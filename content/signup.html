@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no">
+	
+	<link rel="stylesheet" href="content/css/core.css" media="screen, projection, print" />
+
+	<script type="text/javascript" src="content/js/css3-mediaqueries.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Princess+Sofia' rel='stylesheet' type='text/css'>
+	<script>
+
+		window.onload = function() {
+
+	  setTimeout(function(){window.scrollTo(0, 1);}, 100);
+
+	}
+
+	</script>
+	
+</head>
+
+<body>
+<div id="page">
+	<div id="content">
+		<h1 class="small-logo" >Treehouse</h1>
+		<h1>Sign Up</h1>
+        <form action="/signup" method='post'>
+		
+			<input type="text" class="formstyle" name="username" value="username" onfocus="if (this.value == 'username') {this.value = '';}" onblur="if (this.value == '') {this.value = 'username';}">
+			<input type="text" class="formstyle" name="password" value="password" onfocus="if (this.value == 'password') {this.value = '';}" onblur="if (this.value == '') {this.value = 'password';}">
+			<input type="submit" class="button" value="Create my account">
+			
+			
+		</form>
+        <div id='message'></div>
+		<div class="log-in-text"><a href="/login">Already awesome? Log in.</a></div>
+	</div>
+</div>
+
+</body>
+</html>

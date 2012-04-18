@@ -1,0 +1,39 @@
+    <script>
+        window.onload = function() {
+            setTimeout(function(){window.scrollTo(0, 1);}, 100);
+        }
+    </script>
+    <script type="text/javascript" src="content/js/onclick.js"></script>
+    <script src="/dnode.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            var client = {};
+            client.addAchievementDesc = function(message) {
+                document.getElementById('achievementDesc').innerHTML += message;
+            };
+
+
+            DNode(client).connect(function (server) {
+                server.createAchievementDesc(currentUserId, function (message) {
+                    document.getElementById('achievementDesc').innerHTML = message;
+                });
+            });
+        };
+    </script>
+
+</head>
+<body>
+<div id="page">
+    <div id="content no-padding">
+        <div id="menu">
+            <ul>
+                <li class="back"><a href="achievements"><img src="content/img/back-1.png" alt=""/></a></li>
+                <li class="logo"><h2 class="small-logo" >Treehouse</h2></li>
+                <li class="add"><a href="newAchievement"><img src="content/img/add-1.png" /></a></li>
+            </ul>
+        </div>
+        <span id="achievementDesc"></span>
+            </div>
+        </div>
+    </body>
+</html>

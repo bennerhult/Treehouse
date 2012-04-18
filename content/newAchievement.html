@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no">
+        <link rel="stylesheet" href="content/css/core.css" media="screen, projection, print" />
+        <script type="text/javascript" src="content/js/css3-mediaqueries.js"></script>
+        <link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Princess+Sofia' rel='stylesheet' type='text/css'>
+        <script>
+            window.onload = function() {
+                setTimeout(function(){window.scrollTo(0, 1);}, 100);
+            }
+        </script>
+        <script type="text/javascript" src="content/js/onclick.js"></script>
+    </head>
+    <body>
+        <div id="page">
+            <div id="content no-padding">
+                <div id="menu">
+                    <ul>
+                        <li class="back"><a href="achievements"><img src="content/img/back-1.png" alt=""/></a></li>
+                        <li class="logo"><h2 class="small-logo" >Treehouse</h2></li>
+                        <li class="add"><a href="newAchievement"><img src="content/img/add-1.png" /></a></li>
+                    </ul>
+                </div>
+                <div class="achievement-info">
+                    <div class="textarea">
+                        <form action="/newAchievement" method='post'>
+                            <input type="text" class="formstyle" name="title" value="title" onfocus="if (this.value == 'title') {this.value = '';}" onblur="if (this.value == '') {this.value = 'title';}">
+                            <input type="text" class="formstyle" name="description" value="description" onfocus="if (this.value == 'description') {this.value = '';}" onblur="if (this.value == '') {this.value = 'description';}">
+                            <input type="text" class="formstyle" name="goalQuantity" value="#" onfocus="if (this.value == '#') {this.value = '';}" onblur="if (this.value == '') {this.value = '#';}">
+                            <input type="text" class="formstyle" name="goalTitle" value="goal" onfocus="if (this.value == 'goal') {this.value = '';}" onblur="if (this.value == '') {this.value = 'goal';}">
+                            <input type="submit" class="button" value="Create achievement">
+                        </form>
+                    </div>
+                    <div class="imagearea">
+                        <img src="content/img/image-1.png" alt=""/>
+                        <span class="gradient-bg"> </span>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
