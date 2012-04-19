@@ -24,12 +24,13 @@ var dbUri= mongoLocalConf.protocol + '://' + mongoLocalConf.host + ':' + mongoLo
 
 var mongooseSessionStore = new SessionMongoose({
     url: dbUri,
-    interval: 120000 // expiration check worker run interval in millisec (default: 60000)
+    interval: 60000 // expiration check worker run interval in millisec (default: 60000)
 });
 
 app.configure(function() {
    app.use(express.bodyParser());
    app.use(express.cookieParser());
+   app.use(express.favicon()); //change for app.use(express.favicon('public/favicon.ico) when we have a favicon
    app.use(express.session({ store: mongooseSessionStore, secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4' }));
 });
 
