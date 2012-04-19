@@ -14,7 +14,7 @@ app.configure('development', function() {
 
 app.configure('production', function() {
     console.log("Treehouse in production mode.");
-    app.set('db-uri', 'mongodb://@staff.mongohq.com:10005/app4109808');
+    app.set('db-uri', 'mongodb://erik@lejbrinkbennerhult.se:applehorsegreenwtfanything@staff.mongohq.com:10005/app4109808');
 });
 
 app.configure(function() {
