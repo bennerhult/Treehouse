@@ -17,6 +17,8 @@ app.configure('production', function() {
     app.set('db-uri', 'mongodb://treehouser:applehorsegreenwtfanything@staff.mongohq.com:10005/app4109808');
 });
 
+//a (free) cloud database I started on mongohq, before I noticed that we could get one on heroku. Use for testing?
+//staff.mongohq.com:10077/treehouse -u treehouser -p applehorsegreenwtfanything
 
 var mongooseSessionStore = new sessionMongoose({
     url: app.set('db-uri'),

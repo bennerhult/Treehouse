@@ -1,0 +1,26 @@
+#Treehouse
+What have you achieved today?
+[Go inside](http://www.treehouse.io)
+
+##Project
+[Basecamp todo](https://lejbrinkbennerhult.basecamphq.com/projects/5178735-webb/todo_lists/18984493)
+[Heroku with MongoHQ](https://api.heroku.com/myapps/treehouseapp)
+
+##Git commands
+git add .
+git commit -m "comment"
+git push -u origin master
+
+##Empty database
+db.users.remove();
+db.achievements.remove();
+db.goals.remove();
+db.progresses.remove();
+
+##The missing manual
+[jQuery Mobile](http://jquerymobile.com/)
+[Node.js](http://nodejs.org/)
+[Underscore](http://documentcloud.github.com/underscore/)
+[Express](http://expressjs.com/)
+[Backbone](http://documentcloud.github.com/backbone/)
+
