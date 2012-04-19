@@ -240,7 +240,7 @@ function writeAchievements(request, response) {
                             }
                             response.write("<div class='container'><a href='achievement?achievementId="
                                 + myAchievement._id
-                                +"'><img src='content/img/image-2.png' alt='"
+                                +"'><img src='content/img/defaultImage.png' alt='"
                                 + myAchievement.title
                                 + "'/><span class='gradient-bg'> </span><span class='progressbar'> </span><span class='progress' style='width:"
                                 + myPercentageFinished

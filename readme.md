@@ -16,10 +16,15 @@ What have you achieved today?
 
 ##Heroku commands
 Push from git to Heroku
+
 `git push heroku master`
+
 Start Heroku
+
 `heroku ps:scale web=1`
+
 Check logs
+
 `heroku logs`
 
 ##Mongo - clear database
