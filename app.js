@@ -17,7 +17,7 @@ app.configure('production', function() {
     app.set('db-uri', 'mongodb://treehouser:applehorsegreenwtfanything@staff.mongohq.com:10005/app4109808');
 });
 
-//a (free) cloud database I started on mongohq, before I noticed that we could get one on heroku. Use for testing?
+//a (free) cloud database I (Erik) started on mongohq, before I noticed that we could get one on Hseroku. Use for testing?
 //staff.mongohq.com:10077/treehouse -u treehouser -p applehorsegreenwtfanything
 
 var mongooseSessionStore = new sessionMongoose({
@@ -249,6 +249,7 @@ function writeAchievements(request, response) {
                                 + "</p><div class='separerare'>&nbsp;</div></div>");
 
                             if (index == progresses.length -1) {
+                                response.write("<div class='achievement'><div class='container'><a href='newAchievement'><img src='content/img/empty.png' alt=''/></a></div><p>Create a new achievement</p><div class='separerare'>&nbsp;</div></div>");
                                 finishAchievementsPage(response);
                             }
                         }
@@ -257,16 +258,13 @@ function writeAchievements(request, response) {
                 });
             });
         } else {
+            response.write("<div class='achievement first'><div class='container'><a href='newAchievement'><img src='content/img/empty.png' alt=''/></a></div><p>Create a new achievement</p><div class='separerare'>&nbsp;</div></div>");
             finishAchievementsPage(response);
         }
     });
-
-
 }
 
 function finishAchievementsPage(response) {
-    response.write("<div class='achievement'><div class='container'><a href='newAchievement'><img src='content/img/empty.png' alt=''/></a></div><p>Create a new achievement</p><div class='separerare'>&nbsp;</div></div>");
-
     response.write("</div></div></div></body></html>");
     response.end();
 }
