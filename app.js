@@ -224,17 +224,29 @@ function writeAchievements(request, response) {
     progress.Progress.find({ achiever_id: request.session.user_id}, function(err, progresses) {
         if (progresses && progresses.length > 0) {
             progresses.forEach(function(currentProgress, index, array) {
-                achievement.Achievement.findById(currentProgress.achievement_id, function(err, achievement) {
-                    response.write("<div class='achievement'><div class='container'><a href='achievement?achievementId="
-                        + achievement._id
-                        +"'><img src='content/img/image-2.png' alt='"
-                        + achievement.title
-                        + "'/><span class='gradient-bg'> </span><span class='progressbar'> </span><span class='progress' style='width:50%;'> </span></a></div><p>"
-                        + achievement.title
-                        + "</p><div class='separerare'>&nbsp;</div></div>");
-                        if (index == progresses.length -1) {
-                            finishAchievementsPage(response);
+                achievement.Achievement.findById(currentProgress.achievement_id, function(err, myAchievement) {
+                    var myQuantityTotal = 0;
+                    var myQuantityFinished = 0;
+                    myAchievement.goals.forEach(function(goal, index2, array) {
+                        myQuantityTotal += goal.quantityTotal;
+                        myQuantityFinished += currentProgress.quantityFinished;
+                        if (index2 == myAchievement.goals.length -1) {
+                            var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100;
+                            response.write("<div class='achievement'><div class='container'><a href='achievement?achievementId="
+                                + myAchievement._id
+                                +"'><img src='content/img/image-2.png' alt='"
+                                + myAchievement.title
+                                + "'/><span class='gradient-bg'> </span><span class='progressbar'> </span><span class='progress' style='width:"
+                                + myPercentageFinished
+                                + "%;'> </span></a></div><p>"
+                                + myAchievement.title
+                                + "</p><div class='separerare'>&nbsp;</div></div>");
+                            if (index == progresses.length -1) {
+                                finishAchievementsPage(response);
+                            }
                         }
+                    });
+
                 });
             });
         } else {
