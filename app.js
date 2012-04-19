@@ -231,7 +231,7 @@ function writeAchievements(request, response) {
                         myQuantityFinished += currentProgress.quantityFinished;
                         if (index2 == myAchievement.goals.length -1) {
                             var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100;
-                            if (index2 == 0) {
+                            if (index == 0) {
                                 response.write("<div class='achievement first'>");
                             }  else  {
                                 response.write("<div class='achievement'>");
