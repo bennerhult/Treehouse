@@ -4,6 +4,7 @@ What have you achieved today?
 
 ##Project
 [Basecamp todo](https://lejbrinkbennerhult.basecamphq.com/projects/5178735-webb/todo_lists/18984493)
+
 [Heroku with MongoHQ](https://api.heroku.com/myapps/treehouseapp)
 
 ##Git commands
@@ -14,11 +15,11 @@ What have you achieved today?
 `git push -u origin master`
 
 ##Heroku commands
-####Push from git to Heroku
+Push from git to Heroku
 `git push heroku master`
-####Start Heroku
+Start Heroku
 `heroku ps:scale web=1`
-####Check logs
+Check logs
 `heroku logs`
 
 ##Mongo - clear database
@@ -37,13 +38,17 @@ What have you achieved today?
 
 [Climb into your OWN Treehouse!](http://localhost:3000/)
 
-###Simulate production environment
+####Simulate production environment
 `set NODE_ENV=production` (`set NODE_ENV=development` to restore)
 
 ##The missing manual
 [jQuery Mobile](http://jquerymobile.com/)
+
 [Node.js](http://nodejs.org/)
+
 [Underscore](http://documentcloud.github.com/underscore/)
+
 [Express](http://expressjs.com/)
+
 [Backbone](http://documentcloud.github.com/backbone/)
 
