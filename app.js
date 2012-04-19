@@ -17,6 +17,12 @@ app.configure('production', function() {
     app.set('db-uri', 'mongodb://treehouser:applehorsegreenwtfanything@staff.mongohq.com:10005/app4109808');
 });
 
+
+var mongooseSessionStore = new sessionMongoose({
+    url: app.set('db-uri'),
+    interval: 60000 // expiration check worker run interval in millisec (default: 60000)
+});
+
 app.configure(function() {
    app.use(express.bodyParser());
    app.use(express.cookieParser());
@@ -24,10 +30,7 @@ app.configure(function() {
    app.use(express.session({ store: mongooseSessionStore, secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4' }));
 });
 
-var mongooseSessionStore = new sessionMongoose({
-    url: app.set('db-uri'),
-    interval: 60000 // expiration check worker run interval in millisec (default: 60000)
-});
+
 
 var dburi = app.set('db-uri');
 
@@ -217,13 +220,9 @@ function writeSignupPage(response, errorMessage) {
 
 function writeAchievements(request, response) {
     response.write(achievementsPage);
-console.log("a")
     response.write("<div class='achievement first'><div class='container'><a href='newAchievement'><img src='content/img/empty.png' alt=''/></a></div><p>Create a new achievement</p><div class='separerare'>&nbsp;</div></div>");
     progress.Progress.find({ achiever_id: request.session.user_id}, function(err, progresses) {
-        console.log("b")
         if (progresses && progresses.length > 0) {
-            console.log("d" + progresses.length)
-            console.log("e" + progresses)
             progresses.forEach(function(currentProgress, index, array) {
                 achievement.Achievement.findById(currentProgress.achievement_id, function(err, achievement) {
                     response.write("<div class='achievement'><div class='container'><a href='achievement?achievementId="
@@ -239,7 +238,6 @@ console.log("a")
                 });
             });
         } else {
-            console.log("c")
             finishAchievementsPage(response);
         }
     });
