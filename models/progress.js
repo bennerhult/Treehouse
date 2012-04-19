@@ -1,17 +1,8 @@
-var mongoose = require('mongoose');
-var Goal = require('./goal.js');
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose'),
+    db = require('./db.js'),
+    Schema = mongoose.Schema;
 
-var mongoLocalConf = {
-    protocol: "mongodb",
-    user: "",
-    pass: "",
-    name: "test",
-    host: "localhost",
-    port: 27017
-};
-
-mongoose.connect(mongoLocalConf.protocol + '://' + mongoLocalConf.host + ':' + mongoLocalConf.port + '/' + mongoLocalConf.name);
+mongoose.connect(db.uri);
 
 var ProgressSchema = new Schema({
     achiever_id     : Schema.ObjectId,
@@ -40,7 +31,6 @@ function createProgress(achiever_id, goal_id) {
     progress.achiever_id = achiever_id;
     progress.goal_id = goal_id;
     progress.quantityFinished = 0;
-
     progress.save(function (err) {
     });
 }

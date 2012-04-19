@@ -3,27 +3,17 @@ var fs = require('fs'),
     path = require('path'),
     express = require('express'),
     dnode = require('dnode'),
+    db = require('./models/db.js'),
     User = require('./models/user.js'),
     achievement = require('./models/achievement.js'),
     goal = require('./models/goal.js'),
     SessionMongoose = require("session-mongoose"),
     progress = require('./models/progress.js');
 
-var mongoLocalConf = {
-    protocol: "mongodb",
-    user: "",
-    pass: "",
-    name: "test",
-    host: "localhost",
-    port: "27017"
-};
-
 app = express.createServer();
 
-var dbUri= mongoLocalConf.protocol + '://' + mongoLocalConf.host + ':' + mongoLocalConf.port + '/' + mongoLocalConf.name;
-
 var mongooseSessionStore = new SessionMongoose({
-    url: dbUri,
+    url: db.uri,
     interval: 60000 // expiration check worker run interval in millisec (default: 60000)
 });
 
@@ -90,7 +80,6 @@ console.log('Treehouse server started on port ' + port);
 
 app.get('/content/*', function(request, response){
     var filePath = '.' + request.url;
-
     var extname = path.extname(filePath);
     var contentType = 'text/html';
     switch (extname) {
@@ -103,7 +92,6 @@ app.get('/content/*', function(request, response){
     }
 
     path.exists(filePath, function(exists) {
-
         if (exists) {
             fs.readFile(filePath, function(error, content) {
                 if (error) {

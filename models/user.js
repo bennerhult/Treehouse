@@ -1,16 +1,8 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose')
+    db = require('./db.js'),
+    Schema = mongoose.Schema;
 
-var mongoLocalConf = {
-    protocol: "mongodb",
-    user: "",
-    pass: "",
-    name: "test",
-    host: "localhost",
-    port: 27017
-};
-
-mongoose.connect(mongoLocalConf.protocol + '://' + mongoLocalConf.host + ':' + mongoLocalConf.port + '/' + mongoLocalConf.name);
+mongoose.connect(db.uri);
 
 var UserSchema = new Schema({
     created         : Date,
