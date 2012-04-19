@@ -3,18 +3,18 @@ var fs = require('fs'),
     path = require('path'),
     express = require('express'),
     dnode = require('dnode'),
-    db = require('./models/db.js'),
-    User = require('./models/user.js'),
-    achievement = require('./models/achievement.js'),
-    goal = require('./models/goal.js'),
-    SessionMongoose = require("session-mongoose"),
-    progress = require('./models/progress.js');
+    sessionMongoose = require("session-mongoose");
 
 app = express.createServer();
 
-var mongooseSessionStore = new SessionMongoose({
-    url: db.uri,
-    interval: 60000 // expiration check worker run interval in millisec (default: 60000)
+app.configure('development', function() {
+    console.log("Treehouse in development mode.");
+    app.set('db-uri', 'mongodb://localhost:27017/test');
+});
+
+app.configure('production', function() {
+    console.log("Treehouse in production mode.");
+    app.set('db-uri', 'mongodb://@staff.mongohq.com:10005/app4109808');
 });
 
 app.configure(function() {
@@ -24,9 +24,25 @@ app.configure(function() {
    app.use(express.session({ store: mongooseSessionStore, secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4' }));
 });
 
+var mongooseSessionStore = new sessionMongoose({
+    url: app.set('db-uri'),
+    interval: 60000 // expiration check worker run interval in millisec (default: 60000)
+});
+
+var dburi = app.set('db-uri');
+
+module.exports = {
+    dburi: dburi
+};
+
+var user = require('./models/user.js'),
+    achievement = require('./models/achievement.js'),
+    goal = require('./models/goal.js'),
+    progress = require('./models/progress.js');
+
 function loadUser(request, response, next) {
     if (request.session.user_id) {
-        User.User.findById(request.session.user_id, function(err, user) {
+        user.User.findById(request.session.user_id, function(err, user) {
             if (user) {
                 next();
             } else {
@@ -55,7 +71,7 @@ fs.readFile('content/signup.html', function (err, data) {
 });
 
 app.post('/login', function(request, response){
-    User.User.findOne({ username: request.body.username, password: request.body.password }, function(err,myUser) {
+    user.User.findOne({ username: request.body.username, password: request.body.password }, function(err,myUser) {
         if (myUser != null) {
             request.session.user_id = myUser._id;
             writeAchievements(response);
@@ -67,7 +83,7 @@ app.post('/login', function(request, response){
 });
 
 app.post('/signup', function(request, response){
-    User.createUser(request.body.username, request.body.password, function (err) {
+    user.createUser(request.body.username, request.body.password, function (err) {
         if (err) {
             writeSignupPage(response,err);
         } else writeLoginPage(response, 'Awesome');
@@ -76,6 +92,7 @@ app.post('/signup', function(request, response){
 });
 
 var port = process.env.PORT || 3000;
+app.listen(port);
 console.log('Treehouse server started on port ' + port);
 
 app.get('/content/*', function(request, response){
@@ -104,14 +121,11 @@ app.get('/content/*', function(request, response){
                 }
             });
         }
-        else {
-            //404!
+        else { //404!
             writeLoginPage(response, "Hey, use the rope ladder!");
         }
     });
 });
-
-app.listen(port);
 
 app.get('/', function(request, response){
     writeLoginPage(response, "");

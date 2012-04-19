@@ -1,10 +1,10 @@
 var mongoose = require('mongoose'),
-    db = require('./db.js'),
-    GoalSchema = require('./goal.js'),
-    Progress = require('./progress.js'),
+    treehouse = require('../app.js'),
+    goalSchema = require('./goal.js'),
+    progress = require('./progress.js'),
     Schema= mongoose.Schema;
 
-mongoose.connect(db.uri);
+mongoose.connect(treehouse.dburi);
 
 var AchievementSchema = new Schema({
     createdDate     : Date,
@@ -12,7 +12,7 @@ var AchievementSchema = new Schema({
     title           : String,
     description     : String,
     imageURL        : String,
-    goals           :[GoalSchema]
+    goals           :[goalSchema]
 });
 
 var Achievement = mongoose.model('Achievement', AchievementSchema);
@@ -34,7 +34,7 @@ function createAchievement(title, description) {
 
 function addGoalToAchievement(goal, achievement, userId) {
     achievement.goals.push(goal);
-    Progress.createProgress(userId, goal._id);
+    progress.createProgress(userId, goal._id);
     achievement.save(function (err) {
     });
 }

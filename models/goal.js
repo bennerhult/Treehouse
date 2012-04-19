@@ -1,9 +1,8 @@
 var mongoose = require('mongoose'),
-    db = require('./db.js'),
+    treehouse = require('../app.js'),
     Schema = mongoose.Schema;
 
-mongoose.connect(db.uri);
-
+mongoose.connect(treehouse.dburi);
 
 var GoalSchema = new Schema({
     createdDate     : Date,
@@ -18,7 +17,6 @@ module.exports = {
     prepareGoal: prepareGoal,
     GoalSchema: GoalSchema
 };
-
 
 function prepareGoal(title, quantityTotal) {
     var goal = new Goal();

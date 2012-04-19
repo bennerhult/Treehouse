@@ -1,8 +1,8 @@
 var mongoose = require('mongoose'),
-    db = require('./db.js'),
+    treehouse = require('../app.js'),
     Schema = mongoose.Schema;
 
-mongoose.connect(db.uri);
+mongoose.connect(treehouse.dburi);
 
 var ProgressSchema = new Schema({
     achiever_id     : Schema.ObjectId,
