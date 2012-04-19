@@ -220,7 +220,6 @@ function writeSignupPage(response, errorMessage) {
 
 function writeAchievements(request, response) {
     response.write(achievementsPage);
-    response.write("<div class='achievement first'><div class='container'><a href='newAchievement'><img src='content/img/empty.png' alt=''/></a></div><p>Create a new achievement</p><div class='separerare'>&nbsp;</div></div>");
     progress.Progress.find({ achiever_id: request.session.user_id}, function(err, progresses) {
         if (progresses && progresses.length > 0) {
             progresses.forEach(function(currentProgress, index, array) {
@@ -232,7 +231,12 @@ function writeAchievements(request, response) {
                         myQuantityFinished += currentProgress.quantityFinished;
                         if (index2 == myAchievement.goals.length -1) {
                             var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100;
-                            response.write("<div class='achievement'><div class='container'><a href='achievement?achievementId="
+                            if (index2 == 0) {
+                                response.write("<div class='achievement first'>");
+                            }  else  {
+                                response.write("<div class='achievement'>");
+                            }
+                            response.write("<div class='container'><a href='achievement?achievementId="
                                 + myAchievement._id
                                 +"'><img src='content/img/image-2.png' alt='"
                                 + myAchievement.title
@@ -241,6 +245,7 @@ function writeAchievements(request, response) {
                                 + "%;'> </span></a></div><p>"
                                 + myAchievement.title
                                 + "</p><div class='separerare'>&nbsp;</div></div>");
+
                             if (index == progresses.length -1) {
                                 finishAchievementsPage(response);
                             }
@@ -258,6 +263,8 @@ function writeAchievements(request, response) {
 }
 
 function finishAchievementsPage(response) {
+    response.write("<div class='achievement'><div class='container'><a href='newAchievement'><img src='content/img/empty.png' alt=''/></a></div><p>Create a new achievement</p><div class='separerare'>&nbsp;</div></div>");
+
     response.write("</div></div></div></body></html>");
     response.end();
 }
