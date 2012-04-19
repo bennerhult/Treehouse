@@ -14,7 +14,7 @@
 
 
             DNode(client).connect(function (server) {
-                server.createAchievementDesc(currentUserId, function (message) {
+                server.createAchievementDesc(currentUserId, currentAchievementId, function (message) {
                     document.getElementById('achievementDesc').innerHTML = message;
                 });
             });

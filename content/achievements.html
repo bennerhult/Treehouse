@@ -14,21 +14,6 @@
             }
         </script>
         <script type="text/javascript" src="content/js/onclick.js"></script>
-        <script src="/dnode.js" type="text/javascript"></script>
-        <script type="text/javascript">
-            window.onload = function () {
-                var client = {};
-                client.addText = function(message) {
-                    document.getElementById('achievementList').innerHTML += message;
-                };
-
-                DNode(client).connect(function (server) {
-                    server.createText(function (message) {
-                        document.getElementById('achievementList').innerHTML = message;
-                    });
-                });
-            };
-        </script>
     </head>
     <body>
         <div id="page">
@@ -40,8 +25,4 @@
                         <li class="logo"><h2 class="small-logo" >Treehouse</h2></li>
                     </ul>
                 </div>
-                <span id="achievementList"></span>
-            </div>
-        </div>
-    </body>
-</html>
+                <div id='achievementList'>

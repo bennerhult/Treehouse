@@ -22,10 +22,10 @@ module.exports = {
     addGoalToAchievement: addGoalToAchievement
 };
 
-function createAchievement(title, description) {
+function createAchievement(createdBy, title, description) {
     var achievement = new Achievement();
     achievement.createdDate = new Date();
-    achievement.createdBy = "Erik";
+    achievement.createdBy = createdBy;
     achievement.title = title;
     achievement.description = description;
     achievement.imageURL = "content/img/image-2.png";
@@ -34,7 +34,7 @@ function createAchievement(title, description) {
 
 function addGoalToAchievement(goal, achievement, userId) {
     achievement.goals.push(goal);
-    progress.createProgress(userId, goal._id);
+    progress.createProgress(userId, achievement._id, goal._id);
     achievement.save(function (err) {
     });
 }

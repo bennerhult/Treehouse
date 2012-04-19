@@ -1,5 +1,5 @@
 var mongoose = require('mongoose')
-treehouse = require('../app.js'),
+    treehouse = require('../app.js'),
     Schema = mongoose.Schema;
 
 mongoose.connect(treehouse.dburi);

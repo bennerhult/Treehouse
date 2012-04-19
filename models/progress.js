@@ -5,9 +5,10 @@ var mongoose = require('mongoose'),
 mongoose.connect(treehouse.dburi);
 
 var ProgressSchema = new Schema({
-    achiever_id     : Schema.ObjectId,
-    goal_id           : Schema.ObjectId,
-    quantityFinished  : Number
+    achiever_id         : Schema.ObjectId,
+    achievement_id      : Schema.ObjectId,
+    goal_id             : Schema.ObjectId,
+    quantityFinished    : Number
 });
 
 var Progress = mongoose.model('Progress', ProgressSchema);
@@ -26,9 +27,10 @@ function markProgress(achiever_id, goal_id) {
     });
 }
 
-function createProgress(achiever_id, goal_id) {
+function createProgress(achiever_id, achievement_id, goal_id) {
     var progress = new Progress();
     progress.achiever_id = achiever_id;
+    progress.achievement_id = achievement_id;
     progress.goal_id = goal_id;
     progress.quantityFinished = 0;
     progress.save(function (err) {
