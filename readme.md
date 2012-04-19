@@ -27,7 +27,21 @@ Check logs
 
 `heroku logs`
 
-##Mongo - clear database
+##Mongo locally
+####Start database
+`cd c://mongo/bin`
+
+`mongod`
+
+####Start database monitor
+`cd c://mongo/bin`
+
+`mongo`
+
+#####Example find
+`db.achievements.find();`
+
+####Clear database
 `db.users.remove();`
 
 `db.achievements.remove();`
@@ -36,7 +50,10 @@ Check logs
 
 `db.progresses.remove();`
 
-##Locally
+##Local Node.js
+
+`cd c://th`
+
 `cd c://th`
 
 `node app.js`
