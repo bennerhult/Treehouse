@@ -1,21 +1,37 @@
 #Treehouse
 What have you achieved today?
-[Go inside](http://www.treehouse.io)
+[Go to the Treehouse!](http://www.treehouse.io)
 
 ##Project
 [Basecamp todo](https://lejbrinkbennerhult.basecamphq.com/projects/5178735-webb/todo_lists/18984493)
 [Heroku with MongoHQ](https://api.heroku.com/myapps/treehouseapp)
 
 ##Git commands
-git add .
-git commit -m "comment"
-git push -u origin master
+`git add .`
+`git commit -m "comment"`
+`git push -u origin master`
 
-##Empty database
-db.users.remove();
-db.achievements.remove();
-db.goals.remove();
-db.progresses.remove();
+##Heroku commands
+####push from git to Heroku
+`git push heroku master`
+####start Heroku
+`heroku ps:scale web=1`
+####check logs
+`heroku logs`
+
+##Mongo - clear database
+`db.users.remove();`
+`db.achievements.remove();`
+`db.goals.remove();`
+`db.progresses.remove();`
+
+##Locally
+`cd c://th`
+`node app.js`
+[treehouse local](http://localhost:3000/)
+
+###Simulate production environment
+`set NODE_ENV=production` (`set NODE_ENV=development` to restore)
 
 ##The missing manual
 [jQuery Mobile](http://jquerymobile.com/)
