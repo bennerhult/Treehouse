@@ -3,7 +3,7 @@ What have you achieved today?
 [Go to the Treehouse!](http://www.treehouse.io)
 
 ##Project
-[Basecamp todo](https://lejbrinkbennerhult.basecamphq.com/projects/5178735-webb/todo_lists/18984493)
+[Basecamp todo](https://lejbrinkbennerhult.basecamphq.com/projects/9535387-treehouse/todo_lists)
 
 [Heroku with MongoHQ](https://api.heroku.com/myapps/treehouseapp)
 
