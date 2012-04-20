@@ -8,6 +8,8 @@ What have you achieved today?
 [Heroku with MongoHQ](https://api.heroku.com/myapps/treehouseapp)
 
 ##Git commands
+`cd c://th`
+
 `git add .`
 
 `git commit -m "comment"`
@@ -51,8 +53,6 @@ Check logs
 `db.progresses.remove();`
 
 ##Local Node.js
-
-`cd c://th`
 
 `cd c://th`
 
