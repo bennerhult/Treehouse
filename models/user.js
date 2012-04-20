@@ -23,6 +23,6 @@ function createUser(name, password, callback) {
     user.username = name;
     user.password = password;
     user.save(function (error) {
-        callback(error);
+        callback(user,error);
     });
 }

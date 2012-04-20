@@ -88,10 +88,13 @@ app.post('/login', function(request, response){
 });
 
 app.post('/signup', function(request, response){
-    user.createUser(request.body.username, request.body.password, function (err) {
+    user.createUser(request.body.username, request.body.password, function (myUser,err) {
         if (err) {
             writeSignupPage(response,err);
-        } else writeLoginPage(response, 'Awesome');
+        } else {
+            request.session.user_id = myUser._id;
+            writeAchievements(request, response);
+        }
     });
 
 });
