@@ -209,14 +209,12 @@ app.post('/newAchievement', function(request, response){
 });
 
 function writeLoginPage(response, errorMessage) {
-    loginPage = loginPage.toString().replace("<div id='message'></div>", "<div id='message'>" + errorMessage + "</div>");
-    response.write(loginPage);
+    response.write(loginPage.toString().replace("<div id='message'></div>", "<div id='message'>" + errorMessage + "</div>"));
     response.end();
 }
 
 function writeSignupPage(response, errorMessage) {
-    signupPage = signupPage.toString().replace("<div id='message'></div>", "<div id='message'>" + errorMessage + "</div>");
-    response.write(signupPage);
+    response.write(signupPage.toString().replace("<div id='message'></div>", "<div id='message'>" + errorMessage + "</div>"));
     response.end();
 }
 
