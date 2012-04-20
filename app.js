@@ -109,6 +109,9 @@ app.get('/content/*', function(request, response){
         case '.css':
             contentType = 'text/css';
             break;
+        case '.png':
+            contentType = 'image/png';
+            break;
     }
 
     path.exists(filePath, function(exists) {
