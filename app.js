@@ -17,9 +17,6 @@ app.configure('production', function() {
     app.set('db-uri', 'mongodb://treehouser:applehorsegreenwtfanything@staff.mongohq.com:10005/app4109808');
 });
 
-//a (free) cloud database I (Erik) started on mongohq, before I noticed that we could get one on Hseroku. Use for testing?
-//staff.mongohq.com:10077/treehouse -u treehouser -p applehorsegreenwtfanything
-
 var mongooseSessionStore = new sessionMongoose({
     url: app.set('db-uri'),
     interval: 60000 // expiration check worker run interval in millisec (default: 60000)
@@ -31,8 +28,6 @@ app.configure(function() {
    app.use(express.favicon()); //change for app.use(express.favicon('public/favicon.ico) when we have a favicon
    app.use(express.session({ store: mongooseSessionStore, secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4' }));
 });
-
-
 
 var dburi = app.set('db-uri');
 
