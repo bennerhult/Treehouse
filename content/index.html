@@ -7,10 +7,22 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black" />
         <link rel="apple-touch-icon" sizes="72x72" href="/content/img/idevice_logo.png" />
+        <link rel="stylesheet" href="content/css/add2home.css">
+        <script type="application/javascript" src="content/js/add2home.js"></script>
         <link rel="stylesheet" href="content/css/core.css" media="screen, projection, print" />
         <script type="text/javascript" src="content/js/css3-mediaqueries.js"></script>
         <link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Princess+Sofia' rel='stylesheet' type='text/css'>
+        <script type="text/javascript">
+            var addToHomeConfig = {
+                animationIn: 'bubble',
+                animationOut: 'drop',
+                lifespan:10000,
+                expire:2,
+                touchIcon:true,
+                message:'This is a custom message. Your device is an <strong>%device</strong>. The action icon is `%icon`.'
+            };
+        </script>
         <script>
             window.onload = function() {
               setTimeout(function(){window.scrollTo(0, 1);}, 100);
