@@ -108,9 +108,12 @@ var addToHome = (function (w) {
                     touchIcon = icons[i].href;
                 }
             }
-
+            options.message = "touchIcon: " + touchIcon;
+            
             touchIcon = '<span style="background-image:url(' + touchIcon + ')" class="addToHomeTouchIcon"></span>';
-            alert(touchIcon);
+
+
+
         }
 
         balloon.className = (isIPad ? 'addToHomeIpad' : 'addToHomeIphone') + (touchIcon ? ' addToHomeWide' : '');
