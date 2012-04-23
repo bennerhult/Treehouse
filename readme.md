@@ -39,14 +39,16 @@ Check logs
 
 ##Mongo locally
 ####Start database
-`cd c://mongo/bin`
+`c://mongo/bin/mongod`
 
-`mongod`
+ alt
+
+ `d:` followed by `mongo/bin/mongod`
+
 
 ####Start database monitor
-`cd c://mongo/bin`, alt. `d:` followed by `cd mongo/bin`
+`c://mongo/bin/mongo`, alt. `d:` followed by `mongo/bin/mongo`
 
-`mongo`
 
 #####Example find
 `db.achievements.find();`
