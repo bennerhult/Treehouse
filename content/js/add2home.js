@@ -91,7 +91,7 @@ var addToHome = (function (w) {
         balloon.id = 'addToHomeScreen';
         balloon.style.cssText += 'left:-9999px;-webkit-transition-property:-webkit-transform,opacity;-webkit-transition-duration:0;-webkit-transform:translate3d(0,0,0);position:' + (OSVersion < 5 ? 'absolute' : 'fixed');
         options.message = "Install the Treehouse app on your %device: tap %icon and then <strong>Add to Home Screen</strong>";
-
+        options.message = "";
         if (icons.length) {
             for (i = 0, l = icons.length; i < l; i++) {
                 sizes = icons[i].getAttribute('sizes');
@@ -105,6 +105,7 @@ var addToHome = (function (w) {
                     touchIcon = icons[i].href;
                 }
             }
+            options.message += touchIcon;
             touchIcon = '<span style="background-image:url(' + touchIcon + ')" class="addToHomeTouchIcon"></span>';
         }
 
