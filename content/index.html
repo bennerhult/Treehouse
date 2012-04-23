@@ -13,20 +13,13 @@
         <script type="text/javascript" src="content/js/css3-mediaqueries.js"></script>
         <link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Princess+Sofia' rel='stylesheet' type='text/css'>
-        <script type="text/javascript">
-            var addToHomeConfig = {
-                animationIn: 'bubble',
-                animationOut: 'drop',
-                lifespan:10000,
-                expire:2,
-                touchIcon:true,
-                message:'This is a custom message. Your device is an <strong>%device</strong>. The action icon is `%icon`.'
-            };
-        </script>
         <script>
             window.onload = function() {
               setTimeout(function(){window.scrollTo(0, 1);}, 100);
+                addToHome.show(true);
             }
+
+
         </script>
     </head>
     <body>
@@ -39,7 +32,7 @@
                     <input type="submit" class="button green" value="Log in">
                 </form>
                 <div id='message'></div>
-                <div class="log-in-text"><a href="signup">Don't have an account? Sign up.</a></div>
+                <div class="log-in-text"><a href="signup">Don't hasve an account? Sign up.</a></div>
             </div>
         </div>
     </body>
