@@ -36,7 +36,7 @@ Check logs
 `mongod`
 
 ####Start database monitor
-`cd c://mongo/bin`
+`cd c://mongo/bin`, alt. `d:` followed by `cd mongo/bin`
 
 `mongo`
 
