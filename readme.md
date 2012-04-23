@@ -8,7 +8,7 @@ What have you achieved today?
 [Heroku with MongoHQ](https://api.heroku.com/myapps/treehouseapp)
 
 ##Git commands
-`cd c://th`
+`cd c://th`, alt. `d:` followed by `cd th`
 
 `git add .`
 
@@ -54,7 +54,7 @@ Check logs
 
 ##Local Node.js
 
-`cd c://th`
+`cd c://th`, alt. `d:` followed by `cd th`
 
 `node app.js`
 
