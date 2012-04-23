@@ -8,7 +8,7 @@ What have you achieved today?
 [Heroku with MongoHQ](https://api.heroku.com/myapps/treehouseapp)
 
 ##Git commands
-###check in
+###push
 `cd c://th`, alt. `d:` followed by `cd th`
 
 `git add .`
@@ -17,7 +17,7 @@ What have you achieved today?
 
 `git push -u origin master`
 
-###check out
+###pull
 `git fetch origin`
 
 `git merge origin/master`
