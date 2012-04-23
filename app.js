@@ -128,7 +128,7 @@ app.get('/content/*', function(request, response){
             });
         }
         else { //404!
-            writeLoginPage(response, "Hey, use the rope ladder!");
+            response.redirect("/");
         }
     });
 });
@@ -163,6 +163,11 @@ app.get('/achievement', loadUser, function(request, response){
 app.get('/newAchievement', loadUser, function(request, response){
     writeNewAchievementPage(response, "");
 });
+
+app.get('*', function(request, response){
+    response.redirect("/");
+});
+
 var achievementsPage;
 fs.readFile('content/achievements.html', function (err, data) {
     if (err) {
