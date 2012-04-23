@@ -25,7 +25,7 @@ body{
 #page{
     position: relative;
     margin: 0 auto;
-    background-color: #dfd3af;
+    background-color: #ccc;
     background-image: url(../img/bg-1.png);
 
     -moz-box-shadow: inset 5px 5px 10px rgba(162,162,162,0.45);
