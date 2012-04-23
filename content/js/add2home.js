@@ -29,7 +29,7 @@ var addToHome = (function (w) {
             bottomOffset:-25, // Distance of the balloon from bottom
             expire:0, // Minutes to wait before showing the popup again (0 = always displayed)
             message:'', // Customize your message or force a language ('' = automatic)
-            touchIcon:false, // Display the touch icon
+            touchIcon:true, // Display the touch icon
             arrow:true, // Display the balloon arrow
             hookOnLoad:true, // Should we hook to onload event? (really advanced usage)
             iterations:100                // Internal/debug use
@@ -91,10 +91,8 @@ var addToHome = (function (w) {
         balloon = document.createElement('div');
         balloon.id = 'addToHomeScreen';
         balloon.style.cssText += 'left:-9999px;-webkit-transition-property:-webkit-transform,opacity;-webkit-transition-duration:0;-webkit-transform:translate3d(0,0,0);position:' + (OSVersion < 5 ? 'absolute' : 'fixed');
-
         options.message = "Install the Treehouse app on your %device: tap %icon and then <strong>Add to Home Screen</strong>";
 
-        // Search for the apple-touch-icon
         if (icons.length) {
             for (i = 0, l = icons.length; i < l; i++) {
                 sizes = icons[i].getAttribute('sizes');
@@ -108,12 +106,7 @@ var addToHome = (function (w) {
                     touchIcon = icons[i].href;
                 }
             }
-            options.message = "touchIcon: " + touchIcon;
-            
             touchIcon = '<span style="background-image:url(' + touchIcon + ')" class="addToHomeTouchIcon"></span>';
-
-
-
         }
 
         balloon.className = (isIPad ? 'addToHomeIpad' : 'addToHomeIphone') + (touchIcon ? ' addToHomeWide' : '');
@@ -124,7 +117,6 @@ var addToHome = (function (w) {
 
         document.body.appendChild(balloon);
 
-        // Add the close action
         closeButton = balloon.querySelector('.addToHomeClose');
         if (closeButton) closeButton.addEventListener('click', clicked, false);
 
