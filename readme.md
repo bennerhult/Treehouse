@@ -43,7 +43,7 @@ Check logs
 
 
 ####Start database monitor
-`c://mongo/bin/mongo`, alt. `d://mongo/bin/`mongo`
+`c://mongo/bin/mongo`, alt. `d://mongo/bin/mongo`
 
 
 #####Example find
