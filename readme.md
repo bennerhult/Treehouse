@@ -24,6 +24,12 @@ What have you achieved today?
 
 Click Synchronize `ctrl-alt-y' in WebStorm
 
+###restore
+`cd c://th`, alt. `d:` followed by `cd th`
+
+`git checkout .` (. means all files, totally possible to restore just one file too)
+
+
 ##Heroku commands
 Push from git to Heroku
 
@@ -39,15 +45,11 @@ Check logs
 
 ##Mongo locally
 ####Start database
-`c://mongo/bin/mongod`
-
- alt
-
- `d:` followed by `mongo/bin/mongod`
+`c://mongo/bin/mongod` alt `d://mongo/bin/mongod`
 
 
 ####Start database monitor
-`c://mongo/bin/mongo`, alt. `d:` followed by `mongo/bin/mongo`
+`c://mongo/bin/mongo`, alt. `d://mongo/bin/mongo`
 
 
 #####Example find
