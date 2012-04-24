@@ -24,6 +24,12 @@ What have you achieved today?
 
 Click Synchronize `ctrl-alt-y' in WebStorm
 
+###restore
+`cd c://th`, alt. `d:` followed by `cd th`
+
+`git checkout .` (. means all files, totally possible to restore just one file too)
+
+
 ##Heroku commands
 Push from git to Heroku
 
