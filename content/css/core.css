@@ -231,6 +231,12 @@ input.button:focus{
     float: left;
 }
 
+
+
+#achievementList{
+    min-height: 600px;
+}
+
 .achievement .container{
     width: 100px;
     position: relative;
