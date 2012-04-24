@@ -296,10 +296,7 @@ function writeAchievementPage(response, currentUserId, currentAchievementId) {
     response.write("var currentUserId =  '" + currentUserId + "';");
     response.write("var currentAchievementId =  '" + currentAchievementId + "'; </script>");
     response.write(achievementPage2);
-
-    response.write("<span id='achievementDesc'>");
     createAchievementDesc(response, currentUserId, currentAchievementId);
-
 }
 
 function createAchievementDesc (response, currentUserId, currentAchievementId) {
