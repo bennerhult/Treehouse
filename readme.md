@@ -39,15 +39,11 @@ Check logs
 
 ##Mongo locally
 ####Start database
-`c://mongo/bin/mongod`
-
- alt
-
- `d:` followed by `mongo/bin/mongod`
+`c://mongo/bin/mongod` alt `d://mongo/bin/mongod`
 
 
 ####Start database monitor
-`c://mongo/bin/mongo`, alt. `d:` followed by `mongo/bin/mongo`
+`c://mongo/bin/mongo`, alt. `d://mongo/bin/`mongo`
 
 
 #####Example find
