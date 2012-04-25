@@ -192,6 +192,7 @@ var achievementPage1 = "<!DOCTYPE html>"
     + "<title>Achievement</title>"
     + "<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />"
     + "<meta name='viewport' content='width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no'>"
+    + "<link rel='icon' href='/content/favicon.ico' type='image/vnd.microsoft.icon'>"
     + "<link rel='stylesheet' href='content/css/core.css' media='screen, projection, print' />"
     + "<script type='text/javascript' src='content/js/css3-mediaqueries.js'></script>"
     + "<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>"
@@ -295,10 +296,7 @@ function writeAchievementPage(response, currentUserId, currentAchievementId) {
     response.write("var currentUserId =  '" + currentUserId + "';");
     response.write("var currentAchievementId =  '" + currentAchievementId + "'; </script>");
     response.write(achievementPage2);
-
-    response.write("<span id='achievementDesc'>");
     createAchievementDesc(response, currentUserId, currentAchievementId);
-
 }
 
 function createAchievementDesc (response, currentUserId, currentAchievementId) {
