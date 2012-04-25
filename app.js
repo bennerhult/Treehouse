@@ -258,9 +258,9 @@ function writeAchievements(request, response) {
                                 + myAchievement._id
                                 +"'><img src='content/img/defaultImage.png' alt='"
                                 + myAchievement.title
-                                + "'/><span class='gradient-bg'> </span><span class='progressbar'> </span><span class='progress' style='width:"
+                                + "'/><span class='gradient-bg'> </span><span class='progressbar'> </span><div class='progress-container-achievments'><span class='progress' style='width:"
                                 + myPercentageFinished
-                                + "%;'> </span></a></div><p>"
+                                + "%;'> </span></div></a></div><p>"
                                 + myAchievement.title
                                 + "</p><div class='separerare'>&nbsp;</div></div>");
 
@@ -321,9 +321,9 @@ function createAchievementDesc (response, currentUserId, currentAchievementId) {
                                     + myAchievement.description
                                     + "</p></div><div class='imagearea'><img src='content/img/image-1.png' alt='"
                                     +  myAchievement.createdBy + ": " + myAchievement.title
-                                    + "'/><span class='gradient-bg'> </span><span class='progressbar'> </span><span class='progress' style='width:"
+                                    + "'/><span class='gradient-bg'> </span><span class='progressbar'> </span><div class='progress-container'><span class='progress' style='width:"
                                     + myPercentageFinished
-                                    + "%;'> </span></div><div class='clear'></div></div>");
+                                    + "%;'> </span></div></div><div class='clear'></div></div>");
                                 response.write(goalTextsText);
                                 response.write(achievementPage3);
                                 response.end();
@@ -350,7 +350,7 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage) {
     + "<tr>"
     + "<td class='bararea'>"
     + "<span class='progressbar'></span>"
-    + " <span class='progress' style='width:"
+    + "<span class='progress' style='width:"
     + progressPercentage
     + "%;'> </span>"
     + "</td>"

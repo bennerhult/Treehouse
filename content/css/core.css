@@ -232,7 +232,7 @@ input.button:focus{
 }
 
 #achievementList{
-    min-height: 600px;
+    min-height: 500px;
 }
 
 .achievement .container{
@@ -280,16 +280,38 @@ span.progressbar{
     border: 1px solid rgba(253,245,228,0.8);
 }
 
+
+.imagearea div.progress-container{
+
+    position: absolute;
+    width: 68%;
+    left: -1px;
+    margin-left: 16%;
+    height: 9px;
+    bottom: 16px;
+}
+
+
+div.progress-container-achievments{
+
+    bottom: 0px;
+    position: absolute;
+    display: block;
+    height: 4px;
+    width: 68%;
+    left: 1px;
+    margin-left: 15%;
+
+}
+
 span.progress{
     position: absolute;
-
     left: 0px;
     -moz-box-shadow: 0 0 6px 4px rgba(254,246,229,0.79);
     -webkit-box-shadow: 0 0 6px 4px rgba(254,246,229,0.79);
     box-shadow: 0 0 6px 4px rgba(254,246,229,0.79);
-
+    width: 100%;
     height: 4px;
-    margin-left: 16%;
     bottom: 16px;
     background-color: #fdf5e4;
 
