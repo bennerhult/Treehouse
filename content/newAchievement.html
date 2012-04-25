@@ -26,25 +26,62 @@
                     <ul>
                         <li class="back"><a href="achievements"><img src="content/img/back-1.png" alt=""/></a></li>
                         <li class="logo"><img src="content/img/logo-small.png" /></li>
-                        <li class="add"><a href="newAchievement"><img src="content/img/add-1.png" /></a></li>
+
                     </ul>
                 </div>
+
+
+                <form action="/newAchievement" method='post'>
+
                 <div class="achievement-info">
-                    <div class="textarea">
-                        <form action="/newAchievement" method='post'>
+                    <div class="inputarea">
+
                             <input type="text" class="formstyle" name="title" value="title" onfocus="if (this.value == 'title') {this.value = '';}" onblur="if (this.value == '') {this.value = 'title';}">
                             <input type="text" class="formstyle" name="description" value="description" onfocus="if (this.value == 'description') {this.value = '';}" onblur="if (this.value == '') {this.value = 'description';}">
-                            <input type="text" class="formstyle" name="goalQuantity" value="#" onfocus="if (this.value == '#') {this.value = '';}" onblur="if (this.value == '') {this.value = '#';}">
-                            <input type="text" class="formstyle" name="goalTitle" value="goal" onfocus="if (this.value == 'goal') {this.value = '';}" onblur="if (this.value == '') {this.value = 'goal';}">
-                            <input type="submit" class="button" value="Create achievement">
-                        </form>
                     </div>
                     <div class="imagearea">
-                        <img src="content/img/image-1.png" alt=""/>
+                        <img src="content/img/image-2.png" alt=""/>
                         <span class="gradient-bg"> </span>
+
                     </div>
                     <div class="clear"></div>
                 </div>
+
+                <div id="achievement-container">
+                    <div class="part-achievement">
+
+                        <table>
+                            <tr>
+                                <td class="goal"><input type="text" class="formstyle" name="goalTitle" value="goal" onfocus="if (this.value == 'goal') {this.value = '';}" onblur="if (this.value == '') {this.value = 'goal';}"></td>
+                                <td class="quantity"><input type="text" class="formstyle" name="goalQuantity" value="1" onfocus="if (this.value == '1') {this.value = '';}" onblur="if (this.value == '') {this.value = '1';}"></td>
+                            </tr>
+                        </table>
+
+                        <div class="clear"></div>
+                        <div class="separerare-part"></div>
+                    </div>
+
+                </div>
+
+                <div class="create-achievement">
+                    <input type="submit" class="button" value="Create achievement">
+                </div>
+
+
+
+
+
+                            <!--
+                                <input type="text" class="formstyle" name="title" value="title" onfocus="if (this.value == 'title') {this.value = '';}" onblur="if (this.value == '') {this.value = 'title';}">
+                                <input type="text" class="formstyle" name="description" value="description" onfocus="if (this.value == 'description') {this.value = '';}" onblur="if (this.value == '') {this.value = 'description';}">
+                                <input type="text" class="formstyle" name="goalQuantity" value="#" onfocus="if (this.value == '#') {this.value = '';}" onblur="if (this.value == '') {this.value = '#';}">
+                                <input type="text" class="formstyle" name="goalTitle" value="goal" onfocus="if (this.value == 'goal') {this.value = '';}" onblur="if (this.value == '') {this.value = 'goal';}">-->
+
+
+
+
+
+                </form>
             </div>
         </div>
     </body>

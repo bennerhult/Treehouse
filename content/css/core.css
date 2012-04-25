@@ -129,7 +129,7 @@ input.formstyle{
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
-    margin-top: 15px;
+    margin-bottom: 15px;
     border: 1px solid #9e9d9d;
 }
 
@@ -228,6 +228,11 @@ input.button:focus{
     float: left;
 }
 
+.inputarea{
+   float: left;
+    width: 70%;
+}
+
 #achievementList{
     min-height: 500px;
 }
@@ -318,7 +323,7 @@ span.progress{
 #achievement-container{
 
     background-color: rgba(0,0,0,0.4);
-    margin: 40px 5% 40px 5%;
+    margin: 40px 5% 10px 5%;
 
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -336,6 +341,11 @@ span.progress{
     box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
 }
 
+
+
+.create-achievement{
+    margin: 10px 5% 10px 5%;
+}
 
 .part-achievement{
     margin-right: 5%;
@@ -362,6 +372,15 @@ table tr td.bararea{
 
 table tr td.countarea{
     padding-left: 10px;
+}
+
+
+table tr td.goal{
+    width: 90%;
+}
+
+table tr td.quantity{
+    width: 10%;
 }
 
 .progress-container span.progressbar,
