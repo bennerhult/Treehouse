@@ -143,7 +143,17 @@ app.get('/progress', function(request, response){
 
     achievement.Achievement.findOne({ _id: achievementId }, function(err,obj) {
         progress.markProgress(request.session.user_id, goalId);
-        writeAchievementPage(response, request.session.user_id, achievementId);
+        writeAchievementPage(response, request.session.user_id, achievementId, false);
+    });
+});
+
+app.get('/publicize', function(request, response){
+    var url_parts = url.parse(request.url, true);
+    var achievementId  = url_parts.query.achievement;
+
+    achievement.Achievement.findOne({ _id: achievementId }, function(err,currentAchievement) {
+        achievement.publicize(currentAchievement);
+        writeAchievementPage(response, request.session.user_id, achievementId, false);
     });
 });
 
@@ -164,10 +174,23 @@ app.get('/achievements', loadUser, function(request, response){
     writeAchievements(request, response);
 });
 
-app.get('/achievement', loadUser, function(request, response){
+app.get('/achievement', function(request, response){
     var url_parts = url.parse(request.url, true);
     var currentAchievementId = url_parts.query.achievementId;
-    writeAchievementPage(response, request.session.user_id, currentAchievementId);
+
+
+    achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
+       if (request.session.user_id) {
+           loadUser (request, response, function () { writeAchievementPage(response, request.session.user_id, currentAchievement, false)});
+       } else if (currentAchievement.publiclyVisible)    {
+           var userId  = url_parts.query.userId;
+           writeAchievementPage(response, userId, currentAchievement, true);
+       } else {
+           writeLoginPage(response, "");
+       }
+
+    });
+
 });
 
 app.get('/newAchievement', loadUser, function(request, response){
@@ -198,6 +221,14 @@ var achievementPage1 = "<!DOCTYPE html>"
     + "<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>"
     + "<script>";
 
+var achievementPublicPage2;
+fs.readFile('content/achievementPublic.html', function (err, data) {
+    if (err) {
+        throw err;
+    }
+    achievementPublicPage2 = data;
+});
+
 var achievementPage2;
 fs.readFile('content/achievement.html', function (err, data) {
     if (err) {
@@ -205,8 +236,6 @@ fs.readFile('content/achievement.html', function (err, data) {
     }
     achievementPage2 = data;
 });
-
-var achievementPage3 = "<br /><br /><br /><div class='fb-like' data-send='false' data-width='350' data-show-faces='true' font='segoe ui'></div></div></div></div></div></body></html>";
 
 var newAchievementPage;
 fs.readFile('content/newAchievement.html', function (err, data) {
@@ -290,57 +319,68 @@ function writeNewAchievementPage(response) {
     response.end();
 }
 
-function writeAchievementPage(response, currentUserId, currentAchievementId) {
+function writeAchievementPage(response, currentUserId, currentAchievement, publicView) {
+
     response.write(achievementPage1);
+
+
     response.write("var currentUserId =  '" + currentUserId + "';");
-    response.write("var currentAchievementId =  '" + currentAchievementId + "'; </script>");
+    response.write("var currentAchievementId =  '" + currentAchievement._id + "'; </script>");
 
-    response.write("<meta property='og:title' content='I achieved something today!'/>");                                                              //The title of the entity.
-    response.write("<meta property='og:type' content='article'/>");                                                                //The type of entity. You must select a type from the list of Open Graph types.
-    response.write("<meta property='og:image' content='http://treehouse.io/content/img/image-1.png'/>");                            //The URL to an image that represents the entity. Images must be at least 50 pixels by 50 pixels. Square images work best, but you are allowed to use images up to three times as wide as they are tall.
-    response.write("<meta property='og:url' content='www.treehouse.io?achievementId=" + currentAchievementId + "'/>");              //The canonical, permanent URL of the page representing the entity. When you use Open Graph tags, the Like button posts a link to the og:url instead of the URL in the Like button code.
-    response.write("<meta property='og:site_name' content='Treehouse'/>");                                                          //A human-readable name for your site, e.g., "IMDb".
+    console.log("currentUserId: " + currentUserId);
+    console.log("currentAchievementId: " + currentAchievement._id);
 
-    response.write(achievementPage2);
-    createAchievementDesc(response, currentUserId, currentAchievementId);
+    response.write("<meta property='og:title' content='I achieved something today!'/>");                                                                //The title of the entity.
+    response.write("<meta property='og:type' content='article'/>");                                                                                     //The type of entity. You must select a type from the list of Open Graph types.
+    response.write("<meta property='og:image' content='http://treehouse.io/content/img/image-1.png'/>");                                                //The URL to an image that represents the entity. Images must be at least 50 pixels by 50 pixels. Square images work best, but you are allowed to use images up to three times as wide as they are tall.
+    response.write("<meta property='og:url' content='www.treehouse.io?achievementId=" + currentAchievement._id +"&userId=" + currentUserId + "'/>");    //The canonical, permanent URL of the page representing the entity. When you use Open Graph tags, the Like button posts a link to the og:url instead of the URL in the Like button code.
+        //    response.write("<meta property='og:site_name' content='Treehouse'/>");                                                                    //A human-readable name for your site, e.g., "IMDb".
+    if (publicView)  {
+        response.write(achievementPublicPage2);
+    }    else {
+        response.write(achievementPage2);
+    }
+
+
+    createAchievementDesc(response, currentUserId, currentAchievement, publicView);
 }
 
-function createAchievementDesc (response, currentUserId, currentAchievementId) {
-    achievement.Achievement.findById(currentAchievementId, function(err,myAchievement) {
-        if (myAchievement) {
-            var goalTexts = [];
-            myAchievement.goals.forEach(function(goal) {
-                progress.Progress.findOne({ achiever_id:  currentUserId,  goal_id: goal._id}, function(err,myProgress) {
-                    var myPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100;
-                    goalTexts.push(getGoalText(goal, myAchievement, myProgress.quantityFinished, myPercentageFinished));
-                    if (goalTexts.length == myAchievement.goals.length) {
-                        var goalTextsText = "";
-                        goalTexts.forEach(function(goalText, index) {
-                            goalTextsText += goalText;
-                            if (index == goalTexts.length - 1) {
-                                response.write("<div class='achievement-info'><div class='textarea'><h2>"
-                                    + myAchievement.createdBy + ": " + myAchievement.title
-                                    + "</h2><p id='achievementDescription'>"
-                                    + myAchievement.description
-                                    + "</p></div>"
-                                    + "<div class='imagearea'><img src='content/img/image-1.png' alt='"
-                                    +  myAchievement.createdBy + ": " + myAchievement.title
-                                    + "'/><span class='gradient-bg'> </span><span class='progressbar'> </span><div class='progress-container'><span class='progress' style='width:"
-                                    + myPercentageFinished
-                                    + "%;'> </span></div></div><div class='clear'></div>");
-                                response.write(goalTextsText);
-                                response.write(achievementPage3);
-                                response.end();
-                            }
-                        });
+function createAchievementDesc (response, currentUserId, myAchievement, publicView) {
+    var goalTexts = [];
+    myAchievement.goals.forEach(function(goal) {
+        progress.Progress.findOne({ achiever_id:  currentUserId,  goal_id: goal._id}, function(err,myProgress) {
+            var myPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100;
+            goalTexts.push(getGoalText(goal, myAchievement, myProgress.quantityFinished, myPercentageFinished));
+            if (goalTexts.length == myAchievement.goals.length) {
+                var goalTextsText = "";
+                goalTexts.forEach(function(goalText, index) {
+                    goalTextsText += goalText;
+                    if (index == goalTexts.length - 1) {
+                        response.write("<div class='achievement-info'><div class='textarea'><h2>"
+                            + myAchievement.createdBy + ": " + myAchievement.title
+                            + "</h2><p id='achievementDescription'>"
+                            + myAchievement.description
+                            + "</p></div>"
+                            + "<div class='imagearea'><img src='content/img/image-1.png' alt='"
+                            +  myAchievement.createdBy + ": " + myAchievement.title
+                            + "'/><span class='gradient-bg'> </span><span class='progressbar'> </span><div class='progress-container'><span class='progress' style='width:"
+                            + myPercentageFinished
+                            + "%;'> </span></div></div><div class='clear'></div>");
+                        response.write(goalTextsText);
+                        response.write("<br /><br />");
+
+                        if(!myAchievement.publiclyVisible) {
+                            response.write("<a href='publicize?achievement=" + myAchievement._id + "'>Share publicly</a>");
+                        }   else {
+                            response.write("<div class='fb-like' data-send='false' data-width='350' data-show-faces='true' font='segoe ui'></div>");
+                        }
+                        response.write("</div></div></div></div></body></html>");
+                        response.end();
                     }
                 });
-            })
-        } else {
-            response.write(achievementPage3);
-            response.end();
-        }
-    });
+            }
+        });
+    })
 }
 
 function getGoalText(goal, achievement, progressNumber, progressPercentage) {

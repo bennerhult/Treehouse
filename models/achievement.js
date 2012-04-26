@@ -20,7 +20,8 @@ var Achievement = mongoose.model('Achievement', AchievementSchema);
 module.exports = {
     Achievement: Achievement,
     createAchievement: createAchievement,
-    addGoalToAchievement: addGoalToAchievement
+    addGoalToAchievement: addGoalToAchievement,
+    publicize: publicize
 };
 
 function createAchievement(createdBy, title, description) {
@@ -37,6 +38,13 @@ function createAchievement(createdBy, title, description) {
 function addGoalToAchievement(goal, achievement, userId) {
     achievement.goals.push(goal);
     progress.createProgress(userId, achievement._id, goal._id);
+    achievement.save(function (err) {
+    });
+}
+
+function publicize(achievement) {
+    achievement.publiclyVisible = true;
+
     achievement.save(function (err) {
     });
 }
