@@ -7,12 +7,13 @@ var mongoose = require('mongoose'),
 mongoose.connect(treehouse.dburi);
 
 var AchievementSchema = new Schema({
-    createdDate     : Date,
-    createdBy       : String,
-    title           : String,
-    description     : String,
-    imageURL        : String,
-    goals           :[goalSchema]
+    createdDate         : Date,
+    createdBy           : String,
+    title               : String,
+    description         : String,
+    imageURL            : String,
+    publiclyVisible     : Boolean,
+    goals               :[goalSchema]
 });
 
 var Achievement = mongoose.model('Achievement', AchievementSchema);
@@ -29,6 +30,7 @@ function createAchievement(createdBy, title, description) {
     achievement.title = title;
     achievement.description = description;
     achievement.imageURL = "content/img/image-2.png";
+    achievement.publiclyVisible = false;
     return achievement;
 }
 

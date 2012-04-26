@@ -313,6 +313,10 @@ input.file {
     min-height: 500px;
 }
 
+#achievementDesc{
+    min-height: 500px;
+}
+
 .achievement .container{
     width: 100px;
     position: relative;

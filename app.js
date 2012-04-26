@@ -206,7 +206,7 @@ fs.readFile('content/achievement.html', function (err, data) {
     achievementPage2 = data;
 });
 
-var achievementPage3 = "<br /><br /><br /><fb:like send='false' layout='standard' width='350' show_faces='false' font='segoe ui'></fb:like></span></div></div></div></body></html>";
+var achievementPage3 = "<br /><br /><br /><fb:like send='false' layout='standard' width='350' show_faces='false' font='segoe ui'></fb:like></div></div></div></div></body></html>";
 
 var newAchievementPage;
 fs.readFile('content/newAchievement.html', function (err, data) {
