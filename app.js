@@ -141,9 +141,9 @@ app.get('/progress', function(request, response){
     var achievementId  = url_parts.query.achievement;
     var goalId  = url_parts.query.goal;
 
-    achievement.Achievement.findOne({ _id: achievementId }, function(err,obj) {
+    achievement.Achievement.findOne({ _id: achievementId }, function(err,currentAchievement) {
         progress.markProgress(request.session.user_id, goalId);
-        writeAchievementPage(response, request.session.user_id, achievementId, false);
+        writeAchievementPage(response, request.session.user_id, currentAchievement, false);
     });
 });
 
@@ -153,7 +153,7 @@ app.get('/publicize', function(request, response){
 
     achievement.Achievement.findOne({ _id: achievementId }, function(err,currentAchievement) {
         achievement.publicize(currentAchievement);
-        writeAchievementPage(response, request.session.user_id, achievementId, false);
+        writeAchievementPage(response, request.session.user_id, currentAchievement, false);
     });
 });
 
@@ -340,40 +340,42 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
 
 function createAchievementDesc (response, currentUserId, myAchievement, publicView) {
     var goalTexts = [];
-    myAchievement.goals.forEach(function(goal) {
-        progress.Progress.findOne({ achiever_id:  currentUserId,  goal_id: goal._id}, function(err,myProgress) {
-            var myPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100;
-            goalTexts.push(getGoalText(goal, myAchievement, myProgress.quantityFinished, myPercentageFinished));
-            if (goalTexts.length == myAchievement.goals.length) {
-                var goalTextsText = "";
-                goalTexts.forEach(function(goalText, index) {
-                    goalTextsText += goalText;
-                    if (index == goalTexts.length - 1) {
-                        response.write("<div class='achievement-info'><div class='textarea'><h2>"
-                            + myAchievement.createdBy + ": " + myAchievement.title
-                            + "</h2><p id='achievementDescription'>"
-                            + myAchievement.description
-                            + "</p></div>"
-                            + "<div class='imagearea'><img src='content/img/image-1.png' alt='"
-                            +  myAchievement.createdBy + ": " + myAchievement.title
-                            + "'/><span class='gradient-bg'> </span><span class='progressbar'> </span><div class='progress-container'><span class='progress' style='width:"
-                            + myPercentageFinished
-                            + "%;'> </span></div></div><div class='clear'></div>");
-                        response.write(goalTextsText);
-                        response.write("<br /><br />");
+    if(myAchievement.goals) {
+        myAchievement.goals.forEach(function(goal) {
+            progress.Progress.findOne({ achiever_id:  currentUserId,  goal_id: goal._id}, function(err,myProgress) {
+                var myPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100;
+                goalTexts.push(getGoalText(goal, myAchievement, myProgress.quantityFinished, myPercentageFinished));
+                if (goalTexts.length == myAchievement.goals.length) {
+                    var goalTextsText = "";
+                    goalTexts.forEach(function(goalText, index) {
+                        goalTextsText += goalText;
+                        if (index == goalTexts.length - 1) {
+                            response.write("<div class='achievement-info'><div class='textarea'><h2>"
+                                + myAchievement.createdBy + ": " + myAchievement.title
+                                + "</h2><p id='achievementDescription'>"
+                                + myAchievement.description
+                                + "</p></div>"
+                                + "<div class='imagearea'><img src='content/img/image-1.png' alt='"
+                                +  myAchievement.createdBy + ": " + myAchievement.title
+                                + "'/><span class='gradient-bg'> </span><span class='progressbar'> </span><div class='progress-container'><span class='progress' style='width:"
+                                + myPercentageFinished
+                                + "%;'> </span></div></div><div class='clear'></div>");
+                            response.write(goalTextsText);
+                            response.write("<br /><br />");
 
-                        if(!myAchievement.publiclyVisible) {
-                            response.write("<a href='publicize?achievement=" + myAchievement._id + "'>Share publicly</a>");
-                        }   else {
-                            response.write("<div class='fb-like' data-send='false' data-width='350' data-show-faces='true' font='segoe ui'></div>");
+                            if(!myAchievement.publiclyVisible) {
+                                response.write("<a href='publicize?achievement=" + myAchievement._id + "'>Share publicly</a>");
+                            }   else {
+                                response.write("<div class='fb-like' data-send='false' data-width='350' data-show-faces='true' font='segoe ui'></div>");
+                            }
+                            response.write("</div></div></div></div></body></html>");
+                            response.end();
                         }
-                        response.write("</div></div></div></div></body></html>");
-                        response.end();
-                    }
-                });
-            }
-        });
-    })
+                    });
+                }
+            });
+        })
+    }
 }
 
 function getGoalText(goal, achievement, progressNumber, progressPercentage) {
