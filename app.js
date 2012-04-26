@@ -309,7 +309,7 @@ function createAchievementDesc (response, currentUserId, currentAchievementId) {
                     myPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100;
                     goalTexts.push(getGoalText(goal, myAchievement, myProgress.quantityFinished, myPercentageFinished));
                     if (goalTexts.length == myAchievement.goals.length) {
-                        goalTextsText = "";
+                        var goalTextsText = "";
                         goalTexts.forEach(function(goalText, index2, array) {
                             goalTextsText += goalText;
                             if (index2 == goalTexts.length - 1) {
