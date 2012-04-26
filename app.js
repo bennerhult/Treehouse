@@ -187,7 +187,7 @@ fs.readFile('content/achievements.html', function (err, data) {
 });
 
 var achievementPage1 = "<!DOCTYPE html>"
-    + "<html xmlns:fb='http://ogp.me/ns/fb#'>"
+    + "<html>"
     + "<head>"
     + "<title>Treehouse</title>"
     + "<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />"
@@ -206,7 +206,7 @@ fs.readFile('content/achievement.html', function (err, data) {
     achievementPage2 = data;
 });
 
-var achievementPage3 = "<br /><br /><br /><fb:like send='false' layout='standard' width='350' show_faces='false' font='segoe ui'></fb:like></div></div></div></div></body></html>";
+var achievementPage3 = "<br /><br /><br /><div class='fb-like' data-send='false' data-width='350' data-show-faces='true' font='segoe ui'></div></div></div></div></div></body></html>";
 
 var newAchievementPage;
 fs.readFile('content/newAchievement.html', function (err, data) {
