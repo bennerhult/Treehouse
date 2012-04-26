@@ -337,7 +337,7 @@ function createAchievementDesc (response, currentUserId, currentAchievementId) {
 }
 
 function getGoalText(goal, achievement, progressNumber, progressPercentage) {
-    return "<div id='achievement-container'>"
+    var goalText =  "<div id='achievement-container'>"
     + "<div class='part-achievement'>"
     + "<div class='progress-container'>"
     + "<h3>"
@@ -360,18 +360,25 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage) {
     + "</td>"
     + "</tr>"
     + "</table>"
-    + "</div>"
-    + "<div class='addbutton'>"
-    + "<a href='progress?achievement="
-    + achievement._id
-    + "&goal="
-    + goal._id
-    + "'>"
-    + "<img src='content/img/+.png' alt='I did it!'/>"
-    + "</a>"
-    + "</div>"
-    + "<div class='clear'></div>"
+    + "</div>";
+
+
+    if (progressPercentage < 100) {
+        goalText    += "<div class='addbutton'>"
+                    + "<a href='progress?achievement="
+                    + achievement._id
+                    + "&goal="
+                    + goal._id
+                    + "'>"
+                    + "<img src='content/img/+.png' alt='I did it!'/>"
+                    + "</a>"
+                    + "</div>";
+    }
+
+    goalText    += "<div class='clear'></div>"
     + "</div>"
     + "<div class='separerare-part'>&nbsp;</div>"
-    + "</div>"
+    + "</div>";
+
+    return goalText;
 }
