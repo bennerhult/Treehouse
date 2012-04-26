@@ -296,11 +296,10 @@ function writeAchievementPage(response, currentUserId, currentAchievementId) {
     response.write("var currentAchievementId =  '" + currentAchievementId + "'; </script>");
 
     response.write("<meta property='og:title' content='I achieved something today!'/>");                                                              //The title of the entity.
-    response.write("<meta property='og:type' content='article '/>");                                                                //The type of entity. You must select a type from the list of Open Graph types.
+    response.write("<meta property='og:type' content='article'/>");                                                                //The type of entity. You must select a type from the list of Open Graph types.
     response.write("<meta property='og:image' content='http://treehouse.io/content/img/image-1.png'/>");                            //The URL to an image that represents the entity. Images must be at least 50 pixels by 50 pixels. Square images work best, but you are allowed to use images up to three times as wide as they are tall.
     response.write("<meta property='og:url' content='www.treehouse.io?achievementId=" + currentAchievementId + "'/>");              //The canonical, permanent URL of the page representing the entity. When you use Open Graph tags, the Like button posts a link to the og:url instead of the URL in the Like button code.
     response.write("<meta property='og:site_name' content='Treehouse'/>");                                                          //A human-readable name for your site, e.g., "IMDb".
-    response.write("<meta property='og:admins' content='638639471'/>");                                                             //A comma-separated list of either the Facebook IDs of page administrators or a Facebook Platform application ID. At a minimum, include only your own Facebook ID.
 
     response.write(achievementPage2);
     createAchievementDesc(response, currentUserId, currentAchievementId);
