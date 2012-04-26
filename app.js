@@ -265,7 +265,7 @@ function writeAchievements(request, response) {
                                 + "</p><div class='separerare'>&nbsp;</div></div>");
 
                             if (index == progresses.length -1) {
-                                response.write("<div class='achievement'><div class='container'><a href='newAchievement'><img src='content/img/empty.png' alt=''/></a></div><p>Create a new achievement</p><div class='separerare'>&nbsp;</div></div>");
+                                response.write("<div class='achievement'><div class='container'><a href='newAchievement'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>");
                                 finishAchievementsPage(response);
                             }
                         }
@@ -274,7 +274,7 @@ function writeAchievements(request, response) {
                 });
             });
         } else {
-            response.write("<div class='achievement first'><div class='container'><a href='newAchievement'><img src='content/img/empty.png' alt=''/></a></div><p>Create a new achievement</p><div class='separerare'>&nbsp;</div></div>");
+            response.write("<div class='achievement first'><div class='container'><a href='newAchievement'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>");
             finishAchievementsPage(response);
         }
     });
