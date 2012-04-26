@@ -61,6 +61,10 @@ html>body #page{height:auto; min-height:100%;}
     margin-bottom: 120px;
 }
 
+img.signup-logo{
+    padding-bottom: 20px;
+}
+
 
 #menu{
 
@@ -118,7 +122,7 @@ html>body #page{height:auto; min-height:100%;}
 
 
 input.formstyle{
-    width: 96.5%;
+    width: 98.5%;
     height: 27px;
     margin-top: 2px;
     font-family: 'Philosopher', sans-serif;
@@ -462,40 +466,12 @@ a:focus{
 }
 
 h1{
-    font: 1.875em Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font: 2em Verdana, Geneva, Arial, Helvetica, sans-serif;
     font-weight: bold;
-    color: #000;
-    text-shadow: 0px 0px 1px rgb(83, 71, 48);
-}
+    color: #333;
+    padding-top: 20px;
+    padding-bottom: 5px;
 
-h1.small-logo{
-
-    font-family: 'Princess Sofia', cursive;
-    font-size: 1.5em;
-    font-weight: normal;
-    margin-bottom: 15px;
-
-}
-
-h2.small-logo{
-    padding-top: 3px;
-    color: #fff;
-    font-family: 'Princess Sofia', cursive;
-    font-size: 1.275em;
-    font-weight: normal;
-
-}
-
-h1.small-logo img{
-    height: 30px;
-}
-
-h1.large-logo{
-    text-align: center;
-    margin-top: 10px;
-    font-family: 'Princess Sofia', cursive;
-    font-size: 2.275em;
-    margin-bottom: 10px;
 }
 
 h2{
