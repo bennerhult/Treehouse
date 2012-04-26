@@ -187,7 +187,7 @@ fs.readFile('content/achievements.html', function (err, data) {
 });
 
 var achievementPage1 = "<!DOCTYPE html>"
-    + "<html>"
+    + "<html xmlns:fb='http://ogp.me/ns/fb#'>"
     + "<head>"
     + "<title>Treehouse</title>"
     + "<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />"
@@ -206,7 +206,7 @@ fs.readFile('content/achievement.html', function (err, data) {
     achievementPage2 = data;
 });
 
-var achievementPage3 = "</span></div></div></body></html>";
+var achievementPage3 = "<br /><br /><br /><fb:like send='false' layout='standard' width='350' show_faces='false' font='segoe ui'></fb:like></span></div></div></div></body></html>";
 
 var newAchievementPage;
 fs.readFile('content/newAchievement.html', function (err, data) {
@@ -302,25 +302,25 @@ function createAchievementDesc (response, currentUserId, currentAchievementId) {
     achievement.Achievement.findById(currentAchievementId, function(err,myAchievement) {
         if (myAchievement) {
             var goalTexts = [];
-            myAchievement.goals.forEach(function(goal, index, array) {
-
+            myAchievement.goals.forEach(function(goal) {
                 progress.Progress.findOne({ achiever_id:  currentUserId,  goal_id: goal._id}, function(err,myProgress) {
                     myPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100;
                     goalTexts.push(getGoalText(goal, myAchievement, myProgress.quantityFinished, myPercentageFinished));
                     if (goalTexts.length == myAchievement.goals.length) {
                         var goalTextsText = "";
-                        goalTexts.forEach(function(goalText, index2, array) {
+                        goalTexts.forEach(function(goalText, index) {
                             goalTextsText += goalText;
-                            if (index2 == goalTexts.length - 1) {
+                            if (index == goalTexts.length - 1) {
                                 response.write("<div class='achievement-info'><div class='textarea'><h2>"
                                     + myAchievement.createdBy + ": " + myAchievement.title
                                     + "</h2><p id='achievementDescription'>"
                                     + myAchievement.description
-                                    + "</p></div><div class='imagearea'><img src='content/img/image-1.png' alt='"
+                                    + "</p></div>"
+                                    + "<div class='imagearea'><img src='content/img/image-1.png' alt='"
                                     +  myAchievement.createdBy + ": " + myAchievement.title
                                     + "'/><span class='gradient-bg'> </span><span class='progressbar'> </span><div class='progress-container'><span class='progress' style='width:"
                                     + myPercentageFinished
-                                    + "%;'> </span></div></div><div class='clear'></div></div>");
+                                    + "%;'> </span></div></div><div class='clear'></div>");
                                 response.write(goalTextsText);
                                 response.write(achievementPage3);
                                 response.end();
