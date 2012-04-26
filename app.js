@@ -142,8 +142,9 @@ app.get('/progress', function(request, response){
     var goalId  = url_parts.query.goal;
 
     achievement.Achievement.findOne({ _id: achievementId }, function(err,currentAchievement) {
-        progress.markProgress(request.session.user_id, goalId);
-        writeAchievementPage(response, request.session.user_id, currentAchievement, false);
+        progress.markProgress(request.session.user_id, goalId, function() {
+            writeAchievementPage(response, request.session.user_id, currentAchievement, false);
+        });
     });
 });
 
