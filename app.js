@@ -302,16 +302,15 @@ function createAchievementDesc (response, currentUserId, currentAchievementId) {
     achievement.Achievement.findById(currentAchievementId, function(err,myAchievement) {
         if (myAchievement) {
             var goalTexts = [];
-            myAchievement.goals.forEach(function(goal, index, array) {
-
+            myAchievement.goals.forEach(function(goal) {
                 progress.Progress.findOne({ achiever_id:  currentUserId,  goal_id: goal._id}, function(err,myProgress) {
                     myPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100;
                     goalTexts.push(getGoalText(goal, myAchievement, myProgress.quantityFinished, myPercentageFinished));
                     if (goalTexts.length == myAchievement.goals.length) {
                         var goalTextsText = "";
-                        goalTexts.forEach(function(goalText, index2, array) {
+                        goalTexts.forEach(function(goalText, index) {
                             goalTextsText += goalText;
-                            if (index2 == goalTexts.length - 1) {
+                            if (index == goalTexts.length - 1) {
                                 response.write("<div class='achievement-info'><div class='textarea'><h2>"
                                     + myAchievement.createdBy + ": " + myAchievement.title
                                     + "</h2><p id='achievementDescription'>"
