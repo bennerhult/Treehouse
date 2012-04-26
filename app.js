@@ -311,7 +311,7 @@ function createAchievementDesc (response, currentUserId, currentAchievementId) {
             var goalTexts = [];
             myAchievement.goals.forEach(function(goal) {
                 progress.Progress.findOne({ achiever_id:  currentUserId,  goal_id: goal._id}, function(err,myProgress) {
-                    myPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100;
+                    var myPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100;
                     goalTexts.push(getGoalText(goal, myAchievement, myProgress.quantityFinished, myPercentageFinished));
                     if (goalTexts.length == myAchievement.goals.length) {
                         var goalTextsText = "";
