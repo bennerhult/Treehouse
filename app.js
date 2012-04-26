@@ -345,7 +345,7 @@ function createAchievementDesc (response, currentUserId, myAchievement, publicVi
         myAchievement.goals.forEach(function(goal) {
             progress.Progress.findOne({ achiever_id:  currentUserId,  goal_id: goal._id}, function(err,myProgress) {
                 var myPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100;
-                goalTexts.push(getGoalText(goal, myAchievement, myProgress.quantityFinished, myPercentageFinished));
+                goalTexts.push(getGoalText(goal, myAchievement, myProgress.quantityFinished, myPercentageFinished, publicView));
                 if (goalTexts.length == myAchievement.goals.length) {
                     var goalTextsText = "";
                     goalTexts.forEach(function(goalText, index) {
@@ -379,7 +379,7 @@ function createAchievementDesc (response, currentUserId, myAchievement, publicVi
     }
 }
 
-function getGoalText(goal, achievement, progressNumber, progressPercentage) {
+function getGoalText(goal, achievement, progressNumber, progressPercentage, publicView) {
     var goalText =  "<div id='achievement-container'>"
     + "<div class='part-achievement'>"
     + "<div class='progress-container'>"
@@ -406,7 +406,7 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage) {
     + "</div>";
 
 
-    if (progressPercentage < 100) {
+    if (!publicView && progressPercentage < 100) {
         goalText    += "<div class='addbutton'>"
                     + "<a href='progress?achievement="
                     + achievement._id
