@@ -157,7 +157,7 @@ app.get('/signup', function(request, response){
 
 app.get('/signout', function(request, response){
     request.session.destroy();
-    writeLoginPage(response, "You are logged out!");
+    writeLoginPage(response, "");
 });
 
 app.get('/achievements', loadUser, function(request, response){
