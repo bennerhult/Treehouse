@@ -589,6 +589,10 @@ p{
     opacity: 0.7;
 }
 
+.achievement p{
+    padding-top: 5px;
+}
+
 p#achievementDescription{
     text-transform: none;
     padding-top: 15px;
