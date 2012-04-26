@@ -66,6 +66,11 @@ img.signup-logo{
 }
 
 
+#message{
+    font: 12px Verdana, Geneva, Arial, Helvetica, sans-serif;
+    color: #c21515;
+}
+
 #menu{
 
     position: fixed;
