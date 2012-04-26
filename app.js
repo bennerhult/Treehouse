@@ -154,7 +154,11 @@ app.get('/publicize', function(request, response){
 
     achievement.Achievement.findOne({ _id: achievementId }, function(err,currentAchievement) {
         achievement.publicize(currentAchievement);
-        writeAchievementPage(response, request.session.user_id, currentAchievement, false);
+        response.redirect("/achievement?achievementId="
+            + achievementId
+            + "&userId="
+            + request.session.user_id);
+        //writeAchievementPage(response, request.session.user_id, currentAchievement, false);
     });
 });
 
@@ -286,6 +290,8 @@ function writeAchievements(request, response) {
                             }
                             response.write("<div class='container'><a href='achievement?achievementId="
                                 + myAchievement._id
+                                + "&userId="
+                                +  request.session.user_id
                                 +"'><img src='content/img/defaultImage.png' alt='"
                                 + myAchievement.title
                                 + "'/><span class='gradient-bg'> </span><span class='progressbar'> </span><div class='progress-container-achievements'><span class='progress' style='width:"
