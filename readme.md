@@ -37,7 +37,7 @@ Push from git to Heroku
 
 Start Heroku
 
-`heroku ps:scale web=1`
+`heroku restart`
 
 Check logs
 
