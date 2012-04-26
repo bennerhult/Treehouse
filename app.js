@@ -196,7 +196,6 @@ var achievementPage1 = "<!DOCTYPE html>"
     + "<link rel='stylesheet' href='content/css/core.css' media='screen, projection, print' />"
     + "<script type='text/javascript' src='content/js/css3-mediaqueries.js'></script>"
     + "<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>"
-    + "<link href='http://fonts.googleapis.com/css?family=Princess+Sofia' rel='stylesheet' type='text/css'>"
     + "<script>";
 
 var achievementPage2;
@@ -259,7 +258,7 @@ function writeAchievements(request, response) {
                                 + myAchievement._id
                                 +"'><img src='content/img/defaultImage.png' alt='"
                                 + myAchievement.title
-                                + "'/><span class='gradient-bg'> </span><span class='progressbar'> </span><div class='progress-container-achievments'><span class='progress' style='width:"
+                                + "'/><span class='gradient-bg'> </span><span class='progressbar'> </span><div class='progress-container-achievements'><span class='progress' style='width:"
                                 + myPercentageFinished
                                 + "%;'> </span></div></a></div><p>"
                                 + myAchievement.title
