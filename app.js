@@ -189,7 +189,7 @@ fs.readFile('content/achievements.html', function (err, data) {
 var achievementPage1 = "<!DOCTYPE html>"
     + "<html>"
     + "<head>"
-    + "<title>Achievement</title>"
+    + "<title>Treehouse</title>"
     + "<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />"
     + "<meta name='viewport' content='width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no'>"
     + "<link rel='icon' href='/content/favicon.ico' type='image/vnd.microsoft.icon'>"
