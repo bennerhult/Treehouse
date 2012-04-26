@@ -126,7 +126,8 @@ img.signup-logo{
 /*-- LOG IN / SIGN UP --*/
 
 
-input.formstyle{
+input.formstyle,
+textarea.formstyle{
     width: 98.5%;
     height: 27px;
     margin-top: 2px;
@@ -135,9 +136,9 @@ input.formstyle{
     padding-left: 1%;
     color: #2c3524;
 
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
     margin-bottom: 15px;
     border: 1px solid #9e9d9d;
 }
@@ -177,6 +178,17 @@ input.button{
     margin-top: 20px;
     margin-bottom: 20px;
     cursor: pointer;
+}
+
+.achievement-info .formstyle{
+    margin-bottom: 5px;
+}
+
+
+textarea.formstyle{
+    width: 98%;
+    height: 82px;
+    margin-bottom: 0px;
 }
 
 input.button:hover,
@@ -239,7 +251,6 @@ input.file {
     text-align: right;
     width: 95px;
     float: right;
-
     -moz-opacity:0 ;
     filter:alpha(opacity: 0);
     opacity: 0;
@@ -282,12 +293,6 @@ input.file {
     padding-bottom: 10px;
 }
 
-.imagearea{
-    position: relative;
-    float: right;
-    text-align: right;
-}
-
 .addbutton{
     position: relative;
     float: right;
@@ -301,7 +306,7 @@ input.file {
 
 .inputarea{
    float: left;
-    width: 70%;
+   width: 70%;
 }
 
 #achievementList{
@@ -313,6 +318,26 @@ input.file {
     position: relative;
     margin: 0px auto;
     display: block;
+}
+
+.imagearea-container{
+    position: relative;
+    float: right;
+    text-align: right;
+}
+
+.imagearea{
+    position: relative;
+}
+
+.imagearea div.progress-container{
+
+    position: absolute;
+    width: 68%;
+    left: -1px;
+    margin-left: 16%;
+    height: 9px;
+    bottom: 16px;
 }
 
 span.gradient-bg{
@@ -353,18 +378,6 @@ span.progressbar{
     border: 1px solid rgba(253,245,228,0.8);
 }
 
-
-.imagearea div.progress-container{
-
-    position: absolute;
-    width: 68%;
-    left: -1px;
-    margin-left: 16%;
-    height: 9px;
-    bottom: 16px;
-}
-
-
 div.progress-container-achievements{
 
     bottom: 0px;
@@ -394,7 +407,7 @@ span.progress{
 #achievement-container{
 
     background-color: rgba(0,0,0,0.4);
-    margin: 40px 5% 10px 5%;
+    margin: 10px 5% 10px 5%;
 
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;

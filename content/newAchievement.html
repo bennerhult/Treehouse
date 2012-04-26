@@ -37,21 +37,26 @@
                     <div class="inputarea">
 
                             <input type="text" class="formstyle" name="title" value="title" onfocus="if (this.value == 'title') {this.value = '';}" onblur="if (this.value == '') {this.value = 'title';}">
-                            <input type="text" class="formstyle" name="description" value="description" onfocus="if (this.value == 'description') {this.value = '';}" onblur="if (this.value == '') {this.value = 'description';}">
-                    </div>
-                    <div class="imagearea">
-                        <img src="content/img/image-2.png" alt=""/>
-                        <span class="gradient-bg"> </span>
+                           <!-- <input type="text" class="formstyle" name="description" value="description" onfocus="if (this.value == 'description') {this.value = '';}" onblur="if (this.value == '') {this.value = 'description';}">-->
 
+                            <textarea class="formstyle" name="description" >description</textarea>
                     </div>
+                    <div class="imagearea-container">
+                        <div class="imagearea">
+                            <img src="content/img/image-2.png" alt=""/>
+                            <span class="gradient-bg"> </span>
+
+                        </div>
+                        <div class="fileinputs">
+
+                            <input type="file" class="file" />
+                            <div class="fakefile"> Upload image</div>
+
+                        </div>
+                     </div>
 
                     <div class="clear"></div>
-                    <div class="fileinputs">
 
-                        <input type="file" class="file" />
-                        <div class="fakefile"> Upload image</div>
-
-                    </div>
                 </div>
 
                 <div id="achievement-container">
