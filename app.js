@@ -166,12 +166,12 @@ app.get('/achievements', loadUser, function(request, response){
 
 app.get('/achievement', loadUser, function(request, response){
     var url_parts = url.parse(request.url, true);
-    currentAchievementId = url_parts.query.achievementId;
+    var currentAchievementId = url_parts.query.achievementId;
     writeAchievementPage(response, request.session.user_id, currentAchievementId);
 });
 
 app.get('/newAchievement', loadUser, function(request, response){
-    writeNewAchievementPage(response, "");
+    writeNewAchievementPage(response);
 });
 
 app.get('*', function(request, response){
@@ -241,11 +241,11 @@ function writeAchievements(request, response) {
     response.write(achievementsPage);
     progress.Progress.find({ achiever_id: request.session.user_id}, function(err, progresses) {
         if (progresses && progresses.length > 0) {
-            progresses.forEach(function(currentProgress, index, array) {
+            progresses.forEach(function(currentProgress, index) {
                 achievement.Achievement.findById(currentProgress.achievement_id, function(err, myAchievement) {
                     var myQuantityTotal = 0;
                     var myQuantityFinished = 0;
-                    myAchievement.goals.forEach(function(goal, index2, array) {
+                    myAchievement.goals.forEach(function(goal, index2) {
                         myQuantityTotal += goal.quantityTotal;
                         myQuantityFinished += currentProgress.quantityFinished;
                         if (index2 == myAchievement.goals.length -1) {
@@ -286,7 +286,7 @@ function finishAchievementsPage(response) {
     response.end();
 }
 
-function writeNewAchievementPage(response, userId) {
+function writeNewAchievementPage(response) {
     response.write(newAchievementPage);
     response.end();
 }
