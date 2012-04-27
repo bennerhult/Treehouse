@@ -202,8 +202,18 @@ input.button:focus{
 div.fileinputs {
     position: relative;
     margin-top: 5px;
+    padding-left: 25px;
 }
 
+.fileinputs ul li{
+    float: left;
+    margin-right: 10px;
+
+}
+
+.fileinputs ul li.last{
+
+}
 
 div.fakefile {
     position: absolute;
@@ -257,6 +267,10 @@ input.file {
     z-index: 2;
 }
 
+
+.none{
+    display: none;
+}
 
 
 /* achievement page */
