@@ -370,8 +370,8 @@ function createAchievementDesc (response, currentUserId, myAchievement, publicVi
                     goalTexts.forEach(function(goalText, index) {
                         goalTextsText += goalText;
                         if (index == goalTexts.length - 1) {
-                            response.write("<div class='achievement-info'><div class='textarea'><h2>"
-                                + myAchievement.createdBy + ": " + myAchievement.title
+                            response.write("<div class='achievement-info'><div class='textarea'><h2 id='creator'>"
+                                + myAchievement.createdBy + ":</h2><h2>" + myAchievement.title
                                 + "</h2><p id='achievementDescription'>"
                                 + myAchievement.description
                                 + "</p></div>"
