@@ -158,7 +158,6 @@ app.get('/publicize', function(request, response){
             + achievementId
             + "&userId="
             + request.session.user_id);
-        //writeAchievementPage(response, request.session.user_id, currentAchievement, false);
     });
 });
 
