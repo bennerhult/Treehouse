@@ -303,6 +303,7 @@ input.file {
 
 
 .textarea{
+    width: 70%;
     float: left;
 }
 
