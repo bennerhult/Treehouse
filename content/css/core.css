@@ -274,7 +274,8 @@ input.file {
 }
 
 .achievement img,
-.achievement-info img{
+.imagearea img,
+.create-imagearea img{
     border: 3px solid #fff;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -299,6 +300,7 @@ input.file {
     text-align: right;
     padding-top: 10px;
 }
+
 
 .textarea{
     float: left;
