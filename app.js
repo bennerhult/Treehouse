@@ -38,6 +38,8 @@ var user = require('./models/user.js'),
     achievement = require('./models/achievement.js'),
     goal = require('./models/goal.js'),
     progress = require('./models/progress.js');
+    requestHandlers = require('./code/requestHandlers.js');
+    staticFiles = require('./code/staticFiles.js');
 
 function loadUser(request, response, next) {
     if (request.session.user_id) {
@@ -52,14 +54,6 @@ function loadUser(request, response, next) {
         writeLoginPage(response, "You fell out! Come back inside!");
     }
 }
-
-var loginPage;
-fs.readFile('content/index.html', function (err, data) {
-    if (err) {
-        throw err;
-    }
-    loginPage = data;
-});
 
 var signupPage;
 fs.readFile('content/signup.html', function (err, data) {
@@ -98,38 +92,7 @@ app.listen(port);
 console.log('Treehouse server started on port ' + port);
 
 app.get('/content/*', function(request, response){
-    var filePath = '.' + request.url;
-    var extname = path.extname(filePath);
-    var contentType = 'text/html';
-    switch (extname) {
-        case '.js':
-            contentType = 'text/javascript';
-            break;
-        case '.css':
-            contentType = 'text/css';
-            break;
-        case '.png':
-            contentType = 'image/png';
-            break;
-    }
-
-    path.exists(filePath, function(exists) {
-        if (exists) {
-            fs.readFile(filePath, function(error, content) {
-                if (error) {
-                    response.writeHead(500);
-                    response.end();
-                }
-                else {
-                    response.writeHead(200, { 'Content-Type': contentType });
-                    response.end(content, 'utf-8');
-                }
-            });
-        }
-        else { //404!
-            response.redirect("/");
-        }
-    });
+    staticFiles.serve("." + request.url, response)   ;
 });
 
 app.get('/', function(request, response){
@@ -275,8 +238,7 @@ app.post('/newAchievement', function(request, response){
 });
 
 function writeLoginPage(response, errorMessage) {
-    response.write(loginPage.toString().replace("<div id='message'></div>", "<div id='message'>" + errorMessage + "</div>"));
-    response.end();
+    requestHandlers.indexPage(response);
 }
 
 function writeSignupPage(response, errorMessage) {
@@ -423,7 +385,6 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
     + "</tr>"
     + "</table>"
     + "</div>";
-
 
     if (!publicView && progressPercentage < 100) {
         goalText    += "<div class='addbutton'>"
