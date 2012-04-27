@@ -21,7 +21,8 @@ module.exports = {
     Achievement: Achievement,
     createAchievement: createAchievement,
     addGoalToAchievement: addGoalToAchievement,
-    publicize: publicize
+    publicize: publicize,
+    remove: remove
 };
 
 function createAchievement(createdBy, title, description) {
@@ -44,7 +45,12 @@ function addGoalToAchievement(goal, achievement, userId) {
 
 function publicize(achievement) {
     achievement.publiclyVisible = true;
-
     achievement.save(function (err) {
+    });
+}
+
+function remove(achievement, userId, next)    {
+    achievement.remove(function (err) {
+        progress.removeProgress(achievement._id, userId, next);
     });
 }

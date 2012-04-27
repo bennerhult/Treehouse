@@ -182,7 +182,7 @@ app.get('/achievements', loadUser, function(request, response){
 app.get('/achievement', function(request, response){
     var url_parts = url.parse(request.url, true);
     var currentAchievementId = url_parts.query.achievementId;
-
+    request.session.current_achievement_id = currentAchievementId;
 
     achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
        if (request.session.user_id) {
@@ -200,6 +200,14 @@ app.get('/achievement', function(request, response){
 
 app.get('/newAchievement', loadUser, function(request, response){
     writeNewAchievementPage(response);
+});
+
+app.get('/delete', loadUser, function(request, response){
+    achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
+        achievement.remove(currentAchievement, request.session.user_id, function () {
+            writeAchievements(request, response);
+        });
+    });
 });
 
 app.get('*', function(request, response){
