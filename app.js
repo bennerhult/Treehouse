@@ -136,6 +136,13 @@ app.get('/', function(request, response){
     writeLoginPage(response, "");
 });
 
+app.get('/next', function(request, response){
+    response.writeHead(200, {'content-type': 'application/json' });
+    var returnthis = 'hej';
+    response.write(JSON.stringify(returnthis));
+    response.end('\n', 'utf-8');
+});
+
 app.get('/progress', function(request, response){
     var url_parts = url.parse(request.url, true);
     var achievementId  = url_parts.query.achievement;

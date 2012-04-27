@@ -11,6 +11,8 @@
 
         <script type="application/javascript" src="content/js/add2home.js"></script>
         <script type="text/javascript" src="content/js/css3-mediaqueries.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+
         <link rel="stylesheet" href="content/css/add2home.css">
         <link rel="stylesheet" href="content/css/core.css" media="screen, projection, print" />
         <link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
@@ -19,6 +21,28 @@
             var addToHomeConfig = {
                 autostart:false
             }
+
+            function getSumData(callback) {
+                $.ajax('/next', {
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) { if ( callback ) callback(data); },
+                    error  : function()     { if ( callback ) callback(null); }
+                });
+            }
+            /*getSumData(
+             function(data) {
+             //alert(data);
+             $("#tam").html(data);
+             }
+             ) */
+
+
+            function securePasswordField() {
+                $("#passwordSpan").html("<input id='passwordField' type='password' class='formstyle' name='password'>");
+                $("#passwordField").focus();
+            }
+
             window.onload = function() {
                 setTimeout(function(){window.scrollTo(0, 1);}, 100);
                 setTimeout(function(){addToHome.show(true);}, 200);
@@ -31,12 +55,16 @@
                 <img class="signup-logo" src="content/img/logo-large.png" />
                 <form action="/login" method='post'>
                     <input type="text" class="formstyle" name="username" value="username" onfocus="if (this.value == 'username') {this.value = '';}" onblur="if (this.value == '') {this.value = 'username';}">
-                    <input type="password" class="formstyle" name="password" value="password" onfocus="if (this.value == 'password') {this.value = '';}" onblur="if (this.value == '') {this.value = 'password';}">
+                    <span id="passwordSpan">
+                        <input type="text" class="formstyle" name="password" value="password" onfocus="securePasswordField();">
+                    </span>
                     <div id='message'></div>
                     <input type="submit" class="button green" value="Log in">
                 </form>
+
                 <div class="log-in-text"><a href="signup">Don't have an account? Sign up.</a></div>
 
+                <div id="tam"></div>
             </div>
         </div>
     </body>
