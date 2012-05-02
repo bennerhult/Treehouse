@@ -34,9 +34,24 @@ function topPart() {
             tab + 'autostart:false  ' + nl +
             tab + '}              ' + nl +
 
-            tab + 'function getSumData(callback) {       ' + nl +
-            tab + '$.ajax("/next", {     ' + nl +
+
+            tab +     'function checkUser() {' + nl +
+            tab +     'checkUserOnServer(' + nl +
+            tab +         'function(data) {'+ nl +
+            tab +             'if (data == "ok") {'+ nl +
+            tab +               'window.location = "/achievements";'+ nl +      //Erik: fix this when achievements page is ajaxified
+            tab +             '} else $("#message").html(data);'+ nl +
+            tab +         '}'+ nl +
+            tab +     ')'+ nl +
+            tab + '}'+ nl +
+
+            tab + 'function checkUserOnServer(callback) {       ' + nl +
+            tab + 'var username = $("input[name=username]"); ' + nl +
+            tab + 'var password = $("input[name=password]");  ' + nl +
+            tab + 'var data = "username=" + username.val() + "&password=" + password.val()' + nl +
+            tab + '$.ajax("/checkUser", {     ' + nl +
             tab + 'type: "GET",   ' + nl +
+            tab + 'data: data,   ' + nl +
             tab + 'dataType: "json",     ' + nl +
             tab + 'success: function(data) { if ( callback ) callback(data); },   ' + nl +
             tab + 'error  : function()     { if ( callback ) callback(null); }  ' + nl +

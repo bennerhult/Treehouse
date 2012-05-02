@@ -62,6 +62,28 @@ fs.readFile('content/signup.html', function (err, data) {
     signupPage = data;
 });
 
+
+app.get('/checkUser', function(request, response){
+    user.User.findOne({ username: request.query.username, password: request.query.password }, function(err,myUser) {
+        if (myUser != null) {
+            request.session.user_id = myUser._id;
+            response.writeHead(200, {'content-type': 'application/json' });
+            response.write(JSON.stringify('ok'));
+            response.end('\n', 'utf-8');
+        } else {
+            request.session.destroy();
+            response.writeHead(200, {'content-type': 'application/json' });
+            response.write(JSON.stringify('Username or password unknown.'));
+            response.end('\n', 'utf-8');
+    }
+    });
+
+
+
+
+});
+
+
 app.post('/login', function(request, response){
     user.User.findOne({ username: request.body.username, password: request.body.password }, function(err,myUser) {
         if (myUser != null) {
