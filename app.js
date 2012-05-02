@@ -1,6 +1,5 @@
 var fs = require('fs'),
     url = require('url'),
-    path = require('path'),
     express = require('express'),
     sessionMongoose = require("session-mongoose");
 
