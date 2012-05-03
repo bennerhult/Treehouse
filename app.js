@@ -17,13 +17,13 @@ app.configure('production', function() {
 
 var mongooseSessionStore = new sessionMongoose({
     url: app.set('db-uri'),
-    interval: 60000 // expiration check worker run interval in millisec (default: 60000)
+    interval: 60000
 });
 
 app.configure(function() {
    app.use(express.bodyParser());
    app.use(express.cookieParser());
-   app.use(express.favicon()); //change for app.use(express.favicon('public/favicon.ico) when we have a favicon
+   app.use(express.favicon()); //TODO: change for app.use(express.favicon('public/favicon.ico) when we have a favicon
    app.use(express.session({ store: mongooseSessionStore, secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4' }));
 });
 
@@ -46,11 +46,11 @@ function loadUser(request, response, next) {
             if (user) {
                 next();
             } else {
-                writeLoginPage(response, "You have been logged out. Come back inside!");
+                writeLoginPage(response);
             }
         });
     } else {
-        writeLoginPage(response, "You fell out! Come back inside!");
+        writeLoginPage(response);
     }
 }
 
@@ -95,7 +95,7 @@ app.get('/content/*', function(request, response){
 });
 
 app.get('/', function(request, response){
-    writeLoginPage(response, "");
+    writeLoginPage(response);
 });
 
 app.get('/progress', function(request, response){
@@ -125,7 +125,7 @@ app.get('/publicize', function(request, response){
 
 app.get('/signout', function(request, response){
     request.session.destroy();
-    writeLoginPage(response, "");
+    writeLoginPage(response);
 });
 
 app.get('/achievements', loadUser, function(request, response){
@@ -144,7 +144,7 @@ app.get('/achievement', function(request, response){
            var userId  = url_parts.query.userId;
            writeAchievementPage(response, userId, currentAchievement, true);
        } else {
-           writeLoginPage(response, "");
+           writeLoginPage(response);
        }
 
     });
@@ -221,7 +221,7 @@ app.post('/newAchievement', function(request, response){
     });
 });
 
-function writeLoginPage(response, errorMessage) {
+function writeLoginPage(response) {
     requestHandlers.indexPage(response);
 }
 
