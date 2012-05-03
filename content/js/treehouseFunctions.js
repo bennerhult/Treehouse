@@ -29,6 +29,12 @@ function checkUserOnServer(callback) {
     });       
 }
 
+/******************  logout functions  ******************/
+function logout() {
+    $.ajax("/logout");
+    insertContent(getLoginContent());
+}
+
 /******************  signup functions  ******************/
 
 function signup() {
@@ -64,7 +70,6 @@ function openAchievements() {
 function getAchievements() {
     getAchievementsFromServer(
         function(data) {
-           //alert(data);
             $("#achievementList").html(data);
         }
     )

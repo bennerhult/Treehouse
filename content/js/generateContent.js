@@ -50,7 +50,7 @@ function getAchievementsContent() {
             '<div id="content no-padding">' + nl +
                 '<div id="menu">' + nl +
                     '<ul>' + nl +
-                        '<li class="back"><a href="/signout"><img src="content/img/log-out.png" alt=""/></a></li>' + nl +
+                        '<li class="back"><a href="javascript:void(0)" onclick="logout()"><img src="content/img/log-out.png" alt=""/></a></li>' + nl +
                         '<li class="logo"><img src="content/img/logo-small.png" /></li>' + nl +
                     '</ul>' + nl +
                 '</div>' + nl +

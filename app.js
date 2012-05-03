@@ -70,6 +70,9 @@ app.get('/checkUser', function(request, response){
     });
 });
 
+app.get('/logout', function(request, response){
+    request.session.destroy();
+});
 
 app.get('/signup', function(request, response){
     user.createUser(request.query.username, request.query.password, function (myUser,err) {
@@ -130,8 +133,6 @@ app.get('/achievements', function(request, response){
             finishAchievementsList(response, achievementsList);
         }
     });
-
-
 });
 
 function finishAchievementsList(response, achievementsList) {
@@ -177,10 +178,7 @@ app.get('/publicize', function(request, response){
     });
 });
 
-app.get('/signout', function(request, response){
-    request.session.destroy();
-    writeLoginPage(response);
-});
+
 
 
 app.get('/achievement', function(request, response){
