@@ -1,8 +1,9 @@
 var nl = '\n';
 var tab = '\t';
 
-function insertContent(content) {
+function insertContent(content, callback) {
    $("#contentArea").html(content);
+   callback();
 }
 
 function getLoginContent() {
@@ -42,3 +43,21 @@ function getSignupContent() {
         '</div>' + nl
         )
 }
+
+function getAchievementsContent() {
+    return (
+        '<div id="page">' + nl +
+            '<div id="content no-padding">' + nl +
+                '<div id="menu">' + nl +
+                    '<ul>' + nl +
+                        '<li class="back"><a href="/signout"><img src="content/img/log-out.png" alt=""/></a></li>' + nl +
+                        '<li class="logo"><img src="content/img/logo-small.png" /></li>' + nl +
+                    '</ul>' + nl +
+                '</div>' + nl +
+                '<div id="achievementList"></div>' + nl  +
+            '</div>' + nl +
+        '</div>' + nl
+        )
+}
+
+

@@ -8,8 +8,8 @@
 function checkUser() {
     checkUserOnServer(
         function(data) {
-            if (data == "ok") {
-                window.location = "/achievements";     //TODO: fix this when achievements page is ajaxified
+            if (data == "ok") { //TODO: use ajax success/error instead
+                openAchievements();
             } else $("#message").html(data);
         }
     )
@@ -34,8 +34,8 @@ function checkUserOnServer(callback) {
 function signup() {
     signupOnServer(
         function(data) {
-            if (data == "ok") {                        //TODO: use ajax success/error instead
-                window.location = "/achievements";     //TODO: fix this when achievements page is ajaxified
+            if (data == "ok") {
+                openAchievements();
             } else $("#message").html(data);
         }
     )
@@ -47,6 +47,35 @@ function signupOnServer(callback) {
     var data = "username=" + username.val() + "&password=" + password.val();
 
     $.ajax("/signup", {
+        type: "GET",
+        data: data,
+        dataType: "json",
+        success: function(data) { if ( callback ) callback(data); },
+        error  : function()     { if ( callback ) callback(null); }
+    });
+}
+
+
+/******************  achievements functions  ******************/
+function openAchievements() {
+    insertContent(getAchievementsContent(), getAchievements);
+}
+
+function getAchievements() {
+    getAchievementsFromServer(
+        function(data) {
+           //alert(data);
+            $("#achievementList").html(data);
+        }
+    )
+}
+
+function getAchievementsFromServer(callback) {
+    var username = $("input[name=username]");
+    var password = $("input[name=password]");
+    var data = "username=" + username.val() + "&password=" + password.val();
+
+    $.ajax("/achievements", {
         type: "GET",
         data: data,
         dataType: "json",
