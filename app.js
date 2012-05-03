@@ -54,15 +54,6 @@ function loadUser(request, response, next) {
     }
 }
 
-var signupPage;
-fs.readFile('content/signup.html', function (err, data) {
-    if (err) {
-        throw err;
-    }
-    signupPage = data;
-});
-
-
 app.get('/checkUser', function(request, response){
     user.User.findOne({ username: request.query.username, password: request.query.password }, function(err,myUser) {
         if (myUser != null) {
@@ -79,28 +70,20 @@ app.get('/checkUser', function(request, response){
     });
 });
 
-app.post('/login', function(request, response){
-    user.User.findOne({ username: request.body.username, password: request.body.password }, function(err,myUser) {
-        if (myUser != null) {
-            request.session.user_id = myUser._id;
-            writeAchievements(request, response);
-        } else {
-            request.session.destroy();
-            writeLoginPage(response, 'Username or password unknown.');
-        }
-    });
-});
 
-app.post('/signup', function(request, response){
-    user.createUser(request.body.username, request.body.password, function (myUser,err) {
+app.get('/signup', function(request, response){
+    user.createUser(request.query.username, request.query.password, function (myUser,err) {
         if (err) {
-            writeSignupPage(response,err);
-        } else {
+            response.writeHead(200, {'content-type': 'application/json' });
+            response.write(JSON.stringify(err.message));
+            response.end('\n', 'utf-8');
+        }  else {
             request.session.user_id = myUser._id;
-            writeAchievements(request, response);
+            response.writeHead(200, {'content-type': 'application/json' });
+            response.write(JSON.stringify('ok'));
+            response.end('\n', 'utf-8');
         }
     });
-
 });
 
 var port = process.env.PORT || 1337;
@@ -113,13 +96,6 @@ app.get('/content/*', function(request, response){
 
 app.get('/', function(request, response){
     writeLoginPage(response, "");
-});
-
-app.get('/next', function(request, response){
-    response.writeHead(200, {'content-type': 'application/json' });
-    var returnthis = 'hej';
-    response.write(JSON.stringify(returnthis));
-    response.end('\n', 'utf-8');
 });
 
 app.get('/progress', function(request, response){
@@ -149,10 +125,6 @@ app.get('/publicize', function(request, response){
 
 app.get('/login', function(request, response){
     writeLoginPage(response, "");
-});
-
-app.get('/signup', function(request, response){
-    writeSignupPage(response, "");
 });
 
 app.get('/signout', function(request, response){
@@ -255,11 +227,6 @@ app.post('/newAchievement', function(request, response){
 
 function writeLoginPage(response, errorMessage) {
     requestHandlers.indexPage(response);
-}
-
-function writeSignupPage(response, errorMessage) {
-    response.write(signupPage.toString().replace("<div id='message'></div>", "<div id='message'>" + errorMessage + "</div>"));
-    response.end();
 }
 
 function writeAchievements(request, response) {
