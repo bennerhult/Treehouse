@@ -77,12 +77,7 @@ app.get('/checkUser', function(request, response){
             response.end('\n', 'utf-8');
     }
     });
-
-
-
-
 });
-
 
 app.post('/login', function(request, response){
     user.User.findOne({ username: request.body.username, password: request.body.password }, function(err,myUser) {
@@ -108,7 +103,7 @@ app.post('/signup', function(request, response){
 
 });
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 1337;
 app.listen(port);
 console.log('Treehouse server started on port ' + port);
 
