@@ -61,7 +61,6 @@ function signupOnServer(callback) {
     });
 }
 
-
 /******************  achievements functions  ******************/
 function openAchievements() {
     insertContent(getAchievementsContent(), getAchievements);
@@ -76,13 +75,32 @@ function getAchievements() {
 }
 
 function getAchievementsFromServer(callback) {
-    var username = $("input[name=username]");
-    var password = $("input[name=password]");
-    var data = "username=" + username.val() + "&password=" + password.val();
-
     $.ajax("/achievements", {
         type: "GET",
-        data: data,
+        dataType: "json",
+        success: function(data) { if ( callback ) callback(data); },
+        error  : function()     { if ( callback ) callback(null); }
+    });
+}
+
+/******************  achievement functions  ******************/
+function openAchievement(achievementId, userId) {
+    var link =  "/achievement?achievementId=" + achievementId + "&userId=" + userId;
+    window.history.pushState(null, null, link);
+    insertContent(getAchievementContent());
+}
+
+function getAchievement() {
+    getAchievementFromServer(
+        function(data) {
+            $("#achievementDesc").html(data);
+        }
+    )
+}
+
+function getAchievementFromServer(callback) {
+    $.ajax("/achievement", {
+        type: "GET",
         dataType: "json",
         success: function(data) { if ( callback ) callback(data); },
         error  : function()     { if ( callback ) callback(null); }

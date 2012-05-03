@@ -54,6 +54,18 @@ function loadUser(request, response, next) {
     }
 }
 
+var port = process.env.PORT || 1337;
+app.listen(port);
+console.log('Treehouse server started on port ' + port);
+
+app.get('/content/*', function(request, response){
+    staticFiles.serve("." + request.url, response)   ;
+});
+
+app.get('/', function(request, response){
+    writeLoginPage(response);
+});
+
 app.get('/checkUser', function(request, response){
     user.User.findOne({ username: request.query.username, password: request.query.password }, function(err,myUser) {
         if (myUser != null) {
@@ -107,18 +119,17 @@ app.get('/achievements', function(request, response){
                             }  else  {
                                 achievementsList += "<div class='achievement'>";
                             }
-                            achievementsList += "<div class='container'><a href='achievement?achievementId="
+                            achievementsList += '<div class="container"><a href="javascript:void(0)" onclick="insertContent(openAchievement(\''
                                 + myAchievement._id
-                                + "&userId="
-                                +  request.session.user_id
-                                +"'><img src='content/img/defaultImage.png' alt='"
+                                + '\', \''
+                                + request.session.user_id
+                                + '\'))"><img src="content/img/defaultImage.png" alt="'
                                 + myAchievement.title
-                                + "'/><span class='gradient-bg'> </span><span class='progressbar'> </span><div class='progress-container-achievements'><span class='progress' style='width:"
+                                + '"/><span class="gradient-bg"> </span><span class="progressbar"> </span><div class="progress-container-achievements"><span class="progress" style="width:"'
                                 + myPercentageFinished
-                                + "%;'> </span></div></a></div><p>"
+                                + '%"> </span></div></a></div><p>'
                                 + myAchievement.title
-                                + "</p><div class='separerare'>&nbsp;</div></div>";
-
+                                + '</p><div class="separerare">&nbsp;</div></div>';
                             if (index == progresses.length -1) {
                                 achievementsList += "<div class='achievement'><div class='container'><a href='newAchievement'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>";
                                 finishAchievementsList(response, achievementsList);
@@ -141,137 +152,24 @@ function finishAchievementsList(response, achievementsList) {
     response.end('\n', 'utf-8');
 }
 
-var port = process.env.PORT || 1337;
-app.listen(port);
-console.log('Treehouse server started on port ' + port);
-
-app.get('/content/*', function(request, response){
-    staticFiles.serve("." + request.url, response)   ;
-});
-
-app.get('/', function(request, response){
-    writeLoginPage(response);
-});
-
-app.get('/progress', function(request, response){
-    var url_parts = url.parse(request.url, true);
-    var achievementId  = url_parts.query.achievement;
-    var goalId  = url_parts.query.goal;
-
-    achievement.Achievement.findOne({ _id: achievementId }, function(err,currentAchievement) {
-        progress.markProgress(request.session.user_id, goalId, function() {
-            writeAchievementPage(response, request.session.user_id, currentAchievement, false);
-        });
-    });
-});
-
-app.get('/publicize', function(request, response){
-    var url_parts = url.parse(request.url, true);
-    var achievementId  = url_parts.query.achievement;
-
-    achievement.Achievement.findOne({ _id: achievementId }, function(err,currentAchievement) {
-        achievement.publicize(currentAchievement);
-        response.redirect("/achievement?achievementId="
-            + achievementId
-            + "&userId="
-            + request.session.user_id);
-    });
-});
-
-
-
-
 app.get('/achievement', function(request, response){
     var url_parts = url.parse(request.url, true);
     var currentAchievementId = url_parts.query.achievementId;
     request.session.current_achievement_id = currentAchievementId;
 
     achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
-       if (request.session.user_id) {
-           loadUser (request, response, function () { writeAchievementPage(response, request.session.user_id, currentAchievement, false)});
-       } else if (currentAchievement.publiclyVisible)    {
-           var userId  = url_parts.query.userId;
-           writeAchievementPage(response, userId, currentAchievement, true);
-       } else {
-           writeLoginPage(response);
-       }
+        if (request.session.user_id) {
+            loadUser (request, response, function () { writeAchievementPage(response, request.session.user_id, currentAchievement, false)});
+        } else if (currentAchievement.publiclyVisible)    {
+            var userId  = url_parts.query.userId;
+            writeAchievementPage(response, userId, currentAchievement, true);
+        } else {
+            writeLoginPage(response);
+        }
 
     });
 
 });
-
-app.get('/newAchievement', loadUser, function(request, response){
-    writeNewAchievementPage(response);
-});
-
-app.get('/delete', loadUser, function(request, response){
-    achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
-        achievement.remove(currentAchievement, request.session.user_id, function () {
-            //writeAchievements(request, response);
-        });
-    });
-});
-
-app.get('*', function(request, response){
-    response.redirect("/");
-});
-
-var achievementPage1 = "<!DOCTYPE html>"
-    + "<html>"
-    + "<head>"
-    + "<title>Treehouse</title>"
-    + "<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />"
-    + "<meta name='viewport' content='width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no'>"
-    + "<link rel='icon' href='/content/favicon.ico' type='image/vnd.microsoft.icon'>"
-    + "<link rel='stylesheet' href='content/css/core.css' media='screen, projection, print' />"
-    + "<script type='text/javascript' src='content/js/css3-mediaqueries.js'></script>"
-    + "<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>"
-    + "<script>";
-
-var achievementPublicPage2;
-fs.readFile('content/achievementPublic.html', function (err, data) {
-    if (err) {
-        throw err;
-    }
-    achievementPublicPage2 = data;
-});
-
-var achievementPage2;
-fs.readFile('content/achievement.html', function (err, data) {
-    if (err) {
-        throw err;
-    }
-    achievementPage2 = data;
-});
-
-var newAchievementPage;
-fs.readFile('content/newAchievement.html', function (err, data) {
-    if (err) {
-        throw err;
-    }
-    newAchievementPage = data;
-});
-
-app.post('/newAchievement', function(request, response){
-    user.User.findById(request.session.user_id, function(err, user) {
-        var motherAchievement = achievement.createAchievement(user.username, request.body.title, request.body.description);
-        var goalToBeCreated = goal.prepareGoal(request.body.goalTitle, request.body.goalQuantity);
-
-        achievement.addGoalToAchievement(goalToBeCreated, motherAchievement, user._id);
-        //writeAchievements(request, response);
-    });
-});
-
-function writeLoginPage(response) {
-    requestHandlers.indexPage(response);
-}
-
-
-
-function writeNewAchievementPage(response) {
-    response.write(newAchievementPage);
-    response.end();
-}
 
 function writeAchievementPage(response, currentUserId, currentAchievement, publicView) {
     response.write(achievementPage1);
@@ -333,46 +231,122 @@ function createAchievementDesc (response, currentUserId, myAchievement, publicVi
 
 function getGoalText(goal, achievement, progressNumber, progressPercentage, publicView) {
     var goalText =  "<div id='achievement-container'>"
-    + "<div class='part-achievement'>"
-    + "<div class='progress-container'>"
-    + "<h3>"
-    +  goal.title
-    +"</h3>"
-    + "<table border='1px'>"
-    + "<tr>"
-    + "<td class='bararea'>"
-    + "<span class='progressbar'></span>"
-    + "<span class='progress' style='width:"
-    + progressPercentage
-    + "%;'> </span>"
-    + "</td>"
-    + " <td class='countarea'>"
-    + "<h3>"
-    + progressNumber
-    + "/"
-    + goal.quantityTotal
-    + "</h3>"
-    + "</td>"
-    + "</tr>"
-    + "</table>"
-    + "</div>";
+        + "<div class='part-achievement'>"
+        + "<div class='progress-container'>"
+        + "<h3>"
+        +  goal.title
+        +"</h3>"
+        + "<table border='1px'>"
+        + "<tr>"
+        + "<td class='bararea'>"
+        + "<span class='progressbar'></span>"
+        + "<span class='progress' style='width:"
+        + progressPercentage
+        + "%;'> </span>"
+        + "</td>"
+        + " <td class='countarea'>"
+        + "<h3>"
+        + progressNumber
+        + "/"
+        + goal.quantityTotal
+        + "</h3>"
+        + "</td>"
+        + "</tr>"
+        + "</table>"
+        + "</div>";
 
     if (!publicView && progressPercentage < 100) {
         goalText    += "<div class='addbutton'>"
-                    + "<a href='progress?achievement="
-                    + achievement._id
-                    + "&goal="
-                    + goal._id
-                    + "'>"
-                    + "<img src='content/img/+.png' alt='I did it!'/>"
-                    + "</a>"
-                    + "</div>";
+            + "<a href='progress?achievement="
+            + achievement._id
+            + "&goal="
+            + goal._id
+            + "'>"
+            + "<img src='content/img/+.png' alt='I did it!'/>"
+            + "</a>"
+            + "</div>";
     }
 
     goalText    += "<div class='clear'></div>"
-    + "</div>"
-    + "<div class='separerare-part'>&nbsp;</div>"
-    + "</div>";
+        + "</div>"
+        + "<div class='separerare-part'>&nbsp;</div>"
+        + "</div>";
 
     return goalText;
+}
+
+app.get('/progress', function(request, response){
+    var url_parts = url.parse(request.url, true);
+    var achievementId  = url_parts.query.achievement;
+    var goalId  = url_parts.query.goal;
+
+    achievement.Achievement.findOne({ _id: achievementId }, function(err,currentAchievement) {
+        progress.markProgress(request.session.user_id, goalId, function() {
+            writeAchievementPage(response, request.session.user_id, currentAchievement, false);
+        });
+    });
+});
+
+app.get('/publicize', function(request, response){
+    var url_parts = url.parse(request.url, true);
+    var achievementId  = url_parts.query.achievement;
+
+    achievement.Achievement.findOne({ _id: achievementId }, function(err,currentAchievement) {
+        achievement.publicize(currentAchievement);
+        response.redirect("/achievement?achievementId="
+            + achievementId
+            + "&userId="
+            + request.session.user_id);
+    });
+});
+
+app.get('/newAchievement', loadUser, function(request, response){
+    writeNewAchievementPage(response);
+});
+
+app.get('/delete', loadUser, function(request, response){
+    achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
+        achievement.remove(currentAchievement, request.session.user_id, function () {
+            //writeAchievements(request, response);
+        });
+    });
+});
+
+app.get('*', function(request, response){
+    response.redirect("/");
+});
+
+var achievementPublicPage2;
+fs.readFile('content/achievementPublic.html', function (err, data) {
+    if (err) {
+        throw err;
+    }
+    achievementPublicPage2 = data;
+});
+
+var newAchievementPage;
+fs.readFile('content/newAchievement.html', function (err, data) {
+    if (err) {
+        throw err;
+    }
+    newAchievementPage = data;
+});
+
+app.post('/newAchievement', function(request, response){
+    user.User.findById(request.session.user_id, function(err, user) {
+        var motherAchievement = achievement.createAchievement(user.username, request.body.title, request.body.description);
+        var goalToBeCreated = goal.prepareGoal(request.body.goalTitle, request.body.goalQuantity);
+
+        achievement.addGoalToAchievement(goalToBeCreated, motherAchievement, user._id);
+        //writeAchievements(request, response);
+    });
+});
+
+function writeLoginPage(response) {
+    requestHandlers.indexPage(response);
+}
+
+function writeNewAchievementPage(response) {
+    response.write(newAchievementPage);
+    response.end();
 }
