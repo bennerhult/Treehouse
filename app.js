@@ -123,10 +123,6 @@ app.get('/publicize', function(request, response){
     });
 });
 
-app.get('/login', function(request, response){
-    writeLoginPage(response, "");
-});
-
 app.get('/signout', function(request, response){
     request.session.destroy();
     writeLoginPage(response, "");

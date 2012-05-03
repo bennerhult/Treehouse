@@ -18,7 +18,7 @@ function getLoginContent() {
                         '<div id="message"></div>' + nl +
                         '<input type="submit" class="button green" value="Log in">' + nl +
                     '</form>' + nl +
-                    '<div class="log-in-text"><a href="javascript:void(0" onclick="insertContent(getSignupContent())">Don\'t have an account? Sign up.</a></div>' + nl +
+                    '<div class="log-in-text"><a href="javascript:void(0)" onclick="insertContent(getSignupContent())">Don\'t have an account? Sign up.</a></div>' + nl +
                 '</div>' + nl +
             '</div>' + nl
         )
@@ -37,7 +37,7 @@ function getSignupContent() {
                     '<div id="message"></div>' + nl +
                     '<input type="submit" class="button" value="Create my account">' + nl +
                 '</form>' + nl +
-                '<div class="log-in-text"><a href="insertContent(getLoginContent())">Already awesome? Log in.</a></div>' + nl +
+                '<div class="log-in-text"><a href="javascript:void(0)" onclick="insertContent(getLoginContent())">Already awesome? Log in.</a></div>' + nl +
             '</div>' + nl +
         '</div>' + nl
         )
