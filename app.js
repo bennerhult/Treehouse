@@ -131,7 +131,7 @@ app.get('/achievements', function(request, response){
                                 + myAchievement.title
                                 + '</p><div class="separerare">&nbsp;</div></div>';
                             if (index == progresses.length -1) {
-                                achievementsList += "<div class='achievement'><div class='container'><a href='newAchievement'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>";
+                                achievementsList += "<div class='achievement'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>";
                                 finishAchievementsList(response, achievementsList);
                             }
                         }
@@ -140,7 +140,7 @@ app.get('/achievements', function(request, response){
                 });
             });
         } else {
-            achievementsList += "<div class='achievement first'><div class='container'><a href='newAchievement'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>";
+            achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>";
             finishAchievementsList(response, achievementsList);
         }
     });
@@ -300,20 +300,12 @@ app.get('/publicize', function(request, response){
     });
 });
 
-app.get('/newAchievement', loadUser, function(request, response){
-    writeNewAchievementPage(response);
-});
-
 app.get('/delete', loadUser, function(request, response){
     achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
         achievement.remove(currentAchievement, request.session.user_id, function () {
             //writeAchievements(request, response);
         });
     });
-});
-
-app.get('*', function(request, response){
-    response.redirect("/");
 });
 
 var achievementPublicPage2;
@@ -324,21 +316,25 @@ fs.readFile('content/achievementPublic.html', function (err, data) {
     achievementPublicPage2 = data;
 });
 
-var newAchievementPage;
-fs.readFile('content/newAchievement.html', function (err, data) {
-    if (err) {
-        throw err;
-    }
-    newAchievementPage = data;
-});
+app.get('/newAchievement', function(request, response){
+    console.log('new achievement');
 
-app.post('/newAchievement', function(request, response){
     user.User.findById(request.session.user_id, function(err, user) {
-        var motherAchievement = achievement.createAchievement(user.username, request.body.title, request.body.description);
-        var goalToBeCreated = goal.prepareGoal(request.body.goalTitle, request.body.goalQuantity);
+        console.log('request.session.user_id, ' + request.session.user_id);
+        console.log('request.query.title, ' + request.query.title);
+        console.log('request.query.description, ' + request.query.description);
+        console.log('request.query.goalQuantity, ' + request.query.goalQuantity);
+        console.log('request.query.goalTitle, ' + request.query.goalTitle);
+
+
+        var motherAchievement = achievement.createAchievement(user.username, request.query.title, request.query.description);
+        var goalToBeCreated = goal.prepareGoal(request.query.goalTitle, request.query.goalQuantity);
 
         achievement.addGoalToAchievement(goalToBeCreated, motherAchievement, user._id);
-        //writeAchievements(request, response);
+
+        response.writeHead(200, {'content-type': 'application/json' });
+        response.write(JSON.stringify('ok'));
+        response.end('\n', 'utf-8');
     });
 });
 
@@ -346,7 +342,6 @@ function writeLoginPage(response) {
     requestHandlers.indexPage(response);
 }
 
-function writeNewAchievementPage(response) {
-    response.write(newAchievementPage);
-    response.end();
-}
+app.get('*', function(request, response){
+    response.redirect("/");
+});

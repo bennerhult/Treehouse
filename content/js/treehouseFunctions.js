@@ -106,3 +106,33 @@ function getAchievementFromServer(callback,achievementId, userId) {
         error  : function()     { if ( callback ) callback(null); }
     });
 }
+
+/******************  new achievement functions  ******************/
+
+function createAchievement() {
+   createAchievementOnServer(
+
+    function(data) {
+            if (data == "ok") { //TODO: use ajax success/error instead
+                openAchievements();
+            }
+        }
+    )
+}
+
+function createAchievementOnServer(callback,achievementId, userId) {
+    var title = $("input[name=title]");
+    var description = $("textarea[name=description]");
+    var goalQuantity = $("input[name=goalQuantity]");
+    var goalTitle = $("input[name=goalTitle]");
+
+    var data = "title=" + title.val() + "&description=" + description.val() + "&goalQuantity=" + goalQuantity.val() + "&goalTitle=" + goalTitle.val();
+
+    $.ajax("/newAchievement", {
+        type: "GET",
+        data: data,
+        dataType: "json",
+        success: function(data) { if ( callback ) callback(data); },
+        error  : function()     { if ( callback ) callback(null); }
+    });
+}

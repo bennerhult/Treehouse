@@ -81,8 +81,61 @@ function getAchievementContent() {
                 '</div>' + nl  +
                 '<div id="achievementDesc"></div>' + nl  +
             '</div>' + nl +
-            '</div>' + nl
+        '</div>' + nl
         )
 }
 
-
+function getNewAchievementContent() {
+    return (
+        '<div id="page">' + nl  +
+            '<div id="content no-padding">' + nl  +
+                '<div id="menu">' + nl  +
+                    '<ul>' + nl  +
+                        '<li class="back"><a href="javascript:void(0)" onclick="openAchievements()"><img src="content/img/back-1.png" alt=""/></a></li>' + nl  +
+                        '<li class="logo"><img src="content/img/logo-small.png" /></li>' + nl  +
+                    '</ul>' + nl  +
+                '</div>' + nl  +
+                '<form action="javascript: createAchievement();">' + nl  +
+                    '<div class="achievement-info">' + nl  +
+                        '<div class="inputarea">' + nl  +
+                            '<input type="text" class="formstyle" name="title" value="title" onfocus="if (this.value == \'title\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'title\';}">' + nl  +
+                            '<textarea class="formstyle" name="description">description</textarea>' + nl  +
+                        '</div>' + nl  +
+                        '<div class="imagearea-container">' + nl  +
+                            '<div class="create-imagearea">' + nl  +
+                            '<img src="content/img/image-2.png" alt="" />' + nl  +
+                            '<span class="gradient-bg"></span>' + nl  +
+                        '</div>' + nl  +
+                        '<div class="fileinputs none">' + nl  +
+                            '<input type="file" class="file" />' + nl  +
+                            '<div class="fakefile"> Upload image</div>' + nl  +
+                        '</div>' + nl  +
+                        '<div class="fileinputs">' + nl  +
+                            '<ul>' + nl  +
+                                '<li><img src="content/img/left-arrow.png" alt="" /></li>' + nl  +
+                                '<li class="last"><img src="content/img/right-arrow.png" alt="" /></li>' + nl  +
+                            '</ul>' + nl  +
+                        '</div>' + nl  +
+                    '</div>' + nl  +
+                    '<div class="clear"></div>' + nl  +
+                '</div>' + nl  +
+                '<div id="achievement-container">' + nl  +
+                    '<div class="part-achievement">' + nl  +
+                        '<table>' + nl  +
+                            '<tr>' + nl  +
+                                '<td class="goal"><input type="text" class="formstyle" name="goalTitle" value="goal" onfocus="if (this.value == \'goal\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'goal\';}"></td>' + nl  +
+                                '<td class="quantity"><input type="text" class="formstyle" name="goalQuantity" value="1" onfocus="if (this.value == \'1\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'1\';}"></td>' + nl  +
+                            '</tr>' + nl  +
+                        '</table>' + nl  +
+                        '<div class="clear"></div>' + nl  +
+                        '<div class="separerare-part"></div>' + nl  +
+                    '</div>' + nl  +
+                '</div>' + nl  +
+                ' <div class="create-achievement">' + nl  +
+                    '<input type="submit" class="button" value="Create achievement">' + nl  +
+                '</div>' + nl  +
+            '</form>' + nl  +
+        '</div>' + nl  +
+    '</div>'
+    )
+}
