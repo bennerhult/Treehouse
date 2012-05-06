@@ -125,7 +125,7 @@ app.get('/achievements', function(request, response){
                                 + request.session.user_id
                                 + '\'))"><img src="content/img/defaultImage.png" alt="'
                                 + myAchievement.title
-                                + '"/><span class="gradient-bg"> </span><span class="progressbar"> </span><div class="progress-container-achievements"><span class="progress" style="width:"'
+                                + '"/><span class="gradient-bg"> </span><span class="progressbar"> </span><div class="progress-container-achievements"><span class="progress" style="width:'
                                 + myPercentageFinished
                                 + '%"> </span></div></a></div><p>'
                                 + myAchievement.title
