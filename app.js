@@ -21,10 +21,12 @@ var mongooseSessionStore = new sessionMongoose({
 });
 
 app.configure(function() {
-   app.use(express.bodyParser());
-   app.use(express.cookieParser());
-   app.use(express.favicon()); //TODO: change for app.use(express.favicon('public/favicon.ico) when we have a favicon
-   app.use(express.session({ store: mongooseSessionStore, secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4' }));
+    app.use(express.bodyParser());
+    app.use(express.cookieParser());
+
+    app.use(express.favicon('/content/favicon.ico'));
+    app.use(express.session({ store: mongooseSessionStore, secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4' }));
+    app.use(app.router);
 });
 
 var dburi = app.set('db-uri');
@@ -46,11 +48,17 @@ function loadUser(request, response, next) {
             if (user) {
                 next();
             } else {
-                writeLoginPage(response);
+                console.log("logged out 1")
+                response.writeHead(200, {'content-type': 'application/json' });
+                response.write(JSON.stringify(err.message));
+                response.end('\n', 'utf-8');
             }
         });
     } else {
-        writeLoginPage(response);
+        console.log("logged out 2")
+        response.writeHead(200, {'content-type': 'application/json' });
+        response.write(JSON.stringify("logged out 2"));
+        response.end('\n', 'utf-8');
     }
 }
 
@@ -156,7 +164,10 @@ app.get('/achievement', function(request, response){
     response.writeHead(200, {'content-type': 'application/json' });
     var url_parts = url.parse(request.url, true);
     var currentAchievementId = url_parts.query.achievementId.trim();
-    request.session.current_achievement_id = currentAchievementId;
+    console.log("currentAchievementId: " + currentAchievementId);
+    app.set('current_achievement_id', currentAchievementId);
+    //request.session.current_achievement_id = currentAchievementId;
+
     achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
         if (request.session.user_id) {
             loadUser (request, response, function () { writeAchievementPage(response, request.session.user_id, currentAchievement, false)});
@@ -301,10 +312,17 @@ app.get('/publicize', function(request, response){
 });
 
 app.get('/delete', loadUser, function(request, response){
-    achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
-        achievement.remove(currentAchievement, request.session.user_id, function () {
-            //writeAchievements(request, response);
-        });
+    achievement.Achievement.findOne({ _id: app.set('current_achievement_id') }, function(err,currentAchievement) {
+        if (currentAchievement)    {
+            achievement.remove(currentAchievement, request.session.user_id, function () {
+                response.writeHead(200, {'content-type': 'application/json' });
+                response.write(JSON.stringify('ok'));
+                response.end('\n', 'utf-8');
+            });
+        }   else {
+            console.log("trying to remove non-existing achievement " + app.set('current_achievement_id'));
+        }
+
     });
 });
 
@@ -317,21 +335,10 @@ fs.readFile('content/achievementPublic.html', function (err, data) {
 });
 
 app.get('/newAchievement', function(request, response){
-    console.log('new achievement');
-
     user.User.findById(request.session.user_id, function(err, user) {
-        console.log('request.session.user_id, ' + request.session.user_id);
-        console.log('request.query.title, ' + request.query.title);
-        console.log('request.query.description, ' + request.query.description);
-        console.log('request.query.goalQuantity, ' + request.query.goalQuantity);
-        console.log('request.query.goalTitle, ' + request.query.goalTitle);
-
-
         var motherAchievement = achievement.createAchievement(user.username, request.query.title, request.query.description);
         var goalToBeCreated = goal.prepareGoal(request.query.goalTitle, request.query.goalQuantity);
-
         achievement.addGoalToAchievement(goalToBeCreated, motherAchievement, user._id);
-
         response.writeHead(200, {'content-type': 'application/json' });
         response.write(JSON.stringify('ok'));
         response.end('\n', 'utf-8');

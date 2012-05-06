@@ -120,7 +120,7 @@ function createAchievement() {
     )
 }
 
-function createAchievementOnServer(callback,achievementId, userId) {
+function createAchievementOnServer(callback) {
     var title = $("input[name=title]");
     var description = $("textarea[name=description]");
     var goalQuantity = $("input[name=goalQuantity]");
@@ -131,6 +131,27 @@ function createAchievementOnServer(callback,achievementId, userId) {
     $.ajax("/newAchievement", {
         type: "GET",
         data: data,
+        dataType: "json",
+        success: function(data) { if ( callback ) callback(data); },
+        error  : function()     { if ( callback ) callback(null); }
+    });
+}
+
+/******************  delete achievement functions  ******************/
+function deleteAchievement() {
+    deleteAchievementOnServer(
+        function(data) {
+            if (data == "ok") { //TODO: use ajax success/error instead
+                openAchievements();
+            }
+        }
+    )
+}
+
+
+function deleteAchievementOnServer(callback) {
+    $.ajax("/delete", {
+        type: "GET",
         dataType: "json",
         success: function(data) { if ( callback ) callback(data); },
         error  : function()     { if ( callback ) callback(null); }

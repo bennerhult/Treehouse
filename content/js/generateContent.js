@@ -76,7 +76,7 @@ function getAchievementContent() {
                     '<ul>' + nl  +
                         '<li class="back"><a href="javascript:void(0)" onclick="openAchievements()"><img src="content/img/back-1.png" alt=""/></a></li>' + nl  +
                         '<li class="logo"><img src="content/img/logo-small.png" /></li>' + nl  +
-                        '<li class="add"><a href="delete"><img src="content/img/delete.png" /></a></li>' + nl  +
+                        '<li class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>' + nl  +
                     '</ul>' + nl  +
                 '</div>' + nl  +
                 '<div id="achievementDesc"></div>' + nl  +
