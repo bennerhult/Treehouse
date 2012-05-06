@@ -153,18 +153,18 @@ function finishAchievementsList(response, achievementsList) {
 }
 
 app.get('/achievement', function(request, response){
+    response.writeHead(200, {'content-type': 'application/json' });
     var url_parts = url.parse(request.url, true);
-    var currentAchievementId = url_parts.query.achievementId;
+    var currentAchievementId = url_parts.query.achievementId.trim();
     request.session.current_achievement_id = currentAchievementId;
-
     achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
         if (request.session.user_id) {
             loadUser (request, response, function () { writeAchievementPage(response, request.session.user_id, currentAchievement, false)});
         } else if (currentAchievement.publiclyVisible)    {
-            var userId  = url_parts.query.userId;
-            writeAchievementPage(response, userId, currentAchievement, true);
+            writeAchievementPage(response, url_parts.query.userId, currentAchievement, true);
         } else {
-            writeLoginPage(response);
+            response.write(JSON.stringify("login")); //TODO: make this goto login page on client
+            response.end('\n', 'utf-8');
         }
 
     });
@@ -172,24 +172,24 @@ app.get('/achievement', function(request, response){
 });
 
 function writeAchievementPage(response, currentUserId, currentAchievement, publicView) {
-    response.write(achievementPage1);
-    response.write("var currentUserId =  '" + currentUserId + "';");
-    response.write("var currentAchievementId =  '" + currentAchievement._id + "'; </script>");
-    response.write("<meta property='og:title' content='Treehouse: " + currentAchievement.title + "'/>");
-    response.write("<meta property='og:type' content='article'/>");
-    response.write("<meta property='og:image' content='http://treehouse.io/content/img/image-1.png'/>");
-    response.write("<meta property='og:url' content='www.treehouse.io/achievement?achievementId=" + currentAchievement._id +"&userId=" + currentUserId + "'/>");
+    var achievementDesc = "";
+    achievementDesc += "var currentUserId =  '" + currentUserId + "';";
+    achievementDesc += "var currentAchievementId =  '" + currentAchievement._id + "'; </script>";
+    achievementDesc += "<meta property='og:title' content='Treehouse: " + currentAchievement.title + "'/>";
+    achievementDesc += "<meta property='og:type' content='article'/>";
+    achievementDesc += "<meta property='og:image' content='http://treehouse.io/content/img/image-1.png'/>";
+    achievementDesc += "<meta property='og:url' content='www.treehouse.io/achievement?achievementId=" + currentAchievement._id +"&userId=" + currentUserId + "'/>";
 
     if (publicView)  {
-        response.write(achievementPublicPage2);
-    }    else {
+        response.write(achievementPublicPage2); //TODO: fix public page
+    }/*    else {
         response.write(achievementPage2);
-    }
+    }  */
 
-    createAchievementDesc(response, currentUserId, currentAchievement, publicView);
+    createAchievementDesc(response, currentUserId, currentAchievement, publicView, achievementDesc);
 }
 
-function createAchievementDesc (response, currentUserId, myAchievement, publicView) {
+function createAchievementDesc (response, currentUserId, myAchievement, publicView, achievementDesc) {
     var goalTexts = [];
     if(myAchievement.goals) {
         myAchievement.goals.forEach(function(goal) {
@@ -201,7 +201,7 @@ function createAchievementDesc (response, currentUserId, myAchievement, publicVi
                     goalTexts.forEach(function(goalText, index) {
                         goalTextsText += goalText;
                         if (index == goalTexts.length - 1) {
-                            response.write("<div class='achievement-info'><div class='textarea'><h2 id='creator'>"
+                            achievementDesc += "<div class='achievement-info'><div class='textarea'><h2 id='creator'>"
                                 + myAchievement.createdBy + ":</h2><h2>" + myAchievement.title
                                 + "</h2><p id='achievementDescription'>"
                                 + myAchievement.description
@@ -210,17 +210,17 @@ function createAchievementDesc (response, currentUserId, myAchievement, publicVi
                                 +  myAchievement.createdBy + ": " + myAchievement.title
                                 + "'/><span class='gradient-bg'> </span><span class='progressbar'> </span><div class='progress-container'><span class='progress' style='width:"
                                 + myPercentageFinished
-                                + "%;'> </span></div></div><div class='clear'></div>");
-                            response.write(goalTextsText);
-                            response.write("<br /><br />");
+                                + "%;'> </span></div></div><div class='clear'></div>";
+                            achievementDesc += goalTextsText;
+                            achievementDesc += "<br /><br />";
 
                             if(!myAchievement.publiclyVisible) {
-                                response.write("<a href='publicize?achievement=" + myAchievement._id + "'>Share publicly</a>");
+                                achievementDesc += "<a href='publicize?achievement=" + myAchievement._id + "'>Share publicly</a>";
                             }   else {
-                                response.write("<div class='fb-like' data-send='false' data-width='350' data-show-faces='true' font='segoe ui'></div>");
+                                achievementDesc += "<div class='fb-like' data-send='false' data-width='350' data-show-faces='true' font='segoe ui'></div>";
                             }
-                            response.write("</div></div></div></div></body></html>");
-                            response.end();
+                            response.write(JSON.stringify(achievementDesc));
+                            response.end('\n', 'utf-8');
                         }
                     });
                 }

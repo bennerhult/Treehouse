@@ -1,9 +1,9 @@
 var nl = '\n';
 var tab = '\t';
 
-function insertContent(content, callback) {
+function insertContent(content, callback, achievementId, userId) {
    $("#contentArea").html(content);
-   callback();
+   callback(achievementId, userId);
 }
 
 function getLoginContent() {

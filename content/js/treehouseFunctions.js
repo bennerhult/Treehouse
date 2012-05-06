@@ -63,6 +63,7 @@ function signupOnServer(callback) {
 
 /******************  achievements functions  ******************/
 function openAchievements() {
+    window.history.pushState(null, null, "/");
     insertContent(getAchievementsContent(), getAchievements);
 }
 
@@ -85,21 +86,20 @@ function getAchievementsFromServer(callback) {
 
 /******************  achievement functions  ******************/
 function openAchievement(achievementId, userId) {
-    var link =  "/achievement?achievementId=" + achievementId + "&userId=" + userId;
-    window.history.pushState(null, null, link);
-    insertContent(getAchievementContent());
+    window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + userId);
+    insertContent(getAchievementContent(), getAchievement, achievementId, userId);
 }
 
-function getAchievement() {
+function getAchievement(achievementId, userId) {
     getAchievementFromServer(
         function(data) {
             $("#achievementDesc").html(data);
-        }
+        }, achievementId, userId
     )
 }
 
-function getAchievementFromServer(callback) {
-    $.ajax("/achievement", {
+function getAchievementFromServer(callback,achievementId, userId) {
+    $.ajax("/achievement?achievementId= " + achievementId + "&userId=" + userId, {
         type: "GET",
         dataType: "json",
         success: function(data) { if ( callback ) callback(data); },
