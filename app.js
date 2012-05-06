@@ -164,9 +164,7 @@ app.get('/achievement', function(request, response){
     response.writeHead(200, {'content-type': 'application/json' });
     var url_parts = url.parse(request.url, true);
     var currentAchievementId = url_parts.query.achievementId.trim();
-    console.log("currentAchievementId: " + currentAchievementId);
     app.set('current_achievement_id', currentAchievementId);
-    //request.session.current_achievement_id = currentAchievementId;
 
     achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
         if (request.session.user_id) {
@@ -241,59 +239,56 @@ function createAchievementDesc (response, currentUserId, myAchievement, publicVi
 }
 
 function getGoalText(goal, achievement, progressNumber, progressPercentage, publicView) {
-    var goalText =  "<div id='achievement-container'>"
-        + "<div class='part-achievement'>"
-        + "<div class='progress-container'>"
-        + "<h3>"
-        +  goal.title
-        +"</h3>"
-        + "<table border='1px'>"
-        + "<tr>"
-        + "<td class='bararea'>"
-        + "<span class='progressbar'></span>"
-        + "<span class='progress' style='width:"
+    var goalText =  '<div id="achievement-container">'
+        + '<div class="part-achievement">'
+        + '<div class="progress-container">'
+        + '<h3>'
+        + goal.title
+        + '</h3>'
+        + '<table border="1px">'
+        + '<tr>'
+        + '<td class="bararea">'
+        + '<span class="progressbar"></span>'
+        + '<span class="progress" style="width:'
         + progressPercentage
-        + "%;'> </span>"
-        + "</td>"
-        + " <td class='countarea'>"
-        + "<h3>"
+        + '%;"> </span>'
+        + '</td>'
+        + '<td class="countarea">'
+        + '<h3>'
         + progressNumber
-        + "/"
+        + '/'
         + goal.quantityTotal
-        + "</h3>"
-        + "</td>"
-        + "</tr>"
-        + "</table>"
-        + "</div>";
+        + '</h3>'
+        + '</td>'
+        + '</tr>'
+        + '</table>'
+        + '</div>';
 
     if (!publicView && progressPercentage < 100) {
-        goalText    += "<div class='addbutton'>"
-            + "<a href='progress?achievement="
-            + achievement._id
-            + "&goal="
-            + goal._id
-            + "'>"
-            + "<img src='content/img/+.png' alt='I did it!'/>"
-            + "</a>"
-            + "</div>";
+        goalText    += '<div class="addbutton">'
+            + '<a href="javascript:void(0)" onclick="progress(\'' + achievement._id + '\', \'' + goal._id + '\')">'
+            + '<img src="content/img/+.png" alt="I did it!"/>'
+            + '</a>'
+            + '</div>';
     }
 
-    goalText    += "<div class='clear'></div>"
-        + "</div>"
-        + "<div class='separerare-part'>&nbsp;</div>"
-        + "</div>";
+    goalText    += '<div class="clear"></div>'
+        + '</div>'
+        + '<div class="separerare-part">&nbsp;</div>'
+        + '</div>';
 
     return goalText;
 }
 
 app.get('/progress', function(request, response){
-    var url_parts = url.parse(request.url, true);
-    var achievementId  = url_parts.query.achievement;
-    var goalId  = url_parts.query.goal;
+    var achievementId  = request.query.achievementId;
+    var goalId  = request.query.goalId;
 
     achievement.Achievement.findOne({ _id: achievementId }, function(err,currentAchievement) {
         progress.markProgress(request.session.user_id, goalId, function() {
-            writeAchievementPage(response, request.session.user_id, currentAchievement, false);
+            response.writeHead(200, {'content-type': 'application/json' });
+            response.write(JSON.stringify('ok'));
+            response.end('\n', 'utf-8');
         });
     });
 });
@@ -319,19 +314,10 @@ app.get('/delete', loadUser, function(request, response){
                 response.write(JSON.stringify('ok'));
                 response.end('\n', 'utf-8');
             });
-        }   else {
+        } else {
             console.log("trying to remove non-existing achievement " + app.set('current_achievement_id'));
         }
-
     });
-});
-
-var achievementPublicPage2;
-fs.readFile('content/achievementPublic.html', function (err, data) {
-    if (err) {
-        throw err;
-    }
-    achievementPublicPage2 = data;
 });
 
 app.get('/newAchievement', function(request, response){

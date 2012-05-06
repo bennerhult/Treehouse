@@ -107,6 +107,27 @@ function getAchievementFromServer(callback,achievementId, userId) {
     });
 }
 
+function progress(achievementId, goalId) {
+
+    progressOnServer(
+        function(data) {
+            openAchievements(); //TODO: progress the bar!
+        }, achievementId, goalId
+    )
+}
+
+function progressOnServer(callback, achievementId, goalId) {
+
+    var data = "achievementId=" + achievementId + "&goalId=" + goalId;
+
+    $.ajax("/progress", {
+        type: "GET",
+        data: data,
+        dataType: "json",
+        success: function(data) { if ( callback ) callback(data); },
+        error  : function()     { if ( callback ) callback(null); }
+    });
+}
 /******************  new achievement functions  ******************/
 
 function createAchievement() {
@@ -147,7 +168,6 @@ function deleteAchievement() {
         }
     )
 }
-
 
 function deleteAchievementOnServer(callback) {
     $.ajax("/delete", {
