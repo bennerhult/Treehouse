@@ -36,9 +36,7 @@ function topPart() {
                     tab + '<script type="text/javascript">' + nl +
                         tab + '$(document).ready(function() {' + nl +
                             tab + 'insertContent(getLoginContent(), function() {' + nl +
-                                tab + '$("html, body").animate({scrollTop: $("#page").offset().top}, 1000, function() {' + nl +
-                                    tab + 'setTimeout(function(){addToHome.show(false);}, 100);' + nl +
-                                tab + '});' + nl +
+                                tab + 'setTimeout(function(){addToHome.show(false);}, 100);' + nl +
                             tab + '});' + nl +
                         tab + '});  ' + nl +
                     tab + '</script>' + nl +
