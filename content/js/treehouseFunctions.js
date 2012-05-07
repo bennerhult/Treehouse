@@ -145,8 +145,7 @@ function publicize(achievementId) {
     )
 }
 
-function publicizeOnServer(callback, achievementId) {
-    //var data = "achievementId=" + achievementId;
+function publicizeOnServer(callback) {
     $.ajax("/publicize", {
         type: "GET",
         dataType: "json",

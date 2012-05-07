@@ -207,7 +207,7 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
                             achievementDesc += '<br /><br />';
 
                             if(!currentAchievement.publiclyVisible) {
-                                achievementDesc += '<a href="javascript:void(0)" onclick="publicize(\'' + currentAchievement._id + '\')">Share publicly</a>';
+                                achievementDesc += '<a href="javascript:void(0)" onclick="publicize()">Share publicly</a>';
                             }   else {
                                 achievementDesc += '<div class="fb-like" data-send="false" data-width="350" data-show-faces="true" font="segoe ui"></div>';
                             }
