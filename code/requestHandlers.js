@@ -32,8 +32,9 @@ function topPart() {
                     tab + '<script type="text/javascript">' + nl +
                         tab + '$(document).ready(function() {' + nl +
                             tab + 'insertContent(getLoginContent(), function() {' + nl +
-                                tab + '$("html, body").animate({scrollTop: $("#page").offset().top}, 1000);' + nl +
-                                tab + 'setTimeout(function(){addToHome.show(true);}, 200);' + nl +
+                                tab + '$("html, body").animate({scrollTop: $("#page").offset().top}, 1000, function() {' + nl +
+                                    tab + 'setTimeout(function(){addToHome.show(true);}, 100);' + nl +
+                                tab + '});' + nl +
                             tab + '});' + nl +
                         tab + '});  ' + nl +
                     tab + '</script>' + nl +
