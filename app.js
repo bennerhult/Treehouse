@@ -183,7 +183,7 @@ app.get('/achievement', function(request, response){
 function writeAchievementPage(response, currentUserId, currentAchievement, publicView) {
     var achievementDesc = "";
     achievementDesc += "var currentUserId =  '" + currentUserId + "';";
-    achievementDesc += "var currentAchievementId =  '" + currentAchievement._id + "'; </script>";
+    achievementDesc += "var currentAchievementId =  '" + currentAchievement._id + "'</script>";
     achievementDesc += "<meta property='og:title' content='Treehouse: " + currentAchievement.title + "'/>";
     achievementDesc += "<meta property='og:type' content='article'/>";
     achievementDesc += "<meta property='og:image' content='http://treehouse.io/content/img/image-1.png'/>";
