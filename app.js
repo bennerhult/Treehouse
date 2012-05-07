@@ -182,8 +182,8 @@ app.get('/achievement', function(request, response){
 
 function writeAchievementPage(response, currentUserId, currentAchievement, publicView) {
     var achievementDesc = "";
-    achievementDesc += "var currentUserId =  '" + currentUserId + "';";
-    achievementDesc += "var currentAchievementId =  '" + currentAchievement._id + "'</script>";
+    achievementDesc += "var currentUserId =  '" + currentUserId + "';";   //TODO: remove these and use session variables
+    achievementDesc += "var currentAchievementId =  '" + currentAchievement._id + "'</script>";    //TODO: remove these and use session variables
     achievementDesc += "<meta property='og:title' content='Treehouse: " + currentAchievement.title + "'/>";
     achievementDesc += "<meta property='og:type' content='article'/>";
     achievementDesc += "<meta property='og:image' content='http://treehouse.io/content/img/image-1.png'/>";
@@ -217,9 +217,9 @@ function createAchievementDesc (response, currentUserId, myAchievement, publicVi
                                 + "</p></div>"
                                 + "<div class='imagearea'><img src='content/img/image-1.png' alt='"
                                 +  myAchievement.createdBy + ": " + myAchievement.title
-                                + "'/><span class='gradient-bg'> </span><span class='progressbar'> </span><div class='progress-container'><span class='progress' style='width:"
+                                + "'/><span class='gradient-bg'> </span><span class='progressbar'> </span><div id='progressbar' class='progress-container'><span class='progress' style='width:"
                                 + myPercentageFinished
-                                + "%;'> </span></div></div><div class='clear'></div>";
+                                + "%;'></span></div></div><div class='clear'></div>";
                             achievementDesc += goalTextsText;
                             achievementDesc += "<br /><br />";
 
@@ -249,11 +249,11 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
         + '<tr>'
         + '<td class="bararea">'
         + '<span class="progressbar"></span>'
-        + '<span class="progress" style="width:'
+        + '<div id="progressbar-goal"><span class="progress" style="width:'
         + progressPercentage
-        + '%;"> </span>'
+        + '%;"></span></div>'
         + '</td>'
-        + '<td class="countarea">'
+        + '<td id="countarea" class="countarea">'
         + '<h3>'
         + progressNumber
         + '/'
@@ -266,7 +266,7 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
 
     if (!publicView && progressPercentage < 100) {
         goalText    += '<div class="addbutton">'
-            + '<a href="javascript:void(0)" onclick="progress(\'' + achievement._id + '\', \'' + goal._id + '\')">'
+            + '<a href="javascript:void(0)" onclick="progress(\'' + goal._id + '\', \'' +  goal.quantityTotal + '\')">'
             + '<img src="content/img/+.png" alt="I did it!"/>'
             + '</a>'
             + '</div>';
@@ -281,16 +281,14 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
 }
 
 app.get('/progress', function(request, response){
-    var achievementId  = request.query.achievementId;
     var goalId  = request.query.goalId;
 
-    achievement.Achievement.findOne({ _id: achievementId }, function(err,currentAchievement) {
-        progress.markProgress(request.session.user_id, goalId, function() {
-            response.writeHead(200, {'content-type': 'application/json' });
-            response.write(JSON.stringify('ok'));
-            response.end('\n', 'utf-8');
-        });
+    progress.markProgress(request.session.user_id, goalId, function(quantityFinished) {
+        response.writeHead(200, {'content-type': 'application/json' });
+        response.write(JSON.stringify(quantityFinished));
+        response.end('\n', 'utf-8');
     });
+
 });
 
 app.get('/publicize', function(request, response){

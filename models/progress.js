@@ -24,7 +24,7 @@ function markProgress(achiever_id, goal_id, next) {
     Progress.findOne({ achiever_id: achiever_id,  goal_id: goal_id}, function(err,obj) {
         obj.quantityFinished+=1;
         obj.save(function (err) {
-            next();
+            next(obj.quantityFinished);
         });
     });
 }

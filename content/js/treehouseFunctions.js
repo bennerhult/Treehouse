@@ -107,18 +107,21 @@ function getAchievementFromServer(callback,achievementId, userId) {
     });
 }
 
-function progress(achievementId, goalId) {
+function progress(goalId, quantityTotal) {
 
     progressOnServer(
-        function(data) {
-            openAchievements(); //TODO: progress the bar!
-        }, achievementId, goalId
+        function(quantityFinished) {
+            var myPercentageFinished = (quantityFinished / quantityTotal) * 100;
+            $("#progressbar").html("<span class='progress' style='width:" + myPercentageFinished + "%;'></span>");
+            $("#progressbar-goal").html("<span class='progress' style='width:" + myPercentageFinished + "%;'></span>");
+            $("#countarea").html("<h3>" + quantityFinished + "/" + quantityTotal + "</h3>");
+        }, goalId
     )
 }
 
-function progressOnServer(callback, achievementId, goalId) {
+function progressOnServer(callback, goalId) {
 
-    var data = "achievementId=" + achievementId + "&goalId=" + goalId;
+    var data = "goalId=" + goalId;
 
     $.ajax("/progress", {
         type: "GET",
