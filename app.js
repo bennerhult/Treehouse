@@ -127,11 +127,11 @@ app.get('/achievements', function(request, response){
                             }  else  {
                                 achievementsList += "<div class='achievement'>";
                             }
-                            achievementsList += '<div class="container"><a href="javascript:void(0)" onclick="insertContent(openAchievement(\''
+                            achievementsList += '<div class="container"><a href="javascript:void(0)" onclick="openAchievement(\''
                                 + myAchievement._id
                                 + '\', \''
                                 + request.session.user_id
-                                + '\'))"><img src="content/img/defaultImage.png" alt="'
+                                + '\', false)"><img src="content/img/defaultImage.png" alt="'
                                 + myAchievement.title
                                 + '"/><span class="gradient-bg"> </span><span class="progressbar"> </span><div class="progress-container-achievements"><span class="progress" style="width:'
                                 + myPercentageFinished
@@ -160,7 +160,7 @@ function finishAchievementsList(response, achievementsList) {
     response.end('\n', 'utf-8');
 }
 
-app.get('/achievement', function(request, response){
+app.get('/achievementFromServer', function(request, response){
     response.writeHead(200, {'content-type': 'application/json' });
     var url_parts = url.parse(request.url, true);
     var currentAchievementId = url_parts.query.achievementId.trim();
@@ -182,65 +182,46 @@ app.get('/achievement', function(request, response){
 
 function writeAchievementPage(response, currentUserId, currentAchievement, publicView) {
     var achievementDesc = "";
-    achievementDesc += "var currentUserId =  '" + currentUserId + "';";   //TODO: remove these and use session variables
-    achievementDesc += "var currentAchievementId =  '" + currentAchievement._id + "'</script>";    //TODO: remove these and use session variables
-    achievementDesc += "<meta property='og:title' content='Treehouse: " + currentAchievement.title + "'/>";
-    achievementDesc += "<meta property='og:type' content='article'/>";
-    achievementDesc += "<meta property='og:image' content='http://treehouse.io/content/img/image-1.png'/>";
-    achievementDesc += "<meta property='og:url' content='www.treehouse.io/achievement?achievementId=" + currentAchievement._id +"&userId=" + currentUserId + "'/>";
-
-    if (publicView)  {
-        response.write(achievementPublicPage2); //TODO: fix public page
-    }/*    else {
-        response.write(achievementPage2);
-    }  */
-
-    createAchievementDesc(response, currentUserId, currentAchievement, publicView, achievementDesc);
-}
-
-function createAchievementDesc (response, currentUserId, myAchievement, publicView, achievementDesc) {
     var goalTexts = [];
-    if(myAchievement.goals) {
-        myAchievement.goals.forEach(function(goal) {
+    if(currentAchievement.goals) {
+        currentAchievement.goals.forEach(function(goal) {
             progress.Progress.findOne({ achiever_id:  currentUserId,  goal_id: goal._id}, function(err,myProgress) {
                 var myPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100;
-                goalTexts.push(getGoalText(goal, myAchievement, myProgress.quantityFinished, myPercentageFinished, publicView));
-                if (goalTexts.length == myAchievement.goals.length) {
+                goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, myPercentageFinished, publicView));
+                if (goalTexts.length == currentAchievement.goals.length) {
                     var goalTextsText = "";
                     goalTexts.forEach(function(goalText, index) {
                         goalTextsText += goalText;
                         if (index == goalTexts.length - 1) {
                             achievementDesc += "<div class='achievement-info'><div class='textarea'><h2>"
-                                + myAchievement.title
+                                + currentAchievement.title
                                 + "</h2><p id='achievementDescription'>"
-                                + myAchievement.description
+                                + currentAchievement.description
                                 + "</p></div>"
                                 + "<div class='imagearea'><img src='content/img/image-1.png' alt='"
-                                +  myAchievement.createdBy + ": " + myAchievement.title
+                                +  currentAchievement.createdBy + ": " + currentAchievement.title
                                 + "'/><span class='gradient-bg'> </span><span class='progressbar'> </span><div id='progressbar' class='progress-container'><span class='progress' style='width:"
                                 + myPercentageFinished
                                 + "%;'></span></div></div><div class='clear'></div>";
                             achievementDesc += goalTextsText;
                             achievementDesc += "<br /><br />";
 
-                            if(!myAchievement.publiclyVisible) {
-                                achievementDesc += "<a href='publicize?achievement=" + myAchievement._id + "'>Share publicly</a>";
+                            if(!currentAchievement.publiclyVisible) {
+                                achievementDesc += "<a href='publicize?achievement=" + currentAchievement._id + "'>Share publicly</a>";
                             }   else {
                                 achievementDesc += "<div class='fb-like' data-send='false' data-width='350' data-show-faces='true' font='segoe ui'></div>";
                             }
 
                             achievementDesc += "<br /><br />";
                             achievementDesc += "<p>";
-                            achievementDesc += "Creator: " + myAchievement.createdBy + "<br />";
+                            achievementDesc += "Creator: " + currentAchievement.createdBy + "<br />";
                             user.User.findOne({ _id:  currentUserId}, function(err,myUser) {
-                                    achievementDesc += "Achiever: " + myUser.username;
-                                    achievementDesc += "</p>";
-                                    response.write(JSON.stringify(achievementDesc));
-                                    response.end('\n', 'utf-8');
+                                achievementDesc += "Achiever: " + myUser.username;
+                                achievementDesc += "</p>";
+                                response.write(JSON.stringify(achievementDesc));
+                                //response.write(JSON.stringify("hej"));
+                                response.end('\n', 'utf-8');
                             });
-
-
-
                         }
                     });
                 }

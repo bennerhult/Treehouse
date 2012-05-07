@@ -83,21 +83,28 @@ function getAchievementsFromServer(callback) {
 }
 
 /******************  achievement functions  ******************/
-function openAchievement(achievementId, userId) {
+function openAchievement(achievementId, userId, public) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + userId);
-    insertContent(getAchievementContent(), getAchievement, achievementId, userId);
+    if (public) {
+        //insertContent(getPublicAchievementContent(), getAchievement, achievementId, userId);
+    } else {
+        insertContent(getAchievementContent(), getAchievement, achievementId, userId);
+        //insertContent(getAchievementContent());
+    }
+
 }
 
 function getAchievement(achievementId, userId) {
     getAchievementFromServer(
         function(data) {
+            $('meta[propery="og:url"]').attr('content', 'www.treehouse.io/achievement?achievementId=' + achievementId + '&userId=' + userId);
             $("#achievementDesc").html(data);
         }, achievementId, userId
     )
 }
 
 function getAchievementFromServer(callback,achievementId, userId) {
-    $.ajax("/achievement?achievementId= " + achievementId + "&userId=" + userId, {
+    $.ajax("/achievementFromServer?achievementId= " + achievementId + "&userId=" + userId, {
         type: "GET",
         dataType: "json",
         success: function(data) { if ( callback ) callback(data); },
@@ -106,7 +113,6 @@ function getAchievementFromServer(callback,achievementId, userId) {
 }
 
 function progress(goalId, quantityTotal) {
-
     progressOnServer(
         function(quantityFinished) {
             var myPercentageFinished = (quantityFinished / quantityTotal) * 100;
