@@ -1,5 +1,4 @@
 /******************  login functions  ******************/
-
  function securePasswordField() {
     $("#passwordSpan").html("<input id=\'passwordField\' type=\'password\' class=\'formstyle\' name=\'password\'>");
     $("#passwordField").focus();
@@ -36,7 +35,6 @@ function logout() {
 }
 
 /******************  signup functions  ******************/
-
 function signup() {
     signupOnServer(
         function(data) {
