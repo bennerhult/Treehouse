@@ -42,7 +42,6 @@ function createProgress(achiever_id, achievement_id, goal_id) {
 function removeProgress(achievement_id, user_id, next) {
     Progress.find({ achiever_id: user_id, achievement_id: achievement_id}, function(err, progresses) {
         progresses.forEach(function(currentProgress, index) {
-            console.log("removing currentProgress");
             currentProgress.remove();
             if (index == progresses.length - 1) {
               next();

@@ -210,8 +210,8 @@ function createAchievementDesc (response, currentUserId, myAchievement, publicVi
                     goalTexts.forEach(function(goalText, index) {
                         goalTextsText += goalText;
                         if (index == goalTexts.length - 1) {
-                            achievementDesc += "<div class='achievement-info'><div class='textarea'><h2 id='creator'>"
-                                + myAchievement.createdBy + ":</h2><h2>" + myAchievement.title
+                            achievementDesc += "<div class='achievement-info'><div class='textarea'><h2>"
+                                + myAchievement.title
                                 + "</h2><p id='achievementDescription'>"
                                 + myAchievement.description
                                 + "</p></div>"
@@ -228,8 +228,19 @@ function createAchievementDesc (response, currentUserId, myAchievement, publicVi
                             }   else {
                                 achievementDesc += "<div class='fb-like' data-send='false' data-width='350' data-show-faces='true' font='segoe ui'></div>";
                             }
-                            response.write(JSON.stringify(achievementDesc));
-                            response.end('\n', 'utf-8');
+
+                            achievementDesc += "<br /><br />";
+                            achievementDesc += "<p>";
+                            achievementDesc += "Creator: " + myAchievement.createdBy + "<br />";
+                            user.User.findOne({ _id:  currentUserId}, function(err,myUser) {
+                                    achievementDesc += "Achiever: " + myUser.username;
+                                    achievementDesc += "</p>";
+                                    response.write(JSON.stringify(achievementDesc));
+                                    response.end('\n', 'utf-8');
+                            });
+
+
+
                         }
                     });
                 }
