@@ -115,14 +115,15 @@ function progress(goalId, quantityTotal) {
             $("#progressbar").html("<span class='progress' style='width:" + myPercentageFinished + "%;'></span>");
             $("#progressbar-goal").html("<span class='progress' style='width:" + myPercentageFinished + "%;'></span>");
             $("#countarea").html("<h3>" + quantityFinished + "/" + quantityTotal + "</h3>");
+            if (myPercentageFinished >= 100) {
+                $("#addbutton").html("");
+            }
         }, goalId
     )
 }
 
 function progressOnServer(callback, goalId) {
-
     var data = "goalId=" + goalId;
-
     $.ajax("/progress", {
         type: "GET",
         data: data,
@@ -131,8 +132,8 @@ function progressOnServer(callback, goalId) {
         error  : function()     { if ( callback ) callback(null); }
     });
 }
-/******************  new achievement functions  ******************/
 
+/******************  new achievement functions  ******************/
 function createAchievement() {
    createAchievementOnServer(
 
