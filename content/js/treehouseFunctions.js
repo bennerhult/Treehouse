@@ -137,6 +137,23 @@ function progressOnServer(callback, goalId) {
     });
 }
 
+function publicize(achievementId) {
+    publicizeOnServer(
+        function() {
+            //TODO
+        }, achievementId
+    )
+}
+
+function publicizeOnServer(callback, achievementId) {
+    //var data = "achievementId=" + achievementId;
+    $.ajax("/publicize", {
+        type: "GET",
+        dataType: "json",
+        success: function(data) { if ( callback ) callback(data); },
+        error  : function()     { if ( callback ) callback(null); }
+    });
+}
 /******************  new achievement functions  ******************/
 function createAchievement() {
    createAchievementOnServer(

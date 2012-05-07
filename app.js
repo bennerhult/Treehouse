@@ -193,31 +193,31 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
                     goalTexts.forEach(function(goalText, index) {
                         goalTextsText += goalText;
                         if (index == goalTexts.length - 1) {
-                            achievementDesc += "<div class='achievement-info'><div class='textarea'><h2>"
+                            achievementDesc += '<div class="achievement-info"><div class="textarea"><h2>'
                                 + currentAchievement.title
-                                + "</h2><p id='achievementDescription'>"
+                                + '</h2><p id="achievementDescription">'
                                 + currentAchievement.description
-                                + "</p></div>"
-                                + "<div class='imagearea'><img src='content/img/image-1.png' alt='"
+                                + '</p></div>'
+                                + '<div class="imagearea"><img src="content/img/image-1.png" alt="'
                                 +  currentAchievement.createdBy + ": " + currentAchievement.title
-                                + "'/><span class='gradient-bg'> </span><span class='progressbar'> </span><div id='progressbar' class='progress-container'><span class='progress' style='width:"
+                                + '"/><span class="gradient-bg"></span><span class="progressbar"></span><div id="progressbar" class="progress-container"><span class="progress" style="width:'
                                 + myPercentageFinished
-                                + "%;'></span></div></div><div class='clear'></div>";
+                                + '%;"></span></div></div><div class="clear"></div>';
                             achievementDesc += goalTextsText;
-                            achievementDesc += "<br /><br />";
+                            achievementDesc += '<br /><br />';
 
                             if(!currentAchievement.publiclyVisible) {
-                                achievementDesc += "<a href='publicize?achievement=" + currentAchievement._id + "'>Share publicly</a>";
+                                achievementDesc += '<a href="javascript:void(0)" onclick="publicize(\'' + currentAchievement._id + '\')">Share publicly</a>';
                             }   else {
-                                achievementDesc += "<div class='fb-like' data-send='false' data-width='350' data-show-faces='true' font='segoe ui'></div>";
+                                achievementDesc += '<div class="fb-like" data-send="false" data-width="350" data-show-faces="true" font="segoe ui"></div>';
                             }
 
-                            achievementDesc += "<br /><br />";
-                            achievementDesc += "<p>";
-                            achievementDesc += "Creator: " + currentAchievement.createdBy + "<br />";
+                            achievementDesc += '<br /><br />';
+                            achievementDesc += '<p>';
+                            achievementDesc += 'Creator: ' + currentAchievement.createdBy + '<br />';
                             user.User.findOne({ _id:  currentUserId}, function(err,myUser) {
-                                achievementDesc += "Achiever: " + myUser.username;
-                                achievementDesc += "</p>";
+                                achievementDesc += 'Achiever: ' + myUser.username;
+                                achievementDesc += '</p>';
                                 response.write(JSON.stringify(achievementDesc));
                                 //response.write(JSON.stringify("hej"));
                                 response.end('\n', 'utf-8');
@@ -284,15 +284,14 @@ app.get('/progress', function(request, response){
 });
 
 app.get('/publicize', function(request, response){
-    var url_parts = url.parse(request.url, true);
-    var achievementId  = url_parts.query.achievement;
+    var achievementId  = app.set('current_achievement_id');
 
     achievement.Achievement.findOne({ _id: achievementId }, function(err,currentAchievement) {
         achievement.publicize(currentAchievement);
-        response.redirect("/achievement?achievementId="
+        /*response.redirect("/achievement?achievementId="
             + achievementId
             + "&userId="
-            + request.session.user_id);
+            + request.session.user_id);  */
     });
 });
 
