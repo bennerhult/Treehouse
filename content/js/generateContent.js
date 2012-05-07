@@ -4,6 +4,7 @@ var tab = '\t';
 function insertContent(content, callback, achievementId, userId) {
    $("#contentArea").html(content);
    callback(achievementId, userId);
+    $("html, body").animate({scrollTop: $("#page").offset().top}, 1000);
 }
 
 function getLoginContent() {
