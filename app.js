@@ -75,7 +75,7 @@ app.get('/', function(request, response){
 });
 
 app.get('/checkUser', function(request, response){
-    user.User.findOne({ username: request.query.username, password: request.query.password }, function(err,myUser) {
+    user.User.findOne({ username: request.query.username.toLowerCase(), password: request.query.password }, function(err,myUser) {
         if (myUser != null) {
             request.session.user_id = myUser._id;
             response.writeHead(200, {'content-type': 'application/json' });
@@ -95,7 +95,7 @@ app.get('/logout', function(request, response){
 });
 
 app.get('/signup', function(request, response){
-    user.createUser(request.query.username, request.query.password, function (myUser,err) {
+    user.createUser(request.query.username.toLowerCase(), request.query.password, function (myUser,err) {
         if (err) {
             response.writeHead(200, {'content-type': 'application/json' });
             response.write(JSON.stringify(err.message));
