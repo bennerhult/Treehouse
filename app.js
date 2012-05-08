@@ -131,7 +131,9 @@ app.get('/achievements', function(request, response){
                                 + myAchievement._id
                                 + '\', \''
                                 + request.session.user_id
-                                + '\', false)"><img src="content/img/defaultImage.png" alt="'
+                                + '\','
+                                + myAchievement.publiclyVisible
+                                + ')"><img src="content/img/defaultImage.png" alt="'
                                 + myAchievement.title
                                 + '"/><span class="gradient-bg"> </span><span class="progressbar"> </span><div class="progress-container-achievements"><span class="progress" style="width:'
                                 + myPercentageFinished
@@ -206,20 +208,17 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
                             achievementDesc += goalTextsText;
                             achievementDesc += '<br /><br />';
 
-                            if(!currentAchievement.publiclyVisible) {
-                                achievementDesc += '<a href="javascript:void(0)" onclick="publicize()">Share publicly</a>';
-                            }   else {
-                                achievementDesc += '<div class="fb-like" data-send="false" data-width="350" data-show-faces="true" font="segoe ui"></div>';
-                            }
+                            achievementDesc += '<div id="publicizeButton"><a href="javascript:void(0)" onclick="publicize()">Share publicly</a></div>';
+                            achievementDesc += '<div id="fbLike"><div class="fb-like" data-send="false" data-width="350" data-show-faces="true" font="segoe ui"></div></div>';
 
-                            achievementDesc += '<br /><br />';
+
+                            achievementDesc += '<br />';
                             achievementDesc += '<p>';
                             achievementDesc += 'Creator: ' + currentAchievement.createdBy + '<br />';
                             user.User.findOne({ _id:  currentUserId}, function(err,myUser) {
                                 achievementDesc += 'Achiever: ' + myUser.username;
                                 achievementDesc += '</p>';
                                 response.write(JSON.stringify(achievementDesc));
-                                //response.write(JSON.stringify("hej"));
                                 response.end('\n', 'utf-8');
                             });
                         }
@@ -273,9 +272,7 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
 }
 
 app.get('/progress', function(request, response){
-    var goalId  = request.query.goalId;
-
-    progress.markProgress(request.session.user_id, goalId, function(quantityFinished) {
+    progress.markProgress(request.session.user_id, request.query.goalId, function(quantityFinished) {
         response.writeHead(200, {'content-type': 'application/json' });
         response.write(JSON.stringify(quantityFinished));
         response.end('\n', 'utf-8');
@@ -284,14 +281,11 @@ app.get('/progress', function(request, response){
 });
 
 app.get('/publicize', function(request, response){
-    var achievementId  = app.set('current_achievement_id');
-
-    achievement.Achievement.findOne({ _id: achievementId }, function(err,currentAchievement) {
+    achievement.Achievement.findOne({ _id: app.set('current_achievement_id') }, function(err,currentAchievement) {
         achievement.publicize(currentAchievement);
-        /*response.redirect("/achievement?achievementId="
-            + achievementId
-            + "&userId="
-            + request.session.user_id);  */
+        response.writeHead(200, {'content-type': 'application/json' });
+        response.write(JSON.stringify("ok"));
+        response.end('\n', 'utf-8');
     });
 });
 

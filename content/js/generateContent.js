@@ -1,9 +1,9 @@
 var nl = '\n';
 var tab = '\t';
 
-function insertContent(content, callback, achievementId, userId) {
+function insertContent(content, callback, achievementId, userId, public) {
    $("#contentArea").html(content);
-   callback(achievementId, userId);
+   callback(achievementId, userId, public);
     $("html, body").animate({scrollTop: $("#page").offset().top}, 2000);
 }
 
@@ -89,6 +89,14 @@ function getAchievementContent() {
 
 function getPublicAchievementContent() {
     return (
+        '<div id="fb-root"></div>' + nl  +
+        '<script>(function(d, s, id) { ' + nl  +
+        'var js, fjs = d.getElementsByTagName(s)[0]; ' + nl  +
+        'if (d.getElementById(id)) return;' + nl  +
+        'js = d.createElement(s); js.id = id;' + nl  +
+        'js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";' + nl  +
+        'fjs.parentNode.insertBefore(js, fjs);' + nl  +
+        '}(document, "script", "facebook-jssdk"));</script>' + nl  +
         '<div id="page">' + nl  +
             '<div id="content no-padding">' + nl  +
                 '<div id="menu">' + nl  +

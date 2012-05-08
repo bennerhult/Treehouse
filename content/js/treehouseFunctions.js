@@ -85,20 +85,23 @@ function getAchievementsFromServer(callback) {
 /******************  achievement functions  ******************/
 function openAchievement(achievementId, userId, public) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + userId);
-    if (public) {
-        //insertContent(getPublicAchievementContent(), getAchievement, achievementId, userId);
-    } else {
-        insertContent(getAchievementContent(), getAchievement, achievementId, userId);
-        //insertContent(getAchievementContent());
-    }
-
+    insertContent(getAchievementContent(), getAchievement, achievementId, userId, public);
 }
 
-function getAchievement(achievementId, userId) {
+function getAchievement(achievementId, userId, public) {
     getAchievementFromServer(
         function(data) {
             $('meta[propery="og:url"]').attr('content', 'www.treehouse.io/achievement?achievementId=' + achievementId + '&userId=' + userId);
             $("#achievementDesc").html(data);
+            if (public) {
+                $("#publicizeButton").empty().remove();
+                jQuery.getScript('http://connect.facebook.net/en_US/all.js', function() {
+                    FB.init({status: true, cookie: true, xfbml: true});
+                    $("#fbLike").show();
+                });
+            } else {
+                $("#fbLike").hide();
+            }
         }, achievementId, userId
     )
 }
@@ -137,11 +140,15 @@ function progressOnServer(callback, goalId) {
     });
 }
 
-function publicize(achievementId) {
+function publicize() {
     publicizeOnServer(
         function() {
-            //TODO
-        }, achievementId
+            $("#publicizeButton").empty().remove();
+            jQuery.getScript('http://connect.facebook.net/en_US/all.js', function() {
+                FB.init({status: true, cookie: true, xfbml: true});
+                $("#fbLike").show();
+            });
+        }
     )
 }
 
@@ -149,7 +156,7 @@ function publicizeOnServer(callback) {
     $.ajax("/publicize", {
         type: "GET",
         dataType: "json",
-        success: function(data) { if ( callback ) callback(data); },
+        success: function() { if ( callback ) callback(); },
         error  : function()     { if ( callback ) callback(null); }
     });
 }
