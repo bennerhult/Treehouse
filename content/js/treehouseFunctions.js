@@ -106,6 +106,25 @@ function getAchievement(achievementId, userId, public) {
     )
 }
 
+
+function getPublicAchievement(achievementId, userId, public) {
+    getAchievementFromServer(
+        function(data) {
+            $('meta[propery="og:url"]').attr('content', 'www.treehouse.io/achievement?achievementId=' + achievementId + '&userId=' + userId);
+            $("#achievementDesc").html(data);
+            if (public) {
+                $("#publicizeButton").empty().remove();
+                jQuery.getScript('http://connect.facebook.net/en_US/all.js', function() {
+                    FB.init({status: true, cookie: true, xfbml: true});
+                    $("#fbLike").show();
+                });
+            } else {
+                $("#fbLike").hide();
+            }
+        }, achievementId, userId
+    )
+}
+
 function getAchievementFromServer(callback,achievementId, userId) {
     $.ajax("/achievementFromServer?achievementId= " + achievementId + "&userId=" + userId, {
         type: "GET",

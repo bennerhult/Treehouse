@@ -109,6 +109,28 @@ app.get('/signup', function(request, response){
     });
 });
 
+//public achievement only
+app.get('/achievement', function(request, response){
+    var url_parts = url.parse(request.url, true);
+    var currentAchievementId = url_parts.query.achievementId;
+    request.session.current_achievement_id = currentAchievementId;
+
+    achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
+        if (currentAchievement && currentAchievement.publiclyVisible)    {
+            var userId  = url_parts.query.userId;
+            requestHandlers.publicAchievementPage(response, userId, currentAchievementId, true);
+
+            //response.write(JSON.stringify(achievementData));
+            //response.end('\n', 'utf-8');
+        } else {
+            writeLoginPage(response);
+        }
+
+    });
+
+});
+
+
 app.get('/achievements', function(request, response){
     var achievementsList = "";
     progress.Progress.find({ achiever_id: request.session.user_id}, function(err, progresses) {
@@ -167,11 +189,10 @@ app.get('/achievementFromServer', function(request, response){
     var url_parts = url.parse(request.url, true);
     var currentAchievementId = url_parts.query.achievementId.trim();
     app.set('current_achievement_id', currentAchievementId);
-
     achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
         if (request.session.user_id) {
             loadUser (request, response, function () { writeAchievementPage(response, request.session.user_id, currentAchievement, false)});
-        } else if (currentAchievement.publiclyVisible)    {
+        } else if (currentAchievement && currentAchievement.publiclyVisible)    {
             writeAchievementPage(response, url_parts.query.userId, currentAchievement, true);
         } else {
             response.write(JSON.stringify("login")); //TODO: make this goto login page on client
@@ -206,11 +227,12 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
                                 + myPercentageFinished
                                 + '%;"></span></div></div><div class="clear"></div>';
                             achievementDesc += goalTextsText;
-                            achievementDesc += '<br /><br />';
+                            achievementDesc += '<br />';
 
                             achievementDesc += '<div id="publicizeButton"><a href="javascript:void(0)" onclick="publicize()">Share publicly</a></div>';
-                            achievementDesc += '<div id="fbLike"><div class="fb-like" data-send="false" data-width="350" data-show-faces="true" font="segoe ui"></div></div>';
-
+                            achievementDesc += '<br />';
+                            achievementDesc += '<div id="fbLike" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="350" data-show-faces="true" font="segoe ui"></div></div>';
+                            achievementDesc += '<br />';
 
                             achievementDesc += '<br />';
                             achievementDesc += '<p>';
