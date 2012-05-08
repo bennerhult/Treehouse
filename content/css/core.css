@@ -61,8 +61,12 @@ html>body #page{height:auto; min-height:100%;}
     margin-bottom: 120px;
 }
 
-img.signup-logo{
+.signup-logo{
     padding-bottom: 20px;
+}
+
+.signup-logo img{
+    max-width: 100%;
 }
 
 
@@ -630,6 +634,17 @@ p#achievementDescription{
 
     #menu{
         width: 100%;
+    }
+}
+
+
+@media screen and (max-width: 400px) {
+    .inputarea{
+        width: 60%;
+    }
+
+    .textarea{
+        width: 60%;
     }
 }
 
