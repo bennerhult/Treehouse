@@ -109,7 +109,7 @@ app.get('/signup', function(request, response){
     });
 });
 
-//public achievement only
+//public achievement
 app.get('/achievement', function(request, response){
     var url_parts = url.parse(request.url, true);
     var currentAchievementId = url_parts.query.achievementId;
@@ -118,10 +118,7 @@ app.get('/achievement', function(request, response){
     achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
         if (currentAchievement && currentAchievement.publiclyVisible)    {
             var userId  = url_parts.query.userId;
-            requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url);
-
-            //response.write(JSON.stringify(achievementData));
-            //response.end('\n', 'utf-8');
+            requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, currentAchievement.imageURL);
         } else {
             writeLoginPage(response);
         }
@@ -129,7 +126,6 @@ app.get('/achievement', function(request, response){
     });
 
 });
-
 
 app.get('/achievements', function(request, response){
     var achievementsList = "";
@@ -155,7 +151,9 @@ app.get('/achievements', function(request, response){
                                 + request.session.user_id
                                 + '\','
                                 + myAchievement.publiclyVisible
-                                + ')"><img src="content/img/defaultImage.png" alt="'
+                                + ')"><img src="'
+                                + myAchievement.imageURL
+                                + '" alt="'
                                 + myAchievement.title
                                 + '"/><span class="gradient-bg"> </span><span class="progressbar"> </span><div class="progress-container-achievements"><span class="progress" style="width:'
                                 + myPercentageFinished
@@ -221,7 +219,9 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
                                 + '</h2><p id="achievementDescription">'
                                 + currentAchievement.description
                                 + '</p></div>'
-                                + '<div class="imagearea"><img src="content/img/image-1.png" alt="'
+                                + '<div class="imagearea"><img src="'
+                                + currentAchievement.imageURL
+                                +'" alt="'
                                 +  currentAchievement.createdBy + ": " + currentAchievement.title
                                 + '"/><span class="gradient-bg"></span><span class="progressbar"></span><div id="progressbar" class="progress-container"><span class="progress" style="width:'
                                 + myPercentageFinished
@@ -327,7 +327,7 @@ app.get('/delete', loadUser, function(request, response){
 
 app.get('/newAchievement', function(request, response){
     user.User.findById(request.session.user_id, function(err, user) {
-        var motherAchievement = achievement.createAchievement(user.username, request.query.title, request.query.description);
+        var motherAchievement = achievement.createAchievement(user.username, request.query.title, request.query.description, request.query.currentImage);
         var goalToBeCreated = goal.prepareGoal(request.query.goalTitle, request.query.goalQuantity);
         achievement.addGoalToAchievement(goalToBeCreated, motherAchievement, user._id);
         response.writeHead(200, {'content-type': 'application/json' });

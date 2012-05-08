@@ -196,9 +196,9 @@ function createAchievementOnServer(callback) {
     var description = $("textarea[name=description]");
     var goalQuantity = $("input[name=goalQuantity]");
     var goalTitle = $("input[name=goalTitle]");
+    var currentImage = $("#achievementImage").attr("src");
 
-    var data = "title=" + title.val() + "&description=" + description.val() + "&goalQuantity=" + goalQuantity.val() + "&goalTitle=" + goalTitle.val();
-
+    var data = "title=" + title.val() + "&description=" + description.val() + "&goalQuantity=" + goalQuantity.val() + "&goalTitle=" + goalTitle.val() + "&currentImage=" + currentImage;
     $.ajax("/newAchievement", {
         type: "GET",
         data: data,
@@ -206,6 +206,20 @@ function createAchievementOnServer(callback) {
         success: function(data) { if ( callback ) callback(data); },
         error  : function()     { if ( callback ) callback(null); }
     });
+}
+
+var images = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png"];
+var imagePath= "content/img/achievementImages/";
+function toggleImage(step) {
+    var currentImage = $("#achievementImage").attr("src").replace(imagePath, "");
+    var currentPos =   jQuery.inArray(currentImage, images);
+    var newPos = currentPos + step;
+    if (newPos  >= images.length) {
+        newPos = 0;
+    }   else if (newPos == -1) {
+        newPos = images.length-1;
+    }
+    $("#achievementImage").attr("src", imagePath + images[newPos]);
 }
 
 /******************  delete achievement functions  ******************/

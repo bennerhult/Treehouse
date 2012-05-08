@@ -6,9 +6,9 @@ function indexPage(response) {
     response.end(topIndexPart() + bottomPart(), 'utf-8');
 }
 
-function publicAchievementPage(response, userId, currentAchievementId, url) {
+function publicAchievementPage(response, userId, currentAchievementId, url, imageUrl) {
     response.writeHead(200, { 'Content-Type': 'text/html' });
-    response.write(topPublicAchievementPart(userId, currentAchievementId, url) + bottomPart());
+    response.write(topPublicAchievementPart(userId, currentAchievementId, url, imageUrl) + bottomPart());
     response.end('\n', 'utf-8');
 }
 
@@ -25,7 +25,7 @@ function topIndexPart() {
                     tab + '<link rel="apple-touch-icon" href="/content/treehouse-icon.png">' + nl +
                     tab + '<meta property="og:title" content="Treehouse" />' + nl +
                     tab + '<meta property="og:type" content="article" />' + nl +
-                    tab + '<meta property="og:image" content="http://treehouse.io/content/img/image-1.png"/>' + nl +
+                    tab + '<meta property="og:image" content="http://treehouse.io/content/img/logo-fb.png"/>' + nl +
                     tab + '<meta property="og:url" content="http://www.treehouse.io"/>' + nl +
                     tab + '<link rel="icon" href="/content/favicon.ico" type="image/vnd.microsoft.icon">' + nl +
                     tab + '<script type="application/javascript" src="content/js/add2home.js"></script>' + nl +
@@ -48,7 +48,7 @@ function topIndexPart() {
         );
 }
 
-function topPublicAchievementPart(userId, currentAchievementId, url) {
+function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl) {
     return (
         '<!DOCTYPE html>' + nl +
             tab + '<html>' + nl +
@@ -59,10 +59,6 @@ function topPublicAchievementPart(userId, currentAchievementId, url) {
             tab + '<meta name="apple-mobile-web-app-capable" content="yes">' + nl +
             tab + '<meta name="apple-mobile-web-app-status-bar-style" content="black" />' + nl +
             tab + '<link rel="apple-touch-icon" href="/content/treehouse-icon.png">' + nl +
-            tab + '<meta property="og:title" content="Treehouse" />' + nl +
-            tab + '<meta property="og:type" content="article" />' + nl +
-            tab + '<meta property="og:image" content="http://treehouse.io/content/img/image-1.png"/>' + nl +
-            tab + '<meta property="og:url" content="http://treehouse.io' + url + '"/>' + nl +
             tab + '<link rel="icon" href="/content/favicon.ico" type="image/vnd.microsoft.icon">' + nl +
             tab + '<script type="application/javascript" src="content/js/add2home.js"></script>' + nl +
             tab + '<script type="application/javascript" src="content/js/generateContent.js"></script>' + nl +
