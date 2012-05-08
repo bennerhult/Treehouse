@@ -638,8 +638,14 @@ p#achievementDescription{
 }
 
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 400px) {
+    .inputarea{
+        width: 60%;
+    }
 
+    .textarea{
+        width: 60%;
+    }
 }
 
 
