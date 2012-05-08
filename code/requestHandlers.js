@@ -6,9 +6,9 @@ function indexPage(response) {
     response.end(topIndexPart() + bottomPart(), 'utf-8');
 }
 
-function publicAchievementPage(response, userId, currentAchievementId, public) {
+function publicAchievementPage(response, userId, currentAchievementId, url) {
     response.writeHead(200, { 'Content-Type': 'text/html' });
-    response.write(topPublicAchievementPart(userId, currentAchievementId, public) + bottomPart());
+    response.write(topPublicAchievementPart(userId, currentAchievementId, url) + bottomPart());
     response.end('\n', 'utf-8');
 }
 
@@ -48,7 +48,7 @@ function topIndexPart() {
         );
 }
 
-function topPublicAchievementPart(userId, currentAchievementId, public) {
+function topPublicAchievementPart(userId, currentAchievementId, url) {
     return (
         '<!DOCTYPE html>' + nl +
             tab + '<html>' + nl +
@@ -62,7 +62,7 @@ function topPublicAchievementPart(userId, currentAchievementId, public) {
             tab + '<meta property="og:title" content="Treehouse" />' + nl +
             tab + '<meta property="og:type" content="article" />' + nl +
             tab + '<meta property="og:image" content="http://treehouse.io/content/img/image-1.png"/>' + nl +
-            tab + '<meta property="og:url" content="http://www.treehouse.io"/>' + nl +
+            tab + '<meta property="og:url" content="http://treehouse.io/' + url + '"/>' + nl +
             tab + '<link rel="icon" href="/content/favicon.ico" type="image/vnd.microsoft.icon">' + nl +
             tab + '<script type="application/javascript" src="content/js/add2home.js"></script>' + nl +
             tab + '<script type="application/javascript" src="content/js/generateContent.js"></script>' + nl +
@@ -75,7 +75,7 @@ function topPublicAchievementPart(userId, currentAchievementId, public) {
             tab + '<script type="text/javascript">' + nl +
             tab + '$(document).ready(function() {' + nl +
             tab + 'insertContent(getPublicAchievementContent(), function() {' + nl +
-            tab + 'getPublicAchievement(\'' +currentAchievementId + '\', \'' + userId + '\', \'' + public + '\');' + nl +
+            tab + 'getPublicAchievement(\'' +currentAchievementId + '\', \'' + userId + '\', \'true\');' + nl +
             tab + '});' + nl +
             tab + '});  ' + nl +
             tab + '</script>' + nl +

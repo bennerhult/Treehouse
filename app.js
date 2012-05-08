@@ -118,7 +118,7 @@ app.get('/achievement', function(request, response){
     achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
         if (currentAchievement && currentAchievement.publiclyVisible)    {
             var userId  = url_parts.query.userId;
-            requestHandlers.publicAchievementPage(response, userId, currentAchievementId, true);
+            requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url);
 
             //response.write(JSON.stringify(achievementData));
             //response.end('\n', 'utf-8');
