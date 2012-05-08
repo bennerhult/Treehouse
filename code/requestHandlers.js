@@ -26,7 +26,7 @@ function topIndexPart() {
                     tab + '<meta property="og:title" content="Treehouse" />' + nl +
                     tab + '<meta property="og:type" content="article" />' + nl +
                     tab + '<meta property="og:image" content="http://treehouse.io/content/img/image-1.png"/>' + nl +
-                    tab + '<meta property="og:url" content="www.treehouse.io"/>' + nl +
+                    tab + '<meta property="og:url" content="http://www.treehouse.io"/>' + nl +
                     tab + '<link rel="icon" href="/content/favicon.ico" type="image/vnd.microsoft.icon">' + nl +
                     tab + '<script type="application/javascript" src="content/js/add2home.js"></script>' + nl +
                     tab + '<script type="application/javascript" src="content/js/generateContent.js"></script>' + nl +
@@ -62,7 +62,7 @@ function topPublicAchievementPart(userId, currentAchievementId, public) {
             tab + '<meta property="og:title" content="Treehouse" />' + nl +
             tab + '<meta property="og:type" content="article" />' + nl +
             tab + '<meta property="og:image" content="http://treehouse.io/content/img/image-1.png"/>' + nl +
-            tab + '<meta property="og:url" content="www.treehouse.io"/>' + nl +
+            tab + '<meta property="og:url" content="http://www.treehouse.io"/>' + nl +
             tab + '<link rel="icon" href="/content/favicon.ico" type="image/vnd.microsoft.icon">' + nl +
             tab + '<script type="application/javascript" src="content/js/add2home.js"></script>' + nl +
             tab + '<script type="application/javascript" src="content/js/generateContent.js"></script>' + nl +
