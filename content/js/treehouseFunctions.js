@@ -117,6 +117,7 @@ function getPublicAchievement(achievementId, userId, public) {
                 jQuery.getScript('http://connect.facebook.net/en_US/all.js', function() {
                     FB.init({status: true, cookie: true, xfbml: true});
                     $("#fbLike").show();
+                    $("#addbutton").empty().remove();
                 });
             } else {
                 $("#fbLike").hide();
