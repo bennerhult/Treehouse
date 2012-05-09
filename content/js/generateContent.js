@@ -144,7 +144,7 @@ function getPublicAchievementContent() {
                 '<div id="menu">' + nl  +
                     '<ul>' + nl  +
                         '<li class="back"></li>' + nl  +
-                        '<li class="logo"><a href="http://treehouse.io"><img src="content/img/logo-small.png" /></a></li>' + nl  +
+                        '<li class="logo"><a href="/"><img src="content/img/logo-small.png" /></a></li>' + nl  +
                     '</ul>' + nl  +
                 '</div>' + nl  +
                 '<div id="achievementDesc"></div>' + nl  +
