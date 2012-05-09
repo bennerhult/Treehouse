@@ -57,8 +57,8 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl) {
             tab + '<link rel="apple-touch-icon" href="/content/treehouse-icon.png">' + nl +
             tab + '<meta property="og:title" content="Treehouse" />' + nl +
             tab + '<meta property="og:type" content="article" />' + nl +
-            tab + '<meta property="og:image" content="http://treehouse.io"' + imageUrl + '"/>' + nl +
-            tab + '<meta property="og:url" content="' + url + '"/>' + nl +
+            tab + '<meta property="og:image" content="http://treehouse.io/' + imageUrl + '"/>' + nl +
+            tab + '<meta property="og:url" content="http://treehouse.io/' + url + '"/>' + nl +
             tab + '<link rel="icon" href="/content/favicon.ico" type="image/vnd.microsoft.icon">' + nl +
             tab + '<script type="application/javascript" src="content/js/add2home.js"></script>' + nl +
             tab + '<script type="application/javascript" src="content/js/generateContent.js"></script>' + nl +
