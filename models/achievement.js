@@ -25,13 +25,13 @@ module.exports = {
     remove: remove
 };
 
-function createAchievement(createdBy, title, description) {
+function createAchievement(createdBy, title, description, imageURL) {
     var achievement = new Achievement();
     achievement.createdDate = new Date();
     achievement.createdBy = createdBy;
     achievement.title = title;
     achievement.description = description;
-    achievement.imageURL = "content/img/image-2.png";
+    achievement.imageURL = imageURL;
     achievement.publiclyVisible = false;
     return achievement;
 }

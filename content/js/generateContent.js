@@ -171,7 +171,7 @@ function getNewAchievementContent() {
                         '</div>' + nl  +
                         '<div class="imagearea-container">' + nl  +
                             '<div class="create-imagearea">' + nl  +
-                            '<img src="content/img/image-2.png" alt="" />' + nl  +
+                            '<img id="achievementImage" src="content/img/achievementImages/1.png" alt="" />' + nl  +
                             '<span class="gradient-bg"></span>' + nl  +
                         '</div>' + nl  +
                         '<div class="fileinputs none">' + nl  +
@@ -180,8 +180,8 @@ function getNewAchievementContent() {
                         '</div>' + nl  +
                         '<div class="fileinputs">' + nl  +
                             '<ul>' + nl  +
-                                '<li><img src="content/img/left-arrow.png" alt="" /></li>' + nl  +
-                                '<li class="last"><img src="content/img/right-arrow.png" alt="" /></li>' + nl  +
+                                '<li><a href="javascript:void(0)" onclick="toggleImage(-1)"><img src="content/img/left-arrow.png" alt="" /></a></li>' + nl  +
+                                '<li class="last"><a href="javascript:void(0)" onclick="toggleImage(1)"><img src="content/img/right-arrow.png" alt="" /></a></li>' + nl  +
                             '</ul>' + nl  +
                         '</div>' + nl  +
                     '</div>' + nl  +
