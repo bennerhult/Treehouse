@@ -163,7 +163,7 @@ function publicize() {
     publicizeOnServer(
         function() {
             $("#publicizeButton").empty().remove();
-            jQuery.getScript('http://connect.facebook.net/en_US/all.js', function() {
+            jQuery.getScript('http://connect.facebook.net/en_US/all.js', function() {      //TODO: store locally
                 FB.init({status: true, cookie: true, xfbml: true});
                 $("#fbLike").show();
             });
