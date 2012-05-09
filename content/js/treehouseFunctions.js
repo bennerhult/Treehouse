@@ -212,7 +212,7 @@ var images = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png"];
 var imagePath= "content/img/achievementImages/";
 function toggleImage(step) {
     var currentImage = $("#achievementImage").attr("src").replace(imagePath, "");
-    var currentPos =   jQuery.inArray(currentImage, images);
+    var currentPos = jQuery.inArray(currentImage, images);
     var newPos = currentPos + step;
     if (newPos  >= images.length) {
         newPos = 0;

@@ -9,40 +9,17 @@ function insertContent(content, callback, achievementId, userId, public) {
 
 function getLoginContent() {
     return (
-            '<div id="page">' + nl +
-                '<div id="web-menu"></div>' + nl +
-                '<div id="leftcontainer"><img src="content/img/treehouse.jpg" /></div>' + nl +
-                '<div id="rightcontainer">' + nl +
-                    '<div class="web-wrap">' + nl +
-                        '<p class="ingress">Discover the world with new eyes. Explore your motivations. Achieve your childhood dreams.</p>' + nl +
-                        '<p class="ingress">Lets play.</p>' + nl +
-                    '</div>' + nl +
-                    '<div id="app-container">' + nl +
-                        '<div id="content">' + nl +
-                            '<div class="signup-logo"><img src="content/img/logo-large.png" /></div>' + nl +
-                            '<form action="javascript: checkUser();">' + nl +
-                                '<input type="text" class="formstyle" name="username" value="username" onfocus="if (this.value == \'username\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'username\';}">' + nl +
-                                '<span id="passwordSpan">' + nl +
-                                    '<input type="text" class="formstyle" name="password" value="password" onfocus="securePasswordField();">' + nl +
-                                '</span>' + nl +
-                                '<div id="message"></div>' + nl +
-                                '<input type="submit" class="button green" value="Log in">' + nl +
-                            '</form>' + nl +
-                            '<div class="log-in-text"><a href="javascript:void(0)" onclick="insertContent(getSignupContent())">Don\'t have an account? Sign up.</a></div>' + nl +
-                        '</div>' + nl +
-                    '</div>' + nl +
-                    '<div class="clear"></div>' + nl +
-                '</div>' + nl +
-                '<div class="clear"></div>' + nl +
-                '<div id="web-footer">' + nl +
-                    '<ul>' + nl +
-                        '<li><h2>Latest Achivement</h2><p>Explore the polar caps!</p><img src="content/img/image-1.png" /></li>' + nl +
-                        '<li><h2>Latest Achivement</h2><p>Explore the polar caps!</p><img src="content/img/image-2.png" /></li>' + nl +
-                        '<li><h2>Latest Achivement</h2><p>Explore the polar caps!</p><img src="content/img/image-2.png" /></li>' + nl +
-                        '<li class="last"><h2>Latest Achivement</h2><p>Explore the polar caps!</p><img src="content/img/image-2.png" /></li>' + nl +
-                    '</ul>' + nl +
-                '</div>' + nl +
-                '<div class="clear"></div>' + nl +
+            '<div id="content">' + nl +
+                '<div class="signup-logo"><img src="content/img/logo-large.png" /></div>' + nl +
+                '<form action="javascript: checkUser();">' + nl +
+                    '<input type="text" class="formstyle" name="username" value="username" onfocus="if (this.value == \'username\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'username\';}">' + nl +
+                    '<span id="passwordSpan">' + nl +
+                        '<input type="text" class="formstyle" name="password" value="password" onfocus="securePasswordField();">' + nl +
+                    '</span>' + nl +
+                    '<div id="message"></div>' + nl +
+                    '<input type="submit" class="button green" value="Log in">' + nl +
+                '</form>' + nl +
+                '<div class="log-in-text"><a href="javascript:void(0)" onclick="insertContent(getSignupContent())">Don\'t have an account? Sign up.</a></div>' + nl +
             '</div>' + nl
         )
 }
@@ -50,55 +27,31 @@ function getLoginContent() {
 
 function getSignupContent() {
     return (
-        '<div id="page">' + nl +
-            '<div id="web-menu"></div>' + nl +
-            '<div id="leftcontainer"><img src="content/img/treehouse.jpg" /></div>' + nl +
-            '<div id="rightcontainer">' + nl +
-                '<div class="web-wrap">' + nl +
-                     '<p class="ingress">Discover the world with new eyes. Explore your motivations. Achieve your childhood dreams.</p>' + nl +
-                     '<p class="ingress">Lets play.</p>' + nl +
-                '</div>' + nl +
-                '<div id="app-container">' + nl +
-                    '<div id="content">' + nl +
-                        '<div class="signup-logo"><img src="content/img/logo-large.png" /></div>' + nl +
-                        '<h1>Sign Up</h1>' + nl +
-                        '<form action="javascript: signup();">' + nl +
-                            '<input type="text" class="formstyle" name="username" value="username" onfocus="if (this.value == \'username\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'username\';}">' + nl +
-                            '<input type="text" class="formstyle" name="password" value="password" onfocus="if (this.value == \'password\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'password\';}">' + nl +
-                            '<div id="message"></div>' + nl +
-                            '<input type="submit" class="button" value="Create my account">' + nl +
-                        '</form>' + nl +
-                        '<div class="log-in-text"><a href="javascript:void(0)" onclick="insertContent(getLoginContent())">Already awesome? Log in.</a></div>' + nl +
-                    '</div>' + nl +
-                '</div>' + nl +
-                '<div class="clear"></div>' + nl +
-            '</div>' + nl +
-            '<div class="clear"></div>' + nl +
-            '<div id="web-footer">' + nl +
-            '<ul>' + nl +
-            '<li><h2>Latest Achivement</h2><p>Explore the polar caps!</p><img src="content/img/image-1.png" /></li>' + nl +
-            '<li><h2>Latest Achivement</h2><p>Explore the polar caps!</p><img src="content/img/image-2.png" /></li>' + nl +
-            '<li><h2>Latest Achivement</h2><p>Explore the polar caps!</p><img src="content/img/image-2.png" /></li>' + nl +
-            '<li class="last"><h2>Latest Achivement</h2><p>Explore the polar caps!</p><img src="content/img/image-2.png" /></li>' + nl +
-            '</ul>' + nl +
-            '</div>' + nl +
-            '<div class="clear"></div>' + nl +
-        '</div>' + nl
+            '<div id="content">' + nl +
+                '<div class="signup-logo"><img src="content/img/logo-large.png" /></div>' + nl +
+                '<h1>Sign Up</h1>' + nl +
+                '<form action="javascript: signup();">' + nl +
+                    '<input type="text" class="formstyle" name="username" value="username" onfocus="if (this.value == \'username\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'username\';}">' + nl +
+                    '<input type="text" class="formstyle" name="password" value="password" onfocus="if (this.value == \'password\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'password\';}">' + nl +
+                    '<div id="message"></div>' + nl +
+                    '<input type="submit" class="button" value="Create my account">' + nl +
+                '</form>' + nl +
+                '<div class="log-in-text"><a href="javascript:void(0)" onclick="insertContent(getLoginContent())">Already awesome? Log in.</a></div>' + nl +
+            '</div>' + nl
+
         )
 }
 
 function getAchievementsContent() {
     return (
-        '<div id="app-container">' + nl +
             '<div id="content no-padding">' + nl +
-            '<div id="menu">' + nl +
-            '<ul>' + nl +
-            '<li class="back"><a href="javascript:void(0)" onclick="logout()"><img src="content/img/log-out.png" alt=""/></a></li>' + nl +
-            '<li class="logo"><img src="content/img/logo-small.png" /></li>' + nl +
-            '</ul>' + nl +
-            '</div>' + nl +
-            '<div id="achievementList"></div>' + nl  +
-            '</div>' + nl +
+                '<div id="menu">' + nl +
+                    '<ul>' + nl +
+                        '<li class="back"><a href="javascript:void(0)" onclick="logout()"><img src="content/img/log-out.png" alt=""/></a></li>' + nl +
+                        '<li class="logo"><img src="content/img/logo-small.png" /></li>' + nl +
+                    '</ul>' + nl +
+                '</div>' + nl +
+                '<div id="achievementList"></div>' + nl  +
             '</div>' + nl
         )
 }
