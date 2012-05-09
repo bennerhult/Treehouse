@@ -110,8 +110,7 @@ function getAchievement(achievementId, userId, public) {
 function getPublicAchievement(achievementId, userId, public) {
     getAchievementFromServer(
         function(data) {
-            $('meta[propery="og:url"]').attr('content', 'www.treehouse.io/achievement?achievementId=' + achievementId + '&userId=' + userId);
-            $("#achievementDesc").html(data);
+             $("#achievementDesc").html(data);
             if (public) {
                 $("#publicizeButton").empty().remove();
                 jQuery.getScript('http://connect.facebook.net/en_US/all.js', function() {
