@@ -70,7 +70,7 @@ Check logs
 
 `node app.js`
 
-[Climb into your OWN Treehouse!](http://localhost:3000/)
+[Climb into your OWN Treehouse!](http://localhost:1337/)
 
 ####Simulate production environment
 `set NODE_ENV=production` (`set NODE_ENV=development` to restore)
