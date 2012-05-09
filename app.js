@@ -118,7 +118,7 @@ app.get('/achievement', function(request, response){
     achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
         if (currentAchievement && currentAchievement.publiclyVisible)    {
             var userId  = url_parts.query.userId;
-            requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, currentAchievement.imageURL);
+            requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, currentAchievement.imageURL, currentAchievement.title);
         } else {
             writeLoginPage(response);
         }

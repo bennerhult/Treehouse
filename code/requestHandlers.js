@@ -6,9 +6,9 @@ function indexPage(response) {
     response.end(topIndexPart() + bottomPart(), 'utf-8');
 }
 
-function publicAchievementPage(response, userId, currentAchievementId, url, imageUrl) {
+function publicAchievementPage(response, userId, currentAchievementId, url, imageUrl, title) {
     response.writeHead(200, { 'Content-Type': 'text/html' });
-    response.write(topPublicAchievementPart(userId, currentAchievementId, url, imageUrl) + bottomPart());
+    response.write(topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, title) + bottomPart());
     response.end('\n', 'utf-8');
 }
 
@@ -44,7 +44,7 @@ function topIndexPart() {
         );
 }
 
-function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl) {
+function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, title) {
     return (
         '<!DOCTYPE html>' + nl +
             tab + '<html>' + nl +
@@ -55,7 +55,7 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl) {
             tab + '<meta name="apple-mobile-web-app-capable" content="yes">' + nl +
             tab + '<meta name="apple-mobile-web-app-status-bar-style" content="black" />' + nl +
             tab + '<link rel="apple-touch-icon" href="/content/treehouse-icon.png">' + nl +
-            tab + '<meta property="og:title" content="Treehouse" />' + nl +
+            tab + '<meta property="og:title" content="Treehouse: ' + title + '" />' + nl +
             tab + '<meta property="og:type" content="article" />' + nl +
             tab + '<meta property="og:image" content="http://treehouse.io/' + imageUrl + '"/>' + nl +
             tab + '<meta property="og:url" content="http://treehouse.io' + url + '"/>' + nl +
