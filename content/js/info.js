@@ -3,9 +3,9 @@ var tab = '\t';
 
 function showInfo(content) {
     //$("html, body").animate({scrollTop: $("#page").offset().top}, 100);
-    $("#infoArea").fadeOut('slow', function() {
+    $("#infoArea").fadeOut('fast', function() {
         $("#infoArea").html(content);
-        $("#infoArea").fadeIn('slow', function() {
+        $("#infoArea").fadeIn('fast', function() {
         });
     });
 
