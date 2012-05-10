@@ -124,10 +124,10 @@ function bottomPart() {
                     '</div>' + nl +
                         '<div id="web-footer">' + nl +
                             '<ul>' + nl +
-                                '<li><h2>Latest Achivement</h2><p>Explore the polar caps!</p><img src="content/img/achievementImages/3.png" /></li>' + nl +
+                                '<li><h2>Latest Achivement</h2><p>Explore the polar caps!</p><div><img src="content/img/achievementImages/3.png" /></div></li>' + nl +
                                 '<li><h2>In a world of change...</h2><p>achievements are forever. Nobody can take your achievements away!</p></li>' + nl +
-                                '<li><h2>Latest Achivement</h2><p>Explore the polar caps!</p><img src="content/img/achievementImages/4.png" /></li>' + nl +
-                                '<li class="last"><h2>Latest Achivement</h2><p>Explore the polar caps!</p><img src="content/img/achievementImages/5.png" /></li>' + nl +
+                                '<li><h2>Latest Achivement</h2><p>Explore the polar caps!</p><div><img src="content/img/achievementImages/4.png" /></div></li>' + nl +
+                                '<li class="last"><h2>Latest Achivement</h2><p>Explore the polar caps!</p><div><img src="content/img/achievementImages/5.png" /></div></li>' + nl +
                             '</ul>' + nl +
             '           </div>' + nl +
                         '<div class="clear"></div>' + nl +
