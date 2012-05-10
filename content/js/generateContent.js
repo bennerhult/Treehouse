@@ -19,7 +19,7 @@ function getLoginContent() {
                     '<div id="message"></div>' + nl +
                     '<input type="submit" class="button green" value="Log in">' + nl +
                 '</form>' + nl +
-                '<div class="log-in-text"><a href="javascript:void(0)" onclick="insertContent(getSignupContent())">Don\'t have an account? Sign up.</a></div>' + nl +
+                '<div class="log-in-text"><a href="javascript:void(0)" onclick="insertContent(getSignupContent())">Don\'t have an account? Sign up. It\'s free.</a></div>' + nl +
             '</div>' + nl
         )
 }
