@@ -194,8 +194,16 @@ function createAchievement() {
 function createAchievementOnServer(callback) {
     var title = $("input[name=title]");
     var description = $("textarea[name=description]");
-    var goalQuantity = $("input[name=goalQuantity]");
-    var goalTitle = $("input[name=goalTitle]");
+
+
+    /*$("form#formID :input").each(function(){
+        var input = $(this); // This is the jquery object of the input, do what you will
+    });        */
+
+    var goalTitle = $("input[name=goalTitle1]");
+    var goalQuantity = $("input[name=goalQuantity1]");
+
+
     var currentImage = $("#achievementImage").attr("src");
 
     var data = "title=" + title.val() + "&description=" + description.val() + "&goalQuantity=" + goalQuantity.val() + "&goalTitle=" + goalTitle.val() + "&currentImage=" + currentImage;
@@ -223,12 +231,8 @@ function toggleImage(step) {
 }
 
 function checkGoal(goalField){
-    //TODO save several goals
-    //TODO calculate total progress
-    //TODO show several goals
     if (goalField.value == '' || goalField.value == 'goal') {
         goalField.value = 'goal';
-
         if ($(goalField).closest("tr")[0].rowIndex + 1 < $('#goalTable tr').length) {
             $(goalField).closest("tr").remove();
         }
