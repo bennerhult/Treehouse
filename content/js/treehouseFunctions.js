@@ -222,6 +222,28 @@ function toggleImage(step) {
     $("#achievementImage").attr("src", imagePath + images[newPos]);
 }
 
+function checkGoal(goalField){
+    //TODO save several goals
+    //TODO calculate total progress
+    //TODO show several goals
+    if (goalField.value == '' || goalField.value == 'goal') {
+        goalField.value = 'goal';
+
+        if ($(goalField).closest("tr")[0].rowIndex + 1 < $('#goalTable tr').length) {
+            $(goalField).closest("tr").remove();
+        }
+    } else {
+        var newLineNumber = $('#goalTable tr').length + 1;
+        if ($(goalField).closest("tr")[0].rowIndex + 2 == newLineNumber) {   //only add new goal line if the blurred goal line is the bottom one
+            var newRow = $('<tr>' + nl  +
+                '<td class="goal"><input type="text" class="formstyle" name="goalTitle' + newLineNumber + '" value="goal" onfocus="if (this.value == \'goal\') {this.value = \'\';}" onblur="checkGoal(this)"></td>' + nl  +
+                '<td class="quantity"><input type="text" class="formstyle" name="goalQuantity' + newLineNumber + '" value="1" onfocus="if (this.value == \'1\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'1\';}"></td>' + nl  +
+                '</tr>');
+            $("#goalTable").append(newRow);
+        }
+
+    }
+}
 /******************  delete achievement functions  ******************/
 function deleteAchievement() {
     deleteAchievementOnServer(

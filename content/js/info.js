@@ -8,7 +8,6 @@ function showInfo(content) {
         $("#infoArea").fadeIn('fast', function() {
         });
     });
-
 }
 
 function getAchievementInfo() {

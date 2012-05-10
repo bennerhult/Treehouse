@@ -1,9 +1,9 @@
 var nl = '\n';
 var tab = '\t';
 
-function insertContent(content, callback, achievementId, userId, public) {
+function insertContent(content, callback, achievementId, userId, publicView) {
    $("#contentArea").html(content);
-   callback(achievementId, userId, public);
+    callback(achievementId, userId, publicView);
     //$("html, body").animate({scrollTop: $("#app-container").offset().top}, 2000);
 }
 
@@ -142,14 +142,13 @@ function getNewAchievementContent() {
                 '</div>' + nl  +
                 '<div id="achievement-container">' + nl  +
                     '<div class="part-achievement">' + nl  +
-                        '<table>' + nl  +
+                        '<table id="goalTable">' + nl  +
                             '<tr>' + nl  +
-                                '<td class="goal"><input type="text" class="formstyle" name="goalTitle" value="goal" onfocus="if (this.value == \'goal\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'goal\';}"></td>' + nl  +
-                                '<td class="quantity"><input type="text" class="formstyle" name="goalQuantity" value="1" onfocus="if (this.value == \'1\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'1\';}"></td>' + nl  +
+                                '<td class="goal"><input type="text" class="formstyle" name="goalTitle1" value="goal" onfocus="if (this.value == \'goal\') {this.value = \'\';}" onblur="checkGoal(this)"></td>' + nl  +
+                                '<td class="quantity"><input type="text" class="formstyle" name="goalQuantity1" value="1" onfocus="if (this.value == \'1\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'1\';}"></td>' + nl  +
                             '</tr>' + nl  +
                         '</table>' + nl  +
                         '<div class="clear"></div>' + nl  +
-                        '<div class="separerare-part"></div>' + nl  +
                     '</div>' + nl  +
                 '</div>' + nl  +
                 ' <div class="create-achievement">' + nl  +
