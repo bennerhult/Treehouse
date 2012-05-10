@@ -473,7 +473,7 @@ input.file {
 }
 
 #achievementDesc{
-    min-height: 500px;
+    min-height: 400px;
 }
 
 .achievement .container{
@@ -827,7 +827,7 @@ p#achievementDescription{
         -webkit-border-radius: 0px;
         border-radius: 0px;
 
-
+        height: 100%;
 
 
     }
@@ -872,6 +872,7 @@ p#achievementDescription{
         -webkit-box-shadow: none;
         box-shadow: none;
         overflow: inherit;
+
     }
 
 
