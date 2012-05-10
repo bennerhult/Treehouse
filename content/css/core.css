@@ -56,9 +56,14 @@ body{
     box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
 }
 
+#main-container{
+    position: relative;
+}
+
 #leftcontainer{
    float: left;
    width: 59.433962%;        /* 630px/ 1060px */
+   width: 59.2264151%;       /* 660px/ 1060px */
 }
 
 
@@ -76,21 +81,27 @@ body{
 }
 
 #rightcontainer{
-    position: relative;
-    float: right;
-    width: 36.792453%;       /*390px / 1060px*/
+   /* position: relative;
+    float: right;*/
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 31.132075%;       /*390px / 1060px*/
+    width: 370px;
+
 }
 
 
+
+
 .web-wrap{
-    padding-top: 70px;
+
     padding-bottom: 20px;
 }
 
 #web-footer{
     margin-top: 30px;
     width: 100%;
-    background-color: #ccc;
 }
 
 
@@ -129,22 +140,31 @@ body{
 
 #web-footer ul li.last{
     margin-right: 0px;
+
 }
 
 #app-container{
     position: relative;
 
-    background-color: #ccc;
-    background-image: url(../img/bg-1.png);
+    background-color: #f4f4f4;
+   /* background-image: url(../img/bg-1.png);*/
 
     -moz-box-shadow: inset 5px 5px 10px rgba(162,162,162,0.45);
     -webkit-box-shadow: inset 5px 5px 10px rgba(162,162,162,0.45);
     box-shadow: inset 5px 5px 10px rgba(162,162,162,0.45);
 
     width: 100%;
-    height: 440px;
+    height: 460px;
     overflow: auto;
 
+   /* border: 3px solid #fff;*/
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
+    -moz-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+    -webkit-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+    box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
 
 
 
@@ -381,6 +401,13 @@ input.file {
     display: none;
 }
 
+.desktop{
+
+}
+
+.ipad{
+    display: none;
+}
 
 /* achievement page */
 
@@ -432,11 +459,11 @@ input.file {
 
 .inputarea{
    float: left;
-   width: 70%;
+   width: 60%;
 }
 
 #achievementList{
-    min-height: 500px;
+    min-height: 400px;
 }
 
 #achievementDesc{
@@ -745,8 +772,60 @@ p#achievementDescription{
 
 @media screen and (max-width: 1080px) {
     #page{
-        width: 90%;
+        width: 95%;
     }
+}
+
+
+@media screen and (max-width: 1000px) {
+    .desktop{
+        display: none;
+    }
+
+    .ipad{
+        display: block;
+    }
+
+    #leftcontainer{
+        width: 48%;
+    }
+
+    #rightcontainer{
+        top:0px;
+
+        background-color: #f4f4f4;
+
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+
+        -moz-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+        -webkit-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+        box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+    }
+
+
+    #app-container{
+        position: relative;
+
+        background-color: #f4f4f4;
+        /* background-image: url(../img/bg-1.png);*/
+
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+
+
+        /* border: 3px solid #fff;*/
+        -moz-border-radius: 0px;
+        -webkit-border-radius: 0px;
+        border-radius: 0px;
+
+
+
+
+    }
+
 }
 
 @media screen and (max-width: 800px) {
@@ -756,8 +835,8 @@ p#achievementDescription{
         position: relative;
 
         margin: 0 auto;
-        background-color: #ccc;
-        background-image: url(../img/bg-1.png);
+      /*  background-color: #ccc;
+        background-image: url(../img/bg-1.png);*/
 
         -moz-box-shadow: inset 5px 5px 10px rgba(162,162,162,0.45);
         -webkit-box-shadow: inset 5px 5px 10px rgba(162,162,162,0.45);
@@ -768,6 +847,15 @@ p#achievementDescription{
         min-height:100%;
         z-index: 1;
         width: 100%;
+
+        background-color: #f4f4f4;
+        -moz-border-radius: 0px;
+        -webkit-border-radius: 0px;
+        border-radius: 0px;
+
+
+
+
     }
 
 
@@ -791,6 +879,19 @@ p#achievementDescription{
 
     #rightcontainer{
         width: 100%;
+        position: relative;
+       float: right;
+
+        background-color: transparent;
+
+
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+
+        -moz-border-radius: 0px;
+        -webkit-border-radius: 0px;
+        border-radius: 0px;
     }
 
     .web-wrap,
@@ -809,6 +910,10 @@ p#achievementDescription{
     #menu{
         position: fixed;
         width: 100%;
+    }
+
+    .inputarea{
+        width: 70%;
     }
 }
 

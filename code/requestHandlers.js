@@ -43,9 +43,16 @@ function topIndexPart() {
                 tab + ' <body>' + nl +
                 '<div id="page">' + nl +
                 '<div id="web-menu"></div>' + nl +
-                '<div id="leftcontainer"><img src="content/img/treehouse.jpg" /></div>' + nl +
+                '<div id="main-container">' + nl +
+                '<div id="leftcontainer">' + nl +
+                    '<div class="web-wrap ipad">' + nl +
+                    '<p class="ingress">Discover the world with new eyes. Explore your motivations. Achieve your childhood dreams.</p>' + nl +
+                    '<p class="ingress">Lets play.</p>' + nl +
+                    '</div>' + nl +
+                    '<img src="content/img/treehouse.jpg" />' + nl +
+                '</div>' + nl +
                 '<div id="rightcontainer">' + nl +
-                '<div class="web-wrap">' + nl +
+                '<div class="web-wrap desktop">' + nl +
                 '<p class="ingress">Discover the world with new eyes. Explore your motivations. Achieve your childhood dreams.</p>' + nl +
                 '<p class="ingress">Lets play.</p>' + nl +
                 '</div>' + nl +
@@ -89,9 +96,16 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
             tab + ' <body>' + nl +
             '<div id="page">' + nl +
             '<div id="web-menu"></div>' + nl +
-            '<div id="leftcontainer"><img src="content/img/treehouse.jpg" /></div>' + nl +
+            '<div id="main-container">' + nl +
+            '<div id="leftcontainer">' + nl +
+                '<div class="web-wrap ipad">' + nl +
+                '<p class="ingress">Discover the world with new eyes. Explore your motivations. Achieve your childhood dreams.</p>' + nl +
+                '<p class="ingress">Lets play.</p>' + nl +
+                '</div>' + nl +
+                '<img src="content/img/treehouse.jpg" />' + nl +
+            '</div>' + nl +
             '<div id="rightcontainer">' + nl +
-            '<div class="web-wrap">' + nl +
+            '<div class="web-wrap desktop">' + nl +
             '<p class="ingress">Discover the world with new eyes. Explore your motivations. Achieve your childhood dreams.</p>' + nl +
             '<p class="ingress">Lets play.</p>' + nl +
             '</div>' + nl +
@@ -102,10 +116,12 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
 
 function bottomPart() {
     return (
+                                '</div>' + nl +
                             '</div>' + nl +
                         '</div>' + nl +
+
+                        '<div class="clear"></div>' + nl +
                     '</div>' + nl +
-                    '<div class="clear"></div>' + nl +
                         '<div id="web-footer">' + nl +
                             '<ul>' + nl +
                                 '<li><h2>Latest Achivement</h2><p>Explore the polar caps!</p><img src="content/img/achievementImages/3.png" /></li>' + nl +
