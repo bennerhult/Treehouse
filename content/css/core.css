@@ -154,10 +154,12 @@ body{
 /*-- CONTENT --*/
 
 #content{
+    position: relative;
     padding: 30px;
 }
 
 #no-padding{
+    position: relative;
     padding: 0px;
 }
 
@@ -183,7 +185,7 @@ body{
 
 #menu{
 
-    /*position: fixed;            */
+    position: absolute;
     z-index: 1;
     top: 0px;
 
@@ -805,6 +807,7 @@ p#achievementDescription{
     }
 
     #menu{
+        position: fixed;
         width: 100%;
     }
 }
