@@ -18,7 +18,7 @@ function getAchievementInfo() {
     '<h2>Why should I want to achieve something?</h2>' +
     '<p>Because you can! Seriously, you might as well ask the purpose of life. An achievement is it\'s own reward.</p>' +
     '<h2>Ok! But why Treehouse?</h2>' +
-    '<p>For many of us, achievements are that much sweeter when they are tracked and made tangible. A diploma, a medal, a title - the recognition you deserve. <br /><br />Treehouse is all that, a place where you store and track all your achievements. Ever wanted to see how many points you had IRL?</p>' +
+    '<p>For many of us, achievements are that much sweeter when they are tracked and made tangible. A diploma, a medal, a title - the recognition you deserve. <br /><br />Imagine a magical place where you could store and track all your achievements. Treehouse is all that. Ever wanted to see how many points you had IRL?</p>' +
     '<h2>I create my own achievements?</h2>' +
     '<p>Yup. <b>You</b> decide what <b>you</b> want to achieve. Have you got a list of things that you just have to do before you die? Are you doing something amazing and can\'t wait to show your peers? What do you want to celebrate when it is done?<br /><br />Only you can tell the limits of your dreams and ambitions. Powerful forces to be sure. What motivates you?</p>' +
     '<h2>Is it free?</h2>' +
