@@ -2,6 +2,7 @@ var nl = '\n';
 var tab = '\t';
 
 function showInfo(content) {
+    //$("html, body").animate({scrollTop: $("#page").offset().top}, 100);
     $("#infoArea").fadeOut('slow', function() {
         $("#infoArea").html(content);
         $("#infoArea").fadeIn('slow', function() {
@@ -17,18 +18,20 @@ function getAchievementInfo() {
     '<h2>Why should I want to achieve something?</h2>' +
     '<p>Because you can! Seriously, you might as well ask the purpose of life. An achievement is it\'s own reward.</p>' +
     '<h2>Ok! But why Treehouse?</h2>' +
-    '<p>For many of us, achievements are sweeter when they are tracked and made tangible. It\'s nice to get a diploma, a medal, a title. <br />Store and track all things you want to achieve in Treehouse.</p>' +
+    '<p>For many of us, achievements are that much sweeter when they are tracked and made tangible. A diploma, a medal, a title - the recognition you deserve. <br /><br />Treehouse is all that, a place where you store and track all your achievements. Ever wanted to see how many points you had IRL?</p>' +
+    '<h2>I create my own achievements?</h2>' +
+    '<p>Yup. <i>You</i> decide what <i>you</i> want to achieve. Have you got a list of things that you just have to do before you die? Are you doing something amazing and can\'t wait to show your peers? What do you want to celebrate when it is done?<br /><br />Only you can tell the limits of your dreams and ambitions. Powerful forces to be sure. What motivates you?</p>' +
     '<h2>Is it free?</h2>' +
     '<p>It is free.</p>' +
     '<h2>Can my friends see my achievements?</h2>' +
-    '<p>When you want to share your feeling of accomplishment (or simply brag) you can publicize your achievements. You can easily share to Facebook or copy the link and share it however you want. We\'ve heard that some people still use email. If you do not share an achievement, only you can see it. Nothing wrong with tracking your success and be proud all by yourself.</p>'
+    '<p>When you want to share your feeling of accomplishment (the technical term would be brag) you can publicize your achievements. You can easily share to Facebook or copy the link and share it however you want. We\'ve heard that some people still use email. If you do not share an achievement, only you can see it. Nothing wrong with tracking your success and be proud all by yourself.</p>'
         )
 }
 
 function getEarlyAdopterInfo() {
     return (
         '<h2>the Coveted Early Adopter Achievement</h2>' +
-            '<p>This is so brand new that you cannot even get it yet! Sign up now and you will be first in line when it appears!</p>'
+            '<p>You are so much of an early adopter that you cannot even get it yet! Impressive! Sign up now and you will be first in line when it appears!</p>'
         )
 }
 
