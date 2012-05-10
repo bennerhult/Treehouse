@@ -203,6 +203,9 @@ body{
     max-width: 100%;
 }
 
+#infoArea {
+    min-height: 648px;
+}
 
 #message{
     font: 12px Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -753,7 +756,6 @@ p{
     font-size: 15px;
     font-weight: normal;
     padding-bottom: 15px;
-    text-transform: capitalize;
     opacity: 0.7;
 }
 
