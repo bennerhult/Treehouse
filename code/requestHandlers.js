@@ -46,15 +46,15 @@ function topIndexPart() {
                 '<div id="main-container">' + nl +
                 '<div id="leftcontainer">' + nl +
                     '<div class="web-wrap ipad">' + nl +
-                    '<p class="ingress">Discover the world with new eyes. Explore your motivations. Achieve your childhood dreams.</p>' + nl +
-                    '<p class="ingress">Lets play.</p>' + nl +
+                '<p class="ingress">Treehouse helps you track your achievements.</p>' + nl +
+                '<p class="ingress">Explore. Achieve. Play.</p>' + nl +
                     '</div>' + nl +
                     '<img src="content/img/treehouse.jpg" />' + nl +
                 '</div>' + nl +
                 '<div id="rightcontainer">' + nl +
                 '<div class="web-wrap desktop">' + nl +
-                '<p class="ingress">Discover the world with new eyes. Explore your motivations. Achieve your childhood dreams.</p>' + nl +
-                '<p class="ingress">Lets play.</p>' + nl +
+                '<p class="ingress">Treehouse helps you track your achievements.</p>' + nl +
+                '<p class="ingress">Explore. Achieve. Play.</p>' + nl +
                 '</div>' + nl +
                 '<div id="app-container">' + nl +
                 tab + ' <div id="contentArea">'
@@ -99,15 +99,15 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
             '<div id="main-container">' + nl +
             '<div id="leftcontainer">' + nl +
                 '<div class="web-wrap ipad">' + nl +
-                '<p class="ingress">Discover the world with new eyes. Explore your motivations. Achieve your childhood dreams.</p>' + nl +
-                '<p class="ingress">Lets play.</p>' + nl +
+            '<p class="ingress">Treehouse helps you track your achievements.</p>' + nl +
+            '<p class="ingress">Explore. Achieve. Play.</p>' + nl +
                 '</div>' + nl +
                 '<img src="content/img/treehouse.jpg" />' + nl +
             '</div>' + nl +
             '<div id="rightcontainer">' + nl +
             '<div class="web-wrap desktop">' + nl +
-            '<p class="ingress">Discover the world with new eyes. Explore your motivations. Achieve your childhood dreams.</p>' + nl +
-            '<p class="ingress">Lets play.</p>' + nl +
+            '<p class="ingress">Treehouse helps you track your achievements.</p>' + nl +
+            '<p class="ingress">Explore. Achieve. Play.</p>' + nl +
             '</div>' + nl +
             '<div id="app-container">' + nl +
             tab + ' <div id="contentArea">'
@@ -124,10 +124,10 @@ function bottomPart() {
                     '</div>' + nl +
                         '<div id="web-footer">' + nl +
                             '<ul>' + nl +
-                                '<li><h2>Latest Achivement</h2><p>Explore the polar caps!</p><div><img src="content/img/achievementImages/3.png" /></div></li>' + nl +
-                                '<li><h2>In a world of change...</h2><p>achievements are forever. Nobody can take your achievements away!</p></li>' + nl +
-                                '<li><h2>Latest Achivement</h2><p>Explore the polar caps!</p><div><img src="content/img/achievementImages/4.png" /></div></li>' + nl +
-                                '<li class="last"><h2>Latest Achivement</h2><p>Explore the polar caps!</p><div><img src="content/img/achievementImages/5.png" /></div></li>' + nl +
+                                '<li><h2>Explore</h2><p>Ever wanted to explore new ground? <br />Get the coveted <a href="">Early Adopter Achievement</a></p></li>' + nl +
+                                '<li><h2>Achieve</h2><p>In an ever changing world, achievements are forever. Nobody can take your achievements away!<br /><a href="">Achievements?</a></p></li>' + nl +
+                                '<li><h2>Play</h2><p>What have you achieved today? Give yourself a new challenge.</p><p>Let\'s play!</p></li>' + nl +
+                                '<li class="last"><h2>Latest Achievement</h2><p>Explore the polar caps!</p><div><img src="content/img/achievementImages/7.png" /></div></li>' + nl +
                             '</ul>' + nl +
             '           </div>' + nl +
                         '<div class="clear"></div>' + nl +
