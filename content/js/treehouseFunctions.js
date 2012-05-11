@@ -192,21 +192,31 @@ function createAchievement() {
 }
 
 function createAchievementOnServer(callback) {
-    var title = $("input[name=title]");
-    var description = $("textarea[name=description]");
+    var nrOfGoals =  $('#goalTable tr').length;
+    var data = "currentImage=" + $("#achievementImage").attr("src");
 
+    var goalTitles = new Array();
+    var goalQuantities = new Array();
+    $("form#createAchievementForm :input").each(function(i, field) {
+        if (field.name) {
+            if (field.name.indexOf("goalTitle") == 0) {
+                goalTitles.push(field.value);
+            } else if (field.name.indexOf("goalQuantity") == 0) {
+                goalQuantities.push(field.value);
+            }else {
+                data += "&";
+                data +=  field.name;
+                data += "=";
+                data +=  field.value;
+            }
+        }
+    });
 
-    /*$("form#formID :input").each(function(){
-        var input = $(this); // This is the jquery object of the input, do what you will
-    });        */
+    data += "&goalTitles=" + goalTitles;
+    data += "&goalQuantities=" + goalQuantities;
 
-    var goalTitle = $("input[name=goalTitle1]");
-    var goalQuantity = $("input[name=goalQuantity1]");
+    alert(data);
 
-
-    var currentImage = $("#achievementImage").attr("src");
-
-    var data = "title=" + title.val() + "&description=" + description.val() + "&goalQuantity=" + goalQuantity.val() + "&goalTitle=" + goalTitle.val() + "&currentImage=" + currentImage;
     $.ajax("/newAchievement", {
         type: "GET",
         data: data,

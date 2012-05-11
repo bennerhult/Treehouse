@@ -22,7 +22,8 @@ module.exports = {
     createAchievement: createAchievement,
     addGoalToAchievement: addGoalToAchievement,
     publicize: publicize,
-    remove: remove
+    remove: remove,
+    save: save
 };
 
 function createAchievement(createdBy, title, description, imageURL) {
@@ -39,6 +40,10 @@ function createAchievement(createdBy, title, description, imageURL) {
 function addGoalToAchievement(goal, achievement, userId) {
     achievement.goals.push(goal);
     progress.createProgress(userId, achievement._id, goal._id);
+
+}
+
+function save(achievement) {
     achievement.save(function (err) {
     });
 }

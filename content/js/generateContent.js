@@ -116,7 +116,7 @@ function getNewAchievementContent() {
                         '<li class="logo"><img src="content/img/logo-small.png" /></li>' + nl  +
                     '</ul>' + nl  +
                 '</div>' + nl  +
-                '<form action="javascript: createAchievement();">' + nl  +
+                '<form id="createAchievementForm" action="javascript: createAchievement();">' + nl  +
                     '<div class="achievement-info">' + nl  +
                         '<div class="inputarea">' + nl  +
                             '<input type="text" class="formstyle" name="title" value="title" onfocus="if (this.value == \'title\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'title\';}">' + nl  +
@@ -126,10 +126,6 @@ function getNewAchievementContent() {
                             '<div class="create-imagearea">' + nl  +
                             '<img id="achievementImage" src="content/img/achievementImages/1.png" alt="" />' + nl  +
                             '<span class="gradient-bg"></span>' + nl  +
-                        '</div>' + nl  +
-                        '<div class="fileinputs none">' + nl  +
-                            '<input type="file" class="file" />' + nl  +
-                            '<div class="fakefile"> Upload image</div>' + nl  +
                         '</div>' + nl  +
                         '<div class="fileinputs">' + nl  +
                             '<ul>' + nl  +
