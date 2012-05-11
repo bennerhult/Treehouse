@@ -1,7 +1,8 @@
 var fs = require('fs'),
     url = require('url'),
     express = require('express'),
-    sessionMongoose = require("session-mongoose");
+    sessionMongoose = require("session-mongoose"),
+    _ = require("underscore")._;
 
 app = express.createServer();
 
@@ -86,7 +87,7 @@ app.get('/checkUser', function(request, response){
             response.writeHead(200, {'content-type': 'application/json' });
             response.write(JSON.stringify('Username or password unknown.'));
             response.end('\n', 'utf-8');
-    }
+        }
     });
 });
 
@@ -127,46 +128,64 @@ app.get('/achievement', function(request, response){
 
 });
 
+function createAchievementDesc(achievements, userId, quantityFinished, achievementsList) {
+    var myQuantityTotal = 0;
+    var myQuantityFinished = 0;
+
+    for (var i in achievements) {
+
+        achievements[i].goals.forEach(function(goal, index2) {
+            myQuantityTotal += goal.quantityTotal;
+            myQuantityFinished += quantityFinished;
+            if (index2 == achievements[i].goals.length -1) {
+
+console.log(achievements[i]._id);
+                var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100;
+                if (i == 0) {
+                    achievementsList += "<div class='achievement first'>";
+                }  else  {
+                    achievementsList += "<div class='achievement'>";
+                }
+                achievementsList += '<div class="container"><a href="javascript:void(0)" onclick="openAchievement(\''
+                    + achievements[i]._id
+                    + '\', \''
+                    + userId
+                    + '\','
+                    + achievements[i].publiclyVisible
+                    + ')"><img src="'
+                    + achievements[i].imageURL
+                    + '" alt="'
+                    + achievements[i].title
+                    + '"/><span class="gradient-bg"> </span><span class="progressbar"> </span><div class="progress-container-achievements"><span class="progress" style="width:'
+                    + myPercentageFinished
+                    + '%"> </span></div></a></div><p>'
+                    + achievements[i].title
+                    + '</p><div class="separerare">&nbsp;</div></div>';
+            }
+        });
+    }
+    return achievementsList;
+}
+
 app.get('/achievements', function(request, response){
     var achievementsList = "";
+    var achievementsToShow = new Array();
+    var achievementIdsToShow = new Array();
     progress.Progress.find({ achiever_id: request.session.user_id}, function(err, progresses) {
         if (progresses && progresses.length > 0) {
             progresses.forEach(function(currentProgress, index) {
                 achievement.Achievement.findById(currentProgress.achievement_id, function(err, myAchievement) {
-                    var myQuantityTotal = 0;
-                    var myQuantityFinished = 0;
-                    myAchievement.goals.forEach(function(goal, index2) {
-                        myQuantityTotal += goal.quantityTotal;
-                        myQuantityFinished += currentProgress.quantityFinished;
-                        if (index2 == myAchievement.goals.length -1) {
-                            var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100;
-                            if (index == 0) {
-                                achievementsList += "<div class='achievement first'>";
-                            }  else  {
-                                achievementsList += "<div class='achievement'>";
-                            }
-                            achievementsList += '<div class="container"><a href="javascript:void(0)" onclick="openAchievement(\''
-                                + myAchievement._id
-                                + '\', \''
-                                + request.session.user_id
-                                + '\','
-                                + myAchievement.publiclyVisible
-                                + ')"><img src="'
-                                + myAchievement.imageURL
-                                + '" alt="'
-                                + myAchievement.title
-                                + '"/><span class="gradient-bg"> </span><span class="progressbar"> </span><div class="progress-container-achievements"><span class="progress" style="width:'
-                                + myPercentageFinished
-                                + '%"> </span></div></a></div><p>'
-                                + myAchievement.title
-                                + '</p><div class="separerare">&nbsp;</div></div>';
-                            if (index == progresses.length -1) {
-                                achievementsList += "<div class='achievement'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>";
-                                finishAchievementsList(response, achievementsList);
-                            }
-                        }
-                    });
+                    if  (_.indexOf(achievementIdsToShow, myAchievement._id.toString()) == -1) {
+                        achievementsToShow.push(myAchievement);
+                        achievementIdsToShow.push(myAchievement._id.toString());
+                    }
 
+                    if (index == progresses.length -1) {
+                        console.log('ccc');
+                        achievementsList = createAchievementDesc(achievementsToShow, request.session.user_id, currentProgress.quantityFinished, achievementsList);
+                        achievementsList += "<div class='achievement'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>";
+                        finishAchievementsList(response, achievementsList);
+                    }
                 });
             });
         } else {
@@ -261,11 +280,10 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
         + '<table border="1px">'
         + '<tr>'
         + '<td class="bararea">'
-        + '<div class="progress-goal-container">'
         + '<span class="progressbar"></span>'
         + '<div id="progressbar-goal"><span class="progress" style="width:'
         + progressPercentage
-        + '%;"></span></div></div>'
+        + '%;"></span></div>'
         + '</td>'
         + '<td id="countarea" class="countarea">'
         + '<h3>'
@@ -332,7 +350,6 @@ app.get('/newAchievement', function(request, response){
         var titles=request.query.goalTitles.split(",");
         var quantities=request.query.goalQuantities.split(",");
         for (var i in titles) {
-            console.log("titles[i]: "+titles[i]);
             var goalToBeCreated  = goal.prepareGoal(titles[i], quantities[i]);
             achievement.addGoalToAchievement(goalToBeCreated, motherAchievement, user._id);
         }
