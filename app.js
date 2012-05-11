@@ -328,15 +328,14 @@ app.get('/newAchievement', function(request, response){
     user.User.findById(request.session.user_id, function(err, user) {
         var motherAchievement = achievement.createAchievement(user.username, request.query.title, request.query.description, request.query.currentImage);
         var nrOfGoals =  request.query.nrOfGoals;
-
-
-        for(var i in request.query.goalTitles)
-        {
-            goal.prepareGoal(request.query.goalTitles[i], request.query.goalQuantities[i]);
-            achievement.addGoalToAchievement(goals, motherAchievement, user._id);
+        var titles=request.query.goalTitles.split(",");
+        var quantities=request.query.goalQuantities.split(",");
+        for (var i in titles) {
+            console.log("titles[i]: "+titles[i]);
+            var goalToBeCreated  = goal.prepareGoal(titles[i], quantities[i]);
+            achievement.addGoalToAchievement(goalToBeCreated, motherAchievement, user._id);
         }
         achievement.save(motherAchievement);
-
         response.writeHead(200, {'content-type': 'application/json' });
         response.write(JSON.stringify('ok'));
         response.end('\n', 'utf-8');
