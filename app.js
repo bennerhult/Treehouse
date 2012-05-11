@@ -279,12 +279,12 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
         + '<tr>'
         + '<td class="bararea">'
         + '<div class="progress-goal-container">'
-        + '<span class="progressbar"></span>'
-        + '<div id="progressbar-goal"><span class="progress" style="width:'
+        + '<span class="progressbar' + goal._id + '"></span>'
+        + '<div id="progressbar-goal' + goal._id + '"><span class="progress" style="width:'
         + progressPercentage
         + '%;"></span></div></div>'
         + '</td>'
-        + '<td id="countarea" class="countarea">'
+        + '<td id="countarea' + goal._id + '" class="countarea">'
         + '<h3>'
         + progressNumber
         + '/'
@@ -295,7 +295,7 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
         + '</table>'
         + '</div>';
     if (progressPercentage < 100) {
-        goalText    += '<div id="addbutton" class="addbutton">'
+        goalText    += '<div id="addbutton' + goal._id + '" class="addbutton">'
             + '<a href="javascript:void(0)" onclick="progress(\'' + goal._id + '\', \'' +  goal.quantityTotal + '\')">'
             + '<img src="content/img/+.png" alt="I did it!"/>'
             + '</a>'
