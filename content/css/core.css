@@ -56,6 +56,34 @@ body{
     box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
 }
 
+
+#web-menu a{
+    text-decoration: none;
+}
+
+
+#web-menu ul li{
+    padding-top: 10px;
+    height: 30px;
+    float: left;
+    padding-right: 20px;
+    padding-left: 20px;
+    border-left: 1px solid #959798;
+    border-right: 1px solid #4a4b4c;
+
+
+}
+
+#web-menu ul li img{
+    margin-top: -5px;
+}
+
+
+#web-menu ul li.first{
+    border-left: 0px;
+   /* padding-top: 5px;*/
+}
+
 #main-container{
     position: relative;
 }

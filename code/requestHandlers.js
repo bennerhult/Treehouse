@@ -43,7 +43,15 @@ function topIndexPart() {
                 tab + '</head>' + nl +
                 tab + ' <body>' + nl +
                 '<div id="page">' + nl +
-                '<div id="web-menu"><a href="javascript:void(0)" onclick="showInfo(getStart())"><img src="content/img/logo-small.png" /></a></div>' + nl +
+                '<div id="web-menu">' + nl +
+                    '<ul>' + nl +
+                        '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart())"><img src="content/img/logo-small.png" /></a></li>'  + nl +
+                        '<li><a href="#">About</a> </li>'  + nl +
+                        '<li><a href="#">Achievemnts</a> </li>'  + nl +
+
+                    '</ul>' + nl +
+                    '<div class="clear"></div>' + nl +
+                '</div>' + nl +
                 '<div id="main-container">' + nl +
                 '<div id="leftcontainer">' + nl +
                     '<div class="web-wrap ipad">' + nl +
