@@ -239,8 +239,8 @@ body{
 }
 
 
-#infoArea{
-   
+#infoArea div{
+    padding: 20px;
 }
 
 #infoArea img{

@@ -118,8 +118,8 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
             '<div id="main-container">' + nl +
             '<div id="leftcontainer">' + nl +
                 '<div class="web-wrap ipad">' + nl +
-            '<p class="ingress">Treehouse helps you track your achievements.</p>' + nl +
-            '<p class="ingress">Explore. Achieve. Play.</p>' + nl +
+                    '<p class="ingress">Treehouse helps you track your achievements.</p>' + nl +
+                    '<p class="ingress">Explore. Achieve. Play.</p>' + nl +
                 '</div>' + nl +
                 '<div id="infoArea"><img src="content/img/treehouse.jpg" /></div>' + nl +
             '</div>' + nl +
