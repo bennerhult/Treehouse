@@ -136,7 +136,7 @@ function createAchievementDesc(achievements, userId, quantityFinished, achieveme
 
         achievements[i].goals.forEach(function(goal, index2) {
             myQuantityTotal += goal.quantityTotal;
-            myQuantityFinished += quantityFinished;
+            myQuantityFinished += goal.quantityFinished;
             if (index2 == achievements[i].goals.length -1) {
 
                 var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100;
