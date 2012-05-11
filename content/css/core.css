@@ -668,8 +668,15 @@ table{
 }
 
 table tr td.bararea{
-    position: relative;
+  /*  background-color: #000;*/
+  /*  position: relative;*/
     width: 70%;
+   /* height: 10px;*/
+}
+
+table tr td .progress-goal-container{
+    position: relative;
+    height: 10px;
 }
 
 table tr td.countarea{
