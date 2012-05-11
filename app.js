@@ -261,10 +261,11 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
         + '<table border="1px">'
         + '<tr>'
         + '<td class="bararea">'
+        + '<div class="progress-goal-container">'
         + '<span class="progressbar"></span>'
         + '<div id="progressbar-goal"><span class="progress" style="width:'
         + progressPercentage
-        + '%;"></span></div>'
+        + '%;"></span></div></div>'
         + '</td>'
         + '<td id="countarea" class="countarea">'
         + '<h3>'
