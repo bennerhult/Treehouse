@@ -215,8 +215,6 @@ function createAchievementOnServer(callback) {
     data += "&goalTitles=" + goalTitles;
     data += "&goalQuantities=" + goalQuantities;
 
-    alert(data);
-
     $.ajax("/newAchievement", {
         type: "GET",
         data: data,
