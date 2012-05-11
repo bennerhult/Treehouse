@@ -96,16 +96,7 @@ body{
 
 
 #leftcontainer img{
-    border: 3px solid #fff;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-
-    -moz-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
-    -webkit-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
-    box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
-    width: 100%;
-
+   width: 100%;
 }
 
 #rightcontainer{
@@ -232,8 +223,30 @@ body{
 }
 
 #infoArea {
+    background-color: #f4f4f4;
     min-height: 648px;
+
+
+
+    border: 3px solid #fff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
+    -moz-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+    -webkit-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+    box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
 }
+
+
+#infoArea{
+   
+}
+
+#infoArea img{
+    padding: 0px;
+}
+
 
 #message{
     font: 12px Verdana, Geneva, Arial, Helvetica, sans-serif;
