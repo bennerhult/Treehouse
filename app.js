@@ -139,7 +139,6 @@ function createAchievementDesc(achievements, userId, quantityFinished, achieveme
             myQuantityFinished += quantityFinished;
             if (index2 == achievements[i].goals.length -1) {
 
-console.log(achievements[i]._id);
                 var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100;
                 if (i == 0) {
                     achievementsList += "<div class='achievement first'>";
@@ -181,7 +180,6 @@ app.get('/achievements', function(request, response){
                     }
 
                     if (index == progresses.length -1) {
-                        console.log('ccc');
                         achievementsList = createAchievementDesc(achievementsToShow, request.session.user_id, currentProgress.quantityFinished, achievementsList);
                         achievementsList += "<div class='achievement'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>";
                         finishAchievementsList(response, achievementsList);
@@ -280,10 +278,11 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
         + '<table border="1px">'
         + '<tr>'
         + '<td class="bararea">'
+        + '<div class="progress-goal-container">'
         + '<span class="progressbar"></span>'
         + '<div id="progressbar-goal"><span class="progress" style="width:'
         + progressPercentage
-        + '%;"></span></div>'
+        + '%;"></span></div></div>'
         + '</td>'
         + '<td id="countarea" class="countarea">'
         + '<h3>'
