@@ -215,10 +215,12 @@ body{
 }
 
 .signup-logo{
+
     padding-bottom: 20px;
 }
 
 .signup-logo img{
+    float: left;
     max-width: 100%;
 }
 
@@ -770,13 +772,25 @@ a:focus{
     text-decoration: none;
 }
 
+.signup-logo h1{
+    float: left;
+    margin-left: 10px;
+    padding-top: 20px;
+    font-weight: bold;
+    font-family: 'Dosis', sans-serif;
+    font-size: 50px;
+    line-height: 50px;
+    text-shadow: -3px 0 4px #ccc;
+    color: rgb(0,0,0);
+    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(117,117,117,0.3)), to(rgba(117,117,117,1)));
+}
+
 h1{
     font: 2em Verdana, Geneva, Arial, Helvetica, sans-serif;
     font-weight: bold;
-    color: #333;
-    padding-top: 20px;
+    color: #1d1d1d;
     padding-bottom: 5px;
-
+    padding-top: 20px;
 }
 
 .web-wrap h1{
@@ -976,6 +990,7 @@ p#achievementDescription{
 
 
 @media screen and (max-width: 400px) {
+
     .inputarea{
         width: 60%;
     }

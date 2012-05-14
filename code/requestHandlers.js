@@ -33,6 +33,7 @@ function topIndexPart() {
                     tab + '<link rel="stylesheet" href="content/css/add2home.css">' + nl +
                     tab + '<link rel="stylesheet" href="content/css/core.css" media="screen, projection, print" />' + nl +
                     tab + '<link href="http://fonts.googleapis.com/css?family=Philosopher" rel="stylesheet" type="text/css">' + nl +
+                    tab + '<link href="http://fonts.googleapis.com/css?family=Dosis" rel="stylesheet" type="text/css">' + nl +
                     tab + '<script type="text/javascript">' + nl +
                         tab + '$(document).ready(function() {' + nl +
                             tab + 'insertContent(getLoginContent(), function() {' + nl +
@@ -94,6 +95,7 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
             tab + '<link rel="stylesheet" href="content/css/add2home.css">' + nl +
             tab + '<link rel="stylesheet" href="content/css/core.css" media="screen, projection, print" />' + nl +
             tab + '<link href="http://fonts.googleapis.com/css?family=Philosopher" rel="stylesheet" type="text/css">' + nl +
+            tab + '<link href="http://fonts.googleapis.com/css?family=Dosis" rel="stylesheet" type="text/css">' + nl +
             tab + '<script type="text/javascript">' + nl +
             tab + '$(document).ready(function() {' + nl +
             tab + 'insertContent(getPublicAchievementContent(), function() {' + nl +

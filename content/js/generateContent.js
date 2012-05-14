@@ -10,7 +10,7 @@ function insertContent(content, callback, achievementId, userId, publicView) {
 function getLoginContent() {
     return (
             '<div id="content">' + nl +
-                '<div class="signup-logo"><img src="content/img/logo-large.png" /></div>' + nl +
+                '<div class="signup-logo"><img src="content/img/tree-large.png" /><h1>treehouse</h1><div class="clear"></div></div>' + nl +
                 '<form action="javascript: checkUser();">' + nl +
                     '<input type="text" class="formstyle" name="username" value="username" onfocus="if (this.value == \'username\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'username\';}">' + nl +
                     '<span id="passwordSpan">' + nl +
@@ -28,7 +28,7 @@ function getLoginContent() {
 function getSignupContent() {
     return (
             '<div id="content">' + nl +
-                '<div class="signup-logo"><img src="content/img/logo-large.png" /></div>' + nl +
+                '<div class="signup-logo"><img src="content/img/tree-large.png" /><h1>treehouse</h1><div class="clear"></div></div>' + nl +
                 '<h1>Sign Up</h1>' + nl +
                 '<form action="javascript: signup();">' + nl +
                     '<input type="text" class="formstyle" name="username" value="username" onfocus="if (this.value == \'username\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'username\';}">' + nl +
