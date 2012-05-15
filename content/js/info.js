@@ -29,6 +29,15 @@ function getAchievementInfo() {
         )
 }
 
+function getAbout() {
+    return (
+        '<div>' +
+            '<p>We ♥ node.js</p>' +
+       '</div>'
+        )
+}
+
+
 function getEarlyAdopterInfo() {
     return (
         '<div>' +

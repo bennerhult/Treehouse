@@ -47,8 +47,8 @@ function topIndexPart() {
                 '<div id="web-menu">' + nl +
                     '<ul>' + nl +
                         '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart())"><img src="content/img/logo-small.png" /></a></li>'  + nl +
-                        '<li><a href="#">About</a> </li>'  + nl +
-                        '<li><a href="#">Achievements</a> </li>'  + nl +
+                        '<li><a href="javascript:void(0)" onclick="showInfo(getAbout())">About</a> </li>'  + nl +
+                        '<li><a href="javascript:void(0)" onclick="showInfo(getAchievementInfo())">Achievements</a> </li>'  + nl +
                     '</ul>' + nl +
                     '<div class="clear"></div>' + nl +
                 '</div>' + nl +
@@ -109,8 +109,8 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
             '<div id="web-menu">' + nl +
                 '<ul>' + nl +
                     '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart())"><img src="content/img/logo-small.png" /></a></li>'  + nl +
-                    '<li><a href="#">About</a> </li>'  + nl +
-                    '<li><a href="#">Achievements</a> </li>'  + nl +
+                    '<li><a href="javascript:void(0)" onclick="showInfo(getAbout())">About</a> </li>'  + nl +
+                    '<li><a href="javascript:void(0)" onclick="showInfo(getAchievementInfo())">Achievements</a> </li>'  + nl +
                 '</ul>' + nl +
                  '<div class="clear"></div>' + nl +
             '</div>' + nl +
