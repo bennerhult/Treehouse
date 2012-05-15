@@ -24,7 +24,6 @@ function getLoginContent() {
         )
 }
 
-
 function getSignupContent() {
     return (
             '<div id="content">' + nl +
@@ -80,7 +79,6 @@ function getAchievementContent() {
         '</div>' + nl
     )
 }
-
 
 function getPublicAchievementContent() {
     return (
