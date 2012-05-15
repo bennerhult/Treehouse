@@ -12,7 +12,7 @@ function getLoginContent() {
             '<div id="content">' + nl +
                 '<div class="signup-logo"><img src="content/img/tree-large.png" /><h1>treehouse</h1><div class="clear"></div></div>' + nl +
                 '<form action="javascript: checkUser();">' + nl +
-                    '<input type="text" class="formstyle" name="username" value="username" onfocus="if (this.value == \'username\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'username\';}">' + nl +
+                    '<input type="text" class="formstyle" name="username" value="e-mail" onfocus="if (this.value == \'e-mail\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'e-mail\';}">' + nl +
                     '<span id="passwordSpan">' + nl +
                         '<input type="text" class="formstyle" name="password" value="password" onfocus="securePasswordField();">' + nl +
                     '</span>' + nl +
@@ -31,7 +31,7 @@ function getSignupContent() {
                 '<div class="signup-logo"><img src="content/img/tree-large.png" /><h1>treehouse</h1><div class="clear"></div></div>' + nl +
                 '<h1>Sign Up</h1>' + nl +
                 '<form action="javascript: signup();">' + nl +
-                    '<input type="text" class="formstyle" name="username" value="username" onfocus="if (this.value == \'username\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'username\';}">' + nl +
+                    '<input type="text" class="formstyle" name="username" value="e-mail" onfocus="if (this.value == \'e-mail\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'e-mail\';}">' + nl +
                     '<input type="text" class="formstyle" name="password" value="password" onfocus="if (this.value == \'password\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'password\';}">' + nl +
                     '<div id="message"></div>' + nl +
                     '<input type="submit" class="button" value="Create my account">' + nl +
