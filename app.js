@@ -279,7 +279,7 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
     }
 }
 
-function getGoalText(goal, achievement, progressNumber, progressPercentage, publicView, achievementCurrentProgress, achievementTotalProgress) {
+function getGoalText(goal, achievement, progressNumber, progressPercentage, publicView) {
     var goalText =  '<div id="achievement-container">'
         + '<div class="part-achievement">'
         + '<div class="progress-container">'
@@ -307,11 +307,10 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
         + '</div>';
     if (progressPercentage < 100) {
         goalText    += '<div id="addbutton' + goal._id + '" class="addbutton">'
-            + '<a href="javascript:void(0)" onclick="progress(\'' + goal._id + '\', \'' +  goal.quantityTotal + '\', \''+ achievementCurrentProgress + '\', \'' + achievementTotalProgress + '\')">'
+            + '<a href="javascript:void(0)" onclick="progress(\'' + goal._id + '\', \'' +  goal.quantityTotal + '\')">'
             + '<img src="content/img/+.png" alt="I did it!"/>'
             + '</a>'
             + '</div>';
-        goalText+='<div id="debug"></div>'
     }
 
     goalText    += '<div class="clear"></div>'
@@ -321,6 +320,26 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
 
     return goalText;
 }
+
+app.get('/achievementPercentage', function(request, response){
+    var achievementCurrentProgress = 0;
+    var achievementTotalProgress = 0;
+    achievement.Achievement.findOne({ _id: app.set('current_achievement_id') }, function(err,currentAchievement) {
+        currentAchievement.goals.forEach(function(goal, goalIndex) {
+            achievementTotalProgress += goal.quantityTotal;
+            progress.Progress.findOne({ achiever_id:  request.session.user_id,  goal_id: goal._id}, function(err,myProgress) {
+                achievementCurrentProgress += myProgress.quantityFinished;;
+                if (goalIndex == currentAchievement.goals.length -1) {
+                    var achievementPercentageFinished = (achievementCurrentProgress/ achievementTotalProgress) * 100;
+                    response.writeHead(200, {'content-type': 'application/json' });
+                    response.write(JSON.stringify(achievementPercentageFinished));
+                    response.end('\n', 'utf-8');
+                }
+            });
+        });
+    });
+});
+
 
 app.get('/progress', function(request, response){
     progress.markProgress(request.session.user_id, request.query.goalId, function(quantityFinished) {

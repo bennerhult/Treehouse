@@ -134,19 +134,9 @@ function getAchievementFromServer(callback,achievementId, userId) {
     });
 }
 
-function progress(goalId, quantityTotal, achievementCurrentProgress, achievementTotalProgress) {
-    progressOnServer(
-        function(quantityFinished) {
-            achievementCurrentProgress++;
-            var achievementPercentageFinished = (achievementCurrentProgress/ achievementTotalProgress) * 100;
-
-            $("#debug").html("achievementPercentageFinished: " + achievementPercentageFinished
-                +"<br />"
-                +  "achievementCurrentProgress: " + achievementCurrentProgress
-                +"<br />"
-                +  "achievementTotalProgress: " + achievementTotalProgress
-            );
-
+function progress(goalId, quantityTotal) {
+    progressOnServer(function(quantityFinished) {
+        achievementPercentageFinishedFromServer(function(achievementPercentageFinished) {
             $("#progressbar").html("<span class='progress' style='width:" + achievementPercentageFinished + "%;'></span>");
 
             var goalPercentageFinished = (quantityFinished / quantityTotal) * 100;
@@ -155,12 +145,21 @@ function progress(goalId, quantityTotal, achievementCurrentProgress, achievement
             if (goalPercentageFinished >= 100) {
                 $("#addbutton" + goalId).html("");
             }  else {
-                $("#addbutton" + goalId).html('<a href="javascript:void(0)" onclick="progress(\'' + goalId + '\', \'' +  quantityTotal + '\', \''+ achievementCurrentProgress + '\', \'' + achievementTotalProgress + '\')">'
+                $("#addbutton" + goalId).html('<a href="javascript:void(0)" onclick="progress(\'' + goalId + '\', \'' +  quantityTotal + '\')">'
                     + '<img src="content/img/+.png" alt="I did it!"/>'
                     + '</a>');
             }
-        }, goalId
-    )
+        })
+    }, goalId)
+}
+
+function achievementPercentageFinishedFromServer(callback) {
+    $.ajax("/achievementPercentage", {
+        type: "GET",
+        dataType: "json",
+        success: function(data) { if ( callback ) callback(data); },
+        error  : function()     { if ( callback ) callback(null); }
+    });
 }
 
 function progressOnServer(callback, goalId) {
