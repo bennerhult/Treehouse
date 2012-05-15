@@ -238,7 +238,7 @@ function toggleImage(step) {
     $("#achievementImage").attr("src", imagePath + images[newPos]);
 }
 
-function checkGoal(goalField){
+function checkGoal(goalField) {
     if (goalField.value == '' || goalField.value == 'goal') {
         goalField.value = 'goal';
         if ($(goalField).closest("tr")[0].rowIndex + 1 < $('#goalTable tr').length) {

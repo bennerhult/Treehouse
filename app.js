@@ -128,15 +128,20 @@ app.get('/achievement', function(request, response){
 
 });
 
-function createAchievementDesc(achievements, userId, quantityFinished, achievementsList) {
-    var myQuantityTotal = 0;
-    var myQuantityFinished = 0;
+function createAchievementDesc(achievements, userId, progresses, achievementsList) {
+    var myQuantityTotal;
+    var myQuantityFinished;
 
     for (var i in achievements) {
-
+        myQuantityTotal = 0;
+        myQuantityFinished = 0;
         achievements[i].goals.forEach(function(goal, index2) {
             myQuantityTotal += goal.quantityTotal;
-            myQuantityFinished += goal.quantityFinished;
+            console.log(progresses[i]);
+            myQuantityFinished += progresses[i];
+
+            console.log(achievements[i].title + " total: " + myQuantityTotal + ", finished: " + myQuantityFinished);
+
             if (index2 == achievements[i].goals.length -1) {
 
                 var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100;
@@ -170,6 +175,7 @@ app.get('/achievements', function(request, response){
     var achievementsList = "";
     var achievementsToShow = new Array();
     var achievementIdsToShow = new Array();
+    var progressesToShow = new Array();
     progress.Progress.find({ achiever_id: request.session.user_id}, function(err, progresses) {
         if (progresses && progresses.length > 0) {
             progresses.forEach(function(currentProgress, index) {
@@ -177,10 +183,11 @@ app.get('/achievements', function(request, response){
                     if  (_.indexOf(achievementIdsToShow, myAchievement._id.toString()) == -1) {
                         achievementsToShow.push(myAchievement);
                         achievementIdsToShow.push(myAchievement._id.toString());
+                        progressesToShow.push(currentProgress.quantityFinished);
                     }
 
                     if (index == progresses.length -1) {
-                        achievementsList = createAchievementDesc(achievementsToShow, request.session.user_id, currentProgress.quantityFinished, achievementsList);
+                        achievementsList = createAchievementDesc(achievementsToShow, request.session.user_id, progressesToShow, achievementsList);
                         achievementsList += "<div class='achievement'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>";
                         finishAchievementsList(response, achievementsList);
                     }
