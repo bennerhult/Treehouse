@@ -204,9 +204,7 @@ app.get('/achievementFromServer', function(request, response){
             response.write(JSON.stringify("login")); //TODO: make this goto login page on client
             response.end('\n', 'utf-8');
         }
-
     });
-
 });
 
 function writeAchievementPage(response, currentUserId, currentAchievement, publicView) {
@@ -221,7 +219,6 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
                 myQuantityTotal += goal.quantityTotal;
             });
         });
-
         currentAchievement.goals.forEach(function(goal, goalIndex) {
             progress.Progress.findOne({ achiever_id:  currentUserId,  goal_id: goal._id}, function(err,myProgress) {
                 var goalPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100;

@@ -210,7 +210,7 @@ function createAchievementOnServer(callback) {
                 goalTitles.push(field.value);
             } else if (field.name.indexOf("goalQuantity") == 0) {
                 goalQuantities.push(field.value);
-            }else {
+            } else {
                 data += "&";
                 data +=  field.name;
                 data += "=";
@@ -218,6 +218,20 @@ function createAchievementOnServer(callback) {
             }
         }
     });
+
+    for (var i in goalTitles) {     //if any goaltitles or goalquantities are empty, remove goal
+        if (!goalTitles[i]) {
+            goalTitles.splice(i, 1);
+            goalQuantities.splice(i, 1);
+        }
+    }
+
+    for (var i in goalQuantities) {    //if any goalquantities are empty, remove goal
+        if (!goalQuantities[i]) {
+            goalTitles.splice(i, 1);
+            goalQuantities.splice(i, 1);
+        }
+    }
 
     data += "&goalTitles=" + goalTitles;
     data += "&goalQuantities=" + goalQuantities;
