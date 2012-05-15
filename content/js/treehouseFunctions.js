@@ -247,22 +247,20 @@ function toggleImage(step) {
     $("#achievementImage").attr("src", imagePath + images[newPos]);
 }
 
-function checkGoal(goalField) {
-    if (goalField.value == '' || goalField.value == 'goal') {
-        goalField.value = 'goal';
-        if ($(goalField).closest("tr")[0].rowIndex + 1 < $('#goalTable tr').length) {
-            $(goalField).closest("tr").remove();
-        }
-    } else {
-        var newLineNumber = $('#goalTable tr').length + 1;
-        if ($(goalField).closest("tr")[0].rowIndex + 2 == newLineNumber) {   //only add new goal line if the blurred goal line is the bottom one
-            var newRow = $('<tr>' + nl  +
-                '<td class="goal"><input type="text" class="formstyle" name="goalTitle' + newLineNumber + '" placeholder="goal" onblur="checkGoal(this)"></td>' + nl  +
-                '<td class="quantity"><input type="text" class="formstyle" name="goalQuantity' + newLineNumber + '" placeholder="1"></td>' + nl  +
-                '</tr>');
-            $("#goalTable").append(newRow);
-        }
-
+function goalKeyPress(goalField) {
+    var newLineNumber = $('#goalTable tr').length + 1;
+    if ($(goalField).closest("tr")[0].rowIndex + 2 == newLineNumber) {   //only add new goal line if the pressed goal line is the bottom one
+       if (goalField.value.length==0) {
+           var goalQuantityField = "#goalQuantity" + $('#goalTable tr').length;
+           if (! $(goalQuantityField).val())  {
+               $(goalQuantityField).val("1");
+           }
+           var newRow = $('<tr>' + nl  +
+               '<td class="goal"><input type="text" class="formstyle" name="goalTitle' + newLineNumber + '" placeholder="goal" onkeypress="goalKeyPress(this)"></td>' + nl  +
+               '<td class="quantity"><input type="text" class="formstyle" id="goalQuantity' + newLineNumber + '" name="goalQuantity' + newLineNumber + '" placeholder="1"></td>' + nl  +
+               '</tr>');
+           $("#goalTable").append(newRow);
+       }
     }
 }
 /******************  delete achievement functions  ******************/

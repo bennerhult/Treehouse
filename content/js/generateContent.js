@@ -138,8 +138,8 @@ function getNewAchievementContent() {
                     '<div class="part-achievement">' + nl  +
                         '<table id="goalTable">' + nl  +
                             '<tr>' + nl  +
-                                '<td class="goal"><input type="text" class="formstyle" name="goalTitle1" placeholder="goal" onblur="checkGoal(this)"></td>' + nl  +
-                                '<td class="quantity"><input type="text" class="formstyle" name="goalQuantity1" placeholder="1"></td>' + nl  +
+                                '<td class="goal"><input type="text" class="formstyle" name="goalTitle1" placeholder="goal" onkeypress="goalKeyPress(this)"></td>' + nl  +
+                                '<td class="quantity"><input type="text" class="formstyle" id="goalQuantity1" placeholder="1" name="goalQuantity1"></td>' + nl  +
                             '</tr>' + nl  +
                         '</table>' + nl  +
                         '<div class="clear"></div>' + nl  +
