@@ -209,7 +209,7 @@ function createAchievementOnServer(callback) {
             if (field.name.indexOf("goalTitle") == 0) {
                 goalTitles.push(field.value);
             } else if (field.name.indexOf("goalQuantity") == 0) {
-                goalQuantities.push(field.value);
+                goalQuantities.push( field.value);
             } else {
                 data += "&";
                 data +=  field.name;
@@ -232,6 +232,8 @@ function createAchievementOnServer(callback) {
             goalQuantities.splice(i, 1);
         }
     }
+
+    goalTitles = JSON.stringify( goalTitles );
 
     data += "&goalTitles=" + goalTitles;
     data += "&goalQuantities=" + goalQuantities;
