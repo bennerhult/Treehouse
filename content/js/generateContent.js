@@ -14,7 +14,7 @@ function getLoginContent() {
                 '<form action="javascript: checkUser();">' + nl +
                     '<input type="text" class="formstyle" name="username" placeholder="e-mail"">' + nl +
                     '<span id="passwordSpan">' + nl +
-                        '<input type="text" class="formstyle" name="password" placeholder="password" onfocus="securePasswordField();">' + nl +
+                        '<input type="password" class="formstyle" name="password" placeholder="password">' + nl +
                     '</span>' + nl +
                     '<div id="message"></div>' + nl +
                     '<input type="submit" class="button green" value="Log in">' + nl +
@@ -32,7 +32,7 @@ function getSignupContent() {
                 '<h1>Sign Up</h1>' + nl +
                 '<form action="javascript: signup();">' + nl +
                     '<input type="text" class="formstyle" name="username" placeholder="e-mail">' + nl +
-                    '<input type="text" class="formstyle" name="password" placeholder="password">' + nl +
+                    '<input type="password" class="formstyle" name="password" placeholder="password">' + nl +
                     '<div id="message"></div>' + nl +
                     '<input type="submit" class="button" value="Create my account">' + nl +
                 '</form>' + nl +
