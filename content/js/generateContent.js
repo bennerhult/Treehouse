@@ -2,13 +2,13 @@ var nl = '\n';
 var tab = '\t';
 
 function insertContent(content, callback, achievementId, userId, publicView) {
-   $("#contentArea").html(content);
-    callback(achievementId, userId, publicView);
-    if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPad/i))) {
-        if (window.screen.width < 1000) {
-            $("html, body").animate({scrollTop: $("#app-container").offset().top}, 200);
-        }
+    $("#contentArea").html(content);
+
+    if (window.innerWidth < 819) {
+        $("html, body").animate({scrollTop: $("#app-container").offset().top}, 200);
     }
+
+    callback(achievementId, userId, publicView);
 }
 
 function getLoginContent() {
