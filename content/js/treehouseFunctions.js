@@ -134,14 +134,30 @@ function getAchievementFromServer(callback,achievementId, userId) {
     });
 }
 
-function progress(goalId, quantityTotal) {
+function progress(goalId, quantityTotal, achievementCurrentProgress, achievementTotalProgress) {
     progressOnServer(
         function(quantityFinished) {
-            var myPercentageFinished = (quantityFinished / quantityTotal) * 100;
-            $("#progressbar-goal" + goalId).html("<span class='progress' style='width:" + myPercentageFinished + "%;'></span>");
+            achievementCurrentProgress++;
+            var achievementPercentageFinished = (achievementCurrentProgress/ achievementTotalProgress) * 100;
+
+            $("#debug").html("achievementPercentageFinished: " + achievementPercentageFinished
+                +"<br />"
+                +  "achievementCurrentProgress: " + achievementCurrentProgress
+                +"<br />"
+                +  "achievementTotalProgress: " + achievementTotalProgress
+            );
+
+            $("#progressbar").html("<span class='progress' style='width:" + achievementPercentageFinished + "%;'></span>");
+
+            var goalPercentageFinished = (quantityFinished / quantityTotal) * 100;
+            $("#progressbar-goal" + goalId).html("<span class='progress' style='width:" + goalPercentageFinished + "%;'></span>");
             $("#countarea" + goalId).html("<h3>" + quantityFinished + "/" + quantityTotal + "</h3>");
-            if (myPercentageFinished >= 100) {
+            if (goalPercentageFinished >= 100) {
                 $("#addbutton" + goalId).html("");
+            }  else {
+                $("#addbutton" + goalId).html('<a href="javascript:void(0)" onclick="progress(\'' + goalId + '\', \'' +  quantityTotal + '\', \''+ achievementCurrentProgress + '\', \'' + achievementTotalProgress + '\')">'
+                    + '<img src="content/img/+.png" alt="I did it!"/>'
+                    + '</a>');
             }
         }, goalId
     )

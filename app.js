@@ -227,12 +227,17 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
     var myQuantityTotal = 0;
     var myQuantityFinished = 0;
     if(currentAchievement.goals) {
-        currentAchievement.goals.forEach(function(goal) {
+        currentAchievement.goals.forEach(function(goal, goalIndex) {
             progress.Progress.findOne({ achiever_id:  currentUserId,  goal_id: goal._id}, function(err,myProgress) {
-                var goalPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100;
                 myQuantityFinished += myProgress.quantityFinished;
                 myQuantityTotal += goal.quantityTotal;
-                goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, goalPercentageFinished, publicView));
+            });
+        });
+
+        currentAchievement.goals.forEach(function(goal, goalIndex) {
+            progress.Progress.findOne({ achiever_id:  currentUserId,  goal_id: goal._id}, function(err,myProgress) {
+                var goalPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100;
+                goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, goalPercentageFinished, publicView, myQuantityFinished, myQuantityTotal));
                 if (goalTexts.length == currentAchievement.goals.length) {
                     var goalTextsText = "";
                     goalTexts.forEach(function(goalText, index) {
@@ -274,7 +279,7 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
     }
 }
 
-function getGoalText(goal, achievement, progressNumber, progressPercentage, publicView) {
+function getGoalText(goal, achievement, progressNumber, progressPercentage, publicView, achievementCurrentProgress, achievementTotalProgress) {
     var goalText =  '<div id="achievement-container">'
         + '<div class="part-achievement">'
         + '<div class="progress-container">'
@@ -302,10 +307,11 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
         + '</div>';
     if (progressPercentage < 100) {
         goalText    += '<div id="addbutton' + goal._id + '" class="addbutton">'
-            + '<a href="javascript:void(0)" onclick="progress(\'' + goal._id + '\', \'' +  goal.quantityTotal + '\')">'
+            + '<a href="javascript:void(0)" onclick="progress(\'' + goal._id + '\', \'' +  goal.quantityTotal + '\', \''+ achievementCurrentProgress + '\', \'' + achievementTotalProgress + '\')">'
             + '<img src="content/img/+.png" alt="I did it!"/>'
             + '</a>'
             + '</div>';
+        goalText+='<div id="debug"></div>'
     }
 
     goalText    += '<div class="clear"></div>'
@@ -318,7 +324,6 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
 
 app.get('/progress', function(request, response){
     progress.markProgress(request.session.user_id, request.query.goalId, function(quantityFinished) {
-        //updateCurrentAchievmentTotal();
         response.writeHead(200, {'content-type': 'application/json' });
         response.write(JSON.stringify(quantityFinished));
         response.end('\n', 'utf-8');
