@@ -253,12 +253,10 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
                                 + '%;"></span></div></div><div class="clear"></div>';
                             achievementDesc += goalTextsText;
                             achievementDesc += '<br />';
-
                             achievementDesc += '<div id="publicizeButton"><a href="javascript:void(0)" onclick="publicize()">Share publicly</a></div>';
                             achievementDesc += '<br />';
                             achievementDesc += '<div id="fbLike" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="250" data-show-faces="true" font="segoe ui"></div></div>';
                             achievementDesc += '<br />';
-
                             achievementDesc += '<br />';
                             achievementDesc += '<p>';
                             achievementDesc += 'Creator: ' + currentAchievement.createdBy + '<br />';
@@ -287,7 +285,7 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
         + '<tr>'
         + '<td class="bararea">'
         + '<div class="progress-goal-container">'
-        + '<span class="progressbar" id="progressbar' + goal._id + '"></span>'
+        + '<span class="progressbar"></span>'
         + '<div id="progressbar-goal' + goal._id + '"><span class="progress" style="width:'
         + progressPercentage
         + '%;"></span></div></div>'

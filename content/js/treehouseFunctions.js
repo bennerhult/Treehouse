@@ -138,7 +138,6 @@ function progress(goalId, quantityTotal) {
     progressOnServer(
         function(quantityFinished) {
             var myPercentageFinished = (quantityFinished / quantityTotal) * 100;
-            $("#progressbar" + goalId).html("<span class='progress' style='width:" + myPercentageFinished + "%;'></span>");
             $("#progressbar-goal" + goalId).html("<span class='progress' style='width:" + myPercentageFinished + "%;'></span>");
             $("#countarea" + goalId).html("<h3>" + quantityFinished + "/" + quantityTotal + "</h3>");
             if (myPercentageFinished >= 100) {
