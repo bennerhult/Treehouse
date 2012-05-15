@@ -137,11 +137,7 @@ function createAchievementDesc(achievements, userId, progresses, achievementsLis
         myQuantityFinished = 0;
         achievements[i].goals.forEach(function(goal, index2) {
             myQuantityTotal += goal.quantityTotal;
-            console.log(progresses[i]);
             myQuantityFinished += progresses[i];
-
-            console.log(achievements[i].title + " total: " + myQuantityTotal + ", finished: " + myQuantityFinished);
-
             if (index2 == achievements[i].goals.length -1) {
 
                 var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100;
@@ -228,16 +224,21 @@ app.get('/achievementFromServer', function(request, response){
 function writeAchievementPage(response, currentUserId, currentAchievement, publicView) {
     var achievementDesc = "";
     var goalTexts = [];
+    var myQuantityTotal = 0;
+    var myQuantityFinished = 0;
     if(currentAchievement.goals) {
         currentAchievement.goals.forEach(function(goal) {
             progress.Progress.findOne({ achiever_id:  currentUserId,  goal_id: goal._id}, function(err,myProgress) {
-                var myPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100;
-                goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, myPercentageFinished, publicView));
+                var goalPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100;
+                myQuantityFinished += myProgress.quantityFinished;
+                myQuantityTotal += goal.quantityTotal;
+                goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, goalPercentageFinished, publicView));
                 if (goalTexts.length == currentAchievement.goals.length) {
                     var goalTextsText = "";
                     goalTexts.forEach(function(goalText, index) {
                         goalTextsText += goalText;
                         if (index == goalTexts.length - 1) {
+                            var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100;
                             achievementDesc += '<div class="achievement-info"><div class="textarea"><h2>'
                                 + currentAchievement.title
                                 + '</h2><p id="achievementDescription">'
@@ -319,6 +320,7 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
 
 app.get('/progress', function(request, response){
     progress.markProgress(request.session.user_id, request.query.goalId, function(quantityFinished) {
+        //updateCurrentAchievmentTotal();
         response.writeHead(200, {'content-type': 'application/json' });
         response.write(JSON.stringify(quantityFinished));
         response.end('\n', 'utf-8');
