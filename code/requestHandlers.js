@@ -112,10 +112,7 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
                     '<li><a href="#">About</a> </li>'  + nl +
                     '<li><a href="#">Achievements</a> </li>'  + nl +
                 '</ul>' + nl +
-            '<div class="clear"></div>' + nl +
-                    '<li><a href="#">Achievements</a> </li>'  + nl +
-                '</ul>' + nl +
-                '<div class="clear"></div>' + nl +
+                 '<div class="clear"></div>' + nl +
             '</div>' + nl +
             '<div id="main-container">' + nl +
             '<div id="leftcontainer">' + nl +
