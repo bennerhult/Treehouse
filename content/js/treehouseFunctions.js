@@ -78,17 +78,17 @@ function getAchievementsFromServer(callback) {
 }
 
 /******************  achievement functions  ******************/
-function openAchievement(achievementId, userId, public) {
+function openAchievement(achievementId, userId, publiclyVisible) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + userId);
-    insertContent(getAchievementContent(), getAchievement, achievementId, userId, public);
+    insertContent(getAchievementContent(), getAchievement, achievementId, userId, publiclyVisible);
 }
 
-function getAchievement(achievementId, userId, public) {
+function getAchievement(achievementId, userId, publiclyVisible) {
     getAchievementFromServer(
         function(data) {
             $('meta[propery="og:url"]').attr('content', 'www.treehouse.io/achievement?achievementId=' + achievementId + '&userId=' + userId);
             $("#achievementDesc").html(data);
-            if (public) {
+            if (publiclyVisible) {
                 $("#publicizeButton").empty().remove();
                 jQuery.getScript('http://connect.facebook.net/en_US/all.js', function() {
                     FB.init({status: true, cookie: true, xfbml: true});
@@ -102,11 +102,11 @@ function getAchievement(achievementId, userId, public) {
 }
 
 
-function getPublicAchievement(achievementId, userId, public) {
+function getPublicAchievement(achievementId, userId, publiclyVisible) {
     getAchievementFromServer(
         function(data) {
              $("#achievementDesc").html(data);
-            if (public) {
+            if (publiclyVisible) {
                 $("#publicizeButton").empty().remove();
                 jQuery.getScript('http://connect.facebook.net/en_US/all.js', function() {
                     FB.init({status: true, cookie: true, xfbml: true});
@@ -191,7 +191,6 @@ function publicizeOnServer(callback) {
 /******************  new achievement functions  ******************/
 function createAchievement() {
    createAchievementOnServer(
-
     function(data) {
             if (data == "ok") { //TODO: use ajax success/error instead
                 openAchievements();
@@ -203,7 +202,6 @@ function createAchievement() {
 function createAchievementOnServer(callback) {
     var nrOfGoals =  $('#goalTable tr').length;
     var data = "currentImage=" + $("#achievementImage").attr("src");
-
     var goalTitles = new Array();
     var goalQuantities = new Array();
     $("form#createAchievementForm :input").each(function(i, field) {
@@ -263,6 +261,7 @@ function goalKeyPress(goalField) {
        }
     }
 }
+
 /******************  delete achievement functions  ******************/
 function deleteAchievement() {
     deleteAchievementOnServer(
