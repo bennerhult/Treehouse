@@ -219,21 +219,21 @@ function createAchievementOnServer(callback) {
         }
     });
 
-    for (var i in goalTitles) {     //if any goaltitles or goalquantities are empty, remove goal
+    for (var i in goalTitles) {     //if any goaltitles are empty, remove goal
         if (!goalTitles[i]) {
             goalTitles.splice(i, 1);
             goalQuantities.splice(i, 1);
         }
     }
 
-    for (var i in goalQuantities) {    //if any goalquantities are empty, remove goal
-        if (!goalQuantities[i]) {
-            goalTitles.splice(i, 1);
-            goalQuantities.splice(i, 1);
+    for (var j in goalQuantities) {    //if any goalquantities are empty, remove goal
+        if (!goalQuantities[j]) {
+            goalTitles.splice(j, 1);
+            goalQuantities.splice(j, 1);
         }
     }
 
-    goalTitles = JSON.stringify( goalTitles );
+    goalTitles = JSON.stringify(goalTitles);
 
     data += "&goalTitles=" + goalTitles;
     data += "&goalQuantities=" + goalQuantities;
@@ -264,17 +264,15 @@ function toggleImage(step) {
 function goalKeyPress(goalField) {
     var newLineNumber = $('#goalTable tr').length + 1;
     if ($(goalField).closest("tr")[0].rowIndex + 2 == newLineNumber) {   //only add new goal line if the pressed goal line is the bottom one
-       if (goalField.value.length==0) {
-           var goalQuantityField = "#goalQuantity" + $('#goalTable tr').length;
-           if (! $(goalQuantityField).val())  {
-               $(goalQuantityField).val("1");
-           }
-           var newRow = $('<tr>' + nl  +
-               '<td class="goal"><input type="text" class="formstyle" name="goalTitle' + newLineNumber + '" placeholder="goal" onkeypress="goalKeyPress(this)"></td>' + nl  +
-               '<td class="quantity"><input type="text" class="formstyle" id="goalQuantity' + newLineNumber + '" name="goalQuantity' + newLineNumber + '" placeholder="1"></td>' + nl  +
-               '</tr>');
-           $("#goalTable").append(newRow);
+       var goalQuantityField = "#goalQuantity" + $('#goalTable tr').length;
+       if (! $(goalQuantityField).val())  {
+           $(goalQuantityField).val("1");
        }
+       var newRow = $('<tr>' + nl  +
+           '<td class="goal"><input type="text" class="formstyle" name="goalTitle' + newLineNumber + '" placeholder="goal" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)"></td>' + nl  +
+           '<td class="quantity"><input type="text" class="formstyle" id="goalQuantity' + newLineNumber + '" name="goalQuantity' + newLineNumber + '" placeholder="1"></td>' + nl  +
+           '</tr>');
+       $("#goalTable").append(newRow);
     }
 }
 

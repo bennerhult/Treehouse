@@ -12,7 +12,7 @@ function getLoginContent() {
             '<div id="content">' + nl +
                 '<div class="signup-logo"><img src="content/img/tree-large.png" /><h1>treehouse</h1><div class="clear"></div></div>' + nl +
                 '<form action="javascript: checkUser();">' + nl +
-                    '<input type="text" class="formstyle" name="username" placeholder="e-mail"">' + nl +
+                    '<input type="text" class="formstyle" name="username" placeholder="email"">' + nl +
                     '<span id="passwordSpan">' + nl +
                         '<input type="password" class="formstyle" name="password" placeholder="password">' + nl +
                     '</span>' + nl +
@@ -30,7 +30,7 @@ function getSignupContent() {
                 '<div class="signup-logo"><img src="content/img/tree-large.png" /><h1>treehouse</h1><div class="clear"></div></div>' + nl +
                 '<h1>Sign Up</h1>' + nl +
                 '<form action="javascript: signup();">' + nl +
-                    '<input type="text" class="formstyle" name="username" placeholder="e-mail">' + nl +
+                    '<input type="text" class="formstyle" name="username" placeholder="email">' + nl +
                     '<input type="password" class="formstyle" name="password" placeholder="password">' + nl +
                     '<div id="message"></div>' + nl +
                     '<input type="submit" class="button" value="Create my account">' + nl +
@@ -138,7 +138,7 @@ function getNewAchievementContent() {
                     '<div class="part-achievement">' + nl  +
                         '<table id="goalTable">' + nl  +
                             '<tr>' + nl  +
-                                '<td class="goal"><input type="text" class="formstyle" name="goalTitle1" placeholder="goal" onkeypress="goalKeyPress(this)"></td>' + nl  +
+                                '<td class="goal"><input type="text" class="formstyle" name="goalTitle1" placeholder="goal" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)"></td>' + nl  +
                                 '<td class="quantity"><input type="text" class="formstyle" id="goalQuantity1" placeholder="1" name="goalQuantity1"></td>' + nl  +
                             '</tr>' + nl  +
                         '</table>' + nl  +
