@@ -277,7 +277,6 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
                                             + '<span class="progressbar"></span>'
                                             + '<div id="progressbar-goal' + goal._id + '"><span class="progress" style="width:'
                                                 + progressPercentage
-
                                              + '%;"></span></div></div>'
                                     + '</td>'
                                     + '<td id="countarea' + goal._id + '" class="countarea">'
@@ -368,7 +367,7 @@ app.get('/newAchievement', function(request, response){
         var motherAchievement = achievement.createAchievement(user.username, request.query.title, request.query.description, request.query.currentImage);
         var nrOfGoals =  request.query.nrOfGoals;
         var titles= JSON.parse(request.query.goalTitles);
-        var quantities=request.query.goalQuantities.split('","');
+        var quantities=request.query.goalQuantities.split(',');
 
         _.each(titles, function (title, i) {
             var goalToBeCreated  = goal.prepareGoal(title, quantities[i]);
