@@ -191,7 +191,6 @@ function finishAchievementsList(response, achievementsList) {
 }
 
 app.get('/achievementFromServer', function(request, response){
-    response.writeHead(200, {'content-type': 'application/json' });
     var url_parts = url.parse(request.url, true);
     var currentAchievementId = url_parts.query.achievementId.trim();
     app.set('current_achievement_id', currentAchievementId);
@@ -201,8 +200,7 @@ app.get('/achievementFromServer', function(request, response){
         } else if (currentAchievement && currentAchievement.publiclyVisible)    {
             writeAchievementPage(response, url_parts.query.userId, currentAchievement, true);
         } else {
-            response.write(JSON.stringify("login")); //TODO: make this goto login page on client
-            response.end('\n', 'utf-8');
+            writeLoginPage(response);
         }
     });
 });
