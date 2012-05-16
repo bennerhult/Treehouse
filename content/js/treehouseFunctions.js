@@ -234,7 +234,6 @@ function createAchievementOnServer(callback) {
     }
 
     goalTitles = JSON.stringify(goalTitles);
-      alert(goalQuantities)
     data += "&goalTitles=" + goalTitles;
     data += "&goalQuantities=" + goalQuantities;
 
