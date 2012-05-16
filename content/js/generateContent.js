@@ -5,7 +5,7 @@ function insertContent(content, callback, achievementId, userId, publicView) {
     $("#contentArea").html(content);
 
     if (window.innerWidth < 819) {
-        $("html, body").animate({scrollTop: $("#app-container").offset().top}, 200);
+        $("html, body").animate({scrollTop: $("#menu").offset().top}, 200);
     }
 
     callback(achievementId, userId, publicView);
