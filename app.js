@@ -220,7 +220,7 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
         currentAchievement.goals.forEach(function(goal, goalIndex) {
             progress.Progress.findOne({ achiever_id:  currentUserId,  goal_id: goal._id}, function(err,myProgress) {
                 var goalPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100;
-                goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, goalPercentageFinished, publicView));
+                goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, goalPercentageFinished, publicView, goalTexts.length + 1 == currentAchievement.goals.length));
                 if (goalTexts.length == currentAchievement.goals.length) {
                     var goalTextsText = "";
                     goalTexts.forEach(function(goalText, index) {
@@ -264,7 +264,7 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
     }
 }
 
-function getGoalText(goal, achievement, progressNumber, progressPercentage, publicView) {
+function getGoalText(goal, achievement, progressNumber, progressPercentage, publicView, lastGoal) {
     var goalText =  '<div class="part-achievement">'
                          + '<div class="progress-container">'
                             + '<h3>'
@@ -297,9 +297,12 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
     }
 
     goalText    += '<div class="clear"></div>'
-        + '</div>'
-        + '<div class="separerare-part">&nbsp;</div>'
         + '</div>';
+    if (!lastGoal) {
+     goalText    += '<div class="separerare-part">&nbsp;</div>'
+    }
+
+    goalText    += '</div>';
 
     return goalText;
 }
