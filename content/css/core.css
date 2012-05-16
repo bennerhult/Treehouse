@@ -527,10 +527,8 @@ input.file {
 }
 
 .addbutton{
-    position: relative;
-    float: right;
-    text-align: right;
     padding-top: 10px;
+    padding-left: 20px;
 }
 
 

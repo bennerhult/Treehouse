@@ -285,19 +285,23 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
                                         + '/'
                                         + goal.quantityTotal
                                         + '</h3>'
-                                    + '</td>'
-                                + '</tr>'
+                                    + '</td>';
+                                if (progressPercentage < 100) {
+                                    goalText    += '<td><div id="addbutton' + goal._id + '" class="addbutton">'
+                                        + '<a href="javascript:void(0)" onclick="progress(\'' + goal._id + '\', \'' +  goal.quantityTotal + '\')">'
+                                        + '<img src="content/img/+.png" alt="I did it!"/>'
+                                        + '</a>'
+                                        + '</div></td>';
+                                }
+                goalText    += '</tr>'
                             + '</table>'
-    if (progressPercentage < 100) {
-        goalText    += '<div id="addbutton' + goal._id + '" class="addbutton">'
-            + '<a href="javascript:void(0)" onclick="progress(\'' + goal._id + '\', \'' +  goal.quantityTotal + '\')">'
-            + '<img src="content/img/+.png" alt="I did it!"/>'
-            + '</a>'
-            + '</div>';
-    }
 
-    goalText    += '<div class="clear"></div>'
-        + '</div>';
+    goalText    += '<div class="clear"></div>';
+
+
+    goalText    += '</div>';
+
+
     if (!lastGoal) {
      goalText    += '<div class="separerare-part">&nbsp;</div>'
     }
