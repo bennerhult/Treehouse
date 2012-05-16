@@ -142,10 +142,10 @@ function bottomPart() {
                     '</div>' + nl +
                         '<div id="web-footer">' + nl +
                             '<ul>' + nl +
-                                '<li><h2>Explore</h2><p>Ever wanted to explore new ground?<br /><br />Get the coveted <a href="javascript:void(0)" onclick="showInfo(getEarlyAdopterInfo())">Early Adopter Achievement</a></p></li>' + nl +
-                                '<li><h2>Achieve</h2><p>In an ever changing world, achievements are forever. Nobody can take your achievements away!<br /><br /><a href="javascript:void(0)" onclick="showInfo(getAchievementInfo())">Achievements?</a></p></li>' + nl +
-                                '<li><h2>Play</h2><p>What have you achieved today? Give yourself a new challenge.</p><p>Let\'s play!</p></li>' + nl +
-                                '<li class="last"><h2>Latest Achievement</h2><p>Explore the polar caps!</p><div><img src="content/img/achievementImages/7.png" /></div></li>' + nl +
+                                '<li><span><h2>Explore</h2><p>Ever wanted to explore new ground?<br /><br />Get the coveted <a href="javascript:void(0)" onclick="showInfo(getEarlyAdopterInfo())">Early Adopter Achievement</a></p></span></li>' + nl +
+                                '<li><span><h2>Achieve</h2><p>In an ever changing world, achievements are forever. Nobody can take your achievements away!<br /><br /><a href="javascript:void(0)" onclick="showInfo(getAchievementInfo())">Achievements?</a></p></span></li>' + nl +
+                                '<li><span><h2>Play</h2><p>What have you achieved today? Give yourself a new challenge.</p><p>Let\'s play!</p></span></li>' + nl +
+                                '<li class="last"><span><h2>Latest Achievement</h2><p>Explore the polar caps!</p><div><img src="content/img/achievementImages/7.png" /></div></span></li>' + nl +
                             '</ul>' + nl +
             '           </div>' + nl +
                         '<div class="clear"></div>' + nl +
