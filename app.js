@@ -239,7 +239,9 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
                                 + '"/><span class="gradient-bg"></span><span class="progressbar"></span><div id="progressbar" class="progress-container"><span class="progress" style="width:'
                                 + myPercentageFinished
                                 + '%;"></span></div></div><div class="clear"></div>';
+                            achievementDesc += '<div id="achievement-container">';
                             achievementDesc += goalTextsText;
+                            achievementDesc += '</div>';
                             achievementDesc += '<br />';
                             achievementDesc += '<div id="publicizeButton"><a href="javascript:void(0)" onclick="publicize()">Share publicly</a></div>';
                             achievementDesc += '<br />';
@@ -263,31 +265,30 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
 }
 
 function getGoalText(goal, achievement, progressNumber, progressPercentage, publicView) {
-    var goalText =  '<div id="achievement-container">'
-        + '<div class="part-achievement">'
-        + '<div class="progress-container">'
-        + '<h3>'
-        + goal.title
-        + '</h3>'
-        + '<table border="1px">'
-        + '<tr>'
-        + '<td class="bararea">'
-        + '<div class="progress-goal-container">'
-        + '<span class="progressbar"></span>'
-        + '<div id="progressbar-goal' + goal._id + '"><span class="progress" style="width:'
-        + progressPercentage
-        + '%;"></span></div></div>'
-        + '</td>'
-        + '<td id="countarea' + goal._id + '" class="countarea">'
-        + '<h3>'
-        + progressNumber
-        + '/'
-        + goal.quantityTotal
-        + '</h3>'
-        + '</td>'
-        + '</tr>'
-        + '</table>'
-        + '</div>';
+    var goalText =  '<div class="part-achievement">'
+                         + '<div class="progress-container">'
+                            + '<h3>'
+                                + goal.title
+                            + '</h3>'
+                            + '<table border="1px">'
+                                + '<tr>'
+                                    + '<td class="bararea">'
+                                        + '<div class="progress-goal-container">'
+                                            + '<span class="progressbar"></span>'
+                                            + '<div id="progressbar-goal' + goal._id + '"><span class="progress" style="width:'
+                                                + progressPercentage
+
+                                             + '%;"></span></div></div>'
+                                    + '</td>'
+                                    + '<td id="countarea' + goal._id + '" class="countarea">'
+                                        + '<h3>'
+                                        + progressNumber
+                                        + '/'
+                                        + goal.quantityTotal
+                                        + '</h3>'
+                                    + '</td>'
+                                + '</tr>'
+                            + '</table>'
     if (progressPercentage < 100) {
         goalText    += '<div id="addbutton' + goal._id + '" class="addbutton">'
             + '<a href="javascript:void(0)" onclick="progress(\'' + goal._id + '\', \'' +  goal.quantityTotal + '\')">'
