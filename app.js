@@ -220,7 +220,7 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
         currentAchievement.goals.forEach(function(goal, goalIndex) {
             progress.Progress.findOne({ achiever_id:  currentUserId,  goal_id: goal._id}, function(err,myProgress) {
                 var goalPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100;
-                goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, goalPercentageFinished, publicView, myQuantityFinished, myQuantityTotal));
+                goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, goalPercentageFinished, publicView));
                 if (goalTexts.length == currentAchievement.goals.length) {
                     var goalTextsText = "";
                     goalTexts.forEach(function(goalText, index) {
