@@ -179,6 +179,30 @@ body{
 
 }
 
+.banner{
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    right: 0px;
+    bottom: 10%;
+    padding: 10px 20px 10px 20px;
+    -moz-border-top-left-radius: 5px;
+    -moz-border-bottom-left-radius: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+    -moz-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+    -webkit-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+    box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+
+    font-family: 'Philosopher', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    opacity: 0.7;
+}
+
 #app-container{
     position: relative;
 
@@ -879,6 +903,7 @@ p#achievementDescription{
 @media screen and (max-width: 800px) {
 
 
+
     #page{
         position: relative;
 
@@ -960,10 +985,18 @@ p#achievementDescription{
     .inputarea{
         width: 70%;
     }
+
+    .banner{
+        display: block;
+    }
 }
 
 
 @media screen and (max-width: 400px) {
+
+    .banner{
+        display: none;
+    }
 
     .inputarea{
         width: 60%;

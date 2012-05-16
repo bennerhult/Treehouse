@@ -147,8 +147,9 @@ function bottomPart() {
                                 '<li><span><h2>Play</h2><p>What have you achieved today? Give yourself a new challenge.</p><p>Let\'s play!</p></span></li>' + nl +
                                 '<li class="last"><span><h2>Latest Achievement</h2><p>Explore the polar caps!</p><div><img src="content/img/achievementImages/7.png" /></div></span></li>' + nl +
                             '</ul>' + nl +
-            '           </div>' + nl +
+                            '</div>' + nl +
                         '<div class="clear"></div>' + nl +
+                        '<div class="banner">Flip for more info</div>' + nl +
                     '</div>' + nl +
                 '</body>' + nl +
             '</html>' + nl
