@@ -39,6 +39,7 @@ function topIndexPart() {
                             tab + 'insertContent(getLoginContent(), function() {' + nl +
                                 tab + 'setTimeout(function(){addToHome.show(false);}, 100);' + nl +
                             tab + '});' + nl +
+                                tab + 'initListeners()' + nl +
                         tab + '});  ' + nl +
                     tab + '</script>' + nl +
                 tab + '</head>' + nl +

@@ -82,6 +82,14 @@ body{
     background-image: radial-gradient(49% 51%, circle, rgba(255, 255, 255, 0.36), rgba(30, 30, 30, 0.36));
 }
 
+.selected {
+    background-color: #1e1e1e;
+    background-image: -moz-radial-gradient(49% 51%, circle, rgba(255, 255, 255, 0.36), rgba(30, 30, 30, 0.36));
+    background-image: -webkit-radial-gradient(49% 51%, circle, rgba(255, 255, 255, 0.36), rgba(30, 30, 30, 0.36));
+    background-image: -o-radial-gradient(49% 51%, circle, rgba(255, 255, 255, 0.36), rgba(30, 30, 30, 0.36));
+    background-image: -ms-radial-gradient(49% 51%, circle, rgba(255, 255, 255, 0.36), rgba(30, 30, 30, 0.36));
+    background-image: radial-gradient(49% 51%, circle, rgba(255, 255, 255, 0.36), rgba(30, 30, 30, 0.36));
+}
 
 #web-menu ul li{
     float: left;

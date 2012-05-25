@@ -1,13 +1,20 @@
-var nl = '\n';
-var tab = '\t';
+var nl = '\n'
+var tab = '\t'
+
+function initListeners() {
+    $("#web-menu ul li a span").click(function(){
+        $('#web-menu ul li a span').removeClass('selected')
+        $(this).addClass('selected')
+    });
+}
 
 function showInfo(content) {
-    //$("html, body").animate({scrollTop: $("#page").offset().top}, 100);
+    //$("html, body").animate({scrollTop: $("#page").offset().top}, 100)
     $("#infoArea").fadeOut('fast', function() {
-        $("#infoArea").html(content);
+        $("#infoArea").html(content)
         $("#infoArea").fadeIn('fast', function() {
-        });
-    });
+        })
+    })
 }
 
 function getAchievementInfo() {
