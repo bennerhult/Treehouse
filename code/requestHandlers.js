@@ -15,7 +15,7 @@ function publicAchievementPage(response, userId, currentAchievementId, url, imag
 function topIndexPart() {
     return (
             '<!DOCTYPE html>' + nl +
-            tab + '<html>' + nl +
+            tab + '<html manifest="treehouse.manifest">' + nl +
                 tab + '<head>' + nl +
                     tab + '<title>Treehouse</title>' + nl +
                     tab + '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' + nl +
@@ -74,7 +74,7 @@ function topIndexPart() {
 function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, title) {
     return (
         '<!DOCTYPE html>' + nl +
-            tab + '<html>' + nl +
+            tab + '<html  manifest="treehouse.manifest">' + nl +
             tab + '<head>' + nl +
             tab + '<title>Treehouse</title>' + nl +
             tab + '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' + nl +
