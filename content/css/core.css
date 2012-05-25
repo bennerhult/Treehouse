@@ -569,9 +569,9 @@ input.file {
 }
 
 .addbutton{
-  /*  padding-top: 10px;*/
-    padding-left: 20px;
-    text-align: right;
+     text-align: right;
+    height: 24px;
+
 }
 
 
@@ -741,7 +741,6 @@ span.progress{
 
 table{
     width: 100%;
-    margin-bottom: 10px;
 }
 
 table tr td{
