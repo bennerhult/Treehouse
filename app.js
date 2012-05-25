@@ -288,7 +288,7 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
                                     + '</td><td>';
                                 goalText    += '<div id="addbutton' + goal._id + '" class="addbutton">'
                                 if (!publicView && progressPercentage < 100) {
-                                        + '<a href="javascript:void(0)" onclick="progress(\'' + goal._id + '\', \'' +  goal.quantityTotal + '\')">'
+                                    goalText    += '<a href="javascript:void(0)" onclick="progress(\'' + goal._id + '\', \'' +  goal.quantityTotal + '\')">'
                                         + '<img src="content/img/+.png" alt="I did it!"/>'
                                         + '</a>'
                                 }
