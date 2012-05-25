@@ -561,8 +561,9 @@ input.file {
 }
 
 .addbutton{
-    padding-top: 10px;
+  /*  padding-top: 10px;*/
     padding-left: 20px;
+
 }
 
 
@@ -618,6 +619,7 @@ input.file {
     height: 9px;
     bottom: 16px;
 }
+
 
 span.gradient-bg{
     position: absolute;
@@ -682,6 +684,11 @@ span.progress{
 }
 
 
+.imagearea .progress-container span.progress{
+    top: 5px;
+}
+
+
 #achievement-container{
     background-color: rgba(0,0,0,0.4);
     margin: 10px 5% 10px 5%;
@@ -714,18 +721,23 @@ span.progress{
 .part-achievement{
     margin-right: 5%;
     margin-left: 5%;
-    padding-top: 20px;
+    padding-top: 15px;
     padding-bottom: 5px;
 }
 
 .progress-container{
     position: relative;
-    width: 60%;
+    width: 100%;
 }
 
 
 table{
     width: 100%;
+    margin-bottom: 10px;
+}
+
+table tr td{
+    height: 25px;
 }
 
 table tr td.bararea{
@@ -739,6 +751,8 @@ table tr td .progress-goal-container{
 
 table tr td.countarea{
     padding-left: 10px;
+    vertical-align: top;
+    padding-top: 8px;
 }
 
 
@@ -754,12 +768,13 @@ table tr td.quantity{
 .progress-container span.progress{
     width: 100%;
     left: 0px;
-    top: 4px;
+    top: -1px;
     margin-left: 0px;
 }
 
 .progress-container span.progress{
-    top: 5px;
+
+    top: 0px;
     left: 1px;
 }
 
@@ -863,7 +878,6 @@ h3{
     font-family: 'Philosopher', sans-serif;
     font-size: 13px;
     font-weight: normal;
-    padding-bottom: 7px;
     opacity: 0.7;
 }
 p{
