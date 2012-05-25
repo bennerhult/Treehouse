@@ -28,6 +28,8 @@ app.configure(function() {
     app.use(express.favicon('/content/favicon.ico'));
     app.use(express.session({ store: mongooseSessionStore, secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4' }));
     app.use(app.router);
+
+    app.use(express.static(__dirname + '/content'));
 });
 
 var dburi = app.set('db-uri');

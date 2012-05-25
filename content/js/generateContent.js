@@ -1,14 +1,14 @@
-var nl = '\n';
-var tab = '\t';
+var nl = '\n'
+var tab = '\t'
 
 function insertContent(content, callback, achievementId, userId, publicView) {
-    $("#contentArea").html(content);
+    $("#contentArea").html(content)
 
     if (window.innerWidth < 819) {
-        $("html, body").animate({scrollTop: $("#menu").offset().top}, 200);
+        $("html, body").animate({scrollTop: $("#menu").offset().top}, 200)
     }
 
-    callback(achievementId, userId, publicView);
+    callback(achievementId, userId, publicView)
 }
 
 function getLoginContent() {
@@ -41,7 +41,6 @@ function getSignupContent() {
                 '</form>' + nl +
                 '<div class="log-in-text"><a href="javascript:void(0)" onclick="insertContent(getLoginContent())">Already awesome? Log in.</a></div>' + nl +
             '</div>' + nl
-
         )
 }
 
@@ -68,7 +67,7 @@ function getAchievementContent() {
         'js = d.createElement(s); js.id = id;' + nl  +
         'js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";' + nl  +
         'fjs.parentNode.insertBefore(js, fjs);' + nl  +
-        '}(document, "script", "facebook-jssdk"));</script>' + nl  +
+        '}(document, "script", "facebook-jssdk"))</script>' + nl  +
         '<div id="app-container">' + nl  +
             '<div id="content no-padding">' + nl  +
                 '<div id="menu">' + nl  +
@@ -88,12 +87,12 @@ function getPublicAchievementContent() {
     return (
         '<div id="fb-root"></div>' + nl  +
         '<script>(function(d, s, id) { ' + nl  +
-        'var js, fjs = d.getElementsByTagName(s)[0]; ' + nl  +
-        'if (d.getElementById(id)) return;' + nl  +
+        'var js, fjs = d.getElementsByTagName(s)[0]' + nl  +
+        'if (d.getElementById(id)) return' + nl  +
         'js = d.createElement(s); js.id = id;' + nl  +
         'js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";' + nl  +
         'fjs.parentNode.insertBefore(js, fjs);' + nl  +
-        '}(document, "script", "facebook-jssdk"));</script>' + nl  +
+        '}(document, "script", "facebook-jssdk"))</script>' + nl  +
         '<div id="app-container">' + nl  +
             '<div id="content no-padding">' + nl  +
                 '<div id="menu">' + nl  +
@@ -118,7 +117,7 @@ function getNewAchievementContent() {
                         '<li class="logo"><img src="content/img/logo-small.png" /></li>' + nl  +
                     '</ul>' + nl  +
                 '</div>' + nl  +
-                '<form id="createAchievementForm" action="javascript: createAchievement();">' + nl  +
+                '<form id="createAchievementForm" action="javascript: createAchievement()">' + nl  +
                     '<div class="achievement-info">' + nl  +
                         '<div class="inputarea">' + nl  +
                             '<input type="text" class="formstyle" name="title" placeholder="title">' + nl  +
