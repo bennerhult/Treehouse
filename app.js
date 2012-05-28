@@ -73,6 +73,10 @@ app.get('/content/*', function(request, response){
     staticFiles.serve("." + request.url, response)   ;
 });
 
+app.get('/treehouse.manifest', function(request, response){
+    staticFiles.serve("." + request.url, response)   ;
+});
+
 app.get('/', function(request, response){
     writeLoginPage(response);
 });
