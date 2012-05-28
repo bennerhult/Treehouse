@@ -6,8 +6,8 @@ mongoose.connect(treehouse.dburi);
 
 var GoalSchema = new Schema({
     createdDate     : Date,
-    title           : String,
-    quantityTotal     : Number
+    title           : {type: String, required: true},
+    quantityTotal     : {type: Number, required: true}
 });
 
 var Goal = mongoose.model('Goal', GoalSchema);

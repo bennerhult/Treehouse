@@ -8,7 +8,9 @@ function insertContent(content, callback, achievementId, userId, publicView) {
         $("html, body").animate({scrollTop: $("#menu").offset().top}, 200)
     }
 
-    callback(achievementId, userId, publicView)
+    if (callback) {
+        callback(achievementId, userId, publicView)
+    }
 }
 
 function getLoginContent() {
