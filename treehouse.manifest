@@ -1,4 +1,5 @@
 CACHE MANIFEST
+CACHE:
 content/favicon.ico
 content/treehouse-icon.png
 content/css/add2home.css
@@ -41,3 +42,17 @@ content/js/css3-mediaqueries.js
 content/js/generateContent.js
 content/js/info.js
 content/js/treehouseFunctions.js
+
+NETWORK:
+/login
+/checkUser
+/logout
+/signup
+/achievement
+/achievements
+/achievementFromServer
+/achievementPercentage
+/progress
+/publicize
+/delete
+/newAchievement
