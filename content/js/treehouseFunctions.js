@@ -268,7 +268,7 @@ function goalKeyPress(goalField) {
            $(goalQuantityField).val("1");
        }
        var newRow = $('<tr >' + nl  +
-           '<td class="goal"><input type="text" class="formstyle" name="goalTitle' + newLineNumber + '" placeholder="goalaaa" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)"></td>' + nl  +
+           '<td class="goal"><input type="text" class="formstyle" name="goalTitle' + newLineNumber + '" placeholder="goal" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)"></td>' + nl  +
            '<td class="quantity"><input type="text" class="formstyle" id="goalQuantity' + newLineNumber + '" name="goalQuantity' + newLineNumber + '" placeholder="1"></td>' + nl  +
            '</tr>');
        $("#goalTable").append(newRow);
