@@ -1,4 +1,4 @@
-var mongoose = require('mongoose')
+var mongoose = require('mongoose'),
     treehouse = require('../app.js'),
     Schema = mongoose.Schema;
 

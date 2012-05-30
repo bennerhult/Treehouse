@@ -1,9 +1,9 @@
 var nl = '\n';
 var tab = '\t';
 
-function indexPage(response) {
+function indexPage(response, rememberedMe) {
     response.writeHead(200, { 'Content-Type': 'text/html' });
-    response.end(topIndexPart() + bottomPart(), 'utf-8');
+    response.end(topIndexPart(rememberedMe) + bottomPart(), 'utf-8');
 }
 
 function publicAchievementPage(response, userId, currentAchievementId, url, imageUrl, title) {
@@ -12,14 +12,13 @@ function publicAchievementPage(response, userId, currentAchievementId, url, imag
     response.end('\n', 'utf-8');
 }
 
-function topIndexPart() {
-    return (
-            '<!DOCTYPE html>' + nl +
+function topIndexPart(rememberedMe) {
+            var text = '<!DOCTYPE html>' + nl +
             tab + '<html manifest="treehouse.manifest">' + nl +
                 tab + '<head>' + nl +
                     tab + '<title>Treehouse</title>' + nl +
                     tab + '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' + nl +
-                    tab + '<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no">' + nl +
+                    tab + '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">' + nl +
                     tab + '<meta name="apple-mobile-web-app-capable" content="yes">' + nl +
                     tab + '<meta name="apple-mobile-web-app-status-bar-style" content="black" />' + nl +
                     tab + '<link rel="apple-touch-icon" href="/content/treehouse-icon.png">' + nl +
@@ -35,13 +34,17 @@ function topIndexPart() {
                     tab + '<link href="http://fonts.googleapis.com/css?family=Philosopher" rel="stylesheet" type="text/css">' + nl +
                     tab + '<link href="http://fonts.googleapis.com/css?family=Dosis" rel="stylesheet" type="text/css">' + nl +
                     tab + '<script type="text/javascript">' + nl +
-                        tab + '$(document).ready(function() {' + nl +
-                            tab + 'insertContent(getLoginContent(), function() {' + nl +
-                                tab + 'setTimeout(function(){addToHome.show(false);}, 100);' + nl +
-                            tab + '});' + nl +
-                                tab + 'initListeners()' + nl +
-                        tab + '});  ' + nl +
-                    tab + '</script>' + nl +
+                    tab + '$(document).ready(function() {';
+                      if (rememberedMe) {
+                          text += 'openAchievements()'
+
+                      }   else {
+                          text += 'insertContent(getLoginContent(), function() {'  + nl +
+                          'setTimeout(function(){addToHome.show(false)}, 100)' + nl +
+                              tab + '})' + nl +
+                              tab + 'initListeners()'
+                      }
+                    text +=  '})</script>' + nl +
                 tab + '</head>' + nl +
                 tab + ' <body>' + nl +
                 '<div id="page">' + nl +
@@ -68,7 +71,7 @@ function topIndexPart() {
                 '</div>' + nl +
                 '<div id="app-container">' + nl +
                 tab + ' <div id="contentArea">'
-        );
+   return text;
 }
 
 function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, title) {
@@ -78,7 +81,7 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
             tab + '<head>' + nl +
             tab + '<title>Treehouse</title>' + nl +
             tab + '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' + nl +
-            tab + '<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no">' + nl +
+            tab + '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">' + nl +
             tab + '<meta name="apple-mobile-web-app-capable" content="yes">' + nl +
             tab + '<meta name="apple-mobile-web-app-status-bar-style" content="black" />' + nl +
             tab + '<link rel="apple-touch-icon" href="/content/treehouse-icon.png">' + nl +

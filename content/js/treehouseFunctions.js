@@ -3,16 +3,17 @@ function checkUser() {
     checkUserOnServer(
         function(data) {
             if (data == "ok") { //TODO: use ajax success/error instead
-                openAchievements();
-            } else $("#message").html(data);
+                openAchievements()
+            } else $("#message").html(data)
         }
     )
 }
 
 function checkUserOnServer(callback) {
-    var username = $("input[name=username]"); 
-    var password = $("input[name=password]");  
-    var data = "username=" + username.val() + "&password=" + password.val();
+    var username = $("input[name=username]")
+    var password = $("input[name=password]")
+    var remember_me = $("input[name=remember_me]").is(":checked")
+    var data = "username=" + username.val() + "&password=" + password.val() + "&remember_me=" + remember_me
 
     $.ajax("/checkUser", {     
         type: "GET",
@@ -20,13 +21,18 @@ function checkUserOnServer(callback) {
         dataType: "json",
         success: function(data) { if ( callback ) callback(data); },
         error  : function()     { if ( callback ) callback(null); }
-    });       
+    })
 }
 
 /******************  logout functions  ******************/
 function logout() {
-    $.ajax("/logout");
-    insertContent(getLoginContent());
+    $.ajax("/logout", {
+        type: "GET",
+        dataType: "json",
+        success: function() { insertContent(getLoginContent()) },
+        error  : function() { insertContent(getLoginContent()) }
+
+    });
 }
 
 /******************  signup functions  ******************/
@@ -34,36 +40,36 @@ function signup() {
     signupOnServer(
         function(data) {
             if (data == "ok") {
-                openAchievements();
-            } else $("#message").html(data);
+                openAchievements()
+            } else $("#message").html(data)
         }
     )
 }
 
 function signupOnServer(callback) {
-    var username = $("input[name=username]");
-    var password = $("input[name=password]");
-    var data = "username=" + username.val() + "&password=" + password.val();
+    var username = $("input[name=username]")
+    var password = $("input[name=password]")
+    var data = "username=" + username.val() + "&password=" + password.val()
 
     $.ajax("/signup", {
         type: "GET",
         data: data,
         dataType: "json",
-        success: function(data) { if ( callback ) callback(data); },
-        error  : function()     { if ( callback ) callback(null); }
+        success: function(data) { if ( callback ) callback(data) },
+        error  : function()     { if ( callback ) callback(null) }
     });
 }
 
 /******************  achievements functions  ******************/
 function openAchievements() {
-    window.history.pushState(null, null, "/");
-    insertContent(getAchievementsContent(), getAchievements);
+    window.history.pushState(null, null, "/")
+    insertContent(getAchievementsContent(), getAchievements)
 }
 
 function getAchievements() {
     getAchievementsFromServer(
         function(data) {
-            $("#achievementList").html(data);
+            $("#achievementList").html(data)
         }
     )
 }
@@ -72,30 +78,30 @@ function getAchievementsFromServer(callback) {
     $.ajax("/achievements", {
         type: "GET",
         dataType: "json",
-        success: function(data) { if ( callback ) callback(data); },
-        error  : function()     { if ( callback ) callback(null); }
+        success: function(data) { if ( callback ) callback(data) },
+        error  : function()     { if ( callback ) callback(null) }
     });
 }
 
 /******************  achievement functions  ******************/
 function openAchievement(achievementId, userId, publiclyVisible) {
-    window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + userId);
-    insertContent(getAchievementContent(), getAchievement, achievementId, userId, publiclyVisible);
+    window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + userId)
+    insertContent(getAchievementContent(), getAchievement, achievementId, userId, publiclyVisible)
 }
 
 function getAchievement(achievementId, userId, publiclyVisible) {
     getAchievementFromServer(
         function(data) {
-            $('meta[propery="og:url"]').attr('content', 'www.treehouse.io/achievement?achievementId=' + achievementId + '&userId=' + userId);
-            $("#achievementDesc").html(data);
+            $('meta[propery="og:url"]').attr('content', 'www.treehouse.io/achievement?achievementId=' + achievementId + '&userId=' + userId)
+            $("#achievementDesc").html(data)
             if (publiclyVisible) {
-                $("#publicizeButton").empty().remove();
+                $("#publicizeButton").empty().remove()
                 jQuery.getScript('http://connect.facebook.net/en_US/all.js', function() {
-                    FB.init({status: true, cookie: true, xfbml: true});
-                    $("#fbLike").show();
-                });
+                    FB.init({status: true, cookie: true, xfbml: true})
+                    $("#fbLike").show()
+                })
             } else {
-                $("#fbLike").hide();
+                $("#fbLike").hide()
             }
         }, achievementId, userId
     )

@@ -24,7 +24,6 @@ var mongooseSessionStore = new sessionMongoose({
 app.configure(function() {
     app.use(express.bodyParser());
     app.use(express.cookieParser());
-
     app.use(express.favicon('/content/favicon.ico'));
     app.use(express.session({ store: mongooseSessionStore, secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4' }));
     app.use(app.router);
@@ -42,6 +41,7 @@ var user = require('./models/user.js'),
     achievement = require('./models/achievement.js'),
     goal = require('./models/goal.js'),
     progress = require('./models/progress.js');
+    loginToken = require('./models/loginToken.js'),
     requestHandlers = require('./code/requestHandlers.js');
     staticFiles = require('./code/staticFiles.js');
 
@@ -51,18 +51,44 @@ function loadUser(request, response, next) {
             if (user) {
                 next();
             } else {
-                console.log("logged out 1")
                 response.writeHead(200, {'content-type': 'application/json' });
                 response.write(JSON.stringify(err.message));
                 response.end('\n', 'utf-8');
             }
         });
     } else {
-        console.log("logged out 2")
         response.writeHead(200, {'content-type': 'application/json' });
         response.write(JSON.stringify("logged out 2"));
         response.end('\n', 'utf-8');
     }
+}
+
+function authenticateFromLoginToken(request, response) {
+    var cookie = JSON.parse(request.cookies.rememberme)
+    loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
+            if (!token) {
+                response.writeHead(200, {'content-type': 'application/json' });
+                response.write(JSON.stringify("logged out 3"));
+                response.end('\n', 'utf-8');
+                return;
+            }
+
+            user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
+                if (user) {
+                    request.session.user_id = user.id
+
+                    token.token = loginToken.randomToken()
+                    token.save(function() {
+                        response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 2 * 604800000), path: '/' })
+                        writeAchievementsPage(response)
+                    });
+                } else {
+                    response.writeHead(200, {'content-type': 'application/json' });
+                    response.write(JSON.stringify("logged out 2"));
+                    response.end('\n', 'utf-8');
+                }
+            });
+        });
 }
 
 var port = process.env.PORT || 1337;
@@ -70,48 +96,69 @@ app.listen(port);
 console.log('Treehouse server started on port ' + port);
 
 app.get('/content/*', function(request, response){
-    staticFiles.serve("." + request.url, response)   ;
+    staticFiles.serve("." + request.url, response)
 });
 
 app.get('/treehouse.manifest', function(request, response){
-    staticFiles.serve("." + request.url, response)   ;
+    staticFiles.serve("." + request.url, response)
 });
 
 app.get('/', function(request, response){
-    writeLoginPage(response);
+    if (request.cookies.rememberme) {
+        authenticateFromLoginToken(request, response)
+    } else {
+        writeLoginPage(response)
+    }
 });
 
 app.get('/checkUser', function(request, response){
     user.User.findOne({ username: request.query.username.toLowerCase(), password: request.query.password }, function(err,myUser) {
         if (myUser != null) {
-            request.session.user_id = myUser._id;
-            response.writeHead(200, {'content-type': 'application/json' });
-            response.write(JSON.stringify('ok'));
-            response.end('\n', 'utf-8');
+            request.session.user_id = myUser._id
+            request.session.user_email = myUser.username
+            if (request.query.remember_me == "true") {
+                loginToken.createToken(myUser.username, function(myToken) {
+                    response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 2 * 604800000), path: '/' }) //604800000 equals one week
+                    response.write(JSON.stringify('ok'))
+                    response.end('\n', 'utf-8')
+                });
+            }  else {
+                response.writeHead(200, {'content-type': 'application/json' })
+                response.write(JSON.stringify('ok'))
+                response.end('\n', 'utf-8')
+            }
         } else {
-            request.session.destroy();
-            response.writeHead(200, {'content-type': 'application/json' });
-            response.write(JSON.stringify('Username or password unknown.'));
-            response.end('\n', 'utf-8');
+            request.session.destroy()
+            response.writeHead(200, {'content-type': 'application/json' })
+            response.write(JSON.stringify('Username or password unknown.'))
+            response.end('\n', 'utf-8')
         }
     });
 });
 
 app.get('/logout', function(request, response){
-    request.session.destroy();
+    if (request.session) {
+        response.clearCookie('rememberme', null)
+        loginToken.remove(request.session.user_email)
+        request.session.destroy()
+
+        response.writeHead(200, {'content-type': 'application/json' })
+        response.write(JSON.stringify('ok'))
+        response.end('\n', 'utf-8')
+    }
 });
 
 app.get('/signup', function(request, response){
     user.createUser(request.query.username.toLowerCase(), request.query.password, function (myUser,err) {
         if (err) {
-            response.writeHead(200, {'content-type': 'application/json' });
-            response.write(JSON.stringify(err.message));
-            response.end('\n', 'utf-8');
+            response.writeHead(200, {'content-type': 'application/json' })
+            response.write(JSON.stringify(err.message))
+            response.end('\n', 'utf-8')
         }  else {
-            request.session.user_id = myUser._id;
-            response.writeHead(200, {'content-type': 'application/json' });
-            response.write(JSON.stringify('ok'));
-            response.end('\n', 'utf-8');
+            request.session.user_id = myUser._id
+            response.writeHead(200, {'content-type': 'application/json' })
+            response.write(JSON.stringify('ok'))
+            response.end('\n', 'utf-8')
         }
     });
 });
@@ -393,7 +440,11 @@ app.get('/newAchievement', function(request, response){
 });
 
 function writeLoginPage(response) {
-    requestHandlers.indexPage(response);
+    requestHandlers.indexPage(response, false);
+}
+
+function writeAchievementsPage(response) {
+    requestHandlers.indexPage(response, true);
 }
 
 app.get('*', function(request, response){
