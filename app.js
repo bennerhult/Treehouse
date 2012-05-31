@@ -7,12 +7,12 @@ var fs = require('fs'),
 app = express.createServer();
 
 app.configure('development', function() {
-    console.log("Treehouse in development mode.");
+    console.log("Treehouse in dev mode.");
     app.set('db-uri', 'mongodb://localhost:27017/test');
 });
 
 app.configure('production', function() {
-    console.log("Treehouse in production mode.");
+    console.log("Treehouse in prod mode.");
     app.set('db-uri', 'mongodb://treehouser:applehorsegreenwtfanything@staff.mongohq.com:10005/app4109808');
 });
 
