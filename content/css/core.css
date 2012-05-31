@@ -327,17 +327,20 @@ body{
     z-index: 1;
     top: 0px;
 
-    background-color: rgb(124,126,127);
-    background-image: -moz-linear-gradient(bottom, rgb(124,126,127) 18%, rgb(111,114,115) 51%, rgb(124,126,127) 57%);
-    background-image: -webkit-linear-gradient(bottom, rgb(124,126,127) 18%, rgb(111,114,115) 51%, rgb(124,126,127) 57%);
+    background-color: rgb(145,132,88);
+    background-image: linear-gradient(bottom, rgb(145,132,88) 17%, rgb(121,111,73) 49%, rgb(145,132,88) 52%);
+    background-image: -o-linear-gradient(bottom, rgb(145,132,88) 17%, rgb(121,111,73) 49%, rgb(145,132,88) 52%);
+    background-image: -moz-linear-gradient(bottom, rgb(145,132,88) 17%, rgb(121,111,73) 49%, rgb(145,132,88) 52%);
+    background-image: -webkit-linear-gradient(bottom, rgb(145,132,88) 17%, rgb(121,111,73) 49%, rgb(145,132,88) 52%);
+    background-image: -ms-linear-gradient(bottom, rgb(145,132,88) 17%, rgb(121,111,73) 49%, rgb(145,132,88) 52%);
 
     background-image: -webkit-gradient(
         linear,
         left bottom,
         left top,
-        color-stop(0.18, rgb(124,126,127)),
-        color-stop(0.51, rgb(111,114,115)),
-        color-stop(0.57, rgb(124,126,127))
+        color-stop(0.17, rgb(145,132,88)),
+        color-stop(0.49, rgb(121,111,73)),
+        color-stop(0.52, rgb(145,132,88))
     );
     text-align: left;
     width: 100%;
