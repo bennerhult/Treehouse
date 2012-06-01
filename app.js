@@ -7,6 +7,7 @@ var fs = require('fs'),
 app = express.createServer()
 
 app.configure('development', function() {
+<<<<<<< HEAD
     console.log("Treehouse in development mode.")
     app.set('db-uri', 'mongodb://localhost:27017/test')
 });
@@ -14,6 +15,15 @@ app.configure('development', function() {
 app.configure('production', function() {
     console.log("Treehouse in production mode.")
     app.set('db-uri', 'mongodb://treehouser:applehorsegreenwtfanything@staff.mongohq.com:10005/app4109808')
+=======
+    console.log("Treehouse in dev mode.");
+    app.set('db-uri', 'mongodb://localhost:27017/test');
+});
+
+app.configure('production', function() {
+    console.log("Treehouse in prod mode.");
+    app.set('db-uri', 'mongodb://treehouser:applehorsegreenwtfanything@staff.mongohq.com:10005/app4109808');
+>>>>>>> fa6276ae5a94fc778cf3ad825d074828da6fe61b
 });
 
 var mongooseSessionStore = new sessionMongoose({
