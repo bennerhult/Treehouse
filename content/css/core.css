@@ -857,7 +857,17 @@ a:visited{
     font: 11px Verdana, Geneva, Arial, Helvetica, sans-serif;
     font-size: 12px;
     color: #2c3524;
+}
 
+
+#web-footer a{
+    color: #239708;
+}
+
+#web-footer a:hover,
+#web-footer a:hover{
+    color: #000;
+    text-decoration: underline;
 }
 
 a:hover,
