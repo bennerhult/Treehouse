@@ -233,7 +233,7 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
                         goalTextsText += goalText;
                         if (index == goalTexts.length - 1) {
                             var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100;
-                            achievementDesc += '<div class="achievement-info"><div class="textarea"><h2>'
+                            achievementDesc += '<div class="achievement-info"><div class="textarea"><span>&nbsp;</span><h2>'
                                 + currentAchievement.title
                                 + '</h2><p id="achievementDescription">'
                                 + currentAchievement.description
@@ -254,10 +254,10 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
                             achievementDesc += '<div id="fbLike" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="250" data-show-faces="true" font="segoe ui"></div></div>';
                             achievementDesc += '<br />';
                             achievementDesc += '<br />';
-                            achievementDesc += '<p>';
-                            achievementDesc += 'Creator: ' + currentAchievement.createdBy + '<br />';
+                            achievementDesc += '<p class="user">';
+                            achievementDesc += '<span>Creator</span> ' + currentAchievement.createdBy + '</p><p class="user">';
                             user.User.findOne({ _id:  currentUserId}, function(err,myUser) {
-                                achievementDesc += 'Achiever: ' + myUser.username;
+                                achievementDesc += '<span>Achiever</span> ' + myUser.username;
                                 achievementDesc += '</p>';
                                 response.write(JSON.stringify(achievementDesc));
                                 response.end('\n', 'utf-8');
