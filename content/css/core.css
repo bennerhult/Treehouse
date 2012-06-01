@@ -177,7 +177,7 @@ body{
     -webkit-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
     box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
     margin-right: 1.886792%;     /*20px / 1060px*/
-    background-color: #f4f4f4;
+    background-color: #fdf8f1;
 }
 
 
@@ -291,7 +291,7 @@ body{
 }
 
 #infoArea {
-    background-color: #f4f4f4;
+    background-color: #fff;
     min-height: 648px;
 
 
