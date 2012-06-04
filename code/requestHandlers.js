@@ -1,9 +1,9 @@
 var nl = '\n';
 var tab = '\t';
 
-function indexPage(response, rememberedMe) {
+function indexPage(response) {
     response.writeHead(200, { 'Content-Type': 'text/html' });
-    response.end(topIndexPart(rememberedMe) + bottomPart(), 'utf-8');
+    response.end(topIndexPart() + bottomPart(), 'utf-8');
 }
 
 function publicAchievementPage(response, userId, currentAchievementId, url, imageUrl, title) {
@@ -12,7 +12,7 @@ function publicAchievementPage(response, userId, currentAchievementId, url, imag
     response.end('\n', 'utf-8');
 }
 
-function topIndexPart(rememberedMe) {
+function topIndexPart() {
             var text = '<!DOCTYPE html>' + nl +
             tab + '<html manifest="treehouse.manifest">' + nl +
                 tab + '<head>' + nl +
@@ -34,17 +34,11 @@ function topIndexPart(rememberedMe) {
                     tab + '<link href="http://fonts.googleapis.com/css?family=Philosopher" rel="stylesheet" type="text/css">' + nl +
                     tab + '<link href="http://fonts.googleapis.com/css?family=Dosis" rel="stylesheet" type="text/css">' + nl +
                     tab + '<script type="text/javascript">' + nl +
-                    tab + '$(document).ready(function() {';
-                      if (rememberedMe) {
-                          text += 'openAchievements()'
-
-                      }   else {
-                          text += 'insertContent(getLoginContent(), function() {'  + nl +
-                          'setTimeout(function(){addToHome.show(false)}, 100)' + nl +
-                              tab + '})' + nl +
-                              tab + 'initListeners()'
-                      }
-                    text +=  '})</script>' + nl +
+                    tab + '$(document).ready(function() {' + nl
+                        text += 'setTimeout(function(){addToHome.show(false)}, 100)' + nl
+                        text += 'initListeners()' + nl
+                        text += 'rememberMe()'
+                        text +=  '})</script>' + nl +
                 tab + '</head>' + nl +
                 tab + ' <body>' + nl +
                 '<div id="page">' + nl +

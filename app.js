@@ -7,7 +7,6 @@ var fs = require('fs'),
 app = express.createServer()
 
 app.configure('development', function() {
-<<<<<<< HEAD
     console.log("Treehouse in development mode.")
     app.set('db-uri', 'mongodb://localhost:27017/test')
 });
@@ -15,7 +14,6 @@ app.configure('development', function() {
 app.configure('production', function() {
     console.log("Treehouse in production mode.")
     app.set('db-uri', 'mongodb://treehouser:applehorsegreenwtfanything@staff.mongohq.com:10005/app4109808')
-=======
     console.log("Treehouse in dev mode.");
     app.set('db-uri', 'mongodb://localhost:27017/test');
 });
@@ -23,7 +21,6 @@ app.configure('production', function() {
 app.configure('production', function() {
     console.log("Treehouse in prod mode.");
     app.set('db-uri', 'mongodb://treehouser:applehorsegreenwtfanything@staff.mongohq.com:10005/app4109808');
->>>>>>> fa6276ae5a94fc778cf3ad825d074828da6fe61b
 });
 
 var mongooseSessionStore = new sessionMongoose({
@@ -34,10 +31,9 @@ var mongooseSessionStore = new sessionMongoose({
 app.configure(function() {
     app.use(express.bodyParser())
     app.use(express.cookieParser())
-    app.use(express.favicon('/content/favicon.ico'))
+    //app.use(express.favicon('/content/favicon.ico'))
     app.use(express.session({ store: mongooseSessionStore, secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4' }))
-    app.use(app.router)
-    app.use(express.static(__dirname + '/content'))
+    //app.use(app.router)
 });
 
 var dburi = app.set('db-uri')
@@ -55,7 +51,6 @@ var user = require('./models/user.js'),
     staticFiles = require('./code/staticFiles.js')
 
 function loadUser(request, response, next) {
-    console.log("loadUser")
     if (request.session.user_id) {
         user.User.findById(request.session.user_id, function(err, user) {
             if (user) {
@@ -73,17 +68,16 @@ function loadUser(request, response, next) {
     }
 }
 
-function authenticateFromLoginToken(request, response) {
-    console.log("authenticateFromLoginToken")
-    var cookie = JSON.parse(request.cookies.rememberme)
-    loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
+function authenticateFromLoginToken(request, response, initialCall) {
+    if (request.cookies.rememberme)  {
+        var cookie = JSON.parse(request.cookies.rememberme)
+        loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
             if (!token) {
                 response.writeHead(200, {'content-type': 'application/json' })
                 response.write(JSON.stringify("logged out 3"))
                 response.end('\n', 'utf-8')
                 return;
             }
-            console.log("token: " + token.email.toLowerCase())
             user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
                 if (user) {
                     request.session.user_id = user.id
@@ -91,7 +85,13 @@ function authenticateFromLoginToken(request, response) {
                     token.token = loginToken.randomToken()
                     token.save(function() {
                         response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 2 * 604800000), path: '/' })
-                        writeAchievementsPage(response)
+                         if (initialCall) {
+                             writeAchievementsPage(response)
+                         }   else {
+                             response.writeHead(200, {'content-type': 'application/json' })
+                             response.write(JSON.stringify("ok"))
+                             response.end('\n', 'utf-8')
+                         }
                     });
                 } else {
                     response.writeHead(200, {'content-type': 'application/json' })
@@ -100,6 +100,11 @@ function authenticateFromLoginToken(request, response) {
                 }
             });
         });
+    }  else {
+        response.writeHead(200, {'content-type': 'application/json' })
+        response.write(JSON.stringify("logged out 4"))
+        response.end('\n', 'utf-8')
+    }
 }
 
 var port = process.env.PORT || 1337
@@ -116,12 +121,14 @@ app.get('/treehouse.manifest', function(request, response){
 
 app.get('/', function(request, response){
     if (request.cookies.rememberme) {
-        console.log("cookie")
-        authenticateFromLoginToken(request, response)
+        authenticateFromLoginToken(request, response, true)
     } else {
-        console.log("no cookie")
         writeLoginPage(response)
     }
+});
+
+app.get('/rememberMe', function(request, response){
+    authenticateFromLoginToken  (request, response, false);
 });
 
 app.get('/checkUser', function(request, response){
@@ -155,9 +162,7 @@ app.get('/logout', function(request, response){
         loginToken.remove(request.session.user_email)
         request.session.destroy()
 
-        response.writeHead(200, {'content-type': 'application/json' })
-        response.write(JSON.stringify('ok'))
-        response.end('\n', 'utf-8')
+        requestHandlers.indexPage(response)
     }
 });
 
@@ -445,11 +450,11 @@ app.get('/newAchievement', function(request, response){
 })
 
 function writeLoginPage(response) {
-    requestHandlers.indexPage(response, false)
+    requestHandlers.indexPage(response)
 }
 
 function writeAchievementsPage(response) {
-    requestHandlers.indexPage(response, true)
+    requestHandlers.indexPage(response)
 }
 
 app.get('*', function(request, response){

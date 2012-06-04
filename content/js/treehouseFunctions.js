@@ -19,8 +19,32 @@ function checkUserOnServer(callback) {
         type: "GET",
         data: data,
         dataType: "json",
-        success: function(data) { if ( callback ) callback(data); },
-        error  : function()     { if ( callback ) callback(null); }
+        success: function(data) { if ( callback ) callback(data) },
+        error  : function()     { if ( callback ) callback(null) }
+    })
+}
+
+
+function rememberMe() {
+    rememberMeOnServer(
+        function(data) {
+            if (data == "ok") { //TODO: use ajax success/error instead
+                openAchievements()
+            }  else {
+                insertContent(getLoginContent())
+            }
+        }
+    )
+}
+
+
+function rememberMeOnServer(callback) {
+
+    $.ajax("/rememberMe", {
+        type: "GET",
+        dataType: "json",
+        success: function(data) { if ( callback ) callback(data) },
+        error  : function()     { if ( callback ) callback(null) }
     })
 }
 
@@ -32,7 +56,7 @@ function logout() {
         success: function() { insertContent(getLoginContent()) },
         error  : function() { insertContent(getLoginContent()) }
 
-    });
+    })
 }
 
 /******************  signup functions  ******************/
@@ -130,25 +154,25 @@ function getAchievementFromServer(callback,achievementId, userId) {
     $.ajax("/achievementFromServer?achievementId= " + achievementId + "&userId=" + userId, {
         type: "GET",
         dataType: "json",
-        success: function(data) { if ( callback ) callback(data); },
-        error  : function()     { if ( callback ) callback(null); }
-    });
+        success: function(data) { if ( callback ) callback(data) },
+        error  : function()     { if ( callback ) callback(null) }
+    })
 }
 
 function progress(goalId, quantityTotal) {
     progressOnServer(function(quantityFinished) {
         achievementPercentageFinishedFromServer(function(achievementPercentageFinished) {
-            $("#progressbar").html("<span class='progress' style='width:" + achievementPercentageFinished + "%;'></span>");
+            $("#progressbar").html("<span class='progress' style='width:" + achievementPercentageFinished + "%;'></span>")
 
-            var goalPercentageFinished = (quantityFinished / quantityTotal) * 100;
-            $("#progressbar-goal" + goalId).html("<span class='progress' style='width:" + goalPercentageFinished + "%;'></span>");
-            $("#countarea" + goalId).html("<h3>" + quantityFinished + "/" + quantityTotal + "</h3>");
+            var goalPercentageFinished = (quantityFinished / quantityTotal) * 100
+            $("#progressbar-goal" + goalId).html("<span class='progress' style='width:" + goalPercentageFinished + "%;'></span>")
+            $("#countarea" + goalId).html("<h3>" + quantityFinished + "/" + quantityTotal + "</h3>")
             if (goalPercentageFinished >= 100) {
-                $("#addbutton" + goalId).html("");
+                $("#addbutton" + goalId).html("")
             }  else {
                 $("#addbutton" + goalId).html('<a href="javascript:void(0)" onclick="progress(\'' + goalId + '\', \'' +  quantityTotal + '\')">'
                     + '<img src="content/img/+.png" alt="I did it!"/>'
-                    + '</a>');
+                    + '</a>')
             }
         })
     }, goalId)
@@ -158,30 +182,30 @@ function achievementPercentageFinishedFromServer(callback) {
     $.ajax("/achievementPercentage", {
         type: "GET",
         dataType: "json",
-        success: function(data) { if ( callback ) callback(data); },
-        error  : function()     { if ( callback ) callback(null); }
-    });
+        success: function(data) { if ( callback ) callback(data) },
+        error  : function()     { if ( callback ) callback(null) }
+    })
 }
 
 function progressOnServer(callback, goalId) {
-    var data = "goalId=" + goalId;
+    var data = "goalId=" + goalId
     $.ajax("/progress", {
         type: "GET",
         data: data,
         dataType: "json",
-        success: function(data) { if ( callback ) callback(data); },
-        error  : function()     { if ( callback ) callback(null); }
-    });
+        success: function(data) { if ( callback ) callback(data) },
+        error  : function()     { if ( callback ) callback(null) }
+    })
 }
 
 function publicize() {
     publicizeOnServer(
         function() {
-            $("#publicizeButton").empty().remove();
+            $("#publicizeButton").empty().remove()
             jQuery.getScript('http://connect.facebook.net/en_US/all.js', function() {      //TODO: store locally
                 FB.init({status: true, cookie: true, xfbml: true});
-                $("#fbLike").show();
-            });
+                $("#fbLike").show()
+            })
         }
     )
 }
@@ -190,69 +214,69 @@ function publicizeOnServer(callback) {
     $.ajax("/publicize", {
         type: "GET",
         dataType: "json",
-        success: function() { if ( callback ) callback(); },
-        error  : function()     { if ( callback ) callback(null); }
-    });
+        success: function() { if ( callback ) callback() },
+        error  : function()     { if ( callback ) callback(null) }
+    })
 }
 /******************  new achievement functions  ******************/
 function createAchievement() {
    createAchievementOnServer(
     function(data) {
             if (data == "ok") { //TODO: use ajax success/error instead
-                openAchievements();
+                openAchievements()
             }
         }
     )
 }
 
 function createAchievementOnServer(callback) {
-    var nrOfGoals =  $('#goalTable tr').length;
-    var data = "currentImage=" + $("#achievementImage").attr("src");
-    var goalTitles = new Array();
-    var goalQuantities = new Array();
+    var nrOfGoals =  $('#goalTable tr').length
+    var data = "currentImage=" + $("#achievementImage").attr("src")
+    var goalTitles = new Array()
+    var goalQuantities = new Array()
     $("form#createAchievementForm :input").each(function(i, field) {
         if (field.name) {
             if (field.name.indexOf("goalTitle") == 0) {
-                goalTitles.push(field.value);
+                goalTitles.push(field.value)
             } else if (field.name.indexOf("goalQuantity") == 0) {
-                goalQuantities.push( field.value);
+                goalQuantities.push(field.value)
             } else {
-                data += "&";
-                data +=  field.name;
-                data += "=";
-                data +=  field.value;
+                data += "&"
+                data +=  field.name
+                data += "="
+                data +=  field.value
             }
         }
-    });
+    })
 
     for (var i in goalTitles) {     //if any goaltitles are empty, remove goal
         if (!goalTitles[i]) {
-            goalTitles.splice(i, 1);
-            goalQuantities.splice(i, 1);
+            goalTitles.splice(i, 1)
+            goalQuantities.splice(i, 1)
         }
     }
 
     for (var j in goalQuantities) {    //if any goalquantities are empty, remove goal
         if (!goalQuantities[j]) {
-            goalTitles.splice(j, 1);
-            goalQuantities.splice(j, 1);
+            goalTitles.splice(j, 1)
+            goalQuantities.splice(j, 1)
         }
     }
 
-    goalTitles = JSON.stringify(goalTitles);
-    data += "&goalTitles=" + goalTitles;
-    data += "&goalQuantities=" + goalQuantities;
+    goalTitles = JSON.stringify(goalTitles)
+    data += "&goalTitles=" + goalTitles
+    data += "&goalQuantities=" + goalQuantities
 
     $.ajax("/newAchievement", {
         type: "GET",
         data: data,
         dataType: "json",
-        success: function(data) { if ( callback ) callback(data); },
-        error  : function()     { if ( callback ) callback(null); }
-    });
+        success: function(data) { if ( callback ) callback(data) },
+        error  : function()     { if ( callback ) callback(null) }
+    })
 }
 
-var images = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png"];
+var images = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png"]
 var imagePath= "content/img/achievementImages/";
 function toggleImage(step) {
     var currentImage = $("#achievementImage").attr("src").replace(imagePath, "");
@@ -295,7 +319,7 @@ function deleteAchievement() {
     deleteAchievementOnServer(
         function(data) {
             if (data == "ok") { //TODO: use ajax success/error instead
-                openAchievements();
+                openAchievements()
             }
         }
     )
@@ -305,7 +329,7 @@ function deleteAchievementOnServer(callback) {
     $.ajax("/delete", {
         type: "GET",
         dataType: "json",
-        success: function(data) { if ( callback ) callback(data); },
-        error  : function()     { if ( callback ) callback(null); }
-    });
+        success: function(data) { if ( callback ) callback(data) },
+        error  : function()     { if ( callback ) callback(null) }
+    })
 }
