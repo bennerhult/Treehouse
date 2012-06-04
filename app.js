@@ -297,7 +297,9 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
                     goalTexts.forEach(function(goalText, index) {
                         goalTextsText += goalText
                         if (index == goalTexts.length - 1) {
+
                             var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100
+
                             achievementDesc += '<div class="achievement-info"><div class="textarea"><h2>'
                                 + currentAchievement.title
                                 + '</h2><p id="achievementDescription">'

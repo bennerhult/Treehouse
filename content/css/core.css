@@ -578,18 +578,6 @@ input.file {
     position: relative;
 }
 
-.textarea span{
-    background-color: #f8c099;
-    width: 40%;
-    display: block;
-
-    position: absolute;
-    left: 7%;
-    top: 0px;
-    padding-top: 2px;
-    padding-bottom: 2px;
-}
-
 .textarea h2{
     padding-top: 2px;
 }
@@ -719,13 +707,14 @@ span.progress{
     -webkit-border-radius: 3px;
     border-radius: 3px;
 
-    background: #7fc976; /* Old browsers */
-    background: -moz-radial-gradient(center, ellipse cover,  #7fc976 0%, #64a356 100%); /* FF3.6+ */
-    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#7fc976), color-stop(100%,#64a356)); /* Chrome,Safari4+ */
-    background: -webkit-radial-gradient(center, ellipse cover,  #7fc976 0%,#64a356 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-radial-gradient(center, ellipse cover,  #7fc976 0%,#64a356 100%); /* Opera 12+ */
-    background: -ms-radial-gradient(center, ellipse cover,  #7fc976 0%,#64a356 100%); /* IE10+ */
-    background: radial-gradient(center, ellipse cover,  #7fc976 0%,#64a356 100%); /* W3C */
+    background: #a59277; /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover,  #a59277 0%, #7b674b 90%); /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#a59277), color-stop(90%,#7b674b)); /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover,  #a59277 0%,#7b674b 90%); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover,  #a59277 0%,#7b674b 90%); /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover,  #a59277 0%,#7b674b 90%); /* IE10+ */
+    background: radial-gradient(center, ellipse cover,  #a59277 0%,#7b674b 90%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a59277', endColorstr='#7b674b',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
 
     -moz-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
@@ -827,18 +816,15 @@ table tr td.quantity{
     width: 100%;
     background-color: #0c6032;
 
-    /*background-image: linear-gradient(bottom, rgb(255,255,255) 49%, rgb(192,192,192) 50%);
-     background-image: -o-linear-gradient(bottom, rgb(255,255,255) 49%, rgb(192,192,192) 50%);*/
-    background-image: -moz-linear-gradient(bottom, #97b790 49%, #478e3b 50%);
-    background-image: -webkit-linear-gradient(bottom, #97b790 49%,  #478e3b 50%);
-    /*background-image: -ms-linear-gradient(bottom, rgb(255,255,255) 49%, rgb(192,192,192) 50%);*/
 
+    background-image: -moz-linear-gradient(bottom, #ad9a82 49%, #5f4e36 50%);
+    background-image: -webkit-linear-gradient(bottom, #ad9a82 49%, #5f4e36 50%);
     background-image: -webkit-gradient(
         linear,
         left bottom,
         left top,
-        color-stop(0.49, #97b790),
-        color-stop(0.5,  #478e3b)
+        color-stop(0.49, #ad9a82),
+        color-stop(0.5, #5f4e36)
     );
 }
 
