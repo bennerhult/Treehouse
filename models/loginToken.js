@@ -39,11 +39,10 @@ function cookieValue(token) {
     return JSON.stringify({ email: token.email, token: token.token, series: token.series })
 }
 
-//TODO remove all tokens for one email
 function remove(email)    {
-    LoginToken.findOne({ email: email }, function(err, currentToken) {
-        if (currentToken)   {
-            currentToken.remove(function (err) {})
-        }
-    })
+    LoginToken.find({email: email}, function(err, tokens) {
+        tokens.forEach(function(currentToken ) {
+            currentToken.remove();
+        });
+    });
 }
