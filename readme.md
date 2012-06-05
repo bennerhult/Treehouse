@@ -84,5 +84,3 @@ Check logs
 
 [Express](http://expressjs.com/)
 
-[Backbone](http://documentcloud.github.com/backbone/)
-
