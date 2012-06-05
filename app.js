@@ -158,8 +158,6 @@ app.get('/logout', function(request, response){
 })
 
 app.get('/signup', function(request, response){
-
-
     user.createUser(request.query.username.toLowerCase(), request.query.password, function (myUser,err) {
         if (err) {
             response.writeHead(200, {'content-type': 'application/json' })
@@ -279,7 +277,6 @@ function finishAchievementsList(response, achievementsList) {
 app.get('/achievementFromServer', function(request, response){
     var url_parts = url.parse(request.url, true)
     var currentAchievementId = url_parts.query.achievementId.trim()
-    console.log("currentAchievementId: " + currentAchievementId);
     app.set('current_achievement_id', currentAchievementId)
     achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
         if (request.session.user_id) {
@@ -456,30 +453,38 @@ app.get('/newAchievement', function(request, response){
         var nrOfGoals =  request.query.nrOfGoals
         var titles= JSON.parse(request.query.goalTitles)
         var quantities=request.query.goalQuantities.split(',')
+        var numberInGoals = false;
         _.each(titles, function (title, i) {
             var goalToBeCreated  = goal.prepareGoal(title, quantities[i])
-            achievement.addGoalToAchievement(goalToBeCreated, motherAchievement, user._id)
+            if (_.isNaN(parseInt(quantities[i]))) {
+                numberInGoals = true;
+                response.writeHead(200, {'content-type': 'application/json' })
+                response.write(JSON.stringify("Incorrect number"))
+                response.end('\n', 'utf-8')
+            } else  {
+                achievement.addGoalToAchievement(goalToBeCreated, motherAchievement, user._id)
+            }
         })
-        achievement.save(motherAchievement, function(err) {
-              if (err) {
-                  response.writeHead(200, {'content-type': 'application/json' })
-                  response.write(JSON.stringify(getNewAchievementErrorMessage(err)))
-                  response.end('\n', 'utf-8')
-              }   else {
-                  response.writeHead(200, {'content-type': 'application/json' })
-                  response.write(JSON.stringify('ok'))
-                  response.end('\n', 'utf-8')
-              }
-        })
+        if (!numberInGoals) {
+            achievement.save(motherAchievement, function(err) {
+                if (err) {
+                    response.writeHead(200, {'content-type': 'application/json' })
+                    response.write(JSON.stringify(getNewAchievementErrorMessage(err)))
+                    response.end('\n', 'utf-8')
+                }   else {
+                    response.writeHead(200, {'content-type': 'application/json' })
+                    response.write(JSON.stringify('ok'))
+                    response.end('\n', 'utf-8')
+                }
+            })
+        }
 
     })
 })
 
 function getNewAchievementErrorMessage (err){
     var errorMessage = "Oops, something went wrong!"
-
     if (err.errors) {
-        console.log('err' + err.errors.toString());
         if (err.errors.title) {
             if (err.errors.title.type == 'required') {
                 errorMessage  = "No title, no achievement."
