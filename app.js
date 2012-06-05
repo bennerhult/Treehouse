@@ -202,7 +202,7 @@ function getSignupErrorMessage (err){
             }
         }
     }
-    console.log(err.errors)
+
     return errorMessage
 }
 
