@@ -454,24 +454,32 @@ app.get('/newAchievement', function(request, response){
         var titles= JSON.parse(request.query.goalTitles)
         var quantities=request.query.goalQuantities.split(',')
         var numberInGoals = false;
+        var progressesToInit = new Array();
         _.each(titles, function (title, i) {
-            var goalToBeCreated  = goal.prepareGoal(title, quantities[i])
             if (_.isNaN(parseInt(quantities[i]))) {
                 numberInGoals = true;
                 response.writeHead(200, {'content-type': 'application/json' })
                 response.write(JSON.stringify("Incorrect number"))
                 response.end('\n', 'utf-8')
-            } else  {
-                achievement.addGoalToAchievement(goalToBeCreated, motherAchievement, user._id)
             }
         })
         if (!numberInGoals) {
+            _.each(titles, function (title, i) {
+                var goalToBeCreated  = goal.prepareGoal(title, quantities[i])
+                achievement.addGoalToAchievement(goalToBeCreated, motherAchievement, user._id, function (progress) {
+                    progressesToInit.push(progress)
+                } )
+            })
             achievement.save(motherAchievement, function(err) {
                 if (err) {
                     response.writeHead(200, {'content-type': 'application/json' })
                     response.write(JSON.stringify(getNewAchievementErrorMessage(err)))
                     response.end('\n', 'utf-8')
                 }   else {
+                    _.each(progressesToInit, function (progress, i) {
+                        progress.save(function (err) {
+                        })
+                    })
                     response.writeHead(200, {'content-type': 'application/json' })
                     response.write(JSON.stringify('ok'))
                     response.end('\n', 'utf-8')

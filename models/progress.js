@@ -29,14 +29,15 @@ function markProgress(achiever_id, goal_id, next) {
     })
 }
 
-function createProgress(achiever_id, achievement_id, goal_id) {
+function createProgress(achiever_id, achievement_id, goal_id, callback) {
     var progress = new Progress()
     progress.achiever_id = achiever_id
     progress.achievement_id = achievement_id
     progress.goal_id = goal_id
     progress.quantityFinished = 0
-    progress.save(function (err) {
-    })
+    callback (progress);
+    /*progress.save(function (err) {
+    })*/
 }
 
 function removeProgress(achievement_id, user_id, next) {

@@ -38,9 +38,9 @@ function createAchievement(createdBy, title, description, imageURL) {
     return achievement
 }
 
-function addGoalToAchievement(goal, achievement, userId) {
+function addGoalToAchievement(goal, achievement, userId, callback) {
     achievement.goals.push(goal)
-    progress.createProgress(userId, achievement._id, goal._id)
+    progress.createProgress(userId, achievement._id, goal._id, callback)
 }
 
 function save(achievement, callback) {
