@@ -1,5 +1,4 @@
 var nl = '\n'
-var tab = '\t'
 
 function insertContent(content, callback, achievementId, userId, publicView) {
     $("#contentArea").html(content)

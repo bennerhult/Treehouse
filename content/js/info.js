@@ -1,5 +1,4 @@
 var nl = '\n'
-var tab = '\t'
 
 function initListeners() {
     $("#web-menu ul li a span").click(function(){
