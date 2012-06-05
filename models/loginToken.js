@@ -18,7 +18,7 @@ module.exports = {
     createToken: createToken,
     cookieValue: cookieValue,
     remove: remove
-};
+}
 
 function createToken(email, next) {
     var loginToken = new LoginToken()
@@ -42,7 +42,7 @@ function cookieValue(token) {
 function remove(email)    {
     LoginToken.find({email: email}, function(err, tokens) {
         tokens.forEach(function(currentToken ) {
-            currentToken.remove();
-        });
-    });
+            currentToken.remove()
+        })
+    })
 }

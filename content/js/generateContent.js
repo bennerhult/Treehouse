@@ -17,7 +17,7 @@ function getLoginContent() {
     return (
             '<div id="content">' + nl +
                 '<div class="signup-logo"><img src="content/img/logo-large.png" /></div>' + nl +
-                '<form action="javascript: checkUser();">' + nl +
+                '<form action="javascript: checkUser()">' + nl +
                     '<input type="text" class="formstyle" name="username" placeholder="email"">' + nl +
                     '<span id="passwordSpan">' + nl +
                         '<input type="password" class="formstyle" name="password" placeholder="password">' + nl +
@@ -39,7 +39,7 @@ function getSignupContent() {
             '<div id="content">' + nl +
                 '<div class="signup-logo"><img src="content/img/logo-large.png" /></div>' + nl +
                 '<h1 class="signup">Sign Up</h1>' + nl +
-                '<form action="javascript: signup();">' + nl +
+                '<form action="javascript: signup()">' + nl +
                     '<input type="text" class="formstyle" name="username" placeholder="email">' + nl +
                     '<input type="password" class="formstyle" name="password" placeholder="password">' + nl +
                     '<div id="message"></div>' + nl +
@@ -68,11 +68,11 @@ function getAchievementContent() {
     return (
         '<div id="fb-root"></div>' + nl  +
         '<script>(function(d, s, id) { ' + nl  +
-        'var js, fjs = d.getElementsByTagName(s)[0]; ' + nl  +
-        'if (d.getElementById(id)) return;' + nl  +
-        'js = d.createElement(s); js.id = id;' + nl  +
-        'js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";' + nl  +
-        'fjs.parentNode.insertBefore(js, fjs);' + nl  +
+        'var js, fjs = d.getElementsByTagName(s)[0]' + nl  +
+        'if (d.getElementById(id)) return' + nl  +
+        'js = d.createElement(s) js.id = id' + nl  +
+        'js.src = "//connect.facebook.net/en_US/all.js#xfbml=1"' + nl  +
+        'fjs.parentNode.insertBefore(js, fjs)' + nl  +
         '}(document, "script", "facebook-jssdk"))</script>' + nl  +
         '<div id="app-container">' + nl  +
             '<div id="content no-padding">' + nl  +
@@ -95,9 +95,9 @@ function getPublicAchievementContent() {
         '<script>(function(d, s, id) { ' + nl  +
         'var js, fjs = d.getElementsByTagName(s)[0]' + nl  +
         'if (d.getElementById(id)) return' + nl  +
-        'js = d.createElement(s); js.id = id;' + nl  +
-        'js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";' + nl  +
-        'fjs.parentNode.insertBefore(js, fjs);' + nl  +
+        'js = d.createElement(s) js.id = id' + nl  +
+        'js.src = "//connect.facebook.net/en_US/all.js#xfbml=1"' + nl  +
+        'fjs.parentNode.insertBefore(js, fjs)' + nl  +
         '}(document, "script", "facebook-jssdk"))</script>' + nl  +
         '<div id="app-container">' + nl  +
             '<div id="content no-padding">' + nl  +

@@ -5,7 +5,7 @@ function initListeners() {
     $("#web-menu ul li a span").click(function(){
         $('#web-menu ul li a span').removeClass('selected')
         $(this).addClass('selected')
-    });
+    })
 }
 
 function showInfo(content) {

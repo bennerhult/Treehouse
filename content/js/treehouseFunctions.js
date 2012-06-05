@@ -81,7 +81,7 @@ function signupOnServer(callback) {
         dataType: "json",
         success: function(data) { if ( callback ) callback(data) },
         error  : function()     { if ( callback ) callback(null) }
-    });
+    })
 }
 
 /******************  achievements functions  ******************/
@@ -104,7 +104,7 @@ function getAchievementsFromServer(callback) {
         dataType: "json",
         success: function(data) { if ( callback ) callback(data) },
         error  : function()     { if ( callback ) callback(null) }
-    });
+    })
 }
 
 /******************  achievement functions  ******************/
@@ -135,16 +135,16 @@ function getAchievement(achievementId, userId, publiclyVisible) {
 function getPublicAchievement(achievementId, userId, publiclyVisible) {
     getAchievementFromServer(
         function(data) {
-             $("#achievementDesc").html(data);
+             $("#achievementDesc").html(data)
             if (publiclyVisible) {
-                $("#publicizeButton").empty().remove();
+                $("#publicizeButton").empty().remove()
                 jQuery.getScript('http://connect.facebook.net/en_US/all.js', function() {
-                    FB.init({status: true, cookie: true, xfbml: true});
-                    $("#fbLike").show();
-                    $("#addbutton").empty().remove();
-                });
+                    FB.init({status: true, cookie: true, xfbml: true})
+                    $("#fbLike").show()
+                    $("#addbutton").empty().remove()
+                })
             } else {
-                $("#fbLike").hide();
+                $("#fbLike").hide()
             }
         }, achievementId, userId
     )
@@ -277,40 +277,40 @@ function createAchievementOnServer(callback) {
 }
 
 var images = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png"]
-var imagePath= "content/img/achievementImages/";
+var imagePath= "content/img/achievementImages/"
 function toggleImage(step) {
-    var currentImage = $("#achievementImage").attr("src").replace(imagePath, "");
-    var currentPos = jQuery.inArray(currentImage, images);
-    var newPos = currentPos + step;
+    var currentImage = $("#achievementImage").attr("src").replace(imagePath, "")
+    var currentPos = jQuery.inArray(currentImage, images)
+    var newPos = currentPos + step
     if (newPos  >= images.length) {
-        newPos = 0;
+        newPos = 0
     }   else if (newPos == -1) {
-        newPos = images.length-1;
+        newPos = images.length-1
     }
-    $("#achievementImage").attr("src", imagePath + images[newPos]);
+    $("#achievementImage").attr("src", imagePath + images[newPos])
 }
 
 function goalKeyPress(goalField) {
-    var newLineNumber = $('#goalTable tr').length + 1;
+    var newLineNumber = $('#goalTable tr').length + 1
     if ($(goalField).closest("tr")[0].rowIndex + 2 == newLineNumber) {   //only add new goal line if the pressed goal line is the bottom one
-       var goalQuantityField = "#goalQuantity" + $('#goalTable tr').length;
+       var goalQuantityField = "#goalQuantity" + $('#goalTable tr').length
        if (! $(goalQuantityField).val())  {
-           $(goalQuantityField).val("1");
+           $(goalQuantityField).val("1")
        }
        var newRow = $('<tr >' + nl  +
            '<td class="goal"><input type="text" class="formstyle" name="goalTitle' + newLineNumber + '" placeholder="goal" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)"></td>' + nl  +
            '<td class="quantity"><input type="text" class="formstyle" id="goalQuantity' + newLineNumber + '" name="goalQuantity' + newLineNumber + '" placeholder="1"></td>' + nl  +
-           '</tr>');
-       $("#goalTable").append(newRow);
+           '</tr>')
+       $("#goalTable").append(newRow)
        $(newRow)
            .find('td')
            .wrapInner('<div style="display: none;" />')
            .parent()
            .find('td > div')
            .slideDown(300, function(){
-               var $set = $(this);
-           $set.replaceWith($set.contents());
-       });
+               var $set = $(this)
+           $set.replaceWith($set.contents())
+       })
     }
 }
 

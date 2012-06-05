@@ -12,11 +12,11 @@ exports.ext = function () {
     }
     return {
         getExt: function (path) {
-            var i = path.lastIndexOf('.');
-            return (i < 0) ? '' : path.substr(i + 1);
+            var i = path.lastIndexOf('.')
+            return (i < 0) ? '' : path.substr(i + 1)
         },
         getContentType: function (ext) {
-            return extTypes[ext.toLowerCase()] || 'text/plain';
+            return extTypes[ext.toLowerCase()] || 'text/plain'
         }
-    };
-}();
+    }
+}()

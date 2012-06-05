@@ -9,24 +9,24 @@ app = express.createServer()
 app.configure('development', function() {
     console.log("Treehouse in development mode.")
     app.set('db-uri', 'mongodb://localhost:27017/test')
-});
+})
 
 app.configure('production', function() {
     console.log("Treehouse in production mode.")
     app.set('db-uri', 'mongodb://treehouser:applehorsegreenwtfanything@staff.mongohq.com:10005/app4109808')
-    console.log("Treehouse in dev mode.");
-    app.set('db-uri', 'mongodb://localhost:27017/test');
-});
+    console.log("Treehouse in dev mode.")
+    app.set('db-uri', 'mongodb://localhost:27017/test')
+})
 
 app.configure('production', function() {
-    console.log("Treehouse in prod mode.");
-    app.set('db-uri', 'mongodb://treehouser:applehorsegreenwtfanything@staff.mongohq.com:10005/app4109808');
-});
+    console.log("Treehouse in prod mode.")
+    app.set('db-uri', 'mongodb://treehouser:applehorsegreenwtfanything@staff.mongohq.com:10005/app4109808')
+})
 
 var mongooseSessionStore = new sessionMongoose({
     url: app.set('db-uri'),
     interval: 60000
-});
+})
 
 app.configure(function() {
     app.use(express.bodyParser())
@@ -34,13 +34,13 @@ app.configure(function() {
     //app.use(express.favicon('/content/favicon.ico'))
     app.use(express.session({ store: mongooseSessionStore, secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4' }))
     //app.use(app.router)
-});
+})
 
 var dburi = app.set('db-uri')
 
 module.exports = {
     dburi: dburi
-};
+}
 
 var user = require('./models/user.js'),
     achievement = require('./models/achievement.js'),
@@ -60,7 +60,7 @@ function loadUser(request, response, next) {
                 response.write(JSON.stringify(err.message))
                 response.end('\n', 'utf-8')
             }
-        });
+        })
     } else {
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify("logged out 2"))
@@ -76,7 +76,7 @@ function authenticateFromLoginToken(request, response, initialCall) {
                 response.writeHead(200, {'content-type': 'application/json' })
                 response.write(JSON.stringify("logged out 3"))
                 response.end('\n', 'utf-8')
-                return;
+                return
             }
             user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
                 if (user) {
@@ -92,14 +92,14 @@ function authenticateFromLoginToken(request, response, initialCall) {
                              response.write(JSON.stringify("ok"))
                              response.end('\n', 'utf-8')
                          }
-                    });
+                    })
                 } else {
                     response.writeHead(200, {'content-type': 'application/json' })
                     response.write(JSON.stringify("logged out 2"))
                     response.end('\n', 'utf-8')
                 }
-            });
-        });
+            })
+        })
     }  else {
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify("logged out 4"))
@@ -113,11 +113,11 @@ console.log('Treehouse server started on port ' + port)
 
 app.get('/content/*', function(request, response){
     staticFiles.serve("." + request.url, response)
-});
+})
 
 app.get('/treehouse.manifest', function(request, response){
     staticFiles.serve("." + request.url, response)
-});
+})
 
 app.get('/', function(request, response){
     if (request.cookies.rememberme) {
@@ -125,11 +125,11 @@ app.get('/', function(request, response){
     } else {
         writeLoginPage(response)
     }
-});
+})
 
 app.get('/rememberMe', function(request, response){
-    authenticateFromLoginToken  (request, response, false);
-});
+    authenticateFromLoginToken  (request, response, false)
+})
 
 app.get('/checkUser', function(request, response){
     user.User.findOne({ username: request.query.username.toLowerCase(), password: request.query.password }, function(err,myUser) {
@@ -153,8 +153,8 @@ app.get('/checkUser', function(request, response){
             response.write(JSON.stringify('Username or password unknown.'))
             response.end('\n', 'utf-8')
         }
-    });
-});
+    })
+})
 
 app.get('/logout', function(request, response){
     if (request.session) {
@@ -164,7 +164,7 @@ app.get('/logout', function(request, response){
 
         requestHandlers.indexPage(response)
     }
-});
+})
 
 app.get('/signup', function(request, response){
 
@@ -180,8 +180,8 @@ app.get('/signup', function(request, response){
             response.write(JSON.stringify('ok'))
             response.end('\n', 'utf-8')
         }
-    });
-});
+    })
+})
 
 function getSignupErrorMessage (err){
     var errorMessage = "You already got an account, remember? Go log in and check your achievements."
@@ -194,7 +194,6 @@ function getSignupErrorMessage (err){
                 errorMessage  = "Is your email correct?"
             }
         } else if (err.errors.password) {
-
             if (err.errors.password.type == 'required') {
                 errorMessage  = "You need a password!"
             }  else if (err.errors.password.type == 'too_short') {
@@ -219,10 +218,8 @@ app.get('/achievement', function(request, response){
         } else {
             writeLoginPage(response)
         }
-
-    });
-
-});
+    })
+})
 
 function createAchievementDesc(achievements, userId, percentages, achievementsList) {
     for (var i in achievements) {
@@ -277,8 +274,8 @@ app.get('/achievements', function(request, response){
             achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>"
             finishAchievementsList(response, achievementsList)
         }
-    });
-});
+    })
+})
 
 function finishAchievementsList(response, achievementsList) {
     response.writeHead(200, {'content-type': 'application/json' })
@@ -298,8 +295,8 @@ app.get('/achievementFromServer', function(request, response){
         } else {
             writeLoginPage(response)
         }
-    });
-});
+    })
+})
 
 function writeAchievementPage(response, currentUserId, currentAchievement, publicView) {
     var achievementDesc = ""
@@ -393,7 +390,7 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
                 goalText    += '</div></td></tr>'
                             + '</table>'
     goalText    += '<div class="clear"></div>'
-    goalText    += '</div>';
+    goalText    += '</div>'
     if (!lastGoal) {
      goalText    += '<div class="separerare-part">&nbsp;</div>'
     }
@@ -407,8 +404,8 @@ app.get('/achievementPercentage', function(request, response){
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(achievementPercentageFinished))
         response.end('\n', 'utf-8')
-    });
-});
+    })
+})
 
 
 function calculateAchievementProgress(userId, achievementId, callback) {

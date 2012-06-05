@@ -1,15 +1,15 @@
-var nl = '\n';
-var tab = '\t';
+var nl = '\n'
+var tab = '\t'
 
 function indexPage(response) {
-    response.writeHead(200, { 'Content-Type': 'text/html' });
-    response.end(topIndexPart() + bottomPart(), 'utf-8');
+    response.writeHead(200, { 'Content-Type': 'text/html' })
+    response.end(topIndexPart() + bottomPart(), 'utf-8')
 }
 
 function publicAchievementPage(response, userId, currentAchievementId, url, imageUrl, title) {
-    response.writeHead(200, { 'Content-Type': 'text/html' });
-    response.write(topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, title) + bottomPart());
-    response.end('\n', 'utf-8');
+    response.writeHead(200, { 'Content-Type': 'text/html' })
+    response.write(topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, title) + bottomPart())
+    response.end('\n', 'utf-8')
 }
 
 function topIndexPart() {
@@ -65,7 +65,7 @@ function topIndexPart() {
                 '</div>' + nl +
                 '<div id="app-container">' + nl +
                 tab + ' <div id="contentArea">'
-   return text;
+   return text
 }
 
 function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, title) {
@@ -97,9 +97,9 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
             tab + '<script type="text/javascript">' + nl +
             tab + '$(document).ready(function() {' + nl +
             tab + 'insertContent(getPublicAchievementContent(), function() {' + nl +
-            tab + 'getPublicAchievement(\'' +currentAchievementId + '\', \'' + userId + '\', \'true\');' + nl +
-            tab + '});' + nl +
-            tab + '});  ' + nl +
+            tab + 'getPublicAchievement(\'' +currentAchievementId + '\', \'' + userId + '\', \'true\')' + nl +
+            tab + '})' + nl +
+            tab + '})' + nl +
             tab + '</script>' + nl +
             tab + '</head>' + nl +
             tab + ' <body>' + nl +
@@ -127,7 +127,7 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
             '</div>' + nl +
             '<div id="app-container">' + nl +
             tab + ' <div id="contentArea">'
-        );
+        )
 }
 
 function bottomPart() {
@@ -151,8 +151,8 @@ function bottomPart() {
                     '</div>' + nl +
                 '</body>' + nl +
             '</html>' + nl
-        );
+        )
 }
 
-exports.indexPage = indexPage;
-exports.publicAchievementPage = publicAchievementPage;
+exports.indexPage = indexPage
+exports.publicAchievementPage = publicAchievementPage
