@@ -127,17 +127,13 @@ app.get('/checkUser', function(request, response){
         if (myUser != null) {
             request.session.user_id = myUser._id
             request.session.user_email = myUser.username
-            if (request.query.remember_me == "true") {
-                loginToken.createToken(myUser.username, function(myToken) {
-                    response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 2 * 604800000), path: '/' }) //604800000 equals one week
-                    response.write(JSON.stringify('ok'))
-                    response.end('\n', 'utf-8')
-                });
-            }  else {
-                response.writeHead(200, {'content-type': 'application/json' })
+
+            loginToken.createToken(myUser.username, function(myToken) {
+                response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 2 * 604800000), path: '/' }) //604800000 equals one week
                 response.write(JSON.stringify('ok'))
                 response.end('\n', 'utf-8')
-            }
+            });
+
         } else {
             request.session.destroy()
             response.writeHead(200, {'content-type': 'application/json' })

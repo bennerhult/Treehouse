@@ -22,9 +22,6 @@ function getLoginContent() {
                     '<span id="passwordSpan">' + nl +
                         '<input type="password" class="formstyle" name="password" placeholder="password">' + nl +
                     '</span>' + nl +
-                    '<div class="log-in-text">' + nl +
-                        '<input type="checkbox" class="formstyle" name="remember_me" value="on" checked=true> Remember me' + nl +
-                    '</div>' + nl +
                     '<div id="message"></div>' + nl +
                     '<input type="submit" class="button green" value="Log in">' + nl +
 

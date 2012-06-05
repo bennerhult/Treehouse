@@ -12,8 +12,8 @@ function checkUser() {
 function checkUserOnServer(callback) {
     var username = $("input[name=username]")
     var password = $("input[name=password]")
-    var remember_me = $("input[name=remember_me]").is(":checked")
-    var data = "username=" + username.val() + "&password=" + password.val() + "&remember_me=" + remember_me
+
+    var data = "username=" + username.val() + "&password=" + password.val()
 
     $.ajax("/checkUser", {     
         type: "GET",
