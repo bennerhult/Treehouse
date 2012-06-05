@@ -167,10 +167,12 @@ app.get('/logout', function(request, response){
 });
 
 app.get('/signup', function(request, response){
+
+
     user.createUser(request.query.username.toLowerCase(), request.query.password, function (myUser,err) {
         if (err) {
             response.writeHead(200, {'content-type': 'application/json' })
-            response.write(JSON.stringify(err.message))
+            response.write(JSON.stringify(getSignupErrorMessage(err)))
             response.end('\n', 'utf-8')
         }  else {
             request.session.user_id = myUser._id
@@ -180,6 +182,29 @@ app.get('/signup', function(request, response){
         }
     });
 });
+
+function getSignupErrorMessage (err){
+    var errorMessage = "You already got an account, remember? Go log in and check your achievements."
+
+    if (err.errors) {
+        if (err.errors.username) {
+            if (err.errors.username.type == 'required') {
+                errorMessage  = "Hey, type an email!"
+            }  else if (err.errors.username.type == 'invalid_email') {
+                errorMessage  = "Is your email correct?"
+            }
+        } else if (err.errors.password) {
+
+            if (err.errors.password.type == 'required') {
+                errorMessage  = "You need a password!"
+            }  else if (err.errors.password.type == 'too_short') {
+                errorMessage  = "Come on! That password is just too short."
+            }
+        }
+    }
+    console.log(err.errors)
+    return errorMessage
+}
 
 //public achievement
 app.get('/achievement', function(request, response){
