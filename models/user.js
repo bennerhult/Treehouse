@@ -11,9 +11,11 @@ var UserSchema = new Schema({
 })
 
 
-UserSchema.path('password').validate(function (v) {
-    return v.length > 3
-    }, 'too_short')
+UserSchema.path('password').validate(
+    function (password) {
+        return password.length > 3
+    }, 'too_short'
+)
 
 var User = mongoose.model('User', UserSchema)
 
