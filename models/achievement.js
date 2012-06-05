@@ -7,16 +7,17 @@ var mongoose = require('mongoose'),
 mongoose.connect(treehouse.dburi)
 
 var AchievementSchema = new Schema({
-    createdDate         : Date,
-    createdBy           : String,
-    title               : String,
+    createdDate         : {type: Date, required: true},
+    createdBy           : {type: String, required: true},
+    title               : {type: String, required: true},
     description         : String,
-    imageURL            : String,
-    publiclyVisible     : Boolean,
-    goals               :[goalSchema]
+    imageURL            : {type: String, required: true},
+    publiclyVisible     : {type: Boolean, required: true},
+    goals               : {type: [goalSchema], required: true}
 })
 
 var Achievement = mongoose.model('Achievement', AchievementSchema)
+
 module.exports = {
     Achievement: Achievement,
     createAchievement: createAchievement,
@@ -42,15 +43,15 @@ function addGoalToAchievement(goal, achievement, userId) {
     progress.createProgress(userId, achievement._id, goal._id)
 }
 
-function save(achievement) {
-    achievement.save(function (err) {
+function save(achievement, callback) {
+    achievement.save(function (error) {
+        callback(error)
     })
 }
 
 function publicize(achievement) {
     achievement.publiclyVisible = true
-    achievement.save(function (err) {
-    })
+    achievement.save(function (err) {})   //TODO: handle error
 }
 
 function remove(achievement, userId, next)    {

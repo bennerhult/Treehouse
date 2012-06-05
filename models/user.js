@@ -10,7 +10,6 @@ var UserSchema = new Schema({
     password        : { type: String, required: true }
 })
 
-
 UserSchema.path('password').validate(
     function (password) {
         return password.length > 3

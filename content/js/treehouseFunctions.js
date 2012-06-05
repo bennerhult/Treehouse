@@ -224,7 +224,7 @@ function createAchievement() {
     function(data) {
             if (data == "ok") { //TODO: use ajax success/error instead
                 openAchievements()
-            }
+            } else $("#message").html(data)
         }
     )
 }

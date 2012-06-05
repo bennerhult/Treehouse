@@ -126,7 +126,7 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
             '<p class="ingress">Explore. Achieve. Play.</p>' + nl +
             '</div>' + nl +
             '<div id="app-container">' + nl +
-            tab + ' <div id="contentArea">'
+            tab + '<div id="contentArea">'
         )
 }
 

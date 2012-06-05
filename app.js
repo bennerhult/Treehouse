@@ -12,13 +12,6 @@ app.configure('development', function() {
 })
 
 app.configure('production', function() {
-    console.log("Treehouse in production mode.")
-    app.set('db-uri', 'mongodb://treehouser:applehorsegreenwtfanything@staff.mongohq.com:10005/app4109808')
-    console.log("Treehouse in dev mode.")
-    app.set('db-uri', 'mongodb://localhost:27017/test')
-})
-
-app.configure('production', function() {
     console.log("Treehouse in prod mode.")
     app.set('db-uri', 'mongodb://treehouser:applehorsegreenwtfanything@staff.mongohq.com:10005/app4109808')
 })
@@ -31,9 +24,7 @@ var mongooseSessionStore = new sessionMongoose({
 app.configure(function() {
     app.use(express.bodyParser())
     app.use(express.cookieParser())
-    //app.use(express.favicon('/content/favicon.ico'))
     app.use(express.session({ store: mongooseSessionStore, secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4' }))
-    //app.use(app.router)
 })
 
 var dburi = app.set('db-uri')
@@ -256,17 +247,19 @@ app.get('/achievements', function(request, response){
         if (progresses && progresses.length > 0) {
             progresses.forEach(function(currentProgress, index) {
                 achievement.Achievement.findById(currentProgress.achievement_id, function(err, myAchievement) {
-                    if  (_.indexOf(achievementIdsToShow, myAchievement._id.toString()) == -1) {
-                        achievementsToShow.push(myAchievement)
-                        achievementIdsToShow.push(myAchievement._id.toString())
-                        calculateAchievementProgress(request.session.user_id, myAchievement._id, function(achievementPercentageFinished) {
-                            percentages.push(achievementPercentageFinished)
-                            if (index == progresses.length - myAchievement.goals.length) {
-                                achievementsList = createAchievementDesc(achievementsToShow, request.session.user_id, percentages, achievementsList)
-                                achievementsList += "<div class='achievement'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>"
-                                finishAchievementsList(response, achievementsList)
-                            }
-                        })
+                    if (myAchievement) {
+                        if  (_.indexOf(achievementIdsToShow, myAchievement._id.toString()) == -1) {
+                            achievementsToShow.push(myAchievement)
+                            achievementIdsToShow.push(myAchievement._id.toString())
+                            calculateAchievementProgress(request.session.user_id, myAchievement._id, function(achievementPercentageFinished) {
+                                percentages.push(achievementPercentageFinished)
+                                if (index == progresses.length - myAchievement.goals.length) {
+                                    achievementsList = createAchievementDesc(achievementsToShow, request.session.user_id, percentages, achievementsList)
+                                    achievementsList += "<div class='achievement'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>"
+                                    finishAchievementsList(response, achievementsList)
+                                }
+                            })
+                        }
                     }
                 })
             })
@@ -286,6 +279,7 @@ function finishAchievementsList(response, achievementsList) {
 app.get('/achievementFromServer', function(request, response){
     var url_parts = url.parse(request.url, true)
     var currentAchievementId = url_parts.query.achievementId.trim()
+    console.log("currentAchievementId: " + currentAchievementId);
     app.set('current_achievement_id', currentAchievementId)
     achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
         if (request.session.user_id) {
@@ -466,12 +460,39 @@ app.get('/newAchievement', function(request, response){
             var goalToBeCreated  = goal.prepareGoal(title, quantities[i])
             achievement.addGoalToAchievement(goalToBeCreated, motherAchievement, user._id)
         })
-        achievement.save(motherAchievement)
-        response.writeHead(200, {'content-type': 'application/json' })
-        response.write(JSON.stringify('ok'))
-        response.end('\n', 'utf-8')
+        achievement.save(motherAchievement, function(err) {
+              if (err) {
+                  response.writeHead(200, {'content-type': 'application/json' })
+                  response.write(JSON.stringify(getNewAchievementErrorMessage(err)))
+                  response.end('\n', 'utf-8')
+              }   else {
+                  response.writeHead(200, {'content-type': 'application/json' })
+                  response.write(JSON.stringify('ok'))
+                  response.end('\n', 'utf-8')
+              }
+        })
+
     })
 })
+
+function getNewAchievementErrorMessage (err){
+    var errorMessage = "Oops, something went wrong!"
+
+    if (err.errors) {
+        console.log('err' + err.errors.toString());
+        if (err.errors.title) {
+            if (err.errors.title.type == 'required') {
+                errorMessage  = "No title, no achievement."
+            }
+        } else if (err.errors.goals) {
+            if (err.errors.goals.type == 'required') {
+                errorMessage  = "An achievement must have at least one goal."
+            }
+        }
+    }
+
+    return errorMessage
+}
 
 function writeLoginPage(response) {
     requestHandlers.indexPage(response)
