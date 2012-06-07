@@ -1,6 +1,9 @@
 var nl = '\n'
 
+var activeMenuIndex = 0;
+
 function selectActiveMenu(activeMenuNr) {
+    activeMenuIndex = activeMenuNr
     $('#web-menu ul li a span').removeClass('selected')
     if (activeMenuNr >= 0) {
         $('#web-menu ul li a span:eq(' + activeMenuNr + ')').addClass('selected')
@@ -8,13 +11,16 @@ function selectActiveMenu(activeMenuNr) {
 }
 
 function showInfo(content, activeMenuNr) {
-    selectActiveMenu(activeMenuNr)
-    //$("html, body").animate({scrollTop: $("#page").offset().top}, 100)
-    $("#infoArea").fadeOut('fast', function() {
-        $("#infoArea").html(content)
-        $("#infoArea").fadeIn('fast', function() {
+    if (activeMenuNr != activeMenuIndex) {
+        selectActiveMenu(activeMenuNr)
+        //$("html, body").animate({scrollTop: $("#page").offset().top}, 100)
+        $("#infoArea").fadeOut('fast', function() {
+            $("#infoArea").html(content)
+            $("#infoArea").fadeIn('fast', function() {
+            })
         })
-    })
+    }
+
 }
 
 function getAchievementInfo() {
