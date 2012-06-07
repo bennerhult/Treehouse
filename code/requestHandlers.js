@@ -36,7 +36,6 @@ function topIndexPart() {
                     tab + '<script type="text/javascript">' + nl +
                     tab + '$(document).ready(function() {' + nl
                         text += 'setTimeout(function(){addToHome.show(false)}, 100)' + nl
-                        text += 'initListeners()' + nl
                         text += 'rememberMe()'
                         text +=  '})</script>' + nl +
                 tab + '</head>' + nl +
@@ -44,9 +43,9 @@ function topIndexPart() {
                 '<div id="page">' + nl +
                 '<div id="web-menu">' + nl +
                     '<ul>' + nl +
-                    '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart())"><span><img src="content/img/logo-small.png" /></span></a></li>'  + nl +
-                    '<li><a href="javascript:void(0)" onclick="showInfo(getAbout())"><span>About</span></a> </li>'  + nl +
-                    '<li><a href="javascript:void(0)" onclick="showInfo(getAchievementInfo())"><span>Achievements</span></a> </li>'  + nl +
+                    '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart(), 0)"><span><img src="content/img/logo-small.png" /></span></a></li>'  + nl +
+                    '<li><a href="javascript:void(0)" onclick="showInfo(getAbout(), 1)"><span>About</span></a> </li>'  + nl +
+                    '<li><a href="javascript:void(0)" onclick="showInfo(getAchievementInfo(), 2)"><span>Achievements</span></a> </li>'  + nl +
                     '</ul>' + nl +
                     '<div class="clear"></div>' + nl +
                 '</div>' + nl +
@@ -106,9 +105,9 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
             '<div id="page">' + nl +
             '<div id="web-menu">' + nl +
                 '<ul>' + nl +
-                    '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart())"><span><img src="content/img/logo-small.png" /></span></a></li>'  + nl +
-                    '<li><a href="javascript:void(0)" onclick="showInfo(getAbout())"><span>About</span></a> </li>'  + nl +
-                    '<li><a href="javascript:void(0)" onclick="showInfo(getAchievementInfo())"><span>Achievements</span></a> </li>'  + nl +
+                    '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart(), 0)"><span><img src="content/img/logo-small.png" /></span></a></li>'  + nl +
+                    '<li><a href="javascript:void(0)" onclick="showInfo(getAbout(), 1)"><span>About</span></a> </li>'  + nl +
+                    '<li><a href="javascript:void(0)" onclick="showInfo(getAchievementInfo(), 2)"><span>Achievements</span></a> </li>'  + nl +
                 '</ul>' + nl +
                  '<div class="clear"></div>' + nl +
             '</div>' + nl +
@@ -140,8 +139,8 @@ function bottomPart() {
                     '</div>' + nl +
                         '<div id="web-footer">' + nl +
                             '<ul>' + nl +
-                                '<li><span><h2>Explore</h2><p>Ever wanted to explore new ground?<br /><br />Get the coveted <a href="javascript:void(0)" onclick="showInfo(getEarlyAdopterInfo())">Early Adopter Achievement</a></p></span></li>' + nl +
-                                '<li><span><h2>Achieve</h2><p>In an ever changing world, achievements are forever. Nobody can take your achievements away!<br /><br /><a href="javascript:void(0)" onclick="showInfo(getAchievementInfo())">Achievements?</a></p></span></li>' + nl +
+                                '<li><span><h2>Explore</h2><p>Ever wanted to explore new ground?<br /><br />Get the coveted <a href="javascript:void(0)" onclick="showInfo(getEarlyAdopterInfo(), 0)">Early Adopter Achievement</a></p></span></li>' + nl +
+                                '<li><span><h2>Achieve</h2><p>In an ever changing world, achievements are forever. Nobody can take your achievements away!<br /><br /><a href="javascript:void(0)" onclick="showInfo(getAchievementInfo(), 2)">Achievements?</a></p></span></li>' + nl +
                                 '<li><span><h2>Play</h2><p>What have you achieved today? Give yourself a new challenge.</p><p>Let\'s play!</p></span></li>' + nl +
                                 '<li class="last"><span><h2>Latest Achievement</h2><p>Explore the polar caps!</p><div><img src="content/img/achievementImages/7.png" /></div></span></li>' + nl +
                             '</ul>' + nl +

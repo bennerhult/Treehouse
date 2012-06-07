@@ -1,13 +1,12 @@
 var nl = '\n'
 
-function initListeners() {
-    $("#web-menu ul li a span").click(function(){
-        $('#web-menu ul li a span').removeClass('selected')
-        $(this).addClass('selected')
-    })
+function selectActiveMenu(activeMenuNr) {
+    $('#web-menu ul li a span').removeClass('selected')
+    $('#web-menu ul li a span:eq(' + activeMenuNr + ')').addClass('selected')
 }
 
-function showInfo(content) {
+function showInfo(content, activeMenuNr) {
+    selectActiveMenu(activeMenuNr)
     //$("html, body").animate({scrollTop: $("#page").offset().top}, 100)
     $("#infoArea").fadeOut('fast', function() {
         $("#infoArea").html(content)

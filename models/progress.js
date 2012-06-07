@@ -36,8 +36,6 @@ function createProgress(achiever_id, achievement_id, goal_id, callback) {
     progress.goal_id = goal_id
     progress.quantityFinished = 0
     callback (progress);
-    /*progress.save(function (err) {
-    })*/
 }
 
 function removeProgress(achievement_id, user_id, next) {
