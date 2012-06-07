@@ -2,7 +2,9 @@ var nl = '\n'
 
 function selectActiveMenu(activeMenuNr) {
     $('#web-menu ul li a span').removeClass('selected')
-    $('#web-menu ul li a span:eq(' + activeMenuNr + ')').addClass('selected')
+    if (activeMenuNr >= 0) {
+        $('#web-menu ul li a span:eq(' + activeMenuNr + ')').addClass('selected')
+    }
 }
 
 function showInfo(content, activeMenuNr) {
