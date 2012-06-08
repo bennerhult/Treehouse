@@ -76,6 +76,7 @@ function getAchievementContent() {
                     '<ul>' + nl  +
                         '<li class="back"><a href="javascript:void(0)" onclick="openAchievements()"><img src="content/img/back-1.png" alt=""/></a></li>' + nl  +
                         '<li class="logo"><img src="content/img/logo-small.png" /></li>' + nl  +
+                        '<li class="edit"><a href="javascript:void(0)" onclick="editAchievement()"><img src="content/img/edit.png" /></a></li>' + nl  +
                         '<li class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>' + nl  +
                     '</ul>' + nl  +
                 '</div>' + nl  +
@@ -109,9 +110,9 @@ function getPublicAchievementContent() {
     )
 }
 
-function getNewAchievementContent() {
-    return (
-        '<div id="app-container">' + nl  +
+//data if edit, null if create
+function getNewAchievementContent(data) {
+        var text ='<div id="app-container">' + nl  +
             '<div id="content no-padding">' + nl  +
                 '<div id="menu">' + nl  +
                     '<ul>' + nl  +
@@ -122,12 +123,26 @@ function getNewAchievementContent() {
                 '<form id="createAchievementForm" action="javascript: createAchievement()">' + nl  +
                     '<div class="achievement-info">' + nl  +
                         '<div class="inputarea">' + nl  +
-                            '<input type="text" class="formstyle" name="title" placeholder="title">' + nl  +
-                            '<textarea class="formstyle" name="description" placeholder="description"></textarea>' + nl  +
+                            '<input type="text" class="formstyle" name="title" placeholder="title"'
+                                    if (data)  {
+                                        text +=  'value="' + data.title + '"'
+                                    }
+                               text += '>' + nl  +
+                            '<textarea class="formstyle" name="description" placeholder="description">'
+                                    if (data)  {
+                                        text +=   data.description
+                                    }
+                                    text += '</textarea>' + nl  +
                         '</div>' + nl  +
                         '<div class="imagearea-container">' + nl  +
                             '<div class="create-imagearea">' + nl  +
-                            '<img id="achievementImage" src="content/img/achievementImages/1.png" alt="" />' + nl  +
+                            '<img id="achievementImage" src="'
+                                if (data)  {
+                                    text +=   data.imageURL
+                                } else {
+                                    text +=   'content/img/achievementImages/1.png'
+                                }
+                            text +='" alt="" />' + nl  +
                             '<span class="gradient-bg"></span>' + nl  +
                         '</div>' + nl  +
                         '<div class="fileinputs">' + nl  +
@@ -141,21 +156,33 @@ function getNewAchievementContent() {
                 '</div>' + nl  +
                 '<div id="achievement-container">' + nl  +
                     '<div class="part-achievement">' + nl  +
-                        '<table id="goalTable">' + nl  +
-                            '<tr>' + nl  +
-                                '<td class="goal"><input type="text" class="formstyle" name="goalTitle1" placeholder="goal" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)"></td>' + nl  +
-                                '<td class="quantity"><input type="text" class="formstyle" id="goalQuantity1" placeholder="1" name="goalQuantity1"></td>' + nl  +
-                            '</tr>' + nl  +
-                        '</table>' + nl  +
+                        '<table id="goalTable">' + nl
+                            if (data) {
+                                for (var i in data.goals) {
+                                    text+='<tr><td class="goal"><input type="text" class="formstyle" name="goalTitle1" placeholder="goal" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)"'
+                                    text +=  'value="' + data.goals[i].title + '"'
+                                    text+= '></td><td class="quantity"><input type="text" class="formstyle" id="goalQuantity1" placeholder="1" name="goalQuantity1"'
+                                    text +=  'value="' + data.goals[i].quantityTotal + '"'
+                                    text +='></td></tr>'
+                                }
+                            } else {
+                                text += '<tr><td class="goal"><input type="text" class="formstyle" name="goalTitle1" placeholder="goal" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)"></td><td class="quantity"><input type="text" class="formstyle" id="goalQuantity1" placeholder="1" name="goalQuantity1"></td></tr>'
+                            }
+                        text += '</table>' + nl  +
                         '<div class="clear"></div>' + nl  +
                     '</div>' + nl  +
                 '</div>' + nl  +
-                ' <div class="create-achievement">' + nl  +
-                    '<input type="submit" class="button" value="Create achievement">' + nl  +
-                    '<div id="message"></div>' + nl +
-                '</div>' + nl  +
-            '</form>' + nl  +
-        '</div>' + nl  +
-    '</div>'
-    )
+                ' <div class="create-achievement">' + nl
+                    if (data) {
+                        text += '<input type="submit" class="button" value="Save achievement">' + nl
+                    }  else  {
+                        text += '<input type="submit" class="button" value="Create achievement">' + nl
+                    }
+                     text += '<div id="message"></div>' + nl +
+                            '</div>' + nl  +
+                            '</form>' + nl  +
+                            '</div>' + nl  +
+                        '</div>'
+
+    return text
 }

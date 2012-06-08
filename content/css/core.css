@@ -351,23 +351,30 @@ body{
 #menu ul li{
     padding-top: 4px;
     float: left;
-    width: 30%;
     padding-bottom: 2px;
 }
 
 #menu ul li.back{
     text-align: left;
+    width: 30%;
     padding-left: 5%;
 }
 
 #menu ul li.logo{
-    width: 30%;
     text-align: center;
+    width: 30%;
+    opacity: 0.8;
+}
+
+#menu ul li.edit{
+    text-align: center;
+    width:15%;
     opacity: 0.8;
 }
 
 #menu ul li.add{
     float: right;
+    width: 15%;
     text-align: right;
     padding-right: 5%;
 }

@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#2012-06-08 12:18
+#2012-06-08 13:41
 CACHE:
 content/favicon.ico
 content/treehouse-icon.png
@@ -10,6 +10,7 @@ content/img/+.png
 content/img/back-1.png
 content/img/defaultImage.png
 content/img/delete.png
+content/img/edit.png
 content/img/empty.png
 content/img/idevice_logo.png
 content/img/left-arrow.png

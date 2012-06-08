@@ -24,7 +24,6 @@ function checkUserOnServer(callback) {
     })
 }
 
-
 function rememberMe() {
     rememberMeOnServer(
         function(data) {
@@ -36,7 +35,6 @@ function rememberMe() {
         }
     )
 }
-
 
 function rememberMeOnServer(callback) {
 
@@ -130,7 +128,6 @@ function getAchievement(achievementId, userId, publiclyVisible) {
         }, achievementId, userId
     )
 }
-
 
 function getPublicAchievement(achievementId, userId, publiclyVisible) {
     getAchievementFromServer(
@@ -312,6 +309,24 @@ function goalKeyPress(goalField) {
            $set.replaceWith($set.contents())
        })
     }
+}
+
+/******************  edit achievement functions  ******************/
+function editAchievement() {
+    editAchievementOnServer(
+        function(data) {
+            insertContent(getNewAchievementContent(data))
+        }
+    )
+}
+
+function editAchievementOnServer(callback) {
+    $.ajax("/editAchievement", {
+        type: "GET",
+        dataType: "json",
+        success: function(data) { if ( callback ) callback(data) },
+        error  : function()     { if ( callback ) callback(null) }
+    })
 }
 
 /******************  delete achievement functions  ******************/
