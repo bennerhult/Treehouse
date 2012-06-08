@@ -137,7 +137,7 @@ app.get('/checkUser', function(request, response){
         } else {
             request.session.destroy()
             response.writeHead(200, {'content-type': 'application/json' })
-            response.write(JSON.stringify('Username or password unknown.'))
+            response.write(JSON.stringify('You really must know the password to get in.'))
             response.end('\n', 'utf-8')
         }
     })
