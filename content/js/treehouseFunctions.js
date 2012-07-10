@@ -108,7 +108,7 @@ function getAchievementsFromServer(callback) {
 /******************  achievement functions  ******************/
 function openAchievement(achievementId, userId, publiclyVisible) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + userId)
-    insertContent(getAchievementContent(), getAchievement, achievementId, userId, publiclyVisible)
+    insertContent(getAchievementContent(publiclyVisible), getAchievement, achievementId, userId, publiclyVisible)
 }
 
 function getAchievement(achievementId, userId, publiclyVisible) {
@@ -198,6 +198,7 @@ function progressOnServer(callback, goalId) {
 function publicize() {
     publicizeOnServer(
         function() {
+            $("#editButton").html("")
             $("#publicizeButton").empty().remove()
             jQuery.getScript('http://connect.facebook.net/en_US/all.js', function() {      //TODO: store locally
                 FB.init({status: true, cookie: true, xfbml: true});

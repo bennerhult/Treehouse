@@ -60,30 +60,32 @@ function getAchievementsContent() {
         )
 }
 
-function getAchievementContent() {
-    return (
-        '<div id="fb-root"></div>' + nl  +
-            '<script>(function(d, s, id) { ' + nl  +
-            'var js, fjs = d.getElementsByTagName(s)[0]; ' + nl  +
-            'if (d.getElementById(id)) return;' + nl  +
-            'js = d.createElement(s); js.id = id;' + nl  +
-            'js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";' + nl  +
-            'fjs.parentNode.insertBefore(js, fjs);' + nl  +
-            '}(document, "script", "facebook-jssdk"))</script>' + nl  +
+function getAchievementContent(publiclyVisible) {
+    var achievementContent =   '<div id="fb-root"></div>' + nl  +
+        '<script>(function(d, s, id) { ' + nl  +
+        'var js, fjs = d.getElementsByTagName(s)[0]; ' + nl  +
+        'if (d.getElementById(id)) return;' + nl  +
+        'js = d.createElement(s); js.id = id;' + nl  +
+        'js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";' + nl  +
+        'fjs.parentNode.insertBefore(js, fjs);' + nl  +
+        '}(document, "script", "facebook-jssdk"))</script>' + nl  +
         '<div id="app-container">' + nl  +
-            '<div id="content no-padding">' + nl  +
-                '<div id="menu">' + nl  +
-                    '<ul>' + nl  +
-                        '<li class="back"><a href="javascript:void(0)" onclick="openAchievements()"><img src="content/img/back-1.png" alt=""/></a></li>' + nl  +
-                        '<li class="logo"><img src="content/img/logo-small.png" /></li>' + nl  +
-                        '<li class="edit"><a href="javascript:void(0)" onclick="editAchievement()"><img src="content/img/edit.png" /></a></li>' + nl  +
-                        '<li class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>' + nl  +
-                    '</ul>' + nl  +
-                '</div>' + nl  +
-                '<div id="achievementDesc"></div>' + nl  +
-            '</div>' + nl +
-        '</div>' + nl
-    )
+        '<div id="content no-padding">' + nl  +
+        '<div id="menu">' + nl  +
+        '<ul>' + nl  +
+        '<li class="back"><a href="javascript:void(0)" onclick="openAchievements()"><img src="content/img/back-1.png" alt=""/></a></li>' + nl  +
+        '<li class="logo"><img src="content/img/logo-small.png" /></li>' + nl
+        if (!publiclyVisible) {
+            achievementContent += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement()"><img src="content/img/edit.png" /></a></li>' + nl
+        }
+        achievementContent += '<li class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>' + nl  +
+        '</ul>' + nl  +
+        '</div>' + nl  +
+        '<div id="achievementDesc"></div>' + nl  +
+        '</div>' + nl +
+        '</div>' + nl;
+
+    return achievementContent;
 }
 
 function getPublicAchievementContent() {
