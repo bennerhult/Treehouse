@@ -21,6 +21,7 @@ var Achievement = mongoose.model('Achievement', AchievementSchema)
 module.exports = {
     Achievement: Achievement,
     createAchievement: createAchievement,
+    clearGoals: clearGoals,
     addGoalToAchievement: addGoalToAchievement,
     publicize: publicize,
     remove: remove,
@@ -36,6 +37,11 @@ function createAchievement(createdBy, title, description, imageURL) {
     achievement.imageURL = imageURL
     achievement.publiclyVisible = false
     return achievement
+}
+
+function clearGoals(achievement, callback) {
+    achievement.goals = []
+    callback(achievement);
 }
 
 function addGoalToAchievement(goal, achievement, userId, callback) {

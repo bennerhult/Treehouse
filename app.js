@@ -457,30 +457,51 @@ app.get('/editAchievement', loadUser, function(request, response){
     })
 })
 
+function saveAchievement(response, motherAchievement, titles, quantities, userId) {
+    var progressesToInit = new Array()
+    if (titles.length === 0) {
+        finalizeAchievement (response, motherAchievement, titles, quantities, progressesToInit)
+    } else {
+        _.each(titles, function (title, i) {
+            var goalToBeCreated  = goal.prepareGoal(title, quantities[i])
+            achievement.addGoalToAchievement(goalToBeCreated, motherAchievement, userId, function (progress) {
+                progressesToInit.push(progress)
+            })
+            if (i === titles.length - 1) {
+                finalizeAchievement (response, motherAchievement, titles, quantities, progressesToInit)
+            }
+        })
+    }
+}
+
+function finalizeAchievement (response, motherAchievement, titles, quantities, progressesToInit) {
+    achievement.save(motherAchievement, function(err) {
+        if (err) {
+            response.writeHead(200, {'content-type': 'application/json' })
+            response.write(JSON.stringify(getNewAchievementErrorMessage(err)))
+            response.end('\n', 'utf-8')
+        } else {
+            _.each(progressesToInit, function (myProgress, i) {
+                myProgress.save(function (err) {})
+            })
+            response.writeHead(200, {'content-type': 'application/json' })
+            response.write(JSON.stringify('ok'))
+            response.end('\n', 'utf-8')
+        }
+    })
+}
+
 app.get('/newAchievement', function(request, response){
     user.User.findById(request.session.user_id, function(err, user) {
 
         var motherAchievement;
         achievement.Achievement.findOne({ _id: app.set('current_achievement_id') }, function(err,currentAchievement) {
-            if (currentAchievement)  {
-                motherAchievement = currentAchievement
-                motherAchievement.title =  request.query.title;
-                motherAchievement.description =  request.query.description;
-                motherAchievement.imageURL =  request.query.currentImage;
-            } else {
-                motherAchievement = achievement.createAchievement(user.username, request.query.title, request.query.description, request.query.currentImage)
-            }
-
-            console.log("moving on: " + request.query.goalTitles.length + ", " + request.query.goalTitles);
-
+            motherAchievement = achievement.createAchievement(user.username, request.query.title, request.query.description, request.query.currentImage)
             var titles= JSON.parse(request.query.goalTitles)
             var quantities=request.query.goalQuantities.split(',')
             var textInQuantities = false;
-            var progressesToInit = new Array();
             _.each(titles, function (title, i) {
-                console.log(title + ", " + quantities[i])
                 if (_.isNaN(parseInt(quantities[i]))) {
-                    console.log("textInQuantities")
                     textInQuantities = true;
                     response.writeHead(200, {'content-type': 'application/json' })
                     response.write(JSON.stringify("That's not a number!"))
@@ -488,33 +509,14 @@ app.get('/newAchievement', function(request, response){
                 }
             })
             if (!textInQuantities) {
-                _.each(titles, function (title, i) {
-                    if (currentAchievement)  {
-                            //TODO update exisiting goals (must keep id_s so that exisiting progress remains)
-                            //TODO remove uneeded goals (and their progresses)
-                            //TODO add new goals
-                    } else {
-                        var goalToBeCreated  = goal.prepareGoal(title, quantities[i])
-                        achievement.addGoalToAchievement(goalToBeCreated, motherAchievement, user._id, function (progress) {
-                            progressesToInit.push(progress)
+                if (currentAchievement)  {
+                        achievement.remove(currentAchievement, request.session.user_id, function() {
+                            saveAchievement(response, motherAchievement, titles, quantities, request.session.user_id)
                         })
-                    }
-                })
-                achievement.save(motherAchievement, function(err) {
-                    if (err) {
-                        response.writeHead(200, {'content-type': 'application/json' })
-                        response.write(JSON.stringify(getNewAchievementErrorMessage(err)))
-                        response.end('\n', 'utf-8')
-                    } else {
-                        _.each(progressesToInit, function (progress, i) {
-                            progress.save(function (err) {
-                            })
-                        })
-                        response.writeHead(200, {'content-type': 'application/json' })
-                        response.write(JSON.stringify('ok'))
-                        response.end('\n', 'utf-8')
-                    }
-                })
+                } else {
+                    saveAchievement(response, motherAchievement, titles, quantities, request.session.user_id)
+                }
+
             }
         })
     })

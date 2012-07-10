@@ -5,10 +5,10 @@ var mongoose = require('mongoose'),
 mongoose.connect(treehouse.dburi)
 
 var ProgressSchema = new Schema({
-    achiever_id         : Schema.ObjectId,
-    achievement_id      : Schema.ObjectId,
-    goal_id             : Schema.ObjectId,
-    quantityFinished    : Number
+    achiever_id         : {type: Schema.ObjectId, required: true},
+    achievement_id      : {type: Schema.ObjectId, required: true},
+    goal_id             : {type: Schema.ObjectId, required: true},
+    quantityFinished    :{type: Number, required: true}
 })
 
 var Progress = mongoose.model('Progress', ProgressSchema)
