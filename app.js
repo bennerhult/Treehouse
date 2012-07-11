@@ -239,6 +239,7 @@ function createAchievementDesc(achievements, userId, percentages, achievementsLi
 }
 
 app.get('/achievements', function(request, response){
+    app.set('current_achievement_id', null)
     var achievementsList = ""
     var achievementsToShow = new Array()
     var achievementIdsToShow = new Array()
