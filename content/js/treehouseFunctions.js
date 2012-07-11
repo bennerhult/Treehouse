@@ -106,9 +106,9 @@ function getAchievementsFromServer(callback) {
 }
 
 /******************  achievement functions  ******************/
-function openAchievement(achievementId, userId, publiclyVisible) {
+function openAchievement(achievementId, userId, publiclyVisible, progressMade) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + userId)
-    insertContent(getAchievementContent(publiclyVisible), getAchievement, achievementId, userId, publiclyVisible)
+    insertContent(getAchievementContent(publiclyVisible, progressMade), getAchievement, achievementId, userId, publiclyVisible)
 }
 
 function getAchievement(achievementId, userId, publiclyVisible) {
@@ -160,6 +160,7 @@ function progress(goalId, quantityTotal) {
     progressOnServer(function(quantityFinished) {
         achievementPercentageFinishedFromServer(function(achievementPercentageFinished) {
             $("#progressbar").html("<span class='progress' style='width:" + achievementPercentageFinished + "%;'></span>")
+            $("#editButton").html("")
 
             var goalPercentageFinished = (quantityFinished / quantityTotal) * 100
             $("#progressbar-goal" + goalId).html("<span class='progress' style='width:" + goalPercentageFinished + "%;'></span>")

@@ -60,7 +60,7 @@ function getAchievementsContent() {
         )
 }
 
-function getAchievementContent(publiclyVisible) {
+function getAchievementContent(publiclyVisible, progressMade) {
     var achievementContent =   '<div id="fb-root"></div>' + nl  +
         '<script>(function(d, s, id) { ' + nl  +
         'var js, fjs = d.getElementsByTagName(s)[0]; ' + nl  +
@@ -75,7 +75,7 @@ function getAchievementContent(publiclyVisible) {
         '<ul>' + nl  +
         '<li class="back"><a href="javascript:void(0)" onclick="openAchievements()"><img src="content/img/back-1.png" alt=""/></a></li>' + nl  +
         '<li class="logo"><img src="content/img/logo-small.png" /></li>' + nl
-        if (!publiclyVisible) {
+        if (!publiclyVisible && !progressMade) {
             achievementContent += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement()"><img src="content/img/edit.png" /></a></li>' + nl
         }
         achievementContent += '<li class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>' + nl  +

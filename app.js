@@ -219,7 +219,13 @@ function createAchievementDesc(achievements, userId, percentages, achievementsLi
             + userId
             + '\','
             + achievements[i].publiclyVisible
-            + ')"><img src="'
+            + ','
+        if (percentages[i] > 0) {
+            achievementsList += 'true'
+        } else {
+            achievementsList += 'false'
+        }
+        achievementsList += ')"><img src="'
             + achievements[i].imageURL
             + '" alt="'
             + achievements[i].title
