@@ -2,8 +2,8 @@
     "name": "Treehouse",
     "version": "0.0.3",
     "engines": {
-        "node": "0.6.19",
-        "npm":  "1.1.24"
+        "node": "0.6.13",
+        "npm":  "1.1.9"
     },
     "dependencies": {
         "express": "2.5.8",
