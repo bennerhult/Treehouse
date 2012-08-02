@@ -63,7 +63,12 @@ function publicize(achievement) {
 }
 
 function remove(achievement, userId, next)    {
-    achievement.remove(function (err) {     //TODO: handle error
-        progress.removeProgress(achievement._id, userId, next)
+    latestAchievement.getId(function(latestId) {
+        if (achievement.id != latestId) {
+            achievement.remove(function (err) {     //TODO: handle error
+                progress.removeProgress(achievement._id, userId, next)
+            })
+        }
     })
+
 }

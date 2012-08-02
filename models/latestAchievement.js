@@ -25,7 +25,6 @@ function getId(callback) {
     })
 }
 
-
 function update(id) {
     LatestAchievement.findOne({ ownId: 1 }, function(err,latestAchievement) {
         if (latestAchievement) {
