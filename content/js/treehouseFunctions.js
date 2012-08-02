@@ -205,6 +205,7 @@ function publicize() {
                 FB.init({status: true, cookie: true, xfbml: true});
                 $("#fbLike").show()
             })
+            insertLatestAchievement()
         }
     )
 }
