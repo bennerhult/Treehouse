@@ -2,6 +2,7 @@ var mongoose = require('mongoose'),
     treehouse = require('../app.js'),
     goalSchema = require('./goal.js'),
     progress = require('./progress.js'),
+    latestAchievement = require('./latestAchievement.js'),
     Schema= mongoose.Schema
 
 mongoose.connect(treehouse.dburi)
@@ -57,11 +58,12 @@ function save(achievement, callback) {
 
 function publicize(achievement) {
     achievement.publiclyVisible = true
+    latestAchievement.update(achievement._id)
     achievement.save(function (err) {})   //TODO: handle error
 }
 
 function remove(achievement, userId, next)    {
-    achievement.remove(function (err) {
+    achievement.remove(function (err) {     //TODO: handle error
         progress.removeProgress(achievement._id, userId, next)
     })
 }

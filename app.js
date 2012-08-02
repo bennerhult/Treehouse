@@ -22,7 +22,6 @@ var mongooseSessionStore = new sessionMongoose({
 })
 
 app.configure(function() {
-    //app.use(express.bodyParser())
     app.use(express.cookieParser())
     app.use(express.session({ store: mongooseSessionStore, secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4' }))
 })
@@ -35,6 +34,7 @@ module.exports = {
 
 var user = require('./models/user.js'),
     achievement = require('./models/achievement.js'),
+    latestAchievement = require('./models/latestAchievement.js'),
     goal = require('./models/goal.js'),
     progress = require('./models/progress.js'),
     loginToken = require('./models/loginToken.js'),
@@ -191,7 +191,7 @@ function getSignupErrorMessage (err){
 }
 
 //public achievement
-app.get('/achievement', function(request, response){
+app.get('/achievement', function(request, response) {
     var url_parts = url.parse(request.url, true)
     var currentAchievementId = url_parts.query.achievementId
     request.session.current_achievement_id = currentAchievementId
@@ -204,6 +204,17 @@ app.get('/achievement', function(request, response){
             writeLoginPage(response)
         }
     })
+})
+
+app.get('/latestAchievementSplash', function(request, response) {
+    var latestAchievementId = latestAchievement.getId(function(latestAchievementId) {
+        achievement.Achievement.findOne({ _id: latestAchievementId }, function(err,latestAchievement) {
+            response.writeHead(200, {'content-type': 'application/json' })
+            response.write(JSON.stringify(latestAchievement))
+            response.end('\n', 'utf-8')
+        })
+     })
+
 })
 
 function createAchievementDesc(achievements, userId, percentages, achievementsList) {
