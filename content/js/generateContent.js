@@ -84,7 +84,8 @@ function getAchievementContent(publiclyVisible, progressMade) {
         'var js, fjs = d.getElementsByTagName(s)[0]; ' + nl  +
         'if (d.getElementById(id)) return;' + nl  +
         'js = d.createElement(s); js.id = id;' + nl  +
-        'js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";' + nl  +
+        //'js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";' + nl  +
+        'js.src = "content/ext/js/facebook.js#xfbml=1";' + nl  +
         'fjs.parentNode.insertBefore(js, fjs);' + nl  +
         '}(document, "script", "facebook-jssdk"))</script>' + nl  +
         '<div id="app-container">' + nl  +
@@ -113,7 +114,8 @@ function getPublicAchievementContent() {
             'var js, fjs = d.getElementsByTagName(s)[0]; ' + nl  +
             'if (d.getElementById(id)) return;' + nl  +
             'js = d.createElement(s); js.id = id;' + nl  +
-            'js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";' + nl  +
+            //'js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";' + nl  +
+            'js.src = "content/ext/js/facebook.js#xfbml=1";' + nl  +
             'fjs.parentNode.insertBefore(js, fjs);' + nl  +
             '}(document, "script", "facebook-jssdk"))</script>' + nl  +
         '<div id="app-container">' + nl  +
