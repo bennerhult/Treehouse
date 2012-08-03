@@ -118,7 +118,8 @@ function getAchievement(achievementId, userId, publiclyVisible) {
             $("#achievementDesc").html(data)
             if (publiclyVisible) {
                 $("#publicizeButton").empty().remove()
-                jQuery.getScript('http://connect.facebook.net/en_US/all.js', function() {
+                //jQuery.getScript('http://connect.facebook.net/en_US/all.js', function() {
+                jQuery.getScript('content/ext/js/facebook.js', function() {
                     FB.init({status: true, cookie: true, xfbml: true})
                     $("#fbLike").show()
                 })
@@ -135,7 +136,7 @@ function getPublicAchievement(achievementId, userId, publiclyVisible) {
              $("#achievementDesc").html(data)
             if (publiclyVisible) {
                 $("#publicizeButton").empty().remove()
-                jQuery.getScript('http://connect.facebook.net/en_US/all.js', function() {
+                jQuery.getScript('content/ext/js/facebook.js', function() {
                     FB.init({status: true, cookie: true, xfbml: true})
                     $("#fbLike").show()
                     $("#addbutton").empty().remove()
