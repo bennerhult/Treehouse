@@ -108,7 +108,22 @@ function getAchievementsFromServer(callback) {
 /******************  achievement functions  ******************/
 function openAchievement(achievementId, userId, publiclyVisible, progressMade) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + userId)
-    insertContent(getAchievementContent(publiclyVisible, progressMade), getAchievement(achievementId, userId, publiclyVisible))
+    isLatestAchievement(achievementId, function(isLatestAchievement) {
+        insertContent(getAchievementContent(publiclyVisible, progressMade, isLatestAchievement), getAchievement(achievementId, userId, publiclyVisible))
+    })
+}
+
+function isLatestAchievement(achievementId, callback) {
+    $.ajax("/latestAchievementId" , {
+        type: "GET",
+        dataType: "json",
+        success: function(latestAchievementId) {
+            callback(latestAchievementId === achievementId)
+        }, error  : function()     {
+            callback(true)
+        }
+    })
+
 }
 
 function getAchievement(achievementId, userId, publiclyVisible) {

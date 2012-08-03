@@ -27,7 +27,6 @@ function insertLatestAchievement(achievementId, userId) {
             )
         }
     })
-
 }
 
 function getLoginContent() {
@@ -78,7 +77,7 @@ function getAchievementsContent() {
         )
 }
 
-function getAchievementContent(publiclyVisible, progressMade) {
+function getAchievementContent(publiclyVisible, progressMade, isLatestAchievement) {
     var achievementContent =   '<div id="fb-root"></div>' + nl  +
         '<div id="app-container">' + nl  +
         '<div id="content no-padding">' + nl  +
@@ -89,12 +88,14 @@ function getAchievementContent(publiclyVisible, progressMade) {
         if (!publiclyVisible && !progressMade) {
             achievementContent += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement()"><img src="content/img/edit.png" /></a></li>' + nl
         }
-        achievementContent += '<li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>' + nl  +
-        '</ul>' + nl  +
-        '</div>' + nl  +
-        '<div id="achievementDesc"></div>' + nl  +
-        '</div>' + nl +
-        '</div>' + nl;
+        if (!isLatestAchievement) {
+            achievementContent += '<li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>' + nl
+        }
+         achievementContent += '</ul>' + nl  +
+            '</div>' + nl  +
+            '<div id="achievementDesc"></div>' + nl  +
+            '</div>' + nl +
+            '</div>' + nl;
 
     return achievementContent;
 }

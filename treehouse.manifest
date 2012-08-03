@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#2012-08-03 15:23
+#2012-08-03 16:20
 CACHE:
 content/favicon.ico
 content/treehouse-icon.png
@@ -51,3 +51,4 @@ NETWORK:
 /newAchievement
 /editAchievement
 /latestAchievementSplash
+/latestAchievementId
