@@ -12,18 +12,18 @@ function insertContent(content, callback, achievementId, userId, publicView) {
     }
 }
 
-function insertLatestAchievement() {
+function insertLatestAchievement(achievementId, userId) {
     $.ajax("/latestAchievementSplash" , {
         type: "GET",
         dataType: "json",
         success: function(achievement) {
             $("#latestAchievementSplash").html(
-                '<h2>Latest Achievement</h2><p>' + achievement.title + '</p><div><img src="' + achievement.imageURL + '" /></div>'
+                '<h2>Latest Achievement</h2><a href=/achievement?achievementId=' + achievementId + '&userId=' + userId + '"><p>' + achievement.title + '</p></a><div><img src="' + achievement.imageURL + '" /></div>'
             )
         },
         error  : function()     {
             $("#latestAchievementSplash").html(
-                '<h2>Latest Achievement</h2><p>Explore the lunar caps!</p><div><img src="content/img/achievementImages/5.png" /></div>'
+                '<h2>Latest Achievement</h2><p>Be the first</p><div><img src="content/img/achievementImages/3.png" /></div>'
             )
         }
     })

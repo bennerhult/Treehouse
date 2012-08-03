@@ -64,10 +64,11 @@ function authenticateFromLoginToken(request, response, initialCall) {
         var cookie = JSON.parse(request.cookies.rememberme)
         loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
             if (!token) {
-                response.writeHead(200, {'content-type': 'application/json' })
+                writeLoginPage(response)
+               /* response.writeHead(200, {'content-type': 'application/json' })
                 response.write(JSON.stringify("logged out 3"))
                 response.end('\n', 'utf-8')
-                return
+                 return */
             }
             user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
                 if (user) {
@@ -85,16 +86,18 @@ function authenticateFromLoginToken(request, response, initialCall) {
                          }
                     })
                 } else {
-                    response.writeHead(200, {'content-type': 'application/json' })
+                    writeLoginPage(response)
+                    /*response.writeHead(200, {'content-type': 'application/json' })
                     response.write(JSON.stringify("logged out 2"))
-                    response.end('\n', 'utf-8')
+                    response.end('\n', 'utf-8')*/
                 }
             })
         })
     }  else {
-        response.writeHead(200, {'content-type': 'application/json' })
+        writeLoginPage(response)
+        /*response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify("logged out 4"))
-        response.end('\n', 'utf-8')
+        response.end('\n', 'utf-8')   */
     }
 }
 
