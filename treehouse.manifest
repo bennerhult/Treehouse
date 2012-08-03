@@ -1,11 +1,12 @@
 CACHE MANIFEST
-#2012-08-03 13:38
+#2012-08-03 13:43
 CACHE:
 content/favicon.ico
 content/treehouse-icon.png
 content/css/add2home.css
 content/css/core.css
 content/ext/js/jquery.1.7.2.min.js
+content/ext/js/facebook.js
 content/img/+.png
 content/img/back-1.png
 content/img/defaultImage.png
