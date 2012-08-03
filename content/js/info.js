@@ -37,7 +37,7 @@ function getAchievementInfo() {
     '<h2>Is it free?</h2>' +
     '<p>It is free.</p>' +
     '<h2>Can my friends see my achievements?</h2>' +
-    '<p>When you want to share your feeling of accomplishment (the technical term would be brag) you can publicize your achievements. You can easily share to Facebook or copy the link and share it however you want. We\'ve heard that some people still use email. If you do not publicize an achievement, only you can see it. Nothing wrong with tracking your success and be proud all by yourself.</p>' +
+    '<p>When you want to share your feeling of accomplishment (the technical term would be brag) you can publicize your achievements. You can easily share to Facebook or copy the link and share it however you want. Even by trusty old email. If you do not publicize an achievement, only you can see it. Nothing wrong with tracking your success and be proud all by yourself.</p>' +
     '</div>'
         )
 }
