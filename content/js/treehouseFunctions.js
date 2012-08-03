@@ -117,12 +117,9 @@ function getAchievement(achievementId, userId, publiclyVisible) {
             $('meta[propery="og:url"]').attr('content', 'www.treehouse.io/achievement?achievementId=' + achievementId + '&userId=' + userId)
             $("#achievementDesc").html(data)
             if (publiclyVisible) {
+                FB.init({status: true, cookie: true, xfbml: true})
                 $("#publicizeButton").empty().remove()
-                //jQuery.getScript('http://connect.facebook.net/en_US/all.js', function() {
-                jQuery.getScript('content/ext/js/facebook.js', function() {
-                    FB.init({status: true, cookie: true, xfbml: true})
-                    $("#fbLike").show()
-                })
+                $("#fbLike").show()
             } else {
                 $("#fbLike").hide()
             }
@@ -200,12 +197,11 @@ function progressOnServer(callback, goalId) {
 function publicize() {
     publicizeOnServer(
         function() {
+            FB.init({status: true, cookie: true, xfbml: true});
             $("#editButton").html("")
+            $("#deleteButton").html("")
             $("#publicizeButton").empty().remove()
-            jQuery.getScript('content/ext/js/facebook.js', function() {
-                FB.init({status: true, cookie: true, xfbml: true});
-                $("#fbLike").show()
-            })
+            $("#fbLike").show()
             insertLatestAchievement()
         }
     )

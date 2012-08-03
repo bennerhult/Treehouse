@@ -28,6 +28,7 @@ function topIndexPart() {
                     tab + '<script type="application/javascript" src="content/js/info.js"></script>' + nl +
                     tab + '<script type="application/javascript" src="content/js/treehouseFunctions.js"></script>' + nl +
                     tab + '<script type="text/javascript" src="content/js/css3-mediaqueries.js"></script>' + nl +
+                    tab + '<script src="content/ext/js/facebook.js" type="text/javascript"></script>' + nl +
                     tab + '<script src="content/ext/js/jquery.1.7.2.min.js" type="text/javascript"></script>' + nl +
                     tab + '<link rel="stylesheet" href="content/css/add2home.css">' + nl +
                     tab + '<link rel="stylesheet" href="content/css/core.css" media="screen, projection, print" />' + nl +
@@ -89,6 +90,7 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
             tab + '<script type="application/javascript" src="content/js/info.js"></script>' + nl +
             tab + '<script type="application/javascript" src="content/js/treehouseFunctions.js"></script>' + nl +
             tab + '<script type="text/javascript" src="content/js/css3-mediaqueries.js"></script>' + nl +
+            tab + '<script src="content/ext/js/facebook.js" type="text/javascript"></script>' + nl +
             tab + '<script src="content/ext/js/jquery.1.7.2.min.js" type="text/javascript"></script>' + nl +
             tab + '<link rel="stylesheet" href="content/css/add2home.css">' + nl +
             tab + '<link rel="stylesheet" href="content/css/core.css" media="screen, projection, print" />' + nl +
