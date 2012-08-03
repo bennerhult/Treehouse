@@ -18,7 +18,7 @@ function insertLatestAchievement(achievementId, userId) {
         dataType: "json",
         success: function(achievement) {
             $("#latestAchievementSplash").html(
-                '<h2>Latest Achievement</h2><a href=/achievement?achievementId=' + achievementId + '&userId=' + userId + '"><p>' + achievement.title + '</p></a><div><img src="' + achievement.imageURL + '" /></div>'
+                '<h2>Latest Achievement</h2><a href=/achievement?achievementId=' + achievement._id + '><p>' + achievement.title + '</p></a><div><img src="' + achievement.imageURL + '" /></div>'
             )
         },
         error  : function()     {
