@@ -132,12 +132,10 @@ function getPublicAchievement(achievementId, userId, publiclyVisible) {
         function(data) {
              $("#achievementDesc").html(data)
             if (publiclyVisible) {
+                FB.init({status: true, cookie: true, xfbml: true})
                 $("#publicizeButton").empty().remove()
-                jQuery.getScript('content/ext/js/facebook.js', function() {
-                    FB.init({status: true, cookie: true, xfbml: true})
-                    $("#fbLike").show()
-                    $("#addbutton").empty().remove()
-                })
+                $("#addbutton").empty().remove()
+                $("#fbLike").show()
             } else {
                 $("#fbLike").hide()
             }
