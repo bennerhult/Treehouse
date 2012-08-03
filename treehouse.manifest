@@ -49,3 +49,5 @@ NETWORK:
 /publicize
 /delete
 /newAchievement
+/editAchievement
+/latestAchievementSplash
