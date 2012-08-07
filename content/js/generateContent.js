@@ -1,8 +1,20 @@
 var nl = '\n'
 
+var footerContent = '<ul>' + nl +
+    '<li><span><h2>Explore</h2><p>Ever wanted to explore new ground?<br /><br />Get the coveted <a href="javascript:void(0)" onclick="showInfo(getEarlyAdopterInfo(), -1)">Early Adopter Achievement</a></p></span></li>' + nl +
+    '<li><span><h2>Achieve</h2><p>In an ever changing world, achievements are forever. Nobody can take your achievements away!<br /><br /><a href="javascript:void(0)" onclick="showInfo(getAchievementInfo(), 2)">Achievements?</a></p></span></li>' + nl +
+    '<li><span><h2>Play</h2><p>What have you achieved today? Give yourself a new challenge.</p><p>Let\'s play!</p></span></li>' + nl +
+    '<li class="last"><span id="latestAchievementSplash"></span></li>' + nl +
+    '</ul>'
+var isiPad = navigator.userAgent.match(/iPad/i) != null;
+
 function insertContent(content, callback, achievementId, userId, publicView) {
     $("#contentArea").html(content)
-
+    $("#web-footer").html(footerContent)
+    if (!isiPad) {
+        $("#banner").empty().remove()
+    }
+    insertLatestAchievement()
     if (window.innerWidth < 819) {
         $("html, body").animate({scrollTop: $("#menu").offset().top}, 200)
     }

@@ -36,7 +36,6 @@ function topIndexPart() {
                     tab + '<link href="http://fonts.googleapis.com/css?family=Dosis" rel="stylesheet" type="text/css">' + nl +
                     tab + '<script type="text/javascript">' + nl +
                     tab + '$(document).ready(function() {' + nl  +
-                     tab + 'insertLatestAchievement()' + nl +
                      tab   + 'setTimeout(function(){addToHome.show(false)}, 100)' + nl +
                      tab + 'rememberMe()'   +nl +
                     tab   +  '})</script>' + nl +
@@ -98,7 +97,6 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
             tab + '<link href="http://fonts.googleapis.com/css?family=Dosis" rel="stylesheet" type="text/css">' + nl +
             tab + '<script type="text/javascript">' + nl +
             tab + '$(document).ready(function() {' + nl +
-            tab + 'insertLatestAchievement()' + nl +
             tab + 'insertContent(getPublicAchievementContent(), function() {' + nl +
             tab + 'getPublicAchievement(\'' +currentAchievementId + '\', \'' + userId + '\', \'true\')' + nl +
             tab + '})' + nl +
@@ -141,16 +139,9 @@ function bottomPart() {
 
                         '<div class="clear"></div>' + nl +
                     '</div>' + nl +
-                        '<div id="web-footer">' + nl +
-                            '<ul>' + nl +
-                                '<li><span><h2>Explore</h2><p>Ever wanted to explore new ground?<br /><br />Get the coveted <a href="javascript:void(0)" onclick="showInfo(getEarlyAdopterInfo(), -1)">Early Adopter Achievement</a></p></span></li>' + nl +
-                                '<li><span><h2>Achieve</h2><p>In an ever changing world, achievements are forever. Nobody can take your achievements away!<br /><br /><a href="javascript:void(0)" onclick="showInfo(getAchievementInfo(), 2)">Achievements?</a></p></span></li>' + nl +
-                                '<li><span><h2>Play</h2><p>What have you achieved today? Give yourself a new challenge.</p><p>Let\'s play!</p></span></li>' + nl +
-                                '<li class="last"><span id="latestAchievementSplash"></span></li>' + nl +
-                            '</ul>' + nl +
-                            '</div>' + nl +
+                        '<div id="web-footer"></div>' + nl +
                         '<div class="clear"></div>' + nl +
-                        '<div class="banner">Flip for more info</div>' + nl +
+                        '<div id="banner" class="banner">Flip for more info</div>' + nl +
                     '</div>' + nl +
                 '</body>' + nl +
             '</html>' + nl
