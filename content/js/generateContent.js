@@ -12,12 +12,24 @@ function insertContent(content, callback, achievementId, userId, publicView) {
     }
 }
 
+function showLatestAchievement(achievementId) {
+    window.history.pushState(null, null, "/achievement?achievementId=" + achievementId)
+    insertContent(getPublicAchievementContent(), function() {
+        getPublicAchievement(achievementId, null, true)
+    }, achievementId, null, true)
+
+}
+
 function insertLatestAchievement() {
     $.ajax("/latestAchievementSplash" , {
         type: "GET",
         dataType: "json",
         success: function(achievement) {
-            $("#latestAchievementSplash").html('<h2>Latest Achievement</h2><a href=/achievement?achievementId=' + achievement._id + '><p>' + achievement.title + '</p></a><div><a href=/achievement?achievementId=' + achievement._id + '><img src="' + achievement.imageURL + '" /></a></div>')
+            $("#latestAchievementSplash").html(
+                '<h2>Latest Achievement</h2>' +
+                '<p><a href="javascript:void(0)" onclick="showLatestAchievement(\'' + achievement._id + '\')">' + achievement.title + '</a></p>' +
+                '<div><a href="javascript:void(0)" onclick="showLatestAchievement(\'' + achievement._id + '\')"><img src="' + achievement.imageURL + '" /></a></div>'
+                )
         },
         error  : function()     {
             $("#latestAchievementSplash").html('')
