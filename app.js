@@ -65,10 +65,6 @@ function authenticateFromLoginToken(request, response, initialCall) {
         loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
             if (!token) {
                 writeLoginPage(response)
-               /* response.writeHead(200, {'content-type': 'application/json' })
-                response.write(JSON.stringify("logged out 3"))
-                response.end('\n', 'utf-8')
-                 return */
             }
             user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
                 if (user) {
@@ -87,17 +83,11 @@ function authenticateFromLoginToken(request, response, initialCall) {
                     })
                 } else {
                     writeLoginPage(response)
-                    /*response.writeHead(200, {'content-type': 'application/json' })
-                    response.write(JSON.stringify("logged out 2"))
-                    response.end('\n', 'utf-8')*/
                 }
             })
         })
     }  else {
         writeLoginPage(response)
-        /*response.writeHead(200, {'content-type': 'application/json' })
-        response.write(JSON.stringify("logged out 4"))
-        response.end('\n', 'utf-8')   */
     }
 }
 
@@ -228,7 +218,8 @@ app.get('/latestAchievementId', function(request, response) {
     })
 })
 
-function createAchievementDesc(achievements, userId, percentages, achievementsList) {
+function createAchievementDesc(achievements, userId, percentages) {
+    var achievementsList = ""
     for (var i in achievements) {
         if (i == 0) {
             achievementsList += "<div class='achievement first'>"
@@ -272,26 +263,28 @@ function getAchievementList(request, response, completedAchievements) {
     app.set('current_achievement_id', null)
     var achievementsList = ""
     var achievementsToShow = new Array()
-    var achievementIdsToShow = new Array()
+    var achievementIdsGoneThrough = new Array()
     var percentages = new Array()
     progress.Progress.find({ achiever_id: request.session.user_id}, function(err, progresses) {
         if (progresses && progresses.length > 0) {
             progresses.forEach(function(currentProgress, index) {
                 achievement.Achievement.findById(currentProgress.achievement_id, function(err, myAchievement) {
                     if (myAchievement) {
-                        if  (_.indexOf(achievementIdsToShow, myAchievement._id.toString()) == -1) {
+                        if  (_.indexOf(achievementIdsGoneThrough, myAchievement._id.toString()) == -1) {
+                            achievementIdsGoneThrough.push(myAchievement._id.toString())
                             calculateAchievementProgress(request.session.user_id, myAchievement._id, function(achievementPercentageFinished) {
                                 if ((completedAchievements && achievementPercentageFinished == 100) || (!completedAchievements && achievementPercentageFinished < 100)) {
                                     achievementsToShow.push(myAchievement)
-                                    achievementIdsToShow.push(myAchievement._id.toString())
                                     percentages.push(achievementPercentageFinished)
                                 }
-
                                 if (index == progresses.length - myAchievement.goals.length) {
-                                    achievementsList = createAchievementDesc(achievementsToShow, request.session.user_id, percentages, achievementsList)
-                                    achievementsList += "<div class='achievement'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>"
+                                    achievementsList = createAchievementDesc(achievementsToShow, request.session.user_id, percentages)
+                                    if (!completedAchievements) {
+                                        achievementsList += "<div class='achievement'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>"
+                                    }
                                     finishAchievementsList(response, achievementsList)
                                 }
+
                             })
                         }
                     }
