@@ -88,21 +88,31 @@ function openAchievements() {
     insertContent(getAchievementsContent(), getAchievements)
 }
 
-function getAchievements() {
-    getAchievementsFromServer(
+function getAchievements(inProgress) {
+
+    getAchievementsFromServer(inProgress,
         function(data) {
             $("#achievementList").html(data)
         }
     )
 }
 
-function getAchievementsFromServer(callback) {
-    $.ajax("/achievements", {
-        type: "GET",
-        dataType: "json",
-        success: function(data) { if ( callback ) callback(data) },
-        error  : function()     { if ( callback ) callback(null) }
-    })
+function getAchievementsFromServer(completed, callback) {
+    if (completed) {
+        $.ajax("/achievements_completed", {
+            type: "GET",
+            dataType: "json",
+            success: function(data) { if ( callback ) callback(data) },
+            error  : function()     { if ( callback ) callback(null) }
+        })
+    }  else {
+        $.ajax("/achievements_inProgress", {
+            type: "GET",
+            dataType: "json",
+            success: function(data) { if ( callback ) callback(data) },
+            error  : function()     { if ( callback ) callback(null) }
+        })
+    }
 }
 
 /******************  achievement functions  ******************/

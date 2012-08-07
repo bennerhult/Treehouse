@@ -260,7 +260,15 @@ function createAchievementDesc(achievements, userId, percentages, achievementsLi
     return achievementsList
 }
 
-app.get('/achievements', function(request, response){
+app.get('/achievements_inProgress', function(request, response){
+    getAchievementList(request, response, false)
+})
+
+app.get('/achievements_completed', function(request, response){
+    getAchievementList(request, response, true)
+})
+
+function getAchievementList(request, response, completedAchievements) {
     app.set('current_achievement_id', null)
     var achievementsList = ""
     var achievementsToShow = new Array()
@@ -272,10 +280,13 @@ app.get('/achievements', function(request, response){
                 achievement.Achievement.findById(currentProgress.achievement_id, function(err, myAchievement) {
                     if (myAchievement) {
                         if  (_.indexOf(achievementIdsToShow, myAchievement._id.toString()) == -1) {
-                            achievementsToShow.push(myAchievement)
-                            achievementIdsToShow.push(myAchievement._id.toString())
                             calculateAchievementProgress(request.session.user_id, myAchievement._id, function(achievementPercentageFinished) {
-                                percentages.push(achievementPercentageFinished)
+                                if ((completedAchievements && achievementPercentageFinished == 100) || (!completedAchievements && achievementPercentageFinished < 100)) {
+                                    achievementsToShow.push(myAchievement)
+                                    achievementIdsToShow.push(myAchievement._id.toString())
+                                    percentages.push(achievementPercentageFinished)
+                                }
+
                                 if (index == progresses.length - myAchievement.goals.length) {
                                     achievementsList = createAchievementDesc(achievementsToShow, request.session.user_id, percentages, achievementsList)
                                     achievementsList += "<div class='achievement'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>"
@@ -291,7 +302,7 @@ app.get('/achievements', function(request, response){
             finishAchievementsList(response, achievementsList)
         }
     })
-})
+}
 
 function finishAchievementsList(response, achievementsList) {
     response.writeHead(200, {'content-type': 'application/json' })

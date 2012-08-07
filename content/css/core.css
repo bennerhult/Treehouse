@@ -321,6 +321,27 @@ body{
     color: #c21515;
 }
 
+#inProgressOrCompletedMenu{
+    position: absolute;
+    z-index: 1;
+    top: 39px;
+
+    background-color: #fff; //rgb(145,120,88);
+
+    text-align: left;
+    width: 100%;
+    /* width: 400px;*/
+
+}
+
+#inProgressOrCompletedMenu ul li{
+    padding-top: 4px;
+    padding-left: 5%;
+    float: left;
+    padding-bottom: 2px;
+    width: 30%;
+}
+
 #menu{
 
     position: absolute;
