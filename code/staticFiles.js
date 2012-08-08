@@ -1,9 +1,8 @@
-var path = require('path'),
-    fs = require('fs'),
+var fs = require('fs'),
     extTypes = require("./extTypes")
 
 function serveFile(fpath, response) {
-    path.exists(fpath, function(exists) {
+    fs.exists(fpath, function(exists) {
         if (exists) {
             fs.readFile(fpath, function (error, content) {
                 if (error) {
