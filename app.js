@@ -212,9 +212,11 @@ app.get('/latestAchievementSplash', function(request, response) {
 
 app.get('/latestAchievementId', function(request, response) {
     var latestAchievementId = latestAchievement.getId(function(latestAchievementId) {
-    response.writeHead(200, {'content-type': 'application/json' })
-    response.write(JSON.stringify(latestAchievementId))
-    response.end('\n', 'utf-8')
+         response.writeHead(200, {'content-type': 'application/json' })
+        if(latestAchievementId) {
+            response.write(JSON.stringify(latestAchievementId))
+        }
+        response.end('\n', 'utf-8')
     })
 })
 

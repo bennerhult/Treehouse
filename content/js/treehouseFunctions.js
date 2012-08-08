@@ -128,9 +128,13 @@ function isLatestAchievement(achievementId, callback) {
         type: "GET",
         dataType: "json",
         success: function(latestAchievementId) {
-            callback(latestAchievementId === achievementId)
+            if (latestAchievementId) {
+                callback(latestAchievementId === achievementId)
+            }  else {
+                callback(false)  //no latest achievement exists
+            }
         }, error  : function()     {
-            callback(true)
+            callback(true)  //we don't know, but we assume so to avoid removal of the achievement should it be the latest
         }
     })
 
