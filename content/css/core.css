@@ -311,6 +311,8 @@ body{
 
 #infoArea div{
     padding: 20px;
+    background-color: #fff;
+    min-height: 608px;
 }
 
 #infoArea img{
