@@ -45,18 +45,29 @@ function getAchievementInfo() {
 function getAbout() {
     return (
         '<div>' +
-            '<p>We ♥ node.js</p>' +
+            '<h2>We ♥ node.js</h2>' +
+            '<p>Treehouse is thought out, designed and lovingly put together in Stockholm. It runs on the amazing Heroku-platform, based in San Francisco and uses MongoHQ, based in Mountain View, California.</p>' +
        '</div>'
         )
 }
 
+function getFeatureInfo() {
+    return (
+        '<div>' +
+            '<h2>Sharing</h2>' +
+            '<p>When you want to share your feeling of accomplishment (the technical term would be brag) you can publicize your achievements. You can easily share to Facebook or copy the link and share it however you want. Even by trusty old email. If you do not publicize an achievement, only you can see it. Nothing wrong with tracking your success and be proud all by yourself.</p>' +
+            '<h2>15 minutes of fame</h2>' +
+            '<p>The latest publicly shared achievement is showcased on the front page of treehouse.io, so that the whole world gets a glimpse of your awesomeness.</p>' +
+        '</div>'
+        )
+}
 
 function getEarlyAdopterInfo() {
     return (
         '<div>' +
             '<h2>the Coveted Early Adopter Achievement</h2>' +
             '<p>You are so much of an early adopter that you cannot even get it yet! Impressive! Sign up now and you will be first in line when it appears!</p>' +
-        '</div>'
+            '</div>'
         )
 }
 

@@ -89,7 +89,6 @@ function openAchievements() {
 }
 
 function getAchievements(inProgress) {
-
     getAchievementsFromServer(inProgress,
         function(data) {
             $("#achievementList").html(data)

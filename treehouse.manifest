@@ -9,7 +9,6 @@ content/ext/js/jquery.1.7.2.min.js
 content/ext/js/facebook.js
 content/img/+.png
 content/img/back-1.png
-content/img/defaultImage.png
 content/img/delete.png
 content/img/edit.png
 content/img/empty.png
@@ -19,6 +18,7 @@ content/img/log-out.png
 content/img/logo-large.png
 content/img/logo-small.png
 content/img/right-arrow.png
+content/img/sharing.jpg
 content/img/tree-large.png
 content/img/treehouse.jpg
 content/img/x.gif
