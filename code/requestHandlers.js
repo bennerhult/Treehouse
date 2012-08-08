@@ -44,9 +44,9 @@ function topIndexPart() {
                 '<div id="page">' + nl +
                 '<div id="web-menu">' + nl +
                     '<ul>' + nl +
-                    '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart(), 0)"><span class="selected"><img src="content/img/logo-small.png" /></span></a></li>'  + nl +
-                    '<li><a href="javascript:void(0)" onclick="showInfo(getAbout(), 1)"><span>About</span></a> </li>'  + nl +
-                    '<li><a href="javascript:void(0)" onclick="showInfo(getAchievementInfo(), 2)"><span>Achievements</span></a> </li>'  + nl +
+                        '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart(), 0)"><span class="selected"><img src="content/img/logo-small.png" /></span></a></li>'  + nl +
+                        '<li><a href="javascript:void(0)" onclick="showInfo(getAchievementInfo(), 1)"><span>Achievements</span></a> </li>'  + nl +
+                        '<li><a href="javascript:void(0)" onclick="showInfo(getAbout(), 2)"><span>About</span></a> </li>'  + nl +
                     '</ul>' + nl +
                     '<div class="clear"></div>' + nl +
                 '</div>' + nl +
@@ -108,8 +108,8 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
             '<div id="web-menu">' + nl +
                 '<ul>' + nl +
                     '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart(), 0)"><span class="selected"><img src="content/img/logo-small.png" /></span></a></li>'  + nl +
-                    '<li><a href="javascript:void(0)" onclick="showInfo(getAbout(), 1)"><span>About</span></a> </li>'  + nl +
-                    '<li><a href="javascript:void(0)" onclick="showInfo(getAchievementInfo(), 2)"><span>Achievements</span></a> </li>'  + nl +
+                    '<li><a href="javascript:void(0)" onclick="showInfo(getAchievementInfo(), 1)"><span>Achievements</span></a> </li>'  + nl +
+                    '<li><a href="javascript:void(0)" onclick="showInfo(getAbout(), 2)"><span>About</span></a> </li>'  + nl +
                 '</ul>' + nl +
                  '<div class="clear"></div>' + nl +
             '</div>' + nl +
