@@ -56,7 +56,7 @@ function topIndexPart() {
                 '<h1>Treehouse helps you track your achievements.</h1>' + nl +
                 '<p class="ingress">Explore. Achieve. Play.</p>' + nl +
                     '</div>' + nl +
-                    '<div id="infoArea"><img src="content/img/treehouse.jpg" /></div>' + nl +
+                    '<div id="infoArea"><!--<img src="content/img/treehouse.jpg" />--></div>' + nl +
                 '</div>' + nl +
                 '<div id="rightcontainer">' + nl +
                 '<div class="web-wrap desktop">' + nl +
@@ -119,7 +119,7 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
                     '<h1>Treehouse helps you track your achievements.</h1>' + nl +
                     '<p class="ingress">Explore. Achieve. Play.</p>' + nl +
                 '</div>' + nl +
-                '<div id="infoArea"><img src="content/img/treehouse.jpg" /></div>' + nl +
+                '<div id="infoArea"><!--<img src="content/img/treehouse.jpg" />--></div>' + nl +
             '</div>' + nl +
             '<div id="rightcontainer">' + nl +
             '<div class="web-wrap desktop">' + nl +
