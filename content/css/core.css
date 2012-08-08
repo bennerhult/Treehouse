@@ -845,18 +845,22 @@ table tr td.quantity{
 .separerare-part{
     height: 2px;
     width: 100%;
-    background-color: #0c6032;
+    background-color: #8b8d8e;
 
 
-    background-image: -moz-linear-gradient(bottom, #ad9a82 49%, #5f4e36 50%);
-    background-image: -webkit-linear-gradient(bottom, #ad9a82 49%, #5f4e36 50%);
+    background-image: -moz-linear-gradient(bottom, #919191 49%, #575757 50%);
+    background-image: -webkit-linear-gradient(bottom, #919191 49%, #575757 50%);
     background-image: -webkit-gradient(
         linear,
         left bottom,
         left top,
-        color-stop(0.49, #ad9a82),
-        color-stop(0.5, #5f4e36)
+        color-stop(0.49, #919191),
+        color-stop(0.5, #575757)
     );
+
+/*
+    border-left: 1px solid #8b8d8e;
+    border-right: 1px solid #525556;*/
 }
 
 
