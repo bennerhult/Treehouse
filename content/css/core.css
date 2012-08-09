@@ -295,6 +295,7 @@ body{
     background-color: #fff;
     min-height: 648px;
 
+    background-image: url(../img/treehouse.jpg);
 
 
     border: 3px solid #fff;
@@ -310,6 +311,8 @@ body{
 
 #infoArea div{
     padding: 20px;
+    background-color: #fff;
+    min-height: 608px;
 }
 
 #infoArea img{
