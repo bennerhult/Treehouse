@@ -334,17 +334,43 @@ body{
 
     text-align: left;
     width: 100%;
-    /* width: 400px;*/
 
 }
 
 #inProgressOrCompletedMenu ul li{
-    padding-top: 4px;
-    padding-left: 5%;
     float: left;
-    padding-bottom: 2px;
-    width: 30%;
+    width: 50%;
+    text-align: center;
+
 }
+
+#inProgressOrCompletedMenu ul li a{
+    text-decoration: none;
+}
+
+#inProgressOrCompletedMenu ul li span{
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    width: 100%;
+    background: #005977; /* Old browsers */
+    background: -moz-linear-gradient(top,  #005977 0%, #007da7 50%, #005977 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#005977), color-stop(50%,#007da7), color-stop(100%,#005977)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #005977 0%,#007da7 50%,#005977 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #005977 0%,#007da7 50%,#005977 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #005977 0%,#007da7 50%,#005977 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #005977 0%,#007da7 50%,#005977 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#005977', endColorstr='#005977',GradientType=0 ); /* IE6-9 */
+    padding-bottom: 4px;
+    padding-top: 4px;
+}
+
+#inProgressOrCompletedMenu ul li span:hover{
+
+    background: none;
+    background-color: #003e53;
+}
+
 
 #menu{
 
@@ -575,7 +601,7 @@ input.file {
 
 
 .first{
-    padding-top: 50px;
+    padding-top: 80px;
 }
 
 .achievement img,
@@ -1098,6 +1124,11 @@ p#achievementDescription{
     }
 
     #menu{
+        position: fixed;
+        width: 100%;
+    }
+
+    #inProgressOrCompletedMenu{
         position: fixed;
         width: 100%;
     }

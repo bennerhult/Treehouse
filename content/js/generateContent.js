@@ -94,8 +94,8 @@ function getAchievementsContent() {
                 '</div>' + nl +
                 '<div id="inProgressOrCompletedMenu">' +
                 '   <ul>' +
-                '       <li id="inProgress"><a href="javascript:void(0)" onclick="getAchievements(false)">in progress</a></li>' +
-                '       <li id="completed"><a href="javascript:void(0)" onclick="getAchievements(true)">completed</a></li>' +
+                '       <li id="inProgress"><a href="javascript:void(0)" onclick="getAchievements(false)"><span>in progress</span></a></li>' +
+                '       <li id="completed"><a href="javascript:void(0)" onclick="getAchievements(true)"><span>completed</span></a></li>' +
                 '    </ul>' +
                 '</div>' + nl  +
                 '<div id="achievementList"></div>' + nl  +
