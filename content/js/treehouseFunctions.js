@@ -88,8 +88,15 @@ function openAchievements() {
     insertContent(getAchievementsContent(), getAchievements)
 }
 
-function getAchievements(inProgress) {
-    getAchievementsFromServer(inProgress,
+function getAchievements(completed) {
+    if (completed) {
+        $("#completed").attr("class","selected")
+        $("#inProgress").removeClass()
+    } else {
+        $("#inProgress").attr("class","selected")
+        $("#completed").removeClass()
+    }
+    getAchievementsFromServer(completed,
         function(data) {
             $("#achievementList").html(data)
         }
