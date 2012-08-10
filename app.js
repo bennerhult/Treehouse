@@ -220,7 +220,7 @@ app.get('/latestAchievementId', function(request, response) {
     })
 })
 
-function createAchievementDesc(achievements, userId, percentages) {
+function createAchievementDesc(achievements, userId, percentages, completed) {
     var achievementsList = ""
     for (var i in achievements) {
         if (i == 0) {
@@ -234,6 +234,8 @@ function createAchievementDesc(achievements, userId, percentages) {
             + userId
             + '\','
             + achievements[i].publiclyVisible
+            + ','
+            + completed
             + ','
         if (percentages[i] > 0) {
             achievementsList += 'true'
@@ -280,7 +282,7 @@ function getAchievementList(request, response, completedAchievements) {
                                     percentages.push(achievementPercentageFinished)
                                 }
                                 if (index == progresses.length - myAchievement.goals.length) {
-                                    achievementsList = createAchievementDesc(achievementsToShow, request.session.user_id, percentages)
+                                    achievementsList = createAchievementDesc(achievementsToShow, request.session.user_id, percentages, completedAchievements)
                                     if (!completedAchievements) {
                                         achievementsList += "<div class='achievement'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>"
                                     }

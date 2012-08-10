@@ -83,9 +83,9 @@ function signupOnServer(callback) {
 }
 
 /******************  achievements functions  ******************/
-function openAchievements() {
+function openAchievements(completed) {
     window.history.pushState(null, null, "/")
-    insertContent(getAchievementsContent(), getAchievements)
+    insertContent(getAchievementsContent(), getAchievements(completed))
 }
 
 function getAchievements(completed) {
@@ -122,10 +122,10 @@ function getAchievementsFromServer(completed, callback) {
 }
 
 /******************  achievement functions  ******************/
-function openAchievement(achievementId, userId, publiclyVisible, progressMade) {
+function openAchievement(achievementId, userId, publiclyVisible, progressMade, completed) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + userId)
     isLatestAchievement(achievementId, function(isLatestAchievement) {
-        insertContent(getAchievementContent(publiclyVisible, progressMade, isLatestAchievement), getAchievement(achievementId, userId, publiclyVisible))
+        insertContent(getAchievementContent(publiclyVisible, progressMade, isLatestAchievement, completed), getAchievement(achievementId, userId, publiclyVisible))
     })
 }
 

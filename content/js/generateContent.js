@@ -103,13 +103,13 @@ function getAchievementsContent() {
         )
 }
 
-function getAchievementContent(publiclyVisible, progressMade, isLatestAchievement) {
+function getAchievementContent(publiclyVisible, progressMade, isLatestAchievement, completed) {
     var achievementContent =   '<div id="fb-root"></div>' + nl  +
         '<div id="app-container">' + nl  +
         '<div id="content no-padding">' + nl  +
         '<div id="menu">' + nl  +
         '<ul>' + nl  +
-        '<li class="back"><a href="javascript:void(0)" onclick="openAchievements()"><img src="content/img/back-1.png" alt=""/></a></li>' + nl  +
+        '<li class="back"><a href="javascript:void(0)" onclick="openAchievements(' + completed + ')"><img src="content/img/back-1.png" alt=""/></a></li>' + nl  +
         '<li class="logo"><img src="content/img/logo-small.png" /></li>' + nl
         if (!publiclyVisible && !progressMade) {
             achievementContent += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement()"><img src="content/img/edit.png" /></a></li>' + nl
@@ -149,7 +149,7 @@ function getNewAchievementContent(data) {
             '<div id="content no-padding">' + nl  +
                 '<div id="menu">' + nl  +
                     '<ul>' + nl  +
-                        '<li class="back"><a href="javascript:void(0)" onclick="openAchievements();"><img src="content/img/back-1.png" alt=""/></a></li>' + nl  +
+                        '<li class="back"><a href="javascript:void(0)" onclick="openAchievements(false);"><img src="content/img/back-1.png" alt=""/></a></li>' + nl  +
                         '<li class="logo"><img src="content/img/logo-small.png" /></li>' + nl  +
                     '</ul>' + nl  +
                 '</div>' + nl  +
