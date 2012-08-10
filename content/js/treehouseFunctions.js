@@ -89,16 +89,16 @@ function openAchievements(completed) {
 }
 
 function getAchievements(completed) {
-    if (completed) {
-        $("#completed").attr("class","selected")
-        $("#inProgress").removeClass()
-    } else {
-        $("#inProgress").attr("class","selected")
-        $("#completed").removeClass()
-    }
     getAchievementsFromServer(completed,
         function(data) {
             $("#achievementList").html(data)
+            if (completed) {
+                $("#completed").attr("class","selected")
+                $("#inProgress").removeClass()
+            } else {
+                $("#inProgress").attr("class","selected")
+                $("#completed").removeClass()
+            }
         }
     )
 }
