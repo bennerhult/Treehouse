@@ -2,7 +2,7 @@
     "name": "Treehouse",
     "version": "0.0.3",
     "engines": {
-        "node": "0.8.5",
+        "node": "0.8.6",
         "npm":  "1.1.41"
     },
     "dependencies": {
