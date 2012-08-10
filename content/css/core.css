@@ -348,19 +348,27 @@ body{
     text-decoration: none;
 }
 
+#inProgressOrCompletedMenu ul li.selected span{
+
+    background: none;
+    background-color: #4a4b4c;
+}
+
+
 #inProgressOrCompletedMenu ul li span{
     text-decoration: none;
     color: #fff;
     display: block;
     width: 100%;
-    background: #005977; /* Old browsers */
-    background: -moz-linear-gradient(top,  #005977 0%, #007da7 50%, #005977 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#005977), color-stop(50%,#007da7), color-stop(100%,#005977)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #005977 0%,#007da7 50%,#005977 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #005977 0%,#007da7 50%,#005977 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #005977 0%,#007da7 50%,#005977 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #005977 0%,#007da7 50%,#005977 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#005977', endColorstr='#005977',GradientType=0 ); /* IE6-9 */
+    background: #4a4b4c; /* Old browsers */
+    background: -moz-linear-gradient(top,  #4a4b4c 0%, #7c7e7f 50%, #4a4b4c 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4a4b4c), color-stop(50%,#7c7e7f), color-stop(100%,#4a4b4c)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #4a4b4c 0%,#7c7e7f 50%,#4a4b4c 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #4a4b4c 0%,#7c7e7f 50%,#4a4b4c 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #4a4b4c 0%,#7c7e7f 50%,#4a4b4c 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #4a4b4c 0%,#7c7e7f 50%,#4a4b4c 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4a4b4c', endColorstr='#4a4b4c',GradientType=0 ); /* IE6-9 */
+
     padding-bottom: 4px;
     padding-top: 4px;
 }
@@ -368,7 +376,7 @@ body{
 #inProgressOrCompletedMenu ul li span:hover{
 
     background: none;
-    background-color: #003e53;
+    background-color: #4a4b4c;
 }
 
 
