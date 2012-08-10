@@ -125,7 +125,7 @@ function getAchievementsFromServer(completed, callback) {
 function openAchievement(achievementId, userId, publiclyVisible, progressMade, completed) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + userId)
     isLatestAchievement(achievementId, function(isLatestAchievement) {
-        insertContent(getAchievementContent(publiclyVisible, progressMade, isLatestAchievement, completed), getAchievement(achievementId, userId, publiclyVisible))
+        insertContent(getAchievementContent(publiclyVisible, progressMade, isLatestAchievement, completed, userId), getAchievement(achievementId, userId, publiclyVisible))
     })
 }
 
@@ -345,10 +345,10 @@ function goalKeyPress(goalField) {
 }
 
 /******************  edit achievement functions  ******************/
-function editAchievement() {
+function editAchievement(userId) {
     editAchievementOnServer(
         function(data) {
-            insertContent(getNewAchievementContent(data))
+            insertContent(getNewAchievementContent(data, userId))
         }
     )
 }

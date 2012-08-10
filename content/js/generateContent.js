@@ -103,7 +103,7 @@ function getAchievementsContent() {
         )
 }
 
-function getAchievementContent(publiclyVisible, progressMade, isLatestAchievement, completed) {
+function getAchievementContent(publiclyVisible, progressMade, isLatestAchievement, completed, userId) {
     var achievementContent =   '<div id="fb-root"></div>' + nl  +
         '<div id="app-container">' + nl  +
         '<div id="content no-padding">' + nl  +
@@ -112,7 +112,7 @@ function getAchievementContent(publiclyVisible, progressMade, isLatestAchievemen
         '<li class="back"><a href="javascript:void(0)" onclick="openAchievements(' + completed + ')"><img src="content/img/back-1.png" alt=""/></a></li>' + nl  +
         '<li class="logo"><img src="content/img/logo-small.png" /></li>' + nl
         if (!publiclyVisible && !progressMade) {
-            achievementContent += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement()"><img src="content/img/edit.png" /></a></li>' + nl
+            achievementContent += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement(\'' + userId + '\')"><img src="content/img/edit.png" /></a></li>' + nl
         }
         if (!isLatestAchievement) {
             achievementContent += '<li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>' + nl
@@ -144,12 +144,18 @@ function getPublicAchievementContent() {
 }
 
 //data if edit, null if create
-function getNewAchievementContent(data) {
+function getNewAchievementContent(data, userId) {
         var text ='<div id="app-container">' + nl  +
             '<div id="content no-padding">' + nl  +
                 '<div id="menu">' + nl  +
                     '<ul>' + nl  +
-                        '<li class="back"><a href="javascript:void(0)" onclick="openAchievements(false);"><img src="content/img/back-1.png" alt=""/></a></li>' + nl  +
+                        '<li class="back"><a href="javascript:void(0)" onclick="'
+                        if (data) {
+                            text += 'openAchievement(\'' + data._id + '\', \'' + userId + '\', ' + false + ', ' +  false + ', ' + false +')'
+                        } else {
+                            text += 'openAchievements(false)'
+                        }
+                        text+='"><img src="content/img/back-1.png" alt=""/></a></li>' + nl  +
                         '<li class="logo"><img src="content/img/logo-small.png" /></li>' + nl  +
                     '</ul>' + nl  +
                 '</div>' + nl  +
