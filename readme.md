@@ -44,7 +44,9 @@ Check logs
 `heroku logs`
 
 See available versions for Node and NPM
+
 [Node](http://heroku-buildpack-nodejs.s3.amazonaws.com/manifest.nodejs)
+
 [NPM](http://heroku-buildpack-nodejs.s3.amazonaws.com/manifest.npm)
 
 
