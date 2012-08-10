@@ -235,13 +235,13 @@ function createAchievementDesc(achievements, userId, percentages, completed) {
             + '\','
             + achievements[i].publiclyVisible
             + ','
-            + completed
-            + ','
         if (percentages[i] > 0) {
             achievementsList += 'true'
         } else {
             achievementsList += 'false'
         }
+        achievementsList += ','
+            + completed
         achievementsList += ')"><img src="'
             + achievements[i].imageURL
             + '" alt="'
@@ -282,16 +282,12 @@ function getAchievementList(request, response, completedAchievements) {
                                     percentages.push(achievementPercentageFinished)
                                 }
                                 if (index == progresses.length - myAchievement.goals.length) {
-     console.log(myAchievement.title)
-     console.log(completedAchievements)
-
                                     achievementsList = createAchievementDesc(achievementsToShow, request.session.user_id, percentages, completedAchievements)
                                     if (!completedAchievements) {
                                         achievementsList += "<div class='achievement'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>"
                                     }
                                     finishAchievementsList(response, achievementsList)
                                 }
-
                             })
                         }
                     }
