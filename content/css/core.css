@@ -328,7 +328,7 @@ body{
 #inProgressOrCompletedMenu{
     position: absolute;
     z-index: 1;
-    top: 39px;
+    top: 37px;
 
     background-color: #fff; //rgb(145,120,88);
 
