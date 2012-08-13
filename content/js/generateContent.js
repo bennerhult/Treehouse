@@ -92,22 +92,16 @@ function getAchievementsContent() {
             '<div id="content no-padding">' + nl +
                 '<div id="menu">' + nl +
                     '<ul>' + nl +
-                        '<li class="back"><a href="javascript:void(0)" onclick="logout()"><img src="content/img/log-out.png" alt=""/></a></li>' + nl +
-                        '<li class="logo"><img src="content/img/logo-small.png" /></li>' + nl +
+                    '<li id="inProgress"><a href="javascript:void(0)" onclick="getAchievements(false)"><span>in progress</span></a></li>' +
+                    '<li id="completed"><a href="javascript:void(0)" onclick="getAchievements(true)"><span>completed</span></a></li>' +
                     '</ul>' + nl +
                 '</div>' + nl +
-                '<div id="inProgressOrCompletedMenu">' +
-                '   <ul>' +
-                '       <li id="inProgress"><a href="javascript:void(0)" onclick="getAchievements(false)"><span>in progress</span></a></li>' +
-                '       <li id="completed"><a href="javascript:void(0)" onclick="getAchievements(true)"><span>completed</span></a></li>' +
-                '    </ul>' +
-                '</div>' + nl  +
                 '<div class="tab-menu-container">' + nl +
                     '<div class="slider-menu">' + nl +
                         '<ul>' +
-                            '<li><a href=="#"><span>Friends</span></a></li>' + nl +
-                            '<li><a href=="#"><span>My achievements</span></a></li>' + nl +
-                            '<li class="last"><a href=="#"><span>Log out</span></a></li>' + nl +
+                            '<li><a href="javascript:void(0)"><span>Friends</span></a></li>' + nl +
+                            '<li><a href="javascript:void(0)" onclick="getAchievements(false)"><span>My achievements</span></a></li>' + nl +
+                            '<li class="last"><a href="javascript:void(0)" onclick="logout()"><span>Log out</span></a></li>' + nl +
                         '</ul>' + nl +
                     '</div>' + nl +
                     '<div class="tree-tab"><img src="content/img/tree-tab.png" alt=""/></div>' + nl +
