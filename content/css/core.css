@@ -267,6 +267,7 @@ body{
 #content{
     position: relative;
     padding: 30px;
+    padding-top: 50px;
 }
 
 #no-padding{
@@ -380,7 +381,7 @@ body{
 
 
 #menu{
-
+    height: 38px;
     position: absolute;
     z-index: 1;
     top: 0px;
@@ -469,29 +470,24 @@ input.button{
     width: 99.8%;
     height: 35px;
 
+    border: 1px solid #fff;
+
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
 
-    color: #747870;
-    background-color: #bed9da;
-    background-image: -moz-linear-gradient(bottom, rgb(177,198,199) 49%, rgb(190,217,218) 51%);
-    background-image: -webkit-linear-gradient(bottom, rgb(177,198,199) 49%, rgb(190,217,218) 51%);
+    color: #ffffff;
 
-    background-image: -webkit-gradient(
-        linear,
-        left bottom,
-        left top,
-        color-stop(0.49, rgb(177,198,199)),
-        color-stop(0.51, rgb(190,217,218))
-    );
-
-    border: 1px solid #a4b9b9;
+    background: #cb60b3; /* Old browsers */
+    background: -moz-linear-gradient(top,  #cb60b3 0%, #c146a1 50%, #a80077 51%, #db36a4 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cb60b3), color-stop(50%,#c146a1), color-stop(51%,#a80077), color-stop(100%,#db36a4)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #cb60b3 0%,#c146a1 50%,#a80077 51%,#db36a4 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #cb60b3 0%,#c146a1 50%,#a80077 51%,#db36a4 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #cb60b3 0%,#c146a1 50%,#a80077 51%,#db36a4 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #cb60b3 0%,#c146a1 50%,#a80077 51%,#db36a4 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cb60b3', endColorstr='#db36a4',GradientType=0 ); /* IE6-9 */
 
 
-    -moz-box-shadow: inset 0px 0px 5px rgb(255,255,255);
-    -webkit-box-shadow: inset 0px 0px 5px rgb(255,255,255);
-    box-shadow: inset 0px 0px 5px rgb(255,255,255);
     margin-top: 20px;
     margin-bottom: 20px;
     cursor: pointer;
@@ -511,7 +507,7 @@ textarea.formstyle{
 input.button:hover,
 input.button:focus{
     background-image: none;
-    background-color: #bed9da;
+    background-color: #db36a4;
 }
 
 /*file*/

@@ -51,7 +51,10 @@ function insertLatestAchievement() {
 
 function getLoginContent() {
     return (
+            '<div id="menu"></div>' + nl +
             '<div id="content">' + nl +
+
+
                 '<div class="signup-logo"><img src="content/img/logo-large.png" /></div>' + nl +
                 '<form action="javascript: checkUser()">' + nl +
                     '<input type="text" class="formstyle" name="username" placeholder="email"">' + nl +
@@ -69,6 +72,7 @@ function getLoginContent() {
 
 function getSignupContent() {
     return (
+            '<div id="menu"></div>' + nl +
             '<div id="content">' + nl +
                 '<div class="signup-logo"><img src="content/img/logo-large.png" /></div>' + nl +
                 '<h1 class="signup">Sign Up</h1>' + nl +
