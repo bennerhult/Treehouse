@@ -417,13 +417,13 @@ body{
 
 #menu ul li.back{
     text-align: left;
-    width: 30%;
+    width: 45%;
     padding-left: 5%;
 }
 
-#menu ul li.logo{
+#menu ul li.share{
     text-align: center;
-    width: 30%;
+    width:15%;
     opacity: 0.8;
 }
 
@@ -441,7 +441,6 @@ body{
 }
 
 /* tab menu*/
-
 .tab-menu-container{
     z-index: 20;
     position: absolute;

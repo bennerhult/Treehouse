@@ -361,8 +361,6 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
                             achievementDesc += goalTextsText
                             achievementDesc += '</div>'
                             achievementDesc += '<br />'
-                            achievementDesc += '<div id="publicizeButton"><a href="javascript:void(0)" onclick="publicize()">Share publicly</a></div>'
-                            achievementDesc += '<br />'
                             achievementDesc += '<div id="fbLike" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="250" data-show-faces="true" font="segoe ui"></div></div>'
                             achievementDesc += '<br />'
                             achievementDesc += '<br />'

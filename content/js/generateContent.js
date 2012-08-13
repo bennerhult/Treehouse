@@ -91,11 +91,14 @@ function getAchievementsContent() {
     return (
             '<div id="content no-padding">' + nl +
                 '<div id="menu">' + nl +
-                    '<ul>' + nl +
-                    '<li id="inProgress"><a href="javascript:void(0)" onclick="getAchievements(false)"><span>in progress</span></a></li>' +
-                    '<li id="completed"><a href="javascript:void(0)" onclick="getAchievements(true)"><span>completed</span></a></li>' +
-                    '</ul>' + nl +
+
                 '</div>' + nl +
+                '<div id="inProgressOrCompletedMenu">' +
+                '   <ul>' +
+                '       <li id="inProgress"><a href="javascript:void(0)" onclick="getAchievements(false)"><span>in progress</span></a></li>' +
+                '       <li id="completed"><a href="javascript:void(0)" onclick="getAchievements(true)"><span>completed</span></a></li>' +
+                '    </ul>' +
+                '</div>' + nl  +
                 '<div class="tab-menu-container">' + nl +
                     '<div class="slider-menu">' + nl +
                         '<ul>' +
@@ -118,8 +121,10 @@ function getAchievementContent(publiclyVisible, progressMade, isLatestAchievemen
         '<div id="content no-padding">' + nl  +
         '<div id="menu">' + nl  +
         '<ul>' + nl  +
-        '<li class="back"><a href="javascript:void(0)" onclick="openAchievements(' + completed + ')"><img src="content/img/back-1.png" alt=""/></a></li>' + nl  +
-        '<li class="logo"><img src="content/img/logo-small.png" /></li>' + nl
+        '<li class="back"><a href="javascript:void(0)" onclick="openAchievements(' + completed + ')"><img src="content/img/back-1.png" alt=""/></a></li>' + nl
+        if (!publiclyVisible) {
+            achievementContent += '<li id="publicizeButton" class="share"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/share.png" /></a></li>'
+        }
         if (!publiclyVisible && !progressMade) {
             achievementContent += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement(\'' + userId + '\')"><img src="content/img/edit.png" /></a></li>' + nl
         }
@@ -165,7 +170,6 @@ function getNewAchievementContent(data, userId) {
                             text += 'openAchievements(false)'
                         }
                         text+='"><img src="content/img/back-1.png" alt=""/></a></li>' + nl  +
-                        '<li class="logo"><img src="content/img/logo-small.png" /></li>' + nl  +
                     '</ul>' + nl  +
                 '</div>' + nl  +
                 '<form id="createAchievementForm" action="javascript: createAchievement()">' + nl  +
