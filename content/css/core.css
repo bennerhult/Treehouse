@@ -127,8 +127,7 @@ body{
 
 #leftcontainer{
    float: left;
-   width: 59.433962%;        /* 630px/ 1060px */
-   width: 59.2264151%;       /* 660px/ 1060px */
+   width: 60.0%;            /* with small adjusted to image 660px / 1060px */
 }
 
 
@@ -293,10 +292,10 @@ body{
 
 #infoArea {
     background-color: #fff;
-    min-height: 648px;
+    min-height: 628px;
 
     background-image: url(../img/treehouse.jpg);
-
+    background-position: top left;
 
     border: 3px solid #fff;
     -moz-border-radius: 5px;
