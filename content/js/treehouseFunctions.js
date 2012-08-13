@@ -37,13 +37,17 @@ function rememberMe() {
 }
 
 function rememberMeOnServer(callback) {
-
     $.ajax("/rememberMe", {
         type: "GET",
         dataType: "json",
         success: function(data) { if ( callback ) callback(data) },
         error  : function()     { if ( callback ) callback(null) }
     })
+}
+
+/******************  tab menu functions  ******************/
+function toggleTab() {
+    $('#tab-menu').toggle('fast')
 }
 
 /******************  logout functions  ******************/

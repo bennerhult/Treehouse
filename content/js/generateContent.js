@@ -102,14 +102,14 @@ function getAchievementsContent() {
                 '    </ul>' +
                 '</div>' + nl  +
                 '<div class="tab-menu-container">' + nl +
-                    '<div class="slider-menu">' + nl +
+                    '<div id="tab-menu" class="slider-menu">' + nl +
                         '<ul>' +
                             '<li><a href="javascript:void(0)"><span>Friends</span></a></li>' + nl +
-                            '<li><a href="javascript:void(0)" onclick="getAchievements(false)"><span>My achievements</span></a></li>' + nl +
+                            '<li><a href="javascript:void(0)" onclick="getAchievements(false)"><span><nobr>My achievements</nobr></span></a></li>' + nl +
                             '<li class="last"><a href="javascript:void(0)" onclick="logout()"><span>Log out</span></a></li>' + nl +
                         '</ul>' + nl +
                     '</div>' + nl +
-                    '<div class="tree-tab"><img src="content/img/tree-tab.png" alt=""/></div>' + nl +
+                    '<div class="tree-tab"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></div>' + nl +
                     '<div class="clear"></div>' + nl +
                 '</div>' + nl +
                 '<div id="achievementList"></div>' + nl  +
