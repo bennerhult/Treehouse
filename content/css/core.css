@@ -440,6 +440,13 @@ body{
     padding-right: 5%;
 }
 
+#menu ul li.create {
+    float: right;
+    width: 15%;
+    text-align: right;
+    padding-right: 5%;
+}
+
 /* tab menu*/
 .tab-menu-container{
     z-index: 20;
