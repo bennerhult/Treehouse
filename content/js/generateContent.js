@@ -102,6 +102,17 @@ function getAchievementsContent() {
                 '       <li id="completed"><a href="javascript:void(0)" onclick="getAchievements(true)"><span>completed</span></a></li>' +
                 '    </ul>' +
                 '</div>' + nl  +
+                '<div class="tab-menu-container">' + nl +
+                    '<div class="slider-menu">' + nl +
+                        '<ul>' +
+                            '<li><a href=="#"><span>Friends</span></a></li>' + nl +
+                            '<li><a href=="#"><span>My achievements</span></a></li>' + nl +
+                            '<li class="last"><a href=="#"><span>Log out</span></a></li>' + nl +
+                        '</ul>' + nl +
+                    '</div>' + nl +
+                    '<div class="tree-tab"><img src="content/img/tree-tab.png" alt=""/></div>' + nl +
+                    '<div class="clear"></div>' + nl +
+                '</div>' + nl +
                 '<div id="achievementList"></div>' + nl  +
             '</div>' + nl
         )
