@@ -291,7 +291,13 @@ function getAchievementList(request, response, completedAchievements) {
                                     achievementsToShow.push(myAchievement)
                                     percentages.push(achievementPercentageFinished)
                                 }
-                                console.log("index: " + index + ", progresses.length - myAchievement.goals.length: " + progresses.length - myAchievement.goals.length)
+
+                                console.log("index:" )
+                                console.log(index)
+                                console.log("progresses.length - myAchievement.goals.length:")
+                                console.log(progresses.length )
+                                console.log(myAchievement.goals.length)
+
                                 if (index == progresses.length - myAchievement.goals.length) {
                                     achievementsList += createAchievementDesc(achievementsToShow, request.session.user_id, percentages, completedAchievements)
                                     finishAchievementsList(response, achievementsList)
