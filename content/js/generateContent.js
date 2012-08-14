@@ -142,7 +142,6 @@ function getAchievementContent(publiclyVisible, progressMade, isLatestAchievemen
         }
          achievementContent += '</ul>' + nl  +
             '</div>' + nl  +
-             getTabMenu() +
             '<div id="achievementDesc"></div>' + nl  +
             '</div>' + nl +
             '</div>' + nl;
@@ -182,7 +181,6 @@ function getNewAchievementContent(data, userId) {
                         text+='"><img src="content/img/back-1.png" alt=""/></a></li>' + nl  +
                     '</ul>' + nl  +
                 '</div>' + nl  +
-                getTabMenu() +
                 '<form id="createAchievementForm" action="javascript: createAchievement()">' + nl  +
                     '<div class="achievement-info">' + nl  +
                         '<div class="inputarea">' + nl  +
