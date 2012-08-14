@@ -276,6 +276,9 @@ function getAchievementList(request, response, completedAchievements) {
         if (progresses && progresses.length > 0) {
             progresses.forEach(function(currentProgress, index) {
                 achievement.Achievement.findById(currentProgress.achievement_id, function(err, myAchievement) {
+                    if (err) {
+                        console.log("error in app.js: couldn't find achievement for progress " + currentProgress.achievement_id)
+                    }
                     if (myAchievement) {
                         if  (_.indexOf(achievementIdsGoneThrough, myAchievement._id.toString()) == -1) {
                             achievementIdsGoneThrough.push(myAchievement._id.toString())

@@ -94,11 +94,11 @@ function getTabMenu() {
                        '<ul>' + nl +
                            '<li class="header border-top-right">Achievements</li>' + nl +
                            '<li><a href="javascript:void(0)" onclick="getAchievements(false)"><span><nobr>My achievements</nobr></span></a></li>' + nl +
-                           '<li class="last"><a href="javascript:void(0)"><span>Create new achievement</span></a></li>' + nl +
-                           '<li class="header">Friends</li>' + nl +
-                           '<li><a href="javascript:void(0)"><span>My friends</span></a></li>' + nl +
-                           '<li class="last"><a href="javascript:void(0)"><span>Search for friends</span></a></li>' + nl +
-                           '<li class="header">Settings</li>' + nl +
+                           //'<li class="last"><a href="javascript:void(0)"><span>Create new achievement</span></a></li>' + nl +
+                           //'<li class="header">Friends</li>' + nl +
+                           //'<li><a href="javascript:void(0)"><span>My friends</span></a></li>' + nl +
+                           //'<li class="last"><a href="javascript:void(0)"><span>Search for friends</span></a></li>' + nl +
+                           '<li class="header">Account</li>' + nl +
                            '<li class="last"><a href="javascript:void(0)" onclick="logout()"><span class="border-bottom-right">Log out</span></a></li>' + nl +
                        '</ul>' + nl +
                     '</div>' + nl +
