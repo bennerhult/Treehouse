@@ -775,11 +775,13 @@ input.file {
 }
 
 
+
+
 span.gradient-bg{
     position: absolute;
 
     top: 10px;
-    bottom: 5px;
+    bottom: 6px;
     left: 5px;
     right: 5px;
 
@@ -797,6 +799,13 @@ span.gradient-bg{
         color-stop(0.21, rgba(0,0,0,0.5)),
         color-stop(0.42, rgba(0,0,0,0))
     );
+}
+
+.imagearea span.gradient-bg,
+.create-imagearea span.gradient-bg{
+    left: 3px;
+    right: 3px;
+
 }
 
 span.progressbar{
