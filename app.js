@@ -266,6 +266,7 @@ app.get('/achievements_completed', function(request, response){
 function getAchievementList(request, response, completedAchievements) {
     app.set('current_achievement_id', null)
     var achievementsList = ""
+    var goneThroughProgresses = 0
     var achievementsToShow = new Array()
     var achievementIdsGoneThrough = new Array()
     var percentages = new Array()
@@ -278,7 +279,6 @@ function getAchievementList(request, response, completedAchievements) {
             console.log("error in app.js: couldn't find any progess for user " + request.session.user_id)
         }
         if (progresses && progresses.length > 0) {
-            progresses.sort()
             progresses.forEach(function(currentProgress, index) {
                 achievement.Achievement.findById(currentProgress.achievement_id, function(err2, myAchievement) {
                     if (err2) {
@@ -292,7 +292,8 @@ function getAchievementList(request, response, completedAchievements) {
                                     achievementsToShow.push(myAchievement)
                                     percentages.push(achievementPercentageFinished)
                                 }
-                                if (index == progresses.length - myAchievement.goals.length) {
+                                goneThroughProgresses +=  myAchievement.goals.length
+                                if (goneThroughProgresses == progresses.length) {
                                     achievementsList += createAchievementDesc(achievementsToShow, request.session.user_id, percentages, completedAchievements)
                                     finishAchievementsList(response, achievementsList)
                                 }
