@@ -89,7 +89,6 @@ function getSignupContent() {
 
 function getTabMenu() {
     return     '<div class="tab-menu-container">' + nl +
-
                     '<div id="tab-menu" class="slider-menu" style="display:none;">' + nl +
                        '<ul>' + nl +
                            '<li class="header border-top-right">Achievements</li>' + nl +
