@@ -433,13 +433,6 @@ body{
     opacity: 0.8;
 }
 
-#menu ul li.add{
-    float: right;
-    width: 15%;
-    text-align: right;
-    padding-right: 5%;
-}
-
 #menu ul li.create {
     float: right;
     width: 15%;

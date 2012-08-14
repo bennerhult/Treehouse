@@ -107,11 +107,7 @@ function getTabMenu() {
 function getAchievementsContent() {
     return (
             '<div id="content no-padding">' + nl +
-                '<div id="menu">' + nl +
-                '   <ul>' +
-                '<li id="createButton" class="create"><a href="javascript:void(0)" onclick="insertContent(getNewAchievementContent())"><img src="content/img/add.png" /></a></li>' +
-                '    </ul>' +
-                '</div>' + nl +
+                '<div id="menu"></div>' + nl +
                 '<div id="inProgressOrCompletedMenu">' +
                 '   <ul>' +
                 '       <li id="inProgress"><a href="javascript:void(0)" onclick="getAchievements(false)"><span>in progress</span></a></li>' +
