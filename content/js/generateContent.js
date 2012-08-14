@@ -89,7 +89,7 @@ function getSignupContent() {
 
 function getTabMenu() {
     return     '<div class="tab-menu-container">' + nl +
-                    '<div class="tree-tab"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></div>' + nl +
+
                     '<div id="tab-menu" class="slider-menu" style="display:none;">' + nl +
                        '<ul>' + nl +
                            '<li class="header border-top-right">Achievements</li>' + nl +
@@ -107,10 +107,11 @@ function getTabMenu() {
 function getAchievementsContent() {
     return (
             '<div id="content no-padding">' + nl +
-                '<div id="menu"></div>' + nl +
+
                 '<div id="inProgressOrCompletedMenu">' +
                 '   <ul>' +
                 '       <li id="inProgress"><a href="javascript:void(0)" onclick="getAchievements(false)"><span>in progress</span></a></li>' +
+                '       <li><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>' +
                 '       <li id="completed"><a href="javascript:void(0)" onclick="getAchievements(true)"><span>completed</span></a></li>' +
                 '    </ul>' +
                 '</div>' + nl  +
