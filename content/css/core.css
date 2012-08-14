@@ -451,12 +451,14 @@ body{
 .tab-menu-container{
     z-index: 20;
     position: absolute;
-    top: 70px;
+   /* background-color: rgba(0,0,0,0.8);*/
+    top: 0px;
+    bottom: 0px;
 }
 
 .slider-menu{
-    float: left;
-    /*width: 300px;*/
+
+
 }
 
 .slider-menu ul li{
@@ -467,15 +469,22 @@ body{
     border-bottom: 1px solid #4f4d4d;
 }
 
+.slider-menu ul li.header{
+    background-color: #000;
+    font-size: 11px;
+    border: 0px;
+    padding: 4px 4px 7px 10px;
+}
+
 .slider-menu ul li a{
     font-family: 'Philosopher', sans-serif;
-    font-size: 18px;
+    font-size: 14px;
     color: #fff;
     text-decoration: none;
 }
 
 .slider-menu ul li span{
-    background-color: #737677;
+    background-color: rgba(0,0,0,0.8);
     padding-left: 20px;
     padding-right: 70px;
     padding-top: 10px;
@@ -485,16 +494,28 @@ body{
 }
 
 .slider-menu ul li span:hover{
-    background-color: #ccc;
-    color: #292929;
+    background-color: rgba(95,95,95,0.8);
+    color: #000;
 }
 
 .slider-menu ul li.last{
     border: 0px;
 }
 
+.slider-menu ul li.border-top-right{
+    -moz-border-top-right-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.slider-menu ul li span.border-bottom-right{
+    -moz-border-bottom-right-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
 .tree-tab{
-    float: left;
+
 }
 
 /**/

@@ -89,16 +89,20 @@ function getSignupContent() {
 
 function getTabMenu() {
     return     '<div class="tab-menu-container">' + nl +
-        '<div id="tab-menu" class="slider-menu" style="display:none;">' + nl +
-        '<ul>' +
-        '<li><a href="javascript:void(0)" onclick="getFriends(false)"><span>Friends</span></a></li>' + nl +
-        '<li><a href="javascript:void(0)" onclick="getAchievements(false)"><span><nobr>My achievements</nobr></span></a></li>' + nl +
-        '<li class="last"><a href="javascript:void(0)" onclick="logout()"><span>Log out</span></a></li>' + nl +
-        '</ul>' + nl +
-        '</div>' + nl +
-        '<div class="tree-tab"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></div>' + nl +
-        '<div class="clear"></div>' + nl +
-        '</div>' + nl
+                    '<div class="tree-tab"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></div>' + nl +
+                    '<div id="tab-menu" class="slider-menu" style="display:none;">' + nl +
+                       '<ul>' + nl +
+                           '<li class="header border-top-right">Achievements</li>' + nl +
+                           '<li><a href="javascript:void(0)" onclick="getAchievements(false)"><span><nobr>My achievements</nobr></span></a></li>' + nl +
+                           '<li class="last"><a href="javascript:void(0)"><span>Create new achievement</span></a></li>' + nl +
+                           '<li class="header">Friends</li>' + nl +
+                           '<li><a href="javascript:void(0)"><span>My friends</span></a></li>' + nl +
+                           '<li class="last"><a href="javascript:void(0)"><span>Search for friends</span></a></li>' + nl +
+                           '<li class="header">Settings</li>' + nl +
+                           '<li class="last"><a href="javascript:void(0)" onclick="logout()"><span class="border-bottom-right">Log out</span></a></li>' + nl +
+                       '</ul>' + nl +
+                    '</div>' + nl +
+               '</div>' + nl
 }
 function getAchievementsContent() {
     return (
@@ -118,18 +122,6 @@ function getAchievementsContent() {
                 '<div id="achievementList"></div>' + nl  +
             '</div>' + nl
         )
-}
-
-function getFriendsContent() {
-    var achievementContent =   '<div id="app-container">' + nl  +
-        '<div id="content no-padding">' + nl  +
-            '<div id="menu">' + nl  +
-            '</div>' + nl  +
-            getTabMenu() +
-            '<div id="">Friends</div>' + nl  +
-        '</div>' + nl;
-
-    return achievementContent;
 }
 
 function getAchievementContent(publiclyVisible, progressMade, isLatestAchievement, completed, userId) {
