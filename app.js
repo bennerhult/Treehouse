@@ -223,7 +223,11 @@ app.get('/latestAchievementId', function(request, response) {
 function createAchievementDesc(achievements, userId, percentages, completed) {
     var achievementsList = ""
     for (var i in achievements) {
-        achievementsList += "<div class='achievement'>"
+        if (completed && i == 0) {
+            achievementsList += "<div class='achievement first'>"
+        } else {
+            achievementsList += "<div class='achievement'>"
+        }
         achievementsList += '<div class="container"><a href="javascript:void(0)" onclick="openAchievement(\''
             + achievements[i]._id
             + '\', \''
