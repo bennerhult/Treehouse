@@ -401,14 +401,11 @@ body{
 }
 
 #inProgressOrCompletedMenu ul li.selected span{
-
     background: none;
     background-color: #4a4b4c;
 }
 
 #inProgressOrCompletedMenu ul li span:hover{
-
-
     background: none;
     background-color: #4a4b4c;
 }
@@ -439,7 +436,6 @@ body{
 
     text-align: left;
     width: 100%;
-   /* width: 400px;*/
 
 }
 
