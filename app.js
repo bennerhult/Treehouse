@@ -278,6 +278,7 @@ function getAchievementList(request, response, completedAchievements) {
             console.log("error in app.js: couldn't find any progess for user " + request.session.user_id)
         }
         if (progresses && progresses.length > 0) {
+            progresses.sort()
             progresses.forEach(function(currentProgress, index) {
                 achievement.Achievement.findById(currentProgress.achievement_id, function(err2, myAchievement) {
                     if (err2) {
