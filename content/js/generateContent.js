@@ -107,11 +107,7 @@ function getTabMenu() {
 function getAchievementsContent() {
     return (
             '<div id="content no-padding">' + nl +
-                '<div id="menu">' + nl +
-                '   <ul>' +
-                '<li id="createButton" class="create"><a href="javascript:void(0)" onclick="insertContent(getNewAchievementContent())"><img src="content/img/add.png" /></a></li>' +
-                '    </ul>' +
-                '</div>' + nl +
+                '<div id="menu"></div>' + nl +
                 '<div id="inProgressOrCompletedMenu">' +
                 '   <ul>' +
                 '       <li id="inProgress"><a href="javascript:void(0)" onclick="getAchievements(false)"><span>in progress</span></a></li>' +
@@ -142,7 +138,6 @@ function getAchievementContent(publiclyVisible, progressMade, isLatestAchievemen
         }
          achievementContent += '</ul>' + nl  +
             '</div>' + nl  +
-             getTabMenu() +
             '<div id="achievementDesc"></div>' + nl  +
             '</div>' + nl +
             '</div>' + nl;
@@ -182,7 +177,6 @@ function getNewAchievementContent(data, userId) {
                         text+='"><img src="content/img/back-1.png" alt=""/></a></li>' + nl  +
                     '</ul>' + nl  +
                 '</div>' + nl  +
-                getTabMenu() +
                 '<form id="createAchievementForm" action="javascript: createAchievement()">' + nl  +
                     '<div class="achievement-info">' + nl  +
                         '<div class="inputarea">' + nl  +

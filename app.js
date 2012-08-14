@@ -223,11 +223,7 @@ app.get('/latestAchievementId', function(request, response) {
 function createAchievementDesc(achievements, userId, percentages, completed) {
     var achievementsList = ""
     for (var i in achievements) {
-        if (i == 0) {
-            achievementsList += "<div class='achievement first'>"
-        }  else  {
-            achievementsList += "<div class='achievement'>"
-        }
+        achievementsList += "<div class='achievement'>"
         achievementsList += '<div class="container"><a href="javascript:void(0)" onclick="openAchievement(\''
             + achievements[i]._id
             + '\', \''
@@ -269,6 +265,9 @@ function getAchievementList(request, response, completedAchievements) {
     var achievementsToShow = new Array()
     var achievementIdsGoneThrough = new Array()
     var percentages = new Array()
+    if (!completedAchievements) {
+        achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>"
+    }
     progress.Progress.find({ achiever_id: request.session.user_id}, function(err, progresses) {
         if (progresses && progresses.length > 0) {
             progresses.forEach(function(currentProgress, index) {
@@ -282,10 +281,7 @@ function getAchievementList(request, response, completedAchievements) {
                                     percentages.push(achievementPercentageFinished)
                                 }
                                 if (index == progresses.length - myAchievement.goals.length) {
-                                    achievementsList = createAchievementDesc(achievementsToShow, request.session.user_id, percentages, completedAchievements)
-                                    /*if (!completedAchievements) {
-                                        achievementsList += "<div class='achievement'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>"
-                                    } */
+                                    achievementsList += createAchievementDesc(achievementsToShow, request.session.user_id, percentages, completedAchievements)
                                     finishAchievementsList(response, achievementsList)
                                 }
                             })
@@ -294,7 +290,7 @@ function getAchievementList(request, response, completedAchievements) {
                 })
             })
         } else {
-           // achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>"
+            achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>"
             finishAchievementsList(response, achievementsList)
         }
     })

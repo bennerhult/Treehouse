@@ -103,6 +103,7 @@ function getAchievements(completed) {
                 $("#inProgress").attr("class","selected")
                 $("#completed").removeClass()
             }
+            $('#tab-menu').hide('fast')
         }
     )
 }
