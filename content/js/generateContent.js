@@ -131,11 +131,11 @@ function getAchievementContent(publiclyVisible, progressMade, isLatestAchievemen
         '<div id="menu">' + nl  +
         '<ul>' + nl  +
         '<li class="back"><a href="javascript:void(0)" onclick="openAchievements(' + completed + ')"><img src="content/img/back-1.png" alt=""/></a></li>' + nl
-        if (!publiclyVisible) {
-            achievementContent += '<li id="publicizeButton" class="share"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/share.png" /></a></li>'
-        }
         if (!publiclyVisible && !progressMade) {
             achievementContent += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement(\'' + userId + '\')"><img src="content/img/edit.png" /></a></li>' + nl
+        }
+        if (!publiclyVisible) {
+            achievementContent += '<li id="publicizeButton" class="share"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/share.png" /></a></li>'
         }
         if (!isLatestAchievement) {
             achievementContent += '<li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>' + nl
