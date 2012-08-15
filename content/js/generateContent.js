@@ -83,21 +83,44 @@ function getSignupContent() {
 }
 
 function getTabMenu() {
-    return     '<div class="tab-menu-container">' + nl +
-                    '<div id="tab-menu" class="slider-menu" style="display:none;">' + nl +
-                       '<ul>' + nl +
-                           '<li class="header border-top-right">Achievements</li>' + nl +
-                           '<li><a href="javascript:void(0)" onclick="insertContent(getAchievementsContent(), getAchievements(false))"><span><nobr>My achievements</nobr></span></a></li>' + nl +
-                           //'<li class="last"><a href="javascript:void(0)"><span>Create new achievement</span></a></li>' + nl +
-                           //'<li class="header">Friends</li>' + nl +
-                           //'<li><a href="javascript:void(0)"><span>My friends</span></a></li>' + nl +
-                           //'<li class="last"><a href="javascript:void(0)"><span>Search for friends</span></a></li>' + nl +
-                           '<li class="header">Account</li>' + nl +
-                           '<li class="last"><a href="javascript:void(0)" onclick="logout()"><span class="border-bottom-right">Log out</span></a></li>' + nl +
-                       '</ul>' + nl +
-                    '</div>' + nl +
-               '</div>' + nl
+    var x = getCookie('rememberme')
+    var loggedIn = false
+    if (x) {
+        loggedIn = true
+    }
+    var menu = '<div class="tab-menu-container">' + nl +
+           '<div id="tab-menu" class="slider-menu" style="display:none;">' + nl +
+           '<ul>'
+     if (loggedIn) {
+         menu +=    '<li class="header border-top-right">Achievements</li>' + nl +
+                    '<li><a href="javascript:void(0)" onclick="insertContent(getAchievementsContent(), getAchievements(false))"><span><nobr>My achievements</nobr></span></a></li>'+ nl +
+                    //'<li class="header">Friends</li>' + nl +
+                    //'<li><a href="javascript:void(0)"><span>Friends</span></a></li>' + nl +
+                    '<li class="header">Account</li>' + nl +
+                    '<li class="last"><a href="javascript:void(0)" onclick="logout()"><span class="border-bottom-right">Log out</span></a></li>'
+     }  else {
+         menu +=    '<li class="header">Account</li>' + nl +
+                    '<li class="last"><a href="javascript:void(0)" onclick="insertContent(getLoginContent())"><span class="border-bottom-right"><nobr>Log in / sign up</nobr></span></a></li>'
+     }
+    menu += '</ul>' + nl +
+            '</div>' + nl +
+            '</div>' + nl
+    return menu
 }
+
+function getCookie(c_name) {
+    var i,x,y,ARRcookies=document.cookie.split(";")
+    for (i=0;i<ARRcookies.length;i++) {
+        x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="))
+        y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1)
+        x=x.replace(/^\s+|\s+$/g,"")
+        if (x==c_name) {
+            return unescape(y)
+        }
+    }
+}
+
+
 function getAchievementsContent() {
     return (
             '<div id="content no-padding">' + nl +
