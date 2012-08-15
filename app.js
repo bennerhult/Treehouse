@@ -126,7 +126,6 @@ app.get('/checkUser', function(request, response){
                 response.write(JSON.stringify('ok'))
                 response.end('\n', 'utf-8')
             });
-
         } else {
             request.session.destroy()
             response.writeHead(200, {'content-type': 'application/json' })
@@ -141,7 +140,6 @@ app.get('/logout', function(request, response){
         response.clearCookie('rememberme', null)
         loginToken.remove(request.session.user_email)
         request.session.destroy()
-
         requestHandlers.indexPage(response)
     }
 })
@@ -163,7 +161,6 @@ app.get('/signup', function(request, response){
 
 function getSignupErrorMessage (err){
     var errorMessage = "You already got an account, remember? Go log in and check your achievements."
-
     if (err.errors) {
         if (err.errors.username) {
             if (err.errors.username.type == 'required') {
@@ -179,7 +176,6 @@ function getSignupErrorMessage (err){
             }
         }
     }
-
     return errorMessage
 }
 
@@ -188,7 +184,6 @@ app.get('/achievement', function(request, response) {
     var url_parts = url.parse(request.url, true)
     var currentAchievementId = url_parts.query.achievementId
     request.session.current_achievement_id = currentAchievementId
-
     achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
         if (currentAchievement && currentAchievement.publiclyVisible)    {
             var userId  = url_parts.query.userId
@@ -270,19 +265,13 @@ function getAchievementList(request, response, completedAchievements) {
     var achievementsToShow = new Array()
     var achievementIdsGoneThrough = new Array()
     var percentages = new Array()
-    if (!completedAchievements) {
-        achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>"
-    }
+    if (!completedAchievements) { achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>" }
     progress.Progress.find({ achiever_id: request.session.user_id}, function(err, progresses) {
-        if (err) {
-            console.log("error in app.js: couldn't find any progess for user " + request.session.user_id)
-        }
+        if (err) { console.log("error in app.js: couldn't find any progess for user " + request.session.user_id) }
         if (progresses && progresses.length > 0) {
             progresses.forEach(function(currentProgress, index) {
                 achievement.Achievement.findById(currentProgress.achievement_id, function(err2, myAchievement) {
-                    if (err2) {
-                        console.log("error in app.js: couldn't find achievement for progress " + currentProgress.achievement_id)
-                    }
+                    if (err2) { console.log("error in app.js: couldn't find achievement for progress " + currentProgress.achievement_id) }
                     if (myAchievement) {
                         if  (_.indexOf(achievementIdsGoneThrough, myAchievement._id.toString()) == -1) {
                             achievementIdsGoneThrough.push(myAchievement._id.toString())
@@ -292,14 +281,6 @@ function getAchievementList(request, response, completedAchievements) {
                                     percentages.push(achievementPercentageFinished)
                                 }
                                 goneThroughProgresses +=  myAchievement.goals.length
-                                /*
-                                console.log("--- " + myAchievement.title + " ---")
-                                console.log("index:" + index)
-                                console.log("goneThroughProgresses:" + goneThroughProgresses)
-                                console.log("progresses.length:" + progresses.length)
-                                console.log("myAchievement.goals.length: " + myAchievement.goals.length)
-                                  */
-
                                 if (goneThroughProgresses == progresses.length) {
                                     achievementsList += createAchievementDesc(achievementsToShow, request.session.user_id, percentages, completedAchievements)
                                     finishAchievementsList(response, achievementsList)
@@ -585,7 +566,6 @@ function getNewAchievementErrorMessage (err){
             }
         }
     }
-
     return errorMessage
 }
 

@@ -18,7 +18,6 @@ function insertContent(content, callback, achievementId, userId, publicView) {
     if (window.innerWidth < 819) {
         $("html, body").animate({scrollTop: $("#menu").offset().top}, 200)
     }
-
     if (callback) {
         callback(achievementId, userId, publicView)
     }
@@ -29,7 +28,6 @@ function showLatestAchievement(achievementId) {
     insertContent(getPublicAchievementContent(), function() {
         getPublicAchievement(achievementId, null, true)
     }, achievementId, null, true)
-
 }
 
 function insertLatestAchievement() {
@@ -42,8 +40,7 @@ function insertLatestAchievement() {
                 '<p><a href="javascript:void(0)" onclick="showLatestAchievement(\'' + achievement._id + '\')">' + achievement.title + '</a></p>' +
                 '<div><a href="javascript:void(0)" onclick="showLatestAchievement(\'' + achievement._id + '\')"><img src="' + achievement.imageURL + '" /></a></div>'
                 )
-        },
-        error  : function()     {
+        }, error  : function()     {
             $("#latestAchievementSplash").html('')
         }
     })
@@ -53,8 +50,6 @@ function getLoginContent() {
     return (
             '<div id="menu"></div>' + nl +
             '<div id="content">' + nl +
-
-
                 '<div class="signup-logo"><img src="content/img/logo-large.png" /></div>' + nl +
                 '<form action="javascript: checkUser()">' + nl +
                     '<input type="text" class="formstyle" name="username" placeholder="email"">' + nl +
@@ -92,7 +87,7 @@ function getTabMenu() {
                     '<div id="tab-menu" class="slider-menu" style="display:none;">' + nl +
                        '<ul>' + nl +
                            '<li class="header border-top-right">Achievements</li>' + nl +
-                           '<li><a href="javascript:void(0)" onclick="getAchievements(false)"><span><nobr>My achievements</nobr></span></a></li>' + nl +
+                           '<li><a href="javascript:void(0)" onclick="insertContent(getAchievementsContent(), getAchievements(false))"><span><nobr>My achievements</nobr></span></a></li>' + nl +
                            //'<li class="last"><a href="javascript:void(0)"><span>Create new achievement</span></a></li>' + nl +
                            //'<li class="header">Friends</li>' + nl +
                            //'<li><a href="javascript:void(0)"><span>My friends</span></a></li>' + nl +
@@ -114,7 +109,7 @@ function getAchievementsContent() {
                 '       <li id="completed"><a href="javascript:void(0)" onclick="getAchievements(true)"><span>completed</span></a></li>' +
                 '    </ul>' +
                 '</div>' + nl  +
-                getTabMenu() +
+                    getTabMenu() +
                 '<div id="achievementList"></div>' + nl  +
             '</div>' + nl
         )
@@ -127,21 +122,14 @@ function getAchievementContent(publiclyVisible, progressMade, isLatestAchievemen
         '<div id="menu">' + nl  +
         '<ul>' + nl  +
         '<li class="back"><a href="javascript:void(0)" onclick="openAchievements(' + completed + ')"><img src="content/img/back-1.png" alt=""/></a></li>' + nl
-        if (!publiclyVisible && !progressMade) {
-            achievementContent += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement(\'' + userId + '\')"><img src="content/img/edit.png" /></a></li>' + nl
-        }
-        if (!publiclyVisible) {
-            achievementContent += '<li id="publicizeButton" class="share"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/share.png" /></a></li>'
-        }
-        if (!isLatestAchievement) {
-            achievementContent += '<li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>' + nl
-        }
+        if (!publiclyVisible && !progressMade) { achievementContent += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement(\'' + userId + '\')"><img src="content/img/edit.png" /></a></li>' + nl }
+        if (!publiclyVisible) { achievementContent += '<li id="publicizeButton" class="share"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/share.png" /></a></li>' }
+        if (!isLatestAchievement) { achievementContent += '<li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>' + nl }
          achievementContent += '</ul>' + nl  +
             '</div>' + nl  +
             '<div id="achievementDesc"></div>' + nl  +
             '</div>' + nl +
             '</div>' + nl;
-
     return achievementContent;
 }
 
@@ -152,10 +140,10 @@ function getPublicAchievementContent() {
             '<div id="content no-padding">' + nl  +
                 '<div id="menu">' + nl  +
                     '<ul>' + nl  +
-                        '<li class="back"></li>' + nl  +
-                        '<li class="logo"><a href="/"><img src="content/img/logo-small.png" /></a></li>' + nl  +
+                        '<li class="house"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>' +
                     '</ul>' + nl  +
                 '</div>' + nl  +
+                    getTabMenu() +
                 '<div id="achievementDesc"></div>' + nl  +
             '</div>' + nl +
         '</div>' + nl
@@ -245,6 +233,5 @@ function getNewAchievementContent(data, userId) {
                             '</form>' + nl  +
                             '</div>' + nl  +
                         '</div>'
-
     return text
 }

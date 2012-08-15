@@ -433,14 +433,13 @@ body{
         color-stop(0.57, rgb(124,126,127))
     );
 
-
     text-align: left;
     width: 100%;
 
 }
 
 #menu ul li{
-    padding-top: 4px;
+    padding-top: 2px;
     float: left;
     padding-bottom: 2px;
 }
@@ -449,6 +448,11 @@ body{
     text-align: left;
     width: 45%;
     padding-left: 5%;
+}
+
+#menu ul li.house{
+    text-align: center;
+    width:94%;
 }
 
 #menu ul li.share{
