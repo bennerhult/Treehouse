@@ -325,52 +325,63 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
     var myQuantityFinished = 0
     if(currentAchievement.goals) {
         currentAchievement.goals.forEach(function(goal, goalIndex) {
-            progress.Progress.findOne({ achiever_id:  currentUserId,  goal_id: goal._id}, function(err,myProgress) {
-                myQuantityFinished += myProgress.quantityFinished
-                myQuantityTotal += goal.quantityTotal
+            progress.Progress.findOne({ goal_id: goal._id}, function(err,myProgress) {
+                if (err) {
+                    console.log("error in app.js: couldn't find progress for user " + currentUserId)
+                } else {
+                    myQuantityFinished += myProgress.quantityFinished
+                    myQuantityTotal += goal.quantityTotal
+                }
             })
         })
         currentAchievement.goals.forEach(function(goal, goalIndex) {
-            progress.Progress.findOne({ achiever_id:  currentUserId,  goal_id: goal._id}, function(err,myProgress) {
-                var goalPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100
-                goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, goalPercentageFinished, publicView, goalTexts.length + 1 == currentAchievement.goals.length))
-                if (goalTexts.length == currentAchievement.goals.length) {
-                    var goalTextsText = ""
-                    goalTexts.forEach(function(goalText, index) {
-                        goalTextsText += goalText
-                        if (index == goalTexts.length - 1) {
+            progress.Progress.findOne({   goal_id: goal._id}, function(err,myProgress) {
+                if (err) {
+                    console.log("error in app.js: couldn't find progress for user " + currentUserId)
+                } else {
+                    var goalPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100
+                    goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, goalPercentageFinished, publicView, goalTexts.length + 1 == currentAchievement.goals.length))
+                    if (goalTexts.length == currentAchievement.goals.length) {
+                        var goalTextsText = ""
+                        goalTexts.forEach(function(goalText, index) {
+                            goalTextsText += goalText
+                            if (index == goalTexts.length - 1) {
+                                var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100
+                                achievementDesc += '<div class="achievement-info"><div class="textarea"><h2>'
+                                    + currentAchievement.title
+                                    + '</h2><p id="achievementDescription">'
+                                    + currentAchievement.description
+                                    + '</p></div>'
+                                    + '<div class="imagearea"><img src="'
+                                    + currentAchievement.imageURL
+                                    +'" alt="'
+                                    +  currentAchievement.createdBy + ": " + currentAchievement.title
+                                    + '"/><span class="gradient-bg"></span><span class="progressbar"></span><div id="progressbar" class="progress-container"><span class="progress" style="width:'
+                                    + myPercentageFinished
+                                    + '%;"></span></div></div><div class="clear"></div>'
+                                achievementDesc += '<div id="achievement-container">'
+                                achievementDesc += goalTextsText
+                                achievementDesc += '</div>'
+                                achievementDesc += '<br />'
+                                achievementDesc += '<div id="fbLike" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="250" data-show-faces="true" font="segoe ui"></div></div>'
+                                achievementDesc += '<br />'
+                                achievementDesc += '<br />'
+                                achievementDesc += '<p>'
+                                achievementDesc += 'Creator: ' + currentAchievement.createdBy + '<br />'
+                                user.User.findOne({ _id:  currentUserId}, function(err2,myUser) {
+                                    if (err2) {
+                                        console.log("error in app.js: couldn't find user " + currentUserId)
+                                    } else {
+                                        achievementDesc += 'Achiever: ' + myUser.username
+                                    }
+                                    achievementDesc += '</p>'
 
-                            var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100
-
-                            achievementDesc += '<div class="achievement-info"><div class="textarea"><h2>'
-                                + currentAchievement.title
-                                + '</h2><p id="achievementDescription">'
-                                + currentAchievement.description
-                                + '</p></div>'
-                                + '<div class="imagearea"><img src="'
-                                + currentAchievement.imageURL
-                                +'" alt="'
-                                +  currentAchievement.createdBy + ": " + currentAchievement.title
-                                + '"/><span class="gradient-bg"></span><span class="progressbar"></span><div id="progressbar" class="progress-container"><span class="progress" style="width:'
-                                + myPercentageFinished
-                                + '%;"></span></div></div><div class="clear"></div>'
-                            achievementDesc += '<div id="achievement-container">'
-                            achievementDesc += goalTextsText
-                            achievementDesc += '</div>'
-                            achievementDesc += '<br />'
-                            achievementDesc += '<div id="fbLike" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="250" data-show-faces="true" font="segoe ui"></div></div>'
-                            achievementDesc += '<br />'
-                            achievementDesc += '<br />'
-                            achievementDesc += '<p>'
-                            achievementDesc += 'Creator: ' + currentAchievement.createdBy + '<br />'
-                            user.User.findOne({ _id:  currentUserId}, function(err,myUser) {
-                                achievementDesc += 'Achiever: ' + myUser.username
-                                achievementDesc += '</p>'
-                                response.write(JSON.stringify(achievementDesc))
-                                response.end('\n', 'utf-8')
-                            })
-                        }
-                    })
+                                    response.write(JSON.stringify(achievementDesc))
+                                    response.end('\n', 'utf-8')
+                                })
+                            }
+                        })
+                    }
                 }
             })
         })
