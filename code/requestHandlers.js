@@ -22,6 +22,11 @@ function topIndexPart() {
                     tab + '<meta name="apple-mobile-web-app-capable" content="yes">' + nl +
                     tab + '<meta name="apple-mobile-web-app-status-bar-style" content="black" />' + nl +
                     tab + '<link rel="apple-touch-icon" href="/content/treehouse-icon.png">' + nl +
+                    tab + '<meta property="og:site_name" content="Treehouse" />' + nl +
+                    tab + '<meta property="og:title" content="Treehouse helps you track your achievements." />' + nl +
+                    tab + '<meta property="og:type" content="article" />' + nl +
+                    tab + '<meta property="og:image" content="http://treehouse.io/image/treehouse.jpg"/>' + nl +
+                    tab + '<meta property="og:url" content="http://treehouse.io"/>' + nl +
                     tab + '<link rel="icon" href="/content/favicon.ico" type="image/vnd.microsoft.icon">' + nl +
                     tab + '<script type="application/javascript" src="content/js/add2home.js"></script>' + nl +
                     tab + '<script type="application/javascript" src="content/js/generateContent.js"></script>' + nl +
@@ -41,6 +46,7 @@ function topIndexPart() {
                     tab   +  '})</script>' + nl +
                 tab + '</head>' + nl +
                 tab + ' <body>' + nl +
+                '<div id="fb-root"></div>' + nl +
                 '<div id="page">' + nl +
                 '<div id="web-menu">' + nl +
                     '<ul>' + nl +
@@ -79,6 +85,7 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
             tab + '<meta name="apple-mobile-web-app-capable" content="yes">' + nl +
             tab + '<meta name="apple-mobile-web-app-status-bar-style" content="black" />' + nl +
             tab + '<link rel="apple-touch-icon" href="/content/treehouse-icon.png">' + nl +
+            tab + '<meta property="og:site_name" content="Treehouse" />' + nl +
             tab + '<meta property="og:title" content="Treehouse: ' + title + '" />' + nl +
             tab + '<meta property="og:type" content="article" />' + nl +
             tab + '<meta property="og:image" content="http://treehouse.io/' + imageUrl + '"/>' + nl +
@@ -104,6 +111,7 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
             tab + '</script>' + nl +
             tab + '</head>' + nl +
             tab + ' <body>' + nl +
+            '<div id="fb-root"></div>' + nl +
             '<div id="page">' + nl +
             '<div id="web-menu">' + nl +
                 '<ul>' + nl +

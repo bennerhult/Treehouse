@@ -207,12 +207,13 @@ function isLatestAchievement(achievementId, callback) {
 function getAchievement(achievementId, userId, publiclyVisible) {
     getAchievementFromServer(
         function(data) {
-            $('meta[propery="og:url"]').attr('content', 'www.treehouse.io/achievement?achievementId=' + achievementId + '&userId=' + userId)
             $("#achievementDesc").html(data)
             if (publiclyVisible) {
+                $('meta[propery="og:url"]').attr('content', 'www.treehouse.io/achievement?achievementId=' + achievementId + '&userId=' + userId)
                 FB.init({status: true, cookie: true, xfbml: true})
                 $("#publicizeButton").empty().remove()
                 $("#fbLike").show()
+                $("#fbLikeWeb").hide()
             } else {
                 $("#fbLike").hide()
             }
@@ -224,13 +225,15 @@ function getPublicAchievement(achievementId, userId, publiclyVisible) {
     getAchievementFromServer(
         function(data) {
              $("#achievementDesc").html(data)
+            FB.init({status: true, cookie: true, xfbml: true})
             if (publiclyVisible) {
-                FB.init({status: true, cookie: true, xfbml: true})
                 $("#publicizeButton").empty().remove()
                 $("#addbutton").empty().remove()
                 $("#fbLike").show()
+                $("#fbLikeWeb").hide()
             } else {
                 $("#fbLike").hide()
+                $("#fbLikeWeb").show()
             }
         }, achievementId, userId
     )

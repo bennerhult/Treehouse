@@ -5,12 +5,18 @@ var footerContent = '<ul>' + nl +
     '<li><span><h2>Achieve</h2><p>In an ever changing world, achievements are forever. Nobody can take your achievements away!<br /><br /><a href="javascript:void(0)" onclick="showInfo(getAchievementInfo(), 1)">Achievements?</a></p></span></li>' + nl +
     '<li><span><h2>Play</h2><p>Let\'s have fun!<br /><br />Get the coveted <a href="javascript:void(0)" onclick="showInfo(getEarlyAdopterInfo(), -1)">Early Adopter Achievement</a></p></span></li>' + nl +
     '<li class="last"><span id="latestAchievementSplash"></span></li>' + nl +
-    '</ul>'
+    '</ul>' +
+    '<div id="fbLikeWeb" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="250" data-show-faces="true" font="segoe ui"></div></div>'
+
 var isiPad = navigator.userAgent.match(/iPad/i) != null;
 
 function insertContent(content, callback, achievementId, userId, publicView) {
     $("#contentArea").html(content)
     $("#web-footer").html(footerContent)
+
+    FB.init({status: true, cookie: true, xfbml: true})
+    $("#fbLikeWeb").show()
+
     if (!isiPad) {
         $("#banner").empty().remove()
     }
@@ -110,7 +116,7 @@ function getTabMenu(bothCompletedAndNotExists) {
            '<ul>'
      if (loggedIn) {
          menu +=    '<li class="header border-top-right">Achievements</li>' + nl +
-                    '<li><a href="javascript:void(0)" onclick="insertContent(getAchievementsContent(' + bothCompletedAndNotExists + '), getAchievements(false))"><span><nobr>My achievements</nobr></span></a></li>'+ nl +
+                    '<li><a href="javascript:void(0)" onclick="insertContent(getAchievementsContent(' + bothCompletedAndNotExists + '), openAchievements(false))"><span><nobr>My achievements</nobr></span></a></li>'+ nl +
                     '<li class="header">Friends</li>' + nl +
                     '<li><a href="javascript:void(0)" onclick="insertContent(getFriendsContent())"><span>Friends</span></a></li>' + nl +
                     '<li class="header">Account</li>' + nl +
@@ -137,7 +143,6 @@ function getCookie(c_name) {
     }
 }
 
-
 function getAchievementsContent(bothCompletedAndNotExists) {
     var achievementsContent ='<div id="content no-padding"><div id="inProgressOrCompletedMenu"><ul>'
     if (bothCompletedAndNotExists) {
@@ -152,7 +157,7 @@ function getAchievementsContent(bothCompletedAndNotExists) {
 }
 
 function getAchievementContent(publiclyVisible, progressMade, isLatestAchievement, completed, userId) {
-    var achievementContent =   '<div id="fb-root"></div>' + nl  +
+    var achievementContent =
         '<div id="app-container">' + nl  +
         '<div id="content no-padding">' + nl  +
         '<div id="menu">' + nl  +

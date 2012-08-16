@@ -27,6 +27,11 @@ body{
     width: 1060px;
 }
 
+#fbLikeWeb {
+    float: right;
+    text-align: right;
+    margin-top: 30px;
+}
 
 #web-menu{
     height: 40px;
@@ -53,12 +58,10 @@ body{
         color-stop(0.57, rgb(124,126,127))
     );
 
-
     -moz-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
     -webkit-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
     box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
 }
-
 
 #web-menu a{
     font-family: 'Philosopher', sans-serif;
@@ -79,7 +82,6 @@ body{
 #web-menu a:hover span,
 #web-menu a:focus span{
     background-color: #4a4b4c;
-
 }
 
 .selected {
@@ -89,7 +91,6 @@ body{
 #web-menu ul li{
     float: left;
 }
-
 
 #web-menu ul li span{
     padding-top: 12px;
