@@ -82,7 +82,7 @@ function getSignupContent() {
         )
 }
 
-function getTabMenu() {
+function getTabMenu(bothCompletedAndNotExists) {
     var x = getCookie('rememberme')
     var loggedIn = false
     if (x) {
@@ -93,7 +93,7 @@ function getTabMenu() {
            '<ul>'
      if (loggedIn) {
          menu +=    '<li class="header border-top-right">Achievements</li>' + nl +
-                    '<li><a href="javascript:void(0)" onclick="insertContent(getAchievementsContent(), getAchievements(false))"><span><nobr>My achievements</nobr></span></a></li>'+ nl +
+                    '<li><a href="javascript:void(0)" onclick="insertContent(getAchievementsContent(' + bothCompletedAndNotExists + '), getAchievements(false))"><span><nobr>My achievements</nobr></span></a></li>'+ nl +
                     //'<li class="header">Friends</li>' + nl +
                     //'<li><a href="javascript:void(0)"><span>Friends</span></a></li>' + nl +
                     '<li class="header">Account</li>' + nl +
@@ -121,21 +121,17 @@ function getCookie(c_name) {
 }
 
 
-function getAchievementsContent() {
-    return (
-            '<div id="content no-padding">' + nl +
-
-                '<div id="inProgressOrCompletedMenu">' +
-                '   <ul>' +
-                '       <li id="inProgress"><a href="javascript:void(0)" onclick="getAchievements(false)"><span>in progress</span></a></li>' +
-                '       <li><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>' +
-                '       <li id="completed"><a href="javascript:void(0)" onclick="getAchievements(true)"><span>completed</span></a></li>' +
-                '    </ul>' +
-                '</div>' + nl  +
-                    getTabMenu() +
-                '<div id="achievementList"></div>' + nl  +
-            '</div>' + nl
-        )
+function getAchievementsContent(bothCompletedAndNotExists) {
+    var achievementsContent ='<div id="content no-padding"><div id="inProgressOrCompletedMenu"><ul>'
+    if (bothCompletedAndNotExists) {
+        achievementsContent +=  '<li id="inProgress"><a href="javascript:void(0)" onclick="getAchievements(false)"><span>in progress</span></a></li>'
+    }
+    achievementsContent += '<li><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>'
+    if (bothCompletedAndNotExists) {
+        achievementsContent +=  '<li id="completed"><a href="javascript:void(0)" onclick="getAchievements(true)"><span>completed</span></a></li>'
+    }
+    achievementsContent +=  '</ul></div>' + getTabMenu(bothCompletedAndNotExists) + '<div id="achievementList"></div></div>'
+    return achievementsContent
 }
 
 function getAchievementContent(publiclyVisible, progressMade, isLatestAchievement, completed, userId) {
@@ -166,7 +162,7 @@ function getPublicAchievementContent() {
                         '<li class="house"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>' +
                     '</ul>' + nl  +
                 '</div>' + nl  +
-                    getTabMenu() +
+                    getTabMenu(false) +
                 '<div id="achievementDesc"></div>' + nl  +
             '</div>' + nl +
         '</div>' + nl

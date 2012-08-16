@@ -428,6 +428,52 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
     return goalText
 }
 
+app.get('/bothCompletedAndNot', function(request, response) {
+    var completedFound = false
+    var nonCompletedFound = false
+    var achievementIdsGoneThrough = new Array()
+    var goneThroughProgresses = 0
+    progress.Progress.find({ achiever_id: request.session.user_id}, function(err, progresses) {
+        if (err) { console.log("error in app.js: couldn't find any progess for user " + request.session.user_id) }
+        if (progresses && progresses.length > 0) {
+            progresses.forEach(function(currentProgress, index) {
+                achievement.Achievement.findById(currentProgress.achievement_id, function(err2, myAchievement) {
+                    if (err2) { console.log("error in app.js: couldn't find achievement for progress " + currentProgress.achievement_id) }
+                    if (myAchievement) {
+                        if  (_.indexOf(achievementIdsGoneThrough, myAchievement._id.toString()) == -1) {
+                            achievementIdsGoneThrough.push(myAchievement._id.toString())
+                            calculateAchievementProgress(request.session.user_id, myAchievement._id, function(achievementPercentageFinished) {
+                               if(achievementPercentageFinished >= 100) {
+                                   completedFound = true
+                               } else {
+                                   nonCompletedFound = true
+                               }
+                                goneThroughProgresses +=  myAchievement.goals.length
+                                if (goneThroughProgresses == progresses.length) {
+                                    finishCompletedAndNot(response, completedFound, nonCompletedFound)
+                                }
+                            })
+                        }
+                    }
+                })
+            })
+        } else {
+            finishCompletedAndNot(response, completedFound, nonCompletedFound)
+        }
+    })
+
+})
+
+function finishCompletedAndNot(response, completedFound, nonCompletedFound) {
+    response.writeHead(200, {'content-type': 'application/json' })
+    if (nonCompletedFound && completedFound) {
+        response.write(JSON.stringify(true))
+    } else {
+        response.write(JSON.stringify(false))
+    }
+    response.end('\n', 'utf-8')
+}
+
 app.get('/achievementPercentage', function(request, response){
     calculateAchievementProgress(request.session.user_id, app.set('current_achievement_id'), function(achievementPercentageFinished) {
         response.writeHead(200, {'content-type': 'application/json' })

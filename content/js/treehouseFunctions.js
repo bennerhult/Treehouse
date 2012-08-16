@@ -89,8 +89,21 @@ function signupOnServer(callback) {
 /******************  achievements functions  ******************/
 function openAchievements(completed) {
     window.history.pushState(null, null, "/")
-    insertContent(getAchievementsContent(), getAchievements(completed))
+    completedAndNotFromServer(function(data) {
+        insertContent(getAchievementsContent(data), getAchievements(completed))
+    })
 }
+
+
+function completedAndNotFromServer(callback) {
+    $.ajax("/bothCompletedAndNot", {
+        type: "GET",
+        dataType: "json",
+        success: function(data) { if ( callback ) callback(data) },
+        error  : function()     { if ( callback ) callback(null) }
+    })
+}
+
 
 function getAchievements(completed) {
     getAchievementsFromServer(completed,

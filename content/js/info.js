@@ -20,7 +20,6 @@ function showInfo(content, activeMenuNr) {
             })
         })
     }
-
 }
 
 function getAchievementInfo() {
@@ -46,7 +45,7 @@ function getAbout() {
     return (
         '<div>' +
             '<h2>We ♥ node.js</h2>' +
-            '<p>Treehouse is thought out, designed and lovingly put together in Stockholm. It runs on the amazing Heroku-platform, based in San Francisco and uses MongoHQ, based in Mountain View, California.</p>' +
+            '<p>Treehouse is thought out, designed and lovingly put together in Stockholm. It runs on the amazing Heroku-platform from San Francisco and uses MongoHQ, based in Mountain View, California.</p>' +
        '</div>'
         )
 }
