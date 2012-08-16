@@ -103,7 +103,7 @@ function findFriends() {
             $("#message").html("Try with an email, ok?")
         }
     } else {
-        $("#message").html("He who searches, will find.")
+        $("#message").html("One who searches, will find.")
     }
 }
 
