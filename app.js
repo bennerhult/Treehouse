@@ -265,10 +265,11 @@ function getAchievementList(request, response, completedAchievements) {
     var achievementsToShow = new Array()
     var achievementIdsGoneThrough = new Array()
     var percentages = new Array()
-    if (!completedAchievements) { achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>" }
-    progress.Progress.find({ achiever_id: request.session.user_id}, function(err, progresses) {
+   progress.Progress.find({ achiever_id: request.session.user_id}, function(err, progresses) {
         if (err) { console.log("error in app.js: couldn't find any progess for user " + request.session.user_id) }
         if (progresses && progresses.length > 0) {
+            if (!completedAchievements) { achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>" }
+
             progresses.forEach(function(currentProgress, index) {
                 achievement.Achievement.findById(currentProgress.achievement_id, function(err2, myAchievement) {
                     if (err2) { console.log("error in app.js: couldn't find achievement for progress " + currentProgress.achievement_id) }
