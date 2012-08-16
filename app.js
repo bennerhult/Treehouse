@@ -179,6 +179,25 @@ function getSignupErrorMessage (err){
     return errorMessage
 }
 
+app.get('/findFriends', function(request, response){
+    user.User.findOne({ username: request.query.friend_email }, function(err,foundFriend) {
+        if (foundFriend)    {
+            if (request.session.user_id == foundFriend._id ) {
+                returnMessage(response, "Dissociative identity disorder?")
+            }  else {
+                returnMessage(response, request.query.friend_email + " is on TreeHouse")
+            }
+        } else {
+            returnMessage(response, "Your friend does not appear to use Treehouse! Tell them about it and share the happiness!")
+        }
+    })
+})
+
+function returnMessage(response, message) {
+    response.writeHead(200, {'content-type': 'application/json' })
+    response.write(JSON.stringify(message))
+    response.end('\n', 'utf-8')
+}
 //public achievement
 app.get('/achievement', function(request, response) {
     var url_parts = url.parse(request.url, true)

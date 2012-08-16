@@ -86,6 +86,30 @@ function signupOnServer(callback) {
     })
 }
 
+/******************  friends functions  ******************/
+function findFriends() {
+    findFriendsOnServer(
+        function(data) {
+            if (data == "ok") {
+                openAchievements()
+            } else $("#message").html(data)
+        }
+    )
+}
+
+function findFriendsOnServer(callback) {
+    var friend_email = $("input[name=friend_email]")
+    var data = "friend_email=" + friend_email.val()
+
+    $.ajax("/findFriends", {
+        type: "GET",
+        data: data,
+        dataType: "json",
+        success: function(data) { if ( callback ) callback(data) },
+        error  : function()     { if ( callback ) callback(null) }
+    })
+}
+
 /******************  achievements functions  ******************/
 function openAchievements(completed) {
     window.history.pushState(null, null, "/")

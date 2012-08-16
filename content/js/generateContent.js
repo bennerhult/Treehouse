@@ -82,6 +82,23 @@ function getSignupContent() {
         )
 }
 
+function getFriendsContent() {
+    var friendsContent = '<div id="menu">' + nl  +
+        '<ul>' + nl  +
+        '<li class="house"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>' +
+        '</ul>' + nl  +
+        '</div>' + nl
+    friendsContent += getTabMenu(false)
+    friendsContent += '<div id="content">' + nl +
+            '<form action="javascript: findFriends()">' + nl +
+            '<input type="text" class="formstyle" name="friend_email" placeholder="email">' + nl +
+            '<div id="message"></div>' + nl +
+            '<input type="submit" class="button" value="Find friend">' + nl +
+            '</form>' + nl +
+            '</div>'
+     return friendsContent
+}
+
 function getTabMenu(bothCompletedAndNotExists) {
     var x = getCookie('rememberme')
     var loggedIn = false
@@ -94,8 +111,8 @@ function getTabMenu(bothCompletedAndNotExists) {
      if (loggedIn) {
          menu +=    '<li class="header border-top-right">Achievements</li>' + nl +
                     '<li><a href="javascript:void(0)" onclick="insertContent(getAchievementsContent(' + bothCompletedAndNotExists + '), getAchievements(false))"><span><nobr>My achievements</nobr></span></a></li>'+ nl +
-                    //'<li class="header">Friends</li>' + nl +
-                    //'<li><a href="javascript:void(0)"><span>Friends</span></a></li>' + nl +
+                    '<li class="header">Friends</li>' + nl +
+                    '<li><a href="javascript:void(0)" onclick="insertContent(getFriendsContent())"><span>Friends</span></a></li>' + nl +
                     '<li class="header">Account</li>' + nl +
                     '<li class="last"><a href="javascript:void(0)" onclick="logout()"><span class="border-bottom-right">Log out</span></a></li>'
      }  else {
