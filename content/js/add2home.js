@@ -73,8 +73,12 @@ var addToHome = (function (w) {
     function loaded() {
         w.removeEventListener('load', loaded, false)
 
-        if (!isReturningVisitor) w.localStorage.setItem('addToHome', Date.now())
-        else if (options.expire && isExpired) w.localStorage.setItem('addToHome', Date.now() + options.expire * 60000)
+        w.localStorage.removeItem('addToHome')
+        if (!isReturningVisitor) {
+            w.localStorage.setItem('addToHome', Date.now())
+        } else if (options.expire && isExpired) {
+            w.localStorage.setItem('addToHome', Date.now() + options.expire * 60000)
+        }
 
         if (!overrideChecks && ( !isSafari || !isExpired || isSessionActive || isStandalone || !isReturningVisitor )) return
 
