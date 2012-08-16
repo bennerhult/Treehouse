@@ -88,18 +88,25 @@ function signupOnServer(callback) {
 
 /******************  friends functions  ******************/
 function findFriends() {
-    findFriendsOnServer(
-        function(data) {
-            if (data == "ok") {
-                openAchievements()
-            } else $("#message").html(data)
-        }
-    )
+    var friend_email = $("input[name=friend_email]").val()
+    if (friend_email) {
+        findFriendsOnServer(friend_email,
+            function(data) {
+                if (data == "ok") {
+                    //openAchievements()
+                } else $("#message").html(data)
+            }
+        )
+    } else {
+        $("#message").html("He who searches, will find.")
+    }
+
+      //  [ /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i, 'invalid_email' ]
+
 }
 
-function findFriendsOnServer(callback) {
-    var friend_email = $("input[name=friend_email]")
-    var data = "friend_email=" + friend_email.val()
+function findFriendsOnServer(friend_email, callback) {
+    var data = "friend_email=" + friend_email
 
     $.ajax("/findFriends", {
         type: "GET",

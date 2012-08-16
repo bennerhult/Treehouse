@@ -188,7 +188,7 @@ app.get('/findFriends', function(request, response){
                 returnMessage(response, request.query.friend_email + " is on TreeHouse")
             }
         } else {
-            returnMessage(response, "Your friend does not appear to use Treehouse! Tell them about it and share the happiness!")
+            returnMessage(response,  request.query.friend_email + " does not appear to use Treehouse! Tell your friend about it and share the happiness!")
         }
     })
 })
@@ -198,6 +198,7 @@ function returnMessage(response, message) {
     response.write(JSON.stringify(message))
     response.end('\n', 'utf-8')
 }
+
 //public achievement
 app.get('/achievement', function(request, response) {
     var url_parts = url.parse(request.url, true)
