@@ -123,6 +123,9 @@ function findFriendsOnServer(friend_email, callback) {
     })
 }
 
+function visitFriend(friendId) {
+
+}
 /******************  achievements functions  ******************/
 function openAchievements(completed) {
     window.history.pushState(null, null, "/")
