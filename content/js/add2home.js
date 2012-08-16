@@ -14,7 +14,6 @@ var addToHome = (function (w) {
         isReturningVisitor,
         balloon,
         overrideChecks,
-
         positionInterval,
         closeTimeout,
 
@@ -212,7 +211,6 @@ var addToHome = (function (w) {
             posY = isIPad ? w.scrollY - startY : w.scrollY + w.innerHeight - startY
             posX = isIPad ? w.scrollX - startX : w.scrollX + Math.round((w.innerWidth - balloon.offsetWidth) / 2) - startX
         }
-
         balloon.style.webkitTransitionProperty = '-webkit-transform,opacity'
 
         switch (options.animationOut) {
@@ -240,15 +238,14 @@ var addToHome = (function (w) {
                 duration = '0.8s'
                 opacity = '0'
         }
-
         balloon.addEventListener('webkitTransitionEnd', transitionEnd, false)
         balloon.style.opacity = opacity
         balloon.style.webkitTransitionDuration = duration
         balloon.style.webkitTransform = 'translate3d(' + posX + 'px,' + posY + 'px,0)'
     }
 
-
     function clicked() {
+        w.sessionStorage.removeItem('addToHomeSession');
         w.sessionStorage.setItem('addToHomeSession', '1')
         isSessionActive = true
         close()
@@ -282,7 +279,7 @@ var addToHome = (function (w) {
         balloon.style.webkitTransform = 'translate3d(' + posX + 'px,' + posY + 'px,0)'
     }
 
-    // Clear local and session storages (this is useful primarily in development)
+    // Clear local and session storage (this is useful primarily in development)
     function reset() {
         w.localStorage.removeItem('addToHome')
         w.sessionStorage.removeItem('addToHomeSession')
