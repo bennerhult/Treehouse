@@ -183,21 +183,15 @@ app.get('/findFriends', function(request, response){
     user.User.findOne({ username: request.query.friend_email.toLowerCase() }, function(err,foundFriend) {
         if (foundFriend)    {
             if (request.session.user_id == foundFriend._id ) {
-                returnMessage(response, "Dissociative identity disorder?")
+                response.send('Dissociative identity disorder?', { 'Content-Type': 'application/json' }, 404)
             }  else {
-                returnMessage(response, request.query.friend_email + " is on TreeHouse")
+                response.send(foundFriend._id, { 'Content-Type': 'application/json' }, 200)
             }
         } else {
-            returnMessage(response,  request.query.friend_email + " does not appear to use Treehouse! Tell your friend about it and share the happiness!")
+            response.send(request.query.friend_email + ' does not appear to use Treehouse! Tell your friend about it and share the happiness!', { 'Content-Type': 'application/json' }, 404)
         }
     })
 })
-
-function returnMessage(response, message) {
-    response.writeHead(200, {'content-type': 'application/json' })
-    response.write(JSON.stringify(message))
-    response.end('\n', 'utf-8')
-}
 
 //public achievement
 app.get('/achievement', function(request, response) {

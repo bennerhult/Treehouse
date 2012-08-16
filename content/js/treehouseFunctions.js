@@ -92,10 +92,12 @@ function findFriends() {
     if (friend_email) {
         if (friend_email.match(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i)) {
             findFriendsOnServer(friend_email,
-                function(data) {
-                    if (data == "ok") {
-                        //openAchievements()
-                    } else $("#message").html(data)
+                function(data, found) {
+                    if ( found ) {
+                        $("#message").html(friend_email + " found!<br /><a href='javascript:void(0)' onclick='visitFriend(\"" + data + "\")'>Visit!</a>")
+                    } else {
+                        $("#message").html(data)
+                    }
                 }
             )
         }
@@ -110,12 +112,14 @@ function findFriends() {
 function findFriendsOnServer(friend_email, callback) {
     var data = "friend_email=" + friend_email
 
-    $.ajax("/findFriends", {
+    var jqxhr = $.ajax("/findFriends", {
         type: "GET",
         data: data,
         dataType: "json",
-        success: function(data) { if ( callback ) callback(data) },
-        error  : function()     { if ( callback ) callback(null) }
+        statusCode: {
+            200: function(returnData) { callback(returnData, true) },
+            404: function() { callback(jqxhr.responseText , false) }
+        }
     })
 }
 
