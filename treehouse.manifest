@@ -93,4 +93,4 @@ NETWORK:
 /editAchievement
 /latestAchievementSplash
 /latestAchievementId
-/bothCompletedAndNot
+/completedAchievementsExist

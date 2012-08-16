@@ -269,7 +269,6 @@ function getAchievementList(request, response, completedAchievements) {
         if (err) { console.log("error in app.js: couldn't find any progess for user " + request.session.user_id) }
         if (progresses && progresses.length > 0) {
             if (!completedAchievements) { achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>" }
-
             progresses.forEach(function(currentProgress, index) {
                 achievement.Achievement.findById(currentProgress.achievement_id, function(err2, myAchievement) {
                     if (err2) { console.log("error in app.js: couldn't find achievement for progress " + currentProgress.achievement_id) }
@@ -429,9 +428,8 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
     return goalText
 }
 
-app.get('/bothCompletedAndNot', function(request, response) {
+app.get('/completedAchievementsExist', function(request, response) {
     var completedFound = false
-    var nonCompletedFound = false
     var achievementIdsGoneThrough = new Array()
     var goneThroughProgresses = 0
     progress.Progress.find({ achiever_id: request.session.user_id}, function(err, progresses) {
@@ -444,14 +442,12 @@ app.get('/bothCompletedAndNot', function(request, response) {
                         if  (_.indexOf(achievementIdsGoneThrough, myAchievement._id.toString()) == -1) {
                             achievementIdsGoneThrough.push(myAchievement._id.toString())
                             calculateAchievementProgress(request.session.user_id, myAchievement._id, function(achievementPercentageFinished) {
-                               if(achievementPercentageFinished >= 100) {
-                                   completedFound = true
-                               } else {
-                                   nonCompletedFound = true
-                               }
+                                if(achievementPercentageFinished >= 100) {
+                                    completedFound = true
+                                }
                                 goneThroughProgresses +=  myAchievement.goals.length
                                 if (goneThroughProgresses == progresses.length) {
-                                    finishCompletedAndNot(response, completedFound, nonCompletedFound)
+                                    finishCompletedAchievementsExist(response, completedFound)
                                 }
                             })
                         }
@@ -459,15 +455,15 @@ app.get('/bothCompletedAndNot', function(request, response) {
                 })
             })
         } else {
-            finishCompletedAndNot(response, completedFound, nonCompletedFound)
+            finishCompletedAchievementsExist(response, false)
         }
     })
 
 })
 
-function finishCompletedAndNot(response, completedFound, nonCompletedFound) {
+function finishCompletedAchievementsExist(response, completedFound) {
     response.writeHead(200, {'content-type': 'application/json' })
-    if (nonCompletedFound && completedFound) {
+    if (completedFound) {
         response.write(JSON.stringify(true))
     } else {
         response.write(JSON.stringify(false))

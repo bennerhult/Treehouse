@@ -89,14 +89,14 @@ function signupOnServer(callback) {
 /******************  achievements functions  ******************/
 function openAchievements(completed) {
     window.history.pushState(null, null, "/")
-    completedAndNotFromServer(function(data) {
+    completedAchievementsExistFromServer(function(data) {
         insertContent(getAchievementsContent(data), getAchievements(completed))
     })
 }
 
 
-function completedAndNotFromServer(callback) {
-    $.ajax("/bothCompletedAndNot", {
+function completedAchievementsExistFromServer(callback) {
+    $.ajax("/completedAchievementsExist", {
         type: "GET",
         dataType: "json",
         success: function(data) { if ( callback ) callback(data) },
