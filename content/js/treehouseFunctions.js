@@ -90,19 +90,21 @@ function signupOnServer(callback) {
 function findFriends() {
     var friend_email = $("input[name=friend_email]").val()
     if (friend_email) {
-        findFriendsOnServer(friend_email,
-            function(data) {
-                if (data == "ok") {
-                    //openAchievements()
-                } else $("#message").html(data)
-            }
-        )
+        if (friend_email.match(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i)) {
+            findFriendsOnServer(friend_email,
+                function(data) {
+                    if (data == "ok") {
+                        //openAchievements()
+                    } else $("#message").html(data)
+                }
+            )
+        }
+        else {
+            $("#message").html("Try with an email, ok?")
+        }
     } else {
         $("#message").html("He who searches, will find.")
     }
-
-      //  [ /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i, 'invalid_email' ]
-
 }
 
 function findFriendsOnServer(friend_email, callback) {
