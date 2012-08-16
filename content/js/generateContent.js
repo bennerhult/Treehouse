@@ -92,9 +92,9 @@ function getFriendsContent() {
     friendsContent += '<div id="content">' + nl +
             '<form action="javascript: findFriends()">' + nl +
             '<input type="text" class="formstyle" name="friend_email" placeholder="email">' + nl +
-            '<div id="message"></div>' + nl +
             '<input type="submit" class="button" value="Find friend">' + nl +
             '</form>' + nl +
+            '<div id="message"></div>' + nl +
             '</div>'
      return friendsContent
 }
