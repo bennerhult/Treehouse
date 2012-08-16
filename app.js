@@ -180,7 +180,7 @@ function getSignupErrorMessage (err){
 }
 
 app.get('/findFriends', function(request, response){
-    user.User.findOne({ username: request.query.friend_email }, function(err,foundFriend) {
+    user.User.findOne({ username: request.query.friend_email.toLowerCase() }, function(err,foundFriend) {
         if (foundFriend)    {
             if (request.session.user_id == foundFriend._id ) {
                 returnMessage(response, "Dissociative identity disorder?")
