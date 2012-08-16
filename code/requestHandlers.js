@@ -23,7 +23,7 @@ function topIndexPart() {
                     tab + '<meta name="apple-mobile-web-app-status-bar-style" content="black" />' + nl +
                     tab + '<link rel="apple-touch-icon" href="/content/treehouse-icon.png">' + nl +
                     tab + '<meta property="og:site_name" content="Treehouse" />' + nl +
-                    tab + '<meta property="og:title" content="Treehouse helps you track your achievements." />' + nl +
+                    tab + '<meta property="og:title" content="Treehouse. Track your achievements!" />' + nl +
                     tab + '<meta property="og:type" content="article" />' + nl +
                     tab + '<meta property="og:image" content="http://treehouse.io/content/img/treehouse.jpg"/>' + nl +
                     tab + '<meta property="og:url" content="http://www.treehouse.io"/>' + nl +
