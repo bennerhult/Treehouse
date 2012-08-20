@@ -355,12 +355,13 @@ body{
 
 #inProgressOrCompletedMenu ul li{
     float: left;
-    width: 33%;
+    width: 20%;
     text-align: center;
 
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
+
 }
 
 #inProgressOrCompletedMenu ul li#inProgress,
@@ -368,6 +369,15 @@ body{
     margin-top: 3px;
 }
 
+#inProgressOrCompletedMenu ul li#completed{
+    margin-right: 5%;
+    width: 35%;
+}
+
+#inProgressOrCompletedMenu ul li#inProgress{
+    margin-left: 5%;
+    width: 35%;
+}
 
 #inProgressOrCompletedMenu ul li a{
     text-decoration: none;
@@ -440,7 +450,7 @@ body{
 }
 
 #menu ul li{
-    padding-top: 2px;
+    padding-top: 4px;
     float: left;
     padding-bottom: 2px;
 }
@@ -480,6 +490,9 @@ body{
     z-index: 20;
     position: absolute;
     top: 38px;
+    margin: auto;
+    left: 17%;
+    right: 17%;
 
 }
 
@@ -499,7 +512,9 @@ body{
     background-color: #000;
     font-size: 11px;
     border: 0px;
-    padding: 4px 4px 7px 10px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    text-align: center;
 }
 
 .slider-menu ul li a{
@@ -511,8 +526,8 @@ body{
 
 .slider-menu ul li span{
     background-color: rgba(0,0,0,0.8);
-    padding-left: 20px;
-    padding-right: 70px;
+
+    padding-left: 30px;
     padding-top: 10px;
     padding-bottom: 10px;
     width: auto;
@@ -529,15 +544,24 @@ body{
 }
 
 .slider-menu ul li.border-top-right{
-    -moz-border-top-right-radius: 5px;
+
+    /*-moz-border-top-right-radius: 5px;
     -webkit-border-top-right-radius: 5px;
     border-top-right-radius: 5px;
+
+    -moz-border-top-left-radius: 5px;
+    -webkit-border-top-left-radius: 5px;
+    border-top-left-radius: 5px;*/
 }
 
 .slider-menu ul li span.border-bottom-right{
     -moz-border-bottom-right-radius: 5px;
     -webkit-border-bottom-right-radius: 5px;
     border-bottom-right-radius: 5px;
+
+    -moz-border-bottom-left-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
 .tree-tab{
