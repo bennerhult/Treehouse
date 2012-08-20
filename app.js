@@ -14,6 +14,7 @@ app.configure('development', function() {
 app.configure('production', function() {
     console.log("Treehouse in prod mode.")
     if (process.env.DB_URI) {
+        console.log(process.env.DB_URI.toString())
         app.set('db-uri', process.env.DB_URI.toString())
     } else {
         console.log("DB not set up")
