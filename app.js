@@ -4,25 +4,22 @@ var fs = require('fs'),
     sessionMongoose = require("session-mongoose"),
     _ = require("underscore")._
 
+var db_uri = 'mongodb://localhost:27017/test'
+
 app = express.createServer()
 
 app.configure('development', function() {
     console.log("Treehouse in development mode.")
-    app.set('db-uri', 'mongodb://localhost:27017/test')
+    db_uri=process.env.DB_URI
 })
 
 app.configure('production', function() {
     console.log("Treehouse in prod mode.")
-    if (process.env.DB_URI) {
-        console.log(process.env.DB_URI.toString())
-        app.set('db-uri', process.env.DB_URI.toString())
-    } else {
-        console.log("DB not set up")
-    }
+    //app.set('db-uri', db_uri)
 })
 
 var mongooseSessionStore = new sessionMongoose({
-    url: app.get('db-uri'),
+    url: db_uri,
     interval: 60000
 })
 
@@ -31,7 +28,7 @@ app.configure(function() {
     app.use(express.session({ store: mongooseSessionStore, secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4' }))
 })
 
-var dburi = app.get('db-uri')
+var dburi = db_uri
 
 module.exports = {
     dburi: dburi
