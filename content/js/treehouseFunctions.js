@@ -12,7 +12,6 @@ function checkUser() {
 function checkUserOnServer(callback) {
     var username = $("input[name=username]")
     var password = $("input[name=password]")
-
     var data = "username=" + username.val() + "&password=" + password.val()
 
     $.ajax("/checkUser", {     

@@ -10,20 +10,33 @@ var footerContent = '<ul>' + nl +
 
 var isiPad = navigator.userAgent.match(/iPad/i) != null;
 
+function resizeMenu() {
+    if ($(document).width() > 999)   {
+        $("#inProgressOrCompletedMenu").css("top", 264 - $(window).scrollTop())
+        $("#inProgressOrCompletedMenu").css("width", 370 - $(window).scrollLeft())
+    } else if (document.width > 799) {
+            $("#inProgressOrCompletedMenu").css("top", 80  - $(window).scrollTop())
+            $("#inProgressOrCompletedMenu").css("width", 370 - $(window).scrollLeft())
+    } else {
+        $("#inProgressOrCompletedMenu").css("top", "0")
+        $("#inProgressOrCompletedMenu").css("width", "100%")
+    }
+}
+
 function insertContent(content, callback, achievementId, userId, publicView) {
     $("#contentArea").html(content)
     $("#web-footer").html(footerContent)
-
     FB.init({status: true, cookie: true, xfbml: true})
     $("#fbLikeWeb").show()
-
     if (!isiPad) {
         $("#banner").empty().remove()
     }
     insertLatestAchievement()
-    if (window.innerWidth < 819) {
+    /*if (window.innerWidth < 819) {
         $("html, body").animate({scrollTop: $("#menu").offset().top}, 200)
-    }
+    }*/
+    resizeMenu()
+
     if (callback) {
         callback(achievementId, userId, publicView)
     }

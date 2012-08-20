@@ -326,10 +326,12 @@ body{
     color: #c21515;
 }
 
+
+
 #inProgressOrCompletedMenu{
     padding-top: 2px;
     height: 36px;
-    position: absolute;
+    position: fixed;
     z-index: 1;
     top: 0px;
 
