@@ -13,11 +13,15 @@ app.configure('development', function() {
 
 app.configure('production', function() {
     console.log("Treehouse in prod mode.")
-    app.set('db-uri', 'mongodb://treehouser:applehorsegreenwtfanything@vincent.mongohq.com:10034/treehouse')
+    if (process.env.DB_URI) {
+        app.set('db-uri', process.env.DB_URI) //
+    } else {
+        console.log("DB not set up")
+    }
 })
 
 var mongooseSessionStore = new sessionMongoose({
-    url: app.set('db-uri'),
+    url: app.get('db-uri'),
     interval: 60000
 })
 
@@ -26,7 +30,7 @@ app.configure(function() {
     app.use(express.session({ store: mongooseSessionStore, secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4' }))
 })
 
-var dburi = app.set('db-uri')
+var dburi = app.get('db-uri')
 
 module.exports = {
     dburi: dburi
