@@ -16,6 +16,8 @@ app.configure('development', function() {
 app.configure('production', function() {
     console.log("Treehouse in prod mode.")
     //app.set('db-uri', db_uri)
+    var db_uri = 'mongodb://localhost:27017/test'
+
 })
 
 var mongooseSessionStore = new sessionMongoose({
