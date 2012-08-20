@@ -47,7 +47,7 @@ function rememberMeOnServer(callback) {
 
 /******************  tab menu functions  ******************/
 function toggleTab() {
-    $('#tab-menu').toggle('fast')
+    $('#tab-menu').slideToggle('fast');
 }
 
 /******************  logout functions  ******************/
