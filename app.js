@@ -10,13 +10,12 @@ app = express.createServer()
 
 app.configure('development', function() {
     console.log("Treehouse in development mode.")
-    db_uri=process.env.DB_URI
 })
 
 app.configure('production', function() {
     console.log("Treehouse in prod mode.")
     //app.set('db-uri', db_uri)
-    var db_uri = 'mongodb://localhost:27017/test'
+    db_uri=process.env.DB_URI
 
 })
 
