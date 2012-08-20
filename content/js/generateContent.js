@@ -14,6 +14,7 @@ function resizeMenu() {
     if ($(document).width() > 999)   {
         $("#inProgressOrCompletedMenu").css("top", 264 - $(window).scrollTop())
         $("#inProgressOrCompletedMenu").css("width", 370 - $(window).scrollLeft())
+
     } else if (document.width > 799) {
             $("#inProgressOrCompletedMenu").css("top", 80  - $(window).scrollTop())
             $("#inProgressOrCompletedMenu").css("width", 370 - $(window).scrollLeft())

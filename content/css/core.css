@@ -499,7 +499,7 @@ body{
 }
 
 .slider-menu{
-
+    position: fixed;
 
 }
 
