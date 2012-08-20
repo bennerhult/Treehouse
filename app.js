@@ -13,7 +13,7 @@ app.configure('development', function() {
 
 app.configure('production', function() {
     console.log("Treehouse in prod mode.")
-    app.set('db-uri', 'mongodb://treehouser:applehorsegreenwtfanything@staff.mongohq.com:10005/app4109808')
+    app.set('db-uri', 'mongodb://treehouser:applehorsegreenwtfanything@vincent.mongohq.com:10034/treehouse')
 })
 
 var mongooseSessionStore = new sessionMongoose({
