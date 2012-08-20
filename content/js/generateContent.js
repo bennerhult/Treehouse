@@ -30,6 +30,8 @@ function insertContent(content, callback, achievementId, userId, publicView) {
     FB.init({status: true, cookie: true, xfbml: true})
     $("#fbLikeWeb").show()
     if (!isiPad) {
+        document.addEventListener("touchmove", resizeMenu, false);
+        document.addEventListener("scroll", resizeMenu, false);
         $("#banner").empty().remove()
     }
     insertLatestAchievement()
