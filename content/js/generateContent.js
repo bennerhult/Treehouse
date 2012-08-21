@@ -12,7 +12,7 @@ var isiPad = navigator.userAgent.match(/iPad/i) != null;
 
 function resizeMenu() {
     if ($(document).width() > 999)   {
-        $("#inProgressOrCompletedMenu").css("top", 264 - $(window).scrollTop())
+        $("#inProgressOrCompletedMenu").css("top", 261 - $(window).scrollTop())
         $("#inProgressOrCompletedMenu").css("width", 370 - $(window).scrollLeft())
 
     } else if (document.width > 799) {
