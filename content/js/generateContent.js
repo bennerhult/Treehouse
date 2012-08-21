@@ -24,27 +24,29 @@ function resizeMenu() {
     }
 }
 
-function insertContent(content, callback, achievementId, userId, publicView) {
-    $("#contentArea").html(content)
-    $("#web-footer").html(footerContent)
+function init() {
     FB.init({status: true, cookie: true, xfbml: true})
     $("#fbLikeWeb").show()
     if (!isiPad) {
-
         document.addEventListener("scroll", resizeMenu, false);
         $("#banner").empty().remove()
     }  else {
         document.addEventListener("touchmove", resizeMenu, false);
+        document.addEventListener("scroll", resizeMenu, false);
     }
     insertLatestAchievement()
+    $("#web-footer").html(footerContent)
+}
+
+function insertContent(content, callback, achievementId, userId, publicView) {
+    $("#contentArea").html(content)
     /*if (window.innerWidth < 819) {
         $("html, body").animate({scrollTop: $("#menu").offset().top}, 200)
     }*/
-    resizeMenu()
-
     if (callback) {
         callback(achievementId, userId, publicView)
     }
+    resizeMenu()
 }
 
 function showLatestAchievement(achievementId) {
