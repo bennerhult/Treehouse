@@ -1270,6 +1270,11 @@ p#achievementDescription{
         width: 100%;
     }
 
+    .tab-menu-container{
+        position: fixed;
+    }
+
+
     #inProgressOrCompletedMenu{
         position: fixed;
         width: 100%;
