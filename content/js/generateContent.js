@@ -166,11 +166,11 @@ function getCookie(c_name) {
 }
 
 function getAchievementsContent(bothCompletedAndNotExists) {
-    var achievementsContent ='<div id="inProgressOrCompletedMenu"><ul>'
+    var achievementsContent ='<div id="menu"><ul>'
     if (bothCompletedAndNotExists) {
         achievementsContent +=  '<li id="inProgress"><a href="javascript:void(0)" onclick="getAchievements(false)"><span>in progress</span></a></li>'
     }
-    achievementsContent += '<li><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>'
+    achievementsContent += '<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>'
     if (bothCompletedAndNotExists) {
         achievementsContent +=  '<li id="completed"><a href="javascript:void(0)" onclick="getAchievements(true)"><span>completed</span></a></li>'
     }
@@ -202,7 +202,7 @@ function getPublicAchievementContent() {
 
                 '<div id="menu">' + nl  +
                     '<ul>' + nl  +
-                        '<li class="house"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>' +
+                        '<li id="house"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>' +
                     '</ul>' + nl  +
                 '</div>' + nl  +
                     getTabMenu(false) +
