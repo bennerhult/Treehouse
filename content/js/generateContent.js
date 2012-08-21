@@ -10,36 +10,14 @@ var footerContent = '<ul>' + nl +
 
 var isiPad = navigator.userAgent.match(/iPad/i) != null;
 
-function resizeMenu() {
-    if ($(document).width() > 999)   {
-        $("#inProgressOrCompletedMenu").css("top", 261 - $(window).scrollTop())
-        $("#inProgressOrCompletedMenu").css("width", 370 - $(window).scrollLeft())
-
-    } else if (document.width > 799) {
-            $("#inProgressOrCompletedMenu").css("top", 80  - $(window).scrollTop())
-            $("#inProgressOrCompletedMenu").css("width", 370 - $(window).scrollLeft())
-    } else {
-        $("#inProgressOrCompletedMenu").css("top", "0")
-        $("#inProgressOrCompletedMenu").css("width", "100%")
-    }
-}
-
-var myScroll
-
 function init() {
     FB.init({status: true, cookie: true, xfbml: true})
     $("#fbLikeWeb").show()
     insertLatestAchievement()
     $("#web-footer").html(footerContent)
     if (!isiPad) {
-        document.addEventListener("scroll", resizeMenu, false)
         $("#banner").empty().remove()
-    }  else {
-        //document.addEventListener("touchmove", resizeMenu, false)
-        //document.addEventListener("scroll", resizeMenu, false)
-        myScroll = new iScroll('wrapper')
     }
-
 }
 
 function insertContent(content, callback, achievementId, userId, publicView) {
@@ -50,7 +28,6 @@ function insertContent(content, callback, achievementId, userId, publicView) {
     if (callback) {
         callback(achievementId, userId, publicView)
     }
-    resizeMenu()
 }
 
 function showLatestAchievement(achievementId) {
@@ -174,7 +151,7 @@ function getAchievementsContent(bothCompletedAndNotExists) {
     if (bothCompletedAndNotExists) {
         achievementsContent +=  '<li id="completed"><a href="javascript:void(0)" onclick="getAchievements(true)"><span>completed</span></a></li>'
     }
-    achievementsContent +=  '</ul></div>' + getTabMenu(bothCompletedAndNotExists) + '<div id="wrapper"><div id="achievementList"></div></div>'
+    achievementsContent +=  '</ul></div>' + getTabMenu(bothCompletedAndNotExists) + '<div id="achievementList"></div>'
     return achievementsContent
 }
 
