@@ -281,6 +281,10 @@ body{
     max-width: 100%;
 }
 
+.log-in-text{
+    text-align: center;
+}
+
 #infoArea {
     background-color: #fff;
     min-height: 628px;

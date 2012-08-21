@@ -12,7 +12,7 @@ var isiPad = navigator.userAgent.match(/iPad/i) != null;
 
 function resizeMenu() {
     if ($(document).width() > 999)   {
-        $("#inProgressOrCompletedMenu").css("top", 264 - $(window).scrollTop())
+        $("#inProgressOrCompletedMenu").css("top", 261 - $(window).scrollTop())
         $("#inProgressOrCompletedMenu").css("width", 370 - $(window).scrollLeft())
 
     } else if (document.width > 799) {
@@ -24,25 +24,33 @@ function resizeMenu() {
     }
 }
 
-function insertContent(content, callback, achievementId, userId, publicView) {
-    $("#contentArea").html(content)
-    $("#web-footer").html(footerContent)
+var myScroll
+
+function init() {
     FB.init({status: true, cookie: true, xfbml: true})
     $("#fbLikeWeb").show()
-    if (!isiPad) {
-        document.addEventListener("touchmove", resizeMenu, false);
-        document.addEventListener("scroll", resizeMenu, false);
-        $("#banner").empty().remove()
-    }
     insertLatestAchievement()
+    $("#web-footer").html(footerContent)
+    if (!isiPad) {
+        document.addEventListener("scroll", resizeMenu, false)
+        $("#banner").empty().remove()
+    }  else {
+        //document.addEventListener("touchmove", resizeMenu, false)
+        //document.addEventListener("scroll", resizeMenu, false)
+        myScroll = new iScroll('wrapper')
+    }
+
+}
+
+function insertContent(content, callback, achievementId, userId, publicView) {
+    $("#contentArea").html(content)
     /*if (window.innerWidth < 819) {
         $("html, body").animate({scrollTop: $("#menu").offset().top}, 200)
     }*/
-    resizeMenu()
-
     if (callback) {
         callback(achievementId, userId, publicView)
     }
+    resizeMenu()
 }
 
 function showLatestAchievement(achievementId) {
@@ -127,7 +135,7 @@ function getTabMenu(bothCompletedAndNotExists) {
     if (x) {
         loggedIn = true
     }
-    var menu =  '<div id="tab-menu" class="slider-menu" style="display:none;">' + nl +
+    var menu = '<div id="tab-menu" class="slider-menu" style="display:none;">' + nl +
            '<ul>'
      if (loggedIn) {
          menu +=    '<li class="header border-top-right">Achievements</li>' + nl +
@@ -166,14 +174,13 @@ function getAchievementsContent(bothCompletedAndNotExists) {
     if (bothCompletedAndNotExists) {
         achievementsContent +=  '<li id="completed"><a href="javascript:void(0)" onclick="getAchievements(true)"><span>completed</span></a></li>'
     }
-    achievementsContent +=  '</ul></div>' + getTabMenu(bothCompletedAndNotExists) + '<div id="achievementList"></div>'
+    achievementsContent +=  '</ul></div>' + getTabMenu(bothCompletedAndNotExists) + '<div id="wrapper"><div id="achievementList"></div></div>'
     return achievementsContent
 }
 
 function getAchievementContent(publiclyVisible, progressMade, isLatestAchievement, completed, userId) {
     var achievementContent =
         '<div id="app-container">' + nl  +
-
         '<div id="menu">' + nl  +
         '<ul>' + nl  +
         '<li class="back"><a href="javascript:void(0)" onclick="openAchievements(' + completed + ')"><img src="content/img/back-1.png" alt=""/></a></li>' + nl
@@ -184,7 +191,6 @@ function getAchievementContent(publiclyVisible, progressMade, isLatestAchievemen
          achievementContent += '</ul>' + nl  +
             '</div>' + nl  +
             '<div id="achievementDesc"></div>' + nl  +
-
             '</div>' + nl;
     return achievementContent;
 }
