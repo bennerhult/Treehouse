@@ -127,8 +127,7 @@ function getTabMenu(bothCompletedAndNotExists) {
     if (x) {
         loggedIn = true
     }
-    var menu = '<div class="tab-menu-container">' + nl +
-           '<div id="tab-menu" class="slider-menu" style="display:none;">' + nl +
+    var menu =  '<div id="tab-menu" class="slider-menu" style="display:none;">' + nl +
            '<ul>'
      if (loggedIn) {
          menu +=    '<li class="header border-top-right">Achievements</li>' + nl +
@@ -142,7 +141,6 @@ function getTabMenu(bothCompletedAndNotExists) {
                     '<li class="last"><a href="javascript:void(0)" onclick="insertContent(getLoginContent())"><span class="border-bottom-right"><nobr>Log in / sign up</nobr></span></a></li>'
      }
     menu += '</ul>' + nl +
-            '</div>' + nl +
             '</div>' + nl
     return menu
 }
@@ -160,7 +158,7 @@ function getCookie(c_name) {
 }
 
 function getAchievementsContent(bothCompletedAndNotExists) {
-    var achievementsContent ='<div id="content no-padding"><div id="inProgressOrCompletedMenu"><ul>'
+    var achievementsContent ='<div id="inProgressOrCompletedMenu"><ul>'
     if (bothCompletedAndNotExists) {
         achievementsContent +=  '<li id="inProgress"><a href="javascript:void(0)" onclick="getAchievements(false)"><span>in progress</span></a></li>'
     }
@@ -168,14 +166,14 @@ function getAchievementsContent(bothCompletedAndNotExists) {
     if (bothCompletedAndNotExists) {
         achievementsContent +=  '<li id="completed"><a href="javascript:void(0)" onclick="getAchievements(true)"><span>completed</span></a></li>'
     }
-    achievementsContent +=  '</ul></div>' + getTabMenu(bothCompletedAndNotExists) + '<div id="achievementList"></div></div>'
+    achievementsContent +=  '</ul></div>' + getTabMenu(bothCompletedAndNotExists) + '<div id="achievementList"></div>'
     return achievementsContent
 }
 
 function getAchievementContent(publiclyVisible, progressMade, isLatestAchievement, completed, userId) {
     var achievementContent =
         '<div id="app-container">' + nl  +
-        '<div id="content no-padding">' + nl  +
+
         '<div id="menu">' + nl  +
         '<ul>' + nl  +
         '<li class="back"><a href="javascript:void(0)" onclick="openAchievements(' + completed + ')"><img src="content/img/back-1.png" alt=""/></a></li>' + nl
@@ -186,7 +184,7 @@ function getAchievementContent(publiclyVisible, progressMade, isLatestAchievemen
          achievementContent += '</ul>' + nl  +
             '</div>' + nl  +
             '<div id="achievementDesc"></div>' + nl  +
-            '</div>' + nl +
+
             '</div>' + nl;
     return achievementContent;
 }
@@ -195,7 +193,7 @@ function getPublicAchievementContent() {
     return (
         '<div id="fb-root"></div>' + nl  +
         '<div id="app-container">' + nl  +
-            '<div id="content no-padding">' + nl  +
+
                 '<div id="menu">' + nl  +
                     '<ul>' + nl  +
                         '<li class="house"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>' +
@@ -203,7 +201,7 @@ function getPublicAchievementContent() {
                 '</div>' + nl  +
                     getTabMenu(false) +
                 '<div id="achievementDesc"></div>' + nl  +
-            '</div>' + nl +
+
         '</div>' + nl
     )
 }
@@ -211,7 +209,7 @@ function getPublicAchievementContent() {
 //data if edit, null if create
 function getNewAchievementContent(data, userId) {
         var text ='<div id="app-container">' + nl  +
-            '<div id="content no-padding">' + nl  +
+
                 '<div id="menu">' + nl  +
                     '<ul>' + nl  +
                         '<li class="back"><a href="javascript:void(0)" onclick="'
@@ -289,7 +287,7 @@ function getNewAchievementContent(data, userId) {
                      text += '<div id="message"></div>' + nl +
                             '</div>' + nl  +
                             '</form>' + nl  +
-                            '</div>' + nl  +
+
                         '</div>'
     return text
 }

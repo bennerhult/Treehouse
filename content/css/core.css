@@ -265,21 +265,10 @@ body{
 
 /*-- CONTENT --*/
 
-#content{
+#content {
     position: relative;
     padding: 30px;
     padding-top: 50px;
-}
-
-#no-padding{
-    position: relative;
-    padding: 0px;
-}
-
-#content div.log-in-text{
-    width: 100%;
-    text-align: center;
-    margin-bottom: 20px;
 }
 
 .signup-logo{
@@ -488,20 +477,13 @@ body{
     padding-right: 5%;
 }
 
+.slider-menu{
 
-/* tab menu*/
-.tab-menu-container{
     z-index: 20;
     position: absolute;
     top: 38px;
     left: 17%;
     right: 17%;
-
-}
-
-.slider-menu{
-
-
 }
 
 .slider-menu ul li{
@@ -1240,15 +1222,11 @@ p#achievementDescription{
     #rightcontainer{
         width: 100%;
         position: relative;
-       float: right;
-
+        float: right;
         background-color: transparent;
-
-
         -moz-box-shadow: none;
         -webkit-box-shadow: none;
         box-shadow: none;
-
         -moz-border-radius: 0px;
         -webkit-border-radius: 0px;
         border-radius: 0px;
@@ -1272,7 +1250,7 @@ p#achievementDescription{
         width: 100%;
     }
 
-    .tab-menu-container{
+    .slider-menu{
         position: fixed;
     }
 
