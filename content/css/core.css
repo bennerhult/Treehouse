@@ -492,14 +492,13 @@ body{
     z-index: 20;
     position: absolute;
     top: 38px;
-    margin: auto;
     left: 17%;
     right: 17%;
 
 }
 
 .slider-menu{
-    position: fixed;
+
 
 }
 
