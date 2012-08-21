@@ -24,6 +24,7 @@ function resizeMenu() {
     }
 }
 
+
 function init() {
     FB.init({status: true, cookie: true, xfbml: true})
     $("#fbLikeWeb").show()
@@ -31,8 +32,9 @@ function init() {
         document.addEventListener("scroll", resizeMenu, false);
         $("#banner").empty().remove()
     }  else {
-        document.addEventListener("touchmove", resizeMenu, false);
-        document.addEventListener("scroll", resizeMenu, false);
+        //document.addEventListener("touchmove", resizeMenu, false);
+        //document.addEventListener("scroll", resizeMenu, false);
+        myScroll = new iScroll('wrapper');
     }
     insertLatestAchievement()
     $("#web-footer").html(footerContent)
@@ -172,7 +174,7 @@ function getAchievementsContent(bothCompletedAndNotExists) {
     if (bothCompletedAndNotExists) {
         achievementsContent +=  '<li id="completed"><a href="javascript:void(0)" onclick="getAchievements(true)"><span>completed</span></a></li>'
     }
-    achievementsContent +=  '</ul></div>' + getTabMenu(bothCompletedAndNotExists) + '<div id="achievementList"></div></div>'
+    achievementsContent +=  '</ul></div>' + getTabMenu(bothCompletedAndNotExists) + '<div id="wrapper"><div id="achievementList"></div></div></div>'
     return achievementsContent
 }
 
