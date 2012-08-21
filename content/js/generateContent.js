@@ -24,20 +24,22 @@ function resizeMenu() {
     }
 }
 
+var myScroll
 
 function init() {
     FB.init({status: true, cookie: true, xfbml: true})
     $("#fbLikeWeb").show()
-    if (!isiPad) {
-        document.addEventListener("scroll", resizeMenu, false);
-        $("#banner").empty().remove()
-    }  else {
-        //document.addEventListener("touchmove", resizeMenu, false);
-        //document.addEventListener("scroll", resizeMenu, false);
-        myScroll = new iScroll('wrapper');
-    }
     insertLatestAchievement()
     $("#web-footer").html(footerContent)
+    if (!isiPad) {
+        document.addEventListener("scroll", resizeMenu, false)
+        $("#banner").empty().remove()
+    }  else {
+        //document.addEventListener("touchmove", resizeMenu, false)
+        //document.addEventListener("scroll", resizeMenu, false)
+        myScroll = new iScroll('wrapper')
+    }
+
 }
 
 function insertContent(content, callback, achievementId, userId, publicView) {
