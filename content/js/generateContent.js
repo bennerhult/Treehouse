@@ -20,21 +20,81 @@ function init() {
     }
 }
 
-function insertContent(content, callback, achievementId, userId, publicView) {
+function setPublicMenu() {
+    var menu = '<div id="menu">' + nl  +
+        '<ul>' + nl  +
+        '<li id="house"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>' +
+        '</ul>' + nl  +
+        '</div>' + nl  +
+        getTabMenu(false)
+    $("#menuArea").html(menu)
+ }
+
+function setCreateEditMenu(data) {
+    var text ='<div id="menu">' + nl  +
+        '<ul>' + nl  +
+        '<li class="back"><a href="javascript:void(0)" onclick="'
+    if (data) {
+        text += 'openAchievement(\'' + data._id + '\', \'' + userId + '\', ' + false + ', ' +  false + ', ' + false +')'
+    } else {
+        text += 'openAchievements(false)'
+    }
+    text+='"><img src="content/img/back-1.png" alt=""/></a></li>' + nl  +
+        '</ul>' + nl  +
+        '</div>'
+    $("#menuArea").html(text)
+}
+
+function setDefaultMenu(bothCompletedAndNotExists) {
+    var menu = '<div id="menu"><ul>'
+    if (bothCompletedAndNotExists) {
+        menu +=  '<li id="inProgress"><a href="javascript:void(0)" onclick="getAchievements(false)"><span>in progress</span></a></li>'
+    }
+    menu += '<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>'
+    if (bothCompletedAndNotExists) {
+        menu +=  '<li id="completed"><a href="javascript:void(0)" onclick="getAchievements(true)"><span>completed</span></a></li>'
+    }
+    menu +=  '</ul></div>' + getTabMenu(bothCompletedAndNotExists)
+    $("#menuArea").html(menu)
+}
+
+function setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, completed, userId) {
+    var menu = '<div id="menu">' + nl  +
+            '<ul>' + nl  +
+            '<li class="back"><a href="javascript:void(0)" onclick="openAchievements(' + completed + ')"><img src="content/img/back-1.png" alt=""/></a></li>' + nl
+    if (!isLatestAchievement) { menu += '<li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>' + nl }
+
+    if (!publiclyVisible) { menu += '<li id="publicizeButton" class="share"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/share.png" /></a></li>' }
+    if (!publiclyVisible && !progressMade) { menu += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement(\'' + userId + '\')"><img src="content/img/edit.png" /></a></li>' + nl }
+    menu += '</ul>' + nl  +
+        '</div>' + nl  +
+
+    $("#menuArea").html(menu)
+}
+
+function setEmptyMenu() {
+    var menu = '<div id="menu"></div>'
+    $("#menuArea").html(menu)
+}
+
+function insertContent(content, menuFunction, callback) {
     $("#contentArea").html(content)
+    menuFunction()
     /*if (window.innerWidth < 819) {
         $("html, body").animate({scrollTop: $("#menu").offset().top}, 200)
     }*/
     if (callback) {
-        callback(achievementId, userId, publicView)
+        callback()
     }
 }
 
 function showLatestAchievement(achievementId) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId)
-    insertContent(getPublicAchievementContent(), function() {
-        getPublicAchievement(achievementId, null, true)
-    }, achievementId, null, true)
+    insertContent(getPublicAchievementContent(), setPublicMenu(), getPublicAchievement(achievementId, null, true))
+
+    /*function() {
+     getPublicAchievement(achievementId, null, true)
+     }/*, achievementId, null, true)*/
 }
 
 function insertLatestAchievement() {
@@ -55,7 +115,6 @@ function insertLatestAchievement() {
 
 function getLoginContent() {
     return (
-            '<div id="menu"></div>' + nl +
             '<div id="content">' + nl +
                 '<div class="signup-logo"><img src="content/img/logo-large.png" /></div>' + nl +
                 '<form action="javascript: checkUser()">' + nl +
@@ -67,14 +126,13 @@ function getLoginContent() {
                     '<input type="submit" class="button green" value="Log in">' + nl +
 
                 '</form>' + nl +
-                '<div class="log-in-text"><a href="javascript:void(0)" onclick="insertContent(getSignupContent())">Don\'t have an account? Sign up. It\'s free.</a></div>' + nl +
+                '<div class="log-in-text"><a href="javascript:void(0)" onclick="insertContent(getSignupContent(), false)">Don\'t have an account? Sign up. It\'s free.</a></div>' + nl +
             '</div>' + nl
         )
 }
 
 function getSignupContent() {
     return (
-            '<div id="menu"></div>' + nl +
             '<div id="content">' + nl +
                 '<div class="signup-logo"><img src="content/img/logo-large.png" /></div>' + nl +
                 '<h1 class="signup">Sign Up</h1>' + nl +
@@ -84,26 +142,24 @@ function getSignupContent() {
                     '<div id="message"></div>' + nl +
                     '<input type="submit" class="button" value="Create my account">' + nl +
                 '</form>' + nl +
-                '<div class="log-in-text"><a href="javascript:void(0)" onclick="insertContent(getLoginContent())">Already awesome? Log in.</a></div>' + nl +
+                '<div class="log-in-text"><a href="javascript:void(0)" onclick="insertContent(getLoginContent(), setEmptyMenu(), null)">Already awesome? Log in.</a></div>' + nl +
             '</div>' + nl
         )
 }
 
 function getFriendsContent() {
-    var friendsContent = '<div id="menu">' + nl  +
-        '<ul>' + nl  +
-        '<li class="house"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>' +
-        '</ul>' + nl  +
-        '</div>' + nl
-    friendsContent += getTabMenu(false)
-    friendsContent += '<div id="content">' + nl +
-            '<form action="javascript: findFriends()">' + nl +
-            '<input type="text" class="formstyle" name="friend_email" placeholder="email">' + nl +
-            '<input type="submit" class="button" value="Find friend">' + nl +
-            '</form>' + nl +
-            '<div id="message"></div>' + nl +
-            '</div>'
-     return friendsContent
+     return '<div id="content">' + nl +
+         '<form action="javascript: findFriends()">' + nl +
+         '<input type="text" class="formstyle" name="friend_email" placeholder="email">' + nl +
+         '<input type="submit" class="button" value="Find friend">' + nl +
+         '</form>' + nl +
+         '<div id="message"></div>' + nl +
+         '</div>'
+}
+
+function openFriends() {
+    $('#tab-menu').hide('fast')
+    insertContent(getFriendsContent())
 }
 
 function getTabMenu(bothCompletedAndNotExists) {
@@ -116,14 +172,14 @@ function getTabMenu(bothCompletedAndNotExists) {
            '<ul>'
      if (loggedIn) {
          menu +=    '<li class="header border-top-right">Achievements</li>' + nl +
-                    '<li><a href="javascript:void(0)" onclick="insertContent(getAchievementsContent(' + bothCompletedAndNotExists + '), openAchievements(false))"><span><nobr>My achievements</nobr></span></a></li>'+ nl +
+                    '<li><a href="javascript:void(0)" onclick="insertContent(getAchievementsContent(), setDefaultMenu(' + bothCompletedAndNotExists + '), openAchievements(false))"><span><nobr>My achievements</nobr></span></a></li>'+ nl +
                     '<li class="header">Friends</li>' + nl +
-                    '<li><a href="javascript:void(0)" onclick="insertContent(getFriendsContent())"><span>Friends</span></a></li>' + nl +
+                    '<li><a href="javascript:void(0)" onclick="openFriends()"><span>Friends</span></a></li>' + nl +
                     '<li class="header">Account</li>' + nl +
                     '<li class="last"><a href="javascript:void(0)" onclick="logout()"><span class="border-bottom-right">Log out</span></a></li>'
      }  else {
          menu +=    '<li class="header">Account</li>' + nl +
-                    '<li class="last"><a href="javascript:void(0)" onclick="insertContent(getLoginContent())"><span class="border-bottom-right"><nobr>Log in / sign up</nobr></span></a></li>'
+                    '<li class="last"><a href="javascript:void(0)" onclick="insertContent(getLoginContent(), setEmptyMenu(), null)"><span class="border-bottom-right"><nobr>Log in / sign up</nobr></span></a></li>'
      }
     menu += '</ul>' + nl +
             '</div>' + nl
@@ -142,33 +198,15 @@ function getCookie(c_name) {
     }
 }
 
-function getAchievementsContent(bothCompletedAndNotExists) {
-    var achievementsContent ='<div id="menu"><ul>'
-    if (bothCompletedAndNotExists) {
-        achievementsContent +=  '<li id="inProgress"><a href="javascript:void(0)" onclick="getAchievements(false)"><span>in progress</span></a></li>'
-    }
-    achievementsContent += '<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>'
-    if (bothCompletedAndNotExists) {
-        achievementsContent +=  '<li id="completed"><a href="javascript:void(0)" onclick="getAchievements(true)"><span>completed</span></a></li>'
-    }
-    achievementsContent +=  '</ul></div>' + getTabMenu(bothCompletedAndNotExists) + '<div id="achievementList"></div>'
-    return achievementsContent
+function getAchievementsContent() {
+    return '<div id="achievementList"></div>'
 }
 
-function getAchievementContent(publiclyVisible, progressMade, isLatestAchievement, completed, userId) {
+function getAchievementContent() {
     var achievementContent =
         '<div id="app-container">' + nl  +
-        '<div id="menu">' + nl  +
-        '<ul>' + nl  +
-        '<li class="back"><a href="javascript:void(0)" onclick="openAchievements(' + completed + ')"><img src="content/img/back-1.png" alt=""/></a></li>' + nl
-    if (!isLatestAchievement) { achievementContent += '<li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>' + nl }
-
-        if (!publiclyVisible) { achievementContent += '<li id="publicizeButton" class="share"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/share.png" /></a></li>' }
-    if (!publiclyVisible && !progressMade) { achievementContent += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement(\'' + userId + '\')"><img src="content/img/edit.png" /></a></li>' + nl }
-         achievementContent += '</ul>' + nl  +
-            '</div>' + nl  +
             '<div id="achievementDesc"></div>' + nl  +
-            '</div>' + nl;
+        '</div>' + nl;
     return achievementContent;
 }
 
@@ -176,34 +214,15 @@ function getPublicAchievementContent() {
     return (
         '<div id="fb-root"></div>' + nl  +
         '<div id="app-container">' + nl  +
-
-                '<div id="menu">' + nl  +
-                    '<ul>' + nl  +
-                        '<li id="house"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>' +
-                    '</ul>' + nl  +
-                '</div>' + nl  +
-                    getTabMenu(false) +
                 '<div id="achievementDesc"></div>' + nl  +
-
         '</div>' + nl
     )
 }
 
 //data if edit, null if create
 function getNewAchievementContent(data, userId) {
-        var text ='<div id="app-container">' + nl  +
 
-                '<div id="menu">' + nl  +
-                    '<ul>' + nl  +
-                        '<li class="back"><a href="javascript:void(0)" onclick="'
-                        if (data) {
-                            text += 'openAchievement(\'' + data._id + '\', \'' + userId + '\', ' + false + ', ' +  false + ', ' + false +')'
-                        } else {
-                            text += 'openAchievements(false)'
-                        }
-                        text+='"><img src="content/img/back-1.png" alt=""/></a></li>' + nl  +
-                    '</ul>' + nl  +
-                '</div>' + nl  +
+        var text ='<div id="app-container">' + nl  +
                 '<form id="createAchievementForm" action="javascript: createAchievement()">' + nl  +
                     '<div class="achievement-info">' + nl  +
                         '<div class="inputarea">' + nl  +

@@ -29,7 +29,7 @@ function rememberMe() {
             if (data == "ok") { //TODO: use ajax success/error instead
                 openAchievements()
             }  else {
-                insertContent(getLoginContent())
+                insertContent(getLoginContent(), setEmptyMenu(), null)
             }
         }
     )
@@ -54,8 +54,8 @@ function logout() {
     $.ajax("/logout", {
         type: "GET",
         dataType: "json",
-        success: function() { insertContent(getLoginContent()) },
-        error  : function() { insertContent(getLoginContent()) }
+        success: function() { insertContent(getLoginContent(), setEmptyMenu(), null) },
+        error  : function() { insertContent(getLoginContent(), setEmptyMenu(), null) }
 
     })
 }
@@ -128,8 +128,10 @@ function visitFriend(friendId) {
 /******************  achievements functions  ******************/
 function openAchievements(completed) {
     window.history.pushState(null, null, "/")
-    completedAchievementsExistFromServer(function(data) {
-        insertContent(getAchievementsContent(data), getAchievements(completed))
+    completedAchievementsExistFromServer(function(completedExists) {
+        //insertContent(getAchievementsContent(data), getAchievements(completed))
+        insertContent(getAchievementsContent(), setDefaultMenu(completedExists), getAchievements(completed))
+
     })
 }
 
@@ -182,7 +184,7 @@ function getAchievementsFromServer(completed, callback) {
 function openAchievement(achievementId, userId, publiclyVisible, progressMade, completed) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + userId)
     isLatestAchievement(achievementId, function(isLatestAchievement) {
-        insertContent(getAchievementContent(publiclyVisible, progressMade, isLatestAchievement, completed, userId), getAchievement(achievementId, userId, publiclyVisible))
+        insertContent(getAchievementContent(), setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, completed, userId), getAchievement(achievementId, userId, publiclyVisible))
     })
 }
 
@@ -409,6 +411,7 @@ function editAchievement(userId) {
     editAchievementOnServer(
         function(data) {
             insertContent(getNewAchievementContent(data, userId))
+            setCreateEditMenu(data)
         }
     )
 }

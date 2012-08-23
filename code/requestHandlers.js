@@ -70,7 +70,9 @@ function topIndexPart() {
                 '<h1>Treehouse helps you track your achievements.</h1>' + nl +
                 '<p class="ingress">Explore. Achieve. Play.</p>' + nl +
                 '</div>' + nl +
+                '<div id="menuArea"></div>' + nl +
                 '<div id="app-container">' + nl +
+
                 tab + ' <div id="contentArea">'
    return text
 }
@@ -109,6 +111,7 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
             tab + 'insertContent(getPublicAchievementContent(), function() {' + nl +
             tab + 'getPublicAchievement(\'' +currentAchievementId + '\', \'' + userId + '\', \'true\')' + nl +
             tab + '})' + nl +
+            tab + 'setDefaultMenu(false)' + nl +
             tab + '})' + nl +
             tab + '</script>' + nl +
             tab + '</head>' + nl +
@@ -136,8 +139,9 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
             '<h1>Treehouse helps you track your achievements.</h1>' + nl +
             '<p class="ingress">Explore. Achieve. Play.</p>' + nl +
             '</div>' + nl +
+            '<div id="menuArea"></div>' + nl +
             '<div id="app-container">' + nl +
-            tab + '<div id="contentArea">'
+            '<div id="contentArea">'
         )
 }
 

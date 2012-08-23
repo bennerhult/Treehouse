@@ -1223,21 +1223,6 @@ p#achievementDescription{
         width: 100%;
     }
 
-    #menu{
-        position: fixed;
-        width: 100%;
-    }
-
-    .slider-menu{
-        position: fixed;
-    }
-
-
-    #inProgressOrCompletedMenu{
-        position: fixed;
-        width: 100%;
-    }
-
     .inputarea{
         width: 70%;
     }
@@ -1262,7 +1247,3 @@ p#achievementDescription{
         width: 60%;
     }
 }
-
-
-
-
