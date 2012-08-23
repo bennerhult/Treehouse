@@ -91,10 +91,6 @@ function insertContent(content, menuFunction, callback) {
 function showLatestAchievement(achievementId) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId)
     insertContent(getPublicAchievementContent(), setPublicMenu(), getPublicAchievement(achievementId, null, true))
-
-    /*function() {
-     getPublicAchievement(achievementId, null, true)
-     }/*, achievementId, null, true)*/
 }
 
 function insertLatestAchievement() {
