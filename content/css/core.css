@@ -325,7 +325,7 @@ body{
     height: 38px;
     position: absolute;
     z-index: 1;
-    top: 0px;
+    /*top: 0px;*/
 
     background-color: rgb(124,126,127);
     background-image: linear-gradient(bottom, rgb(124,126,127) 18%, rgb(111,114,115) 51%, rgb(124,126,127) 57%);
@@ -360,7 +360,7 @@ body{
     padding-left: 5%;
 }
 
-#menu ul li.house{
+#menu ul li#house{
     text-align: center;
     width:100%;
     padding: 0px;
@@ -456,10 +456,9 @@ body{
 
 
 .slider-menu{
-
     z-index: 20;
     position: absolute;
-    top: 38px;
+    top: 154px;
     left: 17%;
     right: 17%;
 }
@@ -1117,17 +1116,24 @@ p#achievementDescription{
 @media screen and (max-width: 1080px) {
     #page{
         width: 95%;
+
     }
 }
 
 
 @media screen and (max-width: 1000px) {
+
+
     .desktop{
         display: none;
     }
 
     .ipad{
         display: block;
+    }
+
+    .slider-menu{
+        top: 38px;
     }
 
     #leftcontainer{
@@ -1155,6 +1161,7 @@ p#achievementDescription{
 
 
     #page{
+
         position: relative;
 
         margin: 0 auto;
