@@ -155,7 +155,7 @@ function getFriendsContent() {
 
 function openFriends() {
     $('#tab-menu').hide('fast')
-    insertContent(getFriendsContent())
+    insertContent(getFriendsContent(), setDefaultMenu(false))
 }
 
 function getTabMenu(bothCompletedAndNotExists) {
