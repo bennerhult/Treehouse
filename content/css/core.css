@@ -1253,6 +1253,11 @@ p#achievementDescription{
         width: 100%;
     }
 
+    #menu{
+
+        position: fixed;
+    }
+
     .inputarea{
         width: 70%;
     }
