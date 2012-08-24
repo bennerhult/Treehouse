@@ -46,15 +46,15 @@ function setCreateEditMenu(data) {
 }
 
 function setDefaultMenu(bothCompletedAndNotExists) {
-    var menu = '<div id="menu"><ul>'
+    var menu = '<div id="menu"><ul><li id="inProgress">'
     if (bothCompletedAndNotExists) {
-        menu +=  '<li id="inProgress"><a href="javascript:void(0)" onclick="getAchievements(false)"><span>in progress</span></a></li>'
+        menu +=  '<a href="javascript:void(0)" onclick="getAchievements(false)"><span>in progress</span></a>'
     }
-    menu += '<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>'
+    menu += '</li><li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li><li id="completed">'
     if (bothCompletedAndNotExists) {
-        menu +=  '<li id="completed"><a href="javascript:void(0)" onclick="getAchievements(true)"><span>completed</span></a></li>'
+        menu +=  '<a href="javascript:void(0)" onclick="getAchievements(true)"><span>completed</span></a>'
     }
-    menu +=  '</ul></div>' + getTabMenu(bothCompletedAndNotExists)
+    menu +=  '</li></ul></div>' + getTabMenu(bothCompletedAndNotExists)
     $("#menuArea").html(menu)
 }
 
