@@ -59,7 +59,11 @@ function setDefaultMenu(bothCompletedAndNotExists) {
 }
 
 function removeHoverState(){
-    $("body").removeClass("menu ul li span:hover");
+   // $("body").removeClass("menu ul li span:hover");
+
+    $('#inProgress').hover(function() {
+        $("#inProgress").removeClass()
+    });
 }
 
 function setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, completed, userId) {
