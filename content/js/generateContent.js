@@ -9,6 +9,7 @@ var footerContent = '<ul>' + nl +
     '<div id="fbLikeWeb" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="250" data-show-faces="true" font="segoe ui"></div></div>'
 
 var isiPad = navigator.userAgent.match(/iPad/i) != null;
+var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
 
 function init() {
     FB.init({status: true, cookie: true, xfbml: true})
@@ -17,11 +18,6 @@ function init() {
     $("#web-footer").html(footerContent)
     if (!isiPad) {
         $("#banner").empty().remove()
-    } else {
-        $("#inProgressSpan").removeClass()
-        $("#inProgressSpan").attr("class","iDevice")
-        $("#completedSpan").removeClass()
-        $("#completedSpan").attr("class","iDevice")
     }
 }
 
@@ -53,11 +49,23 @@ function setCreateEditMenu(data) {
 function setDefaultMenu(bothCompletedAndNotExists) {
     var menu = '<div id="menu"><ul><li  id="inProgress">'
     if (bothCompletedAndNotExists) {
-        menu +=  '<a href="javascript:void(0)" onclick="getAchievements(false)"><span id="inProgressSpan" class="hoverDesktop">in progress</span></a>'
+        menu +=  '<a href="javascript:void(0)" onclick="getAchievements(false)"><span id="inProgressSpan" class="'
+        if  (isiPad || isiPhone) {
+            menu+= 'iDevice'
+        } else {
+            menu+= 'hoverDesktop'
+        }
+        menu +=  '">in progress</span></a>'
     }
     menu += '</li><li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li><li id="completed">'
     if (bothCompletedAndNotExists) {
-        menu +=  '<a href="javascript:void(0)" onclick="getAchievements(true)"><span id="completedSpan" class="hoverDesktop">completed</span></a>'
+        menu +=  '<a href="javascript:void(0)" onclick="getAchievements(true)"><span id="completedSpan" class="'
+        if  (isiPad || isiPhone) {
+            menu+= 'iDevice'
+        } else {
+            menu+= 'hoverDesktop'
+        }
+        menu +=  '">completed</span></a>'
     }
     menu +=  '</li></ul></div>' + getTabMenu(bothCompletedAndNotExists)
     $("#menuArea").html(menu)
