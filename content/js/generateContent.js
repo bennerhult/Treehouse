@@ -46,23 +46,31 @@ function setCreateEditMenu(data) {
 }
 
 function setDefaultMenu(bothCompletedAndNotExists, completed) {
-    var menu = '<div id="menu"><ul><li id="inProgress">'
+    var menu = '<div id="menu"><ul><li id="inProgress"'
+    if (!completed) {
+        menu += ' class="selected"'
+    }
+    menu += '>'
     if (bothCompletedAndNotExists) {
         menu +=  '<a href="javascript:void(0)" onclick="getAchievements(false)"><span>in progress</span></a>'
     }
-    menu += '</li><li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li><li id="completed">'
+    menu += '</li><li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li><li id="completed"'
+    if (completed) {
+        menu += ' class="selected"'
+    }
+    menu += '>'
     if (bothCompletedAndNotExists) {
         menu +=  '<a href="javascript:void(0)" onclick="getAchievements(true)"><span>completed</span></a>'
     }
     menu +=  '</li></ul></div>' + getTabMenu(bothCompletedAndNotExists)
     $("#menuArea").html(menu)
-    if (completed) {
+   /* if (completed) {
         $("#completed").attr("class","selected")
         $("#inProgress").removeClass()
     } else {
         $("#inProgress").attr("class","selected")
         $("#completed").removeClass()
-    }
+    }*/
 }
 
 function setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, completed, userId) {
