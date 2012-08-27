@@ -437,7 +437,8 @@ body{
     text-decoration: none;
 }
 
-#menu ul li span{
+#menu ul li span.iDevice,
+#menu ul li span.hoverDesktop{
     text-decoration: none;
     color: #fff;
     display: block;
@@ -472,8 +473,10 @@ body{
     background-color: #4a4b4c;
 }
 
-
-
+#menu ul li span.hoverDesktop:hover{
+    background: none;
+    background-color: #4a4b4c;
+}
 
 .slider-menu{
     z-index: 20;
