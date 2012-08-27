@@ -148,8 +148,14 @@ function getAchievements(completed) {
     getAchievementsFromServer(completed,
         function(data) {
             $("#achievementList").html(data)
-
             $('#tab-menu').hide('fast')
+              if (completed) {
+                 $("#completed").attr("class","selected")
+                 $("#inProgress").removeClass()
+             } else {
+                 $("#inProgress").attr("class","selected")
+                 $("#completed").removeClass()
+             }
         }
     )
 }

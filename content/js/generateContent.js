@@ -64,13 +64,6 @@ function setDefaultMenu(bothCompletedAndNotExists, completed) {
     }
     menu +=  '</li></ul></div>' + getTabMenu(bothCompletedAndNotExists)
     $("#menuArea").html(menu)
-   /* if (completed) {
-        $("#completed").attr("class","selected")
-        $("#inProgress").removeClass()
-    } else {
-        $("#inProgress").attr("class","selected")
-        $("#completed").removeClass()
-    }*/
 }
 
 function setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, completed, userId) {
@@ -170,7 +163,7 @@ function getFriendsContent() {
 
 function openFriends() {
     $('#tab-menu').hide('fast')
-    insertContent(getFriendsContent(), setDefaultMenu(false))
+    insertContent(getFriendsContent(), setDefaultMenu(false, false))
 }
 
 function getTabMenu(bothCompletedAndNotExists) {
@@ -183,7 +176,7 @@ function getTabMenu(bothCompletedAndNotExists) {
            '<ul>'
      if (loggedIn) {
          menu +=    '<li class="header border-top-right">Achievements</li>' + nl +
-                    '<li><a href="javascript:void(0)" onclick="insertContent(getAchievementsContent(), setDefaultMenu(' + bothCompletedAndNotExists + '), openAchievements(false))"><span><nobr>My achievements</nobr></span></a></li>'+ nl +
+                    '<li><a href="javascript:void(0)" onclick="insertContent(getAchievementsContent(), setDefaultMenu(' + bothCompletedAndNotExists + ', ' + false + '), openAchievements(false))"><span><nobr>My achievements</nobr></span></a></li>'+ nl +
                     '<li class="header">Friends</li>' + nl +
                     '<li><a href="javascript:void(0)" onclick="openFriends()"><span>Friends</span></a></li>' + nl +
                     '<li class="header">Account</li>' + nl +
@@ -232,7 +225,6 @@ function getPublicAchievementContent() {
 
 //data if edit, null if create
 function getNewAchievementContent(data, userId) {
-
         var text ='<div id="app-container">' + nl  +
                 '<form id="createAchievementForm" action="javascript: createAchievement()">' + nl  +
                     '<div class="achievement-info">' + nl  +
