@@ -17,6 +17,11 @@ function init() {
     $("#web-footer").html(footerContent)
     if (!isiPad) {
         $("#banner").empty().remove()
+    } else {
+        $("#inProgressSpan").removeClass()
+        $("#inProgressSpan").attr("class","iDevice")
+        $("#completedSpan").removeClass()
+        $("#completedSpan").attr("class","iDevice")
     }
 }
 
@@ -56,13 +61,6 @@ function setDefaultMenu(bothCompletedAndNotExists) {
     }
     menu +=  '</li></ul></div>' + getTabMenu(bothCompletedAndNotExists)
     $("#menuArea").html(menu)
-}
-
-function removeHoverState(){
-    $("#inProgressSpan").removeClass()
-    $("#inProgressSpan").attr("class","iDevice")
-    $("#completedSpan").removeClass()
-    $("#completedSpan").attr("class","iDevice")
 }
 
 function setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, completed, userId) {
