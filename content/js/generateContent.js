@@ -45,7 +45,7 @@ function setCreateEditMenu(data) {
     $("#menuArea").html(text)
 }
 
-function setDefaultMenu(bothCompletedAndNotExists) {
+function setDefaultMenu(bothCompletedAndNotExists, completed) {
     var menu = '<div id="menu"><ul><li id="inProgress">'
     if (bothCompletedAndNotExists) {
         menu +=  '<a href="javascript:void(0)" onclick="getAchievements(false)"><span>in progress</span></a>'
@@ -56,6 +56,13 @@ function setDefaultMenu(bothCompletedAndNotExists) {
     }
     menu +=  '</li></ul></div>' + getTabMenu(bothCompletedAndNotExists)
     $("#menuArea").html(menu)
+    if (completed) {
+        $("#completed").attr("class","selected")
+        $("#inProgress").removeClass()
+    } else {
+        $("#inProgress").attr("class","selected")
+        $("#completed").removeClass()
+    }
 }
 
 function setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, completed, userId) {

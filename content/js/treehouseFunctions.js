@@ -129,7 +129,7 @@ function visitFriend(friendId) {
 function openAchievements(completed) {
     window.history.pushState(null, null, "/")
     completedAchievementsExistFromServer(function(completedExists) {
-        insertContent(getAchievementsContent(), setDefaultMenu(completedExists), getAchievements(completed))
+        insertContent(getAchievementsContent(), setDefaultMenu(completedExists, completed), getAchievements(completed))
     })
 }
 
@@ -148,13 +148,7 @@ function getAchievements(completed) {
     getAchievementsFromServer(completed,
         function(data) {
             $("#achievementList").html(data)
-            if (completed) {
-                $("#completed").attr("class","selected")
-                $("#inProgress").removeClass()
-            } else {
-                $("#inProgress").attr("class","selected")
-                $("#completed").removeClass()
-            }
+
             $('#tab-menu').hide('fast')
         }
     )
