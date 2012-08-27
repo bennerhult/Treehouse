@@ -145,7 +145,6 @@ function completedAchievementsExistFromServer(callback) {
 
 
 function getAchievements(completed) {
-    alert(completed)
     getAchievementsFromServer(completed,
         function(data) {
             $("#achievementList").html(data)
