@@ -129,7 +129,7 @@ function visitFriend(friendId) {
 function openAchievements(completed) {
     window.history.pushState(null, null, "/")
     completedAchievementsExistFromServer(function(completedExists) {
-        insertContent(getAchievementsContent(), setDefaultMenu(completedExists, completed), getAchievements(completed))
+        insertContent(getAchievementsContent(), setDefaultMenu(completedExists), getAchievements(completed))
     })
 }
 

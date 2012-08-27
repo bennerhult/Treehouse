@@ -46,7 +46,7 @@ function topIndexPart() {
                      tab + 'rememberMe()'   +nl +
                     tab   +  '})</script>' + nl +
                 tab + '</head>' + nl +
-                tab + ' <body onload="init()">' + nl +
+                tab + ' <body onload="init()" ontouchstart="removeHoverState()">' + nl +
                 '<div id="fb-root"></div>' + nl +
                 '<div id="page">' + nl +
                 '<div id="web-menu">' + nl +
@@ -115,7 +115,7 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
             tab + '})' + nl +
             tab + '</script>' + nl +
             tab + '</head>' + nl +
-            tab + ' <body onload="init()">' + nl +
+            tab + ' <body onload="init()" ontouchstart="removeHoverState()">' + nl +
             '<div id="fb-root"></div>' + nl +
             '<div id="page">' + nl +
             '<div id="web-menu">' + nl +

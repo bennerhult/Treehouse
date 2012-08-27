@@ -45,25 +45,21 @@ function setCreateEditMenu(data) {
     $("#menuArea").html(text)
 }
 
-function setDefaultMenu(bothCompletedAndNotExists, completed) {
-    var menu = '<div id="menu"><ul><li id="inProgress"'
-    if (!completed) {
-        menu += ' class="selected"'
-    }
-    menu += '>'
+function setDefaultMenu(bothCompletedAndNotExists) {
+    var menu = '<div id="menu"><ul><li id="inProgress">'
     if (bothCompletedAndNotExists) {
         menu +=  '<a href="javascript:void(0)" onclick="getAchievements(false)"><span>in progress</span></a>'
     }
-    menu += '</li><li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li><li id="completed"'
-    if (completed) {
-        menu += ' class="selected"'
-    }
-    menu += '>'
+    menu += '</li><li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li><li id="completed">'
     if (bothCompletedAndNotExists) {
         menu +=  '<a href="javascript:void(0)" onclick="getAchievements(true)"><span>completed</span></a>'
     }
     menu +=  '</li></ul></div>' + getTabMenu(bothCompletedAndNotExists)
     $("#menuArea").html(menu)
+}
+
+function removeHoverState(){
+    $("body").removeClass("menu ul li span:hover");
 }
 
 function setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, completed, userId) {
@@ -163,7 +159,7 @@ function getFriendsContent() {
 
 function openFriends() {
     $('#tab-menu').hide('fast')
-    insertContent(getFriendsContent(), setDefaultMenu(false, false))
+    insertContent(getFriendsContent(), setDefaultMenu(false))
 }
 
 function getTabMenu(bothCompletedAndNotExists) {
@@ -176,7 +172,7 @@ function getTabMenu(bothCompletedAndNotExists) {
            '<ul>'
      if (loggedIn) {
          menu +=    '<li class="header border-top-right">Achievements</li>' + nl +
-                    '<li><a href="javascript:void(0)" onclick="insertContent(getAchievementsContent(), setDefaultMenu(' + bothCompletedAndNotExists + ', ' + false + '), openAchievements(false))"><span><nobr>My achievements</nobr></span></a></li>'+ nl +
+                    '<li><a href="javascript:void(0)" onclick="insertContent(getAchievementsContent(), setDefaultMenu(' + bothCompletedAndNotExists + '), openAchievements(false))"><span><nobr>My achievements</nobr></span></a></li>'+ nl +
                     '<li class="header">Friends</li>' + nl +
                     '<li><a href="javascript:void(0)" onclick="openFriends()"><span>Friends</span></a></li>' + nl +
                     '<li class="header">Account</li>' + nl +
