@@ -3,7 +3,7 @@ function checkUser() {
     checkUserOnServer(
         function(data) {
             if (data == "ok") { //TODO: use ajax success/error instead
-                openAchievements()
+                openAchievements(false)
             } else $("#message").html(data)
         }
     )
@@ -27,7 +27,7 @@ function rememberMe() {
     rememberMeOnServer(
         function(data) {
             if (data == "ok") { //TODO: use ajax success/error instead
-                openAchievements()
+                openAchievements(false)
             }  else {
                 insertContent(getLoginContent(), setEmptyMenu(), null)
             }
@@ -65,7 +65,7 @@ function signup() {
     signupOnServer(
         function(data) {
             if (data == "ok") {
-                openAchievements()
+                openAchievements(false)
             } else $("#message").html(data)
         }
     )
@@ -129,9 +129,7 @@ function visitFriend(friendId) {
 function openAchievements(completed) {
     window.history.pushState(null, null, "/")
     completedAchievementsExistFromServer(function(completedExists) {
-        //insertContent(getAchievementsContent(data), getAchievements(completed))
         insertContent(getAchievementsContent(), setDefaultMenu(completedExists), getAchievements(completed))
-
     })
 }
 
@@ -147,6 +145,7 @@ function completedAchievementsExistFromServer(callback) {
 
 
 function getAchievements(completed) {
+    alert(completed)
     getAchievementsFromServer(completed,
         function(data) {
             $("#achievementList").html(data)
@@ -315,7 +314,7 @@ function createAchievement() {
    createAchievementOnServer(
     function(data) {
             if (data == "ok") { //TODO: use ajax success/error instead
-                openAchievements()
+                openAchievements(false)
             } else $("#message").html(data)
         }
     )
@@ -430,7 +429,7 @@ function deleteAchievement() {
     deleteAchievementOnServer(
         function(data) {
             if (data == "ok") { //TODO: use ajax success/error instead
-                openAchievements()
+                openAchievements(false)
             }
         }
     )
