@@ -472,11 +472,7 @@ body{
     background-color: #4a4b4c;
 }
 
-#menu ul li span:hover,
-#menu ul li span:focus{
-    background: none;
-    background-color: #4a4b4c;
-}
+
 
 
 .slider-menu{
