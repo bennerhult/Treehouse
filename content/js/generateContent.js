@@ -92,7 +92,9 @@ function setEmptyMenu() {
 
 function insertContent(content, menuFunction, callback) {
     $("#contentArea").html(content)
-    menuFunction()
+    if (menuFunction) {
+        menuFunction()
+    }
     /*if (window.innerWidth < 819) {
         $("html, body").animate({scrollTop: $("#menu").offset().top}, 200)
     }*/
