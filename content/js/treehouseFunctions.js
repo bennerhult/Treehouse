@@ -27,15 +27,18 @@ function loginUsingFacebook() {
     FB.login(function(response) {
         if (response.authResponse) {
             FB.api('/me', function(me) {
-                checkFBUserOnServer(me.email,
-                    function(data) {
-                        if (data == "ok") { //TODO: use ajax success/error instead
-                            openAchievements(false)
-                        } else {
-                            $("#message").html('Facebook did not play nice. Sorry, ' + me.email)
-          				}
-					}
-				)
+                if (me) {
+                    checkFBUserOnServer(me.email,
+                        function(data) {
+                            if (data == "ok") { //TODO: use ajax success/error instead
+                                openAchievements(false)
+                            } else {
+                                $("#message").html('Facebook did not play nice. Sorry, ' + me.email)
+                            }
+                        }
+                    )
+                }
+                $("#message").html('Facebook did not provide your info. Try to log in with username & password!')
             })
         } else {
             $("#message").html('Facebook did not play nice!')
