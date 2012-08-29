@@ -13,7 +13,6 @@ var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
 
 function init() {
     FB.init({status: true, cookie: true, xfbml: true})
-    $("#fbLikeWeb").show()
     insertLatestAchievement()
     $("#web-footer").html(footerContent)
     if (!isiPad) {
@@ -92,6 +91,7 @@ function setEmptyMenu() {
 
 function insertContent(content, menuFunction, callback) {
     $("#contentArea").html(content)
+    $("#fbLikeWeb").show()
     if (menuFunction) {
         menuFunction()
     }
@@ -105,7 +105,7 @@ function insertContent(content, menuFunction, callback) {
 
 function showLatestAchievement(achievementId) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId)
-    insertContent(getPublicAchievementContent(), setPublicMenu(), getPublicAchievement(achievementId, null, true))
+    insertContent(getPublicAchievementContent(), setPublicMenu(), getPublicAchievement(achievementId, null))
 }
 
 function insertLatestAchievement() {

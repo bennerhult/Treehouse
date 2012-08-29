@@ -41,11 +41,12 @@ function topIndexPart() {
                     tab + '<link href="http://fonts.googleapis.com/css?family=Dosis" rel="stylesheet" type="text/css">' + nl +
                     tab + '<script type="text/javascript">' + nl +
                     tab + '$(document).ready(function() {' + nl  +
+                    tab + 'init()' + nl  +
                      tab   + 'setTimeout(function(){addToHome.show(false)}, 100)' + nl +
                      tab + 'rememberMe()'   +nl +
                     tab   +  '})</script>' + nl +
                 tab + '</head>' + nl +
-                tab + ' <body onload="init()">' + nl +
+                tab + ' <body>' + nl +
                 '<div id="fb-root"></div>' + nl +
                 '<div id="page">' + nl +
                 '<div id="web-menu">' + nl +
@@ -106,14 +107,15 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
             tab + '<link href="http://fonts.googleapis.com/css?family=Dosis" rel="stylesheet" type="text/css">' + nl +
             tab + '<script type="text/javascript">' + nl +
             tab + '$(document).ready(function() {' + nl +
+            tab + 'init()' + nl +
             tab + 'insertContent(getPublicAchievementContent(), function() {' + nl +
-            tab + 'getPublicAchievement(\'' +currentAchievementId + '\', \'' + userId + '\', \'true\')' + nl +
+            tab + 'getPublicAchievement(\'' +currentAchievementId + '\', \'' + userId + '\')' + nl +
             tab + '})' + nl +
             tab + 'setPublicMenu()' + nl +
             tab + '})' + nl +
             tab + '</script>' + nl +
             tab + '</head>' + nl +
-            tab + ' <body onload="init()">' + nl +
+            tab + ' <body>' + nl +
             '<div id="fb-root"></div>' + nl +
             '<div id="page">' + nl +
             '<div id="web-menu">' + nl +

@@ -147,6 +147,8 @@ function completedAchievementsExistFromServer(callback) {
 function getAchievements(completed) {
     getAchievementsFromServer(completed,
         function(data) {
+            FB.XFBML.parse();
+            $("#fbLikeWeb").show()
             $("#achievementList").html(data)
             $('#tab-menu').hide('fast')
               if (completed) {
@@ -209,31 +211,27 @@ function getAchievement(achievementId, userId, publiclyVisible) {
             $("#achievementDesc").html(data)
             if (publiclyVisible) {
                 $('meta[propery="og:url"]').attr('content', 'www.treehouse.io/achievement?achievementId=' + achievementId + '&userId=' + userId)
-                FB.init({status: true, cookie: true, xfbml: true})
+                FB.XFBML.parse();
                 $("#publicizeButton").empty().remove()
-                $("#fbLike").show()
-                $("#fbLikeWeb").hide()
-            } else {
-                $("#fbLike").hide()
-            }
-        }, achievementId, userId
-    )
-}
-
-function getPublicAchievement(achievementId, userId, publiclyVisible) {
-    getAchievementFromServer(
-        function(data) {
-             $("#achievementDesc").html(data)
-            FB.init({status: true, cookie: true, xfbml: true})
-            if (publiclyVisible) {
-                $("#publicizeButton").empty().remove()
-                $("#addbutton").empty().remove()
                 $("#fbLike").show()
                 $("#fbLikeWeb").hide()
             } else {
                 $("#fbLike").hide()
                 $("#fbLikeWeb").show()
             }
+        }, achievementId, userId
+    )
+}
+
+function getPublicAchievement(achievementId, userId) {
+    getAchievementFromServer(
+        function(data) {
+             $("#achievementDesc").html(data)
+            FB.XFBML.parse();
+            $("#publicizeButton").empty().remove()
+            $("#addbutton").empty().remove()
+            $("#fbLike").show()
+            $("#fbLikeWeb").hide()
         }, achievementId, userId
     )
 }
@@ -290,7 +288,7 @@ function progressOnServer(callback, goalId) {
 function publicize() {
     publicizeOnServer(
         function() {
-            FB.init({status: true, cookie: true, xfbml: true});
+            FB.XFBML.parse();
             $("#editButton").html("")
             $("#deleteButton").html("")
             $("#publicizeButton").empty().remove()
