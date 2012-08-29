@@ -41,7 +41,7 @@ function loginUsingFacebook() {
         } else {
             $("#message").html('Facebook did not play nice!');
         }
-    });
+    }, {scope: 'email'})
 }
 
 function checkFBUserOnServer(username, callback) {
