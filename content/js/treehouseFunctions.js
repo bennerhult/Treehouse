@@ -37,8 +37,10 @@ function loginUsingFacebook() {
                             }
                         }
                     )
+                } else {
+                    $("#message").html('Facebook did not provide your info. Try to log in with username & password!')
                 }
-                $("#message").html('Facebook did not provide your info. Try to log in with username & password!')
+
             })
         } else {
             $("#message").html('Facebook did not play nice!')
