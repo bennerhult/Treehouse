@@ -14,16 +14,14 @@ app.configure('development', function() {
 
 app.configure('production', function() {
     console.log("Treehouse in prod mode.")
-    //app.set('db-uri', db_uri)
     db_uri=process.env.DB_URI
-
 })
 
 var mongooseSessionStore = new sessionMongoose({
     url: db_uri,
     interval: 60000
 })
-
+DB_URI:
 app.configure(function() {
     app.use(express.cookieParser())
     app.use(express.session({ store: mongooseSessionStore, secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4' }))

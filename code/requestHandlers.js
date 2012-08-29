@@ -29,7 +29,6 @@ function topIndexPart() {
                     tab + '<meta property="og:url" content="http://www.treehouse.io"/>' + nl +
                     tab + '<link rel="icon" href="/content/favicon.ico" type="image/vnd.microsoft.icon">' + nl +
                     tab + '<script type="application/javascript" src="content/js/add2home.js"></script>' + nl +
-                    tab + '<script type="application/javascript" src="content/js/iscroll.js"></script>' + nl +
                     tab + '<script type="application/javascript" src="content/js/generateContent.js"></script>' + nl +
                     tab + '<script type="application/javascript" src="content/js/info.js"></script>' + nl +
                     tab + '<script type="application/javascript" src="content/js/treehouseFunctions.js"></script>' + nl +
@@ -95,7 +94,6 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
             tab + '<meta property="og:url" content="http://treehouse.io' + url + '"/>' + nl +
             tab + '<link rel="icon" href="/content/favicon.ico" type="image/vnd.microsoft.icon">' + nl +
             tab + '<script type="application/javascript" src="content/js/add2home.js"></script>' + nl +
-            tab + '<script type="application/javascript" src="content/js/iscroll.js"></script>' + nl +
             tab + '<script type="application/javascript" src="content/js/generateContent.js"></script>' + nl +
             tab + '<script type="application/javascript" src="content/js/info.js"></script>' + nl +
             tab + '<script type="application/javascript" src="content/js/treehouseFunctions.js"></script>' + nl +
