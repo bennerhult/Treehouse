@@ -40,7 +40,6 @@ function loginUsingFacebook() {
                 } else {
                     $("#message").html('Facebook did not provide your info. Try to log in with username & password!')
                 }
-
             })
         } else {
             $("#message").html('Facebook did not play nice!')
@@ -88,6 +87,7 @@ function toggleTab() {
 /******************  logout functions  ******************/
 function logout() {
     FB.getLoginStatus(function(response) {
+        alert(response.status)
         if (response.status === 'connected') {
             FB.logout()
         } else if (response.status === 'not_authorized') {
