@@ -23,6 +23,21 @@ function checkUserOnServer(callback) {
     })
 }
 
+function loginUsingFacebook() {
+    alert('loggin in using fb4')
+    FB.login(function(response) {
+        alert('got a response')
+        if (response.authResponse) {
+            alert('Welcome!  Fetching your information.... ');
+            FB.api('/me', function(response) {
+                alert('Good to see you, ' + response.name + '.');
+            });
+        } else {
+            alert('User cancelled login or did not fully authorize.');
+        }
+    });
+}
+
 function rememberMe() {
     rememberMeOnServer(
         function(data) {

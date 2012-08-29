@@ -1,4 +1,5 @@
 var nl = '\n'
+var FB
 
 var footerContent = '<ul>' + nl +
     '<li><span><h2>Explore</h2><p>Learn more about sharing!</p><div><a href="javascript:void(0)" onclick="showInfo(getFeatureInfo(), -1)"><img src="content/img/sharing.jpg"></a></div></span></li>' + nl +
@@ -12,7 +13,7 @@ var isiPad = navigator.userAgent.match(/iPad/i) != null;
 var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
 
 function init() {
-    FB.init({status: true, cookie: true, xfbml: true})
+    FB.init({appId: '480961688595420', status: true, cookie: true, xfbml: true})
     insertLatestAchievement()
     $("#web-footer").html(footerContent)
     if (!isiPad) {
@@ -135,7 +136,10 @@ function getLoginContent() {
                     '</span>' + nl +
                     '<div id="message"></div>' + nl +
                     '<input type="submit" class="button green" value="Log in">' + nl +
+                '</form>' + nl +
 
+                '<form action="javascript: loginUsingFacebook()">' + nl +
+                '<input type="submit" class="button green" value="Log in using Facebook">' + nl +
                 '</form>' + nl +
                 '<div class="log-in-text"><a href="javascript:void(0)" onclick="insertContent(getSignupContent(), false)">Don\'t have an account? Sign up. It\'s free.</a></div>' + nl +
             '</div>' + nl
