@@ -46,7 +46,6 @@ function loginUsingFacebook() {
 
 function checkFBUserOnServer(username, callback) {
     var data = "username=" + username
-   alert(username)
     $.ajax("/checkFBUser", {
         type: "GET",
         data: data,
