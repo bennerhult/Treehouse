@@ -40,7 +40,7 @@ function loginUsingFacebook() {
         } else {
             $("#message").html('Facebook did not play nice!')
         }
-    }, {scope: 'email'})
+    }, {scope: 'email', redirect_uri: '/'})
 }
 
 function checkFBUserOnServer(username, callback) {
