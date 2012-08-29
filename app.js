@@ -129,8 +129,6 @@ app.get('/checkUser', function(request, response){
 })
 
 function getDataForUser(myUser,request, response) {
-
-    console.log(myUser)
     if (myUser != null) {
         request.session.user_id = myUser._id
         request.session.user_email = myUser.username

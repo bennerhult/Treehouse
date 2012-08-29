@@ -95,13 +95,8 @@ function logout() {
         }
     }) */
     //FB.logout()
+    logOutFB()
 
-    if (FB.getAuthResponse()) {
-        FB.logout()
-        alert("logging out FB")
-    } else {
-        alert("not logging out, FB kicked out already")
-    }
     $.ajax("/logout", {
         type: "GET",
         dataType: "json",
@@ -111,6 +106,15 @@ function logout() {
     })
 }
 
+function logOutFB() {
+    if (FB.getAuthResponse()) {
+        alert("logging out FB")
+        FB.logout()
+        logOutFB()
+    } else {
+        alert("not logging out, FB kicked out already")
+    }
+}
 /******************  signup functions  ******************/
 function signup() {
     signupOnServer(
