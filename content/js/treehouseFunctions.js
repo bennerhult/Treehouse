@@ -63,6 +63,13 @@ function toggleTab() {
 
 /******************  logout functions  ******************/
 function logout() {
+    FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+            FB.logout()
+        } else if (response.status === 'not_authorized') {
+            FB.logout()
+        }
+    })
     $.ajax("/logout", {
         type: "GET",
         dataType: "json",
