@@ -32,7 +32,7 @@ function loginUsingFacebook() {
                         if (data == "ok") { //TODO: use ajax success/error instead
                             openAchievements(false)
                         } else {
-                            $("#message").html('Facebook did not play nice: ' + data)
+                            $("#message").html('Facebook did not play nice. Sorry, ' + me.email)
           				}
 					}
 				)
