@@ -13,7 +13,13 @@ var isiPad = navigator.userAgent.match(/iPad/i) != null;
 var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
 
 function init() {
-    FB.init({appId: '480961688595420', status: true, cookie: true, xfbml: true})
+    FB.init({
+        appId: '480961688595420',
+        status: true,
+        cookie: true,
+        xfbml: true,
+        channelUrl : '//www.treehouse.io/channel.html'
+    })
     insertLatestAchievement()
     $("#web-footer").html(footerContent)
     if (!isiPad) {
