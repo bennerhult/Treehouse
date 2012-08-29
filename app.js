@@ -116,26 +116,35 @@ app.get('/rememberMe', function(request, response){
     authenticateFromLoginToken  (request, response, false)
 })
 
-app.get('/checkUser', function(request, response){
-    user.User.findOne({ username: request.query.username.toLowerCase(), password: request.query.password }, function(err,myUser) {
-        if (myUser != null) {
-            request.session.user_id = myUser._id
-            request.session.user_email = myUser.username
-
-            loginToken.createToken(myUser.username, function(myToken) {
-                response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 2 * 604800000), path: '/' }) //604800000 equals one week
-                response.write(JSON.stringify('ok'))
-                response.end('\n', 'utf-8')
-            });
-        } else {
-            request.session.destroy()
-            response.writeHead(200, {'content-type': 'application/json' })
-            response.write(JSON.stringify('You really must know the password to get in.'))
-            response.end('\n', 'utf-8')
-        }
+app.get('/checkFBUser', function(request, response){
+    user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
+        getDataForUser(myUser)
     })
 })
 
+app.get('/checkUser', function(request, response){
+    user.User.findOne({ username: request.query.username.toLowerCase(), password: request.query.password }, function(err,myUser) {
+        getDataForUser(myUser)
+    })
+})
+
+function getDataForUser(myUser) {
+    if (myUser != null) {
+        request.session.user_id = myUser._id
+        request.session.user_email = myUser.username
+
+        loginToken.createToken(myUser.username, function(myToken) {
+            response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 2 * 604800000), path: '/' }) //604800000 equals one week
+            response.write(JSON.stringify('ok'))
+            response.end('\n', 'utf-8')
+        });
+    } else {
+        request.session.destroy()
+        response.writeHead(200, {'content-type': 'application/json' })
+        response.write(JSON.stringify('You really must know the password to get in.'))
+        response.end('\n', 'utf-8')
+    }
+}
 app.get('/logout', function(request, response){
     if (request.session) {
         response.clearCookie('rememberme', null)

@@ -27,16 +27,36 @@ function loginUsingFacebook() {
     FB.login(function(response) {
         if (response.authResponse) {
             FB.api('/me', function(me) {
-
-                document.getElementById('Email').innerHTML = me.email;
-
-
+                var username = document.getElementById('Email').innerHTML = me.email;
+                checkFBUserOnServer(username,
+                    function(data) {
+                        if (data == "ok") { //TODO: use ajax success/error instead
+                            openAchievements(false)
+                        } else {
+                            $("#message").html('Facebook did not play nice!')
+                        }
+                    }
+                )
                 openAchievements(false)
             })
         } else {
             $("#message").html('Facebook did not play nice!');
         }
     });
+}
+
+function checkFBUserOnServer(username, callback) {
+    var username = $("input[name=username]")
+    var password = $("input[name=password]")
+    var data = "username=" + username.val() + "&password=" + password.val()
+
+    $.ajax("/checkUser", {
+        type: "GET",
+        data: data,
+        dataType: "json",
+        success: function(data) { if ( callback ) callback(data) },
+        error  : function()     { if ( callback ) callback(null) }
+    })
 }
 
 function rememberMe() {

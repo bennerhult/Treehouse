@@ -80,6 +80,7 @@ content/js/treehouseFunctions.js
 NETWORK:
 /
 /rememberMe
+/checkFBUser
 /checkUser
 /logout
 /signup
