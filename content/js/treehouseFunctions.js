@@ -86,13 +86,7 @@ function toggleTab() {
 
 /******************  logout functions  ******************/
 function logout() {
-    /* FB.getLoginStatus(function(response) {
-        alert(response.status)
-        if (response.status === 'connected') {
-            FB.logout()
-        } else if (response.status === 'not_authorized') {
-            FB.logout()
-        }
+    /*
     }) */
     //FB.logout()
     logOutFB()
@@ -107,13 +101,17 @@ function logout() {
 }
 
 function logOutFB() {
-    if (FB.getAuthResponse()) {
-        alert("logging out FB")
-        FB.logout()
-        logOutFB()
-    } else {
-        alert("not logging out, FB kicked out already")
-    }
+    FB.getLoginStatus(function(response) {
+        alert(response.status)
+        if (response.status === 'connected') {
+            FB.logout()
+            logOutFB()
+        } else if (response.status === 'not_authorized') {
+            FB.logout()
+            logOutFB()
+        }
+    }, true)
+
 }
 /******************  signup functions  ******************/
 function signup() {
