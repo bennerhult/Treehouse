@@ -86,7 +86,7 @@ function toggleTab() {
 
 /******************  logout functions  ******************/
 function logout() {
-  /*  FB.getLoginStatus(function(response) {
+    /* FB.getLoginStatus(function(response) {
         alert(response.status)
         if (response.status === 'connected') {
             FB.logout()
@@ -94,9 +94,14 @@ function logout() {
             FB.logout()
         }
     }) */
-
     //FB.logout()
-    handleSessionResponse()
+
+    if (FB.getAuthResponse()) {
+        FB.logout()
+        alert("logging out FB")
+    } else {
+        alert("not logging out, FB kicked out already")
+    }
     $.ajax("/logout", {
         type: "GET",
         dataType: "json",
@@ -106,17 +111,6 @@ function logout() {
     })
 }
 
-function handleSessionResponse() {
-    //if we dont have a session (which means the user has been logged out, redirect the user)
-    FB.getLoginStatus(function(response) {
-        alert(response.session)
-        if (response.session) return
-    })
-
-    //if we do have a non-null response.session, call FB.logout(),
-    //the JS method will log the user out of Facebook and remove any authorization cookies
-    FB.logout(handleSessionResponse);
-}
 /******************  signup functions  ******************/
 function signup() {
     signupOnServer(
