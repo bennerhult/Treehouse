@@ -27,8 +27,7 @@ function loginUsingFacebook() {
     FB.login(function(response) {
         if (response.authResponse) {
             FB.api('/me', function(me) {
-                var username = document.getElementById('Email').innerHTML = me.email;
-                checkFBUserOnServer(username,
+                checkFBUserOnServer(me.email,
                     function(data) {
                         if (data == "ok") { //TODO: use ajax success/error instead
                             openAchievements(false)
@@ -47,10 +46,9 @@ function loginUsingFacebook() {
 
 function checkFBUserOnServer(username, callback) {
     var username = $("input[name=username]")
-    var password = $("input[name=password]")
-    var data = "username=" + username.val() + "&password=" + password.val()
+    var data = "username=" + username.val()
 
-    $.ajax("/checkUser", {
+    $.ajax("/checkFBUser", {
         type: "GET",
         data: data,
         dataType: "json",
