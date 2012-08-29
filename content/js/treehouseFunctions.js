@@ -86,9 +86,6 @@ function toggleTab() {
 
 /******************  logout functions  ******************/
 function logout() {
-    /*
-    }) */
-    //FB.logout()
     logOutFB()
 
     $.ajax("/logout", {
@@ -102,7 +99,6 @@ function logout() {
 
 function logOutFB() {
     FB.getLoginStatus(function(response) {
-        alert(response.status)
         if (response.status === 'connected') {
             FB.logout()
             logOutFB()
@@ -111,7 +107,6 @@ function logOutFB() {
             logOutFB()
         }
     }, true)
-
 }
 /******************  signup functions  ******************/
 function signup() {
