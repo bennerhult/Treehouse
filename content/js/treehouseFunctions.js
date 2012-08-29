@@ -32,14 +32,11 @@ function loginUsingFacebook() {
                         if (data == "ok") { //TODO: use ajax success/error instead
                             openAchievements(false)
                         } else {
-                            $("#message").html('Facebook did not play nice!')
-                        }
-                    }
-                )
-                openAchievements(false)
+                            $("#message").html('Facebook did not play nice')
+          				}
             })
         } else {
-            $("#message").html('Facebook did not play nice!');
+            $("#message").html('Facebook did not play nice!')
         }
     }, {scope: 'email'})
 }
