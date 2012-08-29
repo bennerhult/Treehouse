@@ -34,6 +34,8 @@ function loginUsingFacebook() {
                         } else {
                             $("#message").html('Facebook did not play nice')
           				}
+					}
+				)
             })
         } else {
             $("#message").html('Facebook did not play nice!')
