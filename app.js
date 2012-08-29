@@ -118,17 +118,19 @@ app.get('/rememberMe', function(request, response){
 
 app.get('/checkFBUser', function(request, response){
     user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
-        getDataForUser(myUser)
+        getDataForUser(myUser,request, response)
     })
 })
 
 app.get('/checkUser', function(request, response){
     user.User.findOne({ username: request.query.username.toLowerCase(), password: request.query.password }, function(err,myUser) {
-        getDataForUser(myUser)
+        getDataForUser(myUser,request, response)
     })
 })
 
-function getDataForUser(myUser) {
+function getDataForUser(myUser,request, response) {
+
+    console.log(myUser)
     if (myUser != null) {
         request.session.user_id = myUser._id
         request.session.user_email = myUser.username
@@ -145,6 +147,7 @@ function getDataForUser(myUser) {
         response.end('\n', 'utf-8')
     }
 }
+
 app.get('/logout', function(request, response){
     if (request.session) {
         response.clearCookie('rememberme', null)
