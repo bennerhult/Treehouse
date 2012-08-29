@@ -26,7 +26,11 @@ function checkUserOnServer(callback) {
 function loginUsingFacebook() {
     FB.login(function(response) {
         if (response.authResponse) {
-            FB.api('/me', function(response) {
+            FB.api('/me', function(me) {
+
+                document.getElementById('Email').innerHTML = me.email;
+
+
                 openAchievements(false)
             })
         } else {
