@@ -134,19 +134,25 @@ function insertLatestAchievement() {
 function getLoginContent() {
     return (
             '<div id="content">' + nl +
-                '<div class="signup-logo"><img src="content/img/logo-large.png" /></div>' + nl +
+                '<div class="signup-logo">' +
+                    '<img src="content/img/logo-large.png" />' + nl +
+                    '<p>connect below to log in</p>' + nl +
+                    '<form action="javascript: loginUsingFacebook()">' + nl +
+                    '<img src="content/img/facebook.png" value="Log in using Facebook"/>' + nl +
+
+                    '</form>' + nl +
+                '</div>' + nl +
+
                 '<form action="javascript: checkUser()">' + nl +
-                    '<input type="text" class="formstyle" name="username" placeholder="email"">' + nl +
+                    '<input type="text" class="formstyle email" name="username" placeholder="email"">' + nl +
                     '<span id="passwordSpan">' + nl +
-                        '<input type="password" class="formstyle" name="password" placeholder="password">' + nl +
+                        '<input type="password" class="formstyle password" name="password" placeholder="password">' + nl +
                     '</span>' + nl +
                     '<div id="message"></div>' + nl +
                     '<input type="submit" class="button green" value="Log in">' + nl +
                 '</form>' + nl +
 
-                '<form action="javascript: loginUsingFacebook()">' + nl +
-                '<input type="submit" class="button green" value="Log in using Facebook">' + nl +
-                '</form>' + nl +
+
                 '<div class="log-in-text"><a href="javascript:void(0)" onclick="insertContent(getSignupContent(), false)">Don\'t have an account? Sign up. It\'s free.</a></div>' + nl +
             '</div>' + nl
         )
@@ -158,8 +164,8 @@ function getSignupContent() {
                 '<div class="signup-logo"><img src="content/img/logo-large.png" /></div>' + nl +
                 '<h1 class="signup">Sign Up</h1>' + nl +
                 '<form action="javascript: signup()">' + nl +
-                    '<input type="text" class="formstyle" name="username" placeholder="email">' + nl +
-                    '<input type="password" class="formstyle" name="password" placeholder="password">' + nl +
+                    '<input type="text" class="formstyle email" name="username" placeholder="email">' + nl +
+                    '<input type="password" class="formstyle password" name="password" placeholder="password">' + nl +
                     '<div id="message"></div>' + nl +
                     '<input type="submit" class="button" value="Create my account">' + nl +
                 '</form>' + nl +

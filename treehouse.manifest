@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#2012-08-29 21:54
+#2012-08-29 16:07
 CACHE:
 content/favicon.ico
 content/treehouse-icon.png
@@ -98,4 +98,3 @@ NETWORK:
 /latestAchievementId
 /completedAchievementsExist
 /findFriends
-/channel.html

@@ -297,7 +297,7 @@ body{
 }
 
 .signup-logo{
-
+    text-align: center;
     padding-bottom: 20px;
     padding-bottom: 20px;
 }
@@ -572,21 +572,44 @@ body{
 
 input.formstyle,
 textarea.formstyle{
-    width: 98.5%;
-    height: 27px;
-    margin-top: 2px;
+    width: 97.5%;
+    height: 33px;
+   /* margin-top: 2px;*/
     font-family: 'Philosopher', sans-serif;
     font-size: 14px;
-    padding-left: 1%;
+    padding-left: 2%;
     color: #2c3524;
 
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    margin-bottom: 15px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+  /*  margin-bottom: 15px;*/
     border: 1px solid #9e9d9d;
 }
 
+
+input.email{
+    -moz-border-bottom-left-radius: 0px;
+    -webkit-border-bottom-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+
+    -moz-border-bottom-right-radius: 0px;
+    -webkit-border-bottom-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+input.password{
+    -moz-border-top-left-radius: 0px;
+    -webkit-border-top-left-radius: 0px;
+    border-top-left-radius: 0px;
+
+    -moz-border-top-right-radius: 0px;
+    -webkit-border-top-right-radius: 0px;
+    border-top-right-radius: 0px;
+
+    border: 1px solid #9e9d9d;
+    border-top: 0px;
+}
 
 input.button{
     font-family: 'Philosopher', sans-serif;
@@ -594,7 +617,7 @@ input.button{
     text-transform: capitalize;
 
     width: 99.8%;
-    height: 35px;
+    height: 37px;
 
     border: 1px solid #fff;
 
@@ -614,7 +637,7 @@ input.button{
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cb60b3', endColorstr='#db36a4',GradientType=0 ); /* IE6-9 */
 
 
-    margin-top: 20px;
+    margin-top: 15px;
     margin-bottom: 20px;
     cursor: pointer;
 }
@@ -1110,6 +1133,9 @@ p{
     opacity: 0.7;
 }
 
+.signup-logo p{
+    padding-top: 12px;
+}
 
 
 
