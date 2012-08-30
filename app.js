@@ -104,10 +104,6 @@ app.get('/treehouse.manifest', function(request, response){
     staticFiles.serve("." + request.url, response)
 })
 
-app.get('/channel.html', function(request, response){
-    staticFiles.serve("." + request.url, response)
-})
-
 app.get('/', function(request, response){
     if (request.cookies.rememberme) {
         authenticateFromLoginToken(request, response, true)

@@ -17,8 +17,7 @@ function init() {
         appId: '480961688595420',
         status: true,
         cookie: true,
-        xfbml: true,
-        channelUrl : '//www.treehouse.io/channel.html'
+        xfbml: true
     })
     insertLatestAchievement()
     $("#web-footer").html(footerContent)
@@ -138,7 +137,7 @@ function getLoginContent() {
                     '<img src="content/img/logo-large.png" />' + nl +
                     '<p>connect below to log in</p>' + nl +
                     '<form action="javascript: loginUsingFacebook()">' + nl +
-                    '<img src="content/img/facebook.png" value="Log in using Facebook"/>' + nl +
+                    '<input type="image" src="content/img/facebook.png" alt="Facebook Connect"/>' + nl +
 
                     '</form>' + nl +
                 '</div>' + nl +
