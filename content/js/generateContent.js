@@ -18,6 +18,7 @@ function init() {
         status: true,
         cookie: true,
         xfbml: true,
+        channelUrl : '//www.treehouse.io/channel.html',
         oauth: true
     })
     insertLatestAchievement()
