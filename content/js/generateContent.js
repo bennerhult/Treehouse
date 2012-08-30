@@ -17,7 +17,8 @@ function init() {
         appId: '480961688595420',
         status: true,
         cookie: true,
-        xfbml: true
+        xfbml: true,
+        oauth: true
     })
     insertLatestAchievement()
     $("#web-footer").html(footerContent)
