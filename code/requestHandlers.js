@@ -26,7 +26,7 @@ function topIndexPart() {
                     tab + '<meta property="og:title" content="Treehouse. Track your achievements!" />' + nl +
                     tab + '<meta property="og:type" content="article" />' + nl +
                     tab + '<meta property="og:image" content="http://treehouse.io/content/img/treehouse.jpg"/>' + nl +
-                    tab + '<meta property="og:url" content="http://www.treehouse.io"/>' + nl +
+                    tab + '<meta property="og:url" content="http://treehouse.io"/>' + nl +
                     tab + '<link rel="icon" href="/content/favicon.ico" type="image/vnd.microsoft.icon">' + nl +
                     tab + '<script type="text/javascript" src="content/js/css3-mediaqueries.js"></script>' + nl +
                     tab + '<script src="content/ext/js/facebook.js" type="text/javascript"></script>' + nl +
