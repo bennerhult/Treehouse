@@ -1,5 +1,4 @@
 var nl = '\n'
-var FB
 
 var footerContent = '<ul>' + nl +
     '<li><span><h2>Explore</h2><p>Learn more about sharing!</p><div><a href="javascript:void(0)" onclick="showInfo(getFeatureInfo(), -1)"><img src="content/img/sharing.jpg"></a></div></span></li>' + nl +
