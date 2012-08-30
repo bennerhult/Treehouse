@@ -49,11 +49,12 @@ function loginUsingFacebook() {
                                    // } else {
                                         // the user isn't even logged in to Facebook.
                                   //  }
-                                    $("#message").html('Facebook did not play nice. Sorry, ' + apiResponse.name + ', ' + apiResponse.email + '<br/>'
-                                        + response.authResponse.accessToken + ', '
-                                        + response.authResponse.expiresIn + ', '
-                                        + response.authResponse.signedRequest + ', '
-                                        + response.authResponse.userID + ':: '
+                                    $("#message").html('Facebook did not play nice. Sorry, '
+                                        //+ apiResponse.name + ', ' + apiResponse.email + '<br/>'
+                                        //+ response.authResponse.accessToken + ', '
+                                        //+ response.authResponse.expiresIn + ', '
+                                        //+ response.authResponse.signedRequest + ', '
+                                        //+ response.authResponse.userID + ':: '
                                         + JSON.stringify(apiResponse) + ', '
                                         + response.status)
                                 //});

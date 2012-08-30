@@ -12,7 +12,6 @@ var isiPad = navigator.userAgent.match(/iPad/i) != null;
 var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
 
 function init() {
-    alert('init')
     FB.init({
         appId: '480961688595420',
         status: true,
