@@ -26,14 +26,14 @@ function checkUserOnServer(callback) {
 function loginUsingFacebook() {
     FB.login(function(response) {
         if (response.authResponse) {
-            FB.api('/me', function(me) {
-                if (me) {
-                    checkFBUserOnServer(me.email,
+            FB.api('/me', function(apiResponse) {
+                if (apiResponse) {
+                    checkFBUserOnServer(apiResponse.email,
                         function(data) {
                             if (data == "ok") { //TODO: use ajax success/error instead
                                 openAchievements(false)
                             } else {
-                                $("#message").html('Facebook did not play nice. Sorry, ' + me.name + ', ' + me.email + '<br/>'
+                                $("#message").html('Facebook did not play nice. Sorry, ' + apiResponse.name + ', ' + apiResponse.email + '<br/>'
                                     + response.authResponse.accessToken + ', '
                                     + response.authResponse.expiresIn + ', '
                                     + response.authResponse.signedRequest + ', '
@@ -42,11 +42,11 @@ function loginUsingFacebook() {
                         }
                     )
                 } else {
-                    $("#message").html('Facebook did not provide your info. Try to log in with username & password!')
+                    $("#message").html('Facebook did not play nice!')
                 }
             })
         } else {
-            $("#message").html('Facebook did not play nice!')
+            $("#message").html('No worries! Try regular login instead.')
         }
     }, {scope: 'email'})
 }                     //, redirect_uri: '/', display : 'touch'
