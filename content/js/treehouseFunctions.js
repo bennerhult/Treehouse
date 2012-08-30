@@ -33,7 +33,11 @@ function loginUsingFacebook() {
                             if (data == "ok") { //TODO: use ajax success/error instead
                                 openAchievements(false)
                             } else {
-                                $("#message").html('Facebook did not play nice. Sorry, ' + me.name + ', ' + me.email + '<br/>' + response.authResponse)
+                                $("#message").html('Facebook did not play nice. Sorry, ' + me.name + ', ' + me.email + '<br/>'
+                                    + response.authResponse.accessToken + ', '
+                                    + response.authResponse.expiresIn + ', '
+                                    + response.authResponse.signedRequest + ', '
+                                    + response.authResponse.userID + ', ' )
                             }
                         }
                     )
