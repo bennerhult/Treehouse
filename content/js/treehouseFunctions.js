@@ -26,6 +26,7 @@ function checkUserOnServer(callback) {
 function loginUsingFacebook() {
     FB.login(function(response) {
         if (response.authResponse) {
+
             FB.api('/me', function(apiResponse) {
                 if (apiResponse) {
                     checkFBUserOnServer(apiResponse.email,
@@ -33,12 +34,30 @@ function loginUsingFacebook() {
                             if (data == "ok") { //TODO: use ajax success/error instead
                                 openAchievements(false)
                             } else {
-                                $("#message").html('Facebook did not play nice. Sorry, ' + apiResponse.name + ', ' + apiResponse.email + '<br/>'
-                                    + response.authResponse.accessToken + ', '
-                                    + response.authResponse.expiresIn + ', '
-                                    + response.authResponse.signedRequest + ', '
-                                    + response.authResponse.userID + ':: '
-                                    + JSON.stringify(apiResponse) )
+                                FB.getLoginStatus(function(response) {
+                                    if (response.status === 'connected') {
+                                        // the user is logged in and connected to your
+                                        // app, and response.authResponse supplies
+                                        // the user’s ID, a valid access token, a signed
+                                        // request, and the time the access token
+                                        // and signed request each expire
+                                        var uid = response.authResponse.userID;
+                                        var accessToken = response.authResponse.accessToken;
+                                    } else if (response.status === 'not_authorized') {
+                                        // the user is logged in to Facebook,
+                                        //but not connected to the app
+                                    } else {
+                                        // the user isn't even logged in to Facebook.
+                                    }
+                                    $("#message").html('Facebook did not play nice. Sorry, ' + apiResponse.name + ', ' + apiResponse.email + '<br/>'
+                                        + response.authResponse.accessToken + ', '
+                                        + response.authResponse.expiresIn + ', '
+                                        + response.authResponse.signedRequest + ', '
+                                        + response.authResponse.userID + ':: '
+                                        + JSON.stringify(apiResponse) + ', '
+                                        + response.status)
+                                });
+
 
                             }
                         }
