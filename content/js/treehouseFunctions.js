@@ -37,7 +37,9 @@ function loginUsingFacebook() {
                                     + response.authResponse.accessToken + ', '
                                     + response.authResponse.expiresIn + ', '
                                     + response.authResponse.signedRequest + ', '
-                                    + response.authResponse.userID + ', ' )
+                                    + response.authResponse.userID + ', '
+                                    + apiResponse.stringify() )
+
                             }
                         }
                     )
