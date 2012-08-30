@@ -37,8 +37,8 @@ function loginUsingFacebook() {
                                     + response.authResponse.accessToken + ', '
                                     + response.authResponse.expiresIn + ', '
                                     + response.authResponse.signedRequest + ', '
-                                    + response.authResponse.userID + ', '
-                                    + apiResponse.stringify() )
+                                    + response.authResponse.userID + ':: '
+                                    + JSON.stringify(apiResponse) )
 
                             }
                         }
