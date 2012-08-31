@@ -2,6 +2,7 @@ CACHE MANIFEST
 #2012-08-30 18:43
 CACHE:
 content/favicon.ico
+content/img/treehouse.jpg
 content/treehouse-icon.png
 content/css/add2home.css
 content/css/core.css
@@ -20,7 +21,6 @@ content/img/share.png
 content/img/sharing.jpg
 content/img/tree-large.png
 content/img/tree-tab.png
-content/img/treehouse.jpg
 content/img/x.gif
 content/img/achievementImages/1.png
 content/img/achievementImages/2.png
@@ -78,27 +78,4 @@ content/js/info.js
 content/js/treehouseFunctions.js
 
 NETWORK:
-/
-/rememberMe
-/checkFBUser
-/checkUser
-/logout
-/signup
-/achievement
-/achievements_inProgress
-/achievements_completed
-/achievementFromServer
-/achievementPercentage
-/progress
-/publicize
-/delete
-/newAchievement
-/editAchievement
-/latestAchievementSplash
-/latestAchievementId
-/completedAchievementsExist
-/findFriends
-/channel.html
-http://fonts.googleapis.com/css?family=Philosopher
-http://fonts.googleapis.com/css?family=Dosis
 *
