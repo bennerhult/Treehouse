@@ -45,7 +45,7 @@ function loginUsingFacebook() {
         } else {
             $("#message").html('No worries! Try regular login instead.')
         }
-    }, {scope: 'email', redirect_uri: '/', display : 'touch'})
+    }, {scope: 'email'})         //, redirect_uri: 'http://treehouse.io/', display : 'touch'
 }
 
 function checkFBUserOnServer(username, callback) {
