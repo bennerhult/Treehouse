@@ -25,6 +25,10 @@ function init() {
     if (!isiPad) {
         $("#banner").empty().remove()
     }
+    jQuery(window).bind('orientationchange', function() {
+         location.reload()
+    });
+
 }
 
 function setPublicMenu() {
