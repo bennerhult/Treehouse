@@ -29,7 +29,7 @@ function init() {
     if (!isiPad) {
         $("#banner").empty().remove()
     }
-
+   /*
     jQuery(window).bind('orientationchange', function() {
         switch ( window.orientation ) {
             case 0: //Portrait orientation. This is the default value.
@@ -43,7 +43,7 @@ function init() {
                 $("#app-container").scrollTop(0)
                 break
         }
-    })
+    })*/
 
 }
 
