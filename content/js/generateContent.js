@@ -107,8 +107,6 @@ function setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, 
 }
 
 function setEmptyMenu() {
-    var menu = '<div id="menu"></div>'
-    $("#menuArea").html(menu)
 }
 
 function insertContent(content, menuFunction, callback) {
