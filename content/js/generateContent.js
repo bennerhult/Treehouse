@@ -33,10 +33,10 @@ function init() {
 
     jQuery(window).bind('orientationchange', function() {
         switch ( window.orientation ) {
-            case 90: //landscape mode screen turned to the left
+            case 0: //Portrait orientation. This is the default value.
                 $("#rightcontainer").redraw()
                 break
-            case -90: //landscape mode screen turned to the right
+            case 180: //Portrait orientation with the screen turned upside down. This value is currently not supported on iPhone.
                 $("#rightcontainer").redraw()
                 break
         }
