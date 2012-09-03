@@ -23,7 +23,7 @@ function init() {
     insertLatestAchievement()
     $("#web-footer").html(footerContent)
     if (isiPad) {
-        jQuery(window).bind('orientationchange', function() {
+        /*jQuery(window).bind('orientationchange', function() {
             switch ( window.orientation ) {
                 case 0: //Portrait orientation. This is the default value.
                     if ($("#achievementList"))   {
@@ -36,7 +36,7 @@ function init() {
                     }
                     break
             }
-        })
+        })*/
     }  else {
         $("#banner").empty().remove()
     }
