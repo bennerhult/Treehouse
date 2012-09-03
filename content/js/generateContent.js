@@ -11,10 +11,9 @@ var footerContent = '<ul>' + nl +
 var isiPad = navigator.userAgent.match(/iPad/i) != null;
 var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
 
-jQuery.fn.redraw = function() {
-    alert('test')
+/*jQuery.fn.redraw = function() {
     return this.hide(0, function(){$(this).show()});
-};
+};*/
 
 function init() {
     FB.init({
@@ -34,10 +33,12 @@ function init() {
     jQuery(window).bind('orientationchange', function() {
         switch ( window.orientation ) {
             case 0: //Portrait orientation. This is the default value.
-                $("#rightcontainer").redraw()
+                $("#rightcontainer").hide()
+                $("#rightcontainer").show()
                 break
             case 180: //Portrait orientation with the screen turned upside down. This value is currently not supported on iPhone.
-                $("#rightcontainer").redraw()
+                $("#rightcontainer").hide()
+                $("#rightcontainer").show()
                 break
         }
     })
