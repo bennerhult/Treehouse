@@ -12,6 +12,7 @@ var isiPad = navigator.userAgent.match(/iPad/i) != null;
 var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
 
 jQuery.fn.redraw = function() {
+    alert('test')
     return this.hide(0, function(){$(this).show()});
 };
 
@@ -33,10 +34,10 @@ function init() {
     jQuery(window).bind('orientationchange', function() {
         switch ( window.orientation ) {
             case 90: //landscape mode screen turned to the left
-                $("#app-container").redraw()
+                $("#rightcontainer").redraw()
                 break
             case -90: //landscape mode screen turned to the right
-                $("#app-container").redraw()
+                $("#rightcontainer").redraw()
                 break
         }
     })
