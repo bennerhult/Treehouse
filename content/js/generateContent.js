@@ -39,24 +39,14 @@ function init() {
     jQuery(window).bind('orientationchange', function() {
         switch ( window.orientation ) {
             case 0: //Portrait orientation. This is the default value.
-                //$fixedElement.css({ "position": "relative" });
-                $("#menu").css({ "position": "relative" });
-
-                //window.scroll(0, topScrollTarget );
+                $("#menu").css({ "position": "relative" })
                 $("#app-container").scrollTop(0)
-
-               // $fixedElement.css({ "position": "fixed" });
-                $("#menu").css({ "position": "fixed" });
+                $("#menu").css({ "position": "fixed" })
                 break
             case 180: //Portrait orientation with the screen turned upside down. This value is currently not supported on iPhone.
-                //$fixedElement.css({ "position": "relative" });
-                $("#menu").css({ "position": "relative" });
-
-                //window.scroll(0, topScrollTarget );
+                $("#menu").css({ "position": "relative" })
                 $("#app-container").scrollTop(0)
-
-                // $fixedElement.css({ "position": "fixed" });
-                $("#menu").css({ "position": "fixed" });
+                $("#menu").css({ "position": "fixed" })
                 break
         }
     })
