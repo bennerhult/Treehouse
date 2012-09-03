@@ -22,24 +22,24 @@ function init() {
     })
     insertLatestAchievement()
     $("#web-footer").html(footerContent)
-    if (!isiPad) {
+    if (isiPad) {
+        jQuery(window).bind('orientationchange', function() {
+            switch ( window.orientation ) {
+                case 0: //Portrait orientation. This is the default value.
+                    if ($("#achievementList"))   {
+                        location.reload()
+                    }
+                    break
+                case 180: //Portrait orientation with the screen turned upside down. This value is currently not supported on iPhone.
+                    if ($("#achievementList"))   {
+                        location.reload()
+                    }
+                    break
+            }
+        })
+    }  else {
         $("#banner").empty().remove()
     }
-
-    jQuery(window).bind('orientationchange', function() {
-        switch ( window.orientation ) {
-            case 0: //Portrait orientation. This is the default value.
-                if ($("#achievementList"))   {
-                    location.reload()
-                }
-                break
-            case 180: //Portrait orientation with the screen turned upside down. This value is currently not supported on iPhone.
-                if ($("#achievementList"))   {
-                    location.reload()
-                }
-                break
-        }
-    })
 }
 
 function setPublicMenu() {
