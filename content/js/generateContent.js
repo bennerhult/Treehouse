@@ -11,6 +11,10 @@ var footerContent = '<ul>' + nl +
 var isiPad = navigator.userAgent.match(/iPad/i) != null;
 var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
 
+jQuery.fn.redraw = function() {
+    return this.hide(0, function(){$(this).show()});
+};
+
 function init() {
     FB.init({
         appId: '480961688595420',
@@ -25,11 +29,21 @@ function init() {
     if (!isiPad) {
         $("#banner").empty().remove()
     }
+
     jQuery(window).bind('orientationchange', function() {
-         location.reload()
-    });
+        switch ( window.orientation ) {
+            case 90: //landscape mode screen turned to the left
+                $("#app-container").redraw()
+                break
+            case -90: //landscape mode screen turned to the right
+                $("#app-container").redraw()
+                break
+        }
+    })
 
 }
+
+
 
 function setPublicMenu() {
     var menu = '<div id="menu">' + nl  +
