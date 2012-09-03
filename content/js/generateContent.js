@@ -30,23 +30,53 @@ function init() {
         $("#banner").empty().remove()
     }
 
+   /* $("#app-container").scroll(function() {
+        alert( "b: " + $("#app-container").scrollTop())
+
+    } )*/
+
+
+    jQuery(window).bind('orientationchange', function() {
+        switch ( window.orientation ) {
+            case 0: //Portrait orientation. This is the default value.
+                //$fixedElement.css({ "position": "relative" });
+                $("#menu").css({ "position": "relative" });
+
+                //window.scroll(0, topScrollTarget );
+                $("#app-container").scrollTop(0)
+
+               // $fixedElement.css({ "position": "fixed" });
+                $("#menu").css({ "position": "fixed" });
+                break
+            case 180: //Portrait orientation with the screen turned upside down. This value is currently not supported on iPhone.
+                //$fixedElement.css({ "position": "relative" });
+                $("#menu").css({ "position": "relative" });
+
+                //window.scroll(0, topScrollTarget );
+                $("#app-container").scrollTop(0)
+
+                // $fixedElement.css({ "position": "fixed" });
+                $("#menu").css({ "position": "fixed" });
+                break
+        }
+    })
+
+    /*
+
     jQuery(window).bind('orientationchange', function() {
         switch ( window.orientation ) {
             case 0: //Portrait orientation. This is the default value.
                 $("#app-container").scrollTop(0)
-                $("#achievementList").scrollTop(0)
-                alert( $("#achievementList").scrollTop())
                 $("#app-container").hide()
                 $("#app-container").show()
                 break
             case 180: //Portrait orientation with the screen turned upside down. This value is currently not supported on iPhone.
                 $("#app-container").scrollTop(0)
-                $("#achievementList").scrollTop(0)
                 $("#app-container").hide()
                 $("#app-container").show()
                 break
         }
-    })
+    })*/
 
 }
 
