@@ -33,12 +33,12 @@ function init() {
     jQuery(window).bind('orientationchange', function() {
         switch ( window.orientation ) {
             case 0: //Portrait orientation. This is the default value.
-                $("#rightcontainer").hide()
-                $("#rightcontainer").show()
+                $("#app-container").hide()
+                $("#app-container").show()
                 break
             case 180: //Portrait orientation with the screen turned upside down. This value is currently not supported on iPhone.
-                $("#rightcontainer").hide()
-                $("#rightcontainer").show()
+                $("#app-container").hide()
+                $("#app-container").show()
                 break
         }
     })
