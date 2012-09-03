@@ -162,7 +162,14 @@ function getLoginContent() {
 
                     '</form>' + nl +
                 '</div>' + nl +
-
+                '<div class="login-separator">' +
+                    '<ul>' +
+                        '<li><span></span></li>' +
+                        '<li>OR</li>' +
+                        '<li><span></span></li>' +
+                   '</ul>' +
+                    '<div class="clear"></div>' + nl +
+                '</div>' + nl +
                 '<form action="javascript: checkUser()">' + nl +
                     '<input type="text" class="formstyle email" name="username" placeholder="email"">' + nl +
                     '<span id="passwordSpan">' + nl +

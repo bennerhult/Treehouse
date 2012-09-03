@@ -304,11 +304,37 @@ body{
 }
 
 .signup-logo img{
-    max-width: 100%;
+    max-width: 70%;
 }
+
+.login-separator{
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.login-separator ul li{
+    float: left;
+    width: 33%;
+    color: #ccc;
+    text-align: center;
+
+    font-family: 'Philosopher', sans-serif;
+    font-size: 12px;
+
+}
+
+.login-separator ul li span{
+    margin-top: 4px;
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+    display: block;
+}
+
 
 .log-in-text{
     text-align: center;
+    padding-top: 20px;
 }
 
 #infoArea {
@@ -1135,7 +1161,7 @@ p{
 }
 
 .signup-logo p{
-    padding-top: 12px;
+    padding-top: 20px;
 }
 
 
