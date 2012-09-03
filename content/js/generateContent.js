@@ -110,6 +110,11 @@ function insertContent(content, menuFunction, callback) {
     }
 }
 
+function showLogin() {
+    window.history.pushState(null, null, "/")
+    insertContent(getLoginContent(), setEmptyMenu(), null)
+}
+
 function showLatestAchievement(achievementId) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId)
     insertContent(getPublicAchievementContent(), setPublicMenu(), getPublicAchievement(achievementId, null))
@@ -169,7 +174,7 @@ function getSignupContent() {
                     '<div id="message"></div>' + nl +
                     '<input type="submit" class="button" value="Create my account">' + nl +
                 '</form>' + nl +
-                '<div class="log-in-text"><a href="javascript:void(0)" onclick="insertContent(getLoginContent(), setEmptyMenu(), null)">Already awesome? Log in.</a></div>' + nl +
+                '<div class="log-in-text"><a href="javascript:void(0)" onclick="showLogin()">Already awesome? Log in.</a></div>' + nl +
             '</div>' + nl
         )
 }
@@ -206,7 +211,7 @@ function getTabMenu(bothCompletedAndNotExists) {
                     '<li class="last"><a href="javascript:void(0)" onclick="logout()"><span class="border-bottom-right">Log out</span></a></li>'
      }  else {
          menu +=    '<li class="header">Account</li>' + nl +
-                    '<li class="last"><a href="javascript:void(0)" onclick="insertContent(getLoginContent(), setEmptyMenu(), null)"><span class="border-bottom-right"><nobr>Log in / sign up</nobr></span></a></li>'
+                    '<li class="last"><a href="javascript:void(0)" onclick="showLogin()"><span class="border-bottom-right"><nobr>Log in / sign up</nobr></span></a></li>'
      }
     menu += '</ul>' + nl +
             '</div>' + nl

@@ -65,7 +65,7 @@ function rememberMe() {
             if (data == "ok") { //TODO: use ajax success/error instead
                 openAchievements(false)
             }  else {
-                insertContent(getLoginContent(), setEmptyMenu(), null)
+                showLogin()
             }
         }
     )
@@ -92,8 +92,8 @@ function logout() {
     $.ajax("/logout", {
         type: "GET",
         dataType: "json",
-        success: function() { insertContent(getLoginContent(), setEmptyMenu(), null) },
-        error  : function() { insertContent(getLoginContent(), setEmptyMenu(), null) }
+        success: function() { showLogin() },
+        error  : function() { showLogin() }
 
     })
 }
