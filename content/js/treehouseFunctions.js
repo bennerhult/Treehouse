@@ -2,7 +2,7 @@
 function checkUser() {
     checkUserOnServer(
         function(data) {
-            if (data == "ok") { //TODO: use ajax success/error instead
+            if (data == "ok" || data == "new user") { //TODO: use ajax success/error instead
                 openAchievements(false)
             } else $("#message").html(data)
         }
@@ -108,30 +108,6 @@ function logOutFB() {
             logOutFB()
         }
     }, true)
-}
-/******************  signup functions  ******************/
-function signup() {
-    signupOnServer(
-        function(data) {
-            if (data == "ok") {
-                openAchievements(false)
-            } else $("#message").html(data)
-        }
-    )
-}
-
-function signupOnServer(callback) {
-    var username = $("input[name=username]")
-    var password = $("input[name=password]")
-    var data = "username=" + username.val() + "&password=" + password.val()
-
-    $.ajax("/signup", {
-        type: "GET",
-        data: data,
-        dataType: "json",
-        success: function(data) { if ( callback ) callback(data) },
-        error  : function()     { if ( callback ) callback(null) }
-    })
 }
 
 /******************  friends functions  ******************/

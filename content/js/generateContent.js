@@ -178,27 +178,8 @@ function getLoginContent() {
                         '<input type="password" class="formstyle password" name="password" placeholder="password">' + nl +
                     '</span>' + nl +
                     '<div id="message"></div>' + nl +
-                    '<input type="submit" class="button green" value="Log in">' + nl +
+                    '<input type="submit" class="button green" value="Sign in / Sign up">' + nl +
                 '</form>' + nl +
-
-
-                '<div class="log-in-text"><a href="javascript:void(0)" onclick="insertContent(getSignupContent(), false)">Sign up. It\'s free.</a></div>' + nl +
-            '</div>' + nl
-        )
-}
-
-function getSignupContent() {
-    return (
-            '<div id="content">' + nl +
-                '<div class="signup-logo"><img src="content/img/logo-large.png" /></div>' + nl +
-                '<h1 class="signup">Sign Up</h1>' + nl +
-                '<form action="javascript: signup()">' + nl +
-                    '<input type="text" class="formstyle email" name="username" placeholder="email">' + nl +
-                    '<input type="password" class="formstyle password" name="password" placeholder="password">' + nl +
-                    '<div id="message"></div>' + nl +
-                    '<input type="submit" class="button" value="Create my account">' + nl +
-                '</form>' + nl +
-                '<div class="log-in-text"><a href="javascript:void(0)" onclick="showLogin()">Already awesome? Log in.</a></div>' + nl +
             '</div>' + nl
         )
 }

@@ -117,7 +117,7 @@ app.get('/', function(request, response){
 })
 
 app.get('/rememberMe', function(request, response){
-    authenticateFromLoginToken  (request, response, false)
+    authenticateFromLoginToken(request, response, false)
 })
 
 app.get('/checkFBUser', function(request, response){
@@ -138,15 +138,25 @@ function getDataForUser(myUser,request, response) {
         request.session.user_email = myUser.username
 
         loginToken.createToken(myUser.username, function(myToken) {
-            response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 2 * 604800000), path: '/' }) //604800000 equals one week
+            response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
             response.write(JSON.stringify('ok'))
             response.end('\n', 'utf-8')
         });
-    } else {
-        request.session.destroy()
-        response.writeHead(200, {'content-type': 'application/json' })
-        response.write(JSON.stringify('You really must know the password to get in.'))
-        response.end('\n', 'utf-8')
+    } else { //sign up
+        user.createUser(request.query.username.toLowerCase(), request.query.password, function (myUser,err) {
+            if (err) {
+                response.writeHead(200, {'content-type': 'application/json' })
+                response.write(JSON.stringify(getSignupErrorMessage(err)))
+                response.end('\n', 'utf-8')
+            }  else {
+                request.session.user_id = myUser._id
+                loginToken.createToken(myUser.username, function(myToken) {
+                    response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
+                    response.write(JSON.stringify('new user'))
+                    response.end('\n', 'utf-8')
+                })
+            }
+        })
     }
 }
 
@@ -159,23 +169,9 @@ app.get('/logout', function(request, response){
     }
 })
 
-app.get('/signup', function(request, response){
-    user.createUser(request.query.username.toLowerCase(), request.query.password, function (myUser,err) {
-        if (err) {
-            response.writeHead(200, {'content-type': 'application/json' })
-            response.write(JSON.stringify(getSignupErrorMessage(err)))
-            response.end('\n', 'utf-8')
-        }  else {
-            request.session.user_id = myUser._id
-            response.writeHead(200, {'content-type': 'application/json' })
-            response.write(JSON.stringify('ok'))
-            response.end('\n', 'utf-8')
-        }
-    })
-})
 
 function getSignupErrorMessage (err){
-    var errorMessage = "You already got an account, remember? Go log in and check your achievements."
+    var errorMessage = "Is that really your password?"
     if (err.errors) {
         if (err.errors.username) {
             if (err.errors.username.type == 'required') {
