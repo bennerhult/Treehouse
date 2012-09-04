@@ -21,7 +21,8 @@ body{
 }
 
 
-#page{
+#page,
+#page-login{
     position: relative;
     margin: 20px auto;
     width: 1060px;
@@ -240,18 +241,12 @@ body{
     opacity: 0.7;
 }
 
-#app-container{
+#app-container,
+#app-container-login{
     position: relative;
 
 
-    background: #aeb9ad; /* Old browsers */
-    background: -moz-radial-gradient(center, ellipse cover,  #aeb9ad 0%, #677065 100%); /* FF3.6+ */
-    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#aeb9ad), color-stop(100%,#677065)); /* Chrome,Safari4+ */
-    background: -webkit-radial-gradient(center, ellipse cover,  #aeb9ad 0%,#677065 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-radial-gradient(center, ellipse cover,  #aeb9ad 0%,#677065 100%); /* Opera 12+ */
-    background: -ms-radial-gradient(center, ellipse cover,  #aeb9ad 0%,#677065 100%); /* IE10+ */
-    background: radial-gradient(ellipse at center,  #aeb9ad 0%,#677065 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#aeb9ad', endColorstr='#677065',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    background: #f4f4f4; /* Old browsers */
 
 
     width: 100%;
@@ -267,6 +262,19 @@ body{
     -webkit-box-shadow: inset 0px 0px 10px rgba(182,181,178,0.75);
     box-shadow: inset 0px 0px 10px rgba(182,181,178,0.75);
 
+}
+
+#app-container-login{
+
+    background: #b2b7b9; /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover,  #b2b7b9 0%, #717475 100%); /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#b2b7b9), color-stop(100%,#717475)); /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover,  #b2b7b9 0%,#717475 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover,  #b2b7b9 0%,#717475 100%); /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover,  #b2b7b9 0%,#717475 100%); /* IE10+ */
+    background: radial-gradient(ellipse at center,  #b2b7b9 0%,#717475 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b2b7b9', endColorstr='#717475',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
 
 }
 
@@ -274,12 +282,14 @@ body{
 /*scroll on web-kit*/
 
 
-#app-container::-webkit-scrollbar {
+#app-container::-webkit-scrollbar,
+#app-container-login::-webkit-scrollbar{
     width: 7px;
 }
 
 /* Track */
-#::-webkit-scrollbar-track {
+#app-container::-webkit-scrollbar-track,
+#app-container-login::-webkit-scrollbar-track{
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     -webkit-border-radius: 10px;
     border-radius: 10px;
@@ -287,7 +297,8 @@ body{
 }
 
 /* Handle */
-#app-container::-webkit-scrollbar-thumb {
+#app-container::-webkit-scrollbar-thumb,
+#app-container-login::-webkit-scrollbar-thumb{
     -webkit-border-radius: 10px;
     border-radius: 10px;
     background: rgba(216,216,216,0.3);
@@ -1122,18 +1133,17 @@ h1{
     font-family: 'Philosopher', sans-serif;
     font-size: 22px;
     font-weight: bold;
-    line-height: 22px;
     padding-bottom: 15px;
     opacity: 0.7;
 }
 
 h1.signup{
-    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+
     font-size: 2em;
-    font-weight: bold;
-    line-height: 1.3em;
-    padding-bottom: 0px;
-    opacity: 0.7;
+    font-weight: normal;
+    padding-bottom: 10px;
+    opacity: 1;
+    color: #454545;
 }
 
 .web-wrap h1{
@@ -1208,7 +1218,8 @@ p#achievementDescription{
 
 
 @media screen and (max-width: 1080px) {
-    #page{
+    #page,
+    #page-login{
         width: 95%;
 
     }
@@ -1239,7 +1250,8 @@ p#achievementDescription{
     }
 
 
-    #app-container{
+    #app-container,
+    #app-container-login{
         position: relative;
 
 
@@ -1254,10 +1266,11 @@ p#achievementDescription{
 
 
 
-    #page{
+
+    #page,
+    #page-login{
 
         position: relative;
-
         margin: 0 auto;
 
         height:100%;
@@ -1270,19 +1283,6 @@ p#achievementDescription{
         -webkit-border-radius: 0px;
         border-radius: 0px;
 
-
-        background: #aeb9ad; /* Old browsers */
-        background: -moz-radial-gradient(center, ellipse cover,  #aeb9ad 0%, #677065 100%); /* FF3.6+ */
-        background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#aeb9ad), color-stop(100%,#677065)); /* Chrome,Safari4+ */
-        background: -webkit-radial-gradient(center, ellipse cover,  #aeb9ad 0%,#677065 100%); /* Chrome10+,Safari5.1+ */
-        background: -o-radial-gradient(center, ellipse cover,  #aeb9ad 0%,#677065 100%); /* Opera 12+ */
-        background: -ms-radial-gradient(center, ellipse cover,  #aeb9ad 0%,#677065 100%); /* IE10+ */
-        background: radial-gradient(ellipse at center,  #aeb9ad 0%,#677065 100%); /* W3C */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#aeb9ad', endColorstr='#677065',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
-
-
-
         -moz-box-shadow: inset 0px 0px 10px rgba(162,162,162,1);
         -webkit-box-shadow: inset 0px 0px 10px rgba(162,162,162,1);
         box-shadow: inset 0px 0px 10px rgba(162,162,162,1);
@@ -1290,8 +1290,24 @@ p#achievementDescription{
 
     }
 
+    #page-login{
 
-    #app-container{
+        background: #b2b7b9; /* Old browsers */
+        background: -moz-radial-gradient(center, ellipse cover,  #b2b7b9 0%, #717475 100%); /* FF3.6+ */
+        background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#b2b7b9), color-stop(100%,#717475)); /* Chrome,Safari4+ */
+        background: -webkit-radial-gradient(center, ellipse cover,  #b2b7b9 0%,#717475 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-radial-gradient(center, ellipse cover,  #b2b7b9 0%,#717475 100%); /* Opera 12+ */
+        background: -ms-radial-gradient(center, ellipse cover,  #b2b7b9 0%,#717475 100%); /* IE10+ */
+        background: radial-gradient(ellipse at center,  #b2b7b9 0%,#717475 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b2b7b9', endColorstr='#717475',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+    }
+
+
+
+
+    #app-container,
+    #app-container-login{
        background-color: transparent;
         background-image: none;
         -moz-box-shadow: none;
@@ -1332,7 +1348,8 @@ p#achievementDescription{
         display: none;
     }
 
-    #app-container{
+    #app-container,
+    #app-container-login{
         width: 100%;
     }
 
