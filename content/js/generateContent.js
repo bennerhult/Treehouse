@@ -180,7 +180,7 @@ function getLoginContent() {
                 '</form>' + nl +
 
 
-                '<div class="log-in-text"><a href="javascript:void(0)" onclick="insertContent(getSignupContent(), false)">Don\'t have an account? Sign up. It\'s free.</a></div>' + nl +
+                '<div class="log-in-text"><a href="javascript:void(0)" onclick="insertContent(getSignupContent(), false)">Sign up. It\'s free.</a></div>' + nl +
             '</div>' + nl
         )
 }
