@@ -243,9 +243,17 @@ body{
 #app-container{
     position: relative;
 
-    background-color: rgba(243,232,214,0.5);
 
-    background-color: #f7f7f7;
+    background: #aeb9ad; /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover,  #aeb9ad 0%, #677065 100%); /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#aeb9ad), color-stop(100%,#677065)); /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover,  #aeb9ad 0%,#677065 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover,  #aeb9ad 0%,#677065 100%); /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover,  #aeb9ad 0%,#677065 100%); /* IE10+ */
+    background: radial-gradient(ellipse at center,  #aeb9ad 0%,#677065 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#aeb9ad', endColorstr='#677065',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+
     width: 100%;
     height: 460px;
     overflow: auto;
@@ -255,9 +263,9 @@ body{
     border-radius: 5px;
 
 
-    -moz-box-shadow: inset 0px 0px 10px rgba(162,162,162,0.45);
-    -webkit-box-shadow: inset 0px 0px 10px rgba(162,162,162,0.45);
-    box-shadow: inset 0px 0px 10px rgba(162,162,162,0.45);
+    -moz-box-shadow: inset 0px 0px 10px rgba(182,181,178,0.75);
+    -webkit-box-shadow: inset 0px 0px 10px rgba(182,181,178,0.75);
+    box-shadow: inset 0px 0px 10px rgba(182,181,178,0.75);
 
 
 }
@@ -293,7 +301,6 @@ body{
 #content {
     position: relative;
     padding: 30px;
-    padding-top: 50px;
 }
 
 .signup-logo{
@@ -314,7 +321,7 @@ body{
 .login-separator ul li{
     float: left;
     width: 33%;
-    color: #ccc;
+    color: #f5f4f4;
     text-align: center;
 
     font-family: 'Philosopher', sans-serif;
@@ -326,7 +333,7 @@ body{
     margin-top: 4px;
     width: 100%;
     height: 1px;
-    background-color: #ccc;
+    background-color: #f5f4f4;
     display: block;
 }
 
@@ -609,8 +616,8 @@ textarea.formstyle{
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
-  /*  margin-bottom: 15px;*/
-    border: 1px solid #9e9d9d;
+  /*margin-bottom: 15px;*/
+    border: 1px solid #6d6d6d;
 }
 
 
@@ -633,7 +640,6 @@ input.password{
     -webkit-border-top-right-radius: 0px;
     border-top-right-radius: 0px;
 
-    border: 1px solid #9e9d9d;
     border-top: 0px;
 }
 
@@ -645,22 +651,23 @@ input.button{
     width: 99.8%;
     height: 37px;
 
-    border: 1px solid #fff;
+    border: 1px solid #6d6d6d;
 
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
 
-    color: #ffffff;
+    color: #404040;
 
-    background: #cb60b3; /* Old browsers */
-    background: -moz-linear-gradient(top,  #cb60b3 0%, #c146a1 50%, #a80077 51%, #db36a4 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cb60b3), color-stop(50%,#c146a1), color-stop(51%,#a80077), color-stop(100%,#db36a4)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #cb60b3 0%,#c146a1 50%,#a80077 51%,#db36a4 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #cb60b3 0%,#c146a1 50%,#a80077 51%,#db36a4 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #cb60b3 0%,#c146a1 50%,#a80077 51%,#db36a4 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #cb60b3 0%,#c146a1 50%,#a80077 51%,#db36a4 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cb60b3', endColorstr='#db36a4',GradientType=0 ); /* IE6-9 */
+
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ffffff 0%, #bcbbbb 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#bcbbbb)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ffffff 0%,#bcbbbb 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ffffff 0%,#bcbbbb 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ffffff 0%,#bcbbbb 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ffffff 0%,#bcbbbb 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#bcbbbb',GradientType=0 ); /* IE6-9 */
 
 
     margin-top: 15px;
@@ -682,7 +689,7 @@ textarea.formstyle{
 input.button:hover,
 input.button:focus{
     background-image: none;
-    background-color: #db36a4;
+    background-color: #bcbbbb;
 }
 
 /*file*/
@@ -1091,7 +1098,7 @@ a:link,
 a:visited{
     font: 11px Verdana, Geneva, Arial, Helvetica, sans-serif;
     font-size: 12px;
-    color: #2c3524;
+    color: #f5f4f4;
 }
 
 
@@ -1161,6 +1168,8 @@ p{
 
 .signup-logo p{
     padding-top: 20px;
+    color: #fff;
+    opacity: 1;
 }
 
 
@@ -1260,6 +1269,18 @@ p#achievementDescription{
         -moz-border-radius: 0px;
         -webkit-border-radius: 0px;
         border-radius: 0px;
+
+
+        background: #aeb9ad; /* Old browsers */
+        background: -moz-radial-gradient(center, ellipse cover,  #aeb9ad 0%, #677065 100%); /* FF3.6+ */
+        background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#aeb9ad), color-stop(100%,#677065)); /* Chrome,Safari4+ */
+        background: -webkit-radial-gradient(center, ellipse cover,  #aeb9ad 0%,#677065 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-radial-gradient(center, ellipse cover,  #aeb9ad 0%,#677065 100%); /* Opera 12+ */
+        background: -ms-radial-gradient(center, ellipse cover,  #aeb9ad 0%,#677065 100%); /* IE10+ */
+        background: radial-gradient(ellipse at center,  #aeb9ad 0%,#677065 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#aeb9ad', endColorstr='#677065',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+
 
 
         -moz-box-shadow: inset 0px 0px 10px rgba(162,162,162,1);
