@@ -122,17 +122,17 @@ app.get('/rememberMe', function(request, response){
 
 app.get('/checkFBUser', function(request, response){
     user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
-        getDataForUser(myUser,request, response)
+        getDataForUser(myUser, request, response, true)
     })
 })
 
 app.get('/checkUser', function(request, response){
     user.User.findOne({ username: request.query.username.toLowerCase(), password: request.query.password }, function(err,myUser) {
-        getDataForUser(myUser,request, response)
+        getDataForUser(myUser, request, response, false)
     })
 })
 
-function getDataForUser(myUser,request, response) {
+function getDataForUser(myUser,request, response, passwordLessCreation) {   //passwordLessCreation = FB connect sign up
     if (myUser != null) {
         request.session.user_id = myUser._id
         request.session.user_email = myUser.username
@@ -143,20 +143,37 @@ function getDataForUser(myUser,request, response) {
             response.end('\n', 'utf-8')
         });
     } else { //sign up
-        user.createUser(request.query.username.toLowerCase(), request.query.password, function (myUser,err) {
-            if (err) {
-                response.writeHead(200, {'content-type': 'application/json' })
-                response.write(JSON.stringify(getSignupErrorMessage(err)))
-                response.end('\n', 'utf-8')
-            }  else {
-                request.session.user_id = myUser._id
-                loginToken.createToken(myUser.username, function(myToken) {
-                    response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-                    response.write(JSON.stringify('new user'))
+        if (passwordLessCreation){
+            user.createUser(request.query.username.toLowerCase(), function (myUser,err) {
+                if (err) {
+                    response.writeHead(200, {'content-type': 'application/json' })
+                    response.write(JSON.stringify(getSignupErrorMessage(err)))
                     response.end('\n', 'utf-8')
-                })
-            }
-        })
+                }  else {
+                    request.session.user_id = myUser._id
+                    loginToken.createToken(myUser.username, function(myToken) {
+                        response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
+                        response.write(JSON.stringify('new user'))
+                        response.end('\n', 'utf-8')
+                    })
+                }
+            })
+        } else {
+            user.createUser(request.query.username.toLowerCase(), request.query.password, function (myUser,err) {
+                if (err) {
+                    response.writeHead(200, {'content-type': 'application/json' })
+                    response.write(JSON.stringify(getSignupErrorMessage(err)))
+                    response.end('\n', 'utf-8')
+                }  else {
+                    request.session.user_id = myUser._id
+                    loginToken.createToken(myUser.username, function(myToken) {
+                        response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
+                        response.write(JSON.stringify('new user'))
+                        response.end('\n', 'utf-8')
+                    })
+                }
+            })
+        }
     }
 }
 
