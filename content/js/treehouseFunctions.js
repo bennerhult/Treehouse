@@ -177,6 +177,8 @@ function visitFriend(friendId) {
 /******************  achievements functions  ******************/
 function openAchievements(completed) {
     window.history.pushState(null, null, "/")
+    $("#page-login").attr("id","page");
+    $("#app-container-login").attr("id","app-container");
     completedAchievementsExistFromServer(function(completedExists) {
         insertContent(getAchievementsContent(), setDefaultMenu(completedExists), getAchievements(completed))
     })
