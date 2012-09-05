@@ -66,26 +66,27 @@ function authenticateFromLoginToken(request, response, initialCall) {
         loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
             if (!token) {
                 writeLoginPage(response)
-            }
-            user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
-                if (user) {
-                    request.session.user_id = user.id
+            } else {
+                user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
+                    if (user) {
+                        request.session.user_id = user.id
 
-                    token.token = loginToken.randomToken()
-                    token.save(function() {
-                        response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 2 * 604800000), path: '/' })
-                         if (initialCall) {
-                             writeAchievementsPage(response)
-                         }   else {
-                             response.writeHead(200, {'content-type': 'application/json' })
-                             response.write(JSON.stringify("ok"))
-                             response.end('\n', 'utf-8')
-                         }
-                    })
-                } else {
-                    writeLoginPage(response)
-                }
-            })
+                        token.token = loginToken.randomToken()
+                        token.save(function() {
+                            response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 2 * 604800000), path: '/' })
+                            if (initialCall) {
+                                writeAchievementsPage(response)
+                            }   else {
+                                response.writeHead(200, {'content-type': 'application/json' })
+                                response.write(JSON.stringify("ok"))
+                                response.end('\n', 'utf-8')
+                            }
+                        })
+                    } else {
+                        writeLoginPage(response)
+                    }
+                })
+            }
         })
     }  else {
         writeLoginPage(response)
