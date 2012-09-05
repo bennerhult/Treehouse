@@ -9,6 +9,14 @@ var db_uri = 'mongodb://localhost:27017/test'
 
 app = express.createServer()
 
+var server  = email.server.connect({
+    user:    'erik.bennerhult@gmail.com',
+    password:'user.User.findOne(',
+    host:    'smtp.gmail.com',
+    port:    465,
+    ssl:     true
+})
+
 app.configure('development', function() {
     console.log("Treehouse in development mode.")
 })
@@ -128,26 +136,19 @@ app.get('/checkFBUser', function(request, response){
     })
 })
 
-var server  = email.server.connect({
-    user:    'erik.bennerhult@gmail.com',
-    password:'user.User.findOne(',
-    host:    'smtp.gmail.com',
-    port:     465, //465=ssl
-    ssl:     true
-})
-
 app.get('/checkUser', function(request, response){
-    console.log("email 2")
-    server.send({
-        text:    'i hope this works',
-        from:    'Treehouse <erik@lejbrinkbennerhult.se>',
-        to:      'Erik <erik@lejbrinkbennerhult.se>',
-        subject: 'testing emailjs'
-    }, function(err, message) { console.log(err || message)})
-
-    user.User.findOne({ username: request.query.username.toLowerCase(), password: request.query.password }, function(err,myUser) {
-        getDataForUser(myUser, request, response, false)
+    user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
+        server.send({
+            text:    'Click the link: ',
+            from:    'Treehouse <erik@lejbrinkbennerhult.se>',
+            to:      '<' + request.query.username.toLowerCase() + '>',
+            subject: 'Sign in to Treehouse'
+        }, function(err, message) { if (err) console.log(err)})
     })
+
+   /* user.User.findOne({ username: request.query.username.toLowerCase(), password: request.query.password }, function(err,myUser) {
+        getDataForUser(myUser, request, response, false)
+    })*/
 })
 
 function getDataForUser(myUser,request, response, passwordLessCreation) {   //passwordLessCreation = FB connect sign up
