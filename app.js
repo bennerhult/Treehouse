@@ -2,7 +2,8 @@ var fs = require('fs'),
     url = require('url'),
     express = require('express'),
     sessionMongoose = require("session-mongoose"),
-    _ = require("underscore")._
+    _ = require("underscore")._,
+    email   = require('emailjs')
 
 var db_uri = 'mongodb://localhost:27017/test'
 
@@ -41,6 +42,13 @@ var user = require('./models/user.js'),
     loginToken = require('./models/loginToken.js'),
     requestHandlers = require('./code/requestHandlers.js'),
     staticFiles = require('./code/staticFiles.js')
+
+var server  = email.server.connect({
+    user:    'p33724x0',
+    password:'pattern76',
+    host:    'mailX.space2u.com',
+    ssl:     true
+})
 
 function loadUser(request, response, next) {
     if (request.session.user_id) {
@@ -128,6 +136,15 @@ app.get('/checkFBUser', function(request, response){
 })
 
 app.get('/checkUser', function(request, response){
+    console.log("email6")
+    server.send({
+        text:    'i hope this works',
+        from:    'Treehouse <erik@lejbrinkbennerhult.se>',
+        to:      'Erik <erik@lejbrinkbennerhult.se>', //'someone <someone@gmail.com>, another <another@gmail.com>',
+        //cc:      'else <else@gmail.com>',
+        subject: 'testing emailjs'
+    }, function(err, message) { console.log(err || message)})
+
     user.User.findOne({ username: request.query.username.toLowerCase(), password: request.query.password }, function(err,myUser) {
         getDataForUser(myUser, request, response, false)
     })

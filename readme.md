@@ -5,7 +5,9 @@ What have you achieved today?
 ##Project
 [Basecamp todo](https://lejbrinkbennerhult.basecamphq.com/projects/9535387-treehouse/todo_lists)
 
-[Heroku with MongoHQ](https://api.heroku.com/myapps/treehouseapp)
+[Heroku](https://api.heroku.com/myapps/treehouseapp)
+
+[MongoHQ](https://www.mongohq.com/databases)
 
 ##Git commands
 ###push
