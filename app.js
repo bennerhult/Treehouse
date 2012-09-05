@@ -43,13 +43,6 @@ var user = require('./models/user.js'),
     requestHandlers = require('./code/requestHandlers.js'),
     staticFiles = require('./code/staticFiles.js')
 
-var server  = email.server.connect({
-    user:    'p33724x0',
-    password:'pattern76',
-    host:    'mailX.space2u.com',
-    ssl:     true
-})
-
 function loadUser(request, response, next) {
     if (request.session.user_id) {
         user.User.findById(request.session.user_id, function(err, user) {
@@ -135,13 +128,20 @@ app.get('/checkFBUser', function(request, response){
     })
 })
 
+var server  = email.server.connect({
+    user:    'erik.bennerhult@gmail.com',
+    password:'user.User.findOne(',
+    host:    'smtp.gmail.com',
+    port:     465, //465=ssl
+    ssl:     true
+})
+
 app.get('/checkUser', function(request, response){
-    console.log("email6")
+    console.log("email 2")
     server.send({
         text:    'i hope this works',
         from:    'Treehouse <erik@lejbrinkbennerhult.se>',
-        to:      'Erik <erik@lejbrinkbennerhult.se>', //'someone <someone@gmail.com>, another <another@gmail.com>',
-        //cc:      'else <else@gmail.com>',
+        to:      'Erik <erik@lejbrinkbennerhult.se>',
         subject: 'testing emailjs'
     }, function(err, message) { console.log(err || message)})
 
