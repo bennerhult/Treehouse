@@ -168,7 +168,6 @@ app.get('/checkUser', function(request, response){
                     'Sign in to Treehouse',
                     "<html>Click <a href='" + domain + "signin?email=" + username + "&token=" + myToken.token + "'>here</a> to sign in to Treehouse.</html>",
                     'Go to ' + domain + 'signin?email=' + username + '&token=' + myToken.token +  ' to sign in to Treehouse!',
-                    'Bummer! For some reason, we can\'t seem to send you an email. Try using Facebook connect instead?',
                      function() {
                          response.writeHead(200, {'content-type': 'application/json' })
                          response.write(JSON.stringify('existing user'))
@@ -176,13 +175,12 @@ app.get('/checkUser', function(request, response){
                      }
                 )
             })
-        } else {  //TODO: solve security hole that you can manually creat links to creat accounts, by adding a secret token included in the mail
+        } else {
             emailUser(
                 request.query.username.toLowerCase(),
                 'Welcome  to Treehouse',
                 "<html>Click <a href='" + domain + "signup?email=" + request.query.username.toLowerCase() + "'>here</a> to start using Treehouse.</html>",
                 'Go to ' + domain + 'signup?newUser=' + request.query.username.toLowerCase() +  ' to start using Treehouse!',
-                'Bummer! For some reason, we can\'t seem to send you an email. Try using Facebook connect instead?',
                 function() {
                     response.writeHead(200, {'content-type': 'application/json' })
                     response.write(JSON.stringify('new user'))
@@ -193,7 +191,7 @@ app.get('/checkUser', function(request, response){
     })
 })
 
-function emailUser(emailAddress, subject, html, altText, errorMessage, callback) {
+function emailUser(emailAddress, subject, html, altText, callback) {
     server.send({
         text:    altText,
         from:    'Treehouse <staff@treehouse.io>',
@@ -204,14 +202,9 @@ function emailUser(emailAddress, subject, html, altText, errorMessage, callback)
                 {data: html, alternative:true},
             ]
     }, function(err, message) {
-        if (err) {
-            response.writeHead(200, {'content-type': 'application/json' })
-            response.write(JSON.stringify(errorMessage))
-            response.end('\n', 'utf-8')
-        } else {
-            if (callback) callback()
-        }
+        if (err) console.log("error sending email: " + err)
     })
+    if (callback) callback()
 }
 
 function getDataForUser(myUser,request, response) {
