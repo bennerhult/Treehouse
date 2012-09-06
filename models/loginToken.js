@@ -5,9 +5,9 @@ var mongoose = require('mongoose'),
 mongoose.connect(treehouse.dburi)
 
 var LoginTokenSchema = new Schema({
-    email       : String,
-    series      : String,
-    token       : String
+    email       : {type: String},
+    series      : {type: String},
+    token       : {type: String}
 })
 
 var LoginToken = mongoose.model('LoginToken', LoginTokenSchema)

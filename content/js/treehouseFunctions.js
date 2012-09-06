@@ -2,9 +2,13 @@
 function checkUser() {
     checkUserOnServer(
         function(data) {
-            if (data == "ok" || data == "new user") { //TODO: use ajax success/error instead
-                openAchievements(false)
-            } else $("#message").html(data)
+            if (data == "existing user") {
+                $("#message").html('We just sent you the old Treehouse email. Fetch email. Click link!')
+            } else if (data == "new user") {
+                $("#message").html('We just sent you an email. Therein lies a link. Click it and you shall enter!')
+            } else {
+                $("#message").html(data)
+            }
         }
     )
 }

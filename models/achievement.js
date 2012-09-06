@@ -11,7 +11,7 @@ var AchievementSchema = new Schema({
     createdDate         : {type: Date, required: true},
     createdBy           : {type: String, required: true},
     title               : {type: String, required: true},
-    description         : String,
+    description         : {type: String},
     imageURL            : {type: String, required: true},
     publiclyVisible     : {type: Boolean, required: true},
     goals               : {type: [goalSchema], required: true}

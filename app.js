@@ -6,6 +6,7 @@ var fs = require('fs'),
     email   = require('emailjs')
 
 var db_uri = 'mongodb://localhost:27017/test'
+var domain = ''
 
 app = express.createServer()
 
@@ -18,10 +19,12 @@ var server  = email.server.connect({
 })
 
 app.configure('development', function() {
+    domain = 'http://localhost:1337/'
     console.log("Treehouse in development mode.")
 })
 
 app.configure('production', function() {
+    domain = 'http://treehouse.io/'
     console.log("Treehouse in prod mode.")
     db_uri=process.env.DB_URI
 })
@@ -132,67 +135,112 @@ app.get('/rememberMe', function(request, response){
 
 app.get('/checkFBUser', function(request, response){
     user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
-        getDataForUser(myUser, request, response, true)
+        getDataForUser(myUser, request, response)
     })
+})
+
+app.get('/signin', function(request, response){
+    var url_parts = url.parse(request.url, true)
+    var email = url_parts.query.email.toLowerCase()
+    var token = url_parts.query.token
+    loginToken.LoginToken.findOne({ email: email, token: token }, function(err,myUser) {
+        user.User.findOne({ username: email}, function(err,myUser) {
+            request.session.user_email = email
+            getDataForUser(myUser, request, response)
+        })
+    })
+})
+
+app.get('/signup', function(request, response){
+    var url_parts = url.parse(request.url, true)
+    var email = url_parts.query.email.toLowerCase()
+    request.session.user_email = email
+    getDataForUser(null, request, response)
 })
 
 app.get('/checkUser', function(request, response){
-    user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
-        server.send({
-            text:    'Click the link: ',
-            from:    'Treehouse <erik@lejbrinkbennerhult.se>',
-            to:      '<' + request.query.username.toLowerCase() + '>',
-            subject: 'Sign in to Treehouse'
-        }, function(err, message) { if (err) console.log(err)})
+    var username = request.query.username.toLowerCase()
+    user.User.findOne({ username: username }, function(err,myUser) {
+        if (myUser) {
+            loginToken.createToken(myUser.username, function(myToken) {
+                emailUser(
+                    request.query.username.toLowerCase(),
+                    'Sign in to Treehouse',
+                    "<html>Click <a href='" + domain + "signin?email=" + username + "&token=" + myToken.token + "'>here</a> to sign in to Treehouse.</html>",
+                    'Go to ' + domain + 'signin?email=' + username + '&token=' + myToken.token +  ' to sign in to Treehouse!',
+                    'Bummer! For some reason, we can\'t seem to send you an email. Try using Facebook connect instead?',
+                     function() {
+                         response.writeHead(200, {'content-type': 'application/json' })
+                         response.write(JSON.stringify('existing user'))
+                         response.end('\n', 'utf-8')
+                     }
+                )
+            })
+        } else {  //TODO: solve security hole that you can manually creat links to creat accounts, by adding a secret token included in the mail
+            emailUser(
+                request.query.username.toLowerCase(),
+                'Welcome  to Treehouse',
+                "<html>Click <a href='" + domain + "signup?email=" + request.query.username.toLowerCase() + "'>here</a> to start using Treehouse.</html>",
+                'Go to ' + domain + 'signup?newUser=' + request.query.username.toLowerCase() +  ' to start using Treehouse!',
+                'Bummer! For some reason, we can\'t seem to send you an email. Try using Facebook connect instead?',
+                function() {
+                    response.writeHead(200, {'content-type': 'application/json' })
+                    response.write(JSON.stringify('new user'))
+                    response.end('\n', 'utf-8')
+                }
+            )
+        }
     })
-
-   /* user.User.findOne({ username: request.query.username.toLowerCase(), password: request.query.password }, function(err,myUser) {
-        getDataForUser(myUser, request, response, false)
-    })*/
 })
 
-function getDataForUser(myUser,request, response, passwordLessCreation) {   //passwordLessCreation = FB connect sign up
+function emailUser(emailAddress, subject, html, altText, errorMessage, callback) {
+    server.send({
+        text:    altText,
+        from:    'Treehouse <staff@treehouse.io>',
+        to:      '<' + emailAddress + '>',
+        subject: subject,
+        attachment:
+            [
+                {data: html, alternative:true},
+            ]
+    }, function(err, message) {
+        if (err) {
+            response.writeHead(200, {'content-type': 'application/json' })
+            response.write(JSON.stringify(errorMessage))
+            response.end('\n', 'utf-8')
+        } else {
+            if (callback) callback()
+        }
+    })
+}
+
+function getDataForUser(myUser,request, response) {
     if (myUser != null) {
         request.session.user_id = myUser._id
         request.session.user_email = myUser.username
 
         loginToken.createToken(myUser.username, function(myToken) {
             response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-            response.write(JSON.stringify('ok'))
-            response.end('\n', 'utf-8')
-        });
+            writeAchievementsPage(response)
+        })
     } else { //sign up
-        if (passwordLessCreation){
-            user.createUser(request.query.username.toLowerCase(), function (myUser,err) {
-                if (err) {
-                    response.writeHead(200, {'content-type': 'application/json' })
-                    response.write(JSON.stringify(getSignupErrorMessage(err)))
-                    response.end('\n', 'utf-8')
-                }  else {
-                    request.session.user_id = myUser._id
-                    loginToken.createToken(myUser.username, function(myToken) {
-                        response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-                        response.write(JSON.stringify('new user'))
-                        response.end('\n', 'utf-8')
-                    })
-                }
-            })
-        } else {
-            user.createUser(request.query.username.toLowerCase(), request.query.password, function (myUser,err) {
-                if (err) {
-                    response.writeHead(200, {'content-type': 'application/json' })
-                    response.write(JSON.stringify(getSignupErrorMessage(err)))
-                    response.end('\n', 'utf-8')
-                }  else {
-                    request.session.user_id = myUser._id
-                    loginToken.createToken(myUser.username, function(myToken) {
-                        response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-                        response.write(JSON.stringify('new user'))
-                        response.end('\n', 'utf-8')
-                    })
-                }
-            })
+        var email
+        if (request.session.user_email) {  //email sign up
+            email = request.session.user_email
+        } else {                           //fb connect
+            email = request.query.username.toLowerCase()
         }
+        user.createUser(email, function (myUser,err) {
+            if (err) {
+                writeLoginPage(response)
+            }  else {
+                request.session.user_id = myUser._id
+                loginToken.createToken(myUser.username, function(myToken) {
+                    response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
+                    writeAchievementsPage(response)
+                })
+            }
+        })
     }
 }
 
@@ -207,19 +255,13 @@ app.get('/logout', function(request, response){
 
 
 function getSignupErrorMessage (err){
-    var errorMessage = "Is that really your password?"
+    var errorMessage = "Is that really you?"
     if (err.errors) {
         if (err.errors.username) {
             if (err.errors.username.type == 'required') {
                 errorMessage  = "Hey, type an email!"
             }  else if (err.errors.username.type == 'invalid_email') {
                 errorMessage  = "Is your email correct?"
-            }
-        } else if (err.errors.password) {
-            if (err.errors.password.type == 'required') {
-                errorMessage  = "You need a password!"
-            }  else if (err.errors.password.type == 'too_short') {
-                errorMessage  = "Come on! That password is just too short."
             }
         }
     }
