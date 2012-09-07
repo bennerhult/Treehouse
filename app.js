@@ -234,10 +234,12 @@ function getDataForUser(myUser,request, response, newUser) {
         }
     } else {
         var email
+        var fbConnect = false
         if (request.session.user_email) {  //email sign up
             email = request.session.user_email
         } else {                           //fb connect
             email = request.query.username.toLowerCase()
+            fbConnect = true
         }
         user.createUser(email, function (myUser,err) {
             if (err) {
@@ -246,7 +248,13 @@ function getDataForUser(myUser,request, response, newUser) {
                 request.session.user_id = myUser._id
                 loginToken.createToken(myUser.username, function(myToken) {
                     response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-                    writeAchievementsPage(response)
+                    if (fbConnect) {
+                        response.writeHead(200, {'content-type': 'application/json' })
+                        response.write(JSON.stringify('ok'))
+                        response.end('\n', 'utf-8')
+                    } else {
+                        writeAchievementsPage(response)
+                    }
                 })
             }
         })
