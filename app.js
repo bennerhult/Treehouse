@@ -143,11 +143,17 @@ app.get('/signin', function(request, response){
     var url_parts = url.parse(request.url, true)
     var email = url_parts.query.email.toLowerCase()
     var token = url_parts.query.token
-    loginToken.LoginToken.findOne({ email: email, token: token }, function(err,myUser) {
-        user.User.findOne({ username: email}, function(err,myUser) {
-            request.session.user_email = email
-            getDataForUser(myUser, request, response)
-        })
+    console.log('sign in')
+    loginToken.LoginToken.findOne({ email: email, token: token }, function(err,token) {
+        console.log('token found: ' + token)
+        if (token) {
+            user.User.findOne({ username: email}, function(err,myUser) {
+                request.session.user_email = email
+                getDataForUser(myUser, request, response)
+            })
+        }  else {
+            writeLoginPage(response)
+        }
     })
 })
 
