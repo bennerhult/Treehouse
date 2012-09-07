@@ -1,23 +1,29 @@
 /******************  login functions  ******************/
 function checkUser() {
-    checkUserOnServer(
-        function(data) {
-            if (data == "existing user") {
-                $("#message").html('We just sent you the old Treehouse email. Fetch email. Click link!')
-            } else if (data == "new user") {
-                $("#message").html('We just sent you an email. Therein lies a link. Click it and you shall enter!')
-            } else {
-                $("#message").html(data)
-            }
+    var username = $("input[name=username]").val()
+    if (username) {
+        if (username.match(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i)) {
+            checkUserOnServer(username,
+                function(data) {
+                    if (data == "existing user") {
+                        $("#message").html('We just sent you the old Treehouse email. Fetch email. Click link!')
+                    } else if (data == "new user") {
+                        $("#message").html('We just sent you an email. Therein lies a link. Click it and you shall enter!')
+                    } else {
+                        $("#message").html(data)
+                    }
+                }
+            )
+        } else {
+            $("#message").html("Sadly, we can only email to <i>real</i> addresses.")
         }
-    )
+    } else {
+        $("#message").html("First law of Treehouse: First you type, then you press.")
+    }
 }
 
-function checkUserOnServer(callback) {
-    var username = $("input[name=username]")
-    var password = $("input[name=password]")
-    var data = "username=" + username.val() + "&password=" + password.val()
-
+function checkUserOnServer(username, callback) {
+    var data = "username=" + username
     $.ajax("/checkUser", {     
         type: "GET",
         data: data,
@@ -69,7 +75,7 @@ function rememberMe() {
             if (data == "ok") { //TODO: use ajax success/error instead
                 openAchievements(false)
             }  else {
-                showLogin()
+                showSignin()
             }
         }
     )
@@ -89,15 +95,15 @@ function toggleTab() {
     $('#tab-menu').slideToggle('fast');
 }
 
-/******************  logout functions  ******************/
-function logout() {
+/******************  sign out functions  ******************/
+function signout() {
     logOutFB()
 
-    $.ajax("/logout", {
+    $.ajax("/signout", {
         type: "GET",
         dataType: "json",
-        success: function() { showLogin() },
-        error  : function() { showLogin() }
+        success: function() { showSignin() },
+        error  : function() { showSignin() }
 
     })
 }

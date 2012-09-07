@@ -139,30 +139,29 @@ app.get('/checkFBUser', function(request, response){
     })
 })
 
-app.get('/signin', function(request, response){
+app.get('/signin', function(request, response) {
+    signin(request, response, false)
+})
+
+app.get('/signup', function(request, response) {
+    signin(request, response, true)
+})
+
+function signin(request, response, newUser) {
     var url_parts = url.parse(request.url, true)
     var email = url_parts.query.email.toLowerCase()
     var token = url_parts.query.token
-    console.log('sign in')
-    loginToken.LoginToken.findOne({ email: email, token: token }, function(err,token) {
-        console.log('token found: ' + token)
-        if (token) {
+    loginToken.LoginToken.findOne({ email: email, token: token }, function(err,myToken) {
+        if (myToken) {
             user.User.findOne({ username: email}, function(err,myUser) {
                 request.session.user_email = email
-                getDataForUser(myUser, request, response)
+                getDataForUser(myUser, request, response, newUser)
             })
         }  else {
             writeLoginPage(response)
         }
     })
-})
-
-app.get('/signup', function(request, response){
-    var url_parts = url.parse(request.url, true)
-    var email = url_parts.query.email.toLowerCase()
-    request.session.user_email = email
-    getDataForUser(null, request, response)
-})
+}
 
 app.get('/checkUser', function(request, response){
     var username = request.query.username.toLowerCase()
@@ -170,7 +169,7 @@ app.get('/checkUser', function(request, response){
         if (myUser) {
             loginToken.createToken(myUser.username, function(myToken) {
                 emailUser(
-                    request.query.username.toLowerCase(),
+                    username,
                     'Sign in to Treehouse',
                     "<html>Click <a href='" + domain + "signin?email=" + username + "&token=" + myToken.token + "'>here</a> to sign in to Treehouse.</html>",
                     'Go to ' + domain + 'signin?email=' + username + '&token=' + myToken.token +  ' to sign in to Treehouse!',
@@ -182,17 +181,19 @@ app.get('/checkUser', function(request, response){
                 )
             })
         } else {
-            emailUser(
-                request.query.username.toLowerCase(),
-                'Welcome  to Treehouse',
-                "<html>Click <a href='" + domain + "signup?email=" + request.query.username.toLowerCase() + "'>here</a> to start using Treehouse.</html>",
-                'Go to ' + domain + 'signup?newUser=' + request.query.username.toLowerCase() +  ' to start using Treehouse!',
-                function() {
-                    response.writeHead(200, {'content-type': 'application/json' })
-                    response.write(JSON.stringify('new user'))
-                    response.end('\n', 'utf-8')
-                }
-            )
+            loginToken.createToken(username, function(myToken) {
+                emailUser(
+                    username,
+                    'Welcome  to Treehouse',
+                    "<html>Click <a href='" + domain + "signup?email=" + username + "&token=" + myToken.token + "'>here</a> to start using Treehouse.</html>",
+                    'Go to ' + domain + 'signup?email=' + username + '&token=' + myToken.token + ' to start using Treehouse!',
+                    function() {
+                        response.writeHead(200, {'content-type': 'application/json' })
+                        response.write(JSON.stringify('new user'))
+                        response.end('\n', 'utf-8')
+                    }
+                 )
+            })
         }
     })
 })
@@ -213,16 +214,19 @@ function emailUser(emailAddress, subject, html, altText, callback) {
     if (callback) callback()
 }
 
-function getDataForUser(myUser,request, response) {
+function getDataForUser(myUser,request, response, newUser) {
     if (myUser != null) {
-        request.session.user_id = myUser._id
-        request.session.user_email = myUser.username
-
-        loginToken.createToken(myUser.username, function(myToken) {
-            response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-            writeAchievementsPage(response)
-        })
-    } else { //sign up
+        if (newUser) {  //user clicked sin up email twice
+            writeLoginPage(response)
+        }  else {
+            request.session.user_id = myUser._id
+            request.session.user_email = myUser.username
+            loginToken.createToken(myUser.username, function(myToken) {
+                response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
+                writeAchievementsPage(response)
+            })
+        }
+    } else {
         var email
         if (request.session.user_email) {  //email sign up
             email = request.session.user_email
@@ -243,7 +247,7 @@ function getDataForUser(myUser,request, response) {
     }
 }
 
-app.get('/logout', function(request, response){
+app.get('/signout', function(request, response){
     if (request.session) {
         response.clearCookie('rememberme', null)
         loginToken.remove(request.session.user_email)
@@ -734,5 +738,5 @@ function writeAchievementsPage(response) {
 }
 
 app.get('*', function(request, response){
-    response.redirect("/")
+   response.redirect("/")
 })
