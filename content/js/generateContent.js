@@ -210,7 +210,7 @@ function getTabMenu(bothCompletedAndNotExists) {
                     '<li class="header">Friends</li>' + nl +
                     '<li><a href="javascript:void(0)" onclick="openFriends()"><span>Friends</span></a></li>' + nl +
                     '<li class="header">Account</li>' + nl +
-                    '<li class="last"><a href="javascript:void(0)" onclick="signout()"><span class="border-bottom-right">Log out</span></a></li>'
+                    '<li class="last"><a href="javascript:void(0)" onclick="signout()"><span class="border-bottom-right">Sign out</span></a></li>'
      }  else {
          menu +=    '<li class="header">Account</li>' + nl +
                     '<li class="last"><a href="javascript:void(0)" onclick="showSignin()"><span class="border-bottom-right"><nobr>Sign in / Sign up</nobr></span></a></li>'
