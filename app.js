@@ -216,14 +216,20 @@ function emailUser(emailAddress, subject, html, altText, callback) {
 
 function getDataForUser(myUser,request, response, newUser) {
     if (myUser != null) {
-        if (newUser) {  //user clicked sin up email twice
+        if (newUser) {  //user clicked sign up email twice
             writeLoginPage(response)
         }  else {
             request.session.user_id = myUser._id
             request.session.user_email = myUser.username
             loginToken.createToken(myUser.username, function(myToken) {
                 response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-                writeAchievementsPage(response)
+                if (newUser == null ) {
+                    response.writeHead(200, {'content-type': 'application/json' })
+                    response.write(JSON.stringify('ok'))
+                    response.end('\n', 'utf-8')
+                }  else {
+                    writeAchievementsPage(response)
+                }
             })
         }
     } else {
