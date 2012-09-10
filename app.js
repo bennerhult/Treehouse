@@ -151,11 +151,12 @@ function signin(request, response, newUser) {
     var url_parts = url.parse(request.url, true)
     var email = url_parts.query.email.toLowerCase()
     var token = url_parts.query.token
+    var appMode = url_parts.query.appMode
     loginToken.LoginToken.findOne({ email: email, token: token }, function(err,myToken) {
         if (myToken) {
             user.User.findOne({ username: email}, function(err,myUser) {
                 request.session.user_email = email
-                getDataForUser(myUser, request, response, newUser)
+                getDataForUser(myUser, request, response, newUser, appMode)
             })
         }  else {
             writeLoginPage(response)
@@ -165,14 +166,16 @@ function signin(request, response, newUser) {
 
 app.get('/checkUser', function(request, response){
     var username = request.query.username.toLowerCase()
+    var appMode = request.query.appMode
+
     user.User.findOne({ username: username }, function(err,myUser) {
         if (myUser) {
             loginToken.createToken(myUser.username, function(myToken) {
                 emailUser(
                     username,
                     'Sign in to Treehouse',
-                    "<html>Click <a href='" + domain + "signin?email=" + username + "&token=" + myToken.token + "'>here</a> to sign in to Treehouse.</html>",
-                    'Go to ' + domain + 'signin?email=' + username + '&token=' + myToken.token +  ' to sign in to Treehouse!',
+                    "<html>Click <a href='" + domain + "signin?email=" + username + "&token=" + myToken.token + '&appMode=' + appMode + "'>here</a> to sign in to Treehouse.</html>",
+                    'Go to ' + domain + 'signin?email=' + username + '&token=' + myToken.token + '&appMode=' + appMode +  ' to sign in to Treehouse!',
                      function() {
                          response.writeHead(200, {'content-type': 'application/json' })
                          response.write(JSON.stringify('existing user'))
@@ -185,8 +188,8 @@ app.get('/checkUser', function(request, response){
                 emailUser(
                     username,
                     'Welcome  to Treehouse',
-                    "<html>Click <a href='" + domain + "signup?email=" + username + "&token=" + myToken.token + "'>here</a> to start using Treehouse.</html>",
-                    'Go to ' + domain + 'signup?email=' + username + '&token=' + myToken.token + ' to start using Treehouse!',
+                    "<html>Click <a href='" + domain + "signup?email=" + username + "&token=" + myToken.token + '&appMode=' + appMode + "'>here</a> to start using Treehouse.</html>",
+                    'Go to ' + domain + 'signup?email=' + username + '&token=' + myToken.token + '&appMode=' + appMode + ' to start using Treehouse!',
                     function() {
                         response.writeHead(200, {'content-type': 'application/json' })
                         response.write(JSON.stringify('new user'))

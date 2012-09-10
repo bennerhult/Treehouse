@@ -1,9 +1,9 @@
 /******************  login functions  ******************/
-function checkUser() {
+function checkUser(appMode) {
     var username = $("input[name=username]").val()
     if (username) {
         if (username.match(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i)) {
-            checkUserOnServer(username,
+            checkUserOnServer(username, appMode,
                 function(data) {
                     if (data == "existing user") {
                         $("#message").html('We just sent you the old Treehouse email. Fetch email. Click link!')
@@ -22,8 +22,8 @@ function checkUser() {
     }
 }
 
-function checkUserOnServer(username, callback) {
-    var data = "username=" + username
+function checkUserOnServer(username, appMode, callback) {
+    var data = "username=" + username + "&appMode=" + appMode
     $.ajax("/checkUser", {     
         type: "GET",
         data: data,

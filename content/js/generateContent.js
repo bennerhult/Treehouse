@@ -11,6 +11,15 @@ var footerContent = '<ul>' + nl +
 var isiPad = navigator.userAgent.match(/iPad/i) != null;
 var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
 
+var isAppMode = false
+
+if (("standalone" in window.navigator)) {
+    if (!window.navigator.standalone){
+        appMode = true;
+
+    }
+}
+
 function init() {
     FB.init({
         appId: '480961688595420',
@@ -172,7 +181,7 @@ function getLoginContent() {
                    '</ul>' +
                     '<div class="clear"></div>' + nl +
                 '</div>' + nl +
-                '<form action="javascript: checkUser()">' + nl +
+                '<form action="javascript: checkUser(' + isAppMode + ')">' + nl +
                     '<input type="text" class="formstyle email" name="username" placeholder="email"">' + nl +
                     '<div id="message"></div>' + nl +
                     '<input type="submit" class="button green" value="Sign in / Sign up">' + nl +
