@@ -135,7 +135,7 @@ app.get('/rememberMe', function(request, response){
 
 app.get('/checkFBUser', function(request, response){
     user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
-        getDataForUser(myUser, request, response)
+        getDataForUser(myUser, request, response, false)
     })
 })
 
@@ -151,7 +151,10 @@ function signin(request, response, newUser) {
     var url_parts = url.parse(request.url, true)
     var email = url_parts.query.email.toLowerCase()
     var token = url_parts.query.token
-    var appMode = url_parts.query.appMode
+    var appModeString = url_parts.query.appMode
+
+    var appMode = (appModeString === 'true')
+
     loginToken.LoginToken.findOne({ email: email, token: token }, function(err,myToken) {
         if (myToken) {
             user.User.findOne({ username: email}, function(err,myUser) {
@@ -260,7 +263,11 @@ function getDataForUser(myUser,request, response, newUser, appMode) {
                         response.write(JSON.stringify('ok'))
                         response.end('\n', 'utf-8')
                     } else {
-                        writeAchievementsPage(response)
+                        if (appMode) {
+                            writeGotoAppPage(response)
+                        } else {
+                            writeAchievementsPage(response)
+                        }
                     }
                 })
             }

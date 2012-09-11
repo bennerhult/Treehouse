@@ -13,13 +13,8 @@ var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
 
 var isAppMode = false
 
-if (
-    ("standalone" in window.navigator) &&
-        !window.navigator.standalone
-    ){
-
+if (("standalone" in window.navigator) && !window.navigator.standalone){
         isAppMode = true
-
 }
 
 function init() {
