@@ -77,7 +77,9 @@ function authenticateFromLoginToken(request, response, initialCall) {
         var cookie = JSON.parse(request.cookies.rememberme)
         loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
             if (!token) {
-                writeLoginPage(response)
+                response.writeHead(200, {'content-type': 'application/json' })
+                response.write(JSON.stringify("Try signing in again!"))
+                response.end('\n', 'utf-8')
             } else {
                 user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
                     if (user) {
@@ -87,7 +89,7 @@ function authenticateFromLoginToken(request, response, initialCall) {
                         token.save(function() {
                             response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 2 * 604800000), path: '/' })
                             if (initialCall) {
-                                writeAchievementsPage(response)
+                                writeDefaultPage(response)
                             }   else {
                                 response.writeHead(200, {'content-type': 'application/json' })
                                 response.write(JSON.stringify("ok"))
@@ -95,13 +97,17 @@ function authenticateFromLoginToken(request, response, initialCall) {
                             }
                         })
                     } else {
-                        writeLoginPage(response)
+                        response.writeHead(200, {'content-type': 'application/json' })
+                        response.write(JSON.stringify("Bummer! We cannot find you in our records. Contact us at staff@treehouse.io if you want us to help you out."))
+                        response.end('\n', 'utf-8')
                     }
                 })
             }
         })
     }  else {
-        writeLoginPage(response)
+        response.writeHead(200, {'content-type': 'application/json' })
+        response.write(JSON.stringify(""))   //typical first sign in
+        response.end('\n', 'utf-8')
     }
 }
 
@@ -125,7 +131,7 @@ app.get('/', function(request, response){
     if (request.cookies.rememberme) {
         authenticateFromLoginToken(request, response, true)
     } else {
-        writeLoginPage(response)
+        writeDefaultPage(response)
     }
 })
 
@@ -162,7 +168,7 @@ function signin(request, response, newUser) {
                 getDataForUser(myUser, request, response, newUser, appMode)
             })
         }  else {
-            writeLoginPage(response)
+            writeDefaultPage(response, "Oddly enough, you already have an account. Sign in and you are good to go!") //
         }
     })
 }
@@ -223,7 +229,9 @@ function emailUser(emailAddress, subject, html, altText, callback) {
 function getDataForUser(myUser,request, response, newUser, appMode) {
     if (myUser != null) {
         if (newUser) {  //user clicked sign up email twice
-            writeLoginPage(response)
+            response.writeHead(200, {'content-type': 'application/json' })
+            response.write(JSON.stringify("That link is exhausted. order a new one!"))
+            response.end('\n', 'utf-8')
         }  else {
             request.session.user_id = myUser._id
             request.session.user_email = myUser.username
@@ -237,7 +245,7 @@ function getDataForUser(myUser,request, response, newUser, appMode) {
                         response.write(JSON.stringify('ok'))
                         response.end('\n', 'utf-8')
                     }  else {
-                        writeAchievementsPage(response)
+                        writeDefaultPage(response)
                     }
                 }
             })
@@ -253,7 +261,9 @@ function getDataForUser(myUser,request, response, newUser, appMode) {
         }
         user.createUser(email, function (myUser,err) {
             if (err) {
-                writeLoginPage(response)
+                response.writeHead(200, {'content-type': 'application/json' })
+                response.write(JSON.stringify("Oddly enough, you already have an account. Sign in and you are good to go!"))
+                response.end('\n', 'utf-8')
             }  else {
                 request.session.user_id = myUser._id
                 loginToken.createToken(myUser.username, function(myToken) {
@@ -266,7 +276,7 @@ function getDataForUser(myUser,request, response, newUser, appMode) {
                         if (appMode) {
                             writeGotoAppPage(response)
                         } else {
-                            writeAchievementsPage(response)
+                            writeDefaultPage(response)
                         }
                     }
                 })
@@ -323,7 +333,9 @@ app.get('/achievement', function(request, response) {
             var userId  = url_parts.query.userId
             requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, currentAchievement.imageURL, currentAchievement.title)
         } else {
-            writeLoginPage(response)
+            response.writeHead(200, {'content-type': 'application/json' })
+            response.write(JSON.stringify("Nice try, but no hacking allowed. Ok?"))
+            response.end('\n', 'utf-8')
         }
     })
 })
@@ -447,7 +459,9 @@ app.get('/achievementFromServer', function(request, response){
         } else if (currentAchievement && currentAchievement.publiclyVisible)    {
             writeAchievementPage(response, url_parts.query.userId, currentAchievement, true)
         } else {
-            writeLoginPage(response)
+            response.writeHead(200, {'content-type': 'application/json' })
+            response.write(JSON.stringify("Nice try, but no hacking allowed. Ok?"))
+            response.end('\n', 'utf-8')
         }
     })
 })
@@ -671,7 +685,9 @@ app.get('/editAchievement', loadUser, function(request, response){
                 response.end('\n', 'utf-8')
             })
         } else {
-            writeLoginPage(response)
+            response.writeHead(200, {'content-type': 'application/json' })
+            response.write(JSON.stringify("You got thrown out! Sign in again."))
+            response.end('\n', 'utf-8')
         }
     })
 })
@@ -761,11 +777,7 @@ function writeGotoAppPage(response) {
     requestHandlers.gotoAppPage(response)
 }
 
-function writeLoginPage(response) {
-    requestHandlers.indexPage(response)
-}
-
-function writeAchievementsPage(response) {
+function writeDefaultPage(response) {
     requestHandlers.indexPage(response)
 }
 

@@ -11,7 +11,7 @@ function gotoAppPart() {
         '<div class="signup-logo"><img src="content/img/logo-large.png">' +
             '<p>You are now logged in. Close this browser and open your Treehouse app.</p>' +
         '</div>'
-return content
+    return content
 }
 
 function indexPage(response) {

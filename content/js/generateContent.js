@@ -131,11 +131,13 @@ function insertContent(content, menuFunction, callback) {
     }
 }
 
-function showSignin() {
+function showSignin(message) {
     window.history.pushState(null, null, "/")
     $("#page").attr("id","page-login");
     $("#app-container").attr("id","app-container-login");
-    insertContent(getLoginContent(), setEmptyMenu(), null)
+    insertContent(getLoginContent(), setEmptyMenu(), function() {
+        $("#message").html(message)
+    })
 }
 
 function showLatestAchievement(achievementId) {
