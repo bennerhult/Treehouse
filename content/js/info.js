@@ -59,8 +59,8 @@ function getMiscInfo() {
         '<div>' +
             '<h2>Why no password?</h2>' +
             '<p>We consider Treehouse to be a library of dreams, and it is hardly anybody\'s dream to keep track of another password.</p>' +
-            '<p>There is also security to consider (we do build bank solutions on our day jobs). Two simple rules of security: <br />' +
-            '1. Do not give away your password to en entity you do not trust.<br />' +
+            '<p>There is also security to consider (we do build bank solutions in our day jobs). Two simple rules of security: <br />' +
+            '1. Do not give away your password to an entity you do not trust.<br />' +
             '2. Do not trust any* entity who entertains the feeble security notion of a password.<br /><br /> ' +
             'As you have no doubt already noticed, these two laws form an infinity loop. Clever, huh?<br /><br /><br /><br />' +
             '* unless they are silly big and have security people that can handle it, like Facebook. Also, we know you already have a Facebook account and we choose our battles.</p>' +
