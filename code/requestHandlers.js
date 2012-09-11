@@ -55,7 +55,7 @@ function topAppPagePart() {
         tab + '</head>' + nl +
         tab + ' <body>' + nl +
         '<div id="fb-root"></div>' + nl +
-        '<div id="page">' + nl +
+        '<div id="page-login">' + nl +
         '<div id="web-menu">' + nl +
         '<ul>' + nl +
         '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart(), 0)"><span class="selected"><img src="content/img/logo-small.png" /></span></a></li>'  + nl +
