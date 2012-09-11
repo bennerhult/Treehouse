@@ -9,7 +9,7 @@ function gotoAppPage(response) {
 function gotoAppPart() {
     var content = '<div id="content">' +
         '<div class="signup-logo"><img src="content/img/logo-large.png">' +
-            '<p>You are now logged in. Close this browser and open your Treehouse app</p>' +
+            '<p>You are now logged in. Close this browser and open your Treehouse app.</p>' +
         '</div>'
 return content
 }
