@@ -45,10 +45,10 @@ function getAbout() {
     return (
         '<div>' +
             '<h2>A library of dreams</h2>' +
-            '<p>Treehouse is our digital library of dreams, where we can store our past achievements and our dreams for tomorrow. We hope that you will use it to bring out the best in you, by pushing yourself into your desired behavior.</p>' +
+            '<p>Treehouse is our digital library of dreams, where we can store our past achievements and keep track of our dreams for tomorrow. We hope that you will use it to bring out the best in you, by pushing yourself into your desired behavior.</p>' +
             '<h2>We ♥ node.js</h2>' +
             '<p>Treehouse is thought out, designed and lovingly put together in Stockholm. It runs on the amazing Heroku-platform (from San Francisco) and stores all data on MongoHQ (based in Mountain View, California).<br />' +
-            ' If all this sounds awfully technical, it\'s because it is. Leave the implementation details to us. We\'re vikings, we know what we\'re doing.</p>' +
+            'If all this sounds awfully technical, leave the implementation details to us. We\'re vikings, we know what we\'re doing.</p>' +
             '<p>Questions? Feeling chatty? Don\'t be a stranger. <a href="mailto:staff@treehouse.io">staff@treehouse.io</a></p>' +
        '</div>'
         )
@@ -59,9 +59,9 @@ function getMiscInfo() {
         '<div>' +
             '<h2>Why no password?</h2>' +
             '<p>We consider Treehouse to be a library of dreams, and it is hardly anybody\'s dream to keep track of another password.</p>' +
-            '<p>There is also security to consider (we build bank solutions in our day jobs). Two simple rules of security: <br />' +
+            '<p>There is also security to consider (we do build bank solutions on our day jobs). Two simple rules of security: <br />' +
             '1. Do not give away your password to en entity you do not trust.<br />' +
-            '2. Do not trust any* site who entertains the feeble security notion of a password.<br /><br /> ' +
+            '2. Do not trust any* entity who entertains the feeble security notion of a password.<br /><br /> ' +
             'As you have no doubt already noticed, these two laws form an infinity loop. Clever, huh?<br /><br /><br /><br />' +
             '* unless they are silly big and have security people that can handle it, like Facebook. Also, we know you already have a Facebook account and we choose our battles.</p>' +
             '</div>'
