@@ -7,7 +7,7 @@ What have you achieved today?
 
 [Heroku](https://api.heroku.com/myapps/treehouseapp)
 
-[MongoHQ](https://www.mongohq.com/databases)
+[MongoHQ](https://dblayer.com/treehouse/mongo/treehouse/)
 
 ##Git commands
 ###push
