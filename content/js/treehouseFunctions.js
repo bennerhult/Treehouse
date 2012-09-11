@@ -6,9 +6,9 @@ function checkUser(appMode) {
             checkUserOnServer(username, appMode,
                 function(data) {
                     if (data == "existing user") {
-                        $("#message").html('We just sent you the old Treehouse email. Fetch email. Click link!')
+                        $("#emailForm").html('We just sent you the old Treehouse email. Fetch email. Click link!')
                     } else if (data == "new user") {
-                        $("#message").html('We just sent you an email. Therein lies a link. Click it and you shall enter!')
+                        $("#emailForm").html('We just sent you an email. Therein lies a link. Click it and you shall enter!')
                     } else {
                         $("#message").html(data)
                     }
