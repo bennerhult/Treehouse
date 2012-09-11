@@ -15,7 +15,7 @@ var isAppMode = false
 
 if (("standalone" in window.navigator)) {
     if (!window.navigator.standalone){
-        appMode = true;
+        isAppMode = true;
 
     }
 }

@@ -74,7 +74,7 @@ function rememberMe() {
         function(data) {
             if (data == "ok") { //TODO: use ajax success/error instead
                 openAchievements(false)
-            }  else {
+            } else {
                 showSignin()
             }
         }

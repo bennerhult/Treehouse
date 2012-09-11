@@ -217,7 +217,7 @@ function emailUser(emailAddress, subject, html, altText, callback) {
     if (callback) callback()
 }
 
-function getDataForUser(myUser,request, response, newUser) {
+function getDataForUser(myUser,request, response, newUser, appMode) {
     if (myUser != null) {
         if (newUser) {  //user clicked sign up email twice
             writeLoginPage(response)
@@ -226,12 +226,16 @@ function getDataForUser(myUser,request, response, newUser) {
             request.session.user_email = myUser.username
             loginToken.createToken(myUser.username, function(myToken) {
                 response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-                if (newUser == null ) {
-                    response.writeHead(200, {'content-type': 'application/json' })
-                    response.write(JSON.stringify('ok'))
-                    response.end('\n', 'utf-8')
-                }  else {
-                    writeAchievementsPage(response)
+                if (appMode) {
+                    writeGotoAppPage(response)
+                } else {
+                    if (newUser == null ) {
+                        response.writeHead(200, {'content-type': 'application/json' })
+                        response.write(JSON.stringify('ok'))
+                        response.end('\n', 'utf-8')
+                    }  else {
+                        writeAchievementsPage(response)
+                    }
                 }
             })
         }
@@ -744,6 +748,10 @@ function getNewAchievementErrorMessage (err){
         }
     }
     return errorMessage
+}
+
+function writeGotoAppPage(response) {
+    requestHandlers.gotoAppPage(response)
 }
 
 function writeLoginPage(response) {
