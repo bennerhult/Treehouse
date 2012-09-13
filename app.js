@@ -394,14 +394,14 @@ app.get('/achievementsFBWebAppSignin', function(request, response){
 })
 
 app.get('/achievements_inProgress', function(request, response){
-    getAchievementList(request, response, false)
+    getAchievementList(request, response, false, false)
 })
 
 app.get('/achievements_completed', function(request, response){
-    getAchievementList(request, response, true)
+    getAchievementList(request, response, true, false)
 })
 
-function getAchievementList(request, response, completedAchievements) {
+function getAchievementList(request, response, completedAchievements, getInstantly) {
     app.set('current_achievement_id', null)
     var achievementsList = ""
     var goneThroughProgresses = 0
@@ -426,7 +426,7 @@ function getAchievementList(request, response, completedAchievements) {
                                 goneThroughProgresses +=  myAchievement.goals.length
                                 if (goneThroughProgresses == progresses.length) {
                                     achievementsList += createAchievementDesc(achievementsToShow, request.session.user_id, percentages, completedAchievements)
-                                    finishAchievementsList(response, achievementsList)
+                                    finishAchievementsList(response, achievementsList, getInstantly)
                                 }
                             })
                         }
@@ -435,15 +435,19 @@ function getAchievementList(request, response, completedAchievements) {
             })
         } else {
             achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent(), setCreateEditMenu())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>"
-            finishAchievementsList(response, achievementsList)
+            finishAchievementsList(response, achievementsList, getInstantly)
         }
     })
 }
 
-function finishAchievementsList(response, achievementsList) {
-    response.writeHead(200, {'content-type': 'application/json' })
-    response.write(JSON.stringify(achievementsList))
-    response.end('\n', 'utf-8')
+function finishAchievementsList(response, achievementsList, getInstantly) {
+    if (getInstantly) {
+        return achievementsList
+    } else {
+        response.writeHead(200, {'content-type': 'application/json' })
+        response.write(JSON.stringify(achievementsList))
+        response.end('\n', 'utf-8')
+    }
 }
 
 app.get('/achievementFromServer', function(request, response){
@@ -779,7 +783,7 @@ function writeDefaultPage(response) {
 }
 
 function writeAchievementsPage(request, response) {
-    requestHandlers.indexPage(response, getAchievementList(request, response, false))
+    requestHandlers.indexPage(response, getAchievementList(request, response, false, true))
 }
 
 app.get('*', function(request, response){

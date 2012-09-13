@@ -55,7 +55,7 @@ function loginUsingFacebook() {
         } else {
             $("#message").html('No worries! Try regular login instead.')   //the user closed the fb-login dialogue
         }
-    }, {scope: 'email', redirect_uri: 'http://treehouse.io/achievementsFBWebAppSignin'})         //, redirect_uri: 'http://treehouse.io/', display : 'touch'
+    }, {scope: 'email', redirect_uri: 'http://treehouse.io/achievementsFBWebAppSignin', display : 'touch'})
 }
 
 function checkFBUserOnServer(username, callback) {
