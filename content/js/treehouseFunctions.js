@@ -45,16 +45,16 @@ function loginUsingFacebook() {
                                 if (data == "ok") { //TODO: use ajax success/error instead
                                     openAchievements(false)
                                 } else {
-                                    $("#message").html("Facebook did not play nice. Try regular login instead.")
+                                    $("#message").html("Facebook did not play nice. Try regular login instead.1")
                                 }
                             }
                         )
                     } else {
-                        $("#message").html('Facebook did not play nice! Try regular login instead.')
+                        $("#message").html('Facebook did not play nice! Try regular login instead.2')
                     }
                 })
             } else {
-                $("#message").html('No worries! Try regular login instead.')   //the user closed the fb-login dialogue
+                $("#message").html('No worries! Try regular login instead.3')   //the user closed the fb-login dialogue
             }
         }, {scope: 'email', redirect_uri: 'http://treehouse.io/achievementsFBWebAppSignin'})
     } else {
@@ -68,16 +68,16 @@ function loginUsingFacebook() {
                                 if (data == "ok") { //TODO: use ajax success/error instead
                                     openAchievements(false)
                                 } else {
-                                    $("#message").html("Facebook did not play nice. Try regular login instead.")
+                                    $("#message").html("Facebook did not play nice. Try regular login instead.4")
                                 }
                             }
                         )
                     } else {
-                        $("#message").html('Facebook did not play nice! Try regular login instead.')
+                        $("#message").html('Facebook did not play nice! Try regular login instead.5')
                     }
                 })
             } else {
-                $("#message").html('No worries! Try regular login instead.')   //the user closed the fb-login dialogue
+                $("#message").html('No worries! Try regular login instead.6')   //the user closed the fb-login dialogue
             }
         }, {scope: 'email'})
     }
