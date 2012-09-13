@@ -34,28 +34,54 @@ function checkUserOnServer(username, appMode, callback) {
 }
 
 function loginUsingFacebook() {
-    FB.login(function(response) {
-        if (response.authResponse) {
+    if (isAppMode) {
+        FB.login(function(response) {
+            if (response.authResponse) {
 
-            FB.api('/me', function(apiResponse) {
-                if (apiResponse) {
-                    checkFBUserOnServer(apiResponse.email,
-                        function(data) {
-                            if (data == "ok") { //TODO: use ajax success/error instead
-                                openAchievements(false)
-                            } else {
-                                $("#message").html("Facebook did not play nice. Try regular login instead.")
+                FB.api('/me', function(apiResponse) {
+                    if (apiResponse) {
+                        checkFBUserOnServer(apiResponse.email,
+                            function(data) {
+                                if (data == "ok") { //TODO: use ajax success/error instead
+                                    openAchievements(false)
+                                } else {
+                                    $("#message").html("Facebook did not play nice. Try regular login instead.")
+                                }
                             }
-                        }
-                    )
-                } else {
-                    $("#message").html('Facebook did not play nice! Try regular login instead.')
-                }
-            })
-        } else {
-            $("#message").html('No worries! Try regular login instead.')   //the user closed the fb-login dialogue
-        }
-    }, {scope: 'email', redirect_uri: 'http://treehouse.io/achievementsFBWebAppSignin', display : 'touch'})
+                        )
+                    } else {
+                        $("#message").html('Facebook did not play nice! Try regular login instead.')
+                    }
+                })
+            } else {
+                $("#message").html('No worries! Try regular login instead.')   //the user closed the fb-login dialogue
+            }
+        }, {scope: 'email', redirect_uri: 'http://treehouse.io/achievementsFBWebAppSignin'})
+    } else {
+        FB.login(function(response) {
+            if (response.authResponse) {
+
+                FB.api('/me', function(apiResponse) {
+                    if (apiResponse) {
+                        checkFBUserOnServer(apiResponse.email,
+                            function(data) {
+                                if (data == "ok") { //TODO: use ajax success/error instead
+                                    openAchievements(false)
+                                } else {
+                                    $("#message").html("Facebook did not play nice. Try regular login instead.")
+                                }
+                            }
+                        )
+                    } else {
+                        $("#message").html('Facebook did not play nice! Try regular login instead.')
+                    }
+                })
+            } else {
+                $("#message").html('No worries! Try regular login instead.')   //the user closed the fb-login dialogue
+            }
+        }, {scope: 'email'})
+    }
+
 }
 
 function checkFBUserOnServer(username, callback) {
