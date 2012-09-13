@@ -227,7 +227,7 @@ function emailUser(emailAddress, subject, html, altText, callback) {
 }
 
 function getDataForUser(myUser,request, response, newUser, appMode) {
-    if (myUser != null) {
+    if (myUser != null) {   //Sign in
         if (newUser) {  //user clicked sign up email twice
             response.writeHead(200, {'content-type': 'application/json' })
             response.write(JSON.stringify("That link is exhausted. order a new one!"))
@@ -240,17 +240,17 @@ function getDataForUser(myUser,request, response, newUser, appMode) {
                 if (appMode) {
                     writeGotoAppPage(response)
                 } else {
-                    if (newUser == null ) {
+                   // if (newUser == null ) {
                         response.writeHead(200, {'content-type': 'application/json' })
                         response.write(JSON.stringify('ok'))
                         response.end('\n', 'utf-8')
-                    }  else {
-                        writeDefaultPage(response)
-                    }
+                    //}  else {
+                      //  writeDefaultPage(response)
+                    //}
                 }
             })
         }
-    } else {
+    } else {    //Sign up
         var email
         var fbConnect = false
         if (request.session.user_email) {  //email sign up

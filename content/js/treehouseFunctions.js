@@ -44,16 +44,16 @@ function loginUsingFacebook() {
                             if (data == "ok") { //TODO: use ajax success/error instead
                                 openAchievements(false)
                             } else {
-                                $("#message").html(data)    //Your Facebook email is not registered in Treehouse.
+                                $("#message").html("Facebook did not play nice. Try regular login instead.")
                             }
                         }
                     )
                 } else {
-                    $("#message").html('Facebook did not play nice!')
+                    $("#message").html('Facebook did not play nice! Try regular login instead.')
                 }
             })
         } else {
-            $("#message").html('No worries! Try regular login instead.')
+            $("#message").html('No worries! Try regular login instead.')   //the user closed the fb-login dialogue
         }
     }, {scope: 'email'})         //, redirect_uri: 'http://treehouse.io/', display : 'touch'
 }
