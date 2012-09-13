@@ -91,9 +91,10 @@ function authenticateFromLoginToken(request, response, initialCall) {
                             if (initialCall) {
                                 writeDefaultPage(response)
                             }   else {
-                                response.writeHead(200, {'content-type': 'application/json' })
-                                response.write(JSON.stringify("ok"))
-                                response.end('\n', 'utf-8')
+                                //response.writeHead(200, {'content-type': 'application/json' })
+                                //response.write(JSON.stringify("ok"))
+                                //response.end('\n', 'utf-8')
+                                writeDefaultPage(response)
                             }
                         })
                     } else {
