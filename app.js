@@ -226,6 +226,14 @@ function emailUser(emailAddress, subject, html, altText, callback) {
 }
 
 function getDataForUser(myUser, request, response, newUser, appMode) {
+    var email
+    var fbConnect = false
+    if (request.session.user_email) {  //email sign up
+        email = request.session.user_email
+    } else {                           //fb connect
+        email = request.query.username.toLowerCase()
+        fbConnect = true
+    }
     if (myUser != null) {   //Sign in
         if (newUser) {  //user clicked sign up email twice
             response.writeHead(200, {'content-type': 'application/json' })
@@ -239,22 +247,19 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
                 if (appMode) {
                     writeGotoAppPage(response)
                 } else {
-                    //writeDefaultPage(response)
-                    response.writeHead(200, {'content-type': 'application/json' })
-                    response.write(JSON.stringify("ok"))
-                    response.end('\n', 'utf-8')
+                    if (fbConnect) {
+                        response.writeHead(200, {'content-type': 'application/json' })
+                        response.write(JSON.stringify("ok"))
+                        response.end('\n', 'utf-8')
+                    } else {
+                        writeDefaultPage(response)
+                    }
+
                 }
             })
         }
     } else {    //Sign up
-        var email
-        var fbConnect = false
-        if (request.session.user_email) {  //email sign up
-            email = request.session.user_email
-        } else {                           //fb connect
-            email = request.query.username.toLowerCase()
-            fbConnect = true
-        }
+
         user.createUser(email, function (myUser,err) {
             if (err) {
                 response.writeHead(200, {'content-type': 'application/json' })
