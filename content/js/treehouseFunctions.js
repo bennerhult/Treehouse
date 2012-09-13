@@ -44,7 +44,7 @@ function loginUsingFacebook() {
                             if (data == "ok") { //TODO: use ajax success/error instead
                                 openAchievements(false)
                             } else {
-                                $("#message").html('Your Facebook email is not registered in Treehouse.')
+                                $("#message").html(data)    //Your Facebook email is not registered in Treehouse.
                             }
                         }
                     )
