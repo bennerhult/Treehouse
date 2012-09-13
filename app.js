@@ -168,7 +168,7 @@ function signin(request, response, newUser) {
                 getDataForUser(myUser, request, response, newUser, appMode)
             })
         }  else {
-            writeDefaultPage(response, "Oddly enough, you already have an account. Sign in and you are good to go!") //
+            writeDefaultPage(response)
         }
     })
 }
