@@ -225,7 +225,7 @@ function emailUser(emailAddress, subject, html, altText, callback) {
     if (callback) callback()
 }
 
-function getDataForUser(myUser,request, response, newUser, appMode) {
+function getDataForUser(myUser, request, response, newUser, appMode) {
     if (myUser != null) {   //Sign in
         if (newUser) {  //user clicked sign up email twice
             response.writeHead(200, {'content-type': 'application/json' })
@@ -239,7 +239,7 @@ function getDataForUser(myUser,request, response, newUser, appMode) {
                 if (appMode) {
                     writeGotoAppPage(response)
                 } else {
-                    writeAchievementsPage(response)
+                    writeAchievementsPage(request, response)
                 }
             })
         }
@@ -390,7 +390,7 @@ function createAchievementDesc(achievements, userId, percentages, completed) {
 }
 
 app.get('/achievementsFBWebAppSignin', function(request, response){
-    writeDefaultPage(response)
+    writeAchievementsPage(request, response)
 })
 
 app.get('/achievements_inProgress', function(request, response){
@@ -778,9 +778,8 @@ function writeDefaultPage(response) {
     requestHandlers.indexPage(response)
 }
 
-
-function writeAchievementsPage(response) {
-    requestHandlers.indexPage(response)
+function writeAchievementsPage(request, response) {
+    requestHandlers.indexPage(response, getAchievementList(request, response, false))
 }
 
 app.get('*', function(request, response){

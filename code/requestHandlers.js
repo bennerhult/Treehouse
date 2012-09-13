@@ -14,9 +14,9 @@ function gotoAppPart() {
     return content
 }
 
-function indexPage(response) {
+function indexPage(response, data) {
     response.writeHead(200, { 'Content-Type': 'text/html' })
-    response.end(topIndexPart() + bottomPart(), 'utf-8')
+    response.end(topIndexPart() + data + bottomPart(), 'utf-8')
 }
 
 function publicAchievementPage(response, userId, currentAchievementId, url, imageUrl, title) {
