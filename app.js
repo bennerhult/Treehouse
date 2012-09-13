@@ -259,7 +259,6 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
             })
         }
     } else {    //Sign up
-
         user.createUser(email, function (myUser,err) {
             if (err) {
                 response.writeHead(200, {'content-type': 'application/json' })
@@ -785,7 +784,6 @@ function writeGotoAppPage(response) {
 function writeDefaultPage(response) {
     requestHandlers.indexPage(response)
 }
-
 
 app.get('*', function(request, response){
    response.redirect("/")
