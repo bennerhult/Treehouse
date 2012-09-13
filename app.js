@@ -91,10 +91,9 @@ function authenticateFromLoginToken(request, response, initialCall) {
                             if (initialCall) {
                                 writeDefaultPage(response)
                             }   else {
-                                //response.writeHead(200, {'content-type': 'application/json' })
-                                //response.write(JSON.stringify("ok"))
-                                //response.end('\n', 'utf-8')
-                                writeDefaultPage(response)
+                                response.writeHead(200, {'content-type': 'application/json' })
+                                response.write(JSON.stringify("ok"))
+                                response.end('\n', 'utf-8')
                             }
                         })
                     } else {
@@ -159,7 +158,6 @@ function signin(request, response, newUser) {
     var email = url_parts.query.email.toLowerCase()
     var token = url_parts.query.token
     var appModeString = url_parts.query.appMode
-
     var appMode = (appModeString === 'true')
 
     loginToken.LoginToken.findOne({ email: email, token: token }, function(err,myToken) {
@@ -241,9 +239,7 @@ function getDataForUser(myUser,request, response, newUser, appMode) {
                 if (appMode) {
                     writeGotoAppPage(response)
                 } else {
-                    response.writeHead(200, {'content-type': 'application/json' })
-                    response.write(JSON.stringify('ok'))
-                    response.end('\n', 'utf-8')
+                    writeAchievementsPage(response)
                 }
             })
         }
@@ -775,6 +771,11 @@ function writeGotoAppPage(response) {
 }
 
 function writeDefaultPage(response) {
+    requestHandlers.indexPage(response)
+}
+
+
+function writeAchievementsPage(response) {
     requestHandlers.indexPage(response)
 }
 
