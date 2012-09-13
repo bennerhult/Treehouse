@@ -389,6 +389,10 @@ function createAchievementDesc(achievements, userId, percentages, completed) {
     return achievementsList
 }
 
+app.get('/achievementsFBWebAppSignin', function(request, response){
+    writeDefaultPage(response)
+})
+
 app.get('/achievements_inProgress', function(request, response){
     getAchievementList(request, response, false)
 })
