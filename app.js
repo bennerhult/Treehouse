@@ -239,7 +239,10 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
                 if (appMode) {
                     writeGotoAppPage(response)
                 } else {
-                    writeDefaultPage(response)
+                    //writeDefaultPage(response)
+                    response.writeHead(200, {'content-type': 'application/json' })
+                    response.write(JSON.stringify("ok"))
+                    response.end('\n', 'utf-8')
                 }
             })
         }

@@ -60,7 +60,6 @@ function loginUsingFacebook() {
     } else {
         FB.login(function(response) {
             if (response.authResponse) {
-
                 FB.api('/me', function(apiResponse) {
                     if (apiResponse) {
                         checkFBUserOnServer(apiResponse.email,
