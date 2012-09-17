@@ -34,7 +34,7 @@ function checkUserOnServer(username, appMode, callback) {
 }
 
 function loginUsingFacebook() {
-    var userEmail = 'linda@lejbrinkbennerhult.se'
+    var userEmail = 'erik@lejbrinkbennerhult.se'
     if (isAppMode) {
         FB.login(function(response) {
             if (response.authResponse) {
@@ -57,7 +57,7 @@ function loginUsingFacebook() {
             } else {
                 $("#message").html('No worries! Try regular login instead.')   //the user closed the fb-login dialogue
             }
-        }, {scope: 'email', redirect_uri: 'http://treehouse.io/fbAppConnect?username=' +userEmail})
+        }, {scope: 'email', redirect_uri: 'http://treehouse.io/fbAppConnect?username=' + userEmail})
     } else {
         FB.login(function(response) {
             if (response.authResponse) {
