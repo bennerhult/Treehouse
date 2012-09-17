@@ -94,13 +94,11 @@ function authenticateFromLoginToken(request, response, initialCall) {
                         token.save(function() {
                             response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 2 * 604800000), path: '/' })
                             if (initialCall) {
-                                console.log("initial")
+                                console.log("initial")    //TODO: remove unused initialCall param
                                 writeDefaultPage(response)
                             }   else {
                                 console.log("ok")
-                                response.writeHead(200, {'content-type': 'application/json' })
-                                response.write(JSON.stringify("ok"))
-                                response.end('\n', 'utf-8')
+                                writeDefaultPage(response)
                             }
                         })
                     } else {

@@ -34,7 +34,7 @@ function checkUserOnServer(username, appMode, callback) {
 }
 
 function loginUsingFacebook() {
-    var userEmail = 'erik@lejbrinkbennerhult.se'
+    var userEmail = 'linda@lejbrinkbennerhult.se'
     if (isAppMode) {
         FB.login(function(response) {
             if (response.authResponse) {
