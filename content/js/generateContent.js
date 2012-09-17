@@ -36,7 +36,7 @@ function init() {
                         location.reload()
                     }
                     break
-                case 180: //Portrait orientation with the screen turned upside down. This value is currently not supported on iPhone.
+                case 180: //Portrait orientation with the screen turned upside down.
                     if ($("#achievementList"))   {
                         location.reload()
                     }

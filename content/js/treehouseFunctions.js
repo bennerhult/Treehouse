@@ -42,6 +42,7 @@ function loginUsingFacebook() {
                     if (apiResponse) {
                         checkFBUserOnServer(apiResponse.email,
                             function(data) {
+                                alert(data)
                                 if (data == "ok") { //TODO: use ajax success/error instead
                                     openAchievements(false)
                                 } else {
