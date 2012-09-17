@@ -156,6 +156,14 @@ app.get('/checkFBUser', function(request, response){
     })
 })
 
+app.get('/fbAppConnect', function(request, response){
+    console.log("----------- fbAppConnect -------------------")
+    user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
+        console.log(request.query.username.toLowerCase())
+        getDataForUser(myUser, request, response, false)
+    })
+})
+
 app.get('/signin', function(request, response) {
     signin(request, response, false)
 })

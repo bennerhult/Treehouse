@@ -55,7 +55,7 @@ function loginUsingFacebook() {
             } else {
                 $("#message").html('No worries! Try regular login instead.')   //the user closed the fb-login dialogue
             }
-        }, {scope: 'email', redirect_uri: 'http://treehouse.io/'})
+        }, {scope: 'email', redirect_uri: 'http://treehouse.io/fbAppConnect'})
     } else {
         FB.login(function(response) {
             if (response.authResponse) {
