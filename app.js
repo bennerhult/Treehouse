@@ -73,14 +73,19 @@ function loadUser(request, response, next) {
 }
 
 function authenticateFromLoginToken(request, response, initialCall) {
+    console.log("--------          --------")
+    console.log(request.cookies.rememberme)
     if (request.cookies.rememberme)  {
         var cookie = JSON.parse(request.cookies.rememberme)
         loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
+            console.log(cookie.email)
             if (!token) {
+                console.log("no token")
                 response.writeHead(200, {'content-type': 'application/json' })
                 response.write(JSON.stringify("Try signing in again!"))
                 response.end('\n', 'utf-8')
             } else {
+                console.log("token")
                 user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
                     if (user) {
                         request.session.user_id = user.id
@@ -89,14 +94,17 @@ function authenticateFromLoginToken(request, response, initialCall) {
                         token.save(function() {
                             response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 2 * 604800000), path: '/' })
                             if (initialCall) {
+                                console.log("initial")
                                 writeDefaultPage(response)
                             }   else {
+                                console.log("ok")
                                 response.writeHead(200, {'content-type': 'application/json' })
                                 response.write(JSON.stringify("ok"))
                                 response.end('\n', 'utf-8')
                             }
                         })
                     } else {
+                        console.log("bummer")
                         response.writeHead(200, {'content-type': 'application/json' })
                         response.write(JSON.stringify("Bummer! We cannot find you in our records. Contact us at staff@treehouse.io if you want us to help you out."))
                         response.end('\n', 'utf-8')
@@ -105,6 +113,7 @@ function authenticateFromLoginToken(request, response, initialCall) {
             }
         })
     }  else {
+        console.log("typical first")
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(""))   //typical first sign in
         response.end('\n', 'utf-8')
