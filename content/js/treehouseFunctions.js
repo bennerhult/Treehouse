@@ -61,9 +61,7 @@ function loginUsingFacebook() {
 
         */
         // &state=YOUR_STATE_VALUE TODO: add for security
-        window.location.href = 'https://www.facebook.com/dialog/oauth/?client_id=480961688595420&response_type=token&redirect_uri=http://treehouse.io/fbAppConnect&scope=email'
-
-
+        window.location.href = 'https://www.facebook.com/dialog/oauth/?client_id=480961688595420&response_type=token&redirect_uri=http://treehouse.io/fbAppConnect?username=linda@lejbrinkbennerhult.se&scope=email'
     } else {
         FB.login(function(response) {
             if (response.authResponse) {
