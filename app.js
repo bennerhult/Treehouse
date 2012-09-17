@@ -156,7 +156,7 @@ app.get('/checkFBUser', function(request, response){
 
 app.get('/fbAppConnect', function(request, response){
     console.log("----------- fbAppConnect -------------------")
-    console.log(request.query.access_token)
+    console.log(request.query)
     //user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
     user.User.findOne({ username: 'linda@lejbrinkbennerhult.se' }, function(err,myUser) {
         //console.log(request.query.username.toLowerCase())
@@ -250,8 +250,10 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
     if (request.session.user_email) {  //email sign up
         email = request.session.user_email
     } else {                           //fb connect
-        email = request.query.username.toLowerCase()
-        fbConnect = true
+        if (request.query.username)      {
+            email = request.query.username.toLowerCase()
+            fbConnect = true
+        }
     }
     if (myUser != null) {   //Sign in
         if (newUser) {  //user clicked sign up email twice
