@@ -13,9 +13,7 @@ var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
 
 var isAppMode = false
 
-if (("standalone" in window.navigator) && window.navigator.standalone){
-        isAppMode = true
-}
+
 
 function init() {
     FB.init({
@@ -45,6 +43,10 @@ function init() {
         })
     }  else {
         $("#banner").empty().remove()
+    }
+
+    if (("standalone" in window.navigator) && window.navigator.standalone){
+        isAppMode = true
     }
 }
 
@@ -168,8 +170,7 @@ function getLoginContent() {
                     '<img src="content/img/logo-large.png" />' + nl +
                     '<p>connect below to sign in / sign up</p>' + nl +
                     '<form action="javascript: loginUsingFacebook()">' + nl +
-                    '<input type="image" src="content/img/facebook.png" alt="Facebook Connect"/>' + nl +
-
+                        '<input type="image" src="content/img/facebook.png" alt="Facebook Connect"/>' + nl +
                     '</form>' + nl +
                 '</div>' + nl +
                 '<div class="login-separator">' +
