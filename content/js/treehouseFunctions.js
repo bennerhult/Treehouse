@@ -57,7 +57,7 @@ function loginUsingFacebook() {
             } else {
                 $("#message").html('No worries! Try regular login instead.')   //the user closed the fb-login dialogue
             }
-        }, {scope: 'email', show_error: 'true', display : 'touch', next: 'http://treehouse.io/fbAppConnect?username=' + userEmail}) // display: touch , redirect_uri: 'http://treehouse.io/fbAppConnect?username=' + userEmail
+        }, {scope: 'email', show_error: 'true', display : 'touch', response_type : 'token', redirect_uri: 'http://treehouse.io/fbAppConnect?username=' + userEmail}) // display: touch , redirect_uri: 'http://treehouse.io/fbAppConnect?username=' + userEmail
 
 
         // &state=YOUR_STATE_VALUE TODO: add for security
