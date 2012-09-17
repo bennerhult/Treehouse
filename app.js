@@ -149,7 +149,9 @@ app.get('/rememberMe', function(request, response){
 })
 
 app.get('/checkFBUser', function(request, response){
+    console.log("----------- check FB user -------------------")
     user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
+        console.log(request.query.username.toLowerCase())
         getDataForUser(myUser, request, response, false)
     })
 })

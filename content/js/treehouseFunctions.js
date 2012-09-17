@@ -41,7 +41,6 @@ function loginUsingFacebook() {
                     if (apiResponse) {
                         checkFBUserOnServer(apiResponse.email,
                             function(data) {
-                                alert(data)
                                 if (data == "ok") { //TODO: use ajax success/error instead
                                     openAchievements(false)
                                 } else {
@@ -50,12 +49,10 @@ function loginUsingFacebook() {
                             }
                         )
                     } else {
-                        alert('Facebook did not play nice! Try regular login instead.')
                         $("#message").html('Facebook did not play nice! Try regular login instead.')
                     }
                 })
             } else {
-                alert('No worries! Try regular login instead.')
                 $("#message").html('No worries! Try regular login instead.')   //the user closed the fb-login dialogue
             }
         }, {scope: 'email', redirect_uri: 'http://treehouse.io/'})
