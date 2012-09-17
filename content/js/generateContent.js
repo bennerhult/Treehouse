@@ -24,9 +24,9 @@ function init() {
         channelUrl : '//treehouse.io/channel.html',  //increases performance
         oauth: true
     })
-    FB.UIServer.setLoadedNode = function (a, b) {
+   /* FB.UIServer.setLoadedNode = function (a, b) {
         FB.UIServer._loadedNodes[a.id] = b
-    }
+    }*/ //TODO Remove when fb app connect is working
     insertLatestAchievement()
     $("#web-footer").html(footerContent)
     if (isiPad) {
