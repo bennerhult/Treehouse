@@ -159,7 +159,7 @@ app.get('/fbAppConnect', function(request, response){
     console.log(request.query.access_token)
     //user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
     user.User.findOne({ username: 'linda@lejbrinkbennerhult.se' }, function(err,myUser) {
-        console.log(request.query.username.toLowerCase())
+        //console.log(request.query.username.toLowerCase())
         getDataForUser(myUser, request, response, false)
     })
 })
