@@ -14,9 +14,9 @@ function gotoAppPart() {
     return content
 }
 
-function indexPage(response, data) {
+function indexPage(response) {
     response.writeHead(200, { 'Content-Type': 'text/html' })
-    response.end(topIndexPart() + data + bottomPart(), 'utf-8')
+    response.end(topIndexPart() + bottomPart(), 'utf-8')
 }
 
 function publicAchievementPage(response, userId, currentAchievementId, url, imageUrl, title) {
@@ -135,7 +135,7 @@ function topIndexPart() {
                 '<div id="main-container">' + nl +
                 '<div id="leftcontainer">' + nl +
                     '<div class="web-wrap ipad">' + nl +
-                '<h1>Treehouse helps you track your achievements.</h1>' + nl +
+                '<h1>Treehouse helps you track your achievements1.</h1>' + nl +
                 '<p class="ingress">Explore. Achieve. Play.</p>' + nl +
                     '</div>' + nl +
                     '<div id="infoArea"></div>' + nl +
