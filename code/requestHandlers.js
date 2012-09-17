@@ -135,7 +135,7 @@ function topIndexPart() {
                 '<div id="main-container">' + nl +
                 '<div id="leftcontainer">' + nl +
                     '<div class="web-wrap ipad">' + nl +
-                '<h1>Treehouse helps you track your achievements1.</h1>' + nl +
+                '<h1>Treehouse helps you track your achievements.</h1>' + nl +
                 '<p class="ingress">Explore. Achieve. Play.</p>' + nl +
                     '</div>' + nl +
                     '<div id="infoArea"></div>' + nl +
