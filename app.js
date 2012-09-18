@@ -158,7 +158,7 @@ app.get('/fbAppConnect', function(request, response){
     console.log("----------- fbAppConnect -------------------")
 
     console.log("email: " + request.email)
-
+                                         //http://stackoverflow.com/questions/11197668/fb-login-broken-flow-for-ios-webapp
     //  https://graph.facebook.com/me?access_token=YOUR_USER_ACCESS_TOKEN
 
     //user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
