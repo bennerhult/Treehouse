@@ -37,8 +37,11 @@ function loginUsingFacebook() {
     var userEmail = 'linda@lejbrinkbennerhult.se'
 
     if (isAppMode) {  //TODO: try server side http://developers.facebook.com/docs/authentication/server-side/
+        var permissionUrl = "https://m.facebook.com/dialog/oauth?client_id=480961688595420&response_type=code&redirect_uri=http://treehouse.io/fbAppConnect&scope=email";
+        window.location = permissionUrl;
+        /*
         FB.login(function(response) {
-            if (response.authResponse) {
+           if (response.authResponse) {
                 FB.api('/me', function(apiResponse) {
                     if (apiResponse) {
                         userEmail = apiResponse.email
@@ -59,7 +62,7 @@ function loginUsingFacebook() {
                 $("#message").html('No worries! Try regular login instead.')   //the user closed the fb-login dialogue
             }
         }, {scope: 'email', show_error: 'true', display : 'touch', response_type : 'token', redirect_uri: 'http://treehouse.io/fbAppConnect'}) // display: touch , redirect_uri: 'http://treehouse.io/fbAppConnect?username=' + userEmail
-
+          */
 
         // &state=YOUR_STATE_VALUE TODO: add for security
         //window.location.href = 'https://www.facebook.com/dialog/oauth/?client_id=480961688595420&response_type=token&redirect_uri=http://treehouse.io/fbAppConnect?username=linda@lejbrinkbennerhult.se&scope=email'
