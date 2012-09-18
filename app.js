@@ -156,8 +156,8 @@ app.get('/checkFBUser', function(request, response){
 
 app.get('/fbAppConnect', function(request, response){
     console.log("----------- fbAppConnect -------------------")
-    console.log(request)
-    console.log(request.token)
+
+    console.log("token: " + request.token)
 
     //  https://graph.facebook.com/me?access_token=YOUR_USER_ACCESS_TOKEN
 
