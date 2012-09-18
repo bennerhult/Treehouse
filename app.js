@@ -81,9 +81,7 @@ function authenticateFromLoginToken(request, response, initialCall) {
             console.log(cookie.email)
             if (!token) {
                 console.log("no token")
-                response.writeHead(200, {'content-type': 'application/json' })
-                response.write(JSON.stringify("Try signing in again!"))
-                response.end('\n', 'utf-8')
+                writeDefaultPage(response) //Try signing in again!
             } else {
                 console.log("token")
                 user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
