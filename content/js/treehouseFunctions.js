@@ -35,7 +35,9 @@ function checkUserOnServer(username, appMode, callback) {
 
 function loginUsingFacebook() {
     var userEmail = 'linda@lejbrinkbennerhult.se'
-    if (isAppMode) {  //TODO: try server side http://developers.facebook.com/docs/authentication/server-side/
+
+     //todo: remove debug support   :: if (isAppMode)
+    if (true) {  //TODO: try server side http://developers.facebook.com/docs/authentication/server-side/
         FB.login(function(response) {
             if (response.authResponse) {
                 FB.api('/me', function(apiResponse) {
@@ -46,7 +48,7 @@ function loginUsingFacebook() {
                                 if (data == "ok") { //TODO: use ajax success/error instead
                                     openAchievements(false)
                                 } else {
-                                    $("#message").html("Facebook did not play nice. Try regular login instead.")
+                                    $("#message").html("Facebook did not play nice. Try regular login instead." )
                                 }
                             }
                         )
