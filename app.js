@@ -271,13 +271,9 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
                     writeGotoAppPage(response)
                 } else {
                     if (fbConnect) {
-                        /*response.writeHead(200, {'content-type': 'application/json' })
+                        response.writeHead(200, {'content-type': 'application/json' })
                         response.write(JSON.stringify("ok"))
-                        response.end('\n', 'utf-8')*/
-
-                        //TODO test with non app fb connect!
-
-                        writeDefaultPage(response)
+                        response.end('\n', 'utf-8')
                     } else {
                         writeDefaultPage(response)
                     }
