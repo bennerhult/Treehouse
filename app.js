@@ -94,11 +94,13 @@ function authenticateFromLoginToken(request, response, initialCall) {
                         token.save(function() {
                             response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 2 * 604800000), path: '/' })
                             if (initialCall) {
-                                console.log("initial")    //TODO: remove unused initialCall param
+                                console.log("initial")
                                 writeDefaultPage(response)
                             }   else {
                                 console.log("ok")
-                                writeDefaultPage(response)
+                                response.writeHead(200, {'content-type': 'application/json' })
+                                response.write(JSON.stringify("ok"))
+                                response.end('\n', 'utf-8')
                             }
                         })
                     } else {
@@ -156,7 +158,7 @@ app.get('/checkFBUser', function(request, response){
 
 app.get('/fbAppConnect', function(request, response){
     console.log("----------- fbAppConnect -------------------")
-    console.log(request.query)
+    console.log(request)
     //user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
     user.User.findOne({ username: 'linda@lejbrinkbennerhult.se' }, function(err,myUser) {
         //console.log(request.query.username.toLowerCase())

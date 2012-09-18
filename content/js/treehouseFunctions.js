@@ -35,7 +35,7 @@ function checkUserOnServer(username, appMode, callback) {
 
 function loginUsingFacebook() {
     var userEmail = 'linda@lejbrinkbennerhult.se'
-    if (isAppMode) {
+    if (isAppMode) {  //TODO: try server side http://developers.facebook.com/docs/authentication/server-side/
         FB.login(function(response) {
             if (response.authResponse) {
                 FB.api('/me', function(apiResponse) {
@@ -138,7 +138,7 @@ function signout() {
     })
 }
 
-function logOutFB() {
+function logOutFB() {    //TODO: do not log out the user from FB, just from the Treehouse-FB-app
     FB.getLoginStatus(function(response) {
         if (response.status === 'connected') {
             FB.logout()
