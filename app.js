@@ -159,7 +159,7 @@ app.get('/fbAppConnect', function(request, response){
     console.log(request)
     console.log(request.token)
 
-    //https://graph.facebook.com/me?access_token=YOUR_USER_ACCESS_TOKEN
+    //  https://graph.facebook.com/me?access_token=YOUR_USER_ACCESS_TOKEN
 
     //user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
     user.User.findOne({ username: 'linda@lejbrinkbennerhult.se' }, function(err,myUser) {

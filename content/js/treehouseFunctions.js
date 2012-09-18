@@ -36,8 +36,7 @@ function checkUserOnServer(username, appMode, callback) {
 function loginUsingFacebook() {
     var userEmail = 'linda@lejbrinkbennerhult.se'
 
-     //todo: remove debug support   :: if (isAppMode)
-    if (true) {  //TODO: try server side http://developers.facebook.com/docs/authentication/server-side/
+    if (isAppMode) {  //TODO: try server side http://developers.facebook.com/docs/authentication/server-side/
         FB.login(function(response) {
             if (response.authResponse) {
                 FB.api('/me', function(apiResponse) {
