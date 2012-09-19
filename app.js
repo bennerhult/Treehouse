@@ -168,15 +168,16 @@ app.get('/fbAppConnect', function(request, response){
 
     requestModule.get(accessTokenLink, function (accessTokenError, accessTokenResponse, accessTokenBody) {
         if (!accessTokenError && accessTokenResponse.statusCode == 200) {
-            var access_token_parts = accessTokenBody.parse()
-            var accessToken  = access_token_parts.query.access_token
+            var access_token_parts = JSON.parse(accessTokenBody)
+            console.log("PARTS: " + access_token_parts)
+            var accessToken  = access_token_parts.access_token
             console.log("AAA: " + accessToken)
             var graphLink = 'https://graph.facebook.com/me?access_token=' + accessToken
 
             requestModule.get(graphLink, function (graphError, graphResponse, graphBody) {
-                if (!accessTokenError && graphResponse.statusCode == 200) {
-                    var graph_parts = graphBody.parse()
-                    var email  = graph_parts.query.email
+                if (!graphError && graphResponse.statusCode == 200) {
+                    var graph_parts = JSON.parse(graphBody)
+                    var email  = graph_parts.email
                     console.log("BBB: " + email)
 
                     response.writeHead(200, {'content-type': 'application/json' })
