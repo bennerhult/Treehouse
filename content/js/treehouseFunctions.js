@@ -39,8 +39,15 @@ function loginUsingFacebook() {
     //if (isAppMode)
     if (true) {  //TODO: try server side http://developers.facebook.com/docs/authentication/server-side/
         var permissionUrl = "https://m.facebook.com/dialog/oauth?client_id=480961688595420&response_type=code&redirect_uri=http://treehouse.io/fbAppConnect&scope=email"
-        window.location = permissionUrl
+        //window.location = permissionUrl
 
+        var https = require('https');
+
+
+        https.get({ host: 'm.facebook.com', path: '/dialog/oauth?client_id=480961688595420&response_type=code&redirect_uri=http://treehouse.io/fbAppConnect&scope=email' }, function (res) {
+            // console.log(res);
+            alert()
+        })
 
         //return
         /*
