@@ -160,14 +160,13 @@ app.get('/fbAppConnect', function(request, response){
     var code = url_parts.query.code
 
 
-
-    var getAccessTokenLink= 'graph.facebook.com/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://treehouse.io/fbAppConnect&code=' + code
+    var accessTokenLink= 'https://graph.facebook.com/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://treehouse.io/fbAppConnect&code=' + code
     var accessToken
     var https = require('https');
 
 
-
-    https.get(getAccessTokenLink, function(res) {
+    var simpletestlink= 'https://graph.facebook.com/'
+    https.get(simpletestlink, function(res) {
         console.log("statusCode: ", res.statusCode);
         console.log("headers: ", res.headers);
 
@@ -186,7 +185,7 @@ app.get('/fbAppConnect', function(request, response){
     //"email": "erik\u0040lejbrinkbennerhult.se",
 
     response.writeHead(200, {'content-type': 'application/json' })
-    response.write(JSON.stringify(getAccessTokenLink + '<br />accessToken:<br />' + accessToken))
+    response.write(JSON.stringify(accessTokenLink + '   accessToken:  ' + accessToken))
     response.end('\n', 'utf-8')
 
 
