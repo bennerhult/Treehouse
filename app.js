@@ -161,12 +161,18 @@ app.get('/fbAppConnect', function(request, response){
 
 
     var accessTokenLink= 'https://graph.facebook.com/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://treehouse.io/fbAppConnect&code=' + code
-    var accessToken
+    var accessToken = 'test'
     var https = require('https');
 
 
-    var simpletestlink= 'https://graph.facebook.com/'
-    https.get(simpletestlink, function(res) {
+    https.get({ host: 'graph.facebook.com', path: '/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://treehouse.io/fbAppConnect&code=' + code }, function (res) {
+        console.log(res);
+        accessToken = res.body;
+    });
+});
+
+
+   /* https.get(accessTokenLink, function(res) {
         console.log("statusCode: ", res.statusCode);
         console.log("headers: ", res.headers);
 
@@ -179,7 +185,7 @@ app.get('/fbAppConnect', function(request, response){
             console.error("tam: " + e);
     });
 
-
+     */
     var graphLink = 'https://graph.facebook.com/me?access_token=AAAG1bp6ZAa9wBAMmoMEtqJdddn9mhHNacHv0AynJZCzVZAQQp2PtJaMgnfWZBOq1nklmZC5sm2W0WyYpoDKnIwWqZAajgx7zvNCWBxqtH9RwZDZD'
 
     //"email": "erik\u0040lejbrinkbennerhult.se",
