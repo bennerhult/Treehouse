@@ -34,13 +34,11 @@ function checkUserOnServer(username, appMode, callback) {
 }
 
 function loginUsingFacebook() {
-    var userEmail = 'linda@lejbrinkbennerhult.se'
-
+    //http://stackoverflow.com/questions/11197668/fb-login-broken-flow-for-ios-webapp
     if (isAppMode) {  //TODO: try server side http://developers.facebook.com/docs/authentication/server-side/
-        //var permissionUrl = "https://m.facebook.com/dialog/oauth?client_id=480961688595420&response_type=code&redirect_uri=http://treehouse.io/fbAppConnect&scope=email";
-
-        var permissionUrl = "https://m.facebook.com/dialog/oauth?client_id=480961688595420&response_type=token&redirect_uri=http://treehouse.io/fbAppConnect&scope=email";
-        window.location = permissionUrl;
+        var permissionUrl = "https://m.facebook.com/dialog/oauth?client_id=480961688595420&response_type=code&redirect_uri=http://treehouse.io/fbAppConnect&scope=email"
+        window.location = permissionUrl
+        return
         /*
         FB.login(function(response) {
            if (response.authResponse) {
