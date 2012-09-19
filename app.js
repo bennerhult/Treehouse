@@ -179,35 +179,21 @@ app.get('/fbAppConnect', function(request, response){
                     var email  = graph_parts.email
                     console.log("BBB: " + email)
 
-                    response.writeHead(200, {'content-type': 'application/json' })
-                    response.write(JSON.stringify(accessTokenLink + '   accessToken:  ' + accessToken+ '   email:  ' + email))
-                    response.end('\n', 'utf-8')
+                    user.User.findOne({ username: email }, function(err,myUser) {
+                      getDataForUser(myUser, request, response, false)
+                    })
+
+                    //response.writeHead(200, {'content-type': 'application/json' })
+                   // response.write(JSON.stringify(accessTokenLink + '   accessToken:  ' + accessToken+ '   email:  ' + email))
+                   // response.end('\n', 'utf-8')
                 } else {
                     response.writeHead(200, {'content-type': 'application/json' })
                     response.write(JSON.stringify('error: ' + graphError + ', link: ' + graphLink))
                     response.end('\n', 'utf-8')
                 }
             })
-
         }
-
     })
-
-
-
-
-
-
-
-
-    //http://stackoverflow.com/questions/11197668/fb-login-broken-flow-for-ios-webapp
-    //  https://graph.facebook.com/me?access_token=YOUR_USER_ACCESS_TOKEN
-
-    //user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
-    //user.User.findOne({ username: 'linda@lejbrinkbennerhult.se' }, function(err,myUser) {
-        //console.log(request.query.username.toLowerCase())
-      //  getDataForUser(myUser, request, response, false)
-    //})
 })
 
 app.get('/signin', function(request, response) {
