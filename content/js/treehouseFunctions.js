@@ -35,41 +35,9 @@ function checkUserOnServer(username, appMode, callback) {
 
 
 function loginUsingFacebook() {
-    //http://stackoverflow.com/questions/11197668/fb-login-broken-flow-for-ios-webapp
-    //if (isAppMode)
-    if (true) {  //TODO: try server side http://developers.facebook.com/docs/authentication/server-side/
+    if (isAppMode) {
         var permissionUrl = "https://m.facebook.com/dialog/oauth?client_id=480961688595420&response_type=code&redirect_uri=http://treehouse.io/fbAppConnect&scope=email"
         window.location = permissionUrl
-
-
-        //return
-        /*
-        FB.login(function(response) {
-           if (response.authResponse) {
-                FB.api('/me', function(apiResponse) {
-                    if (apiResponse) {
-                        userEmail = apiResponse.email
-                        checkFBUserOnServer(apiResponse.email,
-                            function(data) {
-                                if (data == "ok") { //TODO: use ajax success/error instead
-                                    openAchievements(false)
-                                } else {
-                                    $("#message").html("Facebook did not play nice. Try regular login instead." )
-                                }
-                            }
-                        )
-                    } else {
-                        $("#message").html('Facebook did not play nice! Try regular login instead.')
-                    }
-                })
-            } else {
-                $("#message").html('No worries! Try regular login instead.')   //the user closed the fb-login dialogue
-            }
-        }, {scope: 'email', show_error: 'true', display : 'touch', response_type : 'token', redirect_uri: 'http://treehouse.io/fbAppConnect'}) // display: touch , redirect_uri: 'http://treehouse.io/fbAppConnect?username=' + userEmail
-          */
-
-        // &state=YOUR_STATE_VALUE TODO: add for security
-        //window.location.href = 'https://www.facebook.com/dialog/oauth/?client_id=480961688595420&response_type=token&redirect_uri=http://treehouse.io/fbAppConnect?username=linda@lejbrinkbennerhult.se&scope=email'
     } else {
         FB.login(function(response) {
             if (response.authResponse) {
