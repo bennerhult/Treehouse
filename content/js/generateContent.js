@@ -10,6 +10,7 @@ var footerContent = '<ul>' + nl +
 
 var isiPad = navigator.userAgent.match(/iPad/i) != null;
 var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
+var isiOs = isiPad || isiPhone
 
 var isAppMode = false
 

@@ -35,7 +35,7 @@ function checkUserOnServer(username, appMode, callback) {
 
 
 function loginUsingFacebook() {
-    if (isAppMode) {
+    if (isAppMode || isiOs) {
         var permissionUrl = "https://m.facebook.com/dialog/oauth?client_id=480961688595420&response_type=code&redirect_uri=http://treehouse.io/fbAppConnect&scope=email"
         window.location = permissionUrl
     } else {
