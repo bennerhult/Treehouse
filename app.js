@@ -156,10 +156,12 @@ app.get('/checkFBUser', function(request, response){
 
 app.get('/fbAppConnect', function(request, response){
     console.log("----------- fbAppConnect -------------------")
+    var url_parts = url.parse(request.url, true)
+    var code = url_parts.query.code
 
-    console.log("code: " + request.code)
+    console.log("code: " + code)
 
-    var fblink= 'https://graph.facebook.com/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://treehouse.io&code=' +request.code
+    var fblink= 'https://graph.facebook.com/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://treehouse.io&code=' + code
 
     response.writeHead(200, {'content-type': 'application/json' })
     response.write(JSON.stringify(fblink))
