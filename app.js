@@ -171,9 +171,9 @@ app.get('/fbAppConnect', function(request, response){
     })//*/
 
     var request = require('request');
-    request(accessTokenLink, function (error, response, body) {
+    request.post(accessTokenLink, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            accessToken = body // Print the google web page.
+            accessToken = body
         } else {
             accessToken = "error " + error
         }
