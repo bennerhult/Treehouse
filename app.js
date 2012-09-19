@@ -182,6 +182,10 @@ app.get('/fbAppConnect', function(request, response){
                     response.writeHead(200, {'content-type': 'application/json' })
                     response.write(JSON.stringify(accessTokenLink + '   accessToken:  ' + accessToken+ '   email:  ' + email))
                     response.end('\n', 'utf-8')
+                } else {
+                    response.writeHead(200, {'content-type': 'application/json' })
+                    response.write(JSON.stringify('error: ' + error))
+                    response.end('\n', 'utf-8')
                 }
             })
 
