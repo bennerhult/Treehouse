@@ -171,7 +171,7 @@ app.get('/fbAppConnect', function(request, response){
             console.log("BODY: " + accessTokenBody)
             var access_token_parts = JSON.parse(accessTokenBody)
             console.log("PARTS: " + access_token_parts)
-            var accessToken  = access_token_parts.access_token
+            var accessToken  = accessTokenBody.substring(accessTokenBody.indexOf('='))
             console.log("AAA: " + accessToken)
             var graphLink = 'https://graph.facebook.com/me?access_token=' + accessToken
 
