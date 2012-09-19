@@ -161,54 +161,37 @@ app.get('/fbAppConnect', function(request, response){
 
 
     var accessTokenLink= 'https://graph.facebook.com/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://treehouse.io/fbAppConnect&code=' + code
-    var accessToken = 'test3'
-    //var https = require('https');
 
 
-    /*https.get({ host: 'graph.facebook.com', path: '/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://treehouse.io/fbAppConnect&code=' + code }, function (res) {
-       // console.log(res);
-        accessToken = res;
-    })//*/
 
-    var requestA = require('request');
+    var requestModule = require('request');
 
-    //TODO: post?
-    //https://github.com/mikeal/request#oauth-signing
-    requestA.get(accessTokenLink, function (error, response2, body) {
-        console.log("11111111111111111111111111111111111111111111")
-        if (!error && response2.statusCode == 200) {
-            accessToken = body
-            console.log("22222222222222222222222222222222222")       //TODO vi kommer hit!
-            console.log(body)
-            response.writeHead(200, {'content-type': 'application/json' })
-            response.write(JSON.stringify(accessTokenLink + '   accessToken:  ' + accessToken))
-            response.end('\n', 'utf-8')
-        } else {
-            accessToken = "error " + error
-            console.log("3333333333333333333333333333333333")
+    requestModule.get(accessTokenLink, function (accessTokenError, accessTokenResponse, accessTokenBody) {
+        if (!accessTokenError && accessTokenResponse.statusCode == 200) {
+            var access_token_parts = accessTokenBody.parse()
+            var accessToken  = access_token_parts.query.access_token
+            console.log("AAA: " + accessToken)
+            var graphLink = 'https://graph.facebook.com/me?access_token=' + accessToken
+
+            requestModule.get(graphLink, function (graphError, graphResponse, graphBody) {
+                if (!accessTokenError && graphResponse.statusCode == 200) {
+                    var graph_parts = graphBody.parse()
+                    var email  = graph_parts.query.email
+                    console.log("BBB: " + email)
+
+                    response.writeHead(200, {'content-type': 'application/json' })
+                    response.write(JSON.stringify(accessTokenLink + '   accessToken:  ' + accessToken+ '   email:  ' + email))
+                    response.end('\n', 'utf-8')
+                }
+            })
+
         }
 
     })
 
 
 
-   /* https.get(accessTokenLink, function(res) {
-        console.log("statusCode: ", res.statusCode);
-        console.log("headers: ", res.headers);
 
-        res.on('data', function(d) {
-            accessToken +=d
-            console.log("badz:    " + d)
-        });
-
-    }).on('error', function(e) {     //TODO: start here
-            console.error("tam: " + e);
-    });
-
-     */
-    var graphLink = 'https://graph.facebook.com/me?access_token=AAAG1bp6ZAa9wBAMmoMEtqJdddn9mhHNacHv0AynJZCzVZAQQp2PtJaMgnfWZBOq1nklmZC5sm2W0WyYpoDKnIwWqZAajgx7zvNCWBxqtH9RwZDZD'
-
-    //"email": "erik\u0040lejbrinkbennerhult.se",
 
 
 
