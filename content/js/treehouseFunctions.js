@@ -33,19 +33,11 @@ function checkUserOnServer(username, appMode, callback) {
     })
 }
 
-https://graph.facebook.com/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://treehouse.io&code=AQBkVliWKsgPhYIFglqkHjiWoPng-hmD9ziy74WqExWa5MtQQQ2ksQ7KyBvN4uQvKjjfv2m8PiI5Cfw9YtxWB_euCz8xVdEwn-RA7qFXJBL4yvAbRz8YqepV09YsTAPZvFWZr-GkR-E3V7AIxWQTBdDTeSLYxAUb0A5GIwCJ0JcktorVph2gURnfjDJbUCycMCeQ5Hc0bGaX5M5eV249KYsC
-
-
-
-  "GET /rememberMe HTTP/1.1" 200 5 "http://treehouse.io/fbAppConnect?code=
-AQB00d4LKNFxWbkl24jdsfeYXu8aVKOi9Pmq4u1tCpU_iXMdCIAr8k4wqRdVPQRWuxvDS_o8wI6M9wtKDr3MV8f9y2iFu0etufNzRziPmcOjNvgEnQ50a34HgIhAIkYqD_ArQlFG787zYwjgIFm41nrXKWf-4JKffELnf-70uK0pU_FNRCT6-6jc8cERfnEzWt4FZ4NYISiXWpAQY0UB5uU3
-
-
-http://treehouse.io/fbAppConnect?code=AQBkVliWKsgPhYIFglqkHjiWoPng-hmD9ziy74WqExWa5MtQQQ2ksQ7KyBvN4uQvKjjfv2m8PiI5Cfw9YtxWB_euCz8xVdEwn-RA7qFXJBL4yvAbRz8YqepV09YsTAPZvFWZr-GkR-E3V7AIxWQTBdDTeSLYxAUb0A5GIwCJ0JcktorVph2gURnfjDJbUCycMCeQ5Hc0bGaX5M5eV249KYsC
 
 function loginUsingFacebook() {
     //http://stackoverflow.com/questions/11197668/fb-login-broken-flow-for-ios-webapp
-    if (isAppMode) {  //TODO: try server side http://developers.facebook.com/docs/authentication/server-side/
+    //if (isAppMode)
+    if (true) {  //TODO: try server side http://developers.facebook.com/docs/authentication/server-side/
         var permissionUrl = "https://m.facebook.com/dialog/oauth?client_id=480961688595420&response_type=code&redirect_uri=http://treehouse.io/fbAppConnect&scope=email"
         window.location = permissionUrl
         //return
