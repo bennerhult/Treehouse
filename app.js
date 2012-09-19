@@ -168,6 +168,7 @@ app.get('/fbAppConnect', function(request, response){
 
     requestModule.get(accessTokenLink, function (accessTokenError, accessTokenResponse, accessTokenBody) {
         if (!accessTokenError && accessTokenResponse.statusCode == 200) {
+            console.log("BODY: " + accessTokenBody)
             var access_token_parts = JSON.parse(accessTokenBody)
             console.log("PARTS: " + access_token_parts)
             var accessToken  = access_token_parts.access_token
