@@ -171,11 +171,17 @@ app.get('/fbAppConnect', function(request, response){
     })//*/
 
     var request = require('request');
+
+    //TODO: post?
+    //https://github.com/mikeal/request#oauth-signing
     request.post(accessTokenLink, function (error, response, body) {
+        console.log("11111111111111111111111111111111111111111111")
         if (!error && response.statusCode == 200) {
-            accessToken = body
+            accessToken = response
+            console.log("22222222222222222222222222222222222")
         } else {
             accessToken = "error " + error
+            cconsole.log("3333333333333333333333333333333333")
         }
 
     })
