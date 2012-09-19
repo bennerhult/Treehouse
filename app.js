@@ -165,9 +165,9 @@ app.get('/fbAppConnect', function(request, response){
     var https = require('https');
 
 
-    https.get({ host: 'https://graph.facebook.com', path: '/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://treehouse.io/fbAppConnect&code=' + code }, function (res) {
+    https.get({ host: 'graph.facebook.com', path: '/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://treehouse.io/fbAppConnect&code=' + code }, function (res) {
        // console.log(res);
-        accessToken = res.body;
+        accessToken = res;
     })
 
 
