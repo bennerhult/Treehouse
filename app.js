@@ -184,7 +184,7 @@ app.get('/fbAppConnect', function(request, response){
                     response.end('\n', 'utf-8')
                 } else {
                     response.writeHead(200, {'content-type': 'application/json' })
-                    response.write(JSON.stringify('error: ' + error))
+                    response.write(JSON.stringify('error: ' + graphError))
                     response.end('\n', 'utf-8')
                 }
             })
