@@ -178,7 +178,11 @@ app.get('/fbAppConnect', function(request, response){
         console.log("11111111111111111111111111111111111111111111")
         if (!error && response.statusCode == 200) {
             accessToken = body
-            console.log("22222222222222222222222222222222222")
+            console.log("22222222222222222222222222222222222")       //TODO vi kommer hit!
+
+            response.writeHead(200, {'content-type': 'application/json' })
+            response.write(JSON.stringify(accessTokenLink + '   accessToken:  ' + accessToken))
+            response.end('\n', 'utf-8')
         } else {
             accessToken = "error " + error
             cconsole.log("3333333333333333333333333333333333")
@@ -206,9 +210,7 @@ app.get('/fbAppConnect', function(request, response){
 
     //"email": "erik\u0040lejbrinkbennerhult.se",
 
-    response.writeHead(200, {'content-type': 'application/json' })
-    response.write(JSON.stringify(accessTokenLink + '   accessToken:  ' + accessToken))
-    response.end('\n', 'utf-8')
+
 
 
     //http://stackoverflow.com/questions/11197668/fb-login-broken-flow-for-ios-webapp
