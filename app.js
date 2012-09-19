@@ -161,7 +161,7 @@ app.get('/fbAppConnect', function(request, response){
 
 
     var accessTokenLink= 'https://graph.facebook.com/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://treehouse.io/fbAppConnect&code=' + code
-    var accessToken = 'test2'
+    var accessToken = 'test3'
     //var https = require('https');
 
 
@@ -177,7 +177,7 @@ app.get('/fbAppConnect', function(request, response){
     requestA.get(accessTokenLink, function (error, response, body) {
         console.log("11111111111111111111111111111111111111111111")
         if (!error && response.statusCode == 200) {
-            accessToken = response
+            accessToken = body
             console.log("22222222222222222222222222222222222")
         } else {
             accessToken = "error " + error
