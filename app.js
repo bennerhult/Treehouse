@@ -176,9 +176,9 @@ app.get('/fbAppConnect', function(request, response){
             console.log("badz:    " + d)
         });
 
-    }).on('error', function(e) {
-            console.error(e);
-        });
+    }).on('error', function(e) {     //TODO: start here
+            console.error("tam: " + e);
+    });
 
 
     var graphLink = 'https://graph.facebook.com/me?access_token=AAAG1bp6ZAa9wBAMmoMEtqJdddn9mhHNacHv0AynJZCzVZAQQp2PtJaMgnfWZBOq1nklmZC5sm2W0WyYpoDKnIwWqZAajgx7zvNCWBxqtH9RwZDZD'
