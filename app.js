@@ -171,7 +171,7 @@ app.get('/fbAppConnect', function(request, response){
             console.log("BODY: " + accessTokenBody)
             var accessToken  = accessTokenBody.substring(accessTokenBody.indexOf('='))
             console.log("AAA: " + accessToken)
-            var graphLink = 'https://graph.facebook.com/me?access_token=' + accessToken
+            var graphLink = 'https://graph.facebook.com/me?access_token' + accessToken
 
             requestModule.get(graphLink, function (graphError, graphResponse, graphBody) {
                 if (!graphError && graphResponse.statusCode == 200) {
