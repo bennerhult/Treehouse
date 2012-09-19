@@ -162,12 +162,22 @@ app.get('/fbAppConnect', function(request, response){
 
     var accessTokenLink= 'https://graph.facebook.com/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://treehouse.io/fbAppConnect&code=' + code
     var accessToken = 'test'
-    var https = require('https');
+    //var https = require('https');
 
 
     https.get({ host: 'graph.facebook.com', path: '/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://treehouse.io/fbAppConnect&code=' + code }, function (res) {
        // console.log(res);
         accessToken = res;
+    })//
+
+    var request = require('request');
+    request(accessTokenLink, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            accessToken = body // Print the google web page.
+        } else {
+            accessToken = "error " + error
+        }
+
     })
 
 
