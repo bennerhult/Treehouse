@@ -452,30 +452,41 @@ function getAchievementList(request, response, completedAchievements) {
                     if (err2) { console.log("error in app.js: couldn't find achievement for progress " + currentProgress.achievement_id) }
                     if (myAchievement) {
                         if  (_.indexOf(achievementIdsGoneThrough, myAchievement._id.toString()) == -1) {
-                            achievementIdsGoneThrough.push(myAchievement._id.toString())
-                            calculateAchievementProgress(achieverId, myAchievement._id, function(achievementPercentageFinished) {
-                                if ((completedAchievements && achievementPercentageFinished == 100) || (!completedAchievements && achievementPercentageFinished < 100)) {
-                                    achievementsToShow.push(myAchievement)
-                                    percentages.push(achievementPercentageFinished)
-                                }
-                                goneThroughProgresses +=  myAchievement.goals.length
-                                if (goneThroughProgresses == progresses.length) {
-                                    achievementsList += createAchievementDesc(achievementsToShow, achieverId, percentages, completedAchievements, lookingAtFriendsAchievements)
-                                    finishAchievementsList(response, achievementsList)
-                                }
-                            })
-                        }
+
+                                achievementIdsGoneThrough.push(myAchievement._id.toString())
+                                calculateAchievementProgress(achieverId, myAchievement._id, function(achievementPercentageFinished) {
+                                    if(!lookingAtFriendsAchievements || myAchievement.publiclyVisible) {
+                                        if ((completedAchievements && achievementPercentageFinished == 100) || (!completedAchievements && achievementPercentageFinished < 100)) {
+                                            achievementsToShow.push(myAchievement)
+                                            percentages.push(achievementPercentageFinished)
+                                        }
+                                    }
+                                    goneThroughProgresses +=  myAchievement.goals.length
+                                    if (goneThroughProgresses == progresses.length) {
+                                        achievementsList += createAchievementDesc(achievementsToShow, achieverId, percentages, completedAchievements, lookingAtFriendsAchievements)
+                                        finishAchievementsList(response, achievementsList, completedAchievements)
+                                    }
+                                })
+                            }
+
                     }
                 })
             })
         } else {
             achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent(), setCreateEditMenu())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>"
-            finishAchievementsList(response, achievementsList)
+            finishAchievementsList(response, achievementsList, completedAchievements)
         }
     })
 }
 
-function finishAchievementsList(response, achievementsList) {
+function finishAchievementsList(response, achievementsList, completedAchievements) {
+    if (achievementsList.length < 1) {
+        if (completedAchievements) {
+            achievementsList = "<div class='achievement first'><div class='container'>Your friend has not a single shared completed achievement. Sad but true.</div></div>"
+        }  else {
+            achievementsList = "<div class='achievement first'><div class='container'>Your friend has not a single shared progressing achievement. Sad but true.</div></div>"
+        }
+    }
     response.writeHead(200, {'content-type': 'application/json' })
     response.write(JSON.stringify(achievementsList))
     response.end('\n', 'utf-8')
