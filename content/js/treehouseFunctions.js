@@ -229,10 +229,10 @@ function getAchievementsFromServer(completed, achieverId, callback) {
 }
 
 /******************  achievement functions  ******************/
-function openAchievement(achievementId, userId, publiclyVisible, progressMade, completed) {
-    window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + userId)
+function openAchievement(achievementId, achieverId, publiclyVisible, progressMade, completed) {
+    window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + achieverId)
     isLatestAchievement(achievementId, function(isLatestAchievement) {
-        insertContent(getAchievementContent(), setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, completed, userId), getAchievement(achievementId, userId, publiclyVisible))
+        insertContent(getAchievementContent(), setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, completed, achieverId), getAchievement(achievementId, achieverId, publiclyVisible))
     })
 }
 

@@ -383,7 +383,7 @@ app.get('/latestAchievementId', function(request, response) {
     })
 })
 
-function createAchievementDesc(achievements, userId, percentages, completed, lookingAtFriendsAchievements) {
+function createAchievementDesc(achievements, achieverId, percentages, completed, lookingAtFriendsAchievements) {
     var achievementsList = ""
     for (var i in achievements) {
         if ((completed || lookingAtFriendsAchievements) && i == 0) {
@@ -394,7 +394,7 @@ function createAchievementDesc(achievements, userId, percentages, completed, loo
         achievementsList += '<div class="container"><a href="javascript:void(0)" onclick="openAchievement(\''
             + achievements[i]._id
             + '\', \''
-            + userId
+            + achieverId
             + '\','
             + achievements[i].publiclyVisible
             + ','
@@ -487,7 +487,7 @@ app.get('/achievementFromServer', function(request, response){
     app.set('current_achievement_id', currentAchievementId)
     achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
         if (request.session.user_id) {
-            loadUser (request, response, function () { writeAchievementPage(response, request.session.user_id, currentAchievement, false)})
+            loadUser (request, response, function () { writeAchievementPage(response, url_parts.query.userId, currentAchievement, false)})
         } else if (currentAchievement && currentAchievement.publiclyVisible)    {
             writeAchievementPage(response, url_parts.query.userId, currentAchievement, true)
         } else {
@@ -498,7 +498,7 @@ app.get('/achievementFromServer', function(request, response){
     })
 })
 
-function writeAchievementPage(response, currentUserId, currentAchievement, publicView) {
+function writeAchievementPage(response, currentViewedAchieverId, currentAchievement, publicView) {
     var achievementDesc = ""
     var goalTexts = []
     var myQuantityTotal = 0
@@ -507,7 +507,7 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
         currentAchievement.goals.forEach(function(goal, goalIndex) {
             progress.Progress.findOne({ goal_id: goal._id}, function(err,myProgress) {
                 if (err) {
-                    console.log("error in app.js: couldn't find progress for user " + currentUserId)
+                    console.log("error in app.js: couldn't find progress for user " + currentViewedAchieverId)
                 } else {
                     myQuantityFinished += myProgress.quantityFinished
                     myQuantityTotal += goal.quantityTotal
@@ -517,7 +517,7 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
         currentAchievement.goals.forEach(function(goal, goalIndex) {
             progress.Progress.findOne({   goal_id: goal._id}, function(err,myProgress) {
                 if (err) {
-                    console.log("error in app.js: couldn't find progress for user " + currentUserId)
+                    console.log("error in app.js: couldn't find progress for user " + currentViewedAchieverId)
                 } else {
                     var goalPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100
                     goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, goalPercentageFinished, publicView, goalTexts.length + 1 == currentAchievement.goals.length))
@@ -548,9 +548,9 @@ function writeAchievementPage(response, currentUserId, currentAchievement, publi
                                 achievementDesc += '<br />'
                                 achievementDesc += '<p>'
                                 achievementDesc += 'Creator: ' + currentAchievement.createdBy + '<br />'
-                                user.User.findOne({ _id:  currentUserId}, function(err2,myUser) {
+                                user.User.findOne({ _id:  currentViewedAchieverId}, function(err2,myUser) {
                                     if (err2) {
-                                        console.log("error in app.js: couldn't find user " + currentUserId)
+                                        console.log("error in app.js: couldn't find user " + currentViewedAchieverId)
                                     } else {
                                         achievementDesc += 'Achiever: ' + myUser.username
                                     }
