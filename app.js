@@ -383,10 +383,10 @@ app.get('/latestAchievementId', function(request, response) {
     })
 })
 
-function createAchievementDesc(achievements, userId, percentages, completed) {
+function createAchievementDesc(achievements, userId, percentages, completed, lookingAtFriendsAchievements) {
     var achievementsList = ""
     for (var i in achievements) {
-        if (completed && i == 0) {
+        if ((completed || lookingAtFriendsAchievements) && i == 0) {
             achievementsList += "<div class='achievement first'>"
         } else {
             achievementsList += "<div class='achievement'>"
@@ -433,8 +433,11 @@ function getAchievementList(request, response, completedAchievements) {
     var achievementsToShow = new Array()
     var achievementIdsGoneThrough = new Array()
     var percentages = new Array()
+    var lookingAtFriendsAchievements = false
+
     var achieverId
     if (request.query.achieverId) {
+        lookingAtFriendsAchievements = true
         achieverId = request.query.achieverId
     } else {
         achieverId = request.session.user_id
@@ -443,7 +446,7 @@ function getAchievementList(request, response, completedAchievements) {
 
         if (err) { console.log("error in app.js: couldn't find any progess for user " + achieverId) }
         if (progresses && progresses.length > 0) {
-            if (!completedAchievements) { achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent(), setCreateEditMenu())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>" }
+            if (!lookingAtFriendsAchievements && !completedAchievements ) { achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent(), setCreateEditMenu())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>" }
             progresses.forEach(function(currentProgress, index) {
                 achievement.Achievement.findById(currentProgress.achievement_id, function(err2, myAchievement) {
                     if (err2) { console.log("error in app.js: couldn't find achievement for progress " + currentProgress.achievement_id) }
@@ -457,7 +460,7 @@ function getAchievementList(request, response, completedAchievements) {
                                 }
                                 goneThroughProgresses +=  myAchievement.goals.length
                                 if (goneThroughProgresses == progresses.length) {
-                                    achievementsList += createAchievementDesc(achievementsToShow, achieverId, percentages, completedAchievements)
+                                    achievementsList += createAchievementDesc(achievementsToShow, achieverId, percentages, completedAchievements, lookingAtFriendsAchievements)
                                     finishAchievementsList(response, achievementsList)
                                 }
                             })

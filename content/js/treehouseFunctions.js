@@ -163,11 +163,10 @@ function findFriendsOnServer(friend_email, callback) {
 
 function visitFriend(friendId) {
     var completedExists = true //TODO fetch completedExists or not for friend
-    var completed  = false //TODO fetch completed or not for friend
 
     //TODO only get publicly visible achievements for friend
     //TODO write "friend has no shared achievements" if applicable
-    insertContent(getAchievementsContent(), setDefaultMenu(completedExists), getAchievements(completed, friendId))
+    insertContent(getAchievementsContent(), setDefaultMenu(completedExists), getAchievements(false, friendId))
 }
 /******************  achievements functions  ******************/
 function openAchievements(completed) {
