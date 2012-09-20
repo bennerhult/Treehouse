@@ -64,6 +64,7 @@ function setPublicMenu() {
     $("#menuArea").html(menu)
  }
 
+//TODO remove unused userId below   ?
 function setCreateEditMenu(data) {
     var text ='<div id="menu">' + nl  +
         '<ul>' + nl  +

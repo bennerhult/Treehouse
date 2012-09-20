@@ -73,17 +73,12 @@ function loadUser(request, response, next) {
 }
 
 function authenticateFromLoginToken(request, response, initialCall) {
-    console.log("--------          --------")
-    console.log(request.cookies.rememberme)
     if (request.cookies.rememberme)  {
         var cookie = JSON.parse(request.cookies.rememberme)
         loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
-            console.log(cookie.email)
             if (!token) {
-                console.log("no token")
                 writeDefaultPage(response) //Try signing in again!
             } else {
-                console.log("token")
                 user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
                     if (user) {
                         request.session.user_id = user.id
@@ -92,17 +87,14 @@ function authenticateFromLoginToken(request, response, initialCall) {
                         token.save(function() {
                             response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 2 * 604800000), path: '/' })
                             if (initialCall) {
-                                console.log("initial")
                                 writeDefaultPage(response)
                             }   else {
-                                console.log("ok")
                                 response.writeHead(200, {'content-type': 'application/json' })
                                 response.write(JSON.stringify("ok"))
                                 response.end('\n', 'utf-8')
                             }
                         })
                     } else {
-                        console.log("bummer")
                         response.writeHead(200, {'content-type': 'application/json' })
                         response.write(JSON.stringify("Bummer! We cannot find you in our records. Contact us at staff@treehouse.io if you want us to help you out."))
                         response.end('\n', 'utf-8')
@@ -111,7 +103,6 @@ function authenticateFromLoginToken(request, response, initialCall) {
             }
         })
     }  else {
-        console.log("typical first")
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(""))   //typical first sign in
         response.end('\n', 'utf-8')
@@ -147,9 +138,7 @@ app.get('/rememberMe', function(request, response){
 })
 
 app.get('/checkFBUser', function(request, response){
-    console.log("----------- check FB user -------------------")
     user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
-        console.log(request.query.username.toLowerCase())
         getDataForUser(myUser, request, response, false)
     })
 })
@@ -444,8 +433,15 @@ function getAchievementList(request, response, completedAchievements) {
     var achievementsToShow = new Array()
     var achievementIdsGoneThrough = new Array()
     var percentages = new Array()
-   progress.Progress.find({ achiever_id: request.session.user_id}, function(err, progresses) {
-        if (err) { console.log("error in app.js: couldn't find any progess for user " + request.session.user_id) }
+    var achieverId
+    if (request.query.achieverId) {
+        achieverId = request.query.achieverId
+    } else {
+        achieverId = request.session.user_id
+    }
+    progress.Progress.find({ achiever_id: achieverId}, function(err, progresses) {
+
+        if (err) { console.log("error in app.js: couldn't find any progess for user " + achieverId) }
         if (progresses && progresses.length > 0) {
             if (!completedAchievements) { achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent(), setCreateEditMenu())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>" }
             progresses.forEach(function(currentProgress, index) {
@@ -454,14 +450,14 @@ function getAchievementList(request, response, completedAchievements) {
                     if (myAchievement) {
                         if  (_.indexOf(achievementIdsGoneThrough, myAchievement._id.toString()) == -1) {
                             achievementIdsGoneThrough.push(myAchievement._id.toString())
-                            calculateAchievementProgress(request.session.user_id, myAchievement._id, function(achievementPercentageFinished) {
+                            calculateAchievementProgress(achieverId, myAchievement._id, function(achievementPercentageFinished) {
                                 if ((completedAchievements && achievementPercentageFinished == 100) || (!completedAchievements && achievementPercentageFinished < 100)) {
                                     achievementsToShow.push(myAchievement)
                                     percentages.push(achievementPercentageFinished)
                                 }
                                 goneThroughProgresses +=  myAchievement.goals.length
                                 if (goneThroughProgresses == progresses.length) {
-                                    achievementsList += createAchievementDesc(achievementsToShow, request.session.user_id, percentages, completedAchievements)
+                                    achievementsList += createAchievementDesc(achievementsToShow, achieverId, percentages, completedAchievements)
                                     finishAchievementsList(response, achievementsList)
                                 }
                             })

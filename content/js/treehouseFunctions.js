@@ -133,7 +133,7 @@ function findFriends() {
             findFriendsOnServer(friend_email,
                 function(data, found) {
                     if ( found ) {
-                        $("#message").html(friend_email + " found!<br /><a href='javascript:void(0)' onclick='visitFriend(\"" + data + "\")'>Visit!</a>")
+                        $("#message").html(friend_email + " found!<br /><a href='javascript:void(0)' style='color: black' onclick='visitFriend(\"" + data + "\")'>Visit!</a>")
                     } else {
                         $("#message").html(data)
                     }
@@ -150,7 +150,6 @@ function findFriends() {
 
 function findFriendsOnServer(friend_email, callback) {
     var data = "friend_email=" + friend_email
-
     var jqxhr = $.ajax("/findFriends", {
         type: "GET",
         data: data,
@@ -163,7 +162,12 @@ function findFriendsOnServer(friend_email, callback) {
 }
 
 function visitFriend(friendId) {
+    var completedExists = true //TODO fetch completedExists or not for friend
+    var completed  = false //TODO fetch completed or not for friend
 
+    //TODO only get publicly visible achievements for friend
+    //TODO write "friend has no shared achievements" if applicable
+    insertContent(getAchievementsContent(), setDefaultMenu(completedExists), getAchievements(completed, friendId))
 }
 /******************  achievements functions  ******************/
 function openAchievements(completed) {
@@ -175,7 +179,6 @@ function openAchievements(completed) {
     })
 }
 
-
 function completedAchievementsExistFromServer(callback) {
     $.ajax("/completedAchievementsExist", {
         type: "GET",
@@ -185,9 +188,8 @@ function completedAchievementsExistFromServer(callback) {
     })
 }
 
-
-function getAchievements(completed) {
-    getAchievementsFromServer(completed,
+function getAchievements(completed, achieverId) {
+    getAchievementsFromServer(completed, achieverId,
         function(data) {
             FB.XFBML.parse();
             $("#fbLikeWeb").show()
@@ -204,10 +206,14 @@ function getAchievements(completed) {
     )
 }
 
-function getAchievementsFromServer(completed, callback) {
+function getAchievementsFromServer(completed, achieverId, callback) {
+    if (achieverId) {
+        var data = "achieverId=" + achieverId
+    }
     if (completed) {
         $.ajax("/achievements_completed", {
             type: "GET",
+            data: data,
             dataType: "json",
             success: function(data) { if ( callback ) callback(data) },
             error  : function()     { if ( callback ) callback(null) }
@@ -215,6 +221,7 @@ function getAchievementsFromServer(completed, callback) {
     }  else {
         $.ajax("/achievements_inProgress", {
             type: "GET",
+            data: data,
             dataType: "json",
             success: function(data) { if ( callback ) callback(data) },
             error  : function()     { if ( callback ) callback(null) }
