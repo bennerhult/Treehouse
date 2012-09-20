@@ -166,7 +166,7 @@ function visitFriend(friendId) {
 
     //TODO only get publicly visible achievements for friend
     //TODO write "friend has no shared achievements" if applicable
-    insertContent(getAchievementsContent(), setDefaultMenu(completedExists), getAchievements(false, friendId))
+    insertContent(getAchievementsContent(), setDefaultMenu(completedExists, friendId), getAchievements(false, friendId))
 }
 /******************  achievements functions  ******************/
 function openAchievements(completed) {
