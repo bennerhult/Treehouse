@@ -133,7 +133,7 @@ function findFriends() {
             findFriendsOnServer(friend_email,
                 function(data, found) {
                     if ( found ) {
-                        $("#message").html(friend_email + " found!<br /><a href='javascript:void(0)' style='color: black' onclick='visitFriend(\"" + data + "\")'>Visit!</a>")
+                        $("#message").html(friend_email + " found!<br /><a href='javascript:void(0)' style='color: black' onclick='visitFriend(\"" + data + "\")'>Visit!</a><br /><a href='javascript:void(0)' style='color: black' onclick='addFriend(\"" + data + "\")'>Add!</a>")
                     } else {
                         $("#message").html(data)
                     }
@@ -162,10 +162,19 @@ function findFriendsOnServer(friend_email, callback) {
 }
 
 function visitFriend(friendId) {
-    var completedExists = true //TODO fetch completedExists or not for friend
-    //TODO only get publicly visible achievements for friend
-    //TODO write "friend has no shared achievements" if applicable
+    var completedExists = true
     insertContent(getAchievementsContent(), setDefaultMenu(completedExists, friendId, true), getAchievements(false, friendId, true))
+}
+
+function addFriend(friendId) {
+    //TODO save request in database
+    //TODO visual confirmation that request is created
+    //TODO if friend request sent/received, do not add new request
+
+    //TODO notify friend
+
+    //TODO confirm friend request
+    //TODO ignore fiend request
 }
 
 /******************  achievements functions  ******************/
