@@ -14,9 +14,9 @@ function gotoAppPart() {
     return content
 }
 
-function indexPage(response) {
+function indexPage(response, userId) {
     response.writeHead(200, { 'Content-Type': 'text/html' })
-    response.end(topIndexPart() + bottomPart(), 'utf-8')
+    response.end(topIndexPart(userId) + bottomPart(), 'utf-8')
 }
 
 function publicAchievementPage(response, userId, currentAchievementId, url, imageUrl, title) {
@@ -86,7 +86,7 @@ function topAppPagePart() {
 }
 
 
-function topIndexPart() {
+function topIndexPart(userId) {
             var text = '<!DOCTYPE html>' + nl +
             tab + '<html manifest="treehouse.manifest">' + nl +
                 tab + '<head>' + nl +
@@ -117,7 +117,7 @@ function topIndexPart() {
                     tab + '$(document).ready(function() {' + nl  +
                     tab + 'init()' + nl  +
                      tab   + 'setTimeout(function(){addToHome.show(false)}, 100)' + nl +
-                     tab + 'rememberMe()'   +nl +
+                     tab + 'rememberMe(\'' + userId  + '\')'   +nl +
                     tab   +  '})</script>' + nl +
                 tab + '</head>' + nl +
                 tab + ' <body>' + nl +

@@ -77,7 +77,7 @@ function authenticateFromLoginToken(request, response, initialCall) {
         var cookie = JSON.parse(request.cookies.rememberme)
         loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
             if (!token) {
-                writeDefaultPage(response) //Try signing in again!
+                writeDefaultPage(request, response) //Try signing in again!
             } else {
                 user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
                     if (user) {
@@ -87,7 +87,7 @@ function authenticateFromLoginToken(request, response, initialCall) {
                         token.save(function() {
                             response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 2 * 604800000), path: '/' })
                             if (initialCall) {
-                                writeDefaultPage(response)
+                                writeDefaultPage(request, response)
                             }   else {
                                 response.writeHead(200, {'content-type': 'application/json' })
                                 response.write(JSON.stringify("ok"))
@@ -129,7 +129,7 @@ app.get('/', function(request, response){
     if (request.cookies.rememberme) {
         authenticateFromLoginToken(request, response, true)
     } else {
-        writeDefaultPage(response)
+        writeDefaultPage(request, response)
     }
 })
 
@@ -187,7 +187,7 @@ function signin(request, response, newUser) {
                 getDataForUser(myUser, request, response, newUser, appMode)
             })
         }  else {
-            writeDefaultPage(response)
+            writeDefaultPage(request, response)
         }
     })
 }
@@ -274,7 +274,7 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
                         response.write(JSON.stringify("ok"))
                         response.end('\n', 'utf-8')
                     } else {
-                        writeDefaultPage(response)
+                        writeDefaultPage(request, response)
                     }
 
                 }
@@ -298,7 +298,7 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
                         if (appMode) {
                             writeGotoAppPage(response)
                         } else {
-                            writeDefaultPage(response)
+                            writeDefaultPage(request, response)
                         }
                     }
                 })
@@ -312,7 +312,7 @@ app.get('/signout', function(request, response){
         response.clearCookie('rememberme', null)
         loginToken.remove(request.session.user_email)
         request.session.destroy()
-        requestHandlers.indexPage(response)
+        requestHandlers.indexPage(response, null)
     }
 })
 
@@ -433,18 +433,15 @@ function getAchievementList(request, response, completedAchievements) {
     var achievementsToShow = new Array()
     var achievementIdsGoneThrough = new Array()
     var percentages = new Array()
-    var lookingAtFriendsAchievements = false
-
+    var lookingAtFriendsAchievements = (request.query.lookingAtFriend === 'true')
     var achieverId
-    if (request.query.achieverId) {
-        lookingAtFriendsAchievements = true
+    if (lookingAtFriendsAchievements) {
         achieverId = request.query.achieverId
     } else {
         achieverId = request.session.user_id
     }
     progress.Progress.find({ achiever_id: achieverId}, function(err, progresses) {
-
-        if (err) { console.log("error in app.js: couldn't find any progess for user " + achieverId) }
+        if (err) { console.log("error in app.js: couldn't find any progress for user " + achieverId) }
         if (progresses && progresses.length > 0) {
             if (!lookingAtFriendsAchievements && !completedAchievements ) { achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent(), setCreateEditMenu())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>" }
             progresses.forEach(function(currentProgress, index) {
@@ -624,7 +621,7 @@ app.get('/completedAchievementsExist', function(request, response) {
     var achievementIdsGoneThrough = new Array()
     var goneThroughProgresses = 0
     progress.Progress.find({ achiever_id: request.session.user_id}, function(err, progresses) {
-        if (err) { console.log("error in app.js: couldn't find any progess for user " + request.session.user_id) }
+        if (err) { console.log("error in app.js: couldn't find any progress for user " + request.session.user_id) }
         if (progresses && progresses.length > 0) {
             progresses.forEach(function(currentProgress, index) {
                 achievement.Achievement.findById(currentProgress.achievement_id, function(err2, myAchievement) {
@@ -820,8 +817,8 @@ function writeGotoAppPage(response) {
     requestHandlers.gotoAppPage(response)
 }
 
-function writeDefaultPage(response) {
-    requestHandlers.indexPage(response)
+function writeDefaultPage(request, response) {
+    requestHandlers.indexPage(response, request.session.user_id)
 }
 
 app.get('*', function(request, response){

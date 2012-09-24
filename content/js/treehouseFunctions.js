@@ -74,11 +74,11 @@ function checkFBUserOnServer(username, callback) {
     })
 }
 
-function rememberMe() {
+function rememberMe(userId) {
     rememberMeOnServer(
         function(data) {
             if (data == "ok") { //TODO: use ajax success/error instead
-                openAchievements(false)
+                openAchievements(false, userId)
             } else {
                 showSignin(data)
             }
@@ -163,18 +163,18 @@ function findFriendsOnServer(friend_email, callback) {
 
 function visitFriend(friendId) {
     var completedExists = true //TODO fetch completedExists or not for friend
-
     //TODO only get publicly visible achievements for friend
     //TODO write "friend has no shared achievements" if applicable
-    insertContent(getAchievementsContent(), setDefaultMenu(completedExists, friendId), getAchievements(false, friendId))
+    insertContent(getAchievementsContent(), setDefaultMenu(completedExists, friendId), getAchievements(false, friendId, true))
 }
+
 /******************  achievements functions  ******************/
-function openAchievements(completed) {
+function openAchievements(completed, achieverId) {
     window.history.pushState(null, null, "/")
     $("#page-login").attr("id","page");
     $("#app-container-login").attr("id","app-container");
     completedAchievementsExistFromServer(function(completedExists) {
-        insertContent(getAchievementsContent(), setDefaultMenu(completedExists), getAchievements(completed))
+        insertContent(getAchievementsContent(), setDefaultMenu(completedExists, achieverId), getAchievements(completed, null, false))
     })
 }
 
@@ -187,8 +187,8 @@ function completedAchievementsExistFromServer(callback) {
     })
 }
 
-function getAchievements(completed, achieverId) {
-    getAchievementsFromServer(completed, achieverId,
+function getAchievements(completed, achieverId, lookingAtFriend) {
+    getAchievementsFromServer(completed, achieverId, lookingAtFriend,
         function(data) {
             FB.XFBML.parse();
             $("#fbLikeWeb").show()
@@ -205,9 +205,10 @@ function getAchievements(completed, achieverId) {
     )
 }
 
-function getAchievementsFromServer(completed, achieverId, callback) {
+function getAchievementsFromServer(completed, achieverId, lookingAtFriend, callback) {
+    var data = "lookingAtFriend=" + lookingAtFriend
     if (achieverId) {
-        var data = "achieverId=" + achieverId
+         data += "&achieverId=" + achieverId
     }
     if (completed) {
         $.ajax("/achievements_completed", {
@@ -355,11 +356,11 @@ function publicizeOnServer(callback) {
     })
 }
 /******************  new achievement functions  ******************/
-function createAchievement() {
+function createAchievement(achieverId) {
    createAchievementOnServer(
     function(data) {
             if (data == "ok") { //TODO: use ajax success/error instead
-                openAchievements(false)
+                openAchievements(false, achieverId)
             } else $("#message").html(data)
         }
     )
@@ -470,11 +471,11 @@ function editAchievementOnServer(callback) {
 }
 
 /******************  delete achievement functions  ******************/
-function deleteAchievement() {
+function deleteAchievement(achieverId) {
     deleteAchievementOnServer(
         function(data) {
             if (data == "ok") { //TODO: use ajax success/error instead
-                openAchievements(false)
+                openAchievements(false, achieverId)
             }
         }
     )
