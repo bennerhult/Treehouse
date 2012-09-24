@@ -165,16 +165,16 @@ function visitFriend(friendId) {
     var completedExists = true //TODO fetch completedExists or not for friend
     //TODO only get publicly visible achievements for friend
     //TODO write "friend has no shared achievements" if applicable
-    insertContent(getAchievementsContent(), setDefaultMenu(completedExists, friendId), getAchievements(false, friendId, true))
+    insertContent(getAchievementsContent(), setDefaultMenu(completedExists, friendId, true), getAchievements(false, friendId, true))
 }
 
 /******************  achievements functions  ******************/
-function openAchievements(completed, achieverId) {
+function openAchievements(completed, achieverId, lookingAtFriend) {
     window.history.pushState(null, null, "/")
     $("#page-login").attr("id","page");
     $("#app-container-login").attr("id","app-container");
     completedAchievementsExistFromServer(function(completedExists) {
-        insertContent(getAchievementsContent(), setDefaultMenu(completedExists, achieverId), getAchievements(completed, null, false))
+        insertContent(getAchievementsContent(), setDefaultMenu(completedExists, achieverId, lookingAtFriend), getAchievements(completed, achieverId, lookingAtFriend))
     })
 }
 
@@ -230,10 +230,10 @@ function getAchievementsFromServer(completed, achieverId, lookingAtFriend, callb
 }
 
 /******************  achievement functions  ******************/
-function openAchievement(achievementId, achieverId, publiclyVisible, progressMade, completed) {
+function openAchievement(achievementId, achieverId, publiclyVisible, progressMade, completed, lookingAtFriend) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + achieverId)
     isLatestAchievement(achievementId, function(isLatestAchievement) {
-        insertContent(getAchievementContent(), setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, completed, achieverId), getAchievement(achievementId, achieverId, publiclyVisible))
+        insertContent(getAchievementContent(), setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, completed, achieverId, lookingAtFriend), getAchievement(achievementId, achieverId, publiclyVisible))
     })
 }
 

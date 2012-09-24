@@ -64,13 +64,12 @@ function setPublicMenu() {
     $("#menuArea").html(menu)
  }
 
-//TODO remove unused userId below   ?
 function setCreateEditMenu(data) {
     var text ='<div id="menu">' + nl  +
         '<ul>' + nl  +
         '<li class="back"><a href="javascript:void(0)" onclick="'
     if (data) {
-        text += 'openAchievement(\'' + data._id + '\', \'' + userId + '\', ' + false + ', ' +  false + ', ' + false +')'
+        text += 'openAchievement(\'' + data._id + '\',  null, ' + false + ', ' +  false + ', ' + false +')'
     } else {
         text += 'openAchievements(false)'
     }
@@ -80,10 +79,10 @@ function setCreateEditMenu(data) {
     $("#menuArea").html(text)
 }
 
-function setDefaultMenu(bothCompletedAndNotExists, achieverId) {
+function setDefaultMenu(bothCompletedAndNotExists, achieverId, lookingAtFriend) {
     var menu = '<div id="menu"><ul><li  id="inProgress">'
     if (bothCompletedAndNotExists) {
-        menu +=  '<a href="javascript:void(0)" onclick="getAchievements(false, \'' + achieverId + '\', false)"><span id="inProgressSpan" class="'
+        menu +=  '<a href="javascript:void(0)" onclick="getAchievements(false, \'' + achieverId + '\', ' + lookingAtFriend + ')"><span id="inProgressSpan" class="'
         if  (isiPad || isiPhone) {
             menu+= 'iDevice'
         } else {
@@ -93,7 +92,7 @@ function setDefaultMenu(bothCompletedAndNotExists, achieverId) {
     }
     menu += '</li><li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li><li id="completed">'
     if (bothCompletedAndNotExists) {
-        menu +=  '<a href="javascript:void(0)" onclick="getAchievements(true, \'' + achieverId + '\', false)"><span id="completedSpan" class="'
+        menu +=  '<a href="javascript:void(0)" onclick="getAchievements(true, \'' + achieverId + '\', ' + lookingAtFriend + ')"><span id="completedSpan" class="'
         if  (isiPad || isiPhone) {
             menu+= 'iDevice'
         } else {
@@ -105,14 +104,14 @@ function setDefaultMenu(bothCompletedAndNotExists, achieverId) {
     $("#menuArea").html(menu)
 }
 
-function setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, completed, userId) {
+function setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, completed, achieverId, lookingAtFriend) {
     var menu = '<div id="menu">' + nl  +
             '<ul>' + nl  +
-            '<li class="back"><a href="javascript:void(0)" onclick="openAchievements(' + completed + ')"><img src="content/img/back-1.png" alt=""/></a></li>' + nl
-    if (!isLatestAchievement) { menu += '<li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>' + nl }
+            '<li class="back"><a href="javascript:void(0)" onclick="openAchievements(' + completed + ', \'' + achieverId + '\', ' + lookingAtFriend + ')"><img src="content/img/back-1.png" alt=""/></a></li>' + nl
+    if (!isLatestAchievement && !lookingAtFriend) { menu += '<li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>' + nl }
 
-    if (!publiclyVisible) { menu += '<li id="publicizeButton" class="share"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/share.png" /></a></li>' }
-    if (!publiclyVisible && !progressMade) { menu += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement(\'' + userId + '\')"><img src="content/img/edit.png" /></a></li>' + nl }
+    if (!publiclyVisible && !lookingAtFriend) { menu += '<li id="publicizeButton" class="share"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/share.png" /></a></li>' }
+    if (!publiclyVisible && !progressMade && !lookingAtFriend) { menu += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement(\'' + achieverId + '\')"><img src="content/img/edit.png" /></a></li>' + nl }
     menu += '</ul>' + nl  +
         '</div>' + nl  +
 

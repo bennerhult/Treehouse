@@ -405,6 +405,8 @@ function createAchievementDesc(achievements, achieverId, percentages, completed,
         }
         achievementsList += ','
             + completed
+            + ','
+            + lookingAtFriendsAchievements
         achievementsList += ')"><img src="'
             + achievements[i].imageURL
             + '" alt="'
