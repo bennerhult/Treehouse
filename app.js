@@ -50,6 +50,7 @@ var user = require('./models/user.js'),
     latestAchievement = require('./models/latestAchievement.js'),
     goal = require('./models/goal.js'),
     progress = require('./models/progress.js'),
+    friendship = require('./models/friendship.js'),
     loginToken = require('./models/loginToken.js'),
     requestHandlers = require('./code/requestHandlers.js'),
     staticFiles = require('./code/staticFiles.js')
@@ -276,7 +277,6 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
                     } else {
                         writeDefaultPage(request, response)
                     }
-
                 }
             })
         }
@@ -343,6 +343,15 @@ app.get('/findFriends', function(request, response){
             response.send(request.query.friend_email + ' does not appear to use Treehouse! Tell your friend about it and share the happiness!', { 'Content-Type': 'application/json' }, 404)
         }
     })
+})
+
+
+app.get('/addFriend', function(request, response){
+    friendship.createFriendship(request.session.user_id, request.query.friendId, function() {
+          console.log("friendship created")
+    })
+
+
 })
 
 //public achievement

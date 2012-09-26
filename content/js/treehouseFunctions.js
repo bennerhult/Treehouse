@@ -167,14 +167,31 @@ function visitFriend(friendId) {
 }
 
 function addFriend(friendId) {
-    //TODO save request in database
-    //TODO visual confirmation that request is created
-    //TODO if friend request sent/received, do not add new request
+    addFriendOnServer(friendId)
 
     //TODO notify friend
 
+
+    //TODO visual confirmation that request is created
+    //TODO if friend request sent/received, do not add new request
+
+
+
     //TODO confirm friend request
     //TODO ignore fiend request
+}
+
+
+function addFriendOnServer(friendId, callback) {
+    var data = "friendId=" + friendId
+
+    $.ajax("/addFriend", {
+        type: "GET",
+        data: data,
+        dataType: "json",
+        success: function(data) { if ( callback ) callback(data) },
+        error  : function()     { if ( callback ) callback(null) }
+    })
 }
 
 /******************  achievements functions  ******************/

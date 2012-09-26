@@ -80,8 +80,7 @@ function topAppPagePart() {
         '</div>' + nl +
         '<div id="menuArea"></div>' + nl +
         '<div id="app-container-login">' + nl +
-
-        tab + ' <div id="contentArea">'
+        '<div id="contentArea">'
     return text
 }
 
@@ -147,8 +146,7 @@ function topIndexPart(userId) {
                 '</div>' + nl +
                 '<div id="menuArea"></div>' + nl +
                 '<div id="app-container">' + nl +
-
-                tab + ' <div id="contentArea">'
+                '<div id="contentArea">'
    return text
 }
 
