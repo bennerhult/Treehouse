@@ -534,7 +534,7 @@ function writeAchievementPage(response, currentViewedAchieverId, currentAchievem
     var goalTexts = []
     var myQuantityTotal = 0
     var myQuantityFinished = 0
-    var checkingOtherPersonsAchievement = currentViewedAchieverId === userId
+    var checkingOtherPersonsAchievement = !(currentViewedAchieverId === userId)
     if(currentAchievement.goals) {
         currentAchievement.goals.forEach(function(goal, goalIndex) {
             progress.Progress.findOne({ goal_id: goal._id}, function(err,myProgress) {
