@@ -136,12 +136,14 @@ function findFriends() {
     if (friend_email) {
         if (friend_email.match(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i)) {
             findFriendsOnServer(friend_email,
-                function(data, found) {
-                    if ( found ) {
-                        $("#message").html(friend_email + " found!<br /><a href='javascript:void(0)' style='color: black' onclick='visitFriend(\"" + data + "\")'>Visit!</a><br /><a href='javascript:void(0)' style='color: black' onclick='addFriend(\"" + data + "\")'>Add!</a>")
-                    } else {
-                        $("#message").html(data)
+                function(responseobject) {
+                    var messageText =  friend_email + " found!<br /><a href='javascript:void(0)' style='color: black' onclick='visitFriend(\"" + responseobject.id + "\")'>Visit!</a>"
+                    if (!responseobject.requestExists) {
+                        messageText +=   "<br /><a href='javascript:void(0)' style='color: black' onclick='addFriend(\"" + responseobject.id + "\")'>Add!</a>"
                     }
+                    $("#message").html(messageText)
+                }, function(errorMessage) {
+                    $("#message").html(errorMessage)
                 }
             )
         }
@@ -153,15 +155,15 @@ function findFriends() {
     }
 }
 
-function findFriendsOnServer(friend_email, callback) {
+function findFriendsOnServer(friend_email, callback, errorCallback) {
     var data = "friend_email=" + friend_email
     var jqxhr = $.ajax("/findFriends", {
         type: "GET",
         data: data,
         dataType: "json",
         statusCode: {
-            200: function(returnData) { callback(returnData, true) },
-            404: function() { callback(jqxhr.responseText , false) }
+            200: function(responseobject) { callback(responseobject) },
+            404: function() { errorCallback(jqxhr.responseText ) }
         }
     })
 }
@@ -178,9 +180,7 @@ function addFriend(friendId) {
             $("#message").html("You have already requested to be friends.")
         }
     })
-    //TODO if already friends, "add friend" should not appear
 }
-
 
 function addFriendOnServer(friendId, callback) {
     var data = "friendId=" + friendId

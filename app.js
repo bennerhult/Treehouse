@@ -338,10 +338,16 @@ function getSignupErrorMessage (err){
 app.get('/findFriends', function(request, response){
     user.User.findOne({ username: request.query.friend_email.toLowerCase() }, function(err,foundFriend) {
         if (foundFriend)    {
+
             if (request.session.user_id == foundFriend._id ) {
                 response.send('Dissociative identity disorder?', { 'Content-Type': 'application/json' }, 404)
             }  else {
-                response.send(foundFriend._id, { 'Content-Type': 'application/json' }, 200)
+                friendship.isFriendRequestExisting(foundFriend._id, request.session.user_id, function (requestExists) {
+                    var responseobject = new Object()
+                    responseobject.id = foundFriend._id
+                    responseobject.requestExists = requestExists
+                    response.send(responseobject, { 'Content-Type': 'application/json' }, 200)
+                })
             }
         } else {
             response.send(request.query.friend_email + ' does not appear to use Treehouse! Tell your friend about it and share the happiness!', { 'Content-Type': 'application/json' }, 404)

@@ -16,7 +16,8 @@ var Friendship = mongoose.model('Friendship', FriendshipSchema)
 module.exports = {
     Friendship: Friendship,
     createFriendship: createFriendship,
-    getNrOfRequests: getNrOfRequests
+    getNrOfRequests: getNrOfRequests,
+    isFriendRequestExisting: isFriendRequestExisting
 }
 
 function createFriendship(friend1_id, friend2_id, callback) {
