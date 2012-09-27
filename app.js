@@ -522,22 +522,21 @@ app.get('/achievementFromServer', function(request, response){
     app.set('current_achievement_id', currentAchievementId)
     achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
         if (request.session.user_id) {
-            loadUser (request, response, function () { writeAchievementPage(response, url_parts.query.userId, currentAchievement, false)})
+            loadUser (request, response, function () { writeAchievementPage(response, url_parts.query.userId, currentAchievement, request.session.user_id)})
         } else if (currentAchievement && currentAchievement.publiclyVisible)    {
-            writeAchievementPage(response, url_parts.query.userId, currentAchievement, true)
+            writeAchievementPage(response, url_parts.query.userId, currentAchievement, request.session.user_id)
         } else {
-            response.writeHead(200, {'content-type': 'application/json' })
-            response.write(JSON.stringify("Nice try, but no hacking allowed. Ok?"))
-            response.end('\n', 'utf-8')
+            writeDefaultPage(request, response)
         }
     })
 })
 
-function writeAchievementPage(response, currentViewedAchieverId, currentAchievement, publicView) {
+function writeAchievementPage(response, currentViewedAchieverId, currentAchievement, userId) {
     var achievementDesc = ""
     var goalTexts = []
     var myQuantityTotal = 0
     var myQuantityFinished = 0
+    var checkingOtherPersonsAchievement = currentViewedAchieverId === userId
     if(currentAchievement.goals) {
         currentAchievement.goals.forEach(function(goal, goalIndex) {
             progress.Progress.findOne({ goal_id: goal._id}, function(err,myProgress) {
@@ -555,7 +554,7 @@ function writeAchievementPage(response, currentViewedAchieverId, currentAchievem
                     console.log("error in app.js: couldn't find progress for user " + currentViewedAchieverId)
                 } else {
                     var goalPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100
-                    goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, goalPercentageFinished, publicView, goalTexts.length + 1 == currentAchievement.goals.length))
+                    goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, goalPercentageFinished, checkingOtherPersonsAchievement, goalTexts.length + 1 == currentAchievement.goals.length))
                     if (goalTexts.length == currentAchievement.goals.length) {
                         var goalTextsText = ""
                         goalTexts.forEach(function(goalText, index) {
