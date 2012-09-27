@@ -196,19 +196,60 @@ function getLoginContent() {
         )
 }
 
-function getFriendsContent() {
-     return '<div id="content">' + nl +
-         '<form action="javascript: findFriends()">' + nl +
-         '<input type="text" class="formstyle" name="friend_email" placeholder="email">' + nl +
-         '<input type="submit" class="button" value="Find friend">' + nl +
-         '</form>' + nl +
-         '<div id="message"></div>' + nl +
-         '</div>'
+function getFriendsContent(callback) {
+    getPendingFriendshipRequests(function(pending) {
+        var content = '<div id="content">' + nl +
+            '<form action="javascript: findFriends()">' + nl +
+            '<input type="text" class="formstyle" name="friend_email" placeholder="email">' + nl +
+            '<input type="submit" class="button" value="Find friend">' + nl +
+            '</form>' + nl +
+            '<div id="message"></div>'
+         content += pending
+         content +=   '</div>'
+        callback(content)
+    })
 }
 
+function getPendingFriendshipRequests(callback) {
+    var content = '<div><b>Friend requests</b>'
+    getPendingFriendShipRequestsFromServer(function(pendings) {
+        if (pendings.length === 0) {
+            content += '</div>'
+            callback(content)
+        } else {
+            pendings.forEach(function(currentRequest, index) {
+                content +=   '<br />'
+                content +=   currentRequest.friend1_id
+                content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="confirmFriend(\'' + currentRequest.friend1_id + '\', \'' + currentRequest.friend2_id + '\')">Confirm</a>'
+                if (index  == pendings.length - 1) {
+                    content += '</div>'
+                    callback(content)
+                }
+            })
+        }
+
+    })
+
+}
+
+function getPendingFriendShipRequestsFromServer(callback) {
+    var data = "userId=" + currentUserId
+
+    $.ajax("/pendingFriendshipRequests", {
+        type: "GET",
+        data: data,
+        dataType: "json",
+        statusCode: {
+            200: function(pendings) { callback(pendings) }
+        }
+    })
+}
 function openFriends() {
     $('#tab-menu').hide('fast')
-    insertContent(getFriendsContent(), setDefaultMenu(false, false))
+    getFriendsContent(function(friendsContent) {
+        insertContent(friendsContent, setDefaultMenu(false, false))
+    })
+
 }
 
 function getTabMenu() {

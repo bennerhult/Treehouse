@@ -17,7 +17,8 @@ module.exports = {
     Friendship: Friendship,
     createFriendship: createFriendship,
     getNrOfRequests: getNrOfRequests,
-    isFriendRequestExisting: isFriendRequestExisting
+    isFriendRequestExisting: isFriendRequestExisting,
+    getPendingRequests: getPendingRequests
 }
 
 function createFriendship(friend1_id, friend2_id, callback) {
@@ -36,6 +37,12 @@ function createFriendship(friend1_id, friend2_id, callback) {
         }
     })
 
+}
+
+function getPendingRequests(user_id, callback) {
+    Friendship.find({ friend2_id: user_id }, function(err, friendRequests) {
+        callback(friendRequests)
+    })
 }
 
 function getNrOfRequests(user_id, callback) {
