@@ -1265,7 +1265,9 @@ p#achievementDescription{
 @media screen and (max-width: 800px) {
 
 
-
+    .slider-menu{
+        position: fixed;
+    }
 
     #page,
     #page-login{
