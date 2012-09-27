@@ -380,9 +380,7 @@ app.get('/achievement', function(request, response) {
             var userId  = url_parts.query.userId
             requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, currentAchievement.imageURL, currentAchievement.title)
         } else {
-            response.writeHead(200, {'content-type': 'application/json' })
-            response.write(JSON.stringify("Nice try, but no hacking allowed. Ok?"))
-            response.end('\n', 'utf-8')
+            writeDefaultPage(request, response)
         }
     })
 })
