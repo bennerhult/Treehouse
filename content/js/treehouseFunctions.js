@@ -171,9 +171,12 @@ function visitFriend(friendId) {
 }
 
 function addFriend(friendId) {
-    addFriendOnServer(friendId, function(data) {
-        //TODO visual confirmation that request is created or errormessage
-
+    addFriendOnServer(friendId, function(ok) {
+        if (ok) {
+            $("#message").html("Friend request sent.")
+        }  else {
+            $("#message").html("You have already requested to be friends.")
+        }
     })
     //TODO if already friends, "add friend" should not appear
 }
@@ -186,8 +189,10 @@ function addFriendOnServer(friendId, callback) {
         type: "GET",
         data: data,
         dataType: "json",
-        success: function(data) { if ( callback ) callback(data) },
-        error  : function()     { if ( callback ) callback(null) }
+        statusCode: {
+            200: function() { callback(true) },
+            404: function() { callback(false) }
+        }
     })
 }
 

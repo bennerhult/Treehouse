@@ -28,10 +28,10 @@ function createFriendship(friend1_id, friend2_id, callback) {
     isFriendRequestExisting(friend1_id, friend2_id, function(requestExists) {
         if (!requestExists) {
             friendship.save(function () {
-                callback(friendship)
+                callback(true)
             })
         } else {
-           callback("Could not create friendship request")
+           callback(false)
         }
     })
 
