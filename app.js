@@ -351,8 +351,10 @@ app.get('/findFriends', function(request, response){
 
 
 app.get('/addFriend', function(request, response){
-    friendship.createFriendship(request.session.user_id, request.query.friendId, function() {
-
+    friendship.createFriendship(request.session.user_id, request.query.friendId, function(message) {
+        response.writeHead(200, {'content-type': 'application/json' })
+        response.write(JSON.stringify(message))
+        response.end('\n', 'utf-8')
     })
 
 

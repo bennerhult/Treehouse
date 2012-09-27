@@ -171,18 +171,11 @@ function visitFriend(friendId) {
 }
 
 function addFriend(friendId) {
-    addFriendOnServer(friendId)
+    addFriendOnServer(friendId, function(data) {
+        //TODO visual confirmation that request is created or errormessage
 
-    //TODO notify friend
-
-
-    //TODO visual confirmation that request is created
-    //TODO if friend request sent/received, do not add new request
-
-
-
-    //TODO confirm friend request
-    //TODO ignore fiend request
+    })
+    //TODO if already friends, "add friend" should not appear
 }
 
 

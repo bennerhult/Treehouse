@@ -25,14 +25,34 @@ function createFriendship(friend1_id, friend2_id, callback) {
     friendship.friend1_id = friend1_id
     friendship.friend2_id = friend2_id
     friendship.confirmed= false
-
-    friendship.save(function () {
-        if (callback) callback(friendship)
+    isFriendRequestExisting(friend1_id, friend2_id, function(requestExists) {
+        if (!requestExists) {
+            friendship.save(function () {
+                callback(friendship)
+            })
+        } else {
+           callback("Could not create friendship request")
+        }
     })
+
 }
 
 function getNrOfRequests(user_id, callback) {
     Friendship.find({ friend2_id: user_id }, function(err, friendRequests) {
         callback(friendRequests.length)
+    })
+}
+
+function isFriendRequestExisting(friend1_id, friend2_id, callback) {
+    Friendship.find({ friend1_id: friend1_id, friend2_id: friend2_id }, function(err1, requestFirstDirection) {
+        Friendship.find({ friend1_id: friend2_id, friend2_id: friend1_id }, function(err2, requestSecondDirection) {
+           if (requestFirstDirection.length > 0) {
+               callback(true)
+           } else if (requestSecondDirection.length > 0)   {
+               callback(true)
+           } else {
+               callback(false)
+           }
+        })
     })
 }
