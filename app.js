@@ -105,7 +105,7 @@ function authenticateFromLoginToken(request, response, initialCall) {
             }
         })
     }  else {
-        response.writeHead(200, {'content-type': 'application/json' })
+        response.writeHead(404, {'content-type': 'application/json' })
         response.write(JSON.stringify(""))   //typical first sign in
         response.end('\n', 'utf-8')
     }

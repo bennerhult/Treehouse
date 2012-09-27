@@ -83,7 +83,7 @@ function rememberMe() {
                 nrOfFriendShipRequests = nrOfRequests
                 openAchievements(false, currentUserId, false)
             } else {
-                showSignin(data)
+                showSignin()
             }
         }
     )
@@ -95,7 +95,7 @@ function rememberMeOnServer(callback) {
         dataType: "json",
         statusCode: {
             200: function(returnData) { callback(returnData, true) },
-            404: function() { callback(jqxhr.responseText , false) }
+            404: function() { callback("", false) }
         }
     })
 }
