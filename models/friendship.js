@@ -15,7 +15,8 @@ var Friendship = mongoose.model('Friendship', FriendshipSchema)
 
 module.exports = {
     Friendship: Friendship,
-    createFriendship: createFriendship
+    createFriendship: createFriendship,
+    getNrOfRequests: getNrOfRequests
 }
 
 function createFriendship(friend1_id, friend2_id, callback) {
@@ -27,5 +28,11 @@ function createFriendship(friend1_id, friend2_id, callback) {
 
     friendship.save(function () {
         if (callback) callback(friendship)
+    })
+}
+
+function getNrOfRequests(user_id, callback) {
+    Friendship.find({ friend2_id: user_id }, function(err, friendRequests) {
+        callback(friendRequests.length)
     })
 }

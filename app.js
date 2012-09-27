@@ -271,10 +271,18 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
                     writeGotoAppPage(response)
                 } else {
                     if (fbConnect) {
-                        response.writeHead(200, {'content-type': 'application/json' })
-                        response.write(JSON.stringify("ok"))
-                        response.end('\n', 'utf-8')
+
+                         friendship.getNrOfRequests(request.session.user_id, function (data) {
+                             console.log("1 nr of friend requests: " + data)
+                             response.writeHead(200, {'content-type': 'application/json' })
+                             response.write(JSON.stringify(data))
+                             response.end('\n', 'utf-8')
+                             })
+
                     } else {
+                        friendship.getNrOfRequests(request.session.user_id, function (data) {
+                            console.log("2 nr of friend requests: " + data)
+                        })
                         writeDefaultPage(request, response)
                     }
                 }
@@ -348,7 +356,7 @@ app.get('/findFriends', function(request, response){
 
 app.get('/addFriend', function(request, response){
     friendship.createFriendship(request.session.user_id, request.query.friendId, function() {
-          console.log("friendship created")
+          //console.log("friendship created")
     })
 
 

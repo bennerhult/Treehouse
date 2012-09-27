@@ -54,13 +54,13 @@ function init() {
     }
 }
 
-function setPublicMenu() {
+function setPublicMenu(nrOfFriendRequests) {
     var menu = '<div id="menu">' + nl  +
         '<ul>' + nl  +
         '<li id="house"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>' +
         '</ul>' + nl  +
         '</div>' + nl  +
-        getTabMenu(false)
+        getTabMenu(0)
     $("#menuArea").html(menu)
  }
 
@@ -79,7 +79,7 @@ function setCreateEditMenu(data) {
     $("#menuArea").html(text)
 }
 
-function setDefaultMenu(bothCompletedAndNotExists, achieverId, lookingAtFriend) {
+function setDefaultMenu(bothCompletedAndNotExists, achieverId, lookingAtFriend, nrOfFriendRequests) {
     var menu = '<div id="menu"><ul><li  id="inProgress">'
     if (bothCompletedAndNotExists) {
         menu +=  '<a href="javascript:void(0)" onclick="getAchievements(false, \'' + achieverId + '\', ' + lookingAtFriend + ')"><span id="inProgressSpan" class="'
@@ -100,7 +100,7 @@ function setDefaultMenu(bothCompletedAndNotExists, achieverId, lookingAtFriend) 
         }
         menu +=  '">completed</span></a>'
     }
-    menu +=  '</li></ul></div>' + getTabMenu(bothCompletedAndNotExists)
+    menu +=  '</li></ul></div>' + getTabMenu(nrOfFriendRequests)
     $("#menuArea").html(menu)
 }
 
@@ -206,12 +206,12 @@ function getFriendsContent() {
          '</div>'
 }
 
-function openFriends() {
+function openFriends(nrOfFriendsRequests) {
     $('#tab-menu').hide('fast')
-    insertContent(getFriendsContent(), setDefaultMenu(false, null))
+    insertContent(getFriendsContent(), setDefaultMenu(false, null, false, nrOfFriendsRequests))
 }
 
-function getTabMenu(bothCompletedAndNotExists) {
+function getTabMenu(nrOfFriendRequests) {
     var x = getCookie('rememberme')
     var loggedIn = false
     if (x) {
@@ -223,7 +223,11 @@ function getTabMenu(bothCompletedAndNotExists) {
          menu +=    '<li class="header border-top-right">Achievements</li>' + nl +
                     '<li><a href="javascript:void(0)" onclick="openAchievements(false)"><span><nobr>My achievements</nobr></span></a></li>'+ nl +
                     '<li class="header">Friends</li>' + nl +
-                    '<li><a href="javascript:void(0)" onclick="openFriends()"><span>Friends</span></a></li>' + nl +
+                    '<li><a href="javascript:void(0)" onclick="openFriends()"><span>Friends'
+         if (nrOfFriendRequests > 0) {
+             menu += ' (' + nrOfFriendRequests + ')'
+         }
+         menu +=    '</span></a></li>' + nl +
                     '<li class="header">Account</li>' + nl +
                     '<li class="last"><a href="javascript:void(0)" onclick="signout()"><span class="border-bottom-right">Sign out</span></a></li>'
      }  else {
