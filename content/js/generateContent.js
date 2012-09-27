@@ -187,7 +187,7 @@ function getLoginContent() {
                 '</div>' + nl +
                 '<div id="emailForm">' + nl +
                     '<form action="javascript: checkUser(' + isAppMode + ')">' + nl +
-                        '<input type="text" class="formstyle email" name="username" placeholder="email"">' + nl +
+                        '<input type="text" class="formstyle" name="username" placeholder="email"">' + nl +
                         '<div id="message"></div>' + nl +
                         '<input type="submit" class="button green" value="Sign in / Sign up">' + nl +
                     '</form>' + nl +
