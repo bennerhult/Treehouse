@@ -14,9 +14,9 @@ function gotoAppPart() {
     return content
 }
 
-function indexPage(response, userId) {
+function indexPage(response, userId, nrOfFriendShipRequests) {
     response.writeHead(200, { 'Content-Type': 'text/html' })
-    response.end(topIndexPart(userId) + bottomPart(), 'utf-8')
+    response.end(topIndexPart(userId, nrOfFriendShipRequests) + bottomPart(), 'utf-8')
 }
 
 function publicAchievementPage(response, userId, currentAchievementId, url, imageUrl, title) {
@@ -85,7 +85,7 @@ function topAppPagePart() {
 }
 
 
-function topIndexPart(userId) {
+function topIndexPart(userId, nrOfFriendShipRequests) {
             var text = '<!DOCTYPE html>' + nl +
             tab + '<html manifest="treehouse.manifest">' + nl +
                 tab + '<head>' + nl +
@@ -114,10 +114,9 @@ function topIndexPart(userId) {
                     tab + '<link href="http://fonts.googleapis.com/css?family=Dosis" rel="stylesheet" type="text/css">' + nl +
                     tab + '<script type="text/javascript">' + nl +
                     tab + '$(document).ready(function() {' + nl  +
-                    tab + 'init()' + nl  +
-                     tab   + 'setTimeout(function(){addToHome.show(false)}, 100)' + nl +
-                     tab + 'rememberMe(\'' + userId  + '\')'   +nl +
-                    tab   +  '})</script>' + nl +
+                    tab + 'init(\'' + userId  + '\', \'' + nrOfFriendShipRequests  + '\')' + nl  +
+                    tab + 'rememberMe()'   +nl +
+                    tab   + 'setTimeout(function(){addToHome.show(false)}, 100)})</script>' + nl +
                 tab + '</head>' + nl +
                 tab + ' <body>' + nl +
                 '<div id="fb-root"></div>' + nl +

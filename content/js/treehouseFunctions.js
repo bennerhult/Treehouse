@@ -43,9 +43,9 @@ function loginUsingFacebook() {
                 FB.api('/me', function(apiResponse) {
                     if (apiResponse) {
                         checkFBUserOnServer(apiResponse.email,
-                            function(data, ok) {
+                            function(userId, ok) {
                                 if (ok) { //TODO: use ajax success/error instead
-                                    openAchievements(false, data)
+                                    openAchievements(false, userId, false)
                                 } else {
                                     $("#message").html("Facebook did not play nice. Try regular login instead.")
                                 }
@@ -76,11 +76,12 @@ function checkFBUserOnServer(username, callback) {
     })
 }
 
-function rememberMe(userId) {
+function rememberMe() {
     rememberMeOnServer(
-        function(data) {
-            if (data == "ok") { //TODO: use ajax success/error instead
-                openAchievements(false, userId)
+        function(nrOfRequests, ok) {
+            if (ok) { //TODO: use ajax success/error instead
+                nrOfFriendShipRequests = nrOfRequests
+                openAchievements(false, currentUserId, false)
             } else {
                 showSignin(data)
             }
@@ -92,8 +93,10 @@ function rememberMeOnServer(callback) {
     $.ajax("/rememberMe", {
         type: "GET",
         dataType: "json",
-        success: function(data) { if ( callback ) callback(data) },
-        error  : function()     { if ( callback ) callback(null) }
+        statusCode: {
+            200: function(returnData) { callback(returnData, true) },
+            404: function() { callback(jqxhr.responseText , false) }
+        }
     })
 }
 
@@ -163,8 +166,8 @@ function findFriendsOnServer(friend_email, callback) {
     })
 }
 
-function visitFriend(friendId, nrOfFriendsRequests) {
-    insertContent(getAchievementsContent(), setDefaultMenu(true, friendId, true, nrOfFriendsRequests), getAchievements(false, friendId, true))
+function visitFriend(friendId) {
+    insertContent(getAchievementsContent(), setDefaultMenu(true, true), getAchievements(false, friendId, true))
 }
 
 function addFriend(friendId) {
@@ -196,12 +199,12 @@ function addFriendOnServer(friendId, callback) {
 }
 
 /******************  achievements functions  ******************/
-function openAchievements(completed, achieverId, lookingAtFriend, nrOfFriendsRequests) {
+function openAchievements(completed, achieverId, lookingAtFriend) {
     window.history.pushState(null, null, "/")
     $("#page-login").attr("id","page");
     $("#app-container-login").attr("id","app-container");
     completedAchievementsExistFromServer(function(completedExists) {
-        insertContent(getAchievementsContent(), setDefaultMenu(completedExists, achieverId, lookingAtFriend, nrOfFriendsRequests), getAchievements(completed, achieverId, lookingAtFriend))
+        insertContent(getAchievementsContent(), setDefaultMenu(completedExists, lookingAtFriend), getAchievements(completed, achieverId, lookingAtFriend))
     })
 }
 
@@ -387,7 +390,7 @@ function createAchievement(achieverId) {
    createAchievementOnServer(
     function(data) {
             if (data == "ok") { //TODO: use ajax success/error instead
-                openAchievements(false, achieverId)
+                openAchievements(false, achieverId, false)
             } else $("#message").html(data)
         }
     )
@@ -502,7 +505,7 @@ function deleteAchievement(achieverId) {
     deleteAchievementOnServer(
         function(data) {
             if (data == "ok") { //TODO: use ajax success/error instead
-                openAchievements(false, achieverId)
+                openAchievements(false, achieverId, false)
             }
         }
     )

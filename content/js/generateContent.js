@@ -11,12 +11,15 @@ var footerContent = '<ul>' + nl +
 var isiPad = navigator.userAgent.match(/iPad/i) != null;
 var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
 var isiOs = isiPad || isiPhone
-
+var currentUserId
+var nrOfFriendShipRequests
 var isAppMode = false
 
 
 
-function init() {
+function init(userId, friendShipRequests) {
+    currentUserId = userId
+    nrOfFriendShipRequests = friendShipRequests
     FB.init({
         appId: '480961688595420',
         status: true,
@@ -25,9 +28,6 @@ function init() {
         channelUrl : '//treehouse.io/channel.html',  //increases performance
         oauth: true
     })
-   /* FB.UIServer.setLoadedNode = function (a, b) {
-        FB.UIServer._loadedNodes[a.id] = b
-    }*/ //TODO Remove when fb app connect is working
     insertLatestAchievement()
     $("#web-footer").html(footerContent)
     if (isiPad) {
@@ -64,14 +64,14 @@ function setPublicMenu(nrOfFriendRequests) {
     $("#menuArea").html(menu)
  }
 
-function setCreateEditMenu(data) {
+function setCreateEditMenu(achievement) {
     var text ='<div id="menu">' + nl  +
         '<ul>' + nl  +
         '<li class="back"><a href="javascript:void(0)" onclick="'
-    if (data) {
-        text += 'openAchievement(\'' + data._id + '\',  null, ' + false + ', ' +  false + ', ' + false +')'
+    if (achievement) {
+        text += 'openAchievement(\'' + achievement._id + '\',  null, ' + false + ', ' +  false + ', ' + false +')'
     } else {
-        text += 'openAchievements(false)'
+        text += 'openAchievements(false, \'' + currentUserId + '\', false)'
     }
     text+='"><img src="content/img/back-1.png" alt=""/></a></li>' + nl  +
         '</ul>' + nl  +
@@ -79,10 +79,10 @@ function setCreateEditMenu(data) {
     $("#menuArea").html(text)
 }
 
-function setDefaultMenu(bothCompletedAndNotExists, achieverId, lookingAtFriend, nrOfFriendRequests) {
+function setDefaultMenu(bothCompletedAndNotExists, lookingAtFriend) {
     var menu = '<div id="menu"><ul><li  id="inProgress">'
     if (bothCompletedAndNotExists) {
-        menu +=  '<a href="javascript:void(0)" onclick="getAchievements(false, \'' + achieverId + '\', ' + lookingAtFriend + ')"><span id="inProgressSpan" class="'
+        menu +=  '<a href="javascript:void(0)" onclick="getAchievements(false, \'' + currentUserId + '\', ' + lookingAtFriend + ')"><span id="inProgressSpan" class="'
         if  (isiPad || isiPhone) {
             menu+= 'iDevice'
         } else {
@@ -92,7 +92,7 @@ function setDefaultMenu(bothCompletedAndNotExists, achieverId, lookingAtFriend, 
     }
     menu += '</li><li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li><li id="completed">'
     if (bothCompletedAndNotExists) {
-        menu +=  '<a href="javascript:void(0)" onclick="getAchievements(true, \'' + achieverId + '\', ' + lookingAtFriend + ')"><span id="completedSpan" class="'
+        menu +=  '<a href="javascript:void(0)" onclick="getAchievements(true, \'' + currentUserId + '\', ' + lookingAtFriend + ')"><span id="completedSpan" class="'
         if  (isiPad || isiPhone) {
             menu+= 'iDevice'
         } else {
@@ -100,7 +100,7 @@ function setDefaultMenu(bothCompletedAndNotExists, achieverId, lookingAtFriend, 
         }
         menu +=  '">completed</span></a>'
     }
-    menu +=  '</li></ul></div>' + getTabMenu(nrOfFriendRequests)
+    menu +=  '</li></ul></div>' + getTabMenu()
     $("#menuArea").html(menu)
 }
 
@@ -206,12 +206,12 @@ function getFriendsContent() {
          '</div>'
 }
 
-function openFriends(nrOfFriendsRequests) {
+function openFriends() {
     $('#tab-menu').hide('fast')
-    insertContent(getFriendsContent(), setDefaultMenu(false, null, false, nrOfFriendsRequests))
+    insertContent(getFriendsContent(), setDefaultMenu(false, false))
 }
 
-function getTabMenu(nrOfFriendRequests) {
+function getTabMenu() {
     var x = getCookie('rememberme')
     var loggedIn = false
     if (x) {
@@ -221,11 +221,11 @@ function getTabMenu(nrOfFriendRequests) {
            '<ul>'
      if (loggedIn) {
          menu +=    '<li class="header border-top-right">Achievements</li>' + nl +
-                    '<li><a href="javascript:void(0)" onclick="openAchievements(false)"><span><nobr>My achievements</nobr></span></a></li>'+ nl +
+                    '<li><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><span><nobr>My achievements</nobr></span></a></li>'+ nl +
                     '<li class="header">Friends</li>' + nl +
                     '<li><a href="javascript:void(0)" onclick="openFriends()"><span>Friends'
-         if (nrOfFriendRequests > 0) {
-             menu += ' (' + nrOfFriendRequests + ')'
+         if (nrOfFriendShipRequests > 0) {
+             menu += ' (' + nrOfFriendShipRequests + ')'
          }
          menu +=    '</span></a></li>' + nl +
                     '<li class="header">Account</li>' + nl +
