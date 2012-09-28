@@ -184,7 +184,6 @@ function addFriend(friendId) {
 
 function addFriendOnServer(friendId, callback) {
     var data = "friendId=" + friendId
-
     $.ajax("/addFriend", {
         type: "GET",
         data: data,
@@ -195,6 +194,32 @@ function addFriendOnServer(friendId, callback) {
         }
     })
 }
+
+function ignoreFriendRequest(friendship_id) {
+    ignoreFriendRequestOnServer(friendship_id, function() {
+        nrOfFriendShipRequests--
+        $("#friendshipid" + friendship_id).html("")
+        var friendRequestRow = "<a href='javascript:void(0)' onclick='openFriends()'><span>Friends"
+        if (nrOfFriendShipRequests > 0) {
+            friendRequestRow += " (" + nrOfFriendShipRequests + ")"
+        }
+        friendRequestRow += "</span></a></li>"
+        $("#friendRequestRow").html(friendRequestRow)
+    })
+}
+
+function ignoreFriendRequestOnServer(friendship_id, callback) {
+    var data = "friendship_id=" + friendship_id
+    $.ajax("/ignoreFriendRequest", {
+        type: "GET",
+        data: data,
+        dataType: "json",
+        statusCode: {
+            200: function() { callback() }
+        }
+    })
+}
+
 
 /******************  achievements functions  ******************/
 function openAchievements(completed, achieverId, lookingAtFriend) {

@@ -220,8 +220,11 @@ function getPendingFriendshipRequests(callback) {
             pendings.forEach(function(currentRequest, index) {
                 getUsernameFromServer(currentRequest.friend1_id, function(username) {
                     content +=   '<br />'
+                    content +=   '<span id="friendshipid' + currentRequest._id + '">'
                     content +=    username
-                    content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="confirmFriend(\'' + currentRequest.friend1_id + '\', \'' + currentRequest.friend2_id + '\')">Confirm</a>'
+                    content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="confirmFriendRequest(\'' + currentRequest._id + '\')">Confirm</a>'
+                    content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="ignoreFriendRequest(\'' + currentRequest._id + '\')">Ignore</a>'
+                    content +=   '</span>'
                     if (index  == pendings.length - 1) {
                         content += '</div>'
                         callback(content)
@@ -279,7 +282,7 @@ function getTabMenu() {
          menu +=    '<li class="header border-top-right">Achievements</li>' + nl +
                     '<li><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><span><nobr>My achievements</nobr></span></a></li>'+ nl +
                     '<li class="header">Friends</li>' + nl +
-                    '<li><a href="javascript:void(0)" onclick="openFriends()"><span>Friends'
+                    '<li id="friendRequestRow"><a href="javascript:void(0)" onclick="openFriends()"><span>Friends'
          if (nrOfFriendShipRequests > 0) {
              menu += ' (' + nrOfFriendShipRequests + ')'
          }
