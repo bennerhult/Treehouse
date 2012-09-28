@@ -218,13 +218,15 @@ function getPendingFriendshipRequests(callback) {
             callback(content)
         } else {
             pendings.forEach(function(currentRequest, index) {
-                content +=   '<br />'
-                content +=   currentRequest.friend1_id
-                content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="confirmFriend(\'' + currentRequest.friend1_id + '\', \'' + currentRequest.friend2_id + '\')">Confirm</a>'
-                if (index  == pendings.length - 1) {
-                    content += '</div>'
-                    callback(content)
-                }
+                getUsernameFromServer(currentRequest.friend1_id, function(username) {
+                    content +=   '<br />'
+                    content +=    username
+                    content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="confirmFriend(\'' + currentRequest.friend1_id + '\', \'' + currentRequest.friend2_id + '\')">Confirm</a>'
+                    if (index  == pendings.length - 1) {
+                        content += '</div>'
+                        callback(content)
+                    }
+                })
             })
         }
 
@@ -241,6 +243,19 @@ function getPendingFriendShipRequestsFromServer(callback) {
         dataType: "json",
         statusCode: {
             200: function(pendings) { callback(pendings) }
+        }
+    })
+}
+
+function getUsernameFromServer(userId, callback) {
+    var data = "userId=" + userId
+
+    $.ajax("/usernameForId", {
+        type: "GET",
+        data: data,
+        dataType: "json",
+        statusCode: {
+            200: function(username) { callback(username) }
         }
     })
 }

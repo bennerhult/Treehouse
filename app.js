@@ -373,8 +373,6 @@ app.get('/addFriend', function(request, response){
         }
 
     })
-
-
 })
 
 //public achievement
@@ -391,6 +389,15 @@ app.get('/achievement', function(request, response) {
         }
     })
 })
+
+app.get('/usernameForId', function(request, response) {
+    user.User.findOne({ _id: request.query.userId }, function(err, foundUser) {
+        response.writeHead(200, {'content-type': 'application/json' })
+        response.write(JSON.stringify(foundUser.username))
+        response.end('\n', 'utf-8')
+    })
+})
+
 
 app.get('/latestAchievementSplash', function(request, response) {
     var latestAchievementId = latestAchievement.getId(function(latestAchievementId) {
