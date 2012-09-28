@@ -197,21 +197,48 @@ function getLoginContent() {
 }
 
 function getFriendsContent(callback) {
-    getPendingFriendshipRequests(function(pending) {
-        var content = '<div id="content">' + nl +
-            '<form action="javascript: findFriends()">' + nl +
-            '<input type="text" class="formstyle" name="friend_email" placeholder="email">' + nl +
-            '<input type="submit" class="button" value="Find friend">' + nl +
-            '</form>' + nl +
-            '<div id="message"></div>'
-         content += pending
-         content +=   '</div>'
-        callback(content)
+    getPendingFriendshipRequests(function(pendingFriendshipRequests) {
+        getFriendsList(function(friendsList) {
+            var content = '<div id="content">' + nl +
+                '<form action="javascript: findFriends()">' + nl +
+                '<input type="text" class="formstyle" name="friend_email" placeholder="email">' + nl +
+                '<input type="submit" class="button" value="Find friend">' + nl +
+                '</form>' + nl +
+                '<div id="message"></div>'
+            content += pendingFriendshipRequests
+            content += friendsList
+            content +=   '</div>'
+            callback(content)
+        })
+    })
+}
+
+function getFriendsList(callback) {
+    var content = '<div id="pendingFriendshipsList"><b>Friends</b>'
+    getFriendsFromServer(function(friendsList) {
+        if (friendsList.length === 0) {
+            content += '</div>'
+            callback(content)
+        } else {
+            friendsList.forEach(function(currentFriendship, index) {
+                getUsernameFromServer(currentFriendship.friend1_id, function(username) {   //TODO: make sure you show the other guys name
+                    content +=   '<br />'
+                    content +=   '<span id="friendshipid' + currentFriendship._id + '">'
+                    content +=    username
+                    content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="visitFriend(\'' + currentFriendship.friend1_id + '\')">Visit!</a>'
+                    content +=   '</span>'
+                    if (index  == friendsList.length - 1) {
+                        content += '</div>'
+                        callback(content)
+                    }
+                })
+            })
+        }
     })
 }
 
 function getPendingFriendshipRequests(callback) {
-    var content = '<div><b>Friend requests</b>'
+    var content = '<div id="pendingFriendshipsList"><b>Friend requests</b>'
     getPendingFriendShipRequestsFromServer(function(pendings) {
         if (pendings.length === 0) {
             content += '</div>'
@@ -232,9 +259,7 @@ function getPendingFriendshipRequests(callback) {
                 })
             })
         }
-
     })
-
 }
 
 function getPendingFriendShipRequestsFromServer(callback) {
@@ -246,6 +271,19 @@ function getPendingFriendShipRequestsFromServer(callback) {
         dataType: "json",
         statusCode: {
             200: function(pendings) { callback(pendings) }
+        }
+    })
+}
+
+function getFriendsFromServer(callback) {
+    var data = "userId=" + currentUserId
+
+    $.ajax("/friendsList", {
+        type: "GET",
+        data: data,
+        dataType: "json",
+        statusCode: {
+            200: function(friendsList) { callback(friendsList) }
         }
     })
 }

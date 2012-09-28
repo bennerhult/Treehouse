@@ -20,7 +20,8 @@ module.exports = {
     isFriendRequestExisting: isFriendRequestExisting,
     getPendingRequests: getPendingRequests,
     removeFriendRequest: removeFriendRequest,
-    confirmFriendRequest: confirmFriendRequest
+    confirmFriendRequest: confirmFriendRequest,
+    getFriends: getFriends
 }
 
 function createFriendship(friend1_id, friend2_id, callback) {
@@ -41,8 +42,16 @@ function createFriendship(friend1_id, friend2_id, callback) {
 }
 
 function getPendingRequests(user_id, callback) {
-    Friendship.find({ friend2_id: user_id }, function(err, friendRequests) {
+    Friendship.find({ friend2_id: user_id, confirmed: false }, function(err, friendRequests) {
         callback(friendRequests)
+    })
+}
+
+function getFriends(user_id, callback) {
+    Friendship.find({ friend2_id: user_id, confirmed: true }, function(err, friends) {
+        Friendship.find({ friend1_id: user_id, confirmed: true }, function(err, friends2) {
+             callback (friends.concat(friends2))
+        })
     })
 }
 

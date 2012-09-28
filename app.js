@@ -362,6 +362,14 @@ app.get('/pendingFriendshipRequests', function(request, response){
     })
 })
 
+app.get('/friendsList', function(request, response){
+    friendship.getFriends(request.query.userId, function(friendsList) {
+        response.writeHead(200, {'content-type': 'application/json' })
+        response.write(JSON.stringify(friendsList))
+        response.end('\n', 'utf-8')
+    })
+})
+
 app.get('/addFriend', function(request, response){
     friendship.createFriendship(request.session.user_id, request.query.friendId, function(ok) {
         if (ok) {
