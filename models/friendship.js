@@ -19,7 +19,8 @@ module.exports = {
     getNrOfRequests: getNrOfRequests,
     isFriendRequestExisting: isFriendRequestExisting,
     getPendingRequests: getPendingRequests,
-    removeFriendRequest: removeFriendRequest
+    removeFriendRequest: removeFriendRequest,
+    confirmFriendRequest: confirmFriendRequest
 }
 
 function createFriendship(friend1_id, friend2_id, callback) {
@@ -69,5 +70,14 @@ function removeFriendRequest(friendship_id, next) {
     Friendship.findOne({ _id: friendship_id}, function(err, friendshipToBeRemoved) {
         friendshipToBeRemoved.remove()
         next()
+    })
+}
+
+function confirmFriendRequest(friendship_id, callback) {
+    Friendship.findOne({ _id: friendship_id}, function(err, friendshipToConfirm) {
+        friendshipToConfirm.confirmed = true
+        friendshipToConfirm.save(function () {
+            callback()
+        })
     })
 }

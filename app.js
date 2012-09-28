@@ -376,10 +376,18 @@ app.get('/addFriend', function(request, response){
 })
 
 app.get('/ignoreFriendRequest', function(request, response){
-    friendship.removeFriendRequest(request.query.friendship_id, function(friendshipid) {
-            request.session.nrOfFriendShipRequests--
-            response.writeHead(200, {'content-type': 'application/json' })
-            response.end('\n', 'utf-8')
+    friendship.removeFriendRequest(request.query.friendship_id, function() {
+        request.session.nrOfFriendShipRequests--
+        response.writeHead(200, {'content-type': 'application/json' })
+        response.end('\n', 'utf-8')
+    })
+})
+
+app.get('/confirmFriendRequest', function(request, response){
+    friendship.confirmFriendRequest(request.query.friendship_id, function() {
+        request.session.nrOfFriendShipRequests--
+        response.writeHead(200, {'content-type': 'application/json' })
+        response.end('\n', 'utf-8')
     })
 })
 
