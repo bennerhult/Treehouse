@@ -245,12 +245,18 @@ function getFriendsList(callback) {
             content += '</div>'
             callback(content)
         } else {
+            var friendId
             friendsList.forEach(function(currentFriendship, index) {
-                getUsernameFromServer(currentFriendship.friend1_id, function(username) {   //TODO: make sure you show the other guys name
+                if (currentFriendship.friend1_id === currentUserId) {
+                    friendId = currentFriendship.friend2_id
+                } else {
+                    friendId = currentFriendship.friend1_id
+                }
+                getUsernameFromServer(friendId, function(username) {   //TODO: make sure you show the other guys name
                     content +=   '<br />'
                     content +=   '<span id="friendshipid' + currentFriendship._id + '">'
                     content +=    username
-                    content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="visitFriend(\'' + currentFriendship.friend1_id + '\')">Visit!</a>'
+                    content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="visitFriend(\'' + friendId + '\')">Visit!</a>'
                     content +=   '</span>'
                     if (index  == friendsList.length - 1) {
                         content += '</div>'
