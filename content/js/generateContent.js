@@ -213,30 +213,6 @@ function getFriendsContent(callback) {
     })
 }
 
-function getFriendsList(callback) {
-    var content = '<div id="pendingFriendshipsList"><b>Friends</b>'
-    getFriendsFromServer(function(friendsList) {
-        if (friendsList.length === 0) {
-            content += '</div>'
-            callback(content)
-        } else {
-            friendsList.forEach(function(currentFriendship, index) {
-                getUsernameFromServer(currentFriendship.friend1_id, function(username) {   //TODO: make sure you show the other guys name
-                    content +=   '<br />'
-                    content +=   '<span id="friendshipid' + currentFriendship._id + '">'
-                    content +=    username
-                    content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="visitFriend(\'' + currentFriendship.friend1_id + '\')">Visit!</a>'
-                    content +=   '</span>'
-                    if (index  == friendsList.length - 1) {
-                        content += '</div>'
-                        callback(content)
-                    }
-                })
-            })
-        }
-    })
-}
-
 function getPendingFriendshipRequests(callback) {
     var content = '<div id="pendingFriendshipsList"><b>Friend requests</b>'
     getPendingFriendShipRequestsFromServer(function(pendings) {
@@ -253,6 +229,30 @@ function getPendingFriendshipRequests(callback) {
                     content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="ignoreFriendRequest(\'' + currentRequest._id + '\')">Ignore</a>'
                     content +=   '</span>'
                     if (index  == pendings.length - 1) {
+                        content += '</div>'
+                        callback(content)
+                    }
+                })
+            })
+        }
+    })
+}
+
+function getFriendsList(callback) {
+    var content = '<div id="pendingFriendshipsList"><b>Friends</b>'
+    getFriendsFromServer(function(friendsList) {
+        if (friendsList.length === 0) {
+            content += '</div>'
+            callback(content)
+        } else {
+            friendsList.forEach(function(currentFriendship, index) {
+                getUsernameFromServer(currentFriendship.friend1_id, function(username) {   //TODO: make sure you show the other guys name
+                    content +=   '<br />'
+                    content +=   '<span id="friendshipid' + currentFriendship._id + '">'
+                    content +=    username
+                    content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="visitFriend(\'' + currentFriendship.friend1_id + '\')">Visit!</a>'
+                    content +=   '</span>'
+                    if (index  == friendsList.length - 1) {
                         content += '</div>'
                         callback(content)
                     }

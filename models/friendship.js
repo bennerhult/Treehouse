@@ -56,7 +56,7 @@ function getFriends(user_id, callback) {
 }
 
 function getNrOfRequests(user_id, callback) {
-    Friendship.find({ friend2_id: user_id }, function(err, friendRequests) {
+    Friendship.find({ friend2_id: user_id, confirmed: false }, function(err, friendRequests) {
         callback(friendRequests.length)
     })
 }
