@@ -137,9 +137,16 @@ function findFriends() {
         if (friend_email.match(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i)) {
             findFriendsOnServer(friend_email,
                 function(responseobject) {
-                    var messageText =  friend_email + " found!<br /><a href='javascript:void(0)' style='color: black' onclick='visitFriend(\"" + responseobject.id + "\")'>Visit!</a>"
+                    var messageText
                     if (!responseobject.requestExists) {
+                        messageText = friend_email + " found!<br /><a href='javascript:void(0)' style='color: black' onclick='visitFriend(\"" + responseobject.id + "\")'>Visit!</a>"
                         messageText +=   "<br /><a href='javascript:void(0)' style='color: black' onclick='addFriend(\"" + responseobject.id + "\")'>Add!</a>"
+                    } else {
+                        if (responseobject.confirmed) {
+                            messageText = "You already sent a friend request."
+                        } else {
+                            messageText = "Already your friend!"
+                        }
                     }
                     $("#message").html(messageText)
                 }, function(errorMessage) {

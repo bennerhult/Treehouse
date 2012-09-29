@@ -252,7 +252,7 @@ function getFriendsList(callback) {
                 } else {
                     friendId = currentFriendship.friend1_id
                 }
-                getUsernameFromServer(friendId, function(username) {   //TODO: make sure you show the other guys name
+                getUsernameFromServer(friendId, function(username) {
                     content +=   '<br />'
                     content +=   '<span id="friendshipid' + currentFriendship._id + '">'
                     content +=    username
