@@ -143,9 +143,9 @@ function findFriends() {
                         messageText +=   "<br /><a href='javascript:void(0)' style='color: black' onclick='addFriend(\"" + responseobject.id + "\")'>Add!</a>"
                     } else {
                         if (responseobject.confirmed) {
-                            messageText = "You already sent a friend request."
+                            messageText = friend_email + " is already your friend!"
                         } else {
-                            messageText = "Already your friend!"
+                            messageText = "You have already sent a a friend to " + friend_email + "<br /><a href='javascript:void(0)' style='color: black' onclick='visitFriend(\"" + responseobject.id + "\")'>Visit!</a>"
                         }
                     }
                     $("#message").html(messageText)

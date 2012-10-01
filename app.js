@@ -374,6 +374,18 @@ app.get('/friendsList', function(request, response){
 app.get('/addFriend', function(request, response){
     friendship.createFriendship(request.session.user_id, request.query.friendId, function(ok) {
         if (ok) {
+            //TODO email user
+            /* emailUser(
+                username,
+                'Sign in to Treehouse',
+                "<html>Click <a href='" + domain + "signin?email=" + username + "&token=" + myToken.token + '&appMode=' + appMode + "'>here</a> to sign in to Treehouse.</html>",
+                'Go to ' + domain + 'signin?email=' + username + '&token=' + myToken.token + '&appMode=' + appMode +  ' to sign in to Treehouse!',
+                function() {
+                    response.writeHead(200, {'content-type': 'application/json' })
+                    response.write(JSON.stringify('existing user'))
+                    response.end('\n', 'utf-8')
+                }
+            ) */
             response.writeHead(200, {'content-type': 'application/json' })
             response.end('\n', 'utf-8')
         } else {
@@ -422,7 +434,6 @@ app.get('/usernameForId', function(request, response) {
         response.end('\n', 'utf-8')
     })
 })
-
 
 app.get('/latestAchievementSplash', function(request, response) {
     var latestAchievementId = latestAchievement.getId(function(latestAchievementId) {
