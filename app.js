@@ -341,10 +341,11 @@ app.get('/findFriends', function(request, response){
             if (request.session.user_id == foundFriend._id ) {
                 response.send('Dissociative identity disorder?', { 'Content-Type': 'application/json' }, 404)
             }  else {
-                friendship.isFriendRequestExisting(foundFriend._id, request.session.user_id, function (requestExists, confirmed) {
+                friendship.isFriendRequestExisting(foundFriend._id, request.session.user_id, function (requestExists, confirmed, createdByCurrentUser) {
                     var responseobject = new Object()
                     responseobject.id = foundFriend._id
                     responseobject.confirmed = confirmed
+                    responseobject.createdByCurrentUser = createdByCurrentUser
                     responseobject.requestExists = requestExists
                     response.send(responseobject, { 'Content-Type': 'application/json' }, 200)
                 })

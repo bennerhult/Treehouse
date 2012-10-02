@@ -143,11 +143,10 @@ function findFriends() {
                         messageText = friend_email + " found!<br /><a href='javascript:void(0)' style='color: black' onclick='visitFriend(\"" + responseobject.id + "\")'>Visit!</a>"
                         messageText +=   "<br /><a href='javascript:void(0)' style='color: black' onclick='addFriend(\"" + responseobject.id + "\")'>Add!</a>"
                     } else {
-                       // alert("test: " + responseobject.confirmed)
                         if (responseobject.confirmed) {
                             messageText = friend_email + " is already your friend!"
                         } else {
-                            if (currentUserId == responseobject.id ) {
+                            if (responseobject.createdByCurrentUser ) {
                                 messageText = "You have already sent a friend request to " + friend_email + "<br /><a href='javascript:void(0)' style='color: black' onclick='visitFriend(\"" + responseobject.id + "\")'>Visit!</a>"
                             }  else {
                                 messageText = friend_email + " has already asked to be your friend. Check your friend requests!"
