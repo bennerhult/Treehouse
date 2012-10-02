@@ -144,7 +144,7 @@ function findFriends() {
                     } else {
                         if (responseobject.confirmed) {
                             messageText = friend_email + " is already your friend!"
-                        } else {
+                        } else {       //TODO funkar om man skickat ett request, inte om man är mottagaren av det
                             messageText = "You have already sent a friend request to " + friend_email + "<br /><a href='javascript:void(0)' style='color: black' onclick='visitFriend(\"" + responseobject.id + "\")'>Visit!</a>"
                         }
                     }

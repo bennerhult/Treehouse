@@ -227,6 +227,7 @@ function getPendingFriendshipRequests(callback) {
                     content +=    username
                     content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="confirmFriendRequest(\'' + currentRequest._id + '\')">Confirm</a>'
                     content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="ignoreFriendRequest(\'' + currentRequest._id + '\')">Ignore</a>'
+                    content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="visitFriend(\'' + currentRequest.friend1_id + '\')">Visit</a>'
                     content +=   '</span>'
                     if (index  == pendings.length - 1) {
                         content += '</div>'
