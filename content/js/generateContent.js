@@ -79,10 +79,10 @@ function setCreateEditMenu(achievement) {
     $("#menuArea").html(text)
 }
 
-function setDefaultMenu(bothCompletedAndNotExists, lookingAtFriend) {
+function setDefaultMenu(bothCompletedAndNotExists, lookingAtFriend, achieverId) {
     var menu = '<div id="menu"><ul><li  id="inProgress">'
     if (bothCompletedAndNotExists) {
-        menu +=  '<a href="javascript:void(0)" onclick="getAchievements(false, \'' + currentUserId + '\', ' + lookingAtFriend + ')"><span id="inProgressSpan" class="'
+        menu +=  '<a href="javascript:void(0)" onclick="getAchievements(false, \'' + achieverId + '\', ' + lookingAtFriend + ')"><span id="inProgressSpan" class="'
         if  (isiPad || isiPhone) {
             menu+= 'iDevice'
         } else {
@@ -92,7 +92,7 @@ function setDefaultMenu(bothCompletedAndNotExists, lookingAtFriend) {
     }
     menu += '</li><li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li><li id="completed">'
     if (bothCompletedAndNotExists) {
-        menu +=  '<a href="javascript:void(0)" onclick="getAchievements(true, \'' + currentUserId + '\', ' + lookingAtFriend + ')"><span id="completedSpan" class="'
+        menu +=  '<a href="javascript:void(0)" onclick="getAchievements(true, \'' + achieverId + '\', ' + lookingAtFriend + ')"><span id="completedSpan" class="'
         if  (isiPad || isiPhone) {
             menu+= 'iDevice'
         } else {
@@ -310,7 +310,7 @@ function getUsernameFromServer(userId, callback) {
 function openFriends() {
     $('#tab-menu').hide('fast')
     getFriendsContent(function(friendsContent) {
-        insertContent(friendsContent, setDefaultMenu(false, false))
+        insertContent(friendsContent, setDefaultMenu(false, false, currentUserId))
     })
 
 }
