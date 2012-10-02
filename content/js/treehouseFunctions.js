@@ -137,15 +137,22 @@ function findFriends() {
         if (friend_email.match(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i)) {
             findFriendsOnServer(friend_email,
                 function(responseobject) {
+                    console.log(responseobject)
                     var messageText
                     if (!responseobject.requestExists) {
                         messageText = friend_email + " found!<br /><a href='javascript:void(0)' style='color: black' onclick='visitFriend(\"" + responseobject.id + "\")'>Visit!</a>"
                         messageText +=   "<br /><a href='javascript:void(0)' style='color: black' onclick='addFriend(\"" + responseobject.id + "\")'>Add!</a>"
                     } else {
+                       // alert("test: " + responseobject.confirmed)
                         if (responseobject.confirmed) {
                             messageText = friend_email + " is already your friend!"
-                        } else {       //TODO funkar om man skickat ett request, inte om man är mottagaren av det
-                            messageText = "You have already sent a friend request to " + friend_email + "<br /><a href='javascript:void(0)' style='color: black' onclick='visitFriend(\"" + responseobject.id + "\")'>Visit!</a>"
+                        } else {
+                            if (currentUserId == responseobject.id ) {
+                                messageText = "You have already sent a friend request to " + friend_email + "<br /><a href='javascript:void(0)' style='color: black' onclick='visitFriend(\"" + responseobject.id + "\")'>Visit!</a>"
+                            }  else {
+                                messageText = friend_email + " has already asked to be your friend. Check your friend requests!"
+                            }
+
                         }
                     }
                     $("#message").html(messageText)
