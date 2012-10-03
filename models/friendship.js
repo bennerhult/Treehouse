@@ -86,7 +86,7 @@ function confirmFriendRequest(friendship_id, callback) {
     Friendship.findOne({ _id: friendship_id}, function(err, friendshipToConfirm) {
         friendshipToConfirm.confirmed = true
         friendshipToConfirm.save(function () {
-            callback()
+            callback(friendshipToConfirm.friend1_id)
         })
     })
 }

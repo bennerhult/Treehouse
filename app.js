@@ -405,10 +405,13 @@ app.get('/ignoreFriendRequest', function(request, response){
 })
 
 app.get('/confirmFriendRequest', function(request, response){
-    friendship.confirmFriendRequest(request.query.friendship_id, function() {
-        request.session.nrOfFriendShipRequests--
-        response.writeHead(200, {'content-type': 'application/json' })
-        response.end('\n', 'utf-8')
+    friendship.confirmFriendRequest(request.query.friendship_id, function(friendId) {
+        user.User.findOne({ _id: friendId}, function(err, foundUser) {
+            var responseobject = new Object()
+            responseobject.username = foundUser.username
+            responseobject.id = friendId
+            response.send(responseobject, { 'Content-Type': 'application/json' }, 200)
+        })
     })
 })
 

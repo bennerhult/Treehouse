@@ -138,7 +138,6 @@ function findFriends() {
         if (friend_email.match(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i)) {
             findFriendsOnServer(friend_email,
                 function(responseobject) {
-                    console.log(responseobject)
                     var messageText
                     if (!responseobject.requestExists) {
                         messageText = friend_email + " found!<br /><a href='javascript:void(0)' style='color: black' onclick='visitFriend(\"" + responseobject.id + "\")'>Visit!</a>"
@@ -235,7 +234,7 @@ function ignoreFriendRequestOnServer(friendship_id, callback) {
 }
 
 function confirmFriendRequest(friendship_id) {
-    confirmFriendRequestOnServer(friendship_id, function() {
+    confirmFriendRequestOnServer(friendship_id, function(responseobject) {
         nrOfFriendShipRequests--
         $("#friendshipid" + friendship_id).html("")
         var friendRequestRow = "<a href='javascript:void(0)' onclick='openFriends()'><span>Friends"
@@ -244,6 +243,7 @@ function confirmFriendRequest(friendship_id) {
         }
         friendRequestRow += "</span></a></li>"
         $("#friendRequestRow").html(friendRequestRow)
+        $("#friendsList").append("<br />" + responseobject.username + " <a href='javascript:void(0)' style='color: black' onclick='visitFriend(\"" + responseobject.id + "\")'>Visit!</a>")
     })
 }
 
@@ -254,7 +254,7 @@ function confirmFriendRequestOnServer(friendship_id, callback) {
         data: data,
         dataType: "json",
         statusCode: {
-            200: function() { callback() }
+            200: function(responseobject) { callback(responseobject) }
         }
     })
 }
