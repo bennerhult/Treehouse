@@ -43,10 +43,11 @@ function loginUsingFacebook() {
                 FB.api('/me', function(apiResponse) {
                     if (apiResponse) {
                         checkFBUserOnServer(apiResponse.email,
-                            function(userId, ok) {
-                                console.log("Beta: " + userId )
+                            function(nrOfRequests, ok) {
+                                console.log("Betaa: " + nrOfRequests )
+                                nrOfFriendShipRequests = nrOfRequests
                                 if (ok) { //TODO: use ajax success/error instead
-                                    openAchievements(false, userId, false)
+                                    openAchievements(false, currentUserId, false)
                                 } else {
                                     $("#message").html("Facebook did not play nice. Try regular login instead.")
                                 }
@@ -82,7 +83,7 @@ function rememberMe() {
         function(nrOfRequests, ok) {
             if (ok) { //TODO: use ajax success/error instead
                 nrOfFriendShipRequests = nrOfRequests
-                console.log("Alfa: " + nrOfFriendShipRequests )
+                console.log("Alfaa: " + nrOfFriendShipRequests )
                 openAchievements(false, currentUserId, false)
             } else {
                 showSignin()
