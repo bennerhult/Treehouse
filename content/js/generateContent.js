@@ -240,7 +240,7 @@ function getPendingFriendshipRequests(callback) {
 }
 
 function getFriendsList(callback) {
-    var content = '<div id="pendingFriendshipsList"><b>Friends</b>'
+    var content = '<div id="friendshipsList"><b>Friends</b>'
     getFriendsFromServer(function(friendsList) {
         if (friendsList.length === 0) {
             content += '</div>'
