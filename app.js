@@ -375,18 +375,17 @@ app.get('/friendsList', function(request, response){
 app.get('/addFriend', function(request, response){
     friendship.createFriendship(request.session.user_id, request.query.friendId, function(ok) {
         if (ok) {
-            //TODO email user
-            /* emailUser(
-                username,
-                'Sign in to Treehouse',
-                "<html>Click <a href='" + domain + "signin?email=" + username + "&token=" + myToken.token + '&appMode=' + appMode + "'>here</a> to sign in to Treehouse.</html>",
-                'Go to ' + domain + 'signin?email=' + username + '&token=' + myToken.token + '&appMode=' + appMode +  ' to sign in to Treehouse!',
-                function() {
-                    response.writeHead(200, {'content-type': 'application/json' })
-                    response.write(JSON.stringify('existing user'))
-                    response.end('\n', 'utf-8')
-                }
-            ) */
+            user.User.findOne({ _id: request.query.friendId }, function(err, askedFriend) {
+                user.User.findOne({ _id: request.session.user_id}, function(err, askingFriend) {
+                    emailUser(
+                        askedFriend.username,
+                        askingFriend.username + ' wants to be your friend on Treehouse',
+                        "<html>" + askingFriend.username  + " wants to be your friend on Treehouse! Login and confirm?</html>",
+                        askingFriend.username + ' wants to be your friend on Treehouse! Login and confirm?',
+                        function() {}   //no nothing
+                    )
+                })
+            })
             response.writeHead(200, {'content-type': 'application/json' })
             response.end('\n', 'utf-8')
         } else {
