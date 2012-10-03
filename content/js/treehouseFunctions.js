@@ -44,6 +44,7 @@ function loginUsingFacebook() {
                     if (apiResponse) {
                         checkFBUserOnServer(apiResponse.email,
                             function(userId, ok) {
+                                console.log("Beta: " + userId )
                                 if (ok) { //TODO: use ajax success/error instead
                                     openAchievements(false, userId, false)
                                 } else {
@@ -81,7 +82,7 @@ function rememberMe() {
         function(nrOfRequests, ok) {
             if (ok) { //TODO: use ajax success/error instead
                 nrOfFriendShipRequests = nrOfRequests
-                console.log("nr of requests:::: " + nrOfFriendShipRequests )
+                console.log("Alfa: " + nrOfFriendShipRequests )
                 openAchievements(false, currentUserId, false)
             } else {
                 showSignin()
