@@ -81,6 +81,7 @@ function rememberMe() {
         function(nrOfRequests, ok) {
             if (ok) { //TODO: use ajax success/error instead
                 nrOfFriendShipRequests = nrOfRequests
+                console.log("nr of requests:::: " + nrOfFriendShipRequests )
                 openAchievements(false, currentUserId, false)
             } else {
                 showSignin()
