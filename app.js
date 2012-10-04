@@ -74,7 +74,10 @@ function loadUser(request, response, next) {
 }
 
 function authenticateFromLoginToken(request, response, initialCall) {
+    console.log("-----------------------------------------")
+    console.log("authenticateFromLoginToken: " + initialCall)
     if (request.cookies.rememberme)  {
+        console.log("cookie found")
         var cookie = JSON.parse(request.cookies.rememberme)
         loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
             if (!token) {
@@ -89,13 +92,13 @@ function authenticateFromLoginToken(request, response, initialCall) {
                             token.token = loginToken.randomToken()
                             token.save(function() {
                                 response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 2 * 604800000), path: '/' })
-                                if (initialCall) {
-                                    writeDefaultPage(request, response)
-                                }   else {
+                                //if (initialCall) {
+                                //    writeDefaultPage(request, response)
+                                //}   else {
                                     response.writeHead(200, {'content-type': 'application/json' })
                                     response.write(JSON.stringify(nrOfFriendShipRequests))
                                     response.end('\n', 'utf-8')
-                                }
+                                //}
                             })
                         })
                     } else {
@@ -130,11 +133,7 @@ app.get('/channel.html', function(request, response){
 })
 
 app.get('/', function(request, response){
-    if (request.cookies.rememberme) {
-        authenticateFromLoginToken(request, response, true)
-    } else {
-        writeDefaultPage(request, response)
-    }
+    writeDefaultPage(request, response)
 })
 
 app.get('/rememberMe', function(request, response){
@@ -183,7 +182,7 @@ function signin(request, response, newUser) {
     var token = url_parts.query.token
     var appModeString = url_parts.query.appMode
     var appMode = (appModeString === 'true')
-
+    console.log("signin: " + url_parts.query.email.toLowerCase())
     loginToken.LoginToken.findOne({ email: email, token: token }, function(err,myToken) {
         if (myToken) {
             user.User.findOne({ username: email }, function(err,myUser) {
@@ -250,6 +249,7 @@ function emailUser(emailAddress, subject, html, altText, callback) {
 }
 
 function getDataForUser(myUser, request, response, newUser, appMode) {
+    console.log("getDataForUser")
     var email
     var fbConnect = false
     if (request.session.user_email) {  //email sign up
@@ -441,6 +441,7 @@ app.get('/usernameForId', function(request, response) {
 })
 
 app.get('/latestAchievementSplash', function(request, response) {
+    console.log("latestAchievementSplash")
     var latestAchievementId = latestAchievement.getId(function(latestAchievementId) {
         achievement.Achievement.findOne({ _id: latestAchievementId }, function(err,latestAchievement) {
             response.writeHead(200, {'content-type': 'application/json' })
@@ -897,9 +898,11 @@ function writeGotoAppPage(response) {
 }
 
 function writeDefaultPage(request, response) {
+    console.log("writeDefaultPage: " + request.session.user_id + ", " + request.session.nrOfFriendShipRequests)
     requestHandlers.indexPage(response, request.session.user_id, request.session.nrOfFriendShipRequests)
 }
 
 app.get('*', function(request, response){
+    console.log("*")
    response.redirect("/")
 })
