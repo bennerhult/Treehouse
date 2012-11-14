@@ -84,6 +84,10 @@ See available versions for Node and NPM
 ####Simulate production environment
 `set NODE_ENV=production` (`set NODE_ENV=development` to restore)
 
+
+##  Facebook admin
+[App admin page] (https://developers.facebook.com/apps/480961688595420/)
+
 ##The missing manual
 [jQuery Mobile](http://jquerymobile.com/)
 
