@@ -18,7 +18,6 @@ var isAppMode = false
 
 
 function init(userId, friendShipRequests) {
-    alert('init')
     currentUserId = userId
     nrOfFriendShipRequests = friendShipRequests
     FB.init({
