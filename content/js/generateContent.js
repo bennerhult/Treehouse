@@ -25,7 +25,7 @@ function init(userId, friendShipRequests) {
         status: true,
         cookie: true,
         xfbml: true,
-        channelUrl : '//treehouse.io/channel.html',  //increases performance
+        //channelUrl : '//treehouse.io/channel.html',  //increases performance
         oauth: true
     })
     insertLatestAchievement()
