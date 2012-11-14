@@ -18,6 +18,7 @@ var isAppMode = false
 
 
 function init(userId, friendShipRequests) {
+    alert('init')
     currentUserId = userId
     nrOfFriendShipRequests = friendShipRequests
     FB.init({
@@ -25,7 +26,7 @@ function init(userId, friendShipRequests) {
         status: true,
         cookie: true,
         xfbml: true,
-        //channelUrl : '//treehouse.io/channel.html',  //increases performance
+        channelUrl : '//treehouse.io/channel.html',  //increases performance
         oauth: true
     })
     insertLatestAchievement()
