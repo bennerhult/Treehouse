@@ -35,6 +35,8 @@ function topAppPagePart() {
         tab + '<meta name="apple-mobile-web-app-capable" content="yes">' + nl +
         tab + '<meta name="apple-mobile-web-app-status-bar-style" content="black" />' + nl +
         tab + '<link rel="apple-touch-icon" href="/content/treehouse-icon.png">' + nl +
+        tab + '<meta name="description" content="Treehouse helps you track your achievements. Explore. Achieve. Play!" />' + nl +
+        tab + '<meta name="keywords" content="Gamification, achievement, achieve, track" />' + nl +
         tab + '<meta property="og:site_name" content="Treehouse" />' + nl +
         tab + '<meta property="og:title" content="Treehouse. Track your achievements!" />' + nl +
         tab + '<meta property="og:type" content="article" />' + nl +
@@ -95,6 +97,8 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
                     tab + '<meta name="apple-mobile-web-app-capable" content="yes">' + nl +
                     tab + '<meta name="apple-mobile-web-app-status-bar-style" content="black" />' + nl +
                     tab + '<link rel="apple-touch-icon" href="/content/treehouse-icon.png">' + nl +
+                    tab + '<meta name="description" content="Treehouse helps you track your achievements. Explore. Achieve. Play!" />' + nl +
+                    tab + '<meta name="keywords" content="Gamification, achievement, achieve, track" />' + nl +
                     tab + '<meta property="og:site_name" content="Treehouse" />' + nl +
                     tab + '<meta property="og:title" content="Treehouse. Track your achievements!" />' + nl +
                     tab + '<meta property="og:type" content="article" />' + nl +
