@@ -11,11 +11,11 @@ var domain = ''
 app = express.createServer()
 
 var server  = email.server.connect({
-    user:    'erik.bennerhult@gmail.com',
-    password:'user.User.findOne(',
-    host:    'smtp.gmail.com',
-    port:    465,
-    ssl:     true
+    user:    'pe3116x3',
+    password:'wPWHEybx',
+    host:    'amail3.space2u.com',
+    port:    2525,
+    ssl:     false
 })
 
 app.configure('development', function() {
