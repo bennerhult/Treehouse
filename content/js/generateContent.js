@@ -247,7 +247,6 @@ function getFriendsList(callback) {
     var content = '<div id="friendsList"><b>Friends</b>'
     var index = 0
     getFriendsFromServer(function(friendsList) {
-        //alert(friendsList)
         if (friendsList.length === 0) {
             content += '</div>'
             callback(content)
