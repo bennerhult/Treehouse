@@ -245,27 +245,28 @@ function getPendingFriendshipRequests(callback) {
 
 function getFriendsList(callback) {
     var content = '<div id="friendsList"><b>Friends</b>'
-
+    var index = 0
     getFriendsFromServer(function(friendsList) {
-        alert(friendsList)
+        //alert(friendsList)
         if (friendsList.length === 0) {
             content += '</div>'
             callback(content)
         } else {
             var friendId
-            friendsList.forEach(function(currentFriendship, index) {
+            friendsList.forEach(function(currentFriendship) {
                 if (currentFriendship.friend1_id === currentUserId) {
                     friendId = currentFriendship.friend2_id
                 } else {
                     friendId = currentFriendship.friend1_id
                 }
                 getUsernameFromServer(friendId, function(username, id) {
+                    index++
                     content +=   '<br />'
                     content +=   '<span id="friendshipid' + currentFriendship._id + '">'
                     content +=    username
                     content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')">Visit!</a>'
                     content +=   '</span>'
-                    if (index  == friendsList.length - 1) {
+                    if (index == friendsList.length) {
                         content += '</div>'
                         callback(content)
                     }
