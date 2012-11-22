@@ -48,9 +48,9 @@ function getPendingRequests(user_id, callback) {
 }
 
 function getFriends(user_id, callback) {
-    Friendship.find({ friend2_id: user_id, confirmed: true }, function(err, friends) {
+    Friendship.find({ friend2_id: user_id, confirmed: true }, function(err, friends1) {
         Friendship.find({ friend1_id: user_id, confirmed: true }, function(err, friends2) {
-            var friends = friends.concat(friends2)
+            var friends = friends1.concat(friends2)
             callback (friends)
         })
     })
