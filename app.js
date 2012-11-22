@@ -532,9 +532,11 @@ function getAchievementList(request, response, completedAchievements) {
                         if  (_.indexOf(achievementIdsGoneThrough, myAchievement._id.toString()) == -1) {
                                 achievementIdsGoneThrough.push(myAchievement._id.toString())
                                 calculateAchievementProgress(achieverId, myAchievement._id, function(achievementPercentageFinished) {
-                                    if ((completedAchievements && achievementPercentageFinished == 100) || (!completedAchievements && achievementPercentageFinished < 100)) {
-                                        achievementsToShow.push(myAchievement)
-                                        percentages.push(achievementPercentageFinished)
+                                    if(!lookingAtFriendsAchievements || myAchievement.publiclyVisible) {
+                                        if ((completedAchievements && achievementPercentageFinished == 100) || (!completedAchievements && achievementPercentageFinished < 100)) {
+                                            achievementsToShow.push(myAchievement)
+                                            percentages.push(achievementPercentageFinished)
+                                        }
                                     }
                                     goneThroughProgresses +=  myAchievement.goals.length
                                     if (goneThroughProgresses == progresses.length) {
