@@ -524,13 +524,12 @@ function getAchievementList(request, response, completedAchievements) {
     progress.Progress.find({ achiever_id: achieverId}, function(err, progresses) {
         if (err) { console.log("error in app.js: couldn't find any progress for user " + achieverId) }
         if (progresses && progresses.length > 0) {
-            if (!lookingAtFriendsAchievements && !completedAchievements ) { achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent(), setCreateEditMenu())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>" }
+            if (!completedAchievements ) {achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent(), setCreateEditMenu())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>" }
             progresses.forEach(function(currentProgress, index) {
                 achievement.Achievement.findById(currentProgress.achievement_id, function(err2, myAchievement) {
                     if (err2) { console.log("error in app.js: couldn't find achievement for progress " + currentProgress.achievement_id) }
                     if (myAchievement) {
                         if  (_.indexOf(achievementIdsGoneThrough, myAchievement._id.toString()) == -1) {
-
                                 achievementIdsGoneThrough.push(myAchievement._id.toString())
                                 calculateAchievementProgress(achieverId, myAchievement._id, function(achievementPercentageFinished) {
                                     if(!lookingAtFriendsAchievements || myAchievement.publiclyVisible) {
@@ -551,7 +550,7 @@ function getAchievementList(request, response, completedAchievements) {
                 })
             })
         } else {
-            achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent(), setCreateEditMenu())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>"
+            if (!lookingAtFriendsAchievements) {achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent(), setCreateEditMenu())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>" }
             finishAchievementsList(response, achievementsList, completedAchievements)
         }
     })
