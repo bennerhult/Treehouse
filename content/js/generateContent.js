@@ -257,11 +257,11 @@ function getFriendsList(callback) {
                 } else {
                     friendId = currentFriendship.friend1_id
                 }
-                getUsernameFromServer(friendId, function(username) {
+                getUsernameFromServer(friendId, function(username, id) {
                     content +=   '<br />'
                     content +=   '<span id="friendshipid' + currentFriendship._id + '">'
                     content +=    username
-                    content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="visitFriend(\'' + currentFriendship._id + '\')">Visit!</a>'
+                    content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')">Visit!</a>'
                     content +=   '</span>'
                     if (index  == friendsList.length - 1) {
                         content += '</div>'
@@ -307,7 +307,7 @@ function getUsernameFromServer(userId, callback) {
         data: data,
         dataType: "json",
         statusCode: {
-            200: function(username) { callback(username) }
+            200: function(username) { callback(username, userId) }
         }
     })
 }

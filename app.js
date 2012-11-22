@@ -521,11 +521,14 @@ function getAchievementList(request, response, completedAchievements) {
     } else {
         achieverId = request.session.user_id
     }
+    console.log("achieverId " + achieverId )
     progress.Progress.find({ achiever_id: achieverId}, function(err, progresses) {
+        console.log("progresses " + progresses.length)
         if (err) { console.log("error in app.js: couldn't find any progress for user " + achieverId) }
         if (progresses && progresses.length > 0) {
             if (!completedAchievements ) {achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent(), setCreateEditMenu())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>" }
             progresses.forEach(function(currentProgress, index) {
+                console.log("goneThroughProgresses " + goneThroughProgresses)
                 achievement.Achievement.findById(currentProgress.achievement_id, function(err2, myAchievement) {
                     if (err2) { console.log("error in app.js: couldn't find achievement for progress " + currentProgress.achievement_id) }
                     if (myAchievement) {
