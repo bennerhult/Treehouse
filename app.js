@@ -368,7 +368,6 @@ app.get('/pendingFriendshipRequests', function(request, response){
 
 app.get('/friendsList', function(request, response){
     friendship.getFriends(request.query.userId, function(friendsList) {
-        console.log("--------------length: " + friendsList.length)
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(friendsList))
         response.end('\n', 'utf-8')

@@ -245,7 +245,9 @@ function getPendingFriendshipRequests(callback) {
 
 function getFriendsList(callback) {
     var content = '<div id="friendsList"><b>Friends</b>'
+
     getFriendsFromServer(function(friendsList) {
+        alert(friendsList)
         if (friendsList.length === 0) {
             content += '</div>'
             callback(content)
