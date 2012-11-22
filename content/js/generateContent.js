@@ -261,7 +261,7 @@ function getFriendsList(callback) {
                     content +=   '<br />'
                     content +=   '<span id="friendshipid' + currentFriendship._id + '">'
                     content +=    username
-                    content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="visitFriend(\'' + friendId + '\')">Visit!</a>'
+                    content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="visitFriend(\'' + currentFriendship._id + '\')">Visit!</a>'
                     content +=   '</span>'
                     if (index  == friendsList.length - 1) {
                         content += '</div>'
