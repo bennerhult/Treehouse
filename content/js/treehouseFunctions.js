@@ -356,12 +356,11 @@ function getAchievement(achievementId, userId, publiclyVisible) {
                 $("#fbLike").show()
                 $("#tweetAchievement").show()
                 $("#fbLikeWeb").hide()
-                $("#tweetAchievementWeb").hide()
             } else {
                 $("#fbLike").hide()
                 $("#tweetAchievement").hide()
                 $("#fbLikeWeb").show()
-                $("#tweetAchievementWeb").show()
+                $("#tweetTreehouse").show()
             }
         }, achievementId, userId
     )
@@ -377,7 +376,6 @@ function getPublicAchievement(achievementId, userId) {
             $("#fbLike").show()
             $("#tweetAchievement").show()
             $("#fbLikeWeb").hide()
-            $("#tweetAchievementWeb").hide()
         }, achievementId, userId
     )
 }
