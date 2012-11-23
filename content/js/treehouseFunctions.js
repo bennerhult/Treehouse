@@ -440,7 +440,6 @@ function publicize() {
             $("#publicizeButton").empty().remove()
             $("#fbLike").show()
             $("#tweetAchievement").show()
-            $("#tweetAchievementWeb").show()
             insertLatestAchievement()
         }
     )
