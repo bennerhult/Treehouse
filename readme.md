@@ -17,7 +17,7 @@ What have you achieved today?
 
 `git commit -m "comment"`
 
-`git push -u origin master`
+`git push origin master`
 
 ###pull
 `git fetch origin`
@@ -33,7 +33,7 @@ Click Synchronize `ctrl-alt-y' in WebStorm
 
 
 ##Heroku commands
-Push from git to Heroku
+Push from local repo to Heroku
 
 `git push heroku master`
 
@@ -44,6 +44,7 @@ Start Heroku
 Check logs
 
 `heroku logs`
+
 
 See available versions for Node and NPM
 
