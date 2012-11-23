@@ -633,6 +633,11 @@ function writeAchievementPage(response, currentViewedAchieverId, currentAchievem
                                 achievementDesc += '<div id="fbLike" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="250" data-show-faces="true" font="segoe ui"></div></div>'
                                 achievementDesc += '<br />'
                                 achievementDesc += '<br />'
+                                achievementDesc += '<div id="tweetAchievement" style="overflow:visible;">'
+                                achievementDesc += 'tweet achievement!'
+                                achievementDesc += '</div>'
+                                achievementDesc += '<br />'
+                                achievementDesc += '<br />'
                                 achievementDesc += '<p>'
                                 achievementDesc += 'Creator: ' + currentAchievement.createdBy + '<br />'
                                 user.User.findOne({ _id:  currentViewedAchieverId}, function(err2,myUser) {
