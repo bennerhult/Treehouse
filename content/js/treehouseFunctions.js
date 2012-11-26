@@ -208,6 +208,19 @@ function addFriendOnServer(friendId, callback) {
     })
 }
 
+function removeFriendship(friendship_id) {
+    ignoreFriendRequestOnServer(friendship_id, function() {
+        nrOfFriendShipRequests--
+        $("#friendshipid" + friendship_id).html("")
+        var friendRequestRow = "<a href='javascript:void(0)' onclick='openFriends()'><span>Friends"
+        if (nrOfFriendShipRequests > 0) {
+            friendRequestRow += " (" + nrOfFriendShipRequests + ")"
+        }
+        friendRequestRow += "</span></a></li>"
+        $("#friendRequestRow").html(friendRequestRow)
+    })
+}
+
 function ignoreFriendRequest(friendship_id) {
     ignoreFriendRequestOnServer(friendship_id, function() {
         nrOfFriendShipRequests--

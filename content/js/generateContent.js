@@ -264,6 +264,8 @@ function getFriendsList(callback) {
                     content +=   '<span id="friendshipid' + currentFriendship._id + '">'
                     content +=    username
                     content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')">Visit!</a>'
+
+                    content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="removeFriendship(\'' + currentFriendship._id  + '\')">Remove!</a>'
                     content +=   '</span>'
                     if (index == friendsList.length) {
                         content += '</div>'
