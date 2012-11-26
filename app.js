@@ -445,7 +445,11 @@ app.get('/latestAchievementSplash', function(request, response) {
     var latestAchievementId = latestAchievement.getId(function(latestAchievementId) {
         achievement.Achievement.findOne({ _id: latestAchievementId }, function(err,latestAchievement) {
             response.writeHead(200, {'content-type': 'application/json' })
-            response.write(JSON.stringify(latestAchievement))
+            if (latestAchievement) {
+                response.write(JSON.stringify(latestAchievement))
+            }   else {
+                response.write("")
+            }
             response.end('\n', 'utf-8')
         })
      })
@@ -780,6 +784,15 @@ app.get('/progress', function(request, response){
 app.get('/publicize', function(request, response){
     achievement.Achievement.findOne({ _id: app.set('current_achievement_id') }, function(err,currentAchievement) {
         achievement.publicize(currentAchievement)
+        response.writeHead(200, {'content-type': 'application/json' })
+        response.write(JSON.stringify("ok"))
+        response.end('\n', 'utf-8')
+    })
+})
+
+app.get('/unpublicize', function(request, response){
+    achievement.Achievement.findOne({ _id: app.set('current_achievement_id') }, function(err,currentAchievement) {
+        achievement.unpublicize(currentAchievement)
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify("ok"))
         response.end('\n', 'utf-8')

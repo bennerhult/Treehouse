@@ -446,9 +446,9 @@ function publicize() {
     publicizeOnServer(
         function() {
             FB.XFBML.parse();
-            $("#editButton").html("")
-            $("#deleteButton").html("")
-            $("#publicizeButton").empty().remove()
+            $("#editButton").hide()
+            $("#deleteButton").hide()
+            $("#publicizeButton").hide()
             $("#fbLike").show()
             $("#tweetAchievement").show()
             insertLatestAchievement()
@@ -458,6 +458,29 @@ function publicize() {
 
 function publicizeOnServer(callback) {
     $.ajax("/publicize", {
+        type: "GET",
+        dataType: "json",
+        success: function() { if ( callback ) callback() },
+        error  : function()     { if ( callback ) callback(null) }
+    })
+}
+
+function unpublicize() {
+    unpublicizeOnServer(
+        function() {
+            $("#editButton").show()
+            $("#deleteButton").show()
+            $("#unpublicizeButton").hide()
+            $("#publicizeButton").show()
+            $("#fbLike").hide()
+            $("#tweetAchievement").hide()
+            insertLatestAchievement()
+        }
+    )
+}
+
+function unpublicizeOnServer(callback) {
+    $.ajax("/unpublicize", {
         type: "GET",
         dataType: "json",
         success: function() { if ( callback ) callback() },

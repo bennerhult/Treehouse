@@ -25,8 +25,10 @@ module.exports = {
     clearGoals: clearGoals,
     addGoalToAchievement: addGoalToAchievement,
     publicize: publicize,
+    unpublicize: unpublicize,
     remove: remove,
-    save: save
+    save: save,
+    findPublicAchievement: findPublicAchievement
 }
 
 function createAchievement(createdBy, title, description, imageURL) {
@@ -62,6 +64,23 @@ function publicize(achievement) {
     achievement.save(function (err) {})   //TODO: handle error
 }
 
+function unpublicize(achievement) {
+    achievement.publiclyVisible = false
+    achievement.save(function (err) {
+        latestAchievement.getId(function(id) {
+            if (id.equals(achievement._id)) {
+                findPublicAchievement(function (publicId) {
+                    if (publicId) {
+                        latestAchievement.update(publicId)
+                    }   else {
+                        latestAchievement.update(-1)
+                    }
+                })
+            }
+        })
+    })   //TODO: handle error
+}
+
 function remove(achievement, userId, next)    {
     latestAchievement.getId(function(latestId) {
         if (achievement.id != latestId) {
@@ -71,4 +90,14 @@ function remove(achievement, userId, next)    {
         }
     })
 
+}
+
+function findPublicAchievement(callback) {
+    Achievement.findOne({ publiclyVisible: true }, function(err,publicAchievement) {
+      if (publicAchievement) {
+          callback(publicAchievement.id)
+      } else {
+          callback()
+      }
+    })
 }

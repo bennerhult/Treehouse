@@ -1,6 +1,5 @@
 var mongoose = require('mongoose'),
     treehouse = require('../app.js'),
-    progress = require('./progress.js'),
     Schema= mongoose.Schema
 
 mongoose.connect(treehouse.dburi)
@@ -22,20 +21,25 @@ function getId(callback) {
         if (latestAchievement) {
             callback(latestAchievement.id)
         }   else {
-            callback()
+            callback(-1)
         }
     })
 }
 
 function update(id) {
+    console.log("BADZ: " + id)
     LatestAchievement.findOne({ ownId: 1 }, function(err,latestAchievement) {
-        if (latestAchievement) {
+        if (id == -1) {
+            latestAchievement.remove(function (err) {}) //someone unpublicized the last public achievement
+        } else if (latestAchievement) {
             latestAchievement.id = id;
+            latestAchievement.save(function (error) {})
         } else {
-            latestAchievement = new LatestAchievement()
+            latestAchievement = new LatestAchievement()    //first time here)
             latestAchievement.ownId = 1
             latestAchievement.id = id
+            latestAchievement.save(function (error) {})
         }
-        latestAchievement.save(function (error) {})
+
     })
 }
