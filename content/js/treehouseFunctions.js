@@ -365,7 +365,7 @@ function getAchievement(achievementId, userId, publiclyVisible) {
             if (publiclyVisible) {
                 $('meta[propery="og:url"]').attr('content', 'www.treehouse.io/achievement?achievementId=' + achievementId + '&userId=' + userId)
                 FB.XFBML.parse();
-                $("#publicizeButton").empty().remove()
+                $("#publicizeButton").hide()
                 $("#fbLike").show()
                 $("#tweetAchievement").show()
                 $("#fbLikeWeb").hide()
@@ -384,8 +384,8 @@ function getPublicAchievement(achievementId, userId) {
         function(data) {
              $("#achievementDesc").html(data)
             FB.XFBML.parse();
-            $("#publicizeButton").empty().remove()
-            $("#addbutton").empty().remove()
+            $("#publicizeButton").hide()
+            $("#addbutton").hide()
             $("#fbLike").show()
             $("#tweetAchievement").show()
             $("#fbLikeWeb").hide()
@@ -449,7 +449,9 @@ function publicize() {
             $("#editButton").hide()
             $("#deleteButton").hide()
             $("#publicizeButton").hide()
+            $("#unpublicizeButton").show()
             $("#fbLike").show()
+            $("#fbLikeWeb").hide()
             $("#tweetAchievement").show()
             insertLatestAchievement()
         }
@@ -473,6 +475,7 @@ function unpublicize() {
             $("#unpublicizeButton").hide()
             $("#publicizeButton").show()
             $("#fbLike").hide()
+            $("#fbLikeWeb").show()
             $("#tweetAchievement").hide()
             insertLatestAchievement()
         }

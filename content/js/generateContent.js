@@ -114,16 +114,23 @@ function setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, 
             '<li class="back"><a href="javascript:void(0)" onclick="openAchievements(' + completed + ', \'' + achieverId + '\', ' + lookingAtFriend + ')"><img src="content/img/back-1.png" alt=""/></a></li>' + nl
     if (!lookingAtFriend) {
         if (!isLatestAchievement) { menu += '<li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>' + nl }
-        if (!publiclyVisible) {
-            menu += '<li id="publicizeButton" class="share"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/share.png" /></a></li>'  + nl
-        } else  {
-            menu += '<li id="unpublicizeButton" class="share"><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unshare.png" /></a></li>' + nl
-        }
+
+        menu += '<li id="publicizeButton" class="share"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/share.png" /></a></li>'  + nl
+        menu += '<li id="unpublicizeButton" class="share"><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unshare.png" /></a></li>' + nl
+
         if (!publiclyVisible && !progressMade) { menu += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement(\'' + achieverId + '\')"><img src="content/img/edit.png" /></a></li>' + nl }
     }
 
     menu += '</ul>' + nl  + '</div>'
     $("#menuArea").html(menu)
+
+    if (!lookingAtFriend) {
+        if (!publiclyVisible) {
+            $("#unpublicizeButton").hide()
+        } else {
+            $("#publicizeButton").hide()
+        }
+    }
 }
 
 function setEmptyMenu() {
