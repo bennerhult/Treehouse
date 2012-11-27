@@ -35,7 +35,7 @@ function topAppPagePart() {
         tab + '<meta name="apple-mobile-web-app-capable" content="yes">' + nl +
         tab + '<meta name="apple-mobile-web-app-status-bar-style" content="black" />' + nl +
         tab + '<link rel="apple-touch-icon" href="/content/treehouse-icon.png">' + nl +
-        tab + '<link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 460px) and (-webkit-device-pixel-ratio: 1)" href="/content/img/startup320x460.png" />' + nl +
+        tab + '<link rel="apple-touch-startup-image" media="(device-width: 320px)" href="/content/img/startup320x460.png" />' + nl +
         tab + '<meta name="description" content="Treehouse helps you track your achievements. Explore. Achieve. Play!" />' + nl +
         tab + '<meta name="keywords" content="Gamification, achievement, achieve, track" />' + nl +
         tab + '<meta property="og:site_name" content="Treehouse" />' + nl +
@@ -98,7 +98,7 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
                     tab + '<meta name="apple-mobile-web-app-capable" content="yes">' + nl +
                     tab + '<meta name="apple-mobile-web-app-status-bar-style" content="black" />' + nl +
                     tab + '<link rel="apple-touch-icon" href="/content/treehouse-icon.png">' + nl +
-                    tab + '<link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 460px) and (-webkit-device-pixel-ratio: 1)" href="/content/img/startup320x460.png" />' + nl +
+                    tab + '<link rel="apple-touch-startup-image" media="(device-width: 320px)" href="/content/img/startup320x460.png" />' + nl +
                     tab + '<meta name="description" content="Treehouse helps you track your achievements. Explore. Achieve. Play!" />' + nl +
                     tab + '<meta name="keywords" content="Gamification, achievement, achieve, track" />' + nl +
                     tab + '<meta property="og:site_name" content="Treehouse" />' + nl +
