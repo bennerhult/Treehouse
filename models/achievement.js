@@ -66,17 +66,20 @@ function publicize(achievement) {
 
 function updateLatestAchievementIfNecessary(achievementId) {
     latestAchievement.getId(function(id) {
-        if (id.equals(achievementId)) {
-            findPublicAchievement(function (publicId) {
-                if (publicId) {
-                    latestAchievement.update(publicId)
-                }   else {
-                    latestAchievement.update(-1)
-                }
-            })
+        if (id) {
+            if (id.equals(achievementId)) {
+                findPublicAchievement(function (publicId) {
+                    if (publicId) {
+                        latestAchievement.update(publicId)
+                    }   else {
+                        latestAchievement.update(-1)
+                    }
+                })
+            }
         }
     })
 }
+
 function unpublicize(achievement) {
     achievement.publiclyVisible = false
     achievement.save(function (err) {

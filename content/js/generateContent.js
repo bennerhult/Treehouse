@@ -73,7 +73,7 @@ function setCreateEditMenu(achievement) {
         '<ul>' + nl  +
         '<li class="back"><a href="javascript:void(0)" onclick="'
     if (achievement) {
-        text += 'openAchievement(\'' + achievement._id + '\',  null, ' + false + ', ' +  false + ', ' + false +')'
+        text += 'openAchievement(\'' + achievement._id + '\',\'' + currentUserId + '\', ' + false + ', ' +  false + ', ' + false +', ' + false + ')'
     } else {
         text += 'openAchievements(false, \'' + currentUserId + '\', false)'
     }
