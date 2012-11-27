@@ -447,7 +447,6 @@ function publicize() {
         function() {
             FB.XFBML.parse();
             $("#editButton").hide()
-            $("#deleteButton").hide()
             $("#publicizeButton").hide()
             $("#unpublicizeButton").show()
             $("#fbLike").show()
@@ -612,6 +611,7 @@ function deleteAchievement(achieverId) {
             if (data == "ok") { //TODO: use ajax success/error instead
                 openAchievements(false, achieverId, false)
             }
+            insertLatestAchievement()
         }
     )
 }

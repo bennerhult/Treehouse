@@ -64,32 +64,31 @@ function publicize(achievement) {
     achievement.save(function (err) {})   //TODO: handle error
 }
 
+function updateLatestAchievementIfNecessary(achievementId) {
+    latestAchievement.getId(function(id) {
+        if (id.equals(achievementId)) {
+            findPublicAchievement(function (publicId) {
+                if (publicId) {
+                    latestAchievement.update(publicId)
+                }   else {
+                    latestAchievement.update(-1)
+                }
+            })
+        }
+    })
+}
 function unpublicize(achievement) {
     achievement.publiclyVisible = false
     achievement.save(function (err) {
-        latestAchievement.getId(function(id) {
-            if (id.equals(achievement._id)) {
-                findPublicAchievement(function (publicId) {
-                    if (publicId) {
-                        latestAchievement.update(publicId)
-                    }   else {
-                        latestAchievement.update(-1)
-                    }
-                })
-            }
-        })
+        updateLatestAchievementIfNecessary (achievement.id)
     })   //TODO: handle error
 }
 
 function remove(achievement, userId, next)    {
-    latestAchievement.getId(function(latestId) {
-        if (achievement.id != latestId) {
-            achievement.remove(function (err) {     //TODO: handle error
-                progress.removeProgress(achievement._id, userId, next)
-            })
-        }
+    achievement.remove(function (err) {     //TODO: handle error
+        updateLatestAchievementIfNecessary (achievement.id)
+        progress.removeProgress(achievement._id, userId, next)
     })
-
 }
 
 function findPublicAchievement(callback) {
