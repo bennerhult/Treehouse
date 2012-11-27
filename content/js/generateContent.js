@@ -114,7 +114,7 @@ function setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, 
         menu += '<li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>'
         menu += '<li id="publicizeButton" class="share"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/share.png" /></a></li>'
         menu += '<li id="unpublicizeButton" class="share"><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unshare.png" /></a></li>'
-        if (!publiclyVisible && !progressMade) { menu += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement(\'' + achieverId + '\')"><img src="content/img/edit.png" /></a></li>'}
+        if (!progressMade) { menu += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement(\'' + achieverId + '\')"><img src="content/img/edit.png" /></a></li>'}
     }
     menu += '</ul></div>'
     $("#menuArea").html(menu)
@@ -124,6 +124,7 @@ function setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, 
             $("#unpublicizeButton").hide()
         } else {
             $("#publicizeButton").hide()
+            $("#editButton").hide()
         }
     }
 }
