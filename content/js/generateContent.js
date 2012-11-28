@@ -55,9 +55,14 @@ function init(userId, friendShipRequests) {
 
     if (("standalone" in window.navigator) && window.navigator.standalone){
         isAppMode = true
-        /*$(window).scroll(function() {
-            $('#menu').css('top', $(this).scrollTop() + "px");
-        });*/
+    }
+}
+
+function fixMenu() {
+    if (("standalone" in window.navigator) && window.navigator.standalone){
+        $('#menu').addClass('menu-fixed')
+    } else {
+        $('#menu').addClass('menu-absolute')
     }
 }
 
@@ -69,6 +74,7 @@ function setPublicMenu(nrOfFriendRequests) {
         '</div>' + nl  +
         getTabMenu(0)
     $("#menuArea").html(menu)
+    fixMenu()
  }
 
 function setCreateEditMenu(achievement) {
@@ -84,10 +90,11 @@ function setCreateEditMenu(achievement) {
         '</ul>' + nl  +
         '</div>'
     $("#menuArea").html(text)
+    fixMenu()
 }
 
 function setDefaultMenu(bothCompletedAndNotExists, lookingAtFriend, achieverId) {
-    var menu = '<div id="menu"><ul><li  id="inProgress">'
+    var menu = '<div id="menu" class=""><ul><li  id="inProgress">'
     if (bothCompletedAndNotExists) {
         menu +=  '<a href="javascript:void(0)" onclick="getAchievements(false, \'' + achieverId + '\', ' + lookingAtFriend + ')"><span id="inProgressSpan" class="'
         if  (isiPad || isiPhone) {
@@ -109,6 +116,7 @@ function setDefaultMenu(bothCompletedAndNotExists, lookingAtFriend, achieverId) 
     }
     menu +=  '</li></ul></div>' + getTabMenu()
     $("#menuArea").html(menu)
+    fixMenu()
 }
 
 function setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, completed, achieverId, lookingAtFriend) {
@@ -121,6 +129,7 @@ function setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, 
     }
     menu += '</ul></div>'
     $("#menuArea").html(menu)
+    fixMenu()
 
     if (!lookingAtFriend) {
         if (!publiclyVisible) {
@@ -132,9 +141,10 @@ function setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, 
     }
 }
 
-function setEmptyMenu() {
+function setEmptyMenu(callback) {
     var menu = ''
     $("#menuArea").html(menu)
+    fixMenu()
 }
 
 function insertContent(content, menuFunction, callback) {

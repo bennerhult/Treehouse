@@ -392,10 +392,16 @@ body{
 }
 
 
+.menu-fixed {
+    position: fixed;
+}
+
+.menu-absolute {
+    position: absolute;
+}
 
 #menu{
     height: 38px;
-    position: absolute;
     z-index: 1;
 
     background-color: rgb(124,126,127);
