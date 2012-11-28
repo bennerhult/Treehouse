@@ -397,7 +397,6 @@ body{
     height: 38px;
     position: absolute;
     z-index: 1;
-    top: 0px;
 
     background-color: rgb(124,126,127);
     background-image: linear-gradient(bottom, rgb(124,126,127) 18%, rgb(111,114,115) 51%, rgb(124,126,127) 57%);
