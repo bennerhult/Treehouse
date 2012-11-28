@@ -55,6 +55,9 @@ function init(userId, friendShipRequests) {
 
     if (("standalone" in window.navigator) && window.navigator.standalone){
         isAppMode = true
+        $("#menu").css({
+            "position":"fixed"
+        })
     }
 }
 
