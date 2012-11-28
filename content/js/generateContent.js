@@ -59,8 +59,8 @@ function init(userId, friendShipRequests) {
 }
 
 function fixMenu() {
-    if (("standalone" in window.navigator) && window.navigator.standalone){
-        $('#menu').addClass('menu-fixed')
+    if (isiPhone || isiPad){
+        $('#menu').addClass('menu-static')
     } else {
         $('#menu').addClass('menu-absolute')
     }
@@ -97,7 +97,7 @@ function setDefaultMenu(bothCompletedAndNotExists, lookingAtFriend, achieverId) 
     var menu = '<div id="menu" class=""><ul><li  id="inProgress">'
     if (bothCompletedAndNotExists) {
         menu +=  '<a href="javascript:void(0)" onclick="getAchievements(false, \'' + achieverId + '\', ' + lookingAtFriend + ')"><span id="inProgressSpan" class="'
-        if  (isiPad || isiPhone) {
+        if  (isiPad || isiPhone) {   //TODO Remove this conditional and css classes, they are identical?
             menu+= 'iDevice'
         } else {
             menu+= 'hoverDesktop'
