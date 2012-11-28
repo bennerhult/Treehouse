@@ -336,26 +336,7 @@ function getAchievementsFromServer(completed, achieverId, lookingAtFriend, callb
 /******************  achievement functions  ******************/
 function openAchievement(achievementId, achieverId, publiclyVisible, progressMade, completed, lookingAtFriend) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + achieverId)
-    isLatestAchievement(achievementId, function(isLatestAchievement) {
-        insertContent(getAchievementContent(), setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, completed, achieverId, lookingAtFriend), getAchievement(achievementId, achieverId, publiclyVisible))
-    })
-}
-
-function isLatestAchievement(achievementId, callback) {
-    $.ajax("/latestAchievementId" , {
-        type: "GET",
-        dataType: "json",
-        success: function(latestAchievementId) {
-            if (latestAchievementId) {
-                callback(latestAchievementId === achievementId)
-            }  else {
-                callback(false)  //no latest achievement exists
-            }
-        }, error  : function()     {
-            callback(true)  //we don't know, but we assume so to avoid removal of the achievement should it be the latest
-        }
-    })
-
+    insertContent(getAchievementContent(), setAchievementMenu(publiclyVisible, progressMade, completed, achieverId, lookingAtFriend), getAchievement(achievementId, achieverId, publiclyVisible))
 }
 
 function getAchievement(achievementId, userId, publiclyVisible) {

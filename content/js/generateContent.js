@@ -119,7 +119,7 @@ function setDefaultMenu(bothCompletedAndNotExists, lookingAtFriend, achieverId) 
     fixMenu()
 }
 
-function setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, completed, achieverId, lookingAtFriend) {
+function setAchievementMenu(publiclyVisible, progressMade, completed, achieverId, lookingAtFriend) {
     var menu = '<div id="menu"><ul><li class="back"><a href="javascript:void(0)" onclick="openAchievements(' + completed + ', \'' + achieverId + '\', ' + lookingAtFriend + ')"><img src="content/img/back-1.png" alt=""/></a></li>'
     if (!lookingAtFriend) {
         menu += '<li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>'
@@ -141,7 +141,7 @@ function setAchievementMenu(publiclyVisible, progressMade, isLatestAchievement, 
     }
 }
 
-function setEmptyMenu(callback) {
+function setEmptyMenu() {
     var menu = ''
     $("#menuArea").html(menu)
     fixMenu()
