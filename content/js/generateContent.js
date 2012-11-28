@@ -55,9 +55,9 @@ function init(userId, friendShipRequests) {
 
     if (("standalone" in window.navigator) && window.navigator.standalone){
         isAppMode = true
-        $(window).scroll(function() {
+        /*$(window).scroll(function() {
             $('#menu').css('top', $(this).scrollTop() + "px");
-        });
+        });*/
     }
 }
 
