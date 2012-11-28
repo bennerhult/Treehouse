@@ -59,7 +59,7 @@ function init(userId, friendShipRequests) {
 }
 
 function fixMenu() {
-    if (isiPhone || isiPad){
+    if (isiPhone){ //TODO: fixa ipad, tänk på att den är olika i liggande och stående
         $('#menu').addClass('menu-static')
     } else {
         $('#menu').addClass('menu-absolute')
