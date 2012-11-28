@@ -35,7 +35,12 @@ function topAppPagePart() {
         tab + '<meta name="apple-mobile-web-app-capable" content="yes">' + nl +
         tab + '<meta name="apple-mobile-web-app-status-bar-style" content="black" />' + nl +
         tab + '<link rel="apple-touch-icon" href="/content/treehouse-icon.png">' + nl +
-        tab + '<link rel="apple-touch-startup-image" media="(device-width: 320px)" href="/content/img/startup320x460.png" />' + nl +
+        tab + '<link href="/content/img/startup320x460.png" rel="apple-touch-startup-image" media="(device-width: 320px)"  />' + nl +
+        tab + '<link href="/content/img/startup640x920.png" media="(device-width: 320px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">' + nl +
+        tab + '<link href="/content/img/startup768x1004.png" media="(device-width: 768px) and (orientation: portrait)" rel="apple-touch-startup-image">' + nl +
+        tab + '<link href="/content/img/startup748x1024.png" media="(device-width: 768px) and (orientation: landscape)" rel="apple-touch-startup-image">' + nl +
+        tab + '<link href="/content/img/startup1536x2008.png" media="(device-width: 1536px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">' + nl +
+        tab + '<link href="/content/img/startup1496x2048.png" media="(device-width: 1536px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">' + nl +
         tab + '<meta name="description" content="Treehouse helps you track your achievements. Explore. Achieve. Play!" />' + nl +
         tab + '<meta name="keywords" content="Gamification, achievement, achieve, track" />' + nl +
         tab + '<meta property="og:site_name" content="Treehouse" />' + nl +
@@ -98,7 +103,6 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
                     tab + '<meta name="apple-mobile-web-app-capable" content="yes">' + nl +
                     tab + '<meta name="apple-mobile-web-app-status-bar-style" content="black" />' + nl +
                     tab + '<link rel="apple-touch-icon" href="/content/treehouse-icon.png">' + nl +
-                    tab + '<link rel="apple-touch-startup-image" media="(device-width: 320px)" href="/content/img/startup320x460.png" />' + nl +
                     tab + '<meta name="description" content="Treehouse helps you track your achievements. Explore. Achieve. Play!" />' + nl +
                     tab + '<meta name="keywords" content="Gamification, achievement, achieve, track" />' + nl +
                     tab + '<meta property="og:site_name" content="Treehouse" />' + nl +
