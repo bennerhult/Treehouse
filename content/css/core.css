@@ -404,6 +404,10 @@ body{
     margin: 0;
 }
 
+.menu-area-fixed {
+ border: 1px;
+}
+
 .menu-absolute {
     position: absolute;
 }
