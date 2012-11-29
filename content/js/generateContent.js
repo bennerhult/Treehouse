@@ -39,12 +39,12 @@ function init(userId, friendShipRequests) {
             switch ( window.orientation ) {
                 case 0: //Portrait orientation. This is the default value.
                     if ($("#achievementList"))   {
-                        location.reload()
+                       // location.reload()
                     }
                     break
                 case 180: //Portrait orientation with the screen turned upside down.
                     if ($("#achievementList"))   {
-                        location.reload()
+                       // location.reload()
                     }
                     break
             }
