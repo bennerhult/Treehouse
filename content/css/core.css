@@ -246,7 +246,7 @@ body{
 
 
     width: 100%;
-    min-height: 480px;
+
     height: 480px;
     overflow: auto;
 
@@ -1225,7 +1225,6 @@ p#achievementDescription{
 
 @media screen and (max-width: 1000px) {
 
-
     .desktop{
         display: none;
     }
@@ -1250,17 +1249,12 @@ p#achievementDescription{
     #app-container,
     #app-container-login{
         position: relative;
-
-        min-height:480px;
         height: 100%;
-
-
     }
 
 }
 
 @media screen and (max-width: 800px) {
-
 
     .slider-menu{
         position: fixed;
