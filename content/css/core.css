@@ -1251,7 +1251,7 @@ p#achievementDescription{
     #app-container-login{
         position: relative;
 
-
+        min-height:480px;
         height: 100%;
 
 
