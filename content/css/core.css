@@ -247,6 +247,7 @@ body{
 
     width: 100%;
     min-height: 480px;
+    height: 480px;
     overflow: auto;
 
     -moz-border-radius: 5px;
