@@ -405,7 +405,9 @@ body{
 }
 
 .menu-area-fixed {
- border: 1px;
+    border: 1px;
+    width: 370px;
+    height:  38px;
 }
 
 .menu-absolute {
