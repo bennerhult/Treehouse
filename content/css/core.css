@@ -306,6 +306,7 @@ body{
     position: relative;
     padding: 30px;
     padding-top: 50px;
+    min-height: 480px;
 }
 
 
@@ -1245,7 +1246,7 @@ p#achievementDescription{
     #app-container,
     #app-container-login{
         position: relative;
-
+        height: 100%;
     }
 
 }
