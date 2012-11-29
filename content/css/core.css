@@ -241,19 +241,16 @@ body{
 #app-container-login{
     position: relative;
 
-
     background: #f4f4f4; /* Old browsers */
-
 
     width: 100%;
     min-height: 480px;
-    height: 100%;
+    height: 5000px;
     overflow: auto;
 
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
-
 
     -moz-box-shadow: inset 0px 0px 10px rgba(69,69,69,1);
     -webkit-box-shadow: inset 0px 0px 10px rgba(69,69,69,1);
