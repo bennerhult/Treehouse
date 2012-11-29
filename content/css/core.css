@@ -245,7 +245,6 @@ body{
 
     width: 100%;
     min-height: 480px;
-    height: 5000px;
     overflow: auto;
 
     -moz-border-radius: 5px;
@@ -1246,7 +1245,7 @@ p#achievementDescription{
     #app-container,
     #app-container-login{
         position: relative;
-        height: 100%;
+
     }
 
 }
