@@ -306,7 +306,6 @@ body{
     position: relative;
     padding: 30px;
     padding-top: 50px;
-    min-height: 480px;
 }
 
 
@@ -1311,6 +1310,8 @@ p#achievementDescription{
     html,body{height:100%;}
 
     html>body #page{height:auto; min-height:100%;}
+
+   body { min-height: 900px; }
 
     #leftcontainer{
         display: none;
