@@ -261,6 +261,9 @@ body{
 
 }
 
+html {height:100%;}
+body {min-height:100%;}
+
 #app-container-login{
 
     background: #b2b7b9; /* Old browsers */
