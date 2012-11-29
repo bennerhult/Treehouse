@@ -396,6 +396,10 @@ body{
     position: static;
 }
 
+.menu-fixed {
+    position: fixed;
+}
+
 .menu-absolute {
     position: absolute;
 }

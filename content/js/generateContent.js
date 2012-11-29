@@ -59,8 +59,8 @@ function init(userId, friendShipRequests) {
 }
 
 function fixMenu() {
-    if (isiPhone){ //TODO: fixa ipad, tänk på att den är olika i liggande och stående
-        $('#menu').addClass('menu-static')
+    if (isiPhone){
+        $('#menu').addClass('menu-fixed')
     } else {
         $('#menu').addClass('menu-absolute')
     }
@@ -94,7 +94,7 @@ function setCreateEditMenu(achievement) {
 }
 
 function setDefaultMenu(bothCompletedAndNotExists, lookingAtFriend, achieverId) {
-    var menu = '<div id="menu" class=""><ul><li  id="inProgress">'
+    var menu = '<div id="menu"><ul><li  id="inProgress">'
     if (bothCompletedAndNotExists) {
         menu +=  '<a href="javascript:void(0)" onclick="getAchievements(false, \'' + achieverId + '\', ' + lookingAtFriend + ')"><span id="inProgressSpan" class="'
         if  (isiPad || isiPhone) {   //TODO Remove this conditional and css classes, they are identical?
