@@ -8,6 +8,10 @@ del { text-decoration:line-through; }
 table { border-collapse:collapse;border-spacing:0; }
 
 
+/*-- Facebook styles --*/
+.fbpfl {
+    width: 250px;
+}
 
 /*-- BASE STYLES -- */
 
