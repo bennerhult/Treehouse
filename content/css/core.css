@@ -1242,8 +1242,8 @@ p#achievementDescription{
     }
 
 
-    #app-container,
-    #app-container-login{
+        #app-container,
+        #app-container-login{
         position: relative;
         height: 100%;
     }

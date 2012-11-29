@@ -155,7 +155,6 @@ function insertContent(content, menuFunction, callback) {
         menuFunction()
     }
     if (isiPhone && !isAppMode) {
-        //$("html, body").animate({scrollTop: $("#contentArea").offset().top}, 'fast')
         $("html, body").animate({scrollTop: 0}, 'fast')
     }
     if (callback) {
