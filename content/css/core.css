@@ -247,7 +247,7 @@ body{
 
     width: 100%;
     min-height: 480px;
-    height: 480px;
+    height: 100%;
     overflow: auto;
 
     -moz-border-radius: 5px;
@@ -260,9 +260,6 @@ body{
     box-shadow: inset 0px 0px 10px rgba(69,69,69,1);
 
 }
-
-html {height:100%;}
-body {min-height:100%;}
 
 #app-container-login{
 
