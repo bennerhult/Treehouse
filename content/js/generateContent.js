@@ -60,9 +60,8 @@ function init(userId, friendShipRequests) {
 
 function fixMenu() {
     if (isiPhone){
-        $('#menu').addClass('menu-fixed')
-        $('#menuArea').addClass('menu-area-fixed')
-
+        $('#menu').addClass('menu-static')
+        //$('#menuArea').addClass('menu-area-fixed')
     } else {
         $('#menu').addClass('menu-absolute')
     }
@@ -155,9 +154,9 @@ function insertContent(content, menuFunction, callback) {
     if (menuFunction) {
         menuFunction()
     }
-    /*if (window.innerWidth < 819) {
+    if (isiPhone && !isAppMode) {
         $("html, body").animate({scrollTop: $("#menu").offset().top}, 200)
-    }*/
+    }
     if (callback) {
         callback()
     }
