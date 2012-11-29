@@ -108,7 +108,7 @@ function setDefaultMenu(bothCompletedAndNotExists, lookingAtFriend, achieverId) 
     menu += '</li><li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li><li id="completed">'
     if (bothCompletedAndNotExists) {
         menu +=  '<a href="javascript:void(0)" onclick="getAchievements(true, \'' + achieverId + '\', ' + lookingAtFriend + ')"><span id="completedSpan" class="'
-        if  (isiPad || isiPhone) {
+        if  (isiPad || isiPhone) {    //TODO Remove this conditional and css classes, they are identical?
             menu+= 'iDevice'
         } else {
             menu+= 'hoverDesktop'
