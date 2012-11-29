@@ -405,6 +405,7 @@ body{
 }
 
 .menu-area-fixed {
+    position: fixed;
     border: 1px;
     width: 370px;
     height:  38px;
