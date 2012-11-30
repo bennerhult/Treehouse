@@ -397,8 +397,6 @@ body{
     position: fixed;
     top: 0;
     left: 0;
-    padding: 0;
-    margin: 0;
 }
 
 .menu-area-fixed {
@@ -1249,7 +1247,7 @@ p#achievementDescription{
         #app-container,
         #app-container-login{
         position: relative;
-        height: 480px;
+        height: 100%
     }
 
 }
