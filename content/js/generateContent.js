@@ -120,10 +120,12 @@ function setDefaultMenu(bothCompletedAndNotExists, lookingAtFriend, achieverId) 
     fixMenu()
 }
 
-function setAchievementMenu(publiclyVisible, progressMade, completed, achieverId, lookingAtFriend, lookingAtNotification, sharedAchievement) {
+function setAchievementMenu(publiclyVisible, progressMade, completed, achieverId, lookingAtFriend, lookingAtNotification, sharedAchievement, isAchievementCreatedByMe) {
     var menu = '<div id="menu"><ul><li class="back"><a href="javascript:void(0)" onclick="openAchievements(' + completed + ', \'' + achieverId + '\', ' + lookingAtFriend + ')"><img src="content/img/back-1.png" alt=""/></a></li>'
     if (!lookingAtFriend && !lookingAtNotification) {
-        menu += '<li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>'
+        if (!sharedAchievement || !isAchievementCreatedByMe) {
+            menu += '<li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>'
+        }
         menu += '<li id="publicizeButton" class="share"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/share.png" /></a></li>'
         menu += '<li id="unpublicizeButton" class="share"><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unshare.png" /></a></li>'
         if (!progressMade && !sharedAchievement) { menu += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement(\'' + achieverId + '\')"><img src="content/img/edit.png" /></a></li>'}

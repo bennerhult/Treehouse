@@ -15,7 +15,6 @@ var AchievementSchema = new Schema({
     imageURL            : {type: String, required: true},
     publiclyVisible     : {type: Boolean, required: true},
     goals               : {type: [goalSchema], required: true}
-    //sharingFriends      : {type: [userSchema]}
 })
 
 var Achievement = mongoose.model('Achievement', AchievementSchema)
@@ -25,7 +24,7 @@ module.exports = {
     createAchievement: createAchievement,
     clearGoals: clearGoals,
     addGoalToAchievement: addGoalToAchievement,
-    //addSharerToAchievement: addSharerToAchievement,
+    removeSharedPartOfAchievement: removeSharedPartOfAchievement,
     publicize: publicize,
     unpublicize: unpublicize,
     remove: remove,
@@ -94,6 +93,11 @@ function remove(achievement, userId, next)    {
         updateLatestAchievementIfNecessary (achievement.id)
         progress.removeProgress(achievement._id, userId, next)
     })
+}
+
+function removeSharedPartOfAchievement(achievement, userId, next)    {
+        updateLatestAchievementIfNecessary (achievement.id)
+        progress.removeProgress(achievement._id, userId, next)
 }
 
 function findPublicAchievement(callback) {

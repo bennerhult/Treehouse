@@ -556,7 +556,7 @@ app.get('/latestAchievementSplash', function(request, response) {
 
 })
 
-function createAchievementDesc(achievements, achieverId, percentages, completed, lookingAtFriendsAchievements, sharedAchievements) {
+function createAchievementDesc(achievements, achieverId, percentages, completed, lookingAtFriendsAchievements, sharedAchievements, isAchievementCreatedByMe) {
     var achievementsList = ""
     for (var i in achievements) {
         if ((completed || lookingAtFriendsAchievements) && i == 0) {
@@ -582,6 +582,8 @@ function createAchievementDesc(achievements, achieverId, percentages, completed,
             + lookingAtFriendsAchievements
             + ','
             + sharedAchievements[i]
+            + ', '
+            + isAchievementCreatedByMe
         achievementsList += ')"><img src="'
             + achievements[i].imageURL
             + '" alt="'
@@ -655,18 +657,20 @@ function getAchievementList(request, response, completedAchievements) {
                             achievementIdsGoneThrough.push(myAchievement._id.toString())
                             calculateAchievementProgress(achieverId, myAchievement._id, function(achievementPercentageFinished) {
                                 shareholding.isAchievementShared(myAchievement._id, function(isAchievementShared) {
-                                    if(!lookingAtFriendsAchievements || myAchievement.publiclyVisible) {
-                                        if ((completedAchievements && achievementPercentageFinished == 100) || (!completedAchievements && achievementPercentageFinished < 100)) {
-                                                areAchievementsShared.push(isAchievementShared)
-                                                achievementsToShow.push(myAchievement)
-                                                percentages.push(achievementPercentageFinished)
+                                    shareholding.isAchievementCreatedByMe(achieverId, myAchievement._id, function(isAchievementCreatedByMe) {
+                                        if(!lookingAtFriendsAchievements || myAchievement.publiclyVisible) {
+                                            if ((completedAchievements && achievementPercentageFinished == 100) || (!completedAchievements && achievementPercentageFinished < 100)) {
+                                                    areAchievementsShared.push(isAchievementShared)
+                                                    achievementsToShow.push(myAchievement)
+                                                    percentages.push(achievementPercentageFinished)
+                                            }
                                         }
-                                    }
-                                    goneThroughProgresses +=  myAchievement.goals.length
-                                    if (goneThroughProgresses == progresses.length) {
-                                        achievementsList += createAchievementDesc(achievementsToShow, achieverId, percentages, completedAchievements, lookingAtFriendsAchievements,areAchievementsShared)
-                                        getSharedAchievementNotifications(response, achievementsList, completedAchievements, achieverId, lookingAtFriendsAchievements)
-                                    }
+                                        goneThroughProgresses +=  myAchievement.goals.length
+                                        if (goneThroughProgresses == progresses.length) {
+                                            achievementsList += createAchievementDesc(achievementsToShow, achieverId, percentages, completedAchievements, lookingAtFriendsAchievements,areAchievementsShared, isAchievementCreatedByMe)
+                                            getSharedAchievementNotifications(response, achievementsList, completedAchievements, achieverId, lookingAtFriendsAchievements)
+                                        }
+                                    })
                                 })
                             })
                         }
@@ -1027,11 +1031,22 @@ app.get('/unpublicize', function(request, response){
 
 app.get('/delete', loadUser, function(request, response){
     achievement.Achievement.findOne({ _id: app.set('current_achievement_id') }, function(err,currentAchievement) {
-        if (currentAchievement)    {
-            achievement.remove(currentAchievement, request.session.user_id, function () {
-                response.writeHead(200, {'content-type': 'application/json' })
-                response.write(JSON.stringify('ok'))
-                response.end('\n', 'utf-8')
+        if (currentAchievement) {
+            shareholding.Shareholding.findOne({ shareholder_id: request.session.user_id, achievement_id: currentAchievement._id }, function(err, sharehold) {
+                if (sharehold != null) {
+                    sharehold.remove()
+                    achievement.removeSharedPartOfAchievement(currentAchievement, request.session.user_id, function () {
+                        response.writeHead(200, {'content-type': 'application/json' })
+                        response.write(JSON.stringify('ok'))
+                        response.end('\n', 'utf-8')
+                    })
+                }  else {
+                    achievement.remove(currentAchievement, request.session.user_id, function () {
+                        response.writeHead(200, {'content-type': 'application/json' })
+                        response.write(JSON.stringify('ok'))
+                        response.end('\n', 'utf-8')
+                    })
+                }
             })
         } else {
             console.log("trying to remove non-existing achievement " + app.set('current_achievement_id'))

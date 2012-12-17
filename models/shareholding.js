@@ -23,6 +23,7 @@ module.exports = {
     getSharedAchievementNotifications: getSharedAchievementNotifications,
     confirmShareHolding: confirmShareHolding,
     isAchievementShared: isAchievementShared,
+    isAchievementCreatedByMe: isAchievementCreatedByMe,
     ignoreShareHolding: ignoreShareHolding
 }
 
@@ -38,6 +39,16 @@ function createShareholding(sharer_id, shareholder_id, achievement_id, callback)
             shareholding.save(function () {
                 callback(true)
             })
+        } else {
+            callback(false)
+        }
+    })
+}
+
+function isAchievementCreatedByMe(sharer_id, achievement_id, callback) {
+    Shareholding.findOne({ sharer_id: sharer_id, achievement_id: achievement_id }, function(err, exists) {
+        if (exists) {
+            callback(true)
         } else {
             callback(false)
         }
