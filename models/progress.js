@@ -16,6 +16,7 @@ var Progress = mongoose.model('Progress', ProgressSchema)
 module.exports = {
     Progress: Progress,
     createProgress : createProgress,
+    createAndSaveProgress : createAndSaveProgress,
     markProgress : markProgress,
     removeProgress : removeProgress
 }
@@ -35,7 +36,18 @@ function createProgress(achiever_id, achievement_id, goal_id, callback) {
     progress.achievement_id = achievement_id
     progress.goal_id = goal_id
     progress.quantityFinished = 0
-    callback (progress);
+    if (callback) {
+        callback (progress);
+    }
+}
+
+function createAndSaveProgress(achiever_id, achievement_id, goal_id) {
+    var progress = new Progress()
+    progress.achiever_id = achiever_id
+    progress.achievement_id = achievement_id
+    progress.goal_id = goal_id
+    progress.quantityFinished = 0
+    progress.save()
 }
 
 function removeProgress(achievement_id, user_id, next) {

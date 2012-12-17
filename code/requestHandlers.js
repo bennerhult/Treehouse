@@ -191,7 +191,7 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
             tab + '$(document).ready(function() {' + nl +
             tab + 'init()' + nl +
             tab + 'insertContent(getPublicAchievementContent(), function() {' + nl +
-            tab + 'getPublicAchievement(\'' +currentAchievementId + '\', \'' + userId + '\')' + nl +
+            tab + 'getPublicAchievement(\'' +currentAchievementId + '\')' + nl +
             tab + '})' + nl +
             tab + 'setPublicMenu()' + nl +
             tab + '})' + nl +

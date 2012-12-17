@@ -61,15 +61,15 @@ function getNrOfRequests(user_id, callback) {
     })
 }
 
-function isFriendRequestExisting(friend1_id, friend2_id, callback2) {
+function isFriendRequestExisting(friend1_id, friend2_id, callback) {
     Friendship.findOne({ friend1_id: friend1_id, friend2_id: friend2_id }, function(err1, requestFirstDirection) {
         Friendship.findOne({ friend1_id: friend2_id, friend2_id: friend1_id }, function(err2, requestSecondDirection) {
            if (requestFirstDirection) {
-               callback2(true, requestFirstDirection.confirmed, false)
+               callback(true, requestFirstDirection.confirmed, false)
            } else if (requestSecondDirection)   {
-               callback2(true, requestSecondDirection.confirmed, true)
+               callback(true, requestSecondDirection.confirmed, true)
            } else {
-               callback2(false, false, false)
+               callback(false, false, false)
            }
         })
     })

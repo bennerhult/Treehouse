@@ -83,7 +83,7 @@ function setCreateEditMenu(achievement) {
         '<ul>' + nl  +
         '<li class="back"><a href="javascript:void(0)" onclick="'
     if (achievement) {
-        text += 'openAchievement(\'' + achievement._id + '\',\'' + currentUserId + '\', ' + false + ', ' +  false + ', ' + false +', ' + false + ')'
+        text += 'openAchievement(\'' + achievement._id + '\',\'' + currentUserId + '\', ' + false + ', ' +  false + ', ' + false + ', ' + false+ ', ' + false + ')'
     } else {
         text += 'openAchievements(false, \'' + currentUserId + '\', false)'
     }
@@ -120,19 +120,19 @@ function setDefaultMenu(bothCompletedAndNotExists, lookingAtFriend, achieverId) 
     fixMenu()
 }
 
-function setAchievementMenu(publiclyVisible, progressMade, completed, achieverId, lookingAtFriend) {
+function setAchievementMenu(publiclyVisible, progressMade, completed, achieverId, lookingAtFriend, lookingAtNotification, sharedAchievement) {
     var menu = '<div id="menu"><ul><li class="back"><a href="javascript:void(0)" onclick="openAchievements(' + completed + ', \'' + achieverId + '\', ' + lookingAtFriend + ')"><img src="content/img/back-1.png" alt=""/></a></li>'
-    if (!lookingAtFriend) {
+    if (!lookingAtFriend && !lookingAtNotification) {
         menu += '<li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>'
         menu += '<li id="publicizeButton" class="share"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/share.png" /></a></li>'
         menu += '<li id="unpublicizeButton" class="share"><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unshare.png" /></a></li>'
-        if (!progressMade) { menu += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement(\'' + achieverId + '\')"><img src="content/img/edit.png" /></a></li>'}
+        if (!progressMade && !sharedAchievement) { menu += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement(\'' + achieverId + '\')"><img src="content/img/edit.png" /></a></li>'}
     }
     menu += '</ul></div>'
     $("#menuArea").html(menu)
     fixMenu()
 
-    if (!lookingAtFriend) {
+    if (!lookingAtFriend && !lookingAtNotification) {
         if (!publiclyVisible) {
             $("#unpublicizeButton").hide()
         } else {
@@ -173,7 +173,7 @@ function showSignin(message) {
 
 function showLatestAchievement(achievementId) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId)
-    insertContent(getPublicAchievementContent(), setPublicMenu(), getPublicAchievement(achievementId, null))
+    insertContent(getPublicAchievementContent(), setPublicMenu(), getPublicAchievement(achievementId))
 }
 
 function insertLatestAchievement() {
@@ -279,12 +279,12 @@ function getFriendsList(callback) {
                 } else {
                     friendId = currentFriendship.friend1_id
                 }
-                getUsernameFromServer(friendId, function(username, id) {
+                getUsernameFromServer(friendId, function(username) {
                     index++
                     content +=   '<br />'
                     content +=   '<span id="friendshipid' + currentFriendship._id + '">'
                     content +=    username
-                    content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')">Visit!</a>'
+                    content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="visitFriend(\'' + friendId + '\')">Visit!</a>'
 
                     content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="removeFriendship(\'' + currentFriendship._id  + '\')">Remove!</a>'
                     content +=   '</span>'
@@ -294,6 +294,25 @@ function getFriendsList(callback) {
                     }
                 })
             })
+        }
+    })
+}
+
+function getSharerList(achievementId, callback) {
+    getShareListFromServer(achievementId, function(content) {
+          callback(content)
+    })
+}
+
+function getShareListFromServer(achievementId,callback) {
+    var data = "userId=" + currentUserId   + "&achievementId=" + achievementId
+
+    $.ajax("/shareList", {
+        type: "GET",
+        data: data,
+        dataType: "json",
+        statusCode: {
+            200: function(shareList) { callback(shareList) }
         }
     })
 }
@@ -332,7 +351,7 @@ function getUsernameFromServer(userId, callback) {
         data: data,
         dataType: "json",
         statusCode: {
-            200: function(username) { callback(username, userId) }
+            200: function(username) { callback(username) }
         }
     })
 }
@@ -342,6 +361,16 @@ function openFriends() {
         insertContent(friendsContent, setDefaultMenu(false, false, currentUserId))
     })
 
+}
+
+function progressTab() {
+    $('#sharer-container').hide('fast')
+    $('#achievement-container').show('fast')
+}
+
+function shareTab() {
+    $('#achievement-container').hide('fast')
+    $('#sharer-container').show('fast')
 }
 
 function getTabMenu() {
