@@ -402,11 +402,9 @@ app.get('/shareList', function(request, response){
                                     content +=   ' Share request pending!'
                                 }
                             }
-
                         } else {
                             content += "You can only share achievements you created yourself"
                         }
-
                         content +=   '</h3>'
                         index++
                         if (index == friendsList.length) {
@@ -418,7 +416,15 @@ app.get('/shareList', function(request, response){
                     })
                 })
             })
+
         })
+        if (friendsList.length == 0) {
+            content += "<h3>Add some friends to have someone to share with</h3>"
+            content += '</div>'
+            response.writeHead(200, {'content-type': 'application/json' })
+            response.write(JSON.stringify(content))
+            response.end('\n', 'utf-8')
+        }
     })
 })
 
