@@ -542,15 +542,17 @@ function getUserNameForId(id, callback) {
 
 app.get('/latestAchievementSplash', function(request, response) {
     //console.log("latestAchievementSplash")
-    var latestAchievementId = latestAchievement.getId(function(latestAchievementId) {
-        achievement.Achievement.findOne({ _id: latestAchievementId }, function(err,latestAchievement) {
-            response.writeHead(200, {'content-type': 'application/json' })
-            if (latestAchievement) {
-                response.write(JSON.stringify(latestAchievement))
-            }   else {
-                response.write("")
-            }
-            response.end('\n', 'utf-8')
+    var latestAchievementId = latestAchievement.getId(function(latestProgressId) {
+        progress.Progress.findOne({ _id: latestProgressId }, function(err,latestProgress) {
+            achievement.Achievement.findOne({ _id: latestProgress.achievement_id }, function(err,latestAchievement) {
+                response.writeHead(200, {'content-type': 'application/json' })
+                if (latestAchievement) {
+                    response.write(JSON.stringify(latestAchievement))
+                }   else {
+                    response.write("")
+                }
+                response.end('\n', 'utf-8')
+            })
         })
      })
 
@@ -737,6 +739,10 @@ function writeAchievementPage(response, currentViewedAchieverId, currentAchievem
     var goalTexts = []
     var achievementDesc = ''
     var checkingOtherPersonsAchievement = !(currentViewedAchieverId === userId)
+
+    console.log("checkingOtherPersonsAchievement: " + checkingOtherPersonsAchievement)
+    console.log("currentViewedAchieverId: " + currentViewedAchieverId)
+    console.log("userId: " + userId)
     var achievementUser_id
     if (isNotificationView) {
         achievementUser_id = sharerId
@@ -1012,8 +1018,11 @@ app.get('/progress', function(request, response){
 })
 
 app.get('/publicize', function(request, response){
-    achievement.Achievement.findOne({ _id: app.set('current_achievement_id') }, function(err,currentAchievement) {
-        achievement.publicize(currentAchievement)
+    console.log("current_achievement_id" + app.set('current_achievement_id'))
+    console.log("request.session.user_id" + request.session.user_id)
+
+    progress.Progress.findOne({ achievement_id: app.set('current_achievement_id'), achiever_id: request.session.user_id }, function(err,currentAchievementProgress) {
+        achievement.publicize(currentAchievementProgress)
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify("ok"))
         response.end('\n', 'utf-8')

@@ -59,25 +59,29 @@ function save(achievement, callback) {
     })
 }
 
-function publicize(achievement) {
-    achievement.publiclyVisible = true
-    latestAchievement.update(achievement._id)
-    achievement.save(function (err) {})   //TODO: handle error
+function publicize(progress) {
+    Achievement.findOne({ _id: progress.achievement_id }, function(err,achievement) {
+        achievement.publiclyVisible = true
+        latestAchievement.update(progress._id)
+        achievement.save(function (err) {})   //TODO: handle error
+    })
 }
 
 function updateLatestAchievementIfNecessary(achievementId) {
-    latestAchievement.getId(function(id) {
-        if (id) {
-            if (id.equals(achievementId)) {
-                findPublicAchievement(function (publicId) {
-                    if (publicId) {
-                        latestAchievement.update(publicId)
-                    }   else {
-                        latestAchievement.update(-1)
-                    }
-                })
+    latestAchievement.getId(function(latestAchievement_progressId) {
+        progress.Progress.findOne({ _id: latestAchievement_progressId }, function(err,progress) {
+            if (progress) {
+                if (progress.achievement_id.equals(achievementId)) {
+                    findPublicAchievement(function (publicId) {
+                        if (publicId) {
+                            latestAchievement.update(publicId)
+                        }   else {
+                            latestAchievement.update(-1)
+                        }
+                    })
+                }
             }
-        }
+        })
     })
 }
 
@@ -102,10 +106,14 @@ function removeSharedPartOfAchievement(achievement, userId, next)    {
 
 function findPublicAchievement(callback) {
     Achievement.findOne({ publiclyVisible: true }, function(err,publicAchievement) {
-      if (publicAchievement) {
-          callback(publicAchievement.id)
-      } else {
-          callback()
-      }
+        if (publicAchievement) {
+            progress.Progress.findOne({ achievement_id: publicAchievement._id }, function(err,progress) {
+                if (progress) {
+                    callback(progress._id)
+                } else {
+                    callback()
+                }
+            })
+        }
     })
 }
