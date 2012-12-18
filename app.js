@@ -543,19 +543,32 @@ function getUserNameForId(id, callback) {
 app.get('/latestAchievementSplash', function(request, response) {
     //console.log("latestAchievementSplash")
     var latestAchievementId = latestAchievement.getId(function(latestProgressId) {
-        progress.Progress.findOne({ _id: latestProgressId }, function(err,latestProgress) {
-            achievement.Achievement.findOne({ _id: latestProgress.achievement_id }, function(err,latestAchievement) {
+        console.log("latestProgressId: " + latestProgressId)
+        //progress.Progress.findOne({ _id: latestProgressId }, function(err,latestProgress) {
+            //achievement.Achievement.findOne({ _id: latestProgress.achievement_id }, function(err,latestAchievement) {
                 response.writeHead(200, {'content-type': 'application/json' })
-                if (latestAchievement) {
-                    response.write(JSON.stringify(latestAchievement))
-                }   else {
-                    response.write("")
-                }
-                response.end('\n', 'utf-8')
-            })
-        })
-     })
+             //   if (latestAchievement) {
+                    response.write(JSON.stringify(latestProgressId))
+               // }   else {
 
+               // }
+                response.end('\n', 'utf-8')
+           // })
+       // })
+    })
+})
+
+app.get('/achievement', function(request, response) {
+    achievement.Achievement.findOne({ _id: app.set('current_achievement_id') }, function(err,achievement) {
+        console.log("BADXZ: " + achievement)
+        response.writeHead(200, {'content-type': 'application/json' })
+        if (achievement) {
+            response.write(JSON.stringify(achievement))
+        }   else {
+            response.write("")
+        }
+        response.end('\n', 'utf-8')
+    })
 })
 
 function createAchievementDesc(achievements, achieverId, percentages, completed, lookingAtFriendsAchievements, sharedAchievements, isAchievementCreatedByMe) {
