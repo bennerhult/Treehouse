@@ -178,30 +178,29 @@ function showLatestAchievement(achievementId) {
     insertContent(getPublicAchievementContent(), setPublicMenu(), getPublicAchievement(achievementId))
 }
 
-function getLatestAchievementContent(callback) {
-    $.ajax("/achievement",  {
+/*function getLatestAchievementContent(callback) {
+    $.ajax("/getAchievement",  {
         type: "GET",
         dataType: "json",
         success: function(data) { if ( callback ) callback(data) },
         error  : function()     { if ( callback ) callback(null) }
     })
-}
+} */
+
 function insertLatestAchievement() {
-    getLatestAchievementContent(function (latestAchievement) {
+    //getLatestAchievementContent(function (latestAchievement) {
         $.ajax("/latestAchievementSplash" , {
             type: "GET",
             dataType: "json",
-            success: function(progress_id) {
-                $("#latestAchievementSplash").html(
-                    '<h2>Latest Achievement</h2>' +
-                        '<p><a href="javascript:void(0)" onclick="showLatestAchievement(\'' + progress_id + '\')">' + latestAchievement.title + '</a></p>' +
-                        '<div><a href="javascript:void(0)" onclick="showLatestAchievement(\'' + progress_id + '\')"><img src="' + latestAchievement.imageURL + '" /></a></div>'
+            success: function(content) {
+                $("#latestAchievementSplash").html(content
+
                 )
             }, error  : function()     {
                 $("#latestAchievementSplash").html('')
             }
         })
-    })
+   // })
 }
 
 function getLoginContent() {

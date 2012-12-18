@@ -544,23 +544,30 @@ app.get('/latestAchievementSplash', function(request, response) {
     //console.log("latestAchievementSplash")
     var latestAchievementId = latestAchievement.getId(function(latestProgressId) {
         console.log("latestProgressId: " + latestProgressId)
-        //progress.Progress.findOne({ _id: latestProgressId }, function(err,latestProgress) {
-            //achievement.Achievement.findOne({ _id: latestProgress.achievement_id }, function(err,latestAchievement) {
-                response.writeHead(200, {'content-type': 'application/json' })
-             //   if (latestAchievement) {
-                    response.write(JSON.stringify(latestProgressId))
-               // }   else {
+        progress.Progress.findOne({ _id: latestProgressId }, function(err,latestProgress) {
+           achievement.Achievement.findOne({ _id: latestProgress.achievement_id }, function(err,latestAchievement) {
 
-               // }
+                response.writeHead(200, {'content-type': 'application/json' })
+               if (latestAchievement) {
+                   content = '<h2>Latest Achievement</h2>' +
+                       '<p><a href="javascript:void(0)" onclick="showLatestAchievement(\'' + latestProgressId + '\')">' + latestAchievement.title + '</a></p>' +
+                       '<div><a href="javascript:void(0)" onclick="showLatestAchievement(\'' + latestProgressId + '\')"><img src="' + latestAchievement.imageURL + '" /></a></div>'
+               }   else {
+                     content = '<h2>Latest Achievement</h2>'   +
+                         '<p></p>' +
+                         '<div></div>'
+               }
+               response.write(JSON.stringify(content))
                 response.end('\n', 'utf-8')
-           // })
-       // })
+            })
+        })
     })
 })
 
-app.get('/achievement', function(request, response) {
+app.get('/getAchievement', function(request, response) {
     achievement.Achievement.findOne({ _id: app.set('current_achievement_id') }, function(err,achievement) {
-        console.log("BADXZ: " + achievement)
+        console.log("BADXZ1: " + app.set('current_achievement_id'))
+        console.log("BADXZ2: " + achievement)
         response.writeHead(200, {'content-type': 'application/json' })
         if (achievement) {
             response.write(JSON.stringify(achievement))
