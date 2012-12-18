@@ -81,9 +81,13 @@ body{
 }
 
 #web-menu a:hover span,
-#web-menu a:focus span{
+#web-menu a:focus span,
+#web-menu a span.selected{
     background-color: #4a4b4c;
+
 }
+
+
 /*
 .selected {
     background-color: #4a4b4c;
