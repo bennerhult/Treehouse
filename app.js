@@ -581,7 +581,7 @@ app.get('/latestAchievementSplash', function(request, response) {
                achievement.Achievement.findOne({ _id: latestProgress.achievement_id }, function(err,latestAchievement) {
                    response.writeHead(200, {'content-type': 'application/json' })
                    if (latestAchievement) {
-                       content = '<h2>Latest <Achie></Achie>vement</h2>' +
+                       content = '<h2>Latest Achievement</h2>' +
                            '<p><a href="javascript:void(0)" onclick="showLatestAchievement(\'' + latestAchievement._id + '\', \'' + latestProgress.achiever_id + '\')">' + latestAchievement.title + '</a></p>' +
                            '<div><a href="javascript:void(0)" onclick="showLatestAchievement(\'' + latestAchievement._id + '\', \'' + latestProgress.achiever_id + '\')"><img src="' + latestAchievement.imageURL + '" /></a></div>'
                    }
