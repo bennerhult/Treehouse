@@ -305,7 +305,7 @@ function getSharerList(achievementId, callback) {
 }
 
 function getShareListFromServer(achievementId,callback) {
-    var data = "userId=" + currentUserId   + "&achievementId=" + achievementId
+    var data = "achievementId=" + achievementId
 
     $.ajax("/shareList", {
         type: "GET",

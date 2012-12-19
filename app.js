@@ -122,17 +122,17 @@ app.listen(port)
 console.log('Treehouse server started on port ' + port)
 
 app.get('/content/*', function(request, response){
-    console.log("/content/*")
+    //console.log("/content/*")
     staticFiles.serve("." + request.url, response)
 })
 
 app.get('/treehouse.manifest', function(request, response){
-    console.log("/treehouse.manifest")
+    //console.log("/treehouse.manifest")
     staticFiles.serve("." + request.url, response)
 })
 
 app.get('/channel.html', function(request, response){
-    console.log("/channel.html")
+    //console.log("/channel.html")
     staticFiles.serve("." + request.url, response)
 })
 
@@ -142,8 +142,8 @@ app.get('/achievement', function(request, response) {
     var url_parts = url.parse(request.url, true)
     var currentAchievementId = url_parts.query.achievementId
     var userId  = url_parts.query.userId
-    console.log("/achievement: currentAchievementId " + currentAchievementId)
-    console.log("/achievement: userId " + userId)
+    //console.log("/achievement: currentAchievementId " + currentAchievementId)
+    //console.log("/achievement: userId " + userId)
     progress.Progress.findOne({ achievement_id: currentAchievementId, achiever_id: userId }, function(err,currentProgress) {
         //console.log("BOOOOOOOOM! " + currentProgress )
 
@@ -159,24 +159,24 @@ app.get('/achievement', function(request, response) {
 })
 
 app.get('/', function(request, response){
-    console.log("/")
+    //console.log("/")
     writeDefaultPage(request, response)
 })
 
 app.get('/rememberMe', function(request, response){
-    console.log("rememberMe")
+    //console.log("rememberMe")
     authenticateFromLoginToken(request, response, false)
 })
 
 app.get('/checkFBUser', function(request, response){
-    console.log("/checkFbUser")
+    //console.log("/checkFbUser")
     user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
         getDataForUser(myUser, request, response, false)
     })
 })
 
 app.get('/fbAppConnect', function(request, response){
-    console.log("/fbAppConnect")
+    //console.log("/fbAppConnect")
     var url_parts = url.parse(request.url, true)
     var code = url_parts.query.code
     var accessTokenLink= 'https://graph.facebook.com/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://treehouse.io/fbAppConnect&code=' + code
@@ -199,12 +199,12 @@ app.get('/fbAppConnect', function(request, response){
 })
 
 app.get('/signin', function(request, response) {
-    console.log("/signing")
+    //console.log("/signin")
     signin(request, response, false)
 })
 
 app.get('/signup', function(request, response) {
-    console.log("/signup")
+    //console.log("/signup")
     signin(request, response, true)
 })
 
@@ -228,7 +228,7 @@ function signin(request, response, newUser) {
 }
 
 app.get('/checkUser', function(request, response){
-    console.log("/checkUser")
+    //console.log("/checkUser")
     var username = request.query.username.toLowerCase()
     var appMode = request.query.appMode
 
@@ -347,7 +347,7 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
 }
 
 app.get('/signout', function(request, response){
-    console.log("/signout")
+    //console.log("/signout")
     if (request.session) {
         response.clearCookie('rememberme', null)
         loginToken.remove(request.session.user_email)
@@ -372,7 +372,7 @@ function getSignupErrorMessage (err){
 }
 
 app.get('/findFriends', function(request, response){
-    console.log("/findFriends")
+    //console.log("/findFriends")
     user.User.findOne({ username: request.query.friend_email.toLowerCase() }, function(err,foundFriend) {
         if (foundFriend)    {
             if (request.session.user_id == foundFriend._id ) {
@@ -394,7 +394,7 @@ app.get('/findFriends', function(request, response){
 })
 
 app.get('/pendingFriendshipRequests', function(request, response){
-    console.log("/pendingFriendShipRequests")
+    //console.log("/pendingFriendShipRequests")
     friendship.getPendingRequests(request.query.userId, function(pendings) {
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(pendings))
@@ -403,7 +403,7 @@ app.get('/pendingFriendshipRequests', function(request, response){
 })
 
 app.get('/friendsList', function(request, response){
-    console.log("/friendsList")
+    //console.log("/friendsList")
     friendship.getFriends(request.query.userId, function(friendsList) {
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(friendsList))
@@ -412,27 +412,33 @@ app.get('/friendsList', function(request, response){
 })
 
 app.get('/shareList', function(request, response){
-    console.log("/shareList")
+    //console.log("/shareList")
     content = '<div id="sharerList">'
     var index = 0
     var friendId
-    //console.log("BAMMAMAMAMA: "+ request.session.user_id)
+    var friendIds = new Array()
     friendship.getFriends(request.session.user_id, function(friendsList) {
-        friendsList.forEach(function(currentFriendship) {
-            if (currentFriendship.friend1_id == request.query.userId) {
-                friendId = currentFriendship.friend2_id
+        friendsList.forEach(function(currentFriendship, index) {
+            console.log("")
+            console.log("currentFriendship.friend1_id: " + currentFriendship.friend1_id)
+            console.log("currentFriendship.friend2_id: " + currentFriendship.friend2_id)
+            if (currentFriendship.friend1_id == request.session.user_id) {
+                console.log("2: " + currentFriendship.friend2_id)
+                friendIds.push(currentFriendship.friend2_id)
             } else {
-                friendId = currentFriendship.friend1_id
+                console.log("1: " + currentFriendship.friend1_id)
+                friendIds.push(currentFriendship.friend1_id)
             }
-            shareholding.Shareholding.findOne({ sharer_id: request.query.userId, shareholder_id: friendId, achievement_id: request.query.achievementId }, function(err, alreadySharedToFriend) {
-                shareholding.Shareholding.findOne({ shareholder_id: request.query.userId, achievement_id: request.query.achievementId }, function(err, gotThisFromFriend) {
-                    getUserNameForId(friendId, function(username) {
+            shareholding.Shareholding.findOne({ sharer_id: request.session.user_id, shareholder_id: friendIds[index], achievement_id: request.query.achievementId }, function(err, alreadySharedToFriend) {
+                shareholding.Shareholding.findOne({ shareholder_id: request.session.user_id, achievement_id: request.query.achievementId }, function(err, gotThisFromFriend) {
+                    getUserNameForId(friendIds[index], function(username) {
                         content +=   '<br />'
                         content +=   '<h3>'
+                        console.log("friendIds[index] " + friendIds[index] + ", index: " + index)
                         if(gotThisFromFriend == null) {
                             content +=    username
                             if (alreadySharedToFriend == null) {
-                                content += ' <span id="shareholderid' + friendId + '"><a href="javascript:void(0)" onclick="shareToFriend(\'' + friendId + '\',\'' + request.query.achievementId +  '\')">Share >></a></span>'
+                                content += ' <span id="shareholderid' + friendIds[index] + '"><a href="javascript:void(0)" onclick="shareToFriend(\'' + friendIds[index] + '\',\'' + request.query.achievementId +  '\')">Share >></a></span>'
                             } else {
                                 if (alreadySharedToFriend.confirmed) {
                                     content +=   ' Already got this!'
@@ -444,8 +450,7 @@ app.get('/shareList', function(request, response){
                             content += "You can only share achievements you created yourself"
                         }
                         content +=   '</h3>'
-                        index++
-                        if (index == friendsList.length) {
+                        if (index == friendsList.length - 1) {
                             content += '</div>'
                             response.writeHead(200, {'content-type': 'application/json' })
                             response.write(JSON.stringify(content))
@@ -467,7 +472,7 @@ app.get('/shareList', function(request, response){
 })
 
 app.get('/shareToFriend', function(request, response){
-    console.log("/shareToFriend")
+    //console.log("/shareToFriend")
     shareholding.createShareholding(request.session.user_id, request.query.friendId, request.query.achievementId, function(ok) {
         if (ok) {
             user.User.findOne({ _id: request.query.friendId }, function(err, askedFriend) {
@@ -493,7 +498,7 @@ app.get('/shareToFriend', function(request, response){
 
 
 app.get('/addFriend', function(request, response){
-    console.log("/addFriend")
+    //console.log("/addFriend")
     friendship.createFriendship(request.session.user_id, request.query.friendId, function(ok) {
         if (ok) {
             user.User.findOne({ _id: request.query.friendId }, function(err, askedFriend) {
@@ -518,7 +523,7 @@ app.get('/addFriend', function(request, response){
 })
 
 app.get('/ignoreFriendRequest', function(request, response){
-    console.log("/ignoreFR")
+    //console.log("/ignoreFR")
     friendship.removeFriendRequest(request.query.friendship_id, function() {
         request.session.nrOfFriendShipRequests--
         response.writeHead(200, {'content-type': 'application/json' })
@@ -527,7 +532,7 @@ app.get('/ignoreFriendRequest', function(request, response){
 })
 
 app.get('/confirmFriendRequest', function(request, response){
-    console.log("/confirmFR")
+    //console.log("/confirmFR")
     friendship.confirmFriendRequest(request.query.friendship_id, function(friendId) {
         user.User.findOne({ _id: friendId}, function(err, foundUser) {
             var responseobject = new Object()
@@ -539,7 +544,7 @@ app.get('/confirmFriendRequest', function(request, response){
 })
 
 app.get('/ignoreAchievement', function(request, response){
-    console.log("/ignoreAchievement")
+    //console.log("/ignoreAchievement")
     shareholding.ignoreShareHolding(request.query.achievementId, request.query.userId, function() {
         response.writeHead(200, {'content-type': 'application/json' })
         response.end('\n', 'utf-8')
@@ -548,7 +553,7 @@ app.get('/ignoreAchievement', function(request, response){
 
 
 app.get('/confirmAchievement', function(request, response){
-    console.log("/confirmAchievement")
+    //console.log("/confirmAchievement")
     shareholding.confirmShareHolding(request.query.achievementId, request.query.userId, function() {
         response.writeHead(200, {'content-type': 'application/json' })
         response.end('\n', 'utf-8')
@@ -558,7 +563,7 @@ app.get('/confirmAchievement', function(request, response){
 
 
 app.get('/usernameForId', function(request, response) {
-    console.log("/userNameForId")
+    //console.log("/userNameForId")
     getUserNameForId(request.query.userId, function (username) {
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(username))
@@ -575,7 +580,7 @@ function getUserNameForId(id, callback) {
 app.get('/latestAchievementSplash', function(request, response) {
     //console.log("latestAchievementSplash")
     var latestAchievementId = latestAchievement.getId(function(latestProgressId) {
-        console.log("/latest achievement: progressId: " + latestProgressId)
+        //console.log("/latest achievement: progressId: " + latestProgressId)
         progress.Progress.findOne({ _id: latestProgressId }, function(err,latestProgress) {
            if (latestProgress) {
                achievement.Achievement.findOne({ _id: latestProgress.achievement_id }, function(err,latestAchievement) {
@@ -667,12 +672,12 @@ function createNotificationDesc(notifications, achieverId) {
 }
 
 app.get('/achievements_inProgress', function(request, response){
-    console.log("/achievments_inProgress")
+    //console.log("/achievments_inProgress")
     getAchievementList(request, response, false)
 })
 
 app.get('/achievements_completed', function(request, response){
-    console.log("/achievements_completed")
+    //console.log("/achievements_completed")
     getAchievementList(request, response, true)
 })
 
@@ -759,7 +764,7 @@ function finishAchievementsList(response, achievementsList, completedAchievement
 }
 
 app.get('/achievementFromServer', function(request, response){
-    console.log("/achievementFromServer")
+    //console.log("/achievementFromServer")
     var url_parts = url.parse(request.url, true)
     var currentAchievementId = url_parts.query.achievementId.trim()
     var isNotificationViewString = url_parts.query.isNotificationView.trim()
@@ -1005,7 +1010,7 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
 }
 
 app.get('/completedAchievementsExist', function(request, response) {
-    console.log("/completedAchievementExist")
+    //console.log("/completedAchievementExist")
     var completedFound = false
     var achievementIdsGoneThrough = new Array()
     var goneThroughProgresses = 0
@@ -1049,7 +1054,7 @@ function finishCompletedAchievementsExist(response, completedFound) {
 }
 
 app.get('/achievementPercentage', function(request, response){
-    console.log("/achievementPercentage")
+    //console.log("/achievementPercentage")
     calculateAchievementProgress(request.session.user_id, app.set('current_achievement_id'), function(achievementPercentageFinished) {
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(achievementPercentageFinished))
@@ -1076,7 +1081,7 @@ function calculateAchievementProgress(userId, achievementId, callback) {
 }
 
 app.get('/progress', function(request, response){
-    console.log("/progress")
+    //console.log("/progress")
     progress.markProgress(request.session.user_id, request.query.goalId, function(quantityFinished) {
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(quantityFinished))
@@ -1085,7 +1090,7 @@ app.get('/progress', function(request, response){
 })
 
 app.get('/publicize', function(request, response){
-    console.log("/publicize")
+    //console.log("/publicize")
     progress.Progress.findOne({ achievement_id: app.set('current_achievement_id'), achiever_id: request.session.user_id }, function(err,currentAchievementProgress) {
         achievement.publicize(currentAchievementProgress)
         response.writeHead(200, {'content-type': 'application/json' })
@@ -1095,11 +1100,11 @@ app.get('/publicize', function(request, response){
 })
 
 app.get('/unpublicize', function(request, response){
-    console.log("/unpublicize")
+    //console.log("/unpublicize")
     progress.Progress.findOne({ achievement_id: app.set('current_achievement_id'), achiever_id: request.session.user_id }, function(err,currentProgress) {
         achievement.unpublicize(currentProgress)
         shareholding.isAchievementShared(app.set('current_achievement_id'), function(isShared) {
-            console.log("isShared: " + isShared)
+            //console.log("isShared: " + isShared)
             response.writeHead(200, {'content-type': 'application/json' })
             response.write(JSON.stringify(isShared))
             response.end('\n', 'utf-8')
@@ -1239,6 +1244,6 @@ function writeDefaultPage(request, response) {
 }
 
 app.get('*', function(request, response){
-   console.log("*")
+   //console.log("*")
    response.redirect("/")
 })

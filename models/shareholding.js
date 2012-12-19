@@ -67,7 +67,6 @@ function isShareRequestExisting(sharer_id, shareholder_id, achievement_id, callb
 
 function isAchievementShared(achievement_id, callback) {
     Shareholding.findOne({  achievement_id: achievement_id }, function(err, exists) {
-        console.log("shareholding:: " + exists + ", " + achievement_id)
         if (exists) {
             callback(true)
         } else {
