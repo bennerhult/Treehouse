@@ -1086,9 +1086,6 @@ app.get('/progress', function(request, response){
 
 app.get('/publicize', function(request, response){
     console.log("/publicize")
-    //console.log("current_achievement_id" + app.set('current_achievement_id'))
-    //console.log("request.session.user_id" + request.session.user_id)
-
     progress.Progress.findOne({ achievement_id: app.set('current_achievement_id'), achiever_id: request.session.user_id }, function(err,currentAchievementProgress) {
         achievement.publicize(currentAchievementProgress)
         response.writeHead(200, {'content-type': 'application/json' })
@@ -1101,9 +1098,12 @@ app.get('/unpublicize', function(request, response){
     console.log("/unpublicize")
     progress.Progress.findOne({ achievement_id: app.set('current_achievement_id'), achiever_id: request.session.user_id }, function(err,currentProgress) {
         achievement.unpublicize(currentProgress)
-        response.writeHead(200, {'content-type': 'application/json' })
-        response.write(JSON.stringify("ok"))
-        response.end('\n', 'utf-8')
+        shareholding.isAchievementShared(app.set('current_achievement_id'), function(isShared) {
+            console.log("isShared: " + isShared)
+            response.writeHead(200, {'content-type': 'application/json' })
+            response.write(JSON.stringify(isShared))
+            response.end('\n', 'utf-8')
+        })
     })
 })
 

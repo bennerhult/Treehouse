@@ -535,9 +535,11 @@ function publicizeOnServer(callback) {
 
 function unpublicize() {
     unpublicizeOnServer(
-        function() {
-            $("#editButton").show()
-            $("#deleteButton").show()
+        function(isShared) {
+            if (!isShared) {
+                $("#editButton").show()
+                $("#deleteButton").show()
+            }
             $("#unpublicizeButton").hide()
             $("#publicizeButton").show()
             $("#fbLike").hide()
@@ -552,7 +554,7 @@ function unpublicizeOnServer(callback) {
     $.ajax("/unpublicize", {
         type: "GET",
         dataType: "json",
-        success: function() { if ( callback ) callback() },
+        success: function(isShared) { if ( callback ) callback(isShared) },
         error  : function()     { if ( callback ) callback(null) }
     })
 }
