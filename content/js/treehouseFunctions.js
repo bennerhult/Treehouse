@@ -453,6 +453,7 @@ function getPublicAchievement(achieverId, achievementId) {
             FB.XFBML.parse();
             $("#publicizeButton").hide()
             $("#addbutton").hide()
+            $("#achievementTabs").hide()
             $("#fbLike").show()
             $("#tweetAchievement").show()
             $("#fbLikeWeb").hide()

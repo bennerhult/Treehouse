@@ -921,7 +921,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
 
                                             if(!checkingOtherPersonsAchievement) {
                                                 if(!isNotificationView) {
-                                                    achievementDesc += '<a style="color:black" href="javascript:void(0)" onclick="progressTab()">Progress</a> <a style="color:black" href="javascript:void(0)" onclick="shareTab()">Share</a>'
+                                                    achievementDesc += '<div id="achievementTabs"><a style="color:black" href="javascript:void(0)" onclick="progressTab()">Progress</a> <a style="color:black" href="javascript:void(0)" onclick="shareTab()">Share</a></div>'
                                                 }   else {
                                                     achievementDesc += '<a style="color:black" href="javascript:void(0)" onclick="confirmAchievement(\'' + currentAchievement._id + '\', \'' + userId + '\')">Challenge accepted</a> <a style="color:black" href="javascript:void(0)" onclick="ignoreAchievement(\'' + currentAchievement._id + '\', \'' + userId + '\')">Ignore</a>'
                                                 }
