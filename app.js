@@ -122,32 +122,61 @@ app.listen(port)
 console.log('Treehouse server started on port ' + port)
 
 app.get('/content/*', function(request, response){
+    console.log("/content/*")
     staticFiles.serve("." + request.url, response)
 })
 
 app.get('/treehouse.manifest', function(request, response){
+    console.log("/treehouse.manifest")
     staticFiles.serve("." + request.url, response)
 })
 
 app.get('/channel.html', function(request, response){
+    console.log("/channel.html")
     staticFiles.serve("." + request.url, response)
 })
 
+//public achievement
+app.get('/achievement', function(request, response) {
+    //TODO Erik: märkligt nog verkar denna inte användas
+    var url_parts = url.parse(request.url, true)
+    var currentAchievementId = url_parts.query.achievementId
+    var userId  = url_parts.query.userId
+    console.log("/achievement: currentAchievementId " + currentAchievementId)
+    console.log("/achievement: userId " + userId)
+    progress.Progress.findOne({ achievement_id: currentAchievementId, achiever_id: userId }, function(err,currentProgress) {
+        //console.log("BOOOOOOOOM! " + currentProgress )
+
+        if (currentProgress && currentProgress.publiclyVisible)    {
+            achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
+                request.session.current_achievement_id = currentAchievementId
+                requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, currentAchievement.imageURL, currentAchievement.title)
+            })
+        } else {
+            writeDefaultPage(request, response)
+        }
+    })
+})
+
 app.get('/', function(request, response){
+    console.log("/")
     writeDefaultPage(request, response)
 })
 
 app.get('/rememberMe', function(request, response){
+    console.log("rememberMe")
     authenticateFromLoginToken(request, response, false)
 })
 
 app.get('/checkFBUser', function(request, response){
+    console.log("/checkFbUser")
     user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
         getDataForUser(myUser, request, response, false)
     })
 })
 
 app.get('/fbAppConnect', function(request, response){
+    console.log("/fbAppConnect")
     var url_parts = url.parse(request.url, true)
     var code = url_parts.query.code
     var accessTokenLink= 'https://graph.facebook.com/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://treehouse.io/fbAppConnect&code=' + code
@@ -170,10 +199,12 @@ app.get('/fbAppConnect', function(request, response){
 })
 
 app.get('/signin', function(request, response) {
+    console.log("/signing")
     signin(request, response, false)
 })
 
 app.get('/signup', function(request, response) {
+    console.log("/signup")
     signin(request, response, true)
 })
 
@@ -197,6 +228,7 @@ function signin(request, response, newUser) {
 }
 
 app.get('/checkUser', function(request, response){
+    console.log("/checkUser")
     var username = request.query.username.toLowerCase()
     var appMode = request.query.appMode
 
@@ -315,6 +347,7 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
 }
 
 app.get('/signout', function(request, response){
+    console.log("/signout")
     if (request.session) {
         response.clearCookie('rememberme', null)
         loginToken.remove(request.session.user_email)
@@ -339,6 +372,7 @@ function getSignupErrorMessage (err){
 }
 
 app.get('/findFriends', function(request, response){
+    console.log("/findFriends")
     user.User.findOne({ username: request.query.friend_email.toLowerCase() }, function(err,foundFriend) {
         if (foundFriend)    {
             if (request.session.user_id == foundFriend._id ) {
@@ -360,6 +394,7 @@ app.get('/findFriends', function(request, response){
 })
 
 app.get('/pendingFriendshipRequests', function(request, response){
+    console.log("/pendingFriendShipRequests")
     friendship.getPendingRequests(request.query.userId, function(pendings) {
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(pendings))
@@ -368,6 +403,7 @@ app.get('/pendingFriendshipRequests', function(request, response){
 })
 
 app.get('/friendsList', function(request, response){
+    console.log("/friendsList")
     friendship.getFriends(request.query.userId, function(friendsList) {
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(friendsList))
@@ -376,10 +412,12 @@ app.get('/friendsList', function(request, response){
 })
 
 app.get('/shareList', function(request, response){
+    console.log("/shareList")
     content = '<div id="sharerList">'
     var index = 0
     var friendId
-    friendship.getFriends(request.query.userId, function(friendsList) {
+    //console.log("BAMMAMAMAMA: "+ request.session.user_id)
+    friendship.getFriends(request.session.user_id, function(friendsList) {
         friendsList.forEach(function(currentFriendship) {
             if (currentFriendship.friend1_id == request.query.userId) {
                 friendId = currentFriendship.friend2_id
@@ -429,6 +467,7 @@ app.get('/shareList', function(request, response){
 })
 
 app.get('/shareToFriend', function(request, response){
+    console.log("/shareToFriend")
     shareholding.createShareholding(request.session.user_id, request.query.friendId, request.query.achievementId, function(ok) {
         if (ok) {
             user.User.findOne({ _id: request.query.friendId }, function(err, askedFriend) {
@@ -454,6 +493,7 @@ app.get('/shareToFriend', function(request, response){
 
 
 app.get('/addFriend', function(request, response){
+    console.log("/addFriend")
     friendship.createFriendship(request.session.user_id, request.query.friendId, function(ok) {
         if (ok) {
             user.User.findOne({ _id: request.query.friendId }, function(err, askedFriend) {
@@ -478,6 +518,7 @@ app.get('/addFriend', function(request, response){
 })
 
 app.get('/ignoreFriendRequest', function(request, response){
+    console.log("/ignoreFR")
     friendship.removeFriendRequest(request.query.friendship_id, function() {
         request.session.nrOfFriendShipRequests--
         response.writeHead(200, {'content-type': 'application/json' })
@@ -486,6 +527,7 @@ app.get('/ignoreFriendRequest', function(request, response){
 })
 
 app.get('/confirmFriendRequest', function(request, response){
+    console.log("/confirmFR")
     friendship.confirmFriendRequest(request.query.friendship_id, function(friendId) {
         user.User.findOne({ _id: friendId}, function(err, foundUser) {
             var responseobject = new Object()
@@ -497,6 +539,7 @@ app.get('/confirmFriendRequest', function(request, response){
 })
 
 app.get('/ignoreAchievement', function(request, response){
+    console.log("/ignoreAchievement")
     shareholding.ignoreShareHolding(request.query.achievementId, request.query.userId, function() {
         response.writeHead(200, {'content-type': 'application/json' })
         response.end('\n', 'utf-8')
@@ -505,28 +548,17 @@ app.get('/ignoreAchievement', function(request, response){
 
 
 app.get('/confirmAchievement', function(request, response){
+    console.log("/confirmAchievement")
     shareholding.confirmShareHolding(request.query.achievementId, request.query.userId, function() {
         response.writeHead(200, {'content-type': 'application/json' })
         response.end('\n', 'utf-8')
     })
 })
 
-//public achievement
-app.get('/achievement', function(request, response) {
-    var url_parts = url.parse(request.url, true)
-    var currentAchievementId = url_parts.query.achievementId
-    request.session.current_achievement_id = currentAchievementId
-    achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
-        if (currentAchievement && currentAchievement.publiclyVisible)    {
-            var userId  = url_parts.query.userId
-            requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, currentAchievement.imageURL, currentAchievement.title)
-        } else {
-            writeDefaultPage(request, response)
-        }
-    })
-})
+
 
 app.get('/usernameForId', function(request, response) {
+    console.log("/userNameForId")
     getUserNameForId(request.query.userId, function (username) {
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(username))
@@ -543,42 +575,32 @@ function getUserNameForId(id, callback) {
 app.get('/latestAchievementSplash', function(request, response) {
     //console.log("latestAchievementSplash")
     var latestAchievementId = latestAchievement.getId(function(latestProgressId) {
-        console.log("latestProgressId: " + latestProgressId)
+        console.log("/latest achievement: progressId: " + latestProgressId)
         progress.Progress.findOne({ _id: latestProgressId }, function(err,latestProgress) {
-           achievement.Achievement.findOne({ _id: latestProgress.achievement_id }, function(err,latestAchievement) {
-
-                response.writeHead(200, {'content-type': 'application/json' })
-               if (latestAchievement) {
-                   content = '<h2>Latest Achievement</h2>' +
-                       '<p><a href="javascript:void(0)" onclick="showLatestAchievement(\'' + latestProgressId + '\')">' + latestAchievement.title + '</a></p>' +
-                       '<div><a href="javascript:void(0)" onclick="showLatestAchievement(\'' + latestProgressId + '\')"><img src="' + latestAchievement.imageURL + '" /></a></div>'
-               }   else {
-                     content = '<h2>Latest Achievement</h2>'   +
-                         '<p></p>' +
-                         '<div></div>'
-               }
+           if (latestProgress) {
+               achievement.Achievement.findOne({ _id: latestProgress.achievement_id }, function(err,latestAchievement) {
+                   response.writeHead(200, {'content-type': 'application/json' })
+                   if (latestAchievement) {
+                       content = '<h2>Latest <Achie></Achie>vement</h2>' +
+                           '<p><a href="javascript:void(0)" onclick="showLatestAchievement(\'' + latestAchievement._id + '\', \'' + latestProgress.achiever_id + '\')">' + latestAchievement.title + '</a></p>' +
+                           '<div><a href="javascript:void(0)" onclick="showLatestAchievement(\'' + latestAchievement._id + '\', \'' + latestProgress.achiever_id + '\')"><img src="' + latestAchievement.imageURL + '" /></a></div>'
+                   }
+                   response.write(JSON.stringify(content))
+                   response.end('\n', 'utf-8')
+               })
+           } else {
+               response.writeHead(200, {'content-type': 'application/json' })
+               content = '<h2>Latest Achievement</h2>'   +
+                   '<p></p>' +
+                   '<div></div>'
                response.write(JSON.stringify(content))
-                response.end('\n', 'utf-8')
-            })
+               response.end('\n', 'utf-8')
+           }
         })
     })
 })
 
-app.get('/getAchievement', function(request, response) {
-    achievement.Achievement.findOne({ _id: app.set('current_achievement_id') }, function(err,achievement) {
-        console.log("BADXZ1: " + app.set('current_achievement_id'))
-        console.log("BADXZ2: " + achievement)
-        response.writeHead(200, {'content-type': 'application/json' })
-        if (achievement) {
-            response.write(JSON.stringify(achievement))
-        }   else {
-            response.write("")
-        }
-        response.end('\n', 'utf-8')
-    })
-})
-
-function createAchievementDesc(achievements, achieverId, percentages, completed, lookingAtFriendsAchievements, sharedAchievements, isAchievementCreatedByMe) {
+function createAchievementDesc(achievements,progresses, achieverId, percentages, completed, lookingAtFriendsAchievements, sharedAchievements, isAchievementCreatedByMe) {
     var achievementsList = ""
     for (var i in achievements) {
         if ((completed || lookingAtFriendsAchievements) && i == 0) {
@@ -591,7 +613,7 @@ function createAchievementDesc(achievements, achieverId, percentages, completed,
             + '\', \''
             + achieverId
             + '\','
-            + achievements[i].publiclyVisible
+            + progresses[i].publiclyVisible
             + ','
         if (percentages[i] > 0) {
             achievementsList += 'true'
@@ -645,10 +667,12 @@ function createNotificationDesc(notifications, achieverId) {
 }
 
 app.get('/achievements_inProgress', function(request, response){
+    console.log("/achievments_inProgress")
     getAchievementList(request, response, false)
 })
 
 app.get('/achievements_completed', function(request, response){
+    console.log("/achievements_completed")
     getAchievementList(request, response, true)
 })
 
@@ -657,6 +681,7 @@ function getAchievementList(request, response, completedAchievements) {
     var achievementsList = ""
     var goneThroughProgresses = 0
     var achievementsToShow = new Array()
+    var progressesToShow = new Array()
     var achievementIdsGoneThrough = new Array()
     var percentages = new Array()
     var areAchievementsShared = new Array()
@@ -668,12 +693,12 @@ function getAchievementList(request, response, completedAchievements) {
         achieverId = request.session.user_id
     }
     progress.Progress.find({ achiever_id: achieverId}, function(err, progresses) {
-        if (err) { console.log("error in app.js: couldn't find any progress for user " + achieverId) }
+        if (err) { console.log("error in app.js 1: couldn't find any progress for user " + achieverId) }
         if (progresses && progresses.length > 0) {
             if (!lookingAtFriendsAchievements && !completedAchievements ) {achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent(), setCreateEditMenu())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>" }
             progresses.forEach(function(currentProgress, index) {
                 achievement.Achievement.findById(currentProgress.achievement_id, function(err2, myAchievement) {
-                    if (err2) { console.log("error in app.js: couldn't find achievement for progress " + currentProgress.achievement_id) }
+                    if (err2) { console.log("error in app.js 2: couldn't find achievement for progress " + currentProgress.achievement_id) }
                     if (myAchievement) {
                         if  (_.indexOf(achievementIdsGoneThrough, myAchievement._id.toString()) == -1) {
                             achievementIdsGoneThrough.push(myAchievement._id.toString())
@@ -684,12 +709,13 @@ function getAchievementList(request, response, completedAchievements) {
                                             if ((completedAchievements && achievementPercentageFinished == 100) || (!completedAchievements && achievementPercentageFinished < 100)) {
                                                     areAchievementsShared.push(isAchievementShared)
                                                     achievementsToShow.push(myAchievement)
+                                                    progressesToShow.push(currentProgress)
                                                     percentages.push(achievementPercentageFinished)
                                             }
                                         }
                                         goneThroughProgresses +=  myAchievement.goals.length
                                         if (goneThroughProgresses == progresses.length) {
-                                            achievementsList += createAchievementDesc(achievementsToShow, achieverId, percentages, completedAchievements, lookingAtFriendsAchievements,areAchievementsShared, isAchievementCreatedByMe)
+                                            achievementsList += createAchievementDesc(achievementsToShow, progressesToShow, achieverId, percentages, completedAchievements, lookingAtFriendsAchievements,areAchievementsShared, isAchievementCreatedByMe)
                                             getSharedAchievementNotifications(response, achievementsList, completedAchievements, achieverId, lookingAtFriendsAchievements)
                                         }
                                     })
@@ -733,6 +759,7 @@ function finishAchievementsList(response, achievementsList, completedAchievement
 }
 
 app.get('/achievementFromServer', function(request, response){
+    console.log("/achievementFromServer")
     var url_parts = url.parse(request.url, true)
     var currentAchievementId = url_parts.query.achievementId.trim()
     var isNotificationViewString = url_parts.query.isNotificationView.trim()
@@ -741,42 +768,59 @@ app.get('/achievementFromServer', function(request, response){
     if (isNotificationView) {
         sharerId = url_parts.query.sharerId.trim()
     }
-    app.set('current_achievement_id', currentAchievementId)
-    achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
-        if (request.session.user_id) {
-            loadUser (request, response, function () { writeAchievementPage(response, request.session.user_id, currentAchievement, request.session.user_id, isNotificationView, sharerId)})
-        } else if (currentAchievement && currentAchievement.publiclyVisible)    {
-            writeAchievementPage(response, request.session.user_id, currentAchievement, request.session.user_id, isNotificationView, sharerId)
-        } else {
-            writeDefaultPage(request, response)
-        }
-    })
+    var achieverId = url_parts.query.achieverId
+
+    //console.log("achievementFromServer currentAchievementId: " +currentAchievementId)
+    //console.log("achieverId: " +achieverId)
+   progress.Progress.findOne({ achievement_id: currentAchievementId, achiever_id: achieverId }, function(err,currentProgress) {
+        //achievement.Achievement.findOne({ _id: currentProgress.achievement_id }, function(err,currentAchievement) {
+       app.set('current_achievement_id', currentAchievementId)
+
+       achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
+
+            if (request.session.user_id) {
+                //console.log("SMURF0")
+                loadUser (request, response, function () { writeAchievementPage(response, achieverId, currentAchievement, request.session.user_id, isNotificationView, sharerId)})
+            } else if (currentAchievement && currentProgress.publiclyVisible)    {
+                //console.log("SMURF1")
+                writeAchievementPage(response, achieverId, currentAchievement, request.session.user_id, isNotificationView, sharerId)
+            } else {
+                //console.log("SMURF2")
+                writeDefaultPage(request, response)
+            }
+        })
+  })
+
 })
 
-function writeAchievementPage(response, currentViewedAchieverId, currentAchievement, userId, isNotificationView, sharerId) {
+function writeAchievementPage(response, achieverId, currentAchievement, userId, isNotificationView, sharerId) {
     var myQuantityTotal = 0
     var myQuantityFinished = 0
     var goalTexts = []
     var achievementDesc = ''
-    var checkingOtherPersonsAchievement = !(currentViewedAchieverId === userId)
+    var checkingOtherPersonsAchievement = !(achieverId === userId)
 
-    console.log("checkingOtherPersonsAchievement: " + checkingOtherPersonsAchievement)
-    console.log("currentViewedAchieverId: " + currentViewedAchieverId)
-    console.log("userId: " + userId)
+    //console.log("checkingOtherPersonsAchievement: " + checkingOtherPersonsAchievement)
+    //console.log("achieverId: " + achieverId)
+    //console.log("userId: " + userId)
     var achievementUser_id
     if (isNotificationView) {
         achievementUser_id = sharerId
     }  else {
-        achievementUser_id = userId
+        achievementUser_id = achieverId
     }
 
     if(currentAchievement.goals) {
         getUserNameForId(currentAchievement.createdBy, function(username) {
             shareholding.isAchievementShared(currentAchievement._id, function(isAchievementShared) {
                 currentAchievement.goals.forEach(function(goal, goalIndex) {
+                    //console.log("----------")
+                    //console.log("goal._id" +goal._id)
+                    //console.log("achievementUser_id" +achievementUser_id)
+                    //console.log("-----x----")
                     progress.Progress.findOne({ goal_id: goal._id, achiever_id: achievementUser_id }, function(err,myProgress) {
                         if (err) {
-                            console.log("error in app.js: couldn't find progress for user " + currentViewedAchieverId)
+                            console.log("error in app.js 3: couldn't find progress for user " + achieverId)
                         } else {
                             myQuantityFinished += myProgress.quantityFinished
                             myQuantityTotal += goal.quantityTotal
@@ -788,7 +832,7 @@ function writeAchievementPage(response, currentViewedAchieverId, currentAchievem
                     if (isNotificationView) {
                         progress.Progress.findOne({   goal_id: goal._id }, function(err,myProgress) {
                             if (err) {
-                                console.log("error in app.js: couldn't find progress for user " + currentViewedAchieverId)
+                                console.log("error in app.js 4: couldn't find progress for user " + achieverId)
                             } else {
                                 var goalPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100
                                 goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, goalPercentageFinished, checkingOtherPersonsAchievement, goalTexts.length + 1 == currentAchievement.goals.length, isNotificationView))
@@ -811,10 +855,12 @@ function writeAchievementPage(response, currentViewedAchieverId, currentAchievem
                                                 + myPercentageFinished
                                                 + '%;"></span></div></div><div class="clear"></div>'
 
-                                            if(!isNotificationView) {
-                                                achievementDesc += '<a style="color:black" href="javascript:void(0)" onclick="progressTab()">Progress</a> <a style="color:black" href="javascript:void(0)" onclick="shareTab()">Share</a>'
-                                            }   else {
-                                                achievementDesc += '<a style="color:black" href="javascript:void(0)" onclick="confirmAchievement(\'' + currentAchievement._id + '\', \'' + userId + '\')">Challenge accepted</a> <a style="color:black" href="javascript:void(0)" onclick="ignoreAchievement(\'' + currentAchievement._id + '\', \'' + userId + '\')">Ignore</a>'
+                                            if(!checkingOtherPersonsAchievement) {
+                                                if(!isNotificationView) {
+                                                    achievementDesc += '<a style="color:black" href="javascript:void(0)" onclick="progressTab()">Progress</a> <a style="color:black" href="javascript:void(0)" onclick="shareTab()">Share</a>'
+                                                }   else {
+                                                    achievementDesc += '<a style="color:black" href="javascript:void(0)" onclick="confirmAchievement(\'' + currentAchievement._id + '\', \'' + userId + '\')">Challenge accepted</a> <a style="color:black" href="javascript:void(0)" onclick="ignoreAchievement(\'' + currentAchievement._id + '\', \'' + userId + '\')">Ignore</a>'
+                                                }
                                             }
                                             achievementDesc += '<div id="achievement-container">'
                                             achievementDesc += goalTextsText
@@ -831,9 +877,9 @@ function writeAchievementPage(response, currentViewedAchieverId, currentAchievem
                                             achievementDesc += '<br />'
                                             achievementDesc += '<p>'
                                             achievementDesc += 'Creator: ' + username + '<br />'
-                                            user.User.findOne({ _id:  currentViewedAchieverId}, function(err2,myUser) {
+                                            user.User.findOne({ _id:  achieverId}, function(err2,myUser) {
                                                 if (err2) {
-                                                    console.log("error in app.js: couldn't find user " + currentViewedAchieverId)
+                                                    console.log("error in app.js 5: couldn't find user " + achieverId)
                                                 } else {
                                                     achievementDesc += 'Achiever: ' + myUser.username
                                                 }
@@ -850,7 +896,7 @@ function writeAchievementPage(response, currentViewedAchieverId, currentAchievem
                     }   else {
                         progress.Progress.findOne({   goal_id: goal._id, achiever_id: achievementUser_id}, function(err,myProgress) {
                             if (err) {
-                                console.log("error in app.js: couldn't find progress for user " + currentViewedAchieverId)
+                                console.log("error in app.js 6: couldn't find progress for user " + achieverId)
                             } else {
                                 var goalPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100
                                 goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, goalPercentageFinished, checkingOtherPersonsAchievement, goalTexts.length + 1 == currentAchievement.goals.length, isNotificationView))
@@ -873,10 +919,12 @@ function writeAchievementPage(response, currentViewedAchieverId, currentAchievem
                                                 + myPercentageFinished
                                                 + '%;"></span></div></div><div class="clear"></div>'
 
-                                            if(!isNotificationView) {
-                                                achievementDesc += '<a style="color:black" href="javascript:void(0)" onclick="progressTab()">Progress</a> <a style="color:black" href="javascript:void(0)" onclick="shareTab()">Share</a>'
-                                            }   else {
-                                                achievementDesc += '<a style="color:black" href="javascript:void(0)" onclick="confirmAchievement(\'' + currentAchievement._id + '\', \'' + userId + '\')">Challenge accepted</a> <a style="color:black" href="javascript:void(0)" onclick="ignoreAchievement(\'' + currentAchievement._id + '\', \'' + userId + '\')">Ignore</a>'
+                                            if(!checkingOtherPersonsAchievement) {
+                                                if(!isNotificationView) {
+                                                    achievementDesc += '<a style="color:black" href="javascript:void(0)" onclick="progressTab()">Progress</a> <a style="color:black" href="javascript:void(0)" onclick="shareTab()">Share</a>'
+                                                }   else {
+                                                    achievementDesc += '<a style="color:black" href="javascript:void(0)" onclick="confirmAchievement(\'' + currentAchievement._id + '\', \'' + userId + '\')">Challenge accepted</a> <a style="color:black" href="javascript:void(0)" onclick="ignoreAchievement(\'' + currentAchievement._id + '\', \'' + userId + '\')">Ignore</a>'
+                                                }
                                             }
                                             achievementDesc += '<div id="achievement-container">'
                                             achievementDesc += goalTextsText
@@ -893,9 +941,9 @@ function writeAchievementPage(response, currentViewedAchieverId, currentAchievem
                                             achievementDesc += '<br />'
                                             achievementDesc += '<p>'
                                             achievementDesc += 'Creator: ' + username + '<br />'
-                                            user.User.findOne({ _id:  currentViewedAchieverId}, function(err2,myUser) {
+                                            user.User.findOne({ _id:  achieverId}, function(err2,myUser) {
                                                 if (err2) {
-                                                    console.log("error in app.js: couldn't find user " + currentViewedAchieverId)
+                                                    console.log("error in app.js 7: couldn't find user " + achieverId)
                                                 } else {
                                                     achievementDesc += 'Achiever: ' + myUser.username
                                                 }
@@ -915,10 +963,6 @@ function writeAchievementPage(response, currentViewedAchieverId, currentAchievem
         })
     }
 }
-
-//function continueAchievementPage(myQuantityTotal, myQuantityFinished, response, goal, currentViewedAchieverId, currentAchievement, userId, isNotificationView, myProgress) {
-
-//}
 
 function getGoalText(goal, achievement, progressNumber, progressPercentage, publicView, lastGoal, isNotificationView) {
     var goalText =  '<div class="part-achievement">'
@@ -961,15 +1005,16 @@ function getGoalText(goal, achievement, progressNumber, progressPercentage, publ
 }
 
 app.get('/completedAchievementsExist', function(request, response) {
+    console.log("/completedAchievementExist")
     var completedFound = false
     var achievementIdsGoneThrough = new Array()
     var goneThroughProgresses = 0
     progress.Progress.find({ achiever_id: request.session.user_id}, function(err, progresses) {
-        if (err) { console.log("error in app.js: couldn't find any progress for user " + request.session.user_id) }
+        if (err) { console.log("error in app.js 8: couldn't find any progress for user " + request.session.user_id) }
         if (progresses && progresses.length > 0) {
             progresses.forEach(function(currentProgress, index) {
                 achievement.Achievement.findById(currentProgress.achievement_id, function(err2, myAchievement) {
-                    if (err2) { console.log("error in app.js: couldn't find achievement for progress " + currentProgress.achievement_id) }
+                    if (err2) { console.log("error in app.js 9: couldn't find achievement for progress " + currentProgress.achievement_id) }
                     if (myAchievement) {
                         if  (_.indexOf(achievementIdsGoneThrough, myAchievement._id.toString()) == -1) {
                             achievementIdsGoneThrough.push(myAchievement._id.toString())
@@ -1004,6 +1049,7 @@ function finishCompletedAchievementsExist(response, completedFound) {
 }
 
 app.get('/achievementPercentage', function(request, response){
+    console.log("/achievementPercentage")
     calculateAchievementProgress(request.session.user_id, app.set('current_achievement_id'), function(achievementPercentageFinished) {
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(achievementPercentageFinished))
@@ -1030,6 +1076,7 @@ function calculateAchievementProgress(userId, achievementId, callback) {
 }
 
 app.get('/progress', function(request, response){
+    console.log("/progress")
     progress.markProgress(request.session.user_id, request.query.goalId, function(quantityFinished) {
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(quantityFinished))
@@ -1038,8 +1085,9 @@ app.get('/progress', function(request, response){
 })
 
 app.get('/publicize', function(request, response){
-    console.log("current_achievement_id" + app.set('current_achievement_id'))
-    console.log("request.session.user_id" + request.session.user_id)
+    console.log("/publicize")
+    //console.log("current_achievement_id" + app.set('current_achievement_id'))
+    //console.log("request.session.user_id" + request.session.user_id)
 
     progress.Progress.findOne({ achievement_id: app.set('current_achievement_id'), achiever_id: request.session.user_id }, function(err,currentAchievementProgress) {
         achievement.publicize(currentAchievementProgress)
@@ -1050,8 +1098,9 @@ app.get('/publicize', function(request, response){
 })
 
 app.get('/unpublicize', function(request, response){
-    achievement.Achievement.findOne({ _id: app.set('current_achievement_id') }, function(err,currentAchievement) {
-        achievement.unpublicize(currentAchievement)
+    console.log("/unpublicize")
+    progress.Progress.findOne({ achievement_id: app.set('current_achievement_id'), achiever_id: request.session.user_id }, function(err,currentProgress) {
+        achievement.unpublicize(currentProgress)
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify("ok"))
         response.end('\n', 'utf-8')
@@ -1190,6 +1239,6 @@ function writeDefaultPage(request, response) {
 }
 
 app.get('*', function(request, response){
-   //console.log("*")
+   console.log("*")
    response.redirect("/")
 })

@@ -13,7 +13,6 @@ var AchievementSchema = new Schema({
     title               : {type: String, required: true},
     description         : {type: String},
     imageURL            : {type: String, required: true},
-    publiclyVisible     : {type: Boolean, required: true},
     goals               : {type: [goalSchema], required: true}
 })
 
@@ -39,7 +38,6 @@ function createAchievement(createdBy, title, description, imageURL) {
     achievement.title = title
     achievement.description = description
     achievement.imageURL = imageURL
-    achievement.publiclyVisible = false
     return achievement
 }
 
@@ -59,61 +57,90 @@ function save(achievement, callback) {
     })
 }
 
-function publicize(progress) {
-    Achievement.findOne({ _id: progress.achievement_id }, function(err,achievement) {
-        achievement.publiclyVisible = true
-        latestAchievement.update(progress._id)
-        achievement.save(function (err) {})   //TODO: handle error
+function publicize(oneProgress) {
+    progress.Progress.find({ achievement_id: oneProgress.achievement_id, achiever_id: oneProgress.achiever_id }, function(err,progresses) {
+        progresses.forEach(function(currentProgress, index) {
+            currentProgress.publiclyVisible = true
+            currentProgress.save()
+            if (index == (progresses.length -1)) {
+                console.log("updating latest achievement with " + oneProgress._id)
+                latestAchievement.update(oneProgress._id)
+            }
+        })
     })
 }
 
-function updateLatestAchievementIfNecessary(achievementId) {
+function updateLatestAchievementIfNecessary(progressId, next) {
     latestAchievement.getId(function(latestAchievement_progressId) {
-        progress.Progress.findOne({ _id: latestAchievement_progressId }, function(err,progress) {
-            if (progress) {
-                if (progress.achievement_id.equals(achievementId)) {
+        progress.Progress.findOne({ _id: latestAchievement_progressId }, function(err,currentProgress) {
+
+            if (currentProgress) {
+                if (currentProgress._id.equals(progressId)) {
                     findPublicAchievement(function (publicId) {
                         if (publicId) {
                             latestAchievement.update(publicId)
                         }   else {
                             latestAchievement.update(-1)
                         }
+                        if (next) {
+                            next()
+                        }
                     })
+                }
+            } else {
+                if (next) {
+                    next()
                 }
             }
         })
     })
 }
 
-function unpublicize(achievement) {
-    achievement.publiclyVisible = false
-    achievement.save(function (err) {
-        updateLatestAchievementIfNecessary (achievement.id)
-    })   //TODO: handle error
+function unpublicize(oneProgress) {
+    progress.Progress.find({ achievement_id: oneProgress.achievement_id, achiever_id: oneProgress.achiever_id }, function(err,progresses) {
+        progresses.forEach(function(currentProgress, index) {
+            currentProgress.publiclyVisible = false
+            currentProgress.save()
+            if (index == (progresses.length -1)) {
+                updateLatestAchievementIfNecessary (oneProgress._id)
+            }
+        })
+    })
 }
 
 function remove(achievement, userId, next)    {
-    achievement.remove(function (err) {     //TODO: handle error
-        updateLatestAchievementIfNecessary (achievement.id)
-        progress.removeProgress(achievement._id, userId, next)
+    removeSharedPartOfAchievement(achievement, userId, function() {
+        progress.Progress.find({ achievement_id: achievement._id}, function(err, progresses) {
+            if (progresses && progresses.length > 0) {
+                console.log("could not delete achievement, it has progresses left. achievement_id "+ achievement._id)
+            }  else {
+                achievement.remove(function (err) {
+                    if (next) {
+                        next()
+                    }
+                })
+            }
+        })
     })
 }
 
 function removeSharedPartOfAchievement(achievement, userId, next)    {
-        updateLatestAchievementIfNecessary (achievement.id)
-        progress.removeProgress(achievement._id, userId, next)
+    progress.Progress.find({ achiever_id: userId, achievement_id: achievement._id}, function(err, progresses) {
+        progresses.forEach(function(currentProgress, index) {
+            currentProgress.remove()
+            if (index == progresses.length - 1) {
+                updateLatestAchievementIfNecessary (progress._id, next)
+            }
+        })
+    })
 }
 
 function findPublicAchievement(callback) {
-    Achievement.findOne({ publiclyVisible: true }, function(err,publicAchievement) {
-        if (publicAchievement) {
-            progress.Progress.findOne({ achievement_id: publicAchievement._id }, function(err,progress) {
-                if (progress) {
-                    callback(progress._id)
-                } else {
-                    callback()
-                }
-            })
+    progress.Progress.findOne({ publiclyVisible: true }, function(err,currentProgress) {
+        if (currentProgress) {
+            callback(currentProgress._id)
+        } else {
+            callback()
         }
     })
 }

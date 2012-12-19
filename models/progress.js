@@ -8,6 +8,7 @@ var ProgressSchema = new Schema({
     achiever_id         : {type: Schema.ObjectId, required: true},
     achievement_id      : {type: Schema.ObjectId, required: true},
     goal_id             : {type: Schema.ObjectId, required: true},
+    publiclyVisible     : {type: Boolean, required: true},
     quantityFinished    :{type: Number, required: true}
 })
 
@@ -36,6 +37,7 @@ function createProgress(achiever_id, achievement_id, goal_id, callback) {
     progress.achievement_id = achievement_id
     progress.goal_id = goal_id
     progress.quantityFinished = 0
+    progress.publiclyVisible = false
     if (callback) {
         callback (progress);
     }
@@ -47,6 +49,7 @@ function createAndSaveProgress(achiever_id, achievement_id, goal_id) {
     progress.achievement_id = achievement_id
     progress.goal_id = goal_id
     progress.quantityFinished = 0
+    progress.publiclyVisible = false
     progress.save()
 }
 

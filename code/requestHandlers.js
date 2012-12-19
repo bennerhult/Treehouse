@@ -159,7 +159,7 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
    return text
 }
 
-function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, title) {
+function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUrl, title) {
     return (
         '<!DOCTYPE html>' + nl +
             tab + '<html  manifest="treehouse.manifest">' + nl +
@@ -191,7 +191,7 @@ function topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, t
             tab + '$(document).ready(function() {' + nl +
             tab + 'init()' + nl +
             tab + 'insertContent(getPublicAchievementContent(), function() {' + nl +
-            tab + 'getPublicAchievement(\'' +currentAchievementId + '\')' + nl +
+            tab + 'getPublicAchievement(\'' + achieverId + '\', \'' +currentAchievementId + '\')' + nl +
             tab + '})' + nl +
             tab + 'setPublicMenu()' + nl +
             tab + '})' + nl +

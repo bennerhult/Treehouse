@@ -83,7 +83,7 @@ function setCreateEditMenu(achievement) {
         '<ul>' + nl  +
         '<li class="back"><a href="javascript:void(0)" onclick="'
     if (achievement) {
-        text += 'openAchievement(\'' + achievement._id + '\',\'' + currentUserId + '\', ' + false + ', ' +  false + ', ' + false + ', ' + false+ ', ' + false + ')'
+        text += 'openAchievement(\'' + achievement._id + '\',\'' + currentUserId + '\', ' + false + ', ' +  false + ', ' + false + ', ' + false + ', ' + false+ ', ' + true + ')'
     } else {
         text += 'openAchievements(false, \'' + currentUserId + '\', false)'
     }
@@ -173,34 +173,23 @@ function showSignin(message) {
     })
 }
 
-function showLatestAchievement(achievementId) {
-    window.history.pushState(null, null, "/achievement?achievementId=" + achievementId)
-    insertContent(getPublicAchievementContent(), setPublicMenu(), getPublicAchievement(achievementId))
+function showLatestAchievement(achievementId, userId) {
+    window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + userId)
+    insertContent(getPublicAchievementContent(), setPublicMenu(0), getPublicAchievement(userId, achievementId))
 }
 
-/*function getLatestAchievementContent(callback) {
-    $.ajax("/getAchievement",  {
+function insertLatestAchievement() {
+    $.ajax("/latestAchievementSplash" , {
         type: "GET",
         dataType: "json",
-        success: function(data) { if ( callback ) callback(data) },
-        error  : function()     { if ( callback ) callback(null) }
+        success: function(content) {
+            $("#latestAchievementSplash").html(content
+
+            )
+        }, error  : function()     {
+            $("#latestAchievementSplash").html('')
+        }
     })
-} */
-
-function insertLatestAchievement() {
-    //getLatestAchievementContent(function (latestAchievement) {
-        $.ajax("/latestAchievementSplash" , {
-            type: "GET",
-            dataType: "json",
-            success: function(content) {
-                $("#latestAchievementSplash").html(content
-
-                )
-            }, error  : function()     {
-                $("#latestAchievementSplash").html('')
-            }
-        })
-   // })
 }
 
 function getLoginContent() {

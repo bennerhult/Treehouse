@@ -186,6 +186,7 @@ function shareToFriend(friendId, achievementId) {
         if (ok) {
             $("#shareholderid" + friendId).html("Request sent!")
             $("#deleteButton").hide('fast')
+            $("#editButton").hide('fast')
         }
     })
 }
@@ -394,7 +395,7 @@ function getAchievementsFromServer(completed, achieverId, lookingAtFriend, callb
 
 /******************  share functions  ******************/
 function openShareNotification(achievementId, achieverId, sharerId, publiclyVisible, progressMade) {
-    insertContent(getAchievementContent(), setAchievementMenu(publiclyVisible, progressMade, false, achieverId, false, true, true, false), getNotification(achievementId, sharerId))
+    insertContent(getAchievementContent(), setAchievementMenu(publiclyVisible, progressMade, false, achieverId, false, true, true, false), getNotification(achievementId, sharerId, achieverId))
 }
 
 /******************  achievement functions  ******************/
@@ -403,7 +404,7 @@ function openAchievement(achievementId, achieverId, publiclyVisible, progressMad
     insertContent(getAchievementContent(), setAchievementMenu(publiclyVisible, progressMade, completed, achieverId, lookingAtFriend, false, sharedAchievement, isAchievementCreatedByMe), getAchievement(achievementId, achieverId, publiclyVisible))
 }
 
-function getNotification(achievementId, sharerId) {
+function getNotification(achievementId, sharerId, achieverId) {
     getSharerList(achievementId, function (friendsList) {
         getAchievementFromServer(
             function(data) {
@@ -414,7 +415,7 @@ function getNotification(achievementId, sharerId) {
                 $("#tweetAchievement").hide()
                 $("#fbLikeWeb").show()
                 $("#tweetTreehouse").show()
-            }, achievementId, true, sharerId
+            }, achievementId, true, sharerId, achieverId
         )
     })
 }
@@ -439,27 +440,28 @@ function getAchievement(achievementId, userId, publiclyVisible) {
                     $("#fbLikeWeb").show()
                     $("#tweetTreehouse").show()
                 }
-            }, achievementId, false
+            }, achievementId, false, null, userId
         )
     })
 }
 
-function getPublicAchievement(achievementId) {
+function getPublicAchievement(achieverId, achievementId) {
     getAchievementFromServer(
         function(data) {
             $("#achievementDesc").html(data)
+            $("#sharer-container").hide()
             FB.XFBML.parse();
             $("#publicizeButton").hide()
             $("#addbutton").hide()
             $("#fbLike").show()
             $("#tweetAchievement").show()
             $("#fbLikeWeb").hide()
-        }, achievementId, false
+        }, achievementId, false, null, achieverId
     )
 }
 
-function getAchievementFromServer(callback,achievementId, isNotificationView, sharerId) {
-    $.ajax("/achievementFromServer?achievementId= " + achievementId + "&isNotificationView=" + isNotificationView + "&sharerId=" + sharerId,  {
+function getAchievementFromServer(callback,achievementId, isNotificationView, sharerId, achieverId) {
+    $.ajax("/achievementFromServer?achievementId= " + achievementId + "&isNotificationView=" + isNotificationView + "&sharerId=" + sharerId  + "&achieverId=" + achieverId,  {
         type: "GET",
         dataType: "json",
         success: function(data) { if ( callback ) callback(data) },
