@@ -435,6 +435,7 @@ app.get('/shareList', function(request, response){
 
 function fillShareList(friendsList, userId, achievementId, callback) {
     content = '<div id="sharerList">'
+    var goneThrough= 0
     shareholding.Shareholding.findOne({ shareholder_id: userId, achievement_id: achievementId }, function(err, gotThisFromFriend) {
         if(gotThisFromFriend != null) {
             content += "You can only share achievements you created yourself"
@@ -447,7 +448,7 @@ function fillShareList(friendsList, userId, achievementId, callback) {
                     getUserNameForId(friendsList[index], function(username) {
                         content +=   '<br />'
                         content +=   '<h3>'
-                        console.log("1: " + username)
+                        console.log(index + ": " + username + ": " + goneThrough)
                         content +=    username
                         if (alreadySharedToFriend == null) {
                             content += ' <span id="shareholderid' + friendsList[index] + '"><a href="javascript:void(0)" onclick="shareToFriend(\'' + friendsList[index] + '\',\'' + achievementId +  '\')">Share >></a></span>'
@@ -459,8 +460,9 @@ function fillShareList(friendsList, userId, achievementId, callback) {
                             }
                         }
                         content +=   '</h3>'
-                        console.log("index: " + index)
-                        if (index == friendsList.length -1) {
+                        goneThrough++
+                        if (goneThrough == friendsList.length) {
+                            console.log(content)
                             content += '</div>'
                             callback(content)
                         }
