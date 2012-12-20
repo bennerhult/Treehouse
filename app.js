@@ -435,14 +435,13 @@ app.get('/shareList', function(request, response){
 
 function fillShareList(friendsList, userId, achievementId, callback) {
     content = '<div id="sharerList">'
-    var index = 0
     shareholding.Shareholding.findOne({ shareholder_id: userId, achievement_id: achievementId }, function(err, gotThisFromFriend) {
         if(gotThisFromFriend != null) {
             content += "You can only share achievements you created yourself"
             content += '</div>'
             callback(content)
         } else {
-            friendsList.forEach(function(currentFriendship) {
+            friendsList.forEach(function(currentFriendship, index) {
                 shareholding.Shareholding.findOne({ sharer_id: userId, shareholder_id: friendsList[index], achievement_id: achievementId }, function(err, alreadySharedToFriend) {
                     console.log("###############err: " + err)
                     getUserNameForId(friendsList[index], function(username) {
@@ -460,9 +459,8 @@ function fillShareList(friendsList, userId, achievementId, callback) {
                             }
                         }
                         content +=   '</h3>'
-                        index++
                         console.log("index: " + index)
-                        if (index == friendsList.length) {
+                        if (index == friendsList.length -1) {
                             content += '</div>'
                             callback(content)
                         }
