@@ -459,6 +459,7 @@ function fillShareList(friendsList, userId, achievementId, callback) {
                         content += "You can only share achievements you created yourself"
                     }
                     content +=   '</h3>'
+                    console.log("index: " + index)
                     if (index == friendsList.length - 1) {
                         content += '</div>'
                          callback(content)
