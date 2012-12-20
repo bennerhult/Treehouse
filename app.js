@@ -413,63 +413,63 @@ app.get('/friendsList', function(request, response){
 
 app.get('/shareList', function(request, response){
     //console.log("/shareList")
-    content = '<div id="sharerList">'
-    var index = 0
-    var friendId
     var friendIds = new Array()
     friendship.getFriends(request.session.user_id, function(friendsList) {
         friendsList.forEach(function(currentFriendship, index) {
-            console.log("")
-            console.log("currentFriendship.friend1_id: " + currentFriendship.friend1_id)
-            console.log("currentFriendship.friend2_id: " + currentFriendship.friend2_id)
             if (currentFriendship.friend1_id == request.session.user_id) {
-                console.log("2: " + currentFriendship.friend2_id)
                 friendIds.push(currentFriendship.friend2_id)
             } else {
-                console.log("1: " + currentFriendship.friend1_id)
                 friendIds.push(currentFriendship.friend1_id)
             }
-            shareholding.Shareholding.findOne({ sharer_id: request.session.user_id, shareholder_id: friendIds[index], achievement_id: request.query.achievementId }, function(err, alreadySharedToFriend) {
-                shareholding.Shareholding.findOne({ shareholder_id: request.session.user_id, achievement_id: request.query.achievementId }, function(err, gotThisFromFriend) {
-                    getUserNameForId(friendIds[index], function(username) {
-                        content +=   '<br />'
-                        content +=   '<h3>'
-                        console.log("friendIds[index] " + friendIds[index] + ", index: " + index)
-                        if(gotThisFromFriend == null) {
-                            content +=    username
-                            if (alreadySharedToFriend == null) {
-                                content += ' <span id="shareholderid' + friendIds[index] + '"><a href="javascript:void(0)" onclick="shareToFriend(\'' + friendIds[index] + '\',\'' + request.query.achievementId +  '\')">Share >></a></span>'
-                            } else {
-                                if (alreadySharedToFriend.confirmed) {
-                                    content +=   ' Already got this!'
-                                } else {
-                                    content +=   ' Share request pending!'
-                                }
-                            }
-                        } else {
-                            content += "You can only share achievements you created yourself"
-                        }
-                        content +=   '</h3>'
-                        if (index == friendsList.length - 1) {
-                            content += '</div>'
-                            response.writeHead(200, {'content-type': 'application/json' })
-                            response.write(JSON.stringify(content))
-                            response.end('\n', 'utf-8')
-                        }
-                    })
+            if (index == friendsList.length -1) {
+                fillShareList(friendIds, request.session.user_id, request.query.achievementId, function(content) {
+                    response.writeHead(200, {'content-type': 'application/json' })
+                    response.write(JSON.stringify(content))
+                    response.end('\n', 'utf-8')
                 })
-            })
-
+            }
         })
-        if (friendsList.length == 0) {
-            content += "<h3>Add some friends to have someone to share with</h3>"
-            content += '</div>'
-            response.writeHead(200, {'content-type': 'application/json' })
-            response.write(JSON.stringify(content))
-            response.end('\n', 'utf-8')
-        }
     })
 })
+
+
+function fillShareList(friendsList, userId, achievementId, callback) {
+    content = '<div id="sharerList">'
+    friendsList.forEach(function(currentFriendship, index) {
+        shareholding.Shareholding.findOne({ sharer_id: userId, shareholder_id: friendsList[index], achievement_id: achievementId }, function(err, alreadySharedToFriend) {
+            shareholding.Shareholding.findOne({ shareholder_id: userId, achievement_id: achievementId }, function(err, gotThisFromFriend) {
+                getUserNameForId(friendsList[index], function(username) {
+                    content +=   '<br />'
+                    content +=   '<h3>'
+                    if(gotThisFromFriend == null) {
+                        content +=    username
+                        if (alreadySharedToFriend == null) {
+                            content += ' <span id="shareholderid' + friendsList[index] + '"><a href="javascript:void(0)" onclick="shareToFriend(\'' + friendsList[index] + '\',\'' + achievementId +  '\')">Share >></a></span>'
+                        } else {
+                            if (alreadySharedToFriend.confirmed) {
+                                content +=   ' Already got this!'
+                            } else {
+                                content +=   ' Share request pending!'
+                            }
+                        }
+                    } else {
+                        content += "You can only share achievements you created yourself"
+                    }
+                    content +=   '</h3>'
+                    if (index == friendsList.length - 1) {
+                        content += '</div>'
+                         callback(content)
+                    }
+                })
+            })
+        })
+    })
+    if (friendsList.length == 0) {
+        content += "<h3>Add some friends to have someone to share with</h3>"
+        content += '</div>'
+        callback(content)
+    }
+}
 
 app.get('/shareToFriend', function(request, response){
     //console.log("/shareToFriend")
