@@ -444,11 +444,9 @@ function fillShareList(friendsList, userId, achievementId, callback) {
         } else {
             friendsList.forEach(function(currentFriendship, index) {
                 shareholding.Shareholding.findOne({ sharer_id: userId, shareholder_id: friendsList[index], achievement_id: achievementId }, function(err, alreadySharedToFriend) {
-                    console.log("###############err: " + err)
                     getUserNameForId(friendsList[index], function(username) {
                         content +=   '<br />'
                         content +=   '<h3>'
-                        console.log(index + ": " + username + ": " + goneThrough)
                         content +=    username
                         if (alreadySharedToFriend == null) {
                             content += ' <span id="shareholderid' + friendsList[index] + '"><a href="javascript:void(0)" onclick="shareToFriend(\'' + friendsList[index] + '\',\'' + achievementId +  '\')">Share >></a></span>'
@@ -462,7 +460,6 @@ function fillShareList(friendsList, userId, achievementId, callback) {
                         content +=   '</h3>'
                         goneThrough++
                         if (goneThrough == friendsList.length) {
-                            console.log(content)
                             content += '</div>'
                             callback(content)
                         }
