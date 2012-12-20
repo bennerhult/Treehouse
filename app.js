@@ -441,15 +441,18 @@ function fillShareList(friendsList, userId, achievementId, callback) {
                 getUserNameForId(friendsList[index], function(username) {
                     content +=   '<br />'
                     content +=   '<h3>'
+                    console.log("1: " + username)
+                    console.log(gotThisFromFriend != null)
                     if(gotThisFromFriend == null) {
+                        console.log("2: " + username )
                         content +=    username
                         if (alreadySharedToFriend == null) {
                             content += ' <span id="shareholderid' + friendsList[index] + '"><a href="javascript:void(0)" onclick="shareToFriend(\'' + friendsList[index] + '\',\'' + achievementId +  '\')">Share >></a></span>'
                         } else {
                             if (alreadySharedToFriend.confirmed) {
-                                content +=   ' Already got this!'
+                                content += ' Already got this!'
                             } else {
-                                content +=   ' Share request pending!'
+                                content += ' Share request pending!'
                             }
                         }
                     } else {
