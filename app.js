@@ -715,7 +715,7 @@ function getAchievementList(request, response, completedAchievements) {
                             calculateAchievementProgress(achieverId, myAchievement._id, function(achievementPercentageFinished) {
                                 shareholding.isAchievementShared(myAchievement._id, function(isAchievementShared) {
                                     shareholding.isAchievementCreatedByMe(achieverId, myAchievement._id, function(isAchievementCreatedByMe) {
-                                        if(!lookingAtFriendsAchievements || myAchievement.publiclyVisible) {
+                                        if(!lookingAtFriendsAchievements || currentProgress.publiclyVisible) {
                                             if ((completedAchievements && achievementPercentageFinished == 100) || (!completedAchievements && achievementPercentageFinished < 100)) {
                                                     areAchievementsShared.push(isAchievementShared)
                                                     achievementsToShow.push(myAchievement)
@@ -758,9 +758,9 @@ function getSharedAchievementNotifications(response, achievementsList, completed
 function finishAchievementsList(response, achievementsList, completedAchievements) {
     if (achievementsList.length < 1) {
         if (completedAchievements) {
-            achievementsList = "<div class='achievement first'><div class='container'>Your friend has not a single shared completed achievement. Sad but true.</div></div>"
+            achievementsList = "<div class='achievement first'><div class='container'>Your friend has not a single shared or public completed achievement. Sad but true.</div></div>"
         }  else {
-            achievementsList = "<div class='achievement first'><div class='container'>Your friend has not a single shared progressing achievement. Sad but true.</div></div>"
+            achievementsList = "<div class='achievement first'><div class='container'>Your friend has not a single shared or public progressing achievement. Sad but true.</div></div>"
         }
     }
     response.writeHead(200, {'content-type': 'application/json' })
