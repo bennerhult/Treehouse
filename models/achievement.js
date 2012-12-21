@@ -74,8 +74,8 @@ function updateLatestAchievementIfNecessary(progressId, next) {
     latestAchievement.getId(function(latestAchievement_progressId) {
         progress.Progress.findOne({ _id: latestAchievement_progressId }, function(err,currentProgress) {
 
-            if (currentProgress) {
-                if (currentProgress._id.equals(progressId)) {
+            if (progressId && currentProgress) {
+                if (progressId.equals(currentProgress._id)) {
                     findPublicAchievement(function (publicId) {
                         if (publicId) {
                             latestAchievement.update(publicId)
