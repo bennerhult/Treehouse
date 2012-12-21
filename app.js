@@ -578,7 +578,7 @@ app.get('/usernameForId', function(request, response) {
 
 function getUserNameForId(id, callback) {
     user.User.findOne({ _id: id }, function(err, foundUser) {
-        callback(foundUser.username)
+        callback(foundUser.username, id)
     })
 }
 

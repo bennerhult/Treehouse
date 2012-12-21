@@ -246,7 +246,7 @@ function getPendingFriendshipRequests(callback) {
             callback(content)
         } else {
             pendings.forEach(function(currentRequest, index) {
-                getUsernameFromServer(currentRequest.friend1_id, function(username) {
+                getUsernameFromServer(currentRequest.friend1_id, function(username, id) {
                     content +=   '<br />'
                     content +=   '<span id="friendshipid' + currentRequest._id + '">'
                     content +=    username
@@ -351,7 +351,7 @@ function getUsernameFromServer(userId, callback) {
         data: data,
         dataType: "json",
         statusCode: {
-            200: function(username) { callback(username) }
+            200: function(username, id) { callback(username, id) }
         }
     })
 }
