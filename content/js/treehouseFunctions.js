@@ -427,6 +427,7 @@ function getAchievement(achievementId, userId, publiclyVisible) {
                 $("#achievementDesc").html(data)
                 $("#sharer-container").html(friendsList)
                 $("#sharer-container").hide()
+                $('#progressTab').attr("class","selected")
                 if (publiclyVisible) {
                     $('meta[propery="og:url"]').attr('content', 'www.treehouse.io/achievement?achievementId=' + achievementId + '&userId=' + userId)
                     FB.XFBML.parse();
