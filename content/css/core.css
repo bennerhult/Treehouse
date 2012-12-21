@@ -962,12 +962,16 @@ span.progress{
 
 #sharer-container {
     width: 94%;
-    margin: 45px 0% 10px 0%;
+    margin: 0px 0% 10px 0%;
     padding: 10px 10px 10px 10px;
 
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
+
+    border-top-left-radius: 0px;
+    -webkit-border-top-left-radius: 0px;
+    -moz-border-radius-topleft: 0px;
 
     background: #7e7b76; /* Old browsers */
     background: -moz-radial-gradient(center, ellipse cover,  #a8a7a5 0%, #7e7b76 90%); /* FF3.6+ */
@@ -983,6 +987,41 @@ span.progress{
     -webkit-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
     box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
 }
+
+#achievementTabs{
+    margin-top: 40px;
+    height: 19px;
+}
+
+#achievementTabs span{
+    display: inline;
+    background-color: #131213;
+    padding: 4px 8px;
+    text-decoration: none;
+
+    border-top-left-radius: 3px;
+    -webkit-border-top-left-radius: 3px;
+    -moz-border-radius-topleft: 3px;
+
+    border-top-right-radius: 3px;
+    -webkit-border-top-right-radius: 3px;
+    -moz-border-radius-topright: 3px;
+}
+
+#achievementTabs span.selected{
+    background-color: #7e7b76;
+
+}
+
+#achievementTabs span:hover{
+    background-color: #242224;
+}
+
+#achievementTabs a span{
+    color: #fff;
+    text-decoration: none;
+}
+
 
 #achievement-container{
 
@@ -992,6 +1031,10 @@ span.progress{
     -webkit-border-radius: 3px;
     border-radius: 3px;
 
+    border-top-left-radius: 0px;
+    -webkit-border-top-left-radius: 0px;
+    -moz-border-radius-topleft: 0px;
+
     background: #7e7b76; /* Old browsers */
     background: -moz-radial-gradient(center, ellipse cover,  #a8a7a5 0%, #7e7b76 90%); /* FF3.6+ */
     background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#a8a7a5), color-stop(90%,#7e7b76)); /* Chrome,Safari4+ */
@@ -1005,11 +1048,12 @@ span.progress{
     -moz-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
     -webkit-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
     box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
+
 }
 
 
 .achievement-info #achievement-container{
-    margin: 40px 0% 10px 0%;
+    margin: 0px 0% 10px 0%;
 }
 
 .create-achievement{
@@ -1132,6 +1176,7 @@ a:visited{
     font: 11px Verdana, Geneva, Arial, Helvetica, sans-serif;
     font-size: 12px;
     color: #f5f4f4;
+    text-decoration: none;
 }
 
 
