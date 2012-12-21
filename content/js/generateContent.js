@@ -364,13 +364,17 @@ function openFriends() {
 }
 
 function progressTab() {
-    $('#sharer-container').hide('fast')
-    $('#achievement-container').show('fast')
+    $('#progressTab').attr("class","selected")
+    $('#shareTab').attr("class","")
+    $('#sharer-container').hide()
+    $('#achievement-container').show()
 }
 
 function shareTab() {
-    $('#achievement-container').hide('fast')
-    $('#sharer-container').show('fast')
+    $('#progressTab').attr("class","")
+    $('#shareTab').attr("class","selected")
+    $('#achievement-container').hide()
+    $('#sharer-container').show()
 }
 
 function getTabMenu() {
