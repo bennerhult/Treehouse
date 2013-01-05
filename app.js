@@ -404,7 +404,7 @@ app.get('/pendingFriendshipRequests', function(request, response){
 
 app.get('/friendsList', function(request, response){
     //console.log("/friendsList")
-    friendship.getFriends(request.query.userId, function(friendsList) {
+    friendship.getFriends(request.session.user_id, function(friendsList) {
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(friendsList))
         response.end('\n', 'utf-8')

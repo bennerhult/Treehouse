@@ -331,11 +331,8 @@ function getPendingFriendShipRequestsFromServer(callback) {
 }
 
 function getFriendsFromServer(callback) {
-    var data = "userId=" + currentUserId
-
     $.ajax("/friendsList", {
         type: "GET",
-        data: data,
         dataType: "json",
         statusCode: {
             200: function(friendsList) { callback(friendsList) }
