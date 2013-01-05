@@ -356,7 +356,6 @@ app.get('/signout', function(request, response){
     }
 })
 
-
 function getSignupErrorMessage (err){
     var errorMessage = "Is that really you?"
     if (err.errors) {
@@ -372,7 +371,6 @@ function getSignupErrorMessage (err){
 }
 
 app.get('/findFriends', function(request, response){
-    //console.log("/findFriends")
     user.User.findOne({ username: request.query.friend_email.toLowerCase() }, function(err,foundFriend) {
         if (foundFriend)    {
             if (request.session.user_id == foundFriend._id ) {
@@ -393,47 +391,35 @@ app.get('/findFriends', function(request, response){
     })
 })
 
-/*app.get('/pendingFriendshipRequests', function(request, response){
-    //console.log("/pendingFriendShipRequests")
-    friendship.getPendingRequests(request.query.userId, function(pendings) {
-        response.writeHead(200, {'content-type': 'application/json' })
-        response.write(JSON.stringify(pendings))
-        response.end('\n', 'utf-8')
-    })
-})*/
-
-//todo ADD PENDINGS!
 app.get('/friendsList', function(request, response){
-    var content = '<div id="friendsList"><b>Friends!</b>'
-    console.log("friendslist")
-    friendship.getFriends(request.session.user_id, function(friendsList) {
-        if (friendsList.length === 0) {
-            content += '</div>'
-            response.writeHead(200, {'content-type': 'application/json' })
-            response.write(JSON.stringify(content))
-            response.end('\n', 'utf-8')
-        }  else {
-            var friendId
-            var friendships = new Array()
-            friendsList.forEach(function(currentFriendship, index) {
-
-                friendships.push(currentFriendship)
-
-                if (index == friendsList.length -1) {
-                    fillFriendsList(friendships, request.session.user_id, function(content) {
-                        response.writeHead(200, {'content-type': 'application/json' })
-                        response.write(JSON.stringify(content))
-                        response.end('\n', 'utf-8')
-                    })
-                }
-            })
-        }
+    friendship.getPendingRequests(request.session.user_id, function(pendings) {
+        friendship.getFriends(request.session.user_id, function(friendsList) {
+            if (friendsList.length === 0) {
+                var content = '<div id="friendsList"><b>Friends</b><br />Add some friends!</div>'
+                response.writeHead(200, {'content-type': 'application/json' })
+                response.write(JSON.stringify(content))
+                response.end('\n', 'utf-8')
+            }  else {
+                var friendId
+                var friendships = new Array()
+                friendsList.forEach(function(currentFriendship, index) {
+                    friendships.push(currentFriendship)
+                    if (index == friendsList.length -1) {
+                        fillFriendsList(friendships, pendings, request.session.user_id, function(content) {
+                            response.writeHead(200, {'content-type': 'application/json' })
+                            response.write(JSON.stringify(content))
+                            response.end('\n', 'utf-8')
+                        })
+                    }
+                })
+            }
+        })
     })
 })
 
-function fillFriendsList(friendsList, userId, callback) {
+function fillFriendsList(friendsList, pendings, userId, callback) {
     var currentFriendId
-    content = ""
+    var content = '<div id="friendsList"><b>Friends</b>'
     friendsList.forEach(function(currentFriendship, index) {
         if (currentFriendship.friend1_id == userId) {
             currentFriendId = currentFriendship.friend2_id
@@ -448,9 +434,38 @@ function fillFriendsList(friendsList, userId, callback) {
 
             content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="removeFriendship(\'' + currentFriendship._id  + '\')">Remove!</a>'
             content +=   '</span>'
-            console.log(index)
-            console.log("length: " + friendsList.length)
             if (index == friendsList.length - 1) {
+                content += '</div>'
+                if (pendings.length > 0) {
+                    addPendings(content, pendings, userId, callback)
+                }  else {
+                    callback(content)
+                }
+
+            }
+        })
+
+    })
+}
+
+function addPendings(content, pendings, userId, callback) {
+    var currentFriendId
+    content += '<br /><br /><div id="pendingFriendshipsList"><b>Friend requests</b>'
+    pendings.forEach(function(currentFriendship, index) {
+        if (currentFriendship.friend1_id == userId) {
+            currentFriendId = currentFriendship.friend2_id
+        } else {
+            currentFriendId = currentFriendship.friend1_id
+        }
+        getUserNameForId(currentFriendId, function(username, id) {
+            content +=   '<br />'
+            content +=   '<span id="friendshipid' + currentFriendship._id + '">'
+            content +=    username
+            content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="confirmFriendRequest(\'' + currentFriendship._id + '\')">Confirm</a>'
+            content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="ignoreFriendRequest(\'' + currentFriendship._id + '\')">Ignore</a>'
+            content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')">Visit</a>'
+            content +=   '</span>'
+            if (index == pendings.length - 1) {
                 content += '</div>'
                 callback(content)
             }
@@ -534,7 +549,7 @@ app.get('/shareToFriend', function(request, response){
                         askingFriend.username + ' just shared an Achievement with you!',
                         "<html>" + askingFriend.username  + " just shared an Achievement with you on Treehouse! Login and confirm?</html>",
                         askingFriend.username + ' just shared an Achievement with you on Treehouse! Login and confirm?',
-                        function() {}   //no nothing
+                        function() {}   //do nothing
                     )
                 })
             })

@@ -222,45 +222,16 @@ function getLoginContent() {
 }
 
 function getFriendsContent(callback) {
-    //getPendingFriendshipRequests(function(pendingFriendshipRequests) {
-        getFriendsList(function(friendsList) {
-            var content = '<div id="content">' + nl +
-                '<form action="javascript: findFriends()">' + nl +
-                '<input type="text" class="formstyle" name="friend_email" placeholder="email">' + nl +
-                '<input type="submit" class="button" value="Find friend">' + nl +
-                '</form>' + nl +
-                '<div id="message"></div>'
-            //content += pendingFriendshipRequests
-            content += friendsList
-            content +=   '</div>'
-            callback(content)
-        })
-    //})
-}
-
-function getPendingFriendshipRequests(callback) {
-    var content = '<div id="pendingFriendshipsList"><b>Friend requests</b>'
-    getPendingFriendShipRequestsFromServer(function(pendings) {
-        if (pendings.length === 0) {
-            content += '</div>'
-            callback(content)
-        } else {
-            pendings.forEach(function(currentRequest, index) {
-                getUsernameFromServer(currentRequest.friend1_id, function(username, id) {
-                    content +=   '<br />'
-                    content +=   '<span id="friendshipid' + currentRequest._id + '">'
-                    content +=    username
-                    content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="confirmFriendRequest(\'' + currentRequest._id + '\')">Confirm</a>'
-                    content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="ignoreFriendRequest(\'' + currentRequest._id + '\')">Ignore</a>'
-                    content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')">Visit</a>'
-                    content +=   '</span>'
-                    if (index  == pendings.length - 1) {
-                        content += '</div>'
-                        callback(content)
-                    }
-                })
-            })
-        }
+    getFriendsList(function(friendsList) {
+        var content = '<div id="content">' + nl +
+            '<form action="javascript: findFriends()">' + nl +
+            '<input type="text" class="formstyle" name="friend_email" placeholder="email">' + nl +
+            '<input type="submit" class="button" value="Find friend">' + nl +
+            '</form>' + nl +
+            '<div id="message"></div>'
+        content += friendsList
+        content +=   '</div>'
+        callback(content)
     })
 }
 
