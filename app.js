@@ -393,23 +393,71 @@ app.get('/findFriends', function(request, response){
     })
 })
 
-app.get('/pendingFriendshipRequests', function(request, response){
+/*app.get('/pendingFriendshipRequests', function(request, response){
     //console.log("/pendingFriendShipRequests")
     friendship.getPendingRequests(request.query.userId, function(pendings) {
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(pendings))
         response.end('\n', 'utf-8')
     })
-})
+})*/
 
+//todo ADD PENDINGS!
 app.get('/friendsList', function(request, response){
-    //console.log("/friendsList")
+    var content = '<div id="friendsList"><b>Friends!</b>'
+    console.log("friendslist")
     friendship.getFriends(request.session.user_id, function(friendsList) {
-        response.writeHead(200, {'content-type': 'application/json' })
-        response.write(JSON.stringify(friendsList))
-        response.end('\n', 'utf-8')
+        if (friendsList.length === 0) {
+            content += '</div>'
+            response.writeHead(200, {'content-type': 'application/json' })
+            response.write(JSON.stringify(content))
+            response.end('\n', 'utf-8')
+        }  else {
+            var friendId
+            var friendships = new Array()
+            friendsList.forEach(function(currentFriendship, index) {
+
+                friendships.push(currentFriendship)
+
+                if (index == friendsList.length -1) {
+                    fillFriendsList(friendships, request.session.user_id, function(content) {
+                        response.writeHead(200, {'content-type': 'application/json' })
+                        response.write(JSON.stringify(content))
+                        response.end('\n', 'utf-8')
+                    })
+                }
+            })
+        }
     })
 })
+
+function fillFriendsList(friendsList, userId, callback) {
+    var currentFriendId
+    content = ""
+    friendsList.forEach(function(currentFriendship, index) {
+        if (currentFriendship.friend1_id == userId) {
+            currentFriendId = currentFriendship.friend2_id
+        } else {
+            currentFriendId = currentFriendship.friend1_id
+        }
+        getUserNameForId(currentFriendId, function(username, id) {
+            content +=   '<br />'
+            content +=   '<span id="friendshipid' + currentFriendship._id + '">'
+            content +=    username
+            content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')">Visit!</a>'
+
+            content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="removeFriendship(\'' + currentFriendship._id  + '\')">Remove!</a>'
+            content +=   '</span>'
+            console.log(index)
+            console.log("length: " + friendsList.length)
+            if (index == friendsList.length - 1) {
+                content += '</div>'
+                callback(content)
+            }
+        })
+
+    })
+}
 
 app.get('/shareList', function(request, response){
     //console.log("/shareList")
@@ -475,7 +523,6 @@ function fillShareList(friendsList, userId, achievementId, callback) {
     })
 }
 
-function asyncTester() {}
 app.get('/shareToFriend', function(request, response){
     //console.log("/shareToFriend")
     shareholding.createShareholding(request.session.user_id, request.query.friendId, request.query.achievementId, function(ok) {
