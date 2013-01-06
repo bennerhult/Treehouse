@@ -75,13 +75,15 @@ function isAchievementShared(achievement_id, callback) {
     })
 }
 
-function getSharedAchievementNotifications(achieverId, callback) {
+function getSharedAchievementNotifications(achieverId, userId, callback) {
     var achievementNotifications = []
     Shareholding.find({ shareholder_id: achieverId, confirmed: false }, function(err, notifications) {
         if (notifications && notifications.length > 0) {
             notifications.forEach(function(notification, index) {
                 achievement.Achievement.findOne({ _id: notification.achievement_id }, function(err2,currentAchievement) {
-                    achievementNotifications.push(currentAchievement)
+                    if (notification.shareholder_id == userId || notification.sharer_id == userId) {
+                        achievementNotifications.push(currentAchievement)
+                    }
                     index++
                     if (index == notifications.length) {
                         callback(achievementNotifications)

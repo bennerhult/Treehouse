@@ -796,7 +796,7 @@ function getAchievementList(request, response, completedAchievements) {
                                         goneThroughProgresses +=  myAchievement.goals.length
                                         if (goneThroughProgresses == progresses.length) {
                                             achievementsList += createAchievementDesc(achievementsToShow, progressesToShow, achieverId, percentages, completedAchievements, lookingAtFriendsAchievements,areAchievementsShared, isAchievementCreatedByMe)
-                                            getSharedAchievementNotifications(response, achievementsList, completedAchievements, achieverId, lookingAtFriendsAchievements)
+                                            getSharedAchievementNotifications(response, achievementsList, completedAchievements, achieverId, request.session.user_id)
                                         }
                                     })
                                 })
@@ -807,16 +807,16 @@ function getAchievementList(request, response, completedAchievements) {
             })
         } else {
             if (!lookingAtFriendsAchievements) {achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent(), setCreateEditMenu())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>" }
-            getSharedAchievementNotifications(response, achievementsList, completedAchievements, achieverId, lookingAtFriendsAchievements)
+            getSharedAchievementNotifications(response, achievementsList, completedAchievements, achieverId, request.session.user_id)
         }
     })
 }
 
-function getSharedAchievementNotifications(response, achievementsList, completedAchievements, achieverId, lookingAtFriendsAchievements) {
-    if (completedAchievements || lookingAtFriendsAchievements) {
+function getSharedAchievementNotifications(response, achievementsList, completedAchievements, achieverId, userId) {
+    if (completedAchievements) {
         finishAchievementsList(response, achievementsList, completedAchievements)
     } else {
-        shareholding.getSharedAchievementNotifications(achieverId, function(notifications) {
+        shareholding.getSharedAchievementNotifications(achieverId, userId, function(notifications) {
             if (notifications) {
                 achievementsList += createNotificationDesc(notifications, achieverId)
             }
@@ -879,10 +879,6 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
     var goalTexts = []
     var achievementDesc = ''
     var checkingOtherPersonsAchievement = !(achieverId === userId)
-
-    //console.log("checkingOtherPersonsAchievement: " + checkingOtherPersonsAchievement)
-    //console.log("achieverId: " + achieverId)
-    //console.log("userId: " + userId)
     var achievementUser_id
     if (isNotificationView) {
         achievementUser_id = sharerId
