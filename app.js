@@ -478,20 +478,28 @@ app.get('/shareList', function(request, response){
     //console.log("/shareList")
     var friendIds = new Array()
     friendship.getFriends(request.session.user_id, function(friendsList) {
-        friendsList.forEach(function(currentFriendship, index) {
-            if (currentFriendship.friend1_id == request.session.user_id) {
-                friendIds.push(currentFriendship.friend2_id)
-            } else {
-                friendIds.push(currentFriendship.friend1_id)
-            }
-            if (index == friendsList.length -1) {
-                fillShareList(friendIds, request.session.user_id, request.query.achievementId, function(content) {
-                    response.writeHead(200, {'content-type': 'application/json' })
-                    response.write(JSON.stringify(content))
-                    response.end('\n', 'utf-8')
-                })
-            }
-        })
+        if (friendsList.length > 0) {
+            friendsList.forEach(function(currentFriendship, index) {
+                if (currentFriendship.friend1_id == request.session.user_id) {
+                    friendIds.push(currentFriendship.friend2_id)
+                } else {
+                    friendIds.push(currentFriendship.friend1_id)
+                }
+                if (index == friendsList.length -1) {
+                    fillShareList(friendIds, request.session.user_id, request.query.achievementId, function(content) {
+                        response.writeHead(200, {'content-type': 'application/json' })
+                        response.write(JSON.stringify(content))
+                        response.end('\n', 'utf-8')
+                    })
+                }
+            })
+        }  else {
+            response.writeHead(200, {'content-type': 'application/json' })
+            response.write(JSON.stringify(""))
+            response.end('\n', 'utf-8')
+        }
+
+
     })
 })
 
