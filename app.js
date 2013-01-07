@@ -75,7 +75,6 @@ function loadUser(request, response, next) {
 }
 
 function authenticateFromLoginToken(request, response, initialCall) {
-    //console.log("-----------------------------------------")
     //console.log("authenticateFromLoginToken: " + initialCall)
     if (request.cookies.rememberme)  {
         //console.log("cookie found")
@@ -392,16 +391,19 @@ app.get('/findFriends', function(request, response){
 })
 
 app.get('/friendsList', function(request, response){
+    var friendships = new Array()
     friendship.getPendingRequests(request.session.user_id, function(pendings) {
         friendship.getFriends(request.session.user_id, function(friendsList) {
             if (friendsList.length === 0) {
                 var content = '<div id="friendsList"><b>Friends</b><br />Add some friends!</div>'
-                response.writeHead(200, {'content-type': 'application/json' })
-                response.write(JSON.stringify(content))
-                response.end('\n', 'utf-8')
+                fillFriendsList(friendships, pendings, request.session.user_id, function(content) {
+                    response.writeHead(200, {'content-type': 'application/json' })
+                    response.write(JSON.stringify(content))
+                    response.end('\n', 'utf-8')
+                })
             }  else {
                 var friendId
-                var friendships = new Array()
+
                 friendsList.forEach(function(currentFriendship, index) {
                     friendships.push(currentFriendship)
                     if (index == friendsList.length -1) {
@@ -420,32 +422,40 @@ app.get('/friendsList', function(request, response){
 function fillFriendsList(friendsList, pendings, userId, callback) {
     var currentFriendId
     var content = '<div id="friendsList"><b>Friends</b>'
-    friendsList.forEach(function(currentFriendship, index) {
-        if (currentFriendship.friend1_id == userId) {
-            currentFriendId = currentFriendship.friend2_id
-        } else {
-            currentFriendId = currentFriendship.friend1_id
-        }
-        getUserNameForId(currentFriendId, function(username, id) {
-            content +=   '<br />'
-            content +=   '<span id="friendshipid' + currentFriendship._id + '">'
-            content +=    username
-            content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')">Visit!</a>'
-
-            content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="removeFriendship(\'' + currentFriendship._id  + '\')">Remove!</a>'
-            content +=   '</span>'
-            if (index == friendsList.length - 1) {
-                content += '</div>'
-                if (pendings.length > 0) {
-                    addPendings(content, pendings, userId, callback)
-                }  else {
-                    callback(content)
-                }
-
+    if (friendsList.length > 0) {
+        friendsList.forEach(function(currentFriendship, index) {
+            if (currentFriendship.friend1_id == userId) {
+                currentFriendId = currentFriendship.friend2_id
+            } else {
+                currentFriendId = currentFriendship.friend1_id
             }
-        })
+            getUserNameForId(currentFriendId, function(username, id) {
+                content +=   '<br />'
+                content +=   '<span id="friendshipid' + currentFriendship._id + '">'
+                content +=    username
+                content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')">Visit!</a>'
 
-    })
+                content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="removeFriendship(\'' + currentFriendship._id  + '\')">Remove!</a>'
+                content +=   '</span>'
+                if (index == friendsList.length - 1) {
+                    content += '</div>'
+                    if (pendings.length > 0) {
+                        addPendings(content, pendings, userId, callback)
+                    }  else {
+                        callback(content)
+                    }
+                }
+            })
+        })
+    } else {
+        content += '</div>'
+        if (pendings.length > 0) {
+            addPendings(content, pendings, userId, callback)
+        }  else {
+            callback(content)
+        }
+    }
+
 }
 
 function addPendings(content, pendings, userId, callback) {
@@ -722,10 +732,15 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
 }
 
 
-function createNotificationDesc(notifications, achieverId) {
+function createNotificationDesc(nrOfAchievements, notifications, achieverId) {
     var notificationsList = ""
     for (var i in notifications) {
-        notificationsList += "<div class='achievement'>"
+        if (nrOfAchievements == 0 && i == 0) {
+            notificationsList += "<div class='achievement first'>"
+        }  else {
+            notificationsList += "<div class='achievement'>"
+        }
+
         notificationsList += '<div class="container"><a href="javascript:void(0)" onclick="openShareNotification(\''
             + notifications[i]._id
             + '\', \''
@@ -785,19 +800,21 @@ function getAchievementList(request, response, completedAchievements) {
                             calculateAchievementProgress(achieverId, myAchievement._id, function(achievementPercentageFinished) {
                                 shareholding.isAchievementShared(myAchievement._id, function(isAchievementShared) {
                                     shareholding.isAchievementCreatedByMe(achieverId, myAchievement._id, function(isAchievementCreatedByMe) {
-                                        if(!lookingAtFriendsAchievements || currentProgress.publiclyVisible) {
-                                            if ((completedAchievements && achievementPercentageFinished == 100) || (!completedAchievements && achievementPercentageFinished < 100)) {
-                                                    areAchievementsShared.push(isAchievementShared)
-                                                    achievementsToShow.push(myAchievement)
-                                                    progressesToShow.push(currentProgress)
-                                                    percentages.push(achievementPercentageFinished)
+                                        shareholding.isAchievementSharedByMe(achieverId, myAchievement._id, function(isAchievmentSharedByMe) {
+                                            if(!lookingAtFriendsAchievements || currentProgress.publiclyVisible || isAchievmentSharedByMe) {
+                                                if ((completedAchievements && achievementPercentageFinished == 100) || (!completedAchievements && achievementPercentageFinished < 100)) {
+                                                        areAchievementsShared.push(isAchievementShared)
+                                                        achievementsToShow.push(myAchievement)
+                                                        progressesToShow.push(currentProgress)
+                                                        percentages.push(achievementPercentageFinished)
+                                                }
                                             }
-                                        }
-                                        goneThroughProgresses +=  myAchievement.goals.length
-                                        if (goneThroughProgresses == progresses.length) {
-                                            achievementsList += createAchievementDesc(achievementsToShow, progressesToShow, achieverId, percentages, completedAchievements, lookingAtFriendsAchievements,areAchievementsShared, isAchievementCreatedByMe)
-                                            getSharedAchievementNotifications(response, achievementsList, completedAchievements, achieverId, request.session.user_id)
-                                        }
+                                            goneThroughProgresses +=  myAchievement.goals.length
+                                            if (goneThroughProgresses == progresses.length) {
+                                                achievementsList += createAchievementDesc(achievementsToShow, progressesToShow, achieverId, percentages, completedAchievements, lookingAtFriendsAchievements,areAchievementsShared, isAchievementCreatedByMe)
+                                                getSharedAchievementNotifications(achievementsToShow.length, response, achievementsList, completedAchievements, achieverId, request.session.user_id)
+                                            }
+                                        })
                                     })
                                 })
                             })
@@ -807,18 +824,18 @@ function getAchievementList(request, response, completedAchievements) {
             })
         } else {
             if (!lookingAtFriendsAchievements) {achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent(), setCreateEditMenu())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>" }
-            getSharedAchievementNotifications(response, achievementsList, completedAchievements, achieverId, request.session.user_id)
+            getSharedAchievementNotifications(0, response, achievementsList, completedAchievements, achieverId, request.session.user_id)
         }
     })
 }
 
-function getSharedAchievementNotifications(response, achievementsList, completedAchievements, achieverId, userId) {
+function getSharedAchievementNotifications(nrOfAchievements, response, achievementsList, completedAchievements, achieverId, userId) {
     if (completedAchievements) {
         finishAchievementsList(response, achievementsList, completedAchievements)
     } else {
         shareholding.getSharedAchievementNotifications(achieverId, userId, function(notifications) {
             if (notifications) {
-                achievementsList += createNotificationDesc(notifications, achieverId)
+                achievementsList += createNotificationDesc(nrOfAchievements, notifications, achieverId)
             }
             finishAchievementsList(response, achievementsList, completedAchievements)
         })
@@ -888,7 +905,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
 
     if(currentAchievement.goals) {
         getUserNameForId(currentAchievement.createdBy, function(username) {
-            shareholding.isAchievementShared(currentAchievement._id, function(isAchievementShared) {
+            //shareholding.isAchievementShared(currentAchievement._id, function(isAchievementShared) {
                 currentAchievement.goals.forEach(function(goal, goalIndex) {
                     //console.log("----------")
                     //console.log("goal._id" +goal._id)
@@ -1035,7 +1052,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                         })
                     }
                 })
-            })
+            //})
         })
     }
 }
@@ -1175,7 +1192,6 @@ app.get('/unpublicize', function(request, response){
     progress.Progress.findOne({ achievement_id: app.set('current_achievement_id'), achiever_id: request.session.user_id }, function(err,currentProgress) {
         achievement.unpublicize(currentProgress)
         shareholding.isAchievementShared(app.set('current_achievement_id'), function(isShared) {
-            //console.log("isShared: " + isShared)
             response.writeHead(200, {'content-type': 'application/json' })
             response.write(JSON.stringify(isShared))
             response.end('\n', 'utf-8')

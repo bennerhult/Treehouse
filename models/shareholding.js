@@ -24,6 +24,7 @@ module.exports = {
     confirmShareHolding: confirmShareHolding,
     isAchievementShared: isAchievementShared,
     isAchievementCreatedByMe: isAchievementCreatedByMe,
+    isAchievementSharedByMe: isAchievementSharedByMe,
     ignoreShareHolding: ignoreShareHolding
 }
 
@@ -72,6 +73,18 @@ function isAchievementShared(achievement_id, callback) {
         } else {
             callback(false)
         }
+    })
+}
+
+function isAchievementSharedByMe(userId, achievement_id, callback) {
+    Shareholding.findOne({  achievement_id: achievement_id, shareholder_id: userId }, function(err, exists1) {
+        Shareholding.findOne({  achievement_id: achievement_id, sharer_id: userId }, function(err, exists2) {
+            if (exists1 || exists2) {
+                callback(true)
+            } else {
+                callback(false)
+            }
+        })
     })
 }
 
