@@ -455,6 +455,7 @@ function getPublicAchievement(achieverId, achievementId) {
         function(data) {
             $("#achievementDesc").html(data)
             $("#sharer-container").hide()
+            $("#compare-container").hide()
             FB.XFBML.parse();
             $("#publicizeButton").hide()
             $("#addbutton").hide()
