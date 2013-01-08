@@ -28,15 +28,16 @@ function getAchievementInfo() {
     '<h2>What is an Achievement?</h2>' +
     '<p><b>achievement</b> [uh-cheev-muhnt] <br>  something accomplished, especially by superior ability, special effort, great courage, etc.; a great or heroic deed.</p>' +
     '<h2>Why should I want to achieve something?</h2>' +
-    '<p>Because you can? What is the purpose of anything? An achievement is it\'s own reward.</p>' +
+    '<p>Because you can? An achievement is it\'s own reward.</p>' +
     '<h2>Ok! But why Treehouse?</h2>' +
     '<p>For many of us, achievements are that much sweeter when they are tracked and made tangible. A diploma, a medal, a title - the recognition you deserve. <br /><br />Imagine a magical place where you could store and track all your achievements. Treehouse is all that. Ever wanted to see how many points you had IRL?</p>' +
     '<h2>I create my own achievements?</h2>' +
     '<p>Yup. <b>You</b> decide what <b>you</b> want to achieve. Have you got a list of things that you just have to do before you die? Are you doing something amazing and can\'t wait to show your peers? What do you want to celebrate when it is done?<br /><br />Only you can tell the limits of your dreams and ambitions. Powerful forces to be sure. What motivates you?</p>' +
+    '<p>Also, you can encourage your friends by sharing your achievements with them and compare your progress. Challenge accepted?</p>' +
+    '<h2>Can my friends see my achievements?</h2>' +
+    '<p>If you want them to - publicize or share it. When you want to share your feeling of accomplishment (the technical term would be brag) you can publicize your achievements. Once an achievement is publicized, it is visible to the world and you can easily like it and post to Facebook or copy the link and send it however you want. Even by trusty old email. If you do not publicize or share an achievement, only you can see it. Nothing wrong with tracking your success and be proud all by your lonesome.</p>' +
     '<h2>Is it free?</h2>' +
     '<p>It is free.</p>' +
-    '<h2>Can my friends see my achievements?</h2>' +
-    '<p>If you want them to. When you want to share your feeling of accomplishment (the technical term would be brag) you can share your achievements. You can easily share to Facebook or copy the link and share it however you want. Even by trusty old email. If you do not share an achievement, only you can see it. Nothing wrong with tracking your success and be proud all by your lonesome.</p>' +
     '</div>'
         )
 }
@@ -71,10 +72,12 @@ function getMiscInfo() {
 function getFeatureInfo() {
     return (
         '<div>' +
-            '<h2>Sharing</h2>' +
-            '<p>When you want to share your feeling of accomplishment (the technical term would be brag) you can publicize your achievements. You can easily share to Facebook or copy the link and share it however you want. Even by trusty old email. If you do not publicize an achievement, only you can see it. Nothing wrong with tracking your success and be proud all by your lonesome.</p>' +
+            '<h2>Share & compare</h2>' +
+            '<p>Encourage your friends by sharing your achievements with them and compare your progress. Challenge accepted?</p>' +
+            '<h2>Publicize</h2>' +
+            '<p>When you want to share your feeling of accomplishment (the technical term would be brag) you can publicize your achievements. Once an achievement is publicized, you can easily like it and post to Facebook or copy the link and send it however you want. Even by trusty old email. If you do not publicize or share an achievement, only you can see it. Nothing wrong with tracking your success and be proud all by your lonesome.</p>' +
             '<h2>15 minutes of fame</h2>' +
-            '<p>The latest publicly shared achievement is showcased on the front page of treehouse.io, so that the whole world gets a glimpse of your awesomeness.</p>' +
+            '<p>The latest publicized achievement is showcased on the front page of treehouse.io, so that the whole world gets a glimpse of your awesomeness.</p>' +
         '</div>'
         )
 }
