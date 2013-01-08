@@ -565,17 +565,12 @@ app.get('/compareList', function(request, response){
                 getUserNameForId(currentCompare.achiever_id, function(userName) {
                     achievement.Achievement.findOne({ _id: request.query.achievementId }, function(err,currentAchievement) {
                         currentAchievement.goals.forEach(function(goal, goalIndex) {
-                            //console.log("----------")
-                            //console.log("goal._id" +goal._id)
-                            //console.log("achievementUser_id" +achievementUser_id)
-                            //console.log("-----x----")
                             progress.Progress.findOne({ goal_id: goal._id, achiever_id: currentCompare.achiever_id }, function(err,myProgress) {
                                 if (err) {
                                     console.log("error in app.js 3: couldn't find progress for user " + currentCompare.achiever_id)
                                 } else {
                                     myQuantityFinished += myProgress.quantityFinished
                                     myQuantityTotal += goal.quantityTotal
-                                    console.log("myQuantityTotal: " + myQuantityTotal)
                                 }
 
                                 if (goalIndex == currentAchievement.goals.length - 1 ) {
