@@ -589,6 +589,7 @@ app.get('/compareList', function(request, response){
                 })
             })
         }  else {
+            content = "Before you can compare this achievement you need to succesfully share it to a friend."
             response.writeHead(200, {'content-type': 'application/json' })
             response.write(JSON.stringify(content))
             response.end('\n', 'utf-8')
@@ -613,10 +614,8 @@ function getCompareText(userName, finished, total, index, nrOfCompares) {
             + '</td>'
             + '<td id="countarea' + goal._id + '" class="countarea">'
                 + '<h3>'
-                    + finished
-                    + '/'
-                    + total
-                + '</h3>'
+        + (finished/total) * 100
+                + '%</h3>'
             + '</td><td>'
         compareText    += '<div id="addbutton" class="addbutton"></div>'
         compareText += '</td></tr></table>'
