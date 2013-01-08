@@ -21,6 +21,7 @@ module.exports = {
     createShareholding: createShareholding,
     isShareRequestExisting: isShareRequestExisting,
     getSharedAchievementNotifications: getSharedAchievementNotifications,
+    getCompares: getCompares,
     confirmShareHolding: confirmShareHolding,
     isAchievementShared: isAchievementShared,
     isAchievementCreatedByMe: isAchievementCreatedByMe,
@@ -109,6 +110,30 @@ function getSharedAchievementNotifications(achieverId, userId, callback) {
     })
 }
 
+function getCompares(achievementId, userId, callback) {
+    var compares = []
+    var currentShareFriendId
+    Shareholding.find({ achievement_id: achievementId, confirmed: true }, function(err, shareholdings) {
+        if (shareholdings && shareholdings.length > 0) {
+            shareholdings.forEach(function(shareholding, index) {
+                if (shareholding.shareholder_id == userId) {
+                    currentShareFriendId =   shareholding.sharer_id
+                } else {
+                    currentShareFriendId =   shareholding.shareholder_id
+                }
+                progress.Progress.findOne({ achiever_id: currentShareFriendId, achievement_id: shareholding.achievement_id }, function(err2,currentProgress) {
+                    compares.push(currentProgress)
+                    index++
+                    if (index == shareholdings.length) {
+                        callback(compares)
+                    }
+                })
+            })
+        } else {
+            callback()
+        }
+    })
+}
 function ignoreShareHolding(achievement_id, shareholder_id, callback) {
     Shareholding.findOne({ shareholder_id: shareholder_id, achievement_id: achievement_id }, function(err, shareholding) {
         shareholding.remove()

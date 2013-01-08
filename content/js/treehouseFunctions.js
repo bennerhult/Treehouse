@@ -422,27 +422,31 @@ function getNotification(achievementId, sharerId, achieverId) {
 
 function getAchievement(achievementId, userId, publiclyVisible) {
     getSharerList(achievementId, function (friendsList) {
-        getAchievementFromServer(
-            function(data) {
-                $("#achievementDesc").html(data)
-                $("#sharer-container").html(friendsList)
-                $("#sharer-container").hide()
-                $('#progressTab').attr("class","selected")
-                if (publiclyVisible) {
-                    $('meta[propery="og:url"]').attr('content', 'www.treehouse.io/achievement?achievementId=' + achievementId + '&userId=' + userId)
-                    FB.XFBML.parse();
-                    $("#publicizeButton").hide()
-                    $("#fbLike").show()
-                    $("#tweetAchievement").show()
-                    $("#fbLikeWeb").hide()
-                } else {
-                    $("#fbLike").hide()
-                    $("#tweetAchievement").hide()
-                    $("#fbLikeWeb").show()
-                    $("#tweetTreehouse").show()
-                }
-            }, achievementId, false, null, userId
-        )
+        getCompareList(achievementId, function (compareList) {
+            getAchievementFromServer(
+                function(data) {
+                    $("#achievementDesc").html(data)
+                    $("#sharer-container").html(friendsList)
+                    $("#sharer-container").hide()
+                    $("#compare-container").html(compareList)
+                    $("#compare-container").hide()
+                    $('#progressTab').attr("class","selected")
+                    if (publiclyVisible) {
+                        $('meta[propery="og:url"]').attr('content', 'www.treehouse.io/achievement?achievementId=' + achievementId + '&userId=' + userId)
+                        FB.XFBML.parse();
+                        $("#publicizeButton").hide()
+                        $("#fbLike").show()
+                        $("#tweetAchievement").show()
+                        $("#fbLikeWeb").hide()
+                    } else {
+                        $("#fbLike").hide()
+                        $("#tweetAchievement").hide()
+                        $("#fbLikeWeb").show()
+                        $("#tweetTreehouse").show()
+                    }
+                }, achievementId, false, null, userId
+            )
+        })
     })
 }
 

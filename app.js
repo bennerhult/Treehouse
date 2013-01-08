@@ -485,7 +485,6 @@ function addPendings(content, pendings, userId, callback) {
 }
 
 app.get('/shareList', function(request, response){
-    //console.log("/shareList")
     var friendIds = new Array()
     friendship.getFriends(request.session.user_id, function(friendsList) {
         if (friendsList.length > 0) {
@@ -508,8 +507,6 @@ app.get('/shareList', function(request, response){
             response.write(JSON.stringify(""))
             response.end('\n', 'utf-8')
         }
-
-
     })
 })
 
@@ -554,6 +551,87 @@ function fillShareList(friendsList, userId, achievementId, callback) {
             }
         }
     })
+}
+
+app.get('/compareList', function(request, response){
+    var friendIds = new Array()
+    var content = ""
+
+    shareholding.getCompares(request.query.achievementId, request.session.user_id, function(compareList) {
+        if (compareList && compareList.length > 0) {
+            compareList.forEach(function(currentCompare, index) {
+                var myQuantityFinished = 0
+                var myQuantityTotal = 0
+                getUserNameForId(currentCompare.achiever_id, function(userName) {
+                    achievement.Achievement.findOne({ _id: request.query.achievementId }, function(err,currentAchievement) {
+                        currentAchievement.goals.forEach(function(goal, goalIndex) {
+                            //console.log("----------")
+                            //console.log("goal._id" +goal._id)
+                            //console.log("achievementUser_id" +achievementUser_id)
+                            //console.log("-----x----")
+                            progress.Progress.findOne({ goal_id: goal._id, achiever_id: currentCompare.achiever_id }, function(err,myProgress) {
+                                if (err) {
+                                    console.log("error in app.js 3: couldn't find progress for user " + currentCompare.achiever_id)
+                                } else {
+                                    myQuantityFinished += myProgress.quantityFinished
+                                    myQuantityTotal += goal.quantityTotal
+                                    console.log("myQuantityTotal: " + myQuantityTotal)
+                                }
+
+                                if (goalIndex == currentAchievement.goals.length - 1 ) {
+                                    content += getCompareText(userName, myQuantityFinished, myQuantityTotal, index, compareList.length)
+
+                                    if (index == compareList.length -1) {
+                                        response.writeHead(200, {'content-type': 'application/json' })
+                                        response.write(JSON.stringify(content))
+                                        response.end('\n', 'utf-8')
+                                    }
+                                }
+                            })
+
+                        })
+                    })
+                })
+            })
+        }  else {
+            response.writeHead(200, {'content-type': 'application/json' })
+            response.write(JSON.stringify(content))
+            response.end('\n', 'utf-8')
+        }
+    })
+})
+
+function getCompareText(userName, finished, total, index, nrOfCompares) {
+    compareText = '<div class="part-achievement">'
+    + '<div class="progress-container">'
+    + '<h3>'
+        + userName
+    + '</h3>'
+    + '<table border="1px">'
+        + '<tr>'
+            + '<td class="bararea">'
+                + '<div class="progress-goal-container">'
+                    + '<span class="progressbar"></span>'
+                    + '<div id="progressbar-goal"><span class="progress" style="width:'
+                                                + (finished/total) * 100
+                                             + '%;"></span></div></div>'
+            + '</td>'
+            + '<td id="countarea' + goal._id + '" class="countarea">'
+                + '<h3>'
+                    + finished
+                    + '/'
+                    + total
+                + '</h3>'
+            + '</td><td>'
+        compareText    += '<div id="addbutton" class="addbutton"></div>'
+        compareText += '</td></tr></table>'
+        compareText    += '<div class="clear"></div>'
+        compareText    += '</div>'
+    if (index < nrOfCompares-1) {
+        compareText += '<div class="separerare-part">&nbsp;</div>'
+    }
+    compareText += '</div>'
+    return compareText
 }
 
 app.get('/shareToFriend', function(request, response){
@@ -641,17 +719,6 @@ app.get('/confirmAchievement', function(request, response){
     //console.log("/confirmAchievement")
     shareholding.confirmShareHolding(request.query.achievementId, request.query.userId, function() {
         response.writeHead(200, {'content-type': 'application/json' })
-        response.end('\n', 'utf-8')
-    })
-})
-
-
-
-app.get('/usernameForId', function(request, response) {
-    //console.log("/userNameForId")
-    getUserNameForId(request.query.userId, function (username) {
-        response.writeHead(200, {'content-type': 'application/json' })
-        response.write(JSON.stringify(username))
         response.end('\n', 'utf-8')
     })
 })
@@ -958,7 +1025,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                             achievementDesc += '<div id="achievement-container">'
                                             achievementDesc += goalTextsText
                                             achievementDesc += '</div>'
-                                            achievementDesc += '<div id="sharer-container"></div>'
+                                            achievementDesc += '<div id="sharer-container"></div><div id="comparer-container"></div>'
                                             achievementDesc += '<br />'
                                             achievementDesc += '<div id="fbLike" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="250" data-show-faces="true" font="segoe ui"></div></div>'
                                             achievementDesc += '<br />'
@@ -1014,7 +1081,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
 
                                             if(!checkingOtherPersonsAchievement) {
                                                 if(!isNotificationView) {
-                                                    achievementDesc += '<div id="achievementTabs"><a style="color:black" href="javascript:void(0)" onclick="progressTab()"><span id="progressTab">My progress</span></a> <a style="color:black" href="javascript:void(0)" onclick="shareTab()"><span id="shareTab">Share</span></a><div class="clear"></div></div>'
+                                                    achievementDesc += '<div id="achievementTabs"><a style="color:black" href="javascript:void(0)" onclick="progressTab()"><span id="progressTab">My progress</span></a> <a style="color:black" href="javascript:void(0)" onclick="shareTab()"><span id="shareTab">Share</span></a> <a style="color:black" href="javascript:void(0)" onclick="compareTab()"><span id="compareTab">Compare</span></a><div class="clear"></div></div>'
                                                 }   else {
                                                     achievementDesc += '<a style="color:black" href="javascript:void(0)" onclick="confirmAchievement(\'' + currentAchievement._id + '\', \'' + userId + '\')">Challenge accepted</a> <a style="color:black" href="javascript:void(0)" onclick="ignoreAchievement(\'' + currentAchievement._id + '\', \'' + userId + '\')">Ignore</a>'
                                                 }
@@ -1022,7 +1089,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                             achievementDesc += '<div id="achievement-container">'
                                             achievementDesc += goalTextsText
                                             achievementDesc += '</div>'
-                                            achievementDesc += '<div id="sharer-container"></div>'
+                                            achievementDesc += '<div id="sharer-container"></div><div id="compare-container"></div>'
                                             achievementDesc += '<br />'
                                             achievementDesc += '<div id="fbLike" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="250" data-show-faces="true" font="segoe ui"></div></div>'
                                             achievementDesc += '<br />'

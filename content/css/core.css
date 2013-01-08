@@ -988,6 +988,34 @@ span.progress{
     box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
 }
 
+#compare-container {
+    width: 94%;
+    margin: 0px 0% 10px 0%;
+    padding: 10px 10px 10px 10px;
+
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+
+    border-top-left-radius: 0px;
+    -webkit-border-top-left-radius: 0px;
+    -moz-border-radius-topleft: 0px;
+
+    background: #7e7b76; /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover,  #a8a7a5 0%, #7e7b76 90%); /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#a8a7a5), color-stop(90%,#7e7b76)); /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover,  #a8a7a5 0%,#7e7b76 90%); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover,  #a8a7a5 0%,#7e7b76 90%); /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover,  #a8a7a5 0%,#7e7b76 90%); /* IE10+ */
+    background: radial-gradient(center, ellipse cover,  #a8a7a5 0%,#7e7b76 90%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a8a7a5', endColorstr='#7e7b76',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+
+    -moz-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
+    -webkit-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
+    box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
+}
+
 #achievementTabs{
     margin-top: 40px;
     height: 19px;

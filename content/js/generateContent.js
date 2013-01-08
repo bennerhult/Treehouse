@@ -260,15 +260,22 @@ function getShareListFromServer(achievementId,callback) {
     })
 }
 
-function getPendingFriendShipRequestsFromServer(callback) {
-    var data = "userId=" + currentUserId
 
-    $.ajax("/pendingFriendshipRequests", {
+function getCompareList(achievementId, callback) {
+    getCompareListFromServer(achievementId, function(content) {
+        callback(content)
+    })
+}
+
+function getCompareListFromServer(achievementId,callback) {
+    var data = "achievementId=" + achievementId
+
+    $.ajax("/compareList", {
         type: "GET",
         data: data,
         dataType: "json",
         statusCode: {
-            200: function(pendings) { callback(pendings) }
+            200: function(compareList) { callback(compareList) }
         }
     })
 }
@@ -283,18 +290,6 @@ function getFriendsFromServer(callback) {
     })
 }
 
-function getUsernameFromServer(userId, callback) {
-    var data = "userId=" + userId
-
-    $.ajax("/usernameForId", {
-        type: "GET",
-        data: data,
-        dataType: "json",
-        statusCode: {
-            200: function(username, id) { callback(username, id) }
-        }
-    })
-}
 function openFriends() {
     $('#tab-menu').hide('fast')
     getFriendsContent(function(friendsContent) {
@@ -306,6 +301,9 @@ function openFriends() {
 function progressTab() {
     $('#progressTab').attr("class","selected")
     $('#shareTab').attr("class","")
+    $('#compareTab').attr("class","")
+
+    $('#compare-container').hide()
     $('#sharer-container').hide()
     $('#achievement-container').show()
 }
@@ -313,8 +311,21 @@ function progressTab() {
 function shareTab() {
     $('#progressTab').attr("class","")
     $('#shareTab').attr("class","selected")
+    $('#compareTab').attr("class","")
+
     $('#achievement-container').hide()
+    $('#compare-container').hide()
     $('#sharer-container').show()
+}
+
+function compareTab() {
+    $('#progressTab').attr("class","")
+    $('#shareTab').attr("class","")
+    $('#compareTab').attr("class","selected")
+
+    $('#achievement-container').hide()
+    $('#sharer-container').hide()
+    $('#compare-container').show()
 }
 
 function getTabMenu() {
