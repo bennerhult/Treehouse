@@ -574,7 +574,7 @@ app.get('/compareList', function(request, response){
                                 }
 
                                 if (goalIndex == currentAchievement.goals.length - 1 ) {
-                                    content += getCompareText(userName, myQuantityFinished, myQuantityTotal, index, compareList.length)
+                                    content += getCompareText(userName, myQuantityFinished, myQuantityTotal, index, compareList.length, currentCompare.achiever_id, request.query.achievementId, myProgress.publiclyVisible)
 
                                     if (index == compareList.length -1) {
                                         response.writeHead(200, {'content-type': 'application/json' })
@@ -597,12 +597,12 @@ app.get('/compareList', function(request, response){
     })
 })
 
-function getCompareText(userName, finished, total, index, nrOfCompares) {
+function getCompareText(userName, finished, total, index, nrOfCompares, achieverId, achievementId, publiclyVisible) {
     compareText = '<div class="part-achievement">'
     + '<div class="progress-container">'
-    + '<h3>'
+    + '<h3><a href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ', ' + progressMade + ', ' + completed + ', true, true, ' + isAchievementCreatedByMe + ')">'
         + userName
-    + '</h3>'
+    + '</a></h3>'
     + '<table border="1px">'
         + '<tr>'
             + '<td class="bararea">'
@@ -616,8 +616,11 @@ function getCompareText(userName, finished, total, index, nrOfCompares) {
                 + '<h3>'
         + (finished/total) * 100
                 + '%</h3>'
-            + '</td><td>'
-        compareText    += '<div id="addbutton" class="addbutton"></div>'
+            + '</td><td>&nbsp;</td><td>'
+        var progressMade = finished > 0
+        var completed = finished >= total
+        var isAchievementCreatedByMe = false
+        compareText    += '<div class="imagearea"><a href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ', ' + progressMade + ', ' + completed + ', true, true, ' + isAchievementCreatedByMe + ')"><img src="content/img/user_has_no_image.jpg" alt="Visit friend!"/></a></div>'
         compareText += '</td></tr></table>'
         compareText    += '<div class="clear"></div>'
         compareText    += '</div>'
