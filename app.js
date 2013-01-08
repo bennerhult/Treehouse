@@ -614,7 +614,7 @@ function getCompareText(userName, finished, total, index, nrOfCompares, achiever
             + '</td>'
             + '<td id="countarea' + goal._id + '" class="countarea">'
                 + '<h3>'
-        + (finished/total) * 100
+        + Math.floor((finished/total) * 100)
                 + '%</h3>'
             + '</td><td>&nbsp;</td><td>'
         var progressMade = finished > 0
