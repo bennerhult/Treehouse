@@ -6,14 +6,18 @@ mongoose.connect(treehouse.dburi)
 
 var UserSchema = new Schema({
     created         : Date,
-    username        : { type: String,  required: true, unique: true, validate: [ /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i, 'invalid_email' ] }
-})
+    username        : { type: String,  required: true, unique: true, validate: [ /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i, 'invalid_email' ] },
+    firstName        :  String,
+    lastName        :  String
+    })
 
 var User = mongoose.model('User', UserSchema)
 
 module.exports = {
     User: User,
-    createUser: createUser
+    createUser: createUser,
+    setPrettyName : setPrettyName,
+    getPrettyName : getPrettyName
 }
 
 function createUser(name, callback) {
@@ -23,5 +27,36 @@ function createUser(name, callback) {
 
     user.save(function (error) {
         if (callback) callback(user, error)
+    })
+}
+
+function setPrettyName(userId, firstName, lastName, callback)   {
+    User.findOne({ _id: userId }, function(err,myUser) {
+       if (myUser) {
+           myUser.firstName = firstName
+           myUser.lastName = lastName
+
+           myUser.save(function (error) {
+                if (callback) callback(error)
+            })
+       }
+    })
+}
+
+function getPrettyName(userId, callback) {
+    User.findOne({ _id: userId }, function(err,myUser) {
+        if (myUser){
+            if (myUser.firstName && myUser.lastName) {
+                callback(myUser.firstName + " " + myUser.lastName)
+            } else if (myUser.firstName) {
+                callback(myUser.firstName)
+            } else if (myUser.lastName) {
+                callback(myUser.lastName)
+            } else  {
+                callback(myUser.username)
+            }
+        } else {
+            callback("user not found")
+        }
     })
 }

@@ -369,6 +369,25 @@ function getSignupErrorMessage (err){
     return errorMessage
 }
 
+app.get('/user', function(request, response){
+    user.User.findOne({ _id: request.session.user_id }, function(err,foundUser) {
+        if (foundUser)    {
+            response.send(foundUser, { 'Content-Type': 'application/json' }, 200)
+        }
+    })
+})
+
+app.get('/setPrettyName', function(request, response){
+    user.setPrettyName(request.session.user_id , request.query.firstName, request.query.lastName, function(error) {
+        if (error) {
+            response.writeHead(404, {'content-type': 'application/json' })
+        } else {
+            response.writeHead(200, {'content-type': 'application/json' })
+        }
+        response.end('\n', 'utf-8')
+    })
+})
+
 app.get('/findFriends', function(request, response){
     user.User.findOne({ username: request.query.friend_email.toLowerCase() }, function(err,foundFriend) {
         if (foundFriend)    {
@@ -721,8 +740,8 @@ app.get('/confirmAchievement', function(request, response){
 })
 
 function getUserNameForId(id, callback) {
-    user.User.findOne({ _id: id }, function(err, foundUser) {
-        callback(foundUser.username, id)
+    user.getPrettyName(id, function(prettyName) {
+        callback(prettyName, id)
     })
 }
 
@@ -1034,12 +1053,8 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                             achievementDesc += '<br />'
                                             achievementDesc += '<p>'
                                             achievementDesc += 'Creator: ' + username + '<br />'
-                                            user.User.findOne({ _id:  achieverId}, function(err2,myUser) {
-                                                if (err2) {
-                                                    console.log("error in app.js 5: couldn't find user " + achieverId)
-                                                } else {
-                                                    achievementDesc += 'Achiever: ' + myUser.username
-                                                }
+                                            getUserNameForId(achieverId, function(achieverName) {
+                                                achievementDesc += 'Achiever: ' + achieverName
                                                 achievementDesc += '</p>'
 
                                                 response.write(JSON.stringify(achievementDesc))
@@ -1098,12 +1113,8 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                             achievementDesc += '<br />'
                                             achievementDesc += '<p>'
                                             achievementDesc += 'Creator: ' + username + '<br />'
-                                            user.User.findOne({ _id:  achieverId}, function(err2,myUser) {
-                                                if (err2) {
-                                                    console.log("error in app.js 7: couldn't find user " + achieverId)
-                                                } else {
-                                                    achievementDesc += 'Achiever: ' + myUser.username
-                                                }
+                                            getUserNameForId(achieverId, function(achieverName) {
+                                                achievementDesc += 'Achiever: ' + achieverName
                                                 achievementDesc += '</p>'
 
                                                 response.write(JSON.stringify(achievementDesc))

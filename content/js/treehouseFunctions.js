@@ -131,6 +131,29 @@ function logOutFB() {    //TODO: do not log out the user from FB, just from the 
     }, true)
 }
 
+/******************  user functions  ******************/
+function editUser() {
+    var firstName = $("input[name=firstName]").val()
+    var lastName = $("input[name=lastName]").val()
+
+    setPrettyNameOnServer(firstName, lastName, function(success) {
+        $("#message").html("Changes saved!")
+    })
+}
+
+function setPrettyNameOnServer(firstName, lastName, callback) {
+    var data = "firstName=" + firstName + "&lastName=" + lastName
+    $.ajax("/setPrettyName", {
+        type: "GET",
+        data: data,
+        dataType: "json",
+        statusCode: {
+            200: function() { callback(true) },
+            404: function() { callback(false) }
+        }
+    })
+}
+
 /******************  friends functions  ******************/
 function findFriends() {
     var friend_email = $("input[name=friend_email]").val()

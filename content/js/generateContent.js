@@ -221,6 +221,41 @@ function getLoginContent() {
         )
 }
 
+function getUserContent(callback) {
+    getUserFromServer(function(user) {
+        var content = '<div id="content">' + nl +
+            '<p>Logged in as: ' + user.username + '</p><br />' + nl +
+            '<form action="javascript: editUser()">' + nl
+            if (user.firstName) {
+                content += '<input type="text" class="formstyle" name="firstName" placeholder="first name" value="' + user.firstName + '">' + nl
+            }  else {
+                content += '<input type="text" class="formstyle" name="firstName" placeholder="first name">' + nl
+            }
+            content += '<br /><br />'
+            if (user.lastName) {
+                content += '<input type="text" class="formstyle" name="lastName" placeholder="last name" value="' + user.lastName + '">' + nl
+            }  else {
+                content += '<input type="text" class="formstyle" name="lastName" placeholder="last name">' + nl
+            }
+            content += '<br />'
+            content += '<input type="submit" class="button" value="Save">' + nl +
+            '</form>' + nl +
+            '<div id="message"></div>'
+        content +=   '</div>'
+        callback(content)
+    })
+}
+
+function getUserFromServer(callback) {
+    $.ajax("/user", {
+        type: "GET",
+        dataType: "json",
+        statusCode: {
+            200: function(user) { callback(user) }
+        }
+    })
+}
+
 function getFriendsContent(callback) {
     getFriendsList(function(friendsList) {
         var content = '<div id="content">' + nl +
@@ -295,7 +330,13 @@ function openFriends() {
     getFriendsContent(function(friendsContent) {
         insertContent(friendsContent, setDefaultMenu(false, false, currentUserId))
     })
+}
 
+function openUser() {
+    $('#tab-menu').hide('fast')
+    getUserContent(function(userContent) {
+        insertContent(userContent, setDefaultMenu(false, false, currentUserId))
+    })
 }
 
 function progressTab() {
@@ -346,6 +387,7 @@ function getTabMenu() {
          }
          menu +=    '</span></a></li>' + nl +
                     '<li class="header">Account</li>' + nl +
+                    '<li><a href="javascript:void(0)" onclick="openUser()"><span>User</span></a></li>' +  nl +
                     '<li class="last"><a href="javascript:void(0)" onclick="signout()"><span class="border-bottom-right">Sign out</span></a></li>'
      }  else {
          menu +=    '<li class="header">Account</li>' + nl +
