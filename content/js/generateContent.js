@@ -6,6 +6,7 @@ var footerContent = '<ul>' + nl +
     '<li><span><h2>Play</h2><p>Let\'s have fun!<br /><br />Get the coveted <a href="javascript:void(0)" onclick="showInfo(getEarlyAdopterInfo(), -1)">Early Adopter Achievement</a></p></span></li>' + nl +
     '<li class="last"><span id="latestAchievementSplash"></span></li>' + nl +
     '</ul>' +
+    '<div class="clear"></div>' +
     '<div id="fbLikeWeb" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="250" data-show-faces="true" font="segoe ui"></div></div>' +
     '<div id="tweetTreehouse">' +
     '<a href="https://twitter.com/share?url=http://treehouse.io&text=Treehouse" class="twitter-share-button">Tweet</a>' +
