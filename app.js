@@ -1035,7 +1035,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                 if(!isNotificationView) {
                                                     achievementDesc += '<a style="color:black" href="javascript:void(0)" onclick="progressTab()">Progress</a> <a style="color:black" href="javascript:void(0)" onclick="shareTab()">Share</a>'
                                                 }   else {
-                                                    achievementDesc += '<a style="color:black" href="javascript:void(0)" onclick="confirmAchievement(\'' + currentAchievement._id + '\', \'' + userId + '\')">Challenge accepted</a> <a style="color:black" href="javascript:void(0)" onclick="ignoreAchievement(\'' + currentAchievement._id + '\', \'' + userId + '\')">Ignore</a>'
+                                                    achievementDesc += '<a style="color:black" href="javascript:void(0)" onclick="confirmAchievement(\'' + currentAchievement._id + '\', \'' + userId + '\')"><img src="content/img/challengeaccepted.png" alt="challenge accepted" /></a> <a style="color:black" href="javascript:void(0)" onclick="ignoreAchievement(\'' + currentAchievement._id + '\', \'' + userId + '\')"><img src="content/img/ignore.png" alt="Ignore" /></a>'
                                                 }
                                             }
                                             achievementDesc += '<div id="achievement-container">'
@@ -1095,7 +1095,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                 if(!isNotificationView) {
                                                     achievementDesc += '<div id="achievementTabs"><a style="color:black" href="javascript:void(0)" onclick="progressTab()"><span id="progressTab">My progress</span></a> <a style="color:black" href="javascript:void(0)" onclick="shareTab()"><span id="shareTab">Share</span></a> <a style="color:black" href="javascript:void(0)" onclick="compareTab()"><span id="compareTab">Compare</span></a><div class="clear"></div></div>'
                                                 }   else {
-                                                    achievementDesc += '<a style="color:black" href="javascript:void(0)" onclick="confirmAchievement(\'' + currentAchievement._id + '\', \'' + userId + '\')">Challenge accepted</a> <a style="color:black" href="javascript:void(0)" onclick="ignoreAchievement(\'' + currentAchievement._id + '\', \'' + userId + '\')">Ignore</a>'
+                                                    achievementDesc += '<a style="color:black" href="javascript:void(0)" onclick="confirmAchievement(\'' + currentAchievement._id + '\', \'' + userId + '\')"><img src="content/img/challengeaccepted.png" alt="challenge accepted" /></a> <a style="color:black" href="javascript:void(0)" onclick="ignoreAchievement(\'' + currentAchievement._id + '\', \'' + userId + '\')"><img src="content/img/ignore.png" alt="Ignore" /></a>'
                                                 }
                                             }
                                             achievementDesc += '<div id="achievement-container">'
