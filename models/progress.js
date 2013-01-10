@@ -8,7 +8,6 @@ mongoose.connect(treehouse.dburi)
 var ProgressSchema = new Schema({
     created                     : {type: Date, required: true},
     latestUpdated               : {type: Date},
-    achievementUnlockedDate     : {type: Date},
     achiever_id                 : {type: Schema.ObjectId, required: true},
     achievement_id              : {type: Schema.ObjectId, required: true},
     goal_id                     : {type: Schema.ObjectId, required: true},
@@ -24,7 +23,6 @@ module.exports = {
     createAndSaveProgress : createAndSaveProgress,
     markProgress : markProgress,
     removeProgress : removeProgress,
-    unlockAchievement : unlockAchievement,
     getPercentageFinished: getPercentageFinished
 }
 
@@ -36,16 +34,7 @@ function markProgress(currentAchievement, achiever_id, goal_id, next) {
         obj.latestUpdated = new Date()
         obj.quantityFinished+=1
         obj.save(function (err) {
-            getPercentageFinished(currentAchievement, achiever_id, function (percentage) {
-                if (percentage >= 100) {
-                    unlockAchievement(obj.achievement_id, achiever_id, function() {
-                        next(obj.quantityFinished)
-                    })
-                } else {
-                    next(obj.quantityFinished)
-                }
-            })
-
+          next(obj.quantityFinished)
         })
     })
 }
@@ -99,19 +88,6 @@ function removeProgress(achievement_id, user_id, next) {
             if (index == progresses.length - 1) {
               next()
             }
-        })
-    })
-}
-
-function unlockAchievement(achievement_id, user_id, next) {
-    Progress.find({ achiever_id: user_id, achievement_id: achievement_id}, function(err, progresses) {
-        progresses.forEach(function(currentProgress, index) {
-            currentProgress.achievementUnlockedDate = new Date()
-            currentProgress.save(function (err) {
-                if (index == progresses.length - 1) {
-                    next()
-                }
-            })
         })
     })
 }

@@ -1004,7 +1004,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                         }
                     })
                 })
-
+            progress.Progress.findOne({ achievement_id: currentAchievement._id, achiever_id: achievementUser_id}, {}, { sort: { 'latestUpdated' : -1 } }, function(err, latestProgress) {
                 currentAchievement.goals.forEach(function(goal, goalIndex) {
                     if (isNotificationView) {
                         progress.Progress.findOne({   goal_id: goal._id }, function(err,myProgress) {
@@ -1065,9 +1065,9 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                             }
                         })
                     }   else {
-                        progress.Progress.findOne({   goal_id: goal._id, achiever_id: achievementUser_id}, function(err,myProgress) {
+                        progress.Progress.findOne({ goal_id: goal._id, achiever_id: achievementUser_id}, function(err, myProgress) {
                             if (err) {
-                                console.log("error in app.js 6: couldn't find progress for user " + achieverId)
+                                console.log("error in app.js 6: couldn't find progress for user " + achieverId + ", " + err)
                             } else {
                                 var goalPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100
                                 goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, myProgress.latestUpdated ,goalPercentageFinished, checkingOtherPersonsAchievement, goalTexts.length + 1 == currentAchievement.goals.length, isNotificationView))
@@ -1080,8 +1080,8 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                             achievementDesc += '<div class="achievement-info"><div class="textarea"><h2>'
                                                 + currentAchievement.title
                                                 + "</h2>"
-                                                if(myPercentageFinished >= 100) {                                                                                               //TODO ERIK
-                                                    achievementDesc += "<p id='unlocked'>Unlocked " +  moment().format("MMM Do YYYY") + "</p>";
+                                                if(myPercentageFinished >= 100) {
+                                                        achievementDesc += "<p id='unlocked'>Unlocked " +  moment(latestProgress.latestUpdated).format("MMM Do YYYY") + "</p>"
                                                 }
                                                 achievementDesc += '<p id="achievementDescription">'
                                                 + currentAchievement.description
@@ -1128,7 +1128,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                         })
                     }
                 })
-            //})
+            })
         })
     }
 }
