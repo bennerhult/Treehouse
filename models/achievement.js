@@ -63,7 +63,6 @@ function publicize(oneProgress) {
             currentProgress.publiclyVisible = true
             currentProgress.save()
             if (index == (progresses.length -1)) {
-                console.log("updating latest achievement with " + oneProgress._id)
                 latestAchievement.update(oneProgress._id)
             }
         })
@@ -114,7 +113,7 @@ function remove(achievement, userId, next)    {
             if (progresses && progresses.length > 0) {
                 console.log("could not delete achievement, it has progresses left. achievement_id "+ achievement._id)
             }  else {
-                achievement.remove(function (err) {
+                achievement.remove(function () {
                     if (next) {
                         next()
                     }

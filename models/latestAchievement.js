@@ -27,7 +27,6 @@ function getId(callback) {
 }
 
 function update(id) {
-    console.log("updating latest ach: " + id )
     LatestAchievement.findOne({ ownId: 1 }, function(err,latestAchievement) {
         if (id == -1) {
             latestAchievement.remove(function (err) {}) //someone unpublicized the last public achievement

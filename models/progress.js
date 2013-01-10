@@ -1,15 +1,19 @@
 var mongoose = require('mongoose'),
     treehouse = require('../app.js'),
+    achievement = require('./achievement.js'),
     Schema = mongoose.Schema
 
 mongoose.connect(treehouse.dburi)
 
 var ProgressSchema = new Schema({
-    achiever_id         : {type: Schema.ObjectId, required: true},
-    achievement_id      : {type: Schema.ObjectId, required: true},
-    goal_id             : {type: Schema.ObjectId, required: true},
-    publiclyVisible     : {type: Boolean, required: true},
-    quantityFinished    :{type: Number, required: true}
+    created                     : {type: Date, required: true},
+    latestUpdated               : {type: Date},
+    achievementUnlockedDate     : {type: Date},
+    achiever_id                 : {type: Schema.ObjectId, required: true},
+    achievement_id              : {type: Schema.ObjectId, required: true},
+    goal_id                     : {type: Schema.ObjectId, required: true},
+    publiclyVisible             : {type: Boolean, required: true},
+    quantityFinished            :{type: Number, required: true}
 })
 
 var Progress = mongoose.model('Progress', ProgressSchema)
@@ -19,14 +23,47 @@ module.exports = {
     createProgress : createProgress,
     createAndSaveProgress : createAndSaveProgress,
     markProgress : markProgress,
-    removeProgress : removeProgress
+    removeProgress : removeProgress,
+    unlockAchievement : unlockAchievement,
+    getPercentageFinished: getPercentageFinished
 }
 
-function markProgress(achiever_id, goal_id, next) {
+function markProgress(currentAchievement, achiever_id, goal_id, next) {
     Progress.findOne({ achiever_id: achiever_id,  goal_id: goal_id}, function(err,obj) {
+        if (!obj.created) {
+             obj.created = new Date()
+        }
+        obj.latestUpdated = new Date()
         obj.quantityFinished+=1
         obj.save(function (err) {
-            next(obj.quantityFinished)
+            getPercentageFinished(currentAchievement, achiever_id, function (percentage) {
+                if (percentage >= 100) {
+                    unlockAchievement(obj.achievement_id, achiever_id, function() {
+                        next(obj.quantityFinished)
+                    })
+                } else {
+                    next(obj.quantityFinished)
+                }
+            })
+
+        })
+    })
+}
+
+function getPercentageFinished(currentAchievement, achiever_id, next) {
+    var total = 0
+    var finished = 0
+    currentAchievement.goals.forEach(function(goal, goalIndex) {
+        Progress.findOne({ goal_id: goal._id, achiever_id: achiever_id }, function(err,myProgress) {
+            if (err) {
+                console.log("error in progress.js: couldn't find progress for user " + achiever_id)
+            } else {
+                finished += myProgress.quantityFinished
+                total += goal.quantityTotal
+                if (goalIndex == currentAchievement.goals.length - 1 ) {
+                    next((finished/total) * 100)
+                }
+            }
         })
     })
 }
@@ -38,6 +75,7 @@ function createProgress(achiever_id, achievement_id, goal_id, callback) {
     progress.goal_id = goal_id
     progress.quantityFinished = 0
     progress.publiclyVisible = false
+    progress.created = new Date()
     if (callback) {
         callback (progress);
     }
@@ -50,6 +88,7 @@ function createAndSaveProgress(achiever_id, achievement_id, goal_id) {
     progress.goal_id = goal_id
     progress.quantityFinished = 0
     progress.publiclyVisible = false
+    progress.created = new Date()
     progress.save()
 }
 
@@ -60,6 +99,19 @@ function removeProgress(achievement_id, user_id, next) {
             if (index == progresses.length - 1) {
               next()
             }
+        })
+    })
+}
+
+function unlockAchievement(achievement_id, user_id, next) {
+    Progress.find({ achiever_id: user_id, achievement_id: achievement_id}, function(err, progresses) {
+        progresses.forEach(function(currentProgress, index) {
+            currentProgress.achievementUnlockedDate = new Date()
+            currentProgress.save(function (err) {
+                if (index == progresses.length - 1) {
+                    next()
+                }
+            })
         })
     })
 }

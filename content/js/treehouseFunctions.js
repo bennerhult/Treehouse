@@ -210,6 +210,7 @@ function shareToFriend(friendId, achievementId) {
             $("#shareholderid" + friendId).html("Request sent!")
             $("#deleteButton").hide('fast')
             $("#editButton").hide('fast')
+            $("#publicizeButton").attr("class","add")
         }
     })
 }

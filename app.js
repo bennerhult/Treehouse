@@ -1,6 +1,7 @@
 var fs = require('fs'),
     url = require('url'),
     express = require('express'),
+    moment = require('moment'),
     sessionMongoose = require("session-mongoose"),
     _ = require("underscore")._,
     email   = require('emailjs')
@@ -1011,7 +1012,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                 console.log("error in app.js 4: couldn't find progress for user " + achieverId)
                             } else {
                                 var goalPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100
-                                goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, goalPercentageFinished, checkingOtherPersonsAchievement, goalTexts.length + 1 == currentAchievement.goals.length, isNotificationView))
+                                goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, myProgress.latestUpdated, goalPercentageFinished, checkingOtherPersonsAchievement, goalTexts.length + 1 == currentAchievement.goals.length, isNotificationView))
                                 if (goalTexts.length == currentAchievement.goals.length) {
                                     var goalTextsText = ""
                                     goalTexts.forEach(function(goalText, index) {
@@ -1069,7 +1070,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                 console.log("error in app.js 6: couldn't find progress for user " + achieverId)
                             } else {
                                 var goalPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100
-                                goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, goalPercentageFinished, checkingOtherPersonsAchievement, goalTexts.length + 1 == currentAchievement.goals.length, isNotificationView))
+                                goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, myProgress.latestUpdated ,goalPercentageFinished, checkingOtherPersonsAchievement, goalTexts.length + 1 == currentAchievement.goals.length, isNotificationView))
                                 if (goalTexts.length == currentAchievement.goals.length) {
                                     var goalTextsText = ""
                                     goalTexts.forEach(function(goalText, index) {
@@ -1078,7 +1079,11 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                             var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100
                                             achievementDesc += '<div class="achievement-info"><div class="textarea"><h2>'
                                                 + currentAchievement.title
-                                                + '</h2><p id="achievementDescription">'
+                                                + "</h2>"
+                                                if(myPercentageFinished >= 100) {                                                                                               //TODO ERIK
+                                                    achievementDesc += "<p id='unlocked'>Unlocked " +  moment().format("MMM Do YYYY") + "</p>";
+                                                }
+                                                achievementDesc += '<p id="achievementDescription">'
                                                 + currentAchievement.description
                                                 + '</p></div>'
                                                 + '<div class="imagearea"><img src="'
@@ -1128,11 +1133,16 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
     }
 }
 
-function getGoalText(goal, achievement, progressNumber, progressPercentage, publicView, lastGoal, isNotificationView) {
+function getGoalText(goal, achievement, progressNumber, latestUpdated, progressPercentage, publicView, lastGoal, isNotificationView) {
+    if (!latestUpdated) {
+        latestUpdated = ""
+    }  else {
+        latestUpdated = " (" +  moment(latestUpdated).format("MMM Do YYYY") + ")";
+    }
     var goalText =  '<div class="part-achievement">'
                          + '<div class="progress-container">'
                             + '<h3>'
-                                + goal.title
+                                + goal.title + latestUpdated
                             + '</h3>'
                             + '<table border="1px">'
                                 + '<tr>'
@@ -1241,10 +1251,12 @@ function calculateAchievementProgress(userId, achievementId, callback) {
 
 app.get('/progress', function(request, response){
     //console.log("/progress")
-    progress.markProgress(request.session.user_id, request.query.goalId, function(quantityFinished) {
-        response.writeHead(200, {'content-type': 'application/json' })
-        response.write(JSON.stringify(quantityFinished))
-        response.end('\n', 'utf-8')
+    achievement.Achievement.findOne({ _id: app.set('current_achievement_id') }, function(err,currentAchievement) {
+        progress.markProgress(currentAchievement, request.session.user_id, request.query.goalId, function(quantityFinished) {
+            response.writeHead(200, {'content-type': 'application/json' })
+            response.write(JSON.stringify(quantityFinished))
+            response.end('\n', 'utf-8')
+        })
     })
 })
 
