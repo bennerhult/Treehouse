@@ -120,8 +120,11 @@ function setDefaultMenu(bothCompletedAndNotExists, lookingAtFriend, achieverId) 
     fixMenu()
 }
 
-function setAchievementMenu(publiclyVisible, progressMade, completed, achieverId, lookingAtFriend, lookingAtNotification, sharedAchievement, isAchievementCreatedByMe) {
+function setAchievementMenu(currentAchievementId, publiclyVisible, progressMade, completed, achieverId, lookingAtFriend, lookingAtNotification, sharedAchievement, isAchievementCreatedByMe) {
     var menu = '<div id="menu"><ul><li class="back"><a href="javascript:void(0)" onclick="openAchievements(' + completed + ', \'' + achieverId + '\', ' + lookingAtFriend + ')"><img src="content/img/back-1.png" alt=""/></a></li>'
+
+
+
     if (!lookingAtFriend && !lookingAtNotification) {
         if (!sharedAchievement || !isAchievementCreatedByMe) {
             menu += '<li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>'
@@ -129,7 +132,10 @@ function setAchievementMenu(publiclyVisible, progressMade, completed, achieverId
         menu += '<li id="publicizeButton" class="share"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
         menu += '<li id="unpublicizeButton" class="share"><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unpublicize.png" /></a></li>'
         if (!progressMade && !sharedAchievement) { menu += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement(\'' + achieverId + '\')"><img src="content/img/edit.png" /></a></li>'}
+    }  else if (lookingAtNotification) {
+        menu += '<a style="color:black" href="javascript:void(0)" onclick="confirmAchievement(\'' + currentAchievementId + '\', \'' + achieverId + '\')"><img src="content/img/challengeaccepted.png" alt="challenge accepted" /></a> <a style="color:black" href="javascript:void(0)" onclick="ignoreAchievement(\'' + currentAchievementId + '\', \'' + achieverId + '\')"><img src="content/img/ignore.png" alt="Ignore" /></a>'
     }
+
     menu += '</ul></div>'
     $("#menuArea").html(menu)
     fixMenu()

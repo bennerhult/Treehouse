@@ -418,13 +418,13 @@ function getAchievementsFromServer(completed, achieverId, lookingAtFriend, callb
 
 /******************  share functions  ******************/
 function openShareNotification(achievementId, achieverId, sharerId, publiclyVisible, progressMade) {
-    insertContent(getAchievementContent(), setAchievementMenu(publiclyVisible, progressMade, false, achieverId, false, true, true, false), getNotification(achievementId, sharerId, achieverId))
+    insertContent(getAchievementContent(), setAchievementMenu(achievementId, publiclyVisible, progressMade, false, achieverId, false, true, true, false), getNotification(achievementId, sharerId, achieverId))
 }
 
 /******************  achievement functions  ******************/
 function openAchievement(achievementId, achieverId, publiclyVisible, progressMade, completed, lookingAtFriend, sharedAchievement, isAchievementCreatedByMe) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + achieverId)
-    insertContent(getAchievementContent(), setAchievementMenu(publiclyVisible, progressMade, completed, achieverId, lookingAtFriend, false, sharedAchievement, isAchievementCreatedByMe), getAchievement(achievementId, achieverId, publiclyVisible))
+    insertContent(getAchievementContent(), setAchievementMenu(achievementId, publiclyVisible, progressMade, completed, achieverId, lookingAtFriend, false, sharedAchievement, isAchievementCreatedByMe), getAchievement(achievementId, achieverId, publiclyVisible))
 }
 
 function getNotification(achievementId, sharerId, achieverId) {
