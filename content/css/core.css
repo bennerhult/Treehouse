@@ -835,6 +835,7 @@ input.file {
     width: 65%;
     float: left;
     position: relative;
+    margin-bottom: 40px;
 }
 
 .textarea h2{
@@ -875,6 +876,7 @@ input.file {
     position: relative;
     float: right;
     text-align: right;
+    margin-bottom: 40px;
 }
 
 
@@ -1021,7 +1023,7 @@ span.progress{
 }
 
 #achievementTabs{
-    margin-top: 40px;
+   /* margin-top: 40px;*/
     height: 19px;
 }
 
