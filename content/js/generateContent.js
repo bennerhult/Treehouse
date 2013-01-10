@@ -133,7 +133,7 @@ function setAchievementMenu(currentAchievementId, publiclyVisible, progressMade,
         menu += '<li id="unpublicizeButton" class="share"><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unpublicize.png" /></a></li>'
         if (!progressMade && !sharedAchievement) { menu += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement(\'' + achieverId + '\')"><img src="content/img/edit.png" /></a></li>'}
     }  else if (lookingAtNotification) {
-        menu += '<a style="color:black" href="javascript:void(0)" onclick="confirmAchievement(\'' + currentAchievementId + '\', \'' + achieverId + '\')"><img src="content/img/challengeaccepted.png" alt="challenge accepted" /></a> <a style="color:black" href="javascript:void(0)" onclick="ignoreAchievement(\'' + currentAchievementId + '\', \'' + achieverId + '\')"><img src="content/img/ignore.png" alt="Ignore" /></a>'
+        menu += '<li class="add"><a style="color:black" href="javascript:void(0)" onclick="confirmAchievement(\'' + currentAchievementId + '\', \'' + achieverId + '\')"><img src="content/img/challengeaccepted.png" alt="challenge accepted" /></a></li><li class="share"> <a style="color:black" href="javascript:void(0)" onclick="ignoreAchievement(\'' + currentAchievementId + '\', \'' + achieverId + '\')"><img src="content/img/ignore.png" alt="Ignore" /></a></li>'
     }
 
     menu += '</ul></div>'
