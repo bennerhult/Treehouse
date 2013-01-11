@@ -266,15 +266,14 @@ body{
 }
 
 #app-container-login{
-
-    background: #b2b7b9; /* Old browsers */
-    background: -moz-radial-gradient(center, ellipse cover,  #b2b7b9 0%, #717475 100%); /* FF3.6+ */
-    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#b2b7b9), color-stop(100%,#717475)); /* Chrome,Safari4+ */
-    background: -webkit-radial-gradient(center, ellipse cover,  #b2b7b9 0%,#717475 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-radial-gradient(center, ellipse cover,  #b2b7b9 0%,#717475 100%); /* Opera 12+ */
-    background: -ms-radial-gradient(center, ellipse cover,  #b2b7b9 0%,#717475 100%); /* IE10+ */
-    background: radial-gradient(ellipse at center,  #b2b7b9 0%,#717475 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b2b7b9', endColorstr='#717475',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    background: #767472; /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover,  #767472 5%, #21201f 100%); /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(5%,#767472), color-stop(100%,#21201f)); /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover,  #767472 5%,#21201f 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover,  #767472 5%,#21201f 100%); /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover,  #767472 5%,#21201f 100%); /* IE10+ */
+    background: radial-gradient(ellipse at center,  #767472 5%,#21201f 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#767472', endColorstr='#21201f',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
 
 }
@@ -954,8 +953,8 @@ span.progress{
 
 #sharer-container {
     width: 94%;
-    margin: 0px 0% 10px 0%;
-    padding: 10px 10px 10px 10px;
+  /*  margin: 0px 0% 10px 0%;
+    padding: 10px 10px 10px 10px;*/
 
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -980,7 +979,10 @@ span.progress{
     box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
 }
 .sharerlistitem{
-      position: relative;
+    position: relative;
+    margin-right: 5%;
+    margin-left: 5%;
+    padding-top: 15px;
 }
 
 
@@ -1004,10 +1006,10 @@ span.progress{
    color: #131213;
    opacity: 1;
 }
-
+/*
 .sharerlistitem .separerare-part{
     margin-bottom: 10px;
-}
+}*/
 
 #compare-container {
     width: 100%;
@@ -1327,6 +1329,10 @@ p{
     opacity: 0.7;
 }
 
+p.noshareandcompare{
+    padding: 10px;
+}
+
 .signup-logo p{
     padding-top: 20px;
     color: #fff;
@@ -1439,14 +1445,14 @@ p#achievementDescription{
 
     #page-login{
 
-        background: #8f9393; /* Old browsers */
-        background: -moz-radial-gradient(center, ellipse cover,  #8f9393 0%, #565859 100%); /* FF3.6+ */
-        background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#8f9393), color-stop(100%,#565859)); /* Chrome,Safari4+ */
-        background: -webkit-radial-gradient(center, ellipse cover,  #8f9393 0%,#565859 100%); /* Chrome10+,Safari5.1+ */
-        background: -o-radial-gradient(center, ellipse cover,  #8f9393 0%,#565859 100%); /* Opera 12+ */
-        background: -ms-radial-gradient(center, ellipse cover,  #8f9393 0%,#565859 100%); /* IE10+ */
-        background: radial-gradient(ellipse at center,  #8f9393 0%,#565859 100%); /* W3C */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8f9393', endColorstr='#565859',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+        background: #767472; /* Old browsers */
+        background: -moz-radial-gradient(center, ellipse cover,  #767472 5%, #21201f 100%); /* FF3.6+ */
+        background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(5%,#767472), color-stop(100%,#21201f)); /* Chrome,Safari4+ */
+        background: -webkit-radial-gradient(center, ellipse cover,  #767472 5%,#21201f 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-radial-gradient(center, ellipse cover,  #767472 5%,#21201f 100%); /* Opera 12+ */
+        background: -ms-radial-gradient(center, ellipse cover,  #767472 5%,#21201f 100%); /* IE10+ */
+        background: radial-gradient(ellipse at center,  #767472 5%,#21201f 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#767472', endColorstr='#21201f',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
     }
 

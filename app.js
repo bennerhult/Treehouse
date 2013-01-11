@@ -536,7 +536,7 @@ function fillShareList(friendsList, userId, achievementId, callback) {
     var goneThrough= 0
     shareholding.Shareholding.findOne({ shareholder_id: userId, achievement_id: achievementId }, function(err, gotThisFromFriend) {
         if(gotThisFromFriend != null) {
-            content += "You can only share achievements you created yourself"
+            content += '<p class="noshareandcompare">You can only share achievements you created yourself</p>'
             content += '</div>'
             callback(content)
         } else {
@@ -616,7 +616,7 @@ app.get('/compareList', function(request, response){
                 })
             })
         }  else {
-            content = "Before you can compare this achievement you need to succesfully share it to a friend."
+            content = '<p class="noshareandcompare">Before you can compare this achievement you need to succesfully share it to a friend.</p>'
             response.writeHead(200, {'content-type': 'application/json' })
             response.write(JSON.stringify(content))
             response.end('\n', 'utf-8')
