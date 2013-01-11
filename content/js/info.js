@@ -92,7 +92,5 @@ function getEarlyAdopterInfo() {
 }
 
 function getStart() {
-    return (
-        '<img src="content/img/treehouse.jpg" />'
-        )
+    return ('')
 }

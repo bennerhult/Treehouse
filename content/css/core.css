@@ -258,14 +258,26 @@ body{
     width: 100%;
     height: 480px;
     overflow: auto;
+    /*
+          -moz-border-radius: 5px;
+          -webkit-border-radius: 5px;
+          border-radius: 5px;
 
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
+             -moz-box-shadow: inset 0px 0px 10px rgba(69,69,69,1);
+             -webkit-box-shadow: inset 0px 0px 10px rgba(69,69,69,1);
+             box-shadow: inset 0px 0px 10px rgba(69,69,69,1);*/
 
-    -moz-box-shadow: inset 0px 0px 10px rgba(69,69,69,1);
-    -webkit-box-shadow: inset 0px 0px 10px rgba(69,69,69,1);
-    box-shadow: inset 0px 0px 10px rgba(69,69,69,1);
+
+    -moz-box-shadow:  0px 0px 25px 2px rgba(0,0,0,0.5);
+    -webkit-box-shadow:  0px 0px 25px 2px rgba(0,0,0,0.5);
+    box-shadow:  0px 0px 25px 2px rgba(0,0,0,0.5);
+
+    /*
+    -moz-box-shadow: 1px 16px 14px -13px rgba(0,0,0,.5);
+    -webkit-box-shadow: 1px 16px 14px -13px rgba(0,0,0,.5);
+    box-shadow: 1px 16px 14px -13px rgba(0,0,0,.5));*/
+
+   /* border: 1px solid #303030;*/
 
 }
 
@@ -296,8 +308,9 @@ body{
 #app-container::-webkit-scrollbar-track,
 #app-container-login::-webkit-scrollbar-track{
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
+
+ /*   -webkit-border-radius: 10px;
+    border-radius: 10px;*/
 
 }
 
@@ -364,26 +377,27 @@ body{
 
 #infoArea {
     background-color: #fff;
-    min-height: 628px;
+    min-height: 630px;
 
     background-image: url(../img/treehouse.jpg);
+    background-repeat: no-repeat;
     background-position: top left;
 
-    border: 3px solid #fff;
-    -moz-border-radius: 5px;
+  /*  border: 3px solid #fff;*/
+   /* -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
-    border-radius: 5px;
-
+    border-radius: 5px;*/
+/*
     -moz-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
     -webkit-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
-    box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+    box-shadow:  0px 0px 5px rgba(0,0,0,0.5);*/
 }
 
 
 #infoArea div{
     padding: 20px;
     background-color: #fff;
-    min-height: 593px;
+    min-height: 590px;
 }
 
 #infoArea img{
@@ -441,13 +455,13 @@ body{
     text-align: left;
     width: 100%;
 
-
+/*
     -webkit-border-top-left-radius: 5px;
     -webkit-border-top-right-radius: 5px;
     -moz-border-radius-topleft: 5px;
     -moz-border-radius-topright: 5px;
     border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-top-right-radius: 5px;*/
 
 }
 
