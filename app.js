@@ -620,10 +620,10 @@ app.get('/compareList', function(request, response){
 function getCompareText(userName, finished, total, index, nrOfCompares, achieverId, achievementId, publiclyVisible) {
     compareText = '<div class="part-achievement">'
     + '<div class="progress-container">'
-    + '<h3><a href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ', ' + progressMade + ', ' + completed + ', true, true, ' + isAchievementCreatedByMe + ')">'
+    + '<h3><a class="headerlink" href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ', ' + progressMade + ', ' + completed + ', true, true, ' + isAchievementCreatedByMe + ')">'
         + userName
     + '</a></h3>'
-    + '<table border="1px">'
+    + '<table border="0px">'
         + '<tr>'
             + '<td class="bararea">'
                 + '<div class="progress-goal-container">'
@@ -640,7 +640,7 @@ function getCompareText(userName, finished, total, index, nrOfCompares, achiever
         var progressMade = finished > 0
         var completed = finished >= total
         var isAchievementCreatedByMe = false
-        compareText    += '<div class="imagearea"><a href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ', ' + progressMade + ', ' + completed + ', true, true, ' + isAchievementCreatedByMe + ')"><img src="content/img/user_has_no_image.jpg" alt="Visit friend!"/></a></div>'
+        compareText    += '<div class="user-image"><a href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ', ' + progressMade + ', ' + completed + ', true, true, ' + isAchievementCreatedByMe + ')"><img src="content/img/user_has_no_image.jpg" alt="Visit friend!"/></a></div>'
         compareText += '</td></tr></table>'
         compareText    += '<div class="clear"></div>'
         compareText    += '</div>'
@@ -1096,7 +1096,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
 
                                             if(!checkingOtherPersonsAchievement) {
                                                 if(!isNotificationView) {
-                                                    achievementDesc += '<div id="achievementTabs"><a style="color:black" href="javascript:void(0)" onclick="progressTab()"><span id="progressTab">My progress</span></a> <a style="color:black" href="javascript:void(0)" onclick="shareTab()"><span id="shareTab">Share</span></a> <a style="color:black" href="javascript:void(0)" onclick="compareTab()"><span id="compareTab">Compare</span></a><div class="clear"></div></div>'
+                                                    achievementDesc += '<div id="achievementTabs"><a style="color:black" href="javascript:void(0)" onclick="progressTab()"><span id="progressTab">My progress</span></a><a style="color:black" href="javascript:void(0)" onclick="compareTab()"><span id="compareTab">Compare</span></a><a style="color:black" href="javascript:void(0)" onclick="shareTab()"><span id="shareTab">Share</span></a><div class="clear"></div></div>'
                                                 }
                                             }
                                             achievementDesc += '<div id="achievement-container">'

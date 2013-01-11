@@ -1,4 +1,4 @@
-html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td { margin:0;padding:0;border: 0;outline:0;font-size:100%;vertical-align:baseline;background:transparent; }
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td { margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent; }
 body { line-height:1; }
 ol,ul { list-style:none; }
 blockquote,q { quotes:none; }
@@ -786,7 +786,8 @@ input.file {
 
 .achievement img,
 .imagearea img,
-.create-imagearea img{
+.create-imagearea img,
+.user-image img{
     border: 3px solid #fff;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -795,7 +796,10 @@ input.file {
     -moz-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
     -webkit-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
     box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+}
 
+.user-image{
+    text-align: right;
 }
 
 .achievement-info{
@@ -976,9 +980,9 @@ span.progress{
 }
 
 #compare-container {
-    width: 94%;
-    margin: 0px 0% 10px 0%;
-    padding: 10px 10px 10px 10px;
+    width: 100%;
+   /* margin: 0px 0% 10px 0%;*/
+/*    padding: 10px 10px 10px 10px;*/
 
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -1001,6 +1005,7 @@ span.progress{
     -moz-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
     -webkit-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
     box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
+
 }
 
 #achievementTabs{
@@ -1021,6 +1026,7 @@ span.progress{
     border-top-right-radius: 3px;
     -webkit-border-top-right-radius: 3px;
     -moz-border-radius-topright: 3px;
+    margin-right: 5px;
 }
 
 #achievementTabs span.selected{
@@ -1098,6 +1104,8 @@ table tr td{
 
 table tr td.bararea{
     width: 70%;
+    vertical-align: top;
+    padding-top: 10px;
 }
 
 table tr td .progress-goal-container{
@@ -1108,9 +1116,17 @@ table tr td .progress-goal-container{
 table tr td.countarea{
     padding-left: 10px;
     vertical-align: top;
-    padding-top: 8px;
+    padding-top: 5px;
 }
 
+
+#compare-container table tr td.bararea{
+    width: 50%;
+}
+
+#compare-container table tr td.countarea{
+    width: 20%;
+}
 
 table tr td.goal{
     width: 90%;
@@ -1248,8 +1264,20 @@ h3{
     font-weight: normal;
 
     color: #fff;
-
 }
+
+a.headerlink{
+    font-family: 'Philosopher', sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+}
+
+a.headerlink:hover{
+    text-decoration: underline;
+}
+
 p{
     font-family: 'Philosopher', sans-serif;
     font-size: 15px;
