@@ -787,7 +787,8 @@ input.file {
 .achievement img,
 .imagearea img,
 .create-imagearea img,
-.user-image img{
+.user-image img,
+.leftcontainer img{
     border: 3px solid #fff;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -977,6 +978,35 @@ span.progress{
     -moz-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
     -webkit-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
     box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
+}
+.sharerlistitem{
+      position: relative;
+}
+
+
+#sharer-container .leftcontainer{
+    float: left;
+    padding-bottom: 7px;
+    padding-right: 10px;
+}
+
+#sharer-container .rightcontainer{
+    float: left;
+}
+
+.sharerlistitem .rightcontainer span,
+.sharerlistitem .rightcontainer p.alreadyshared{
+   position: absolute;
+   bottom: 13px;
+   padding-bottom: 0px;
+   font-size: 12px;
+   font-style: italic;
+   color: #131213;
+   opacity: 1;
+}
+
+.sharerlistitem .separerare-part{
+    margin-bottom: 10px;
 }
 
 #compare-container {
@@ -1276,6 +1306,17 @@ a.headerlink{
 
 a.headerlink:hover{
     text-decoration: underline;
+}
+
+
+a.sharelink{
+    font-family: 'Philosopher', sans-serif;
+    color: #131213;
+    text-decoration: underline;
+}
+
+a.sharelink:hover{
+    text-decoration: none;
 }
 
 p{

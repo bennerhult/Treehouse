@@ -543,19 +543,26 @@ function fillShareList(friendsList, userId, achievementId, callback) {
             friendsList.forEach(function(currentFriendship, index) {
                 shareholding.Shareholding.findOne({ sharer_id: userId, shareholder_id: friendsList[index], achievement_id: achievementId }, function(err, alreadySharedToFriend) {
                     getUserNameForId(friendsList[index], function(username) {
-                        content +=   '<br />'
+                        content +=   '<div class="sharerlistitem">'
+                        content +=   '<div class="leftcontainer"><img src="content/img/user_has_no_image.jpg" /></div>'
+                        content +=   '<div class="rightcontainer">'
                         content +=   '<h3>'
                         content +=    username
+                        content +=   '</h3>'
                         if (alreadySharedToFriend == null) {
-                            content += ' <span id="shareholderid' + friendsList[index] + '"><a href="javascript:void(0)" onclick="shareToFriend(\'' + friendsList[index] + '\',\'' + achievementId +  '\')">Share >></a></span>'
+                            content += ' <span id="shareholderid' + friendsList[index] + '"><a class="sharelink" href="javascript:void(0)" onclick="shareToFriend(\'' + friendsList[index] + '\',\'' + achievementId +  '\')">Share</a></span>'
                         } else {
                             if (alreadySharedToFriend.confirmed) {
-                                content += ' Already got this!'
+                                content += '<p class="alreadyshared"> Already got this!</p>'
                             } else {
-                                content += ' Share request pending!'
+                                content += '<p class="alreadyshared">Share request pending!</p>'
                             }
                         }
-                        content +=   '</h3>'
+                        content +=   '</div>'
+                        content +=   '<div class="clear"></div>'
+                        content +=   '<div class="separerare-part">&nbsp;</div>'
+                        content +=   '</div>'
+
                         goneThrough++
                         if (goneThrough == friendsList.length) {
                             content += '</div>'
