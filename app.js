@@ -536,26 +536,33 @@ function fillShareList(friendsList, userId, achievementId, callback) {
     var goneThrough= 0
     shareholding.Shareholding.findOne({ shareholder_id: userId, achievement_id: achievementId }, function(err, gotThisFromFriend) {
         if(gotThisFromFriend != null) {
-            content += "You can only share achievements you created yourself"
+            content += '<p class="noshareandcompare">You can only share achievements you created yourself</p>'
             content += '</div>'
             callback(content)
         } else {
             friendsList.forEach(function(currentFriendship, index) {
                 shareholding.Shareholding.findOne({ sharer_id: userId, shareholder_id: friendsList[index], achievement_id: achievementId }, function(err, alreadySharedToFriend) {
                     getUserNameForId(friendsList[index], function(username) {
-                        content +=   '<br />'
+                        content +=   '<div class="sharerlistitem">'
+                        content +=   '<div class="leftcontainer"><img src="content/img/user_has_no_image.jpg" /></div>'
+                        content +=   '<div class="rightcontainer">'
                         content +=   '<h3>'
                         content +=    username
+                        content +=   '</h3>'
                         if (alreadySharedToFriend == null) {
-                            content += ' <span id="shareholderid' + friendsList[index] + '"><a href="javascript:void(0)" onclick="shareToFriend(\'' + friendsList[index] + '\',\'' + achievementId +  '\')">Share >></a></span>'
+                            content += ' <span id="shareholderid' + friendsList[index] + '"><a class="sharelink" href="javascript:void(0)" onclick="shareToFriend(\'' + friendsList[index] + '\',\'' + achievementId +  '\')">Share</a></span>'
                         } else {
                             if (alreadySharedToFriend.confirmed) {
-                                content += ' Already got this!'
+                                content += '<p class="alreadyshared"> Already got this!</p>'
                             } else {
-                                content += ' Share request pending!'
+                                content += '<p class="alreadyshared">Share request pending!</p>'
                             }
                         }
-                        content +=   '</h3>'
+                        content +=   '</div>'
+                        content +=   '<div class="clear"></div>'
+                        content +=   '<div class="separerare-part">&nbsp;</div>'
+                        content +=   '</div>'
+
                         goneThrough++
                         if (goneThrough == friendsList.length) {
                             content += '</div>'
@@ -609,7 +616,7 @@ app.get('/compareList', function(request, response){
                 })
             })
         }  else {
-            content = "Before you can compare this achievement you need to succesfully share it to a friend."
+            content = '<p class="noshareandcompare">Before you can compare this achievement you need to succesfully share it to a friend.</p>'
             response.writeHead(200, {'content-type': 'application/json' })
             response.write(JSON.stringify(content))
             response.end('\n', 'utf-8')
@@ -620,10 +627,10 @@ app.get('/compareList', function(request, response){
 function getCompareText(userName, finished, total, index, nrOfCompares, achieverId, achievementId, publiclyVisible) {
     compareText = '<div class="part-achievement">'
     + '<div class="progress-container">'
-    + '<h3><a href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ', ' + progressMade + ', ' + completed + ', true, true, ' + isAchievementCreatedByMe + ')">'
+    + '<h3><a class="headerlink" href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ', ' + progressMade + ', ' + completed + ', true, true, ' + isAchievementCreatedByMe + ')">'
         + userName
     + '</a></h3>'
-    + '<table border="1px">'
+    + '<table border="0px">'
         + '<tr>'
             + '<td class="bararea">'
                 + '<div class="progress-goal-container">'
@@ -640,7 +647,7 @@ function getCompareText(userName, finished, total, index, nrOfCompares, achiever
         var progressMade = finished > 0
         var completed = finished >= total
         var isAchievementCreatedByMe = false
-        compareText    += '<div class="imagearea"><a href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ', ' + progressMade + ', ' + completed + ', true, true, ' + isAchievementCreatedByMe + ')"><img src="content/img/user_has_no_image.jpg" alt="Visit friend!"/></a></div>'
+        compareText    += '<div class="user-image"><a href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ', ' + progressMade + ', ' + completed + ', true, true, ' + isAchievementCreatedByMe + ')"><img src="content/img/user_has_no_image.jpg" alt="Visit friend!"/></a></div>'
         compareText += '</td></tr></table>'
         compareText    += '<div class="clear"></div>'
         compareText    += '</div>'
@@ -1096,7 +1103,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
 
                                             if(!checkingOtherPersonsAchievement) {
                                                 if(!isNotificationView) {
-                                                    achievementDesc += '<div id="achievementTabs"><a style="color:black" href="javascript:void(0)" onclick="progressTab()"><span id="progressTab">My progress</span></a> <a style="color:black" href="javascript:void(0)" onclick="shareTab()"><span id="shareTab">Share</span></a> <a style="color:black" href="javascript:void(0)" onclick="compareTab()"><span id="compareTab">Compare</span></a><div class="clear"></div></div>'
+                                                    achievementDesc += '<div id="achievementTabs"><a style="color:black" href="javascript:void(0)" onclick="progressTab()"><span id="progressTab">My progress</span></a><a style="color:black" href="javascript:void(0)" onclick="compareTab()"><span id="compareTab">Compare</span></a><a style="color:black" href="javascript:void(0)" onclick="shareTab()"><span id="shareTab">Share</span></a><div class="clear"></div></div>'
                                                 }
                                             }
                                             achievementDesc += '<div id="achievement-container">'
