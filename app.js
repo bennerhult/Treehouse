@@ -1081,7 +1081,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                 + currentAchievement.title
                                                 + "</h2>"
                                                 if(myPercentageFinished >= 100) {
-                                                        achievementDesc += "<p id='unlocked'>Unlocked " +  moment(latestProgress.latestUpdated).format("MMM Do YYYY") + "</p>"
+                                                        achievementDesc += "<p id='unlocked'>Unlocked: " +  moment(latestProgress.latestUpdated).format("MMM Do YYYY") + "</p>"
                                                 }
                                                 achievementDesc += '<p id="achievementDescription">'
                                                 + currentAchievement.description
@@ -1090,7 +1090,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                 + currentAchievement.imageURL
                                                 +'" alt="'
                                                 +  currentAchievement.createdBy + ": " + currentAchievement.title
-                                                + '"/><span class="gradient-bg"></span><span class="progressbar"></span><div id="progressbar" class="progress-container"><span class="progress" style="width:'
+                                              /  + '"/><span class="gradient-bg"></span><span class="progressbar"></span><div id="progressbar" class="progress-container"><span class="progress" style="width:'
                                                 + myPercentageFinished
                                                 + '%;"></span></div></div><div class="clear"></div>'
 
