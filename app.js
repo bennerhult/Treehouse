@@ -756,7 +756,6 @@ function getUserNameForId(id, callback) {
 app.get('/latestAchievementSplash', function(request, response) {
     //console.log("latestAchievementSplash")
     var latestAchievementId = latestAchievement.getId(function(latestProgressId) {
-        //console.log("/latest achievement: progressId: " + latestProgressId)
         progress.Progress.findOne({ _id: latestProgressId }, function(err,latestProgress) {
            if (latestProgress) {
                achievement.Achievement.findOne({ _id: latestProgress.achievement_id }, function(err,latestAchievement) {
@@ -817,7 +816,11 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
             + percentages[i]
             + '%"> </span></div></a></div><p>'
             + achievements[i].title
-            + '</p><div class="separerare">&nbsp;</div></div>'
+            + '</p>'
+        if (completed) {
+            achievementsList += '<span class="unlockedDate">(' +  moment(progresses[i].latestUpdated).format("MMM Do YYYY")  + ')</span>'
+        }
+        achievementsList += '<div class="separerare">&nbsp;</div></div>'
     }
     return achievementsList
 }
@@ -878,7 +881,7 @@ function getAchievementList(request, response, completedAchievements) {
     } else {
         achieverId = request.session.user_id
     }
-    progress.Progress.find({ achiever_id: achieverId}, function(err, progresses) {
+    progress.Progress.find({ achiever_id: achieverId}, {}, { sort: { 'latestUpdated' : -1 } }, function(err, progresses) {
         if (err) { console.log("error in app.js 1: couldn't find any progress for user " + achieverId) }
         if (progresses && progresses.length > 0) {
             if (!lookingAtFriendsAchievements && !completedAchievements ) {achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent(), setCreateEditMenu())'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare'>&nbsp;</div></div>" }
@@ -958,8 +961,6 @@ app.get('/achievementFromServer', function(request, response){
     }
     var achieverId = url_parts.query.achieverId
 
-    //console.log("achievementFromServer currentAchievementId: " +currentAchievementId)
-    //console.log("achieverId: " +achieverId)
    progress.Progress.findOne({ achievement_id: currentAchievementId, achiever_id: achieverId }, function(err,currentProgress) {
         //achievement.Achievement.findOne({ _id: currentProgress.achievement_id }, function(err,currentAchievement) {
        app.set('current_achievement_id', currentAchievementId)
@@ -996,21 +997,16 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
 
     if(currentAchievement.goals) {
         getUserNameForId(currentAchievement.createdBy, function(username) {
-            //shareholding.isAchievementShared(currentAchievement._id, function(isAchievementShared) {
-                currentAchievement.goals.forEach(function(goal, goalIndex) {
-                    //console.log("----------")
-                    //console.log("goal._id" +goal._id)
-                    //console.log("achievementUser_id" +achievementUser_id)
-                    //console.log("-----x----")
-                    progress.Progress.findOne({ goal_id: goal._id, achiever_id: achievementUser_id }, function(err,myProgress) {
-                        if (err) {
-                            console.log("error in app.js 3: couldn't find progress for user " + achieverId)
-                        } else {
-                            myQuantityFinished += myProgress.quantityFinished
-                            myQuantityTotal += goal.quantityTotal
-                        }
-                    })
+            currentAchievement.goals.forEach(function(goal, goalIndex) {
+                progress.Progress.findOne({ goal_id: goal._id, achiever_id: achievementUser_id }, function(err,myProgress) {
+                    if (err) {
+                        console.log("error in app.js 3: couldn't find progress for user " + achieverId)
+                    } else {
+                        myQuantityFinished += myProgress.quantityFinished
+                        myQuantityTotal += goal.quantityTotal
+                    }
                 })
+            })
             progress.Progress.findOne({ achievement_id: currentAchievement._id, achiever_id: achievementUser_id}, {}, { sort: { 'latestUpdated' : -1 } }, function(err, latestProgress) {
                 currentAchievement.goals.forEach(function(goal, goalIndex) {
                     if (isNotificationView) {
