@@ -530,7 +530,6 @@ app.get('/shareList', function(request, response){
     })
 })
 
-
 function fillShareList(friendsList, userId, achievementId, callback) {
     content = '<div id="sharerList">'
     var goneThrough= 0
@@ -560,12 +559,11 @@ function fillShareList(friendsList, userId, achievementId, callback) {
                         }
                         content +=   '</div>'
                         content +=   '<div class="clear"></div>'
-                        if (!index + 1 == friendsList.length) {
+                        goneThrough++
+                        if (!(goneThrough == friendsList.length)) {
                             content +=   '<div class="separerare-part">&nbsp;</div>'
                         }
                         content +=   '</div>'
-
-                        goneThrough++
                         if (goneThrough == friendsList.length) {
                             content += '</div>'
                             callback(content)
