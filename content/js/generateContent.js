@@ -147,7 +147,12 @@ function setAchievementMenu(currentAchievementId, publiclyVisible, progressMade,
         } else {
             $("#publicizeButton").hide()
             $("#editButton").hide()
+
         }
+    }
+    if (sharedAchievement && isAchievementCreatedByMe) {
+        $("#unpublicizeButton").attr("class","add")
+        $("#publicizeButton").attr("class","add")
     }
 }
 
