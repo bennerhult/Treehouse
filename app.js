@@ -560,7 +560,9 @@ function fillShareList(friendsList, userId, achievementId, callback) {
                         }
                         content +=   '</div>'
                         content +=   '<div class="clear"></div>'
-                        content +=   '<div class="separerare-part">&nbsp;</div>'
+                        if (!index + 1 == friendsList.length) {
+                            content +=   '<div class="separerare-part">&nbsp;</div>'
+                        }
                         content +=   '</div>'
 
                         goneThrough++
@@ -1097,7 +1099,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                 + currentAchievement.imageURL
                                                 +'" alt="'
                                                 +  currentAchievement.createdBy + ": " + currentAchievement.title
-                                              /  + '"/><span class="gradient-bg"></span><span class="progressbar"></span><div id="progressbar" class="progress-container"><span class="progress" style="width:'
+                                                + '"/><span class="gradient-bg"></span><span class="progressbar"></span><div id="progressbar" class="progress-container"><span class="progress" style="width:'
                                                 + myPercentageFinished
                                                 + '%;"></span></div></div><div class="clear"></div>'
 
