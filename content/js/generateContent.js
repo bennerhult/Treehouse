@@ -127,9 +127,9 @@ function setAchievementMenu(currentAchievementId, publiclyVisible, progressMade,
 
 
     if (!lookingAtFriend && !lookingAtNotification) {
-        if (!sharedAchievement || !isAchievementCreatedByMe) {
-            menu += '<li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>'
-        }
+        //if (!sharedAchievement || !isAchievementCreatedByMe) {
+        menu += '<li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>'
+        //}
         menu += '<li id="publicizeButton" class="share"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
         menu += '<li id="unpublicizeButton" class="share"><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unpublicize.png" /></a></li>'
         if (!progressMade && !sharedAchievement) { menu += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement(\'' + achieverId + '\')"><img src="content/img/edit.png" /></a></li>'}
@@ -150,9 +150,8 @@ function setAchievementMenu(currentAchievementId, publiclyVisible, progressMade,
 
         }
     }
-    if (sharedAchievement && isAchievementCreatedByMe) {
-        $("#unpublicizeButton").attr("class","add")
-        $("#publicizeButton").attr("class","add")
+    if (  isAchievementCreatedByMe) {
+        $("#editButton").hide()
     }
 }
 

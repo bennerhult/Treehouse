@@ -208,9 +208,7 @@ function shareToFriend(friendId, achievementId) {
     shareToFriendOnServer(friendId, achievementId, function(ok) {
         if (ok) {
             $("#shareholderid" + friendId).html("Request sent!")
-            $("#deleteButton").hide('fast')
             $("#editButton").hide('fast')
-            $("#publicizeButton").attr("class","add")
         }
     })
 }

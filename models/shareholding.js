@@ -98,8 +98,7 @@ function getSharedAchievementNotifications(achieverId, userId, callback) {
                     if (notification.shareholder_id == userId || notification.sharer_id == userId) {
                         achievementNotifications.push(currentAchievement)
                     }
-                    index++
-                    if (index == notifications.length) {
+                    if (index == (notifications.length -1)) {
                         callback(achievementNotifications)
                     }
                 })
@@ -123,8 +122,7 @@ function getCompares(achievementId, userId, callback) {
                 }
                 progress.Progress.findOne({ achiever_id: currentShareFriendId, achievement_id: shareholding.achievement_id }, function(err2,currentProgress) {
                     compares.push(currentProgress)
-                    index++
-                    if (index == shareholdings.length) {
+                    if (index == shareholdings.length -1) {
                         callback(compares)
                     }
                 })
@@ -146,8 +144,7 @@ function confirmShareHolding(achievement_id, shareholder_id, callback){
         achievement.Achievement.findOne({ _id: achievement_id }, function(err2,currentAchievement) {
             currentAchievement.goals.forEach(function(goal, index) {
                 progress.createAndSaveProgress(shareholder_id, achievement_id, goal._id)
-                index++
-                if (index == currentAchievement.goals.length)  {
+                if (index == currentAchievement.goals.length -1)  {
                     shareholding.confirmed = true
                     shareholding.save(function () {
                         callback()

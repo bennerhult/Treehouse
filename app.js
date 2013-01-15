@@ -533,8 +533,8 @@ app.get('/shareList', function(request, response){
 function fillShareList(friendsList, userId, achievementId, callback) {
     content = '<div id="sharerList">'
     var goneThrough= 0
-    shareholding.Shareholding.findOne({ shareholder_id: userId, achievement_id: achievementId }, function(err, gotThisFromFriend) {
-        if(gotThisFromFriend != null) {
+    achievement.Achievement.findById( achievementId , function(err, foundAchievement) {
+        if(foundAchievement.createdBy != userId) {
             content += '<p class="noshareandcompare">You can only share achievements you created yourself</p>'
             content += '</div>'
             callback(content)
@@ -826,10 +826,10 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
 }
 
 
-function createNotificationDesc(nrOfAchievements, notifications, achieverId) {
+function createNotificationDesc(nrOfAchievements, notifications, achieverId, lookingAtMyownAchievements) {
     var notificationsList = ""
     for (var i in notifications) {
-        if (nrOfAchievements == 0 && i == 0) {
+        if (nrOfAchievements == 0 && i == 0 && !lookingAtMyownAchievements) {
             notificationsList += "<div class='achievement first'>"
         }  else {
             notificationsList += "<div class='achievement'>"
@@ -929,7 +929,7 @@ function getSharedAchievementNotifications(nrOfAchievements, response, achieveme
     } else {
         shareholding.getSharedAchievementNotifications(achieverId, userId, function(notifications) {
             if (notifications) {
-                achievementsList += createNotificationDesc(nrOfAchievements, notifications, achieverId)
+                achievementsList += createNotificationDesc(nrOfAchievements, notifications, achieverId, achieverId == userId)
             }
             finishAchievementsList(response, achievementsList, completedAchievements)
         })
@@ -1288,13 +1288,27 @@ app.get('/unpublicize', function(request, response){
 app.get('/delete', loadUser, function(request, response){
     achievement.Achievement.findOne({ _id: app.set('current_achievement_id') }, function(err,currentAchievement) {
         if (currentAchievement) {
-            shareholding.Shareholding.findOne({ shareholder_id: request.session.user_id, achievement_id: currentAchievement._id }, function(err, sharehold) {
+            shareholding.Shareholding.findOne({ sharer_id: request.session.user_id, achievement_id: currentAchievement._id }, function(err, sharehold) {
                 if (sharehold != null) {
                     sharehold.remove()
                     achievement.removeSharedPartOfAchievement(currentAchievement, request.session.user_id, function () {
-                        response.writeHead(200, {'content-type': 'application/json' })
-                        response.write(JSON.stringify('ok'))
-                        response.end('\n', 'utf-8')
+                            shareholding.Shareholding.find({ achievement_id: currentAchievement._id, confirmed: false }, function(err, notifications) {
+                                if (notifications) {
+                                    notifications.forEach(function(notification, index) {
+                                        notification.remove()
+                                        if (index == (notifications.length - 1)) {
+                                            response.writeHead(200, {'content-type': 'application/json' })
+                                            response.write(JSON.stringify('ok'))
+                                            response.end('\n', 'utf-8')
+                                        }
+                                    })
+                                } else {
+                                    response.writeHead(200, {'content-type': 'application/json' })
+                                    response.write(JSON.stringify('ok'))
+                                    response.end('\n', 'utf-8')
+                                }
+                            })
+
                     })
                 }  else {
                     achievement.remove(currentAchievement, request.session.user_id, function () {

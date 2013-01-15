@@ -1,6 +1,5 @@
 var mongoose = require('mongoose'),
     treehouse = require('../app.js'),
-    achievement = require('./achievement.js'),
     Schema = mongoose.Schema
 
 mongoose.connect(treehouse.dburi)
