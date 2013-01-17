@@ -163,8 +163,11 @@ function findFriends() {
                 function(responseobject) {
                     var messageText
                     if (!responseobject.requestExists) {
-                        messageText = friend_email + " found!<br /><a href='javascript:void(0)' style='color: black' onclick='visitFriend(\"" + responseobject.id + "\")'>Visit!</a>"
-                        messageText +=   "<br /><a href='javascript:void(0)' style='color: black' onclick='addFriend(\"" + responseobject.id + "\")'>Add!</a>"
+                        messageText = "<div class='messagewrap'><div class='leftcontainer'><img src='content/img/user_has_no_image.jpg' /></div>"
+                        messageText +=   "<div class='rightcontainer'>"
+                        messageText += friend_email + " found!<div class='linkactions'><span><a href='javascript:void(0)' style='color: black' onclick='visitFriend(\"" + responseobject.id + "\")'>Visit!</a></span>"
+                        messageText +=   "<span><a href='javascript:void(0)' style='color: black' onclick='addFriend(\"" + responseobject.id + "\")'>Add!</a></span></div>"
+                        messageText +=   "</div><div class='clear'></div></div>"
                     } else {
                         if (responseobject.confirmed) {
                             messageText = friend_email + " is already your friend!"
