@@ -452,16 +452,17 @@ function fillFriendsList(friendsList, pendings, userId, callback) {
             }
             getUserNameForId(currentFriendId, function(username, id) {
                 content +=   '<div class="itemwrap" id="friendshipid' + currentFriendship._id + '">'
-                content +=   '<div class="leftcontainer"><img src="content/img/user_has_no_image.jpg" /></div>'
+                content +=   '<div class="leftcontainer"><a href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')"><img src="content/img/user_has_no_image.jpg" /></a></div>'
                 content +=   '<div class="rightcontainer">'
                 content += '<h3>'
-                content +=   username
+                content +=  '<a class="headerlink" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')">' +username + '</a>'
                 content += '</h3>'
-                content +=   ' <span><a href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')">Visit</a></span>'
                 content +=   ' <span class="remove"><a href="javascript:void(0)" onclick="removeFriendship(\'' + currentFriendship._id  + '\')">Remove</a></span>'
                 content +=   '</div>'
                 content +=   '<div class="clear"></div>'
-                content +=   '<div class="separerare-part">&nbsp;</div>'
+                if  (index < friendsList.length - 1)   {
+                    content +=   '<div class="separerare-part">&nbsp;</div>'
+                }
                 content +=   '</div>'
 
                 if (index == friendsList.length - 1) {
