@@ -836,6 +836,8 @@ input.file {
     min-height: 400px;
 }
 
+
+
 #achievementDesc{
     min-height: 400px;
 }
@@ -875,8 +877,25 @@ input.file {
     bottom: 16px;
 }
 
+span.unlockedDate{
+    background-color: rgba(0,0,0,0.5);
+    position: absolute;
+    top: 25px;
+    left: 5px;
+    color: #fff;
+    font-family: 'Philosopher', sans-serif;
+    font-size: 13px;
+    width:90px;
+    padding: 2px 0px;
 
 
+}
+
+span.unlockedDat div{
+    position: relative;
+    text-align: center;
+    width: 100%;
+}
 
 span.gradient-bg{
     position: absolute;

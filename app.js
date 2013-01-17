@@ -812,14 +812,16 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
             + achievements[i].imageURL
             + '" alt="'
             + achievements[i].title
-            + '"/><span class="gradient-bg"> </span><span class="progressbar"> </span><div class="progress-container-achievements"><span class="progress" style="width:'
+            + '"/><span class="gradient-bg"> </span><span class="progressbar"> </span> '
+        if (completed) {
+            achievementsList += '<span class="unlockedDate"><div>Unlocked <br/>' +  moment(progresses[i].latestUpdated).format("MMM Do YYYY")  + '</div></span>'
+        }
+        achievementsList += '  <div class="progress-container-achievements"><span class="progress" style="width:'
             + percentages[i]
             + '%"> </span></div></a></div><p>'
             + achievements[i].title
             + '</p>'
-        if (completed) {
-            achievementsList += '<span class="unlockedDate">(' +  moment(progresses[i].latestUpdated).format("MMM Do YYYY")  + ')</span>'
-        }
+
         achievementsList += '<div class="separerare">&nbsp;</div></div>'
     }
     return achievementsList
