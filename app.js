@@ -443,6 +443,7 @@ function fillFriendsList(friendsList, pendings, userId, callback) {
     var currentFriendId
     var content = '<div id="friendsList"><div class="header">Friends</div>'
     if (friendsList.length > 0) {
+        content +=   '<div class="myfriends">'
         friendsList.forEach(function(currentFriendship, index) {
             if (currentFriendship.friend1_id == userId) {
                 currentFriendId = currentFriendship.friend2_id
@@ -450,16 +451,21 @@ function fillFriendsList(friendsList, pendings, userId, callback) {
                 currentFriendId = currentFriendship.friend1_id
             }
             getUserNameForId(currentFriendId, function(username, id) {
-                content +=   '<div class="myfriends">'
-                content +=   '<span id="friendshipid' + currentFriendship._id + '">'
-                content +=    username
-                content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')">Visit!</a>'
-
-                content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="removeFriendship(\'' + currentFriendship._id  + '\')">Remove!</a>'
-                content +=   '</span>'
+                content +=   '<div class="itemwrap" id="friendshipid' + currentFriendship._id + '">'
+                content +=   '<div class="leftcontainer"><img src="content/img/user_has_no_image.jpg" /></div>'
+                content +=   '<div class="rightcontainer">'
+                content += '<h3>'
+                content +=   username
+                content += '</h3>'
+                content +=   ' <span><a href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')">Visit</a></span>'
+                content +=   ' <span class="remove"><a href="javascript:void(0)" onclick="removeFriendship(\'' + currentFriendship._id  + '\')">Remove</a></span>'
                 content +=   '</div>'
+                content +=   '<div class="clear"></div>'
+                content +=   '<div class="separerare-part">&nbsp;</div>'
+                content +=   '</div>'
+
                 if (index == friendsList.length - 1) {
-                    content += '</div>'
+                    content += '</div></div>'
                     if (pendings.length > 0) {
                         addPendings(content, pendings, userId, callback)
                     }  else {
