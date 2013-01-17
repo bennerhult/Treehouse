@@ -415,7 +415,7 @@ app.get('/friendsList', function(request, response){
     friendship.getPendingRequests(request.session.user_id, function(pendings) {
         friendship.getFriends(request.session.user_id, function(friendsList) {
             if (friendsList.length === 0) {
-                var content = '<div id="friendsList"><b>Friends</b><br />Add some friends!</div>'
+                var content = '<div id="friendsList"><div class="test">Friends</div><br />Add some friends!</div>'
                 fillFriendsList(friendships, pendings, request.session.user_id, function(content) {
                     response.writeHead(200, {'content-type': 'application/json' })
                     response.write(JSON.stringify(content))
@@ -441,7 +441,7 @@ app.get('/friendsList', function(request, response){
 
 function fillFriendsList(friendsList, pendings, userId, callback) {
     var currentFriendId
-    var content = '<div id="friendsList"><b>Friends</b>'
+    var content = '<div id="friendsList"><div class="header">Friends</div>'
     if (friendsList.length > 0) {
         friendsList.forEach(function(currentFriendship, index) {
             if (currentFriendship.friend1_id == userId) {
@@ -450,7 +450,7 @@ function fillFriendsList(friendsList, pendings, userId, callback) {
                 currentFriendId = currentFriendship.friend1_id
             }
             getUserNameForId(currentFriendId, function(username, id) {
-                content +=   '<br />'
+                content +=   '<div class="myfriends">'
                 content +=   '<span id="friendshipid' + currentFriendship._id + '">'
                 content +=    username
                 content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')">Visit!</a>'
@@ -458,6 +458,7 @@ function fillFriendsList(friendsList, pendings, userId, callback) {
                 content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="removeFriendship(\'' + currentFriendship._id  + '\')">Remove!</a>'
                 content +=   '</span>'
                 if (index == friendsList.length - 1) {
+                    content += '</div>'
                     content += '</div>'
                     if (pendings.length > 0) {
                         addPendings(content, pendings, userId, callback)

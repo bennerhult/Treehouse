@@ -615,6 +615,21 @@ body{
 
 /**/
 
+/*-- friendsList --*/
+
+#friendsList{
+
+}
+
+#friendsList .header{
+    text-align: center;
+    color: #fff;
+    background-color: #000;
+}
+
+#friendsList .myfriends{
+   padding: 30px;
+}
 
 
 /*-- LOG IN / SIGN UP --*/
