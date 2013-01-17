@@ -275,8 +275,8 @@ function getFriendsContent(callback) {
             '<input type="submit" class="button" value="Find friend">' + nl +
             '</form>' + nl +
             '<div id="message"></div>'
-        content += friendsList
         content +=   '</div>'
+        content += friendsList
         callback(content)
     })
 }

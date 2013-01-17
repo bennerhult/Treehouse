@@ -625,6 +625,9 @@ body{
     text-align: center;
     color: #fff;
     background-color: #000;
+    font: 14px 'Philosopher', sans-serif;
+    padding: 4px 0px;
+    font-weight: bold;
 }
 
 #friendsList .myfriends{
