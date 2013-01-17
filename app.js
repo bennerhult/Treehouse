@@ -441,7 +441,7 @@ app.get('/friendsList', function(request, response){
 
 function fillFriendsList(friendsList, pendings, userId, callback) {
     var currentFriendId
-    var content = '<div id="friendsList"><div class="header">Friends</div>'
+    var content = '<div id="friendsList"><b>Friends</b>'
     if (friendsList.length > 0) {
         friendsList.forEach(function(currentFriendship, index) {
             if (currentFriendship.friend1_id == userId) {
@@ -450,7 +450,7 @@ function fillFriendsList(friendsList, pendings, userId, callback) {
                 currentFriendId = currentFriendship.friend1_id
             }
             getUserNameForId(currentFriendId, function(username, id) {
-                content +=   '<div class="myfriends">'
+                content +=   '<br />'
                 content +=   '<span id="friendshipid' + currentFriendship._id + '">'
                 content +=    username
                 content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')">Visit!</a>'
@@ -458,7 +458,6 @@ function fillFriendsList(friendsList, pendings, userId, callback) {
                 content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="removeFriendship(\'' + currentFriendship._id  + '\')">Remove!</a>'
                 content +=   '</span>'
                 if (index == friendsList.length - 1) {
-                    content += '</div>'
                     content += '</div>'
                     if (pendings.length > 0) {
                         addPendings(content, pendings, userId, callback)
