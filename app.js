@@ -836,10 +836,10 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
 }
 
 
-function createNotificationDesc(nrOfAchievements, notifications, achieverId, lookingAtMyownAchievements) {
+function createNotificationDesc(nrOfAchievements, notifications, achieverId, lookingAtFriend) {
     var notificationsList = ""
     for (var i in notifications) {
-        if (nrOfAchievements == 0 && i == 0 && !lookingAtMyownAchievements) {
+        if (nrOfAchievements == 0 && i == 0 && lookingAtFriend) {
             notificationsList += "<div class='achievement first'>"
         }  else {
             notificationsList += "<div class='achievement'>"
@@ -851,10 +851,12 @@ function createNotificationDesc(nrOfAchievements, notifications, achieverId, loo
             + achieverId
             + '\', \''
             + notifications[i].createdBy
-            + '\','
+            + '\', '
             + false
-            + ','
-        notificationsList += 'false)"><img src="'
+            + ', '
+            + lookingAtFriend
+            + ', '
+            + 'false)"><img src="'
             + notifications[i].imageURL
             + '" alt="'
             + notifications[i].title
@@ -939,7 +941,7 @@ function getSharedAchievementNotifications(nrOfAchievements, response, achieveme
     } else {
         shareholding.getSharedAchievementNotifications(achieverId, userId, function(notifications) {
             if (notifications) {
-                achievementsList += createNotificationDesc(nrOfAchievements, notifications, achieverId, achieverId == userId)
+                achievementsList += createNotificationDesc(nrOfAchievements, notifications, achieverId, achieverId != userId)
             }
             finishAchievementsList(response, achievementsList, completedAchievements)
         })

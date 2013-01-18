@@ -419,8 +419,8 @@ function getAchievementsFromServer(completed, achieverId, lookingAtFriend, callb
 }
 
 /******************  share functions  ******************/
-function openShareNotification(achievementId, achieverId, sharerId, publiclyVisible, progressMade) {
-    insertContent(getAchievementContent(), setAchievementMenu(achievementId, publiclyVisible, progressMade, false, achieverId, false, true, true, false), getNotification(achievementId, sharerId, achieverId))
+function openShareNotification(achievementId, achieverId, sharerId, publiclyVisible, lookingAtFriend, progressMade) {
+    insertContent(getAchievementContent(), setAchievementMenu(achievementId, publiclyVisible, progressMade, false, achieverId, lookingAtFriend, true, true, false), getNotification(achievementId, sharerId, achieverId))
 }
 
 /******************  achievement functions  ******************/
