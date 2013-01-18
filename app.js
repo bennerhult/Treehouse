@@ -904,7 +904,7 @@ function getAchievementList(request, response, completedAchievements) {
                             calculateAchievementProgress(achieverId, myAchievement._id, function(achievementPercentageFinished) {
                                 shareholding.isAchievementShared(myAchievement._id, function(isAchievementShared) {
                                     shareholding.isAchievementCreatedByMe(achieverId, myAchievement._id, function(isAchievementCreatedByMe) {
-                                        shareholding.isAchievementSharedByMe(achieverId, myAchievement._id, function(isAchievmentSharedByMe) {
+                                        shareholding.isAchievementSharedByMe(request.session.user_id, myAchievement._id, function(isAchievmentSharedByMe) {
                                             if(!lookingAtFriendsAchievements || currentProgress.publiclyVisible || isAchievmentSharedByMe) {
                                                 if ((completedAchievements && achievementPercentageFinished == 100) || (!completedAchievements && achievementPercentageFinished < 100)) {
                                                         areAchievementsShared.push(isAchievementShared)
