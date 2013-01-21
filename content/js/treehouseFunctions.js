@@ -333,15 +333,28 @@ function ignoreFriendRequestOnServer(friendship_id, callback) {
 
 function confirmFriendRequest(friendship_id) {
     confirmFriendRequestOnServer(friendship_id, function(responseobject) {
+        var friendsRow =  '<div class="itemwrap" id="friendshipid'
+            + responseobject.id
+            + '"><div class="leftcontainer"><a href="javascript:void(0)" onclick="visitFriend(\''
+            + responseobject.id
+            + '\')"><img src="content/img/user_has_no_image.jpg" /></a></div><div class="rightcontainer"><h3><a class="headerlink" href="javascript:void(0)" onclick="visitFriend(\''
+            + responseobject.id
+            + '\')">'
+            + responseobject.username
+            + '</a></h3><span class="remove"><a style="color: #000" href="javascript:void(0)" onclick="removeFriendRequest(\''
+            + responseobject.id
+            + '\')">Remove</a></span></div><div class="clear"></div></div>'
         nrOfFriendShipRequests--
-        $("#friendshipid" + friendship_id).html("")
+        //$("#friendshipid" + friendship_id).html(friendsRow)
+        $("#myfriends").append(friendsRow)
+
+        $("#friendshipid" + friendship_id).remove()
         var friendRequestRow = "<a href='javascript:void(0)' onclick='openFriends()'><span>Friends"
         if (nrOfFriendShipRequests > 0) {
             friendRequestRow += " (" + nrOfFriendShipRequests + ")"
         }
         friendRequestRow += "</span></a></li>"
         $("#friendRequestRow").html(friendRequestRow)
-        $("#friendsList").append("<br />" + responseobject.username + " <a href='javascript:void(0)' style='color: black' onclick='visitFriend(\"" + responseobject.id + "\")'>Visit!</a>")
     })
 }
 

@@ -443,7 +443,7 @@ function fillFriendsList(friendsList, pendings, userId, callback) {
     var currentFriendId
     var content = '<div id="friendsList"><div class="header">Friends</div>'
     if (friendsList.length > 0) {
-        content +=   '<div class="myfriends">'
+        content +=   '<div id="myfriends" class="myfriends">'
         friendsList.forEach(function(currentFriendship, index) {
             if (currentFriendship.friend1_id == userId) {
                 currentFriendId = currentFriendship.friend2_id
@@ -460,16 +460,15 @@ function fillFriendsList(friendsList, pendings, userId, callback) {
                 content +=   ' <span class="remove"><a href="javascript:void(0)" onclick="removeFriendship(\'' + currentFriendship._id  + '\')">Remove</a></span>'
                 content +=   '</div>'
                 content +=   '<div class="clear"></div>'
-                if  (index < friendsList.length - 1)   {
+                if  (index < friendsList.length - 1 || pendings.length > 0)   {
                     content +=   '<div class="separerare-part">&nbsp;</div>'
                 }
                 content +=   '</div>'
-
                 if (index == friendsList.length - 1) {
-                    content += '</div></div>'
                     if (pendings.length > 0) {
                         addPendings(content, pendings, userId, callback)
                     }  else {
+                        content +=   '</div></div>'
                         callback(content)
                     }
                 }
@@ -488,7 +487,6 @@ function fillFriendsList(friendsList, pendings, userId, callback) {
 
 function addPendings(content, pendings, userId, callback) {
     var currentFriendId
-    content += '<br /><br /><div id="pendingFriendshipsList"><b>Friend requests</b>'
     pendings.forEach(function(currentFriendship, index) {
         if (currentFriendship.friend1_id == userId) {
             currentFriendId = currentFriendship.friend2_id
@@ -496,15 +494,22 @@ function addPendings(content, pendings, userId, callback) {
             currentFriendId = currentFriendship.friend1_id
         }
         getUserNameForId(currentFriendId, function(username, id) {
-            content +=   '<br />'
-            content +=   '<span id="friendshipid' + currentFriendship._id + '">'
-            content +=    username
-            content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="confirmFriendRequest(\'' + currentFriendship._id + '\')">Confirm</a>'
-            content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="ignoreFriendRequest(\'' + currentFriendship._id + '\')">Ignore</a>'
-            content +=   ' <a style="color: #000" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')">Visit</a>'
-            content +=   '</span>'
+            content +=   '<div class="itemwrap" id="friendshipid' + currentFriendship._id + '">'
+            content +=   '<div class="leftcontainer"><a href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')"><img src="content/img/user_has_no_image.jpg" /></a></div>'
+            content +=   '<div class="rightcontainer">'
+            content += '<h3>'
+            content +=  '<a class="headerlink" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')">Request: ' +username + '</a>'
+            content += '</h3>'
+            content +=   ' <span class="confirm"><a style="color: #000" href="javascript:void(0)" onclick="confirmFriendRequest(\'' + currentFriendship._id + '\')">Confirm</a></span>'
+            content +=   ' <span class="ignore"><a style="color: #000" href="javascript:void(0)" onclick="ignoreFriendRequest(\'' + currentFriendship._id + '\')">Ignore</a></span>'
+            content +=   '</div>'
+            content +=   '<div class="clear"></div>'
+            if  (index < pendings.length - 1)   {
+                content +=   '<div class="separerare-part">&nbsp;</div>'
+            }
+            content +=   '</div>'
             if (index == pendings.length - 1) {
-                content += '</div>'
+                content += '</div></div>'
                 callback(content)
             }
         })

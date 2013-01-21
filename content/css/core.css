@@ -685,6 +685,20 @@ body{
     right: 0px;
 }
 
+#friendsList .itemwrap span.confirm{
+    position: absolute;
+    bottom: 12px;
+    right: 50px;
+}
+
+#friendsList .itemwrap span.ignore{
+    position: absolute;
+    bottom: 12px;
+    right: 0px;
+}
+
+
+
 #friendsList .itemwrap span a{
     font-family: 'Philosopher', sans-serif;
     color: #131213;
