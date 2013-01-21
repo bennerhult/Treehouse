@@ -296,7 +296,7 @@ function addFriendOnServer(friendId, callback) {
 function removeFriendship(friendship_id) {
     ignoreFriendRequestOnServer(friendship_id, function() {
         nrOfFriendShipRequests--
-        $("#friendshipid" + friendship_id).html("")
+        $("#friendshipid" + friendship_id).remove()
         var friendRequestRow = "<a href='javascript:void(0)' onclick='openFriends()'><span>Friends"
         if (nrOfFriendShipRequests > 0) {
             friendRequestRow += " (" + nrOfFriendShipRequests + ")"
@@ -345,7 +345,6 @@ function confirmFriendRequest(friendship_id) {
             + responseobject.id
             + '\')">Remove</a></span></div><div class="clear"></div></div>'
         nrOfFriendShipRequests--
-        //$("#friendshipid" + friendship_id).html(friendsRow)
         $("#myfriends").append(friendsRow)
 
         $("#friendshipid" + friendship_id).remove()
