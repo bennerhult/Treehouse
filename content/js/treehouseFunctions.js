@@ -232,7 +232,6 @@ function shareToFriendOnServer(friendId, achievementId, callback) {
 function confirmAchievement(achievementId, userId) {
     confirmAchievementOnServer(achievementId, userId, function() {
         openAchievement(achievementId, userId, false, false, false, false, true, false)
-       //openAchievements(false, userId, false)
     })
 }
 
@@ -523,6 +522,7 @@ function progress(goalId, quantityTotal) {
             var goalPercentageFinished = (quantityFinished / quantityTotal) * 100
             $("#progressbar-goal" + goalId).html("<span class='progress' style='width:" + goalPercentageFinished + "%;'></span>")
             $("#countarea" + goalId).html("<h3>" + quantityFinished + "/" + quantityTotal + "</h3>")
+            $("#latestUpdated" + goalId).html(" k'ching!")
             if (goalPercentageFinished >= 100) {
                 $("#addbutton" + goalId).html("")
             }  else {

@@ -1155,9 +1155,9 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
 
 function getGoalText(goal, achievement, progressNumber, latestUpdated, progressPercentage, publicView, lastGoal, isNotificationView) {
     if (!latestUpdated) {
-        latestUpdated = ""
+        latestUpdated = "<span id='latestUpdated" + goal._id +"'></span>"
     }  else {
-        latestUpdated = " (" +  moment(latestUpdated).format("MMM Do YYYY") + ")";
+        latestUpdated = "<span id='latestUpdated" + goal._id + "'> (" +  moment(latestUpdated).format("MMM Do YYYY") + ")</span>"
     }
     var goalText =  '<div class="part-achievement">'
                          + '<div class="progress-container">'
