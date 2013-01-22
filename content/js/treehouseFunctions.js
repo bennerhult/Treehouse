@@ -519,6 +519,9 @@ function progress(goalId, quantityTotal) {
             $("#progressbar").html("<span class='progress' style='width:" + achievementPercentageFinished + "%;'></span>")
             $("#editButton").html("")
 
+            if (achievementPercentageFinished >= 100) {
+                $("#unlocked").html("Achievement unlocked! You're awesome!")
+            }
             var goalPercentageFinished = (quantityFinished / quantityTotal) * 100
             $("#progressbar-goal" + goalId).html("<span class='progress' style='width:" + goalPercentageFinished + "%;'></span>")
             $("#countarea" + goalId).html("<h3>" + quantityFinished + "/" + quantityTotal + "</h3>")
