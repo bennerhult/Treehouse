@@ -231,7 +231,8 @@ function shareToFriendOnServer(friendId, achievementId, callback) {
 
 function confirmAchievement(achievementId, userId) {
     confirmAchievementOnServer(achievementId, userId, function() {
-        openAchievements(false, userId, false)
+        openAchievement(achievementId, userId, false, false, false, false, true, false)
+       //openAchievements(false, userId, false)
     })
 }
 
