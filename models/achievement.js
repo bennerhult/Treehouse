@@ -70,12 +70,9 @@ function publicize(oneProgress) {
 }
 
 function updateLatestAchievementIfNecessary(progressId, next) {
-    console.log("a1")
     latestAchievement.getId(function(latestAchievement_progressId) {
         progress.Progress.findOne({ _id: latestAchievement_progressId }, function(err,currentProgress) {
-            console.log("a2")
             if (progressId && currentProgress) {
-                console.log("a3")
                 if (progressId.equals(currentProgress._id)) {
                     findPublicAchievement(function (publicId) {
                         if (publicId) {
@@ -83,14 +80,12 @@ function updateLatestAchievementIfNecessary(progressId, next) {
                         }   else {
                             latestAchievement.update(-1)
                         }
-                        console.log("a4")
                         if (next) {
                             next()
                         }
                     })
                 }
             } else {
-                console.log("a5")
                 if (next) {
                     next()
                 }
@@ -113,17 +108,12 @@ function unpublicize(oneProgress) {
 
 function remove(achievement, userId, next)    {
     removeSharedPartOfAchievement(achievement, userId, function() {
-        console.log("next1")
         progress.Progress.find({ achievement_id: achievement._id}, function(err, progresses) {
-            console.log("next2")
             if (progresses && progresses.length > 0) {
-                console.log("next3")
                 next()
             }  else {
-                console.log("next4")
                 achievement.remove(function () {
                     if (next) {
-                        console.log("next5")
                         next()
                     }
                 })

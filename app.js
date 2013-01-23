@@ -142,10 +142,8 @@ app.get('/achievement', function(request, response) {
     var url_parts = url.parse(request.url, true)
     var currentAchievementId = url_parts.query.achievementId
     var userId  = url_parts.query.userId
-    //console.log("/achievement: currentAchievementId " + currentAchievementId)
-    //console.log("/achievement: userId " + userId)
+
     progress.Progress.findOne({ achievement_id: currentAchievementId, achiever_id: userId }, function(err,currentProgress) {
-        //console.log("BOOOOOOOOM! " + currentProgress )
 
         if (currentProgress && currentProgress.publiclyVisible)    {
             achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
