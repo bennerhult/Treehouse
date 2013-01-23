@@ -392,6 +392,20 @@ app.get('/setPrettyName', function(request, response){
     })
 })
 
+app.get('/upgradeToIssuer', function(request, response){
+    user.User.findOne({ _id: request.session.user_id}, function(err, issuerProspect) {
+        var text = "User " + issuerProspect.username + ", id: " +  issuerProspect._id + " wants to be an issuer. Make it so. 1. Confirm that the user is really the Issuer and willing to pay the corresponding fees. 2. Change user to issuer=true 3. Give the user an issuerName."
+        emailUser('staff@treehouse.io', 'Issuer Request', text, text,  function(error) {
+            if (error) {
+                response.writeHead(404, {'content-type': 'application/json' })
+            } else {
+                response.writeHead(200, {'content-type': 'application/json' })
+            }
+            response.end('\n', 'utf-8')
+        })
+    })
+})
+
 app.get('/findFriends', function(request, response){
     user.User.findOne({ username: request.query.friend_email.toLowerCase() }, function(err,foundFriend) {
         if (foundFriend)    {

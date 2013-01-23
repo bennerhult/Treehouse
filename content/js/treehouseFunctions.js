@@ -154,6 +154,26 @@ function setPrettyNameOnServer(firstName, lastName, callback) {
     })
 }
 
+function upgradeToIssuer() {
+    upgradeToIssuerOnServer(function(success) {
+        if (success) {
+            $("#issuerMessage").html("Your request has been sent and the happy people in Treehouse HQ will get back to you. We know your email.")
+        }   else {
+            $("#issuerMessage").html("Oopsie, we dropped your request. Sorry! Email us at <a href='mailto:staff@treehouse.io'>staff@treehouse.io</a> and we will sort it out for you.")
+        }
+    })
+}
+
+function upgradeToIssuerOnServer(callback) {
+    $.ajax("/upgradeToIssuer", {
+        type: "GET",
+        dataType: "json",
+        statusCode: {
+            200: function() { callback(true) },
+            404: function() { callback(false) }
+        }
+    })
+}
 /******************  friends functions  ******************/
 function findFriends() {
     var friend_email = $("input[name=friend_email]").val()

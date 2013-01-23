@@ -247,7 +247,17 @@ function getUserContent(callback) {
             content += '<br />'
             content += '<input type="submit" class="button" value="Save">' + nl +
             '</form>' + nl +
-            '<div id="message"></div>'
+            '<div id="message"></div>'  + nl
+             if (!user.isIssuer) {
+                  content += '<div id="content">' + nl +
+                     '<form action="javascript: upgradeToIssuer()">' + nl +
+                     '<input type="submit" class="button" value="Upgrade to issuer">' + nl +
+                     '</form>' + nl +
+                     '<div id="issuerMessage"></div>'  + nl
+             }  else {
+                 content +=   '<div id="issuerMessage">You are an official Treehouse Issuer of Achievements: <b>' + user.issuerName + '</b></div>'
+             }
+
         content +=   '</div>'
         callback(content)
     })
