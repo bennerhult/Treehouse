@@ -60,7 +60,7 @@ function init(userId, friendShipRequests) {
 }
 
 function fixMenu() {
-    if (isiPhone){
+    if (isiOs){
         $('#menu').addClass('menu-fixed')
         //$('#menuArea').addClass('menu-area-fixed')
     } else {
