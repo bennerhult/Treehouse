@@ -60,7 +60,7 @@ function init(userId, friendShipRequests) {
 }
 
 function fixMenu() {
-    if (isiOs){
+    if (isiPhone){   //TODO eller stående iPade
         $('#menu').addClass('menu-fixed')
         //$('#menuArea').addClass('menu-area-fixed')
     } else {
