@@ -76,18 +76,21 @@ function loadUser(request, response, next) {
 }
 
 function authenticateFromLoginToken(request, response, initialCall) {
-    //console.log("authenticateFromLoginToken: " + initialCall)
+    console.log("authenticateFromLoginToken: " + initialCall)
     if (request.cookies.rememberme)  {
-        //console.log("cookie found")
+        console.log("cookie found")
         var cookie = JSON.parse(request.cookies.rememberme)
         loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
             if (!token) {
+                console.log("no token!")
                 response.writeHead(404, {'content-type': 'application/json' })
                 response.write(JSON.stringify(""))
                 response.end('\n', 'utf-8')
             } else {
+                console.log("token: " + token)
                 user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
                     if (user) {
+                        console.log("user: " + user)
                         request.session.user_id = user.id
                         friendship.getNrOfRequests(request.session.user_id, function (nrOfFriendShipRequests) {
                             token.token = loginToken.randomToken()
@@ -96,6 +99,7 @@ function authenticateFromLoginToken(request, response, initialCall) {
                                 //if (initialCall) {
                                 //    writeDefaultPage(request, response)
                                 //}   else {
+                                console.log("responsing well: " + nrOfFriendShipRequests)
                                     response.writeHead(200, {'content-type': 'application/json' })
                                     response.write(JSON.stringify(nrOfFriendShipRequests))
                                     response.end('\n', 'utf-8')
@@ -103,6 +107,7 @@ function authenticateFromLoginToken(request, response, initialCall) {
                             })
                         })
                     } else {
+                        console.log("no user!")
                         response.writeHead(200, {'content-type': 'application/json' })
                         response.write(JSON.stringify("Bummer! We cannot find you in our records. Contact us at staff@treehouse.io if you want us to help you out."))
                         response.end('\n', 'utf-8')
@@ -871,7 +876,7 @@ function createNotificationDesc(nrOfAchievements, notifications, achieverId, loo
 }
 
 app.get('/achievements_inProgress', function(request, response){
-    //console.log("/achievments_inProgress")
+    console.log("/achievments_inProgress")
     getAchievementList(request, response, false)
 })
 
@@ -882,6 +887,10 @@ app.get('/achievements_completed', function(request, response){
 
 function getAchievementList(request, response, completedAchievements) {
     app.set('current_achievement_id', null)
+    if (!request.session.user_id) {
+        request.session.user_id = request.query.achieverId
+    }
+
     var achievementsList = ""
     var goneThroughProgresses = 0
     var achievementsToShow = new Array()
