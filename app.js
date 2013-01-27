@@ -1348,11 +1348,16 @@ app.get('/delete', loadUser, function(request, response){
                             })
 
                     })
-                }  else {
-                    achievement.remove(currentAchievement, request.session.user_id, function () {
-                        response.writeHead(200, {'content-type': 'application/json' })
-                        response.write(JSON.stringify('ok'))
-                        response.end('\n', 'utf-8')
+                }  else {       //childAchievement, shared to me
+                    shareholding.Shareholding.findOne({ shareholder_id: request.session.user_id, achievement_id: currentAchievement._id }, function(err, sharedToMe) {
+                        if (sharedToMe != null) {
+                            sharedToMe.remove()
+                        }
+                        achievement.remove(currentAchievement, request.session.user_id, function () {
+                            response.writeHead(200, {'content-type': 'application/json' })
+                            response.write(JSON.stringify('ok'))
+                            response.end('\n', 'utf-8')
+                        })
                     })
                 }
             })
