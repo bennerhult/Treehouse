@@ -137,7 +137,7 @@ function setAchievementMenu(currentAchievementId, publiclyVisible, progressMade,
     $("#menuArea").html(menu)
     fixMenu()
 
-    if (!lookingAtFriend && !lookingAtNotification) {
+    if (!lookingAtFriend && !lookingAtNotification) {    //looking at myslef and at a real achievement
         if (!publiclyVisible) {
             $("#unpublicizeButton").hide()
         } else {
@@ -146,7 +146,8 @@ function setAchievementMenu(currentAchievementId, publiclyVisible, progressMade,
 
         }
     }
-    if (  isAchievementCreatedByMe) {
+
+    if (!isAchievementCreatedByMe) {
         $("#editButton").hide()
     }
 }
