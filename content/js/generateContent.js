@@ -512,7 +512,7 @@ function getNewAchievementContent(data, userId) {
                     if (data) {
                         text += '<input type="submit" class="button" value="Save achievement">' + nl
                     }  else  {
-                        text += '<input type="submit" class="button" value="<achievement">' + nl
+                        text += '<input type="submit" class="button" value="Create achievement">' + nl
                     }
                      text += '<div id="message"></div>' + nl +
                             '</div>' + nl  +
