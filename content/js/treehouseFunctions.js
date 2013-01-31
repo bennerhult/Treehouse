@@ -402,15 +402,6 @@ function openAchievements(completed, achieverId, lookingAtFriend) {
     })
 }
 
-/*function completedAchievementsExistFromServer(callback) {
-    $.ajax("/completedAchievementsExist", {
-        type: "GET",
-        dataType: "json",
-        success: function(data) { if ( callback ) callback(data) },
-        error  : function()     { if ( callback ) callback(null) }
-    })
-}*/
-
 function getAchievements(completed, achieverId, lookingAtFriend) {
     getAchievementsFromServer(completed, achieverId, lookingAtFriend,
         function(data) {
