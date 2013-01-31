@@ -419,11 +419,11 @@ function getAchievements(completed, achieverId, lookingAtFriend) {
             $("#achievementList").html(data)
             $('#tab-menu').hide('fast')
               if (completed) {
-                 $("#completed").attr("class","selected")
-                 $("#inProgress").removeClass()
+                 $("#completedSpan").attr("class","selected")
+                 $("#inProgressSpan").removeClass()
              } else {
-                 $("#inProgress").attr("class","selected")
-                 $("#completed").removeClass()
+                 $("#inProgressSpan").attr("class","selected")
+                 $("#completedSpan").removeClass()
              }
         }
     )
