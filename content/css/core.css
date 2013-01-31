@@ -407,23 +407,24 @@ body{
 }
 
 #menu{
+    position: relative;
     height: 38px;
     z-index: 1;
-
-    background-color: rgb(124,126,127);
-    background-image: linear-gradient(bottom, rgb(124,126,127) 18%, rgb(111,114,115) 51%, rgb(124,126,127) 57%);
-    background-image: -o-linear-gradient(bottom, rgb(124,126,127) 18%, rgb(111,114,115) 51%, rgb(124,126,127) 57%);
-    background-image: -moz-linear-gradient(bottom, rgb(124,126,127) 18%, rgb(111,114,115) 51%, rgb(124,126,127) 57%);
-    background-image: -webkit-linear-gradient(bottom, rgb(124,126,127) 18%, rgb(111,114,115) 51%, rgb(124,126,127) 57%);
-    background-image: -ms-linear-gradient(bottom, rgb(124,126,127) 18%, rgb(111,114,115) 51%, rgb(124,126,127) 57%);
+    border-bottom: 1px solid rgb(82,81,79);
+    background-color: rgb(108,107,105);
+    background-image: linear-gradient(bottom, rgb(108,107,105) 18%, rgb(82,81,79) 51%, rgb(108,107,105) 57%);
+    background-image: -o-linear-gradient(bottom, rgb(108,107,105) 18%, rgb(82,81,79) 51%, rgb(108,107,105) 57%);
+    background-image: -moz-linear-gradient(bottom, rgb(108,107,105) 18%, rgb(82,81,79) 51%, rgb(108,107,105) 57%));
+    background-image: -webkit-linear-gradient(bottom, rgb(108,107,105) 18%, rgb(82,81,79) 51%, rgb(108,107,105) 57%));
+    background-image: -ms-linear-gradient(bottom, rgb(108,107,105) 18%, rgb(82,81,79) 51%, rgb(108,107,105) 57%);
 
     background-image: -webkit-gradient(
         linear,
         left bottom,
         left top,
-        color-stop(0.18, rgb(124,126,127)),
-        color-stop(0.51, rgb(111,114,115)),
-        color-stop(0.57, rgb(124,126,127))
+        color-stop(0.18, rgb(108,107,105)),
+        color-stop(0.51, rgb(82,81,79)),
+        color-stop(0.57, rgb(108,107,105))
     );
 
     text-align: left;
@@ -436,6 +437,19 @@ body{
     float: left;
     padding-bottom: 2px;
     padding-right: 5px;
+}
+
+#menu ul li.logotext{
+
+    width: 100%;
+    text-align: center;
+}
+
+#menu ul li.logotext p{
+    font-size: 1.5em;
+    color: #fff;
+    padding-bottom: 0px;
+    padding-top: 4px;
 }
 
 #menu ul li.back{
@@ -465,32 +479,13 @@ body{
 
 #menu ul li.add {
     float: right;
-
     padding-right: 5%;
 }
 
-
-#menu ul li#inProgress,
-#menu ul li#completed{
-    margin-top: 5px;
-    padding: 0px;
-}
-
 #menu ul li#menuToggle{
-    width: 30%;
-    padding: 0px;
-    text-align: center;
-    margin-top: 2px;
-}
-
-#menu ul li#completed{
-    width: 30%;
-    margin-right: 5%;
-}
-
-#menu ul li#inProgress{
-    margin-left: 5%;
-    width: 30%;
+    position: absolute;
+    left: 5%;
+    top: 0px;
 }
 
 #menu ul li a{
@@ -541,9 +536,19 @@ body{
 .slider-menu{
     z-index: 20;
     position: absolute;
-    top: 154px;
-    left: 17%;
-    right: 17%;
+    top: 150px;
+    left: 5%;
+    -moz-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
+    -webkit-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
+    box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
+
+    border-bottom-left-radius: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    -moz-border-radius-bottomleft: 3px;
+
+    border-bottom-right-radius: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+    -moz-border-radius-bottompright: 3px;
 }
 
 .slider-menu ul li{
@@ -551,16 +556,21 @@ body{
     font-size: 18px;
     color: #fff;
     border-bottom: 1px solid #4f4d4d;
+
 }
 
-.slider-menu ul li.header{
-    background-color: #000;
-    font-size: 11px;
-    border: 0px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    text-align: center;
+
+.slider-menu ul li.last{
+
+    border-bottom-left-radius: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    -moz-border-radius-bottomleft: 3px;
+
+    border-bottom-right-radius: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+    -moz-border-radius-bottompright: 3px;
 }
+
 
 .slider-menu ul li a{
     font-family: 'Philosopher', sans-serif;
@@ -570,44 +580,28 @@ body{
 }
 
 .slider-menu ul li span{
-    background-color: rgba(0,0,0,0.8);
+    background-color: #464646;
 
-    padding-left: 30px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    width: auto;
+    padding: 10px 80px 10px 20px;
     display: block;
+    border: 1px solid #6d6d6d;
 }
 
 .slider-menu ul li span:hover{
-    background-color: rgba(95,95,95,0.8);
-    color: #000;
+    background-color: #171616;
 }
 
-.slider-menu ul li.last{
-    border: 0px;
+.slider-menu ul li.last span{
+
+    border-bottom-left-radius: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    -moz-border-radius-bottomleft: 3px;
+
+    border-bottom-right-radius: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+    -moz-border-radius-bottompright: 3px;
 }
 
-.slider-menu ul li.border-top-right{
-
-    /*-moz-border-top-right-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
-    border-top-right-radius: 5px;
-
-    -moz-border-top-left-radius: 5px;
-    -webkit-border-top-left-radius: 5px;
-    border-top-left-radius: 5px;*/
-}
-
-.slider-menu ul li span.border-bottom-right{
-    -moz-border-bottom-right-radius: 5px;
-    -webkit-border-bottom-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-
-    -moz-border-bottom-left-radius: 5px;
-    -webkit-border-bottom-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-}
 
 .tree-tab{
     text-align: center;
@@ -991,7 +985,7 @@ input.file {
 }
 
 #contentwrap{
-    padding-top: 50px;
+    padding-top: 20px;
     margin-right: 5%;
     margin-left: 5%;
     padding-bottom: 10px;
@@ -1661,6 +1655,9 @@ p#achievementDescription{
         top:0px;
     }
 
+    #contentwrap{
+        padding-top: 50px;
+    }
 
         #app-container,
         #app-container-login{

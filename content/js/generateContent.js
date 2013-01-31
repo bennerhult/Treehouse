@@ -72,9 +72,9 @@ function fixMenu() {
 
 
 function setDefaultMenu() {
-    var menu = '<div id="menu"><ul><li  id="inProgress">'
-    menu += '</li><li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li><li id="completed">'
-    menu +=  '</li></ul></div>' + getTabMenu()
+    var menu = '<div id="menu"><ul>'
+    menu += '<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>'
+    menu +=  '<li class="logotext"><p>treehouse</p></li></ul></div>' + getTabMenu()
     $("#menuArea").html(menu)
     fixMenu()
 }
@@ -82,8 +82,8 @@ function setDefaultMenu() {
 function setPublicMenu(nrOfFriendRequests) {
     var menu = '<div id="menu">' + nl  +
         '<ul>' + nl  +
-        '<li id="house"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>' +
-        '</ul>' + nl  +
+        '<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>' +
+        '<li class="logotext"><p>treehouse</p></li></ul>' + nl  +
         '</div>' + nl  +
         getTabMenu(0)
     $("#menuArea").html(menu)
@@ -375,20 +375,16 @@ function getTabMenu() {
     var menu = '<div id="tab-menu" class="slider-menu" style="display:none;">' + nl +
            '<ul>'
      if (loggedIn) {
-         menu +=    '<li class="header border-top-right">Achievements</li>' + nl +
-                    '<li><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><span><nobr>My achievements</nobr></span></a></li>'+ nl +
-                    '<li class="header">Friends</li>' + nl +
+         menu +=    '<li><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><span><nobr>My achievements</nobr></span></a></li>'+ nl +
                     '<li id="friendRequestRow"><a href="javascript:void(0)" onclick="openFriends()"><span>Friends'
          if (nrOfFriendShipRequests > 0) {
              menu += ' (' + nrOfFriendShipRequests + ')'
          }
          menu +=    '</span></a></li>' + nl +
-                    '<li class="header">Account</li>' + nl +
                     '<li><a href="javascript:void(0)" onclick="openUser()"><span>User</span></a></li>' +  nl +
-                    '<li class="last"><a href="javascript:void(0)" onclick="signout()"><span class="border-bottom-right">Sign out</span></a></li>'
+                    '<li class="last"><a href="javascript:void(0)" onclick="signout()"><span>Sign out</span></a></li>'
      }  else {
-         menu +=    '<li class="header">Account</li>' + nl +
-                    '<li class="last"><a href="javascript:void(0)" onclick="showSignin()"><span class="border-bottom-right"><nobr>Sign in / Sign up</nobr></span></a></li>'
+         menu +=    '<li class="last"><a href="javascript:void(0)" onclick="showSignin()"><span><nobr>Sign in / Sign up</nobr></span></a></li>'
      }
     menu += '</ul>' + nl +
             '</div>' + nl

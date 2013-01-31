@@ -977,7 +977,7 @@ function getSharedAchievementNotifications(nrOfAchievements, response, achieveme
 function finishAchievementsList(response, achievementsList, completedAchievements) {
     if (achievementsList.length < 1) {
         if (completedAchievements) {
-            achievementsList = "<div class='achievement first'><p class=''>You do not have a any unlocked achievements yet.</p></div>"
+            achievementsList = "<div class='achievement first'><p class=''>You do not have any unlocked achievements yet.</p></div>"
         }  else {
             achievementsList = "<div class='achievement first'><p class=''>Your friend has not a single shared or public progressing achievement. Sad but true.</p></div>"
         }
