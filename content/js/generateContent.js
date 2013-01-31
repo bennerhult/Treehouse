@@ -68,6 +68,17 @@ function fixMenu() {
     }
 }
 
+
+
+
+function setDefaultMenu() {
+    var menu = '<div id="menu"><ul><li  id="inProgress">'
+    menu += '</li><li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li><li id="completed">'
+    menu +=  '</li></ul></div>' + getTabMenu()
+    $("#menuArea").html(menu)
+    fixMenu()
+}
+
 function setPublicMenu(nrOfFriendRequests) {
     var menu = '<div id="menu">' + nl  +
         '<ul>' + nl  +
@@ -75,31 +86,6 @@ function setPublicMenu(nrOfFriendRequests) {
         '</ul>' + nl  +
         '</div>' + nl  +
         getTabMenu(0)
-    $("#menuArea").html(menu)
-    fixMenu()
- }
-
-function setCreateEditMenu(achievement) {
-    var text ='<div id="menu">' + nl  +
-        '<ul>' + nl  +
-        '<li class="back"><a href="javascript:void(0)" onclick="'
-    if (achievement) {
-        text += 'openAchievement(\'' + achievement._id + '\',\'' + currentUserId + '\', ' + false + ', ' +  false + ', ' + false + ', ' + false + ', ' + false+ ', ' + true + ')'
-    } else {
-        text += 'openAchievements(false, \'' + currentUserId + '\', false)'
-    }
-    text+='"><img src="content/img/back-1.png" alt=""/></a></li>' + nl  +
-        '</ul>' + nl  +
-        '</div>'
-    $("#menuArea").html(text)
-    fixMenu()
-}
-
-//TODO: remove the unused in parameters
-function setDefaultMenu(bothCompletedAndNotExists, lookingAtFriend, achieverId) {
-    var menu = '<div id="menu"><ul><li  id="inProgress">'
-    menu += '</li><li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li><li id="completed">'
-    menu +=  '</li></ul></div>' + getTabMenu()
     $("#menuArea").html(menu)
     fixMenu()
 }
@@ -135,9 +121,19 @@ function setAchievementMenu(currentAchievementId, publiclyVisible, progressMade,
     }
 }
 
-function setEmptyMenu() {
-    var menu = ''
-    $("#menuArea").html(menu)
+function setCreateEditMenu(achievement) {
+    var text ='<div id="menu">' + nl  +
+        '<ul>' + nl  +
+        '<li class="back"><a href="javascript:void(0)" onclick="'
+    if (achievement) {
+        text += 'openAchievement(\'' + achievement._id + '\',\'' + currentUserId + '\', ' + false + ', ' +  false + ', ' + false + ', ' + false + ', ' + false+ ', ' + true + ')'
+    } else {
+        text += 'openAchievements(false, \'' + currentUserId + '\', false)'
+    }
+    text+='"><img src="content/img/back-1.png" alt=""/></a></li>' + nl  +
+        '</ul>' + nl  +
+        '</div>'
+    $("#menuArea").html(text)
     fixMenu()
 }
 
@@ -159,7 +155,7 @@ function showSignin(message) {
     window.history.pushState(null, null, "/")
     $("#page").attr("id","page-login");
     $("#app-container").attr("id","app-container-login");
-    insertContent(getLoginContent(), setEmptyMenu(), function() {
+    insertContent(getLoginContent(), null, function() {
         $("#message").html(message)
     })
 }
@@ -329,14 +325,14 @@ function getFriendsFromServer(callback) {
 function openFriends() {
     $('#tab-menu').hide('fast')
     getFriendsContent(function(friendsContent) {
-        insertContent(friendsContent, setDefaultMenu(false, false, currentUserId))
+        insertContent(friendsContent, setDefaultMenu())
     })
 }
 
 function openUser() {
     $('#tab-menu').hide('fast')
     getUserContent(function(userContent) {
-        insertContent(userContent, setDefaultMenu(false, false, currentUserId))
+        insertContent(userContent, setDefaultMenu())
     })
 }
 
@@ -411,25 +407,28 @@ function getCookie(c_name) {
     }
 }
 
-function getAchievementsContent(achieverId, lookingAtFriend) {
-    var content =  '<div id="Linda"><a href="javascript:void(0)" onclick="getAchievements(false, \'' + achieverId + '\', ' + lookingAtFriend + ')"><span id="inProgressSpan" class="'
-        if  (isiPad || isiPhone) {   //TODO Remove this conditional and css classes, they are identical?
-            content+= 'iDevice'
-        } else {
-            content+= 'hoverDesktop'
-        }
-    content +=  '">in progress</span></a>'
+function getAchievementsContent(achieverId, lookingAtFriend, callback) {
+    getUserFromServer(function(user) {
 
-    content +=  '<a href="javascript:void(0)" onclick="getAchievements(true, \'' + achieverId + '\', ' + lookingAtFriend + ')"><span id="completedSpan" class="'
-        if  (isiPad || isiPhone) {    //TODO Remove this conditional and css classes, they are identical?
-            content+= 'iDevice'
-        } else {
-            content+= 'hoverDesktop'
-        }
-    content +=  '">completed</span></a></div>'
+        var content =  '<div id="contentwrap"> <div id="userarea"><img src="content/img/user_has_no_image.jpg" /><p>' + user.username + '</p></div> <div id="achievementListTabs"><a href="javascript:void(0)" onclick="getAchievements(false, \'' + achieverId + '\', ' + lookingAtFriend + ')"><span id="inProgressSpan" class="'
+            if  (isiPad || isiPhone) {   //TODO Remove this conditional and css classes, they are identical?
+                content+= 'iDevice'
+            } else {
+                content+= 'hoverDesktop'
+            }
+        content +=  '">Challenges</span></a>'
 
-    content +=  '<div id="achievementList"></div>'
-    return  content
+        content +=  '<a href="javascript:void(0)" onclick="getAchievements(true, \'' + achieverId + '\', ' + lookingAtFriend + ')"><span id="completedSpan" class="'
+            if  (isiPad || isiPhone) {    //TODO Remove this conditional and css classes, they are identical?
+                content+= 'iDevice'
+            } else {
+                content+= 'hoverDesktop'
+            }
+        content +=  '">Unlocked</span></a></div>'
+
+        content +=  '<div id="achievementList"></div></div>'
+        callback(content)
+    })
 }
 
 function getAchievementContent() {

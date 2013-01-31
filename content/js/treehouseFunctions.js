@@ -287,7 +287,10 @@ function ignoreAchievementOnServer(achievementId, userId, callback) {
 }
 
 function visitFriend(friendId) {
-    insertContent(getAchievementsContent(friendId, true), setDefaultMenu(true, true, friendId), getAchievements(false, friendId, true))
+    getAchievementsContent(friendId, true, function(achievementsContent) {
+        insertContent(achievementsContent, setDefaultMenu(), getAchievements(false, friendId, true))
+    })
+
 }
 
 function addFriend(friendId) {
@@ -394,19 +397,19 @@ function openAchievements(completed, achieverId, lookingAtFriend) {
     window.history.pushState(null, null, "/")
     $("#page-login").attr("id","page");
     $("#app-container-login").attr("id","app-container");
-    completedAchievementsExistFromServer(function(completedExists) {
-        insertContent(getAchievementsContent(achieverId, lookingAtFriend), setDefaultMenu(completedExists, lookingAtFriend, achieverId), getAchievements(completed, achieverId, lookingAtFriend))
+    getAchievementsContent(achieverId, lookingAtFriend, function(achievementsContent) {
+        insertContent(achievementsContent, setDefaultMenu(), getAchievements(completed, achieverId, lookingAtFriend))
     })
 }
 
-function completedAchievementsExistFromServer(callback) {
+/*function completedAchievementsExistFromServer(callback) {
     $.ajax("/completedAchievementsExist", {
         type: "GET",
         dataType: "json",
         success: function(data) { if ( callback ) callback(data) },
         error  : function()     { if ( callback ) callback(null) }
     })
-}
+}*/
 
 function getAchievements(completed, achieverId, lookingAtFriend) {
     getAchievementsFromServer(completed, achieverId, lookingAtFriend,

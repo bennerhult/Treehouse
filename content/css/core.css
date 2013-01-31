@@ -919,7 +919,7 @@ input.file {
     padding-top: 50px;
 }
 
-.achievement img,
+#userarea img,
 .imagearea img,
 .create-imagearea img,
 .user-image img,
@@ -932,6 +932,28 @@ input.file {
     -moz-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
     -webkit-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
     box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+}
+
+.achievement a img{
+    border: 3px solid #fff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
+    -moz-box-shadow:  0px 0px 5px rgb(0,0,0);
+    -webkit-box-shadow:  0px 0px 5px rgb(0,0,0);
+    box-shadow:  0px 0px 5px rgb(0,0,0);
+}
+
+.achievement a{
+    display: block;
+}
+
+.achievement a:hover img{
+
+    -moz-box-shadow:  0px 0px 20px rgb(0,0,0);
+    -webkit-box-shadow:  0px 0px 20px rgb(0,0,0);
+    box-shadow:  0px 0px 20px rgb(0,0,0);
 }
 
 .user-image{
@@ -968,8 +990,89 @@ input.file {
    width: 60%;
 }
 
+#contentwrap{
+    padding-top: 50px;
+    margin-right: 5%;
+    margin-left: 5%;
+    padding-bottom: 10px;
+}
+
+#userarea{
+    height: 50px;
+    margin-bottom: 40px;
+
+}
+#userarea img{
+    float:left;
+    margin-right: 10px;
+}
+
+
+
+#userarea p{
+    float: left;
+}
+
+#achievementListTabs{
+    /* margin-top: 40px;*/
+    height: 19px;
+}
+
+#achievementListTabs span{
+    display: inline;
+    background-color: #131213;
+    padding: 4px 8px;
+    text-decoration: none;
+
+    border-top-left-radius: 3px;
+    -webkit-border-top-left-radius: 3px;
+    -moz-border-radius-topleft: 3px;
+
+    border-top-right-radius: 3px;
+    -webkit-border-top-right-radius: 3px;
+    -moz-border-radius-topright: 3px;
+    margin-right: 5px;
+}
+
+#achievementListTabs span.selected{
+    background-color: #7e7b76;
+
+}
+
+#achievementListTabs span:hover{
+    background-color: #7e7b76;
+}
+
+#achievementListTabs a span{
+    color: #fff;
+    text-decoration: none;
+}
+
 #achievementList{
-    min-height: 400px;
+
+  /*  margin: 10px 5% 10px 5%;*/
+
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+
+    border-top-left-radius: 0px;
+    -webkit-border-top-left-radius: 0px;
+    -moz-border-radius-topleft: 0px;
+
+    background: #7e7b76; /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover,  #a8a7a5 0%, #7e7b76 90%); /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#a8a7a5), color-stop(90%,#7e7b76)); /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover,  #a8a7a5 0%,#7e7b76 90%); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover,  #a8a7a5 0%,#7e7b76 90%); /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover,  #a8a7a5 0%,#7e7b76 90%); /* IE10+ */
+    background: radial-gradient(center, ellipse cover,  #a8a7a5 0%,#7e7b76 90%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a8a7a5', endColorstr='#7e7b76',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+
+    -moz-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
+    -webkit-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
+    box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
 }
 
 
@@ -1361,22 +1464,19 @@ table tr td.quantity{
 .separerare-part{
     height: 2px;
     width: 100%;
-    background-color: #8b8d8e;
+    background-color: #706f6f;
 
 
-    background-image: -moz-linear-gradient(bottom, #919191 49%, #575757 50%);
-    background-image: -webkit-linear-gradient(bottom, #919191 49%, #575757 50%);
+    background-image: -moz-linear-gradient(bottom, #b7b6b6 49%, #757474 50%);
+    background-image: -webkit-linear-gradient(bottom, #b7b6b6 49%, #757474 50%);
     background-image: -webkit-gradient(
         linear,
         left bottom,
         left top,
-        color-stop(0.49, #919191),
-        color-stop(0.5, #575757)
+        color-stop(0.49, #b7b6b6),
+        color-stop(0.5, #757474)
     );
 
-/*
-    border-left: 1px solid #8b8d8e;
-    border-right: 1px solid #525556;*/
 }
 
 
@@ -1481,7 +1581,7 @@ p{
     font-size: 15px;
     font-weight: normal;
     padding-bottom: 15px;
-    opacity: 0.7;
+    color: #434648;
 }
 
 p.noshareandcompare{
@@ -1518,6 +1618,7 @@ p.ingress{
 }
 
 .achievement p{
+    color: #ffffff;
     padding-top: 5px;
 }
 
