@@ -287,7 +287,7 @@ function ignoreAchievementOnServer(achievementId, userId, callback) {
 }
 
 function visitFriend(friendId) {
-    insertContent(getAchievementsContent(), setDefaultMenu(true, true, friendId), getAchievements(false, friendId, true))
+    insertContent(getAchievementsContent(friendId, true), setDefaultMenu(true, true, friendId), getAchievements(false, friendId, true))
 }
 
 function addFriend(friendId) {
@@ -395,7 +395,7 @@ function openAchievements(completed, achieverId, lookingAtFriend) {
     $("#page-login").attr("id","page");
     $("#app-container-login").attr("id","app-container");
     completedAchievementsExistFromServer(function(completedExists) {
-        insertContent(getAchievementsContent(), setDefaultMenu(completedExists, lookingAtFriend, achieverId), getAchievements(completed, achieverId, lookingAtFriend))
+        insertContent(getAchievementsContent(achieverId, lookingAtFriend), setDefaultMenu(completedExists, lookingAtFriend, achieverId), getAchievements(completed, achieverId, lookingAtFriend))
     })
 }
 

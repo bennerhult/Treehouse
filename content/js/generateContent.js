@@ -95,27 +95,10 @@ function setCreateEditMenu(achievement) {
     fixMenu()
 }
 
+//TODO: remove the unused in parameters
 function setDefaultMenu(bothCompletedAndNotExists, lookingAtFriend, achieverId) {
     var menu = '<div id="menu"><ul><li  id="inProgress">'
-    if (bothCompletedAndNotExists) {
-        menu +=  '<a href="javascript:void(0)" onclick="getAchievements(false, \'' + achieverId + '\', ' + lookingAtFriend + ')"><span id="inProgressSpan" class="'
-        if  (isiPad || isiPhone) {   //TODO Remove this conditional and css classes, they are identical?
-            menu+= 'iDevice'
-        } else {
-            menu+= 'hoverDesktop'
-        }
-        menu +=  '">in progress</span></a>'
-    }
     menu += '</li><li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li><li id="completed">'
-    if (bothCompletedAndNotExists) {
-        menu +=  '<a href="javascript:void(0)" onclick="getAchievements(true, \'' + achieverId + '\', ' + lookingAtFriend + ')"><span id="completedSpan" class="'
-        if  (isiPad || isiPhone) {    //TODO Remove this conditional and css classes, they are identical?
-            menu+= 'iDevice'
-        } else {
-            menu+= 'hoverDesktop'
-        }
-        menu +=  '">completed</span></a>'
-    }
     menu +=  '</li></ul></div>' + getTabMenu()
     $("#menuArea").html(menu)
     fixMenu()
@@ -428,8 +411,25 @@ function getCookie(c_name) {
     }
 }
 
-function getAchievementsContent() {
-    return '<div id="achievementList"></div>'
+function getAchievementsContent(achieverId, lookingAtFriend) {
+    var content =  '<div id="Linda"><a href="javascript:void(0)" onclick="getAchievements(false, \'' + achieverId + '\', ' + lookingAtFriend + ')"><span id="inProgressSpan" class="'
+        if  (isiPad || isiPhone) {   //TODO Remove this conditional and css classes, they are identical?
+            content+= 'iDevice'
+        } else {
+            content+= 'hoverDesktop'
+        }
+    content +=  '">in progress</span></a>'
+
+    content +=  '<a href="javascript:void(0)" onclick="getAchievements(true, \'' + achieverId + '\', ' + lookingAtFriend + ')"><span id="completedSpan" class="'
+        if  (isiPad || isiPhone) {    //TODO Remove this conditional and css classes, they are identical?
+            content+= 'iDevice'
+        } else {
+            content+= 'hoverDesktop'
+        }
+    content +=  '">completed</span></a></div>'
+
+    content +=  '<div id="achievementList"></div>'
+    return  content
 }
 
 function getAchievementContent() {
@@ -513,7 +513,7 @@ function getNewAchievementContent(data, userId) {
                     if (data) {
                         text += '<input type="submit" class="button" value="Save achievement">' + nl
                     }  else  {
-                        text += '<input type="submit" class="button" value="Create achievement">' + nl
+                        text += '<input type="submit" class="button" value="<achievement">' + nl
                     }
                      text += '<div id="message"></div>' + nl +
                             '</div>' + nl  +
