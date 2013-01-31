@@ -256,9 +256,12 @@ function getUserFromServer(callback) {
     })
 }
 
-function getPrettyNameFromServer(callback) {
+function getPrettyNameFromServer(user_id, callback) {
+    var data = "user_id=" + user_id
+
     $.ajax("/prettyName", {
         type: "GET",
+        data: data,
         dataType: "json",
         statusCode: {
             200: function(prettyName) { callback(prettyName) }
@@ -417,7 +420,7 @@ function getCookie(c_name) {
 }
 
 function getAchievementsContent(achieverId, lookingAtFriend, callback) {
-    getPrettyNameFromServer(function(prettyName) {
+    getPrettyNameFromServer(achieverId, function(prettyName) {
         var content =  '<div id="contentwrap"> <div id="userarea"><img src="content/img/user_has_no_image.jpg" /><p>' + prettyName + '</p></div> <div id="achievementListTabs"><a href="javascript:void(0)" onclick="getAchievements(false, \'' + achieverId + '\', ' + lookingAtFriend + ')"><span id="inProgressSpan" class="'
             if  (isiPad || isiPhone) {   //TODO Remove this conditional and css classes, they are identical?
                 content+= 'iDevice'

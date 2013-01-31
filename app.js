@@ -382,7 +382,8 @@ app.get('/user', function(request, response){
 })
 
 app.get('/prettyName', function(request, response){
-    user.getPrettyName(request.session.user_id, function(prettyName) {
+
+    user.getPrettyName(request.query.user_id, function(prettyName) {
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(prettyName))
         response.end('\n', 'utf-8')
