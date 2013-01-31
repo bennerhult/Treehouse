@@ -68,8 +68,11 @@ function fixMenu() {
     }
 }
 
-
-
+function setEmptyMenu() {
+    var menu = ''
+    $("#menuArea").html(menu)
+    fixMenu()
+}
 
 function setDefaultMenu() {
     var menu = '<div id="menu"><ul>'
@@ -155,7 +158,7 @@ function showSignin(message) {
     window.history.pushState(null, null, "/")
     $("#page").attr("id","page-login");
     $("#app-container").attr("id","app-container-login");
-    insertContent(getLoginContent(), null, function() {
+    insertContent(getLoginContent(), setEmptyMenu(), function() {
         $("#message").html(message)
     })
 }
