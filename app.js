@@ -1074,8 +1074,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                 }
                                                 achievementDesc += '<div id="achievement-container">'
                                                 achievementDesc += goalTextsText
-                                                achievementDesc += '</div>'
-                                                achievementDesc += '<div id="sharer-container"></div><div id="comparer-container"></div>'
+                                                achievementDesc += '</div><div id="sharer-container"></div><div id="comparer-container"></div>'
                                                 achievementDesc += '<br />'
                                                 achievementDesc += '<div id="fbLike" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="250" data-show-faces="true" font="segoe ui"></div></div>'
                                                 achievementDesc += '<br />'
