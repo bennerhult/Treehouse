@@ -29,7 +29,7 @@ body{
 }
 
 #fbLikeWeb {
-    float: right;
+    float: left;
     text-align: right;
     margin-top: 20px;
 }
@@ -133,11 +133,13 @@ body{
 
 #main-container{
     position: relative;
+    padding-left: 3%;
+    padding-right: 3%;
 }
 
 #leftcontainer{
    float: left;
-   width: 60.0%;            /* with small adjusted to image 660px / 1060px */
+   width: 57.0%;            /* with small adjusted to image 660px / 1060px */
 }
 
 
@@ -146,11 +148,9 @@ body{
 }
 
 #rightcontainer{
-   /* position: relative;
-    float: right;*/
     position: absolute;
     bottom: 0px;
-    right: 0px;
+    right: 3%;
     width: 31.132075%;       /*390px / 1060px*/
     width: 370px;
 
@@ -391,7 +391,7 @@ body{
 
 
 #infoArea div{
-    padding: 20px;
+    padding: 20px 20px 20px 0px;
     background-color: #fff;
     min-height: 590px;
 }
@@ -1027,6 +1027,10 @@ input.file {
 
 #userarea p{
     float: left;
+    font-family: 'Philosopher', sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    padding-top: 2px;
 }
 
 #userarea a.headerlink{
@@ -1034,14 +1038,13 @@ input.file {
 }
 
 #achievementListTabs{
-    /* margin-top: 40px;*/
-    height: 19px;
+    height: 20px;
 }
 
 #achievementListTabs span{
     display: inline;
     background-color: #131213;
-    padding: 4px 8px;
+    padding: 5px 8px;
     text-decoration: none;
 
     border-top-left-radius: 3px;
@@ -1051,7 +1054,7 @@ input.file {
     border-top-right-radius: 3px;
     -webkit-border-top-right-radius: 3px;
     -moz-border-radius-topright: 3px;
-    margin-right: 5px;
+    margin-right: 3px;
 }
 
 #achievementListTabs span.selected{
@@ -1321,13 +1324,13 @@ span.progress{
 
 #achievementTabs{
    /* margin-top: 40px;*/
-    height: 19px;
+    height: 20px;
 }
 
 #achievementTabs span{
     display: inline;
     background-color: #131213;
-    padding: 4px 8px;
+    padding: 5px 8px;
     text-decoration: none;
 
     border-top-left-radius: 3px;
@@ -1337,7 +1340,7 @@ span.progress{
     border-top-right-radius: 3px;
     -webkit-border-top-right-radius: 3px;
     -moz-border-radius-topright: 3px;
-    margin-right: 5px;
+    margin-right: 3px;
 }
 
 #achievementTabs span.selected{
