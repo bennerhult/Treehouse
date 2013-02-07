@@ -1076,14 +1076,6 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                 achievementDesc += goalTextsText
                                                 achievementDesc += '</div><div id="sharer-container"></div><div id="comparer-container"></div>'
                                                 achievementDesc += '<br />'
-                                                achievementDesc += '<div id="fbLike" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="250" data-show-faces="true" font="segoe ui"></div></div>'
-                                                achievementDesc += '<br />'
-                                                achievementDesc += '<div id="tweetAchievement" style="overflow:visible;">'
-                                                achievementDesc += '<a href="https://twitter.com/share' + '?text=' + currentAchievement.title + '" class="twitter-share-button">Tweet</a>'
-                                                achievementDesc += '<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>'
-                                                achievementDesc += '</div>'
-                                                achievementDesc += '<br />'
-                                                achievementDesc += '<br />'
                                                 achievementDesc += '<p>'
                                                 achievementDesc += 'Creator: ' + username
                                                 achievementDesc += '</p>'
@@ -1118,7 +1110,9 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                         }
                                                         achievementDesc += '</p><p id="achievementDescription">'
                                                         + currentAchievement.description
-                                                        + '</p></div>'
+                                                        + '</p>'
+                                                        + '<div id="fbLike" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="250" data-show-faces="true" font="segoe ui"></div></div>'
+                                                        + '</div>'
                                                         + '<div class="imagearea"><img src="'
                                                         + currentAchievement.imageURL
                                                         +'" alt="'
@@ -1151,7 +1145,6 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                         achievementDesc += '<li id="deleteButton" class="rightalign"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li></ul>'
                                                     }
                                                     achievementDesc += '<div class="clear"></div></div>'
-                                                    achievementDesc += '<div id="fbLike" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="250" data-show-faces="true" font="segoe ui"></div></div>'
                                                     achievementDesc += '<br />'
                                                     achievementDesc += '<div id="tweetAchievement" style="overflow:visible;">'
                                                     achievementDesc += '<a href="https://twitter.com/share' + '?text=' + currentAchievement.title + '" class="twitter-share-button">Tweet</a>'
