@@ -331,9 +331,24 @@ body{
     padding-bottom: 5px;
 }
 
+#emailForm{
+    width: 100%;
+    text-align: center;
+}
+
+#emailForm input{
+    width: 78%;
+}
+
+#emailForm input.formstyle{
+    width: 66%;
+}
+
 .login-separator{
     width: 100%;
     margin-bottom: 15px;
+    padding-top: 20px;
+    padding-bottom: 30px;
 }
 
 .login-separator ul li{
@@ -351,7 +366,7 @@ body{
     margin-top: 4px;
     width: 100%;
     height: 1px;
-    background-color: #f5f4f4;
+    background-color: #a1a09f;
     display: block;
 }
 
@@ -1602,11 +1617,6 @@ p.noshareandcompare{
     padding-bottom: 30px;
     color: #fff;
     opacity: 1;
-}
-
-.signup-logo input{
-    padding-bottom: 20px;
-
 }
 
 p.user{
