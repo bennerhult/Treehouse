@@ -1085,8 +1085,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                 achievementDesc += '<br />'
                                                 achievementDesc += '<br />'
                                                 achievementDesc += '<p>'
-                                                achievementDesc += 'Creator: ' + username + '<br />'
-                                                achievementDesc += 'Achiever: ' + achieverName
+                                                achievementDesc += 'Creator: ' + username
                                                 achievementDesc += '</p>'
                                                 response.write(JSON.stringify(achievementDesc))
                                                 response.end('\n', 'utf-8')
@@ -1160,8 +1159,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                     achievementDesc += '</div>'
 
                                                     achievementDesc += '<p>'
-                                                    achievementDesc += 'Creator: ' + username + '<br />'
-                                                    achievementDesc += 'Achiever: ' + achieverName
+                                                    achievementDesc += 'Creator: ' + username
                                                     achievementDesc += '</p>'
                                                    response.write(JSON.stringify(achievementDesc))
                                                     response.end('\n', 'utf-8')
