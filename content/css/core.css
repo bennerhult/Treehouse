@@ -314,7 +314,7 @@ body{
 #content{
     position: relative;
     padding: 30px;
-    padding-top: 50px;
+    padding-top: 40px;
 
 }
 
@@ -334,7 +334,11 @@ body{
 #emailForm{
     width: 100%;
     text-align: center;
+    font: 12px Verdana, Geneva, Arial, Helvetica, sans-serif;
+    color: #fff;
 }
+
+
 
 #emailForm input{
     width: 73%;
@@ -395,13 +399,6 @@ body{
 #infoArea img{
     padding: 0px;
 }
-
-
-#message{
-    font: 12px Verdana, Geneva, Arial, Helvetica, sans-serif;
-    color: #c21515;
-}
-
 
 .menu-static {
     position: static;
