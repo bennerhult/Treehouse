@@ -266,15 +266,16 @@ body{
 }
 
 #app-container-login{
-    background: #767472; /* Old browsers */
-    background: -moz-radial-gradient(center, ellipse cover,  #767472 5%, #21201f 100%); /* FF3.6+ */
-    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(5%,#767472), color-stop(100%,#21201f)); /* Chrome,Safari4+ */
-    background: -webkit-radial-gradient(center, ellipse cover,  #767472 5%,#21201f 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-radial-gradient(center, ellipse cover,  #767472 5%,#21201f 100%); /* Opera 12+ */
-    background: -ms-radial-gradient(center, ellipse cover,  #767472 5%,#21201f 100%); /* IE10+ */
-    background: radial-gradient(ellipse at center,  #767472 5%,#21201f 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#767472', endColorstr='#21201f',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    background: #64615f; /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover,  #64615f 5%, #131212 100%); /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(5%,#64615f), color-stop(100%,#131212)); /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover,  #64615f 5%,#131212 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover,  #64615f 5%,#131212 100%); /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover,  #64615f 5%,#131212 100%); /* IE10+ */
+    background: radial-gradient(ellipse at center,  #64615f 5%,#131212 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#64615f', endColorstr='#131212',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
+    border-radius: 10px;
 
 }
 
@@ -314,6 +315,7 @@ body{
     position: relative;
     padding: 30px;
     padding-top: 50px;
+
 }
 
 
@@ -326,6 +328,7 @@ body{
 
 .signup-logo img{
     max-width: 70%;
+    padding-bottom: 5px;
 }
 
 .login-separator{
@@ -339,7 +342,7 @@ body{
     color: #f5f4f4;
     text-align: center;
 
-    font-family: 'Philosopher', sans-serif;
+    font-family: verdana;
     font-size: 12px;
 
 }
@@ -772,7 +775,7 @@ input.button{
     font-size: 16px;
     text-transform: capitalize;
 
-    width: 99.8%;
+    width: 100%;
     height: 37px;
 
     border: 1px solid #6d6d6d;
@@ -1584,11 +1587,15 @@ p.noshareandcompare{
 
 .signup-logo p{
     padding-top: 20px;
+    padding-bottom: 30px;
     color: #fff;
     opacity: 1;
 }
 
+.signup-logo input{
+    padding-bottom: 20px;
 
+}
 
 p.user{
     color: #0c6032;
