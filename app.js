@@ -1129,7 +1129,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                         if (index == goalTexts.length - 1) {
                                             var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100
                                             achievementDesc += '<div class="achievement-info">'
-                                                +'<div id="userarea"><img src="content/img/user_has_no_image.jpg" /><a class="headerlink" href="#">Linda Sporrek</a></div> '
+                                                +'<div id="userarea"><img src="content/img/user_has_no_image.jpg" /><a class="headerlink" href="#">' + username + '</a></div> '
                                                 +'<div class="textarea"><h2>'
                                                 + currentAchievement.title
                                                 + "</h2><p id='unlocked'>"
