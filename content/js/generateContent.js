@@ -82,49 +82,21 @@ function setDefaultMenu() {
     fixMenu()
 }
 
-function setPublicMenu(nrOfFriendRequests) {
+function setPublicMenu() {
     var menu = '<div id="menu">' + nl  +
         '<ul>' + nl  +
         '<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>' +
         '<li class="logotext"><p>treehouse</p></li></ul>' + nl  +
         '</div>' + nl  +
-        getTabMenu(0)
+        getTabMenu()
     $("#menuArea").html(menu)
     fixMenu()
 }
 
-function setAchievementMenu(currentAchievementId, publiclyVisible, progressMade, completed, achieverId, lookingAtFriend, lookingAtNotification, sharedAchievement, isAchievementCreatedByMe) {
-    var menu = '<div id="menu"><ul><li class="back"><a href="javascript:void(0)" onclick="openAchievements(' + completed + ', \'' + achieverId + '\', ' + lookingAtFriend + ')"><img src="content/img/back-1.png" alt=""/></a></li>'
-
-    /*if (!lookingAtFriend && !lookingAtNotification) {
-       // menu += '<li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>'
-       // menu += '<li id="publicizeButton" class="share"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
-       // menu += '<li id="unpublicizeButton" class="share"><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unpublicize.png" /></a></li>'
-       // if (!progressMade && !sharedAchievement) { menu += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement(\'' + achieverId + '\')"><img src="content/img/edit.png" /></a></li>'}
-    }  else*/
-
-    if (lookingAtNotification && !lookingAtFriend) {
-        menu += '<li class="add"><a style="color:black" href="javascript:void(0)" onclick="confirmAchievement(\'' + currentAchievementId + '\', \'' + achieverId + '\')"><img src="content/img/challengeaccepted.png" alt="challenge accepted" /></a></li><li class="share"> <a style="color:black" href="javascript:void(0)" onclick="ignoreAchievement(\'' + currentAchievementId + '\', \'' + achieverId + '\')"><img src="content/img/ignore.png" alt="Ignore" /></a></li>'
-    }
-
-    menu += '</ul></div>'
+function setAchievementMenu(completed, achieverId, lookingAtFriend) {
+    var menu = '<div id="menu"><ul><li class="back"><a href="javascript:void(0)" onclick="openAchievements(' + completed + ', \'' + achieverId + '\', ' + lookingAtFriend + ')"><img src="content/img/back-1.png" alt=""/></a></li></ul></div>'
     $("#menuArea").html(menu)
     fixMenu()
-   /* if (!lookingAtFriend && !lookingAtNotification) {    //looking at myself and at a real achievement
-        if (!publiclyVisible) {
-            alert('hide1')
-            $("#unpublicizeButton").hide()
-        } else {
-            alert('hide2')
-            $("#publicizeButton").hide()
-            $("#editButton").hide()
-
-        }
-    }
-
-    if (!isAchievementCreatedByMe) {
-        $("#editButton").hide()
-    }*/
 }
 
 function setCreateEditMenu(achievement) {
@@ -132,7 +104,7 @@ function setCreateEditMenu(achievement) {
         '<ul>' + nl  +
         '<li class="back"><a href="javascript:void(0)" onclick="'
     if (achievement) {
-        text += 'openAchievement(\'' + achievement._id + '\',\'' + currentUserId + '\', ' + false + ', ' +  false + ', ' + false + ', ' + false + ', ' + false+ ', ' + true + ')'
+        text += 'openAchievement(\'' + achievement._id + '\',\'' + currentUserId + '\', ' + false + ', ' +  false + ', ' + false + ', ' + false +  ')'
     } else {
         text += 'openAchievements(false, \'' + currentUserId + '\', false)'
     }
@@ -168,7 +140,7 @@ function showSignin(message) {
 
 function showLatestAchievement(achievementId, userId) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + userId)
-    insertContent(getPublicAchievementContent(), setPublicMenu(0), getPublicAchievement(userId, achievementId))
+    insertContent(getPublicAchievementContent(), setPublicMenu(), getPublicAchievement(userId, achievementId))
 }
 
 function insertLatestAchievement() {

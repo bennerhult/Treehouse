@@ -667,7 +667,7 @@ app.get('/compareList', function(request, response){
 function getCompareText(userName, finished, total, index, nrOfCompares, achieverId, achievementId, publiclyVisible) {
     compareText = '<div class="part-achievement">'
     + '<div class="progress-container">'
-    + '<h3><a class="headerlink" href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ', ' + progressMade + ', ' + completed + ', true, true, ' + isAchievementCreatedByMe + ')">'
+    + '<h3><a class="headerlink" href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ', ' + completed + ', true)">'
         + userName
     + '</a></h3>'
     + '<table border="0px">'
@@ -684,10 +684,9 @@ function getCompareText(userName, finished, total, index, nrOfCompares, achiever
         + Math.floor((finished/total) * 100)
                 + '%</h3>'
             + '</td><td>&nbsp;</td><td>'
-        var progressMade = finished > 0
         var completed = finished >= total
         var isAchievementCreatedByMe = false
-        compareText    += '<div class="user-image"><a href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ', ' + progressMade + ', ' + completed + ', true, true, ' + isAchievementCreatedByMe + ')"><img src="content/img/user_has_no_image.jpg" alt="Visit friend!"/></a></div>'
+        compareText    += '<div class="user-image"><a href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ', ' + completed + ', true)"><img src="content/img/user_has_no_image.jpg" alt="Visit friend!"/></a></div>'
         compareText += '</td></tr></table>'
         compareText    += '<div class="clear"></div>'
         compareText    += '</div>'
@@ -835,19 +834,9 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
             + '\','
             + progresses[i].publiclyVisible
             + ','
-        if (percentages[i] > 0) {
-            achievementsList += 'true'
-        } else {
-            achievementsList += 'false'
-        }
-        achievementsList += ','
             + completed
             + ','
             + lookingAtFriendsAchievements
-            + ','
-            + sharedAchievements[i]
-            + ', '
-            + isAchievementCreatedByMe
         achievementsList += ')"><img src="'
             + achievements[i].imageURL
             + '" alt="'
@@ -884,11 +873,8 @@ function createNotificationDesc(nrOfAchievements, notifications, achieverId, loo
             + '\', \''
             + notifications[i].createdBy
             + '\', '
-            + false
-            + ', '
             + lookingAtFriend
-            + ', '
-            + 'false)"><img src="'
+            + ')"><img src="'
             + notifications[i].imageURL
             + '" alt="'
             + notifications[i].title
@@ -1083,6 +1069,9 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                     + '"/><span class="gradient-bg"></span><span class="progressbar"></span><div id="progressbar" class="progress-container"><span class="progress" style="width:'
                                                     + myPercentageFinished
                                                     + '%;"></span></div></div><div class="clear"></div>'
+                                                if (!checkingOtherPersonsAchievement) {
+                                                    achievementDesc += '<ul><li class="add"><a style="color:black" href="javascript:void(0)" onclick="confirmAchievement(\'' + currentAchievement._id + '\', \'' + achieverId + '\')"><img src="content/img/challengeaccepted.png" alt="challenge accepted" /></a></li><li class="share"> <a style="color:black" href="javascript:void(0)" onclick="ignoreAchievement(\'' + currentAchievement._id + '\', \'' + achieverId + '\')"><img src="content/img/ignore.png" alt="Ignore" /></a></li></ul>'
+                                                }
                                                 achievementDesc += '<div id="achievement-container">'
                                                 achievementDesc += goalTextsText
                                                 achievementDesc += '</div>'

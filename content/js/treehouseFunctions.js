@@ -251,7 +251,7 @@ function shareToFriendOnServer(friendId, achievementId, callback) {
 
 function confirmAchievement(achievementId, userId) {
     confirmAchievementOnServer(achievementId, userId, function() {
-        openAchievement(achievementId, userId, false, false, false, false, true, false)
+        openAchievement(achievementId, userId, false, false, false)
     })
 }
 
@@ -445,14 +445,14 @@ function getAchievementsFromServer(completed, achieverId, lookingAtFriend, callb
 }
 
 /******************  share functions  ******************/
-function openShareNotification(achievementId, achieverId, sharerId, publiclyVisible, lookingAtFriend, progressMade) {
-    insertContent(getAchievementContent(), setAchievementMenu(achievementId, publiclyVisible, progressMade, false, achieverId, lookingAtFriend, true, true, false), getNotification(achievementId, sharerId, achieverId))
+function openShareNotification(achievementId, achieverId, sharerId, lookingAtFriend) {
+    insertContent(getAchievementContent(), setAchievementMenu(false, achieverId, lookingAtFriend), getNotification(achievementId, sharerId, achieverId))
 }
 
 /******************  achievement functions  ******************/
-function openAchievement(achievementId, achieverId, publiclyVisible, progressMade, completed, lookingAtFriend, sharedAchievement, isAchievementCreatedByMe) {
+function openAchievement(achievementId, achieverId, publiclyVisible, completed, lookingAtFriend) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + achieverId)
-    insertContent(getAchievementContent(), setAchievementMenu(achievementId, publiclyVisible, progressMade, completed, achieverId, lookingAtFriend, false, sharedAchievement, isAchievementCreatedByMe), getAchievement(achievementId, achieverId, publiclyVisible))
+    insertContent(getAchievementContent(), setAchievementMenu(completed, achieverId, lookingAtFriend), getAchievement(achievementId, achieverId, publiclyVisible))
 }
 
 function getNotification(achievementId, sharerId, achieverId) {
