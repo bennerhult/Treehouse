@@ -96,23 +96,26 @@ function setPublicMenu(nrOfFriendRequests) {
 function setAchievementMenu(currentAchievementId, publiclyVisible, progressMade, completed, achieverId, lookingAtFriend, lookingAtNotification, sharedAchievement, isAchievementCreatedByMe) {
     var menu = '<div id="menu"><ul><li class="back"><a href="javascript:void(0)" onclick="openAchievements(' + completed + ', \'' + achieverId + '\', ' + lookingAtFriend + ')"><img src="content/img/back-1.png" alt=""/></a></li>'
 
-    if (!lookingAtFriend && !lookingAtNotification) {
-        menu += '<li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>'
-        menu += '<li id="publicizeButton" class="share"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
-        menu += '<li id="unpublicizeButton" class="share"><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unpublicize.png" /></a></li>'
-        if (!progressMade && !sharedAchievement) { menu += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement(\'' + achieverId + '\')"><img src="content/img/edit.png" /></a></li>'}
-    }  else if (lookingAtNotification && !lookingAtFriend) {
+    /*if (!lookingAtFriend && !lookingAtNotification) {
+       // menu += '<li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>'
+       // menu += '<li id="publicizeButton" class="share"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
+       // menu += '<li id="unpublicizeButton" class="share"><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unpublicize.png" /></a></li>'
+       // if (!progressMade && !sharedAchievement) { menu += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement(\'' + achieverId + '\')"><img src="content/img/edit.png" /></a></li>'}
+    }  else*/
+
+    if (lookingAtNotification && !lookingAtFriend) {
         menu += '<li class="add"><a style="color:black" href="javascript:void(0)" onclick="confirmAchievement(\'' + currentAchievementId + '\', \'' + achieverId + '\')"><img src="content/img/challengeaccepted.png" alt="challenge accepted" /></a></li><li class="share"> <a style="color:black" href="javascript:void(0)" onclick="ignoreAchievement(\'' + currentAchievementId + '\', \'' + achieverId + '\')"><img src="content/img/ignore.png" alt="Ignore" /></a></li>'
     }
 
     menu += '</ul></div>'
     $("#menuArea").html(menu)
     fixMenu()
-
-    if (!lookingAtFriend && !lookingAtNotification) {    //looking at myslef and at a real achievement
+   /* if (!lookingAtFriend && !lookingAtNotification) {    //looking at myself and at a real achievement
         if (!publiclyVisible) {
+            alert('hide1')
             $("#unpublicizeButton").hide()
         } else {
+            alert('hide2')
             $("#publicizeButton").hide()
             $("#editButton").hide()
 
@@ -121,7 +124,7 @@ function setAchievementMenu(currentAchievementId, publiclyVisible, progressMade,
 
     if (!isAchievementCreatedByMe) {
         $("#editButton").hide()
-    }
+    }*/
 }
 
 function setCreateEditMenu(achievement) {

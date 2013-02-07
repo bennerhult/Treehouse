@@ -1083,12 +1083,6 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                     + '"/><span class="gradient-bg"></span><span class="progressbar"></span><div id="progressbar" class="progress-container"><span class="progress" style="width:'
                                                     + myPercentageFinished
                                                     + '%;"></span></div></div><div class="clear"></div>'
-
-                                                if(!checkingOtherPersonsAchievement) {
-                                                    if(!isNotificationView) {
-                                                        achievementDesc += '<a style="color:black" href="javascript:void(0)" onclick="progressTab()">Progress</a> <a style="color:black" href="javascript:void(0)" onclick="shareTab()">Share</a>'
-                                                    }
-                                                }
                                                 achievementDesc += '<div id="achievement-container">'
                                                 achievementDesc += goalTextsText
                                                 achievementDesc += '</div>'
@@ -1114,66 +1108,82 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                 }
                             })
                         }   else {
-                            progress.Progress.findOne({ goal_id: goal._id, achiever_id: achievementUser_id}, function(err, myProgress) {
-                                if (err) {
-                                    console.log("error in app.js 6: couldn't find progress for user " + achieverId + ", " + err)
-                                } else {
-                                    var goalPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100
-                                    goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, myProgress.latestUpdated ,goalPercentageFinished, checkingOtherPersonsAchievement, goalTexts.length + 1 == currentAchievement.goals.length, isNotificationView))
-                                    if (goalTexts.length == currentAchievement.goals.length) {
-                                        var goalTextsText = ""
-                                        goalTexts.forEach(function(goalText, index) {
-                                            goalTextsText += goalText
-                                            if (index == goalTexts.length - 1) {
-                                                var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100
-                                                achievementDesc += '<div class="achievement-info">'
-                                                    +'<div id="userarea"><img src="content/img/user_has_no_image.jpg" /><a class="headerlink" href="javascript:void(0)" onclick="openAchievements(false, \'' + achievementUser_id + '\', false)">' + achieverName + '</a></div> '
-                                                    +'<div class="textarea"><h2>'
-                                                    + currentAchievement.title
-                                                    + "</h2><p id='unlocked'>"
-                                                    if(myPercentageFinished >= 100) {
-                                                            achievementDesc += "Unlocked: " +  moment(latestProgress.latestUpdated).format("MMM Do YYYY")
-                                                    }
-                                                    achievementDesc += '</p><p id="achievementDescription">'
-                                                    + currentAchievement.description
-                                                    + '</p></div>'
-                                                    + '<div class="imagearea"><img src="'
-                                                    + currentAchievement.imageURL
-                                                    +'" alt="'
-                                                    +  currentAchievement.createdBy + ": " + currentAchievement.title
-                                                    + '"/><span class="gradient-bg"></span><span class="progressbar"></span><div id="progressbar" class="progress-container"><span class="progress" style="width:'
-                                                    + myPercentageFinished
-                                                    + '%;"></span></div></div><div class="clear"></div>'
+                            shareholding.isAchievementShared(currentAchievement._id, function(isAchievementShared) {
+                                progress.Progress.findOne({ goal_id: goal._id, achiever_id: achievementUser_id}, function(err, myProgress) {
+                                    if (err) {
+                                        console.log("error in app.js 6: couldn't find progress for user " + achieverId + ", " + err)
+                                    } else {
+                                        var goalPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100
+                                        goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, myProgress.latestUpdated ,goalPercentageFinished, checkingOtherPersonsAchievement, goalTexts.length + 1 == currentAchievement.goals.length, isNotificationView))
+                                        if (goalTexts.length == currentAchievement.goals.length) {
+                                            var goalTextsText = ""
+                                            goalTexts.forEach(function(goalText, index) {
+                                                goalTextsText += goalText
+                                                if (index == goalTexts.length - 1) {
+                                                    var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100
+                                                    achievementDesc += '<div class="achievement-info">'
+                                                        +'<div id="userarea"><img src="content/img/user_has_no_image.jpg" /><a class="headerlink" href="javascript:void(0)" onclick="openAchievements(false, \'' + achievementUser_id + '\', false)">' + achieverName + '</a></div> '
+                                                        +'<div class="textarea"><h2>'
+                                                        + currentAchievement.title
+                                                        + "</h2><p id='unlocked'>"
+                                                        if(myPercentageFinished >= 100) {
+                                                                achievementDesc += "Unlocked: " +  moment(latestProgress.latestUpdated).format("MMM Do YYYY")
+                                                        }
+                                                        achievementDesc += '</p><p id="achievementDescription">'
+                                                        + currentAchievement.description
+                                                        + '</p></div>'
+                                                        + '<div class="imagearea"><img src="'
+                                                        + currentAchievement.imageURL
+                                                        +'" alt="'
+                                                        +  currentAchievement.createdBy + ": " + currentAchievement.title
+                                                        + '"/><span class="gradient-bg"></span><span class="progressbar"></span><div id="progressbar" class="progress-container"><span class="progress" style="width:'
+                                                        + myPercentageFinished
+                                                        + '%;"></span></div></div><div class="clear"></div>'
 
-                                                if(!checkingOtherPersonsAchievement) {
-                                                    if(!isNotificationView) {
+                                                    if(!checkingOtherPersonsAchievement) {
                                                         achievementDesc += '<div id="achievementTabs"><a style="color:black" href="javascript:void(0)" onclick="progressTab()"><span id="progressTab">My progress</span></a><a style="color:black" href="javascript:void(0)" onclick="compareTab()"><span id="compareTab">Compare</span></a><a style="color:black" href="javascript:void(0)" onclick="shareTab()"><span id="shareTab">Share</span></a><div class="clear"></div></div>'
                                                     }
-                                                }
-                                                achievementDesc += '<div id="achievement-container">'
-                                                achievementDesc += goalTextsText
-                                                achievementDesc += '</div>'
-                                                achievementDesc += '<div id="sharer-container"></div><div id="compare-container"></div>'
-                                                achievementDesc += '<br />'
-                                                achievementDesc += '<div id="fbLike" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="250" data-show-faces="true" font="segoe ui"></div></div>'
-                                                achievementDesc += '<br />'
-                                                achievementDesc += '<div id="tweetAchievement" style="overflow:visible;">'
-                                                achievementDesc += '<a href="https://twitter.com/share' + '?text=' + currentAchievement.title + '" class="twitter-share-button">Tweet</a>'
-                                                achievementDesc += '<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>'
-                                                achievementDesc += '</div>'
-                                                achievementDesc += '<br />'
-                                                achievementDesc += '<br />'
-                                                achievementDesc += '<p>'
-                                                achievementDesc += 'Creator: ' + username + '<br />'
-                                                achievementDesc += 'Achiever: ' + achieverName
-                                                achievementDesc += '</p>'
-                                               response.write(JSON.stringify(achievementDesc))
-                                                response.end('\n', 'utf-8')
+                                                    achievementDesc += '<div id="achievement-container">'
+                                                    achievementDesc += goalTextsText
+                                                    achievementDesc += '</div>'
 
-                                            }
-                                        })
+                                                    if (!checkingOtherPersonsAchievement) {
+                                                        achievementDesc += '<ul><li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>'
+                                                        if (myProgress.publiclyVisible) {
+                                                            achievementDesc += '<li id="unpublicizeButton" class="share"><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unpublicize.png" /></a></li>'
+                                                            achievementDesc += '<li id="publicizeButton" class="share" style="display:none"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
+                                                        }  else {
+                                                            achievementDesc += '<li id="unpublicizeButton" class="share" style="display:none"><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unpublicize.png" /></a></li>'
+                                                            achievementDesc += '<li id="publicizeButton" class="share"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
+                                                        }
+                                                        if (myPercentageFinished == 0 && !isAchievementShared) {
+                                                            achievementDesc += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement(\'' + achieverId + '\')"><img src="content/img/edit.png" /></a></li>'
+                                                        }
+                                                        achievementDesc += '</ul>'
+                                                    }
+
+
+                                                    achievementDesc += '<div id="sharer-container"></div><div id="compare-container"></div>'
+                                                    achievementDesc += '<br />'
+                                                    achievementDesc += '<div id="fbLike" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="250" data-show-faces="true" font="segoe ui"></div></div>'
+                                                    achievementDesc += '<br />'
+                                                    achievementDesc += '<div id="tweetAchievement" style="overflow:visible;">'
+                                                    achievementDesc += '<a href="https://twitter.com/share' + '?text=' + currentAchievement.title + '" class="twitter-share-button">Tweet</a>'
+                                                    achievementDesc += '<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>'
+                                                    achievementDesc += '</div>'
+
+                                                    achievementDesc += '<p>'
+                                                    achievementDesc += 'Creator: ' + username + '<br />'
+                                                    achievementDesc += 'Achiever: ' + achieverName
+                                                    achievementDesc += '</p>'
+                                                   response.write(JSON.stringify(achievementDesc))
+                                                    response.end('\n', 'utf-8')
+
+                                                }
+                                            })
+                                        }
                                     }
-                                }
+                                })
                             })
                         }
                     })
