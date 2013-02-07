@@ -472,30 +472,6 @@ body{
     padding-left: 5%;
 }
 
-#menu ul li#house{
-    text-align: center;
-    width:100%;
-    padding: 0px;
-    margin-top: 2px;
-}
-
-#menu ul li.share{
-    float: right;
-    text-align: center;
-    opacity: 0.8;
-}
-
-#menu ul li.edit{
-    float: right;
-
-    text-align: center;
-    opacity: 0.8;
-}
-
-#menu ul li.add {
-    float: right;
-    padding-right: 5%;
-}
 
 #menu ul li#menuToggle{
     position: absolute;
@@ -546,6 +522,20 @@ body{
 #menu ul li span.hoverDesktop:hover{
     background: none;
     background-color: #4a4b4c;
+}
+
+.actionmenu{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.actionmenu ul li{
+    display: inline;
+}
+
+.actionmenu ul li.rightalign{
+    float: right;
+    margin-left: 3px;
 }
 
 .slider-menu{

@@ -1135,23 +1135,23 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                     achievementDesc += goalTextsText
                                                     achievementDesc += '</div>'
 
-                                                    achievementDesc += '<div id="sharer-container"></div><div id="compare-container"></div>'
+                                                    achievementDesc += '<div id="sharer-container"></div><div id="compare-container"></div><div class="actionmenu">'
 
                                                     if (!checkingOtherPersonsAchievement) {
-                                                        achievementDesc += '<ul><li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>'
+                                                        achievementDesc += '<ul>'
                                                         if (myProgress.publiclyVisible) {
-                                                            achievementDesc += '<li id="unpublicizeButton" class="share"><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unpublicize.png" /></a></li>'
-                                                            achievementDesc += '<li id="publicizeButton" class="share" style="display:none"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
+                                                            achievementDesc += '<li id="unpublicizeButton" ><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unpublicize.png" /></a></li>'
+                                                            achievementDesc += '<li id="publicizeButton"  style="display:none"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
                                                         }  else {
-                                                            achievementDesc += '<li id="unpublicizeButton" class="share" style="display:none"><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unpublicize.png" /></a></li>'
-                                                            achievementDesc += '<li id="publicizeButton" class="share"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
+                                                            achievementDesc += '<li id="unpublicizeButton" style="display:none"><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unpublicize.png" /></a></li>'
+                                                            achievementDesc += '<li id="publicizeButton" ><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
                                                         }
                                                         if (myPercentageFinished == 0 && !isAchievementShared) {
-                                                            achievementDesc += '<li id="editButton" class="edit"><a href="javascript:void(0)" onclick="editAchievement(\'' + achieverId + '\')"><img src="content/img/edit.png" /></a></li>'
+                                                            achievementDesc += '<li id="editButton"  class="rightalign"><a href="javascript:void(0)" onclick="editAchievement(\'' + achieverId + '\')"><img src="content/img/edit.png" /></a></li>'
                                                         }
-                                                        achievementDesc += '</ul>'
+                                                        achievementDesc += '<li id="deleteButton" class="rightalign"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li></ul>'
                                                     }
-                                                    achievementDesc += '<br />'
+                                                    achievementDesc += '<div class="clear"></div></div>'
                                                     achievementDesc += '<div id="fbLike" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="250" data-show-faces="true" font="segoe ui"></div></div>'
                                                     achievementDesc += '<br />'
                                                     achievementDesc += '<div id="tweetAchievement" style="overflow:visible;">'
