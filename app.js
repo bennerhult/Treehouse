@@ -1147,6 +1147,8 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                     achievementDesc += goalTextsText
                                                     achievementDesc += '</div>'
 
+                                                    achievementDesc += '<div id="sharer-container"></div><div id="compare-container"></div>'
+
                                                     if (!checkingOtherPersonsAchievement) {
                                                         achievementDesc += '<ul><li id="deleteButton" class="add"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>'
                                                         if (myProgress.publiclyVisible) {
@@ -1161,9 +1163,6 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                         }
                                                         achievementDesc += '</ul>'
                                                     }
-
-
-                                                    achievementDesc += '<div id="sharer-container"></div><div id="compare-container"></div>'
                                                     achievementDesc += '<br />'
                                                     achievementDesc += '<div id="fbLike" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="250" data-show-faces="true" font="segoe ui"></div></div>'
                                                     achievementDesc += '<br />'
