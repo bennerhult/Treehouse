@@ -1689,15 +1689,21 @@ p#achievementDescription{
         padding-top: 50px;
     }
 
-        #app-container,
-        #app-container-login{
+    #app-container,
+    #app-container-login{
         position: relative;
-        height: 100%
+        height: 95%
     }
 
 }
 
 @media screen and (max-width: 800px) {
+
+    #app-container,
+    #app-container-login{
+        height: 100%
+    }
+
 
     .slider-menu{
         position: fixed;
@@ -1758,6 +1764,11 @@ p#achievementDescription{
 
     html>body #page{height:auto; min-height:100%;}
 
+
+    #main-container{
+        padding-left: 0%;
+        padding-right: 0%;
+    }
     #leftcontainer{
         display: none;
     }
@@ -1773,7 +1784,11 @@ p#achievementDescription{
         -moz-border-radius: 0px;
         -webkit-border-radius: 0px;
         border-radius: 0px;
+        right: 0%;
+
     }
+
+
 
     .web-wrap,
     #web-menu{
@@ -1803,6 +1818,13 @@ p#achievementDescription{
 
     .inputarea{
         width: 70%;
+    }
+    .achievement-info{
+        padding-top: 50px;
+    }
+
+    #content{
+        padding-top: 70px;
     }
 
     .banner{
