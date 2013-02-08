@@ -1057,7 +1057,11 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                             goalTextsText += goalText
                                             if (index == goalTexts.length - 1) {
                                                 var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100
-                                                achievementDesc += '<div class="achievement-info"><div class="textarea"><h2>Share request: '
+                                                achievementDesc += '<div class="achievement-info"><div class="test"><div id="userarea"><img src="content/img/user_has_no_image.jpg" /><a class="headerlink">Linda Sporrek</a><p>shared an achievement with you</p></div>'
+                                                if (!checkingOtherPersonsAchievement) {
+                                                    achievementDesc += '<div class="actionmenu sharerequest"><ul><li><a href="javascript:void(0)" onclick="confirmAchievement(\'' + currentAchievement._id + '\', \'' + achieverId + '\')"><img src="content/img/challengeaccepted.png" alt="challenge accepted" /></a></li><li class=""><a href="javascript:void(0)" onclick="ignoreAchievement(\'' + currentAchievement._id + '\', \'' + achieverId + '\')"><img src="content/img/ignore.png" alt="Ignore" /></a></li></ul></div>'
+                                                }
+                                                achievementDesc +=    '</div><div class="separerare"> </div><div class="textarea"><h2>'
                                                     + currentAchievement.title
                                                     + '</h2><p id="achievementDescription">'
                                                     + currentAchievement.description
@@ -1069,9 +1073,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                     + '"/><span class="gradient-bg"></span><span class="progressbar"></span><div id="progressbar" class="progress-container"><span class="progress" style="width:'
                                                     + myPercentageFinished
                                                     + '%;"></span></div></div><div class="clear"></div>'
-                                                if (!checkingOtherPersonsAchievement) {
-                                                    achievementDesc += '<ul><li class="add"><a style="color:black" href="javascript:void(0)" onclick="confirmAchievement(\'' + currentAchievement._id + '\', \'' + achieverId + '\')"><img src="content/img/challengeaccepted.png" alt="challenge accepted" /></a></li><li class="share"> <a style="color:black" href="javascript:void(0)" onclick="ignoreAchievement(\'' + currentAchievement._id + '\', \'' + achieverId + '\')"><img src="content/img/ignore.png" alt="Ignore" /></a></li></ul>'
-                                                }
+
                                                 achievementDesc += '<div id="achievement-container">'
                                                 achievementDesc += goalTextsText
                                                 achievementDesc += '</div><div id="sharer-container"></div><div id="comparer-container"></div>'
@@ -1102,6 +1104,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                     var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100
                                                     achievementDesc += '<div class="achievement-info">'
                                                         +'<div id="userarea"><img src="content/img/user_has_no_image.jpg" /><a class="headerlink" href="javascript:void(0)" onclick="openAchievements(false, \'' + achievementUser_id + '\', false)">' + achieverName + '</a></div> '
+                                                        +'<div class="separerare"> </div>'
                                                         +'<div class="textarea"><h2>'
                                                         + currentAchievement.title
                                                         + "</h2><p id='unlocked'>"
@@ -1111,7 +1114,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                         achievementDesc += '</p><p id="achievementDescription">'
                                                         + currentAchievement.description
                                                         + '</p>'
-                                                        + '<div id="fbLike" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="250" data-show-faces="true" font="segoe ui"></div></div>'
+                                                        + '<div id="fbLike" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="150px" data-show-faces="false" font="segoe ui"></div></div>'
                                                         + '</div>'
                                                         + '<div class="imagearea"><img src="'
                                                         + currentAchievement.imageURL
