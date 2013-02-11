@@ -1042,7 +1042,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                         }
                     })
                 })
-                progress.Progress.findOne({ achievement_id: currentAchievement._id, achiever_id: achievementUser_id}, {}, { sort: { 'latestUpdated' : -1 } }, function(err, latestProgress) {
+                progress.Progress.findOne({ achievement_id: currentAchievement._id, achiever_id: achieverId}, {}, { sort: { 'latestUpdated' : -1 } }, function(err, latestProgress) {
                     currentAchievement.goals.forEach(function(goal, goalIndex) {
                         if (isNotificationView) {
                             progress.Progress.findOne({   goal_id: goal._id }, function(err,myProgress) {
@@ -1086,7 +1086,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                             })
                         }   else {
                             shareholding.isAchievementShared(currentAchievement._id, function(isAchievementShared) {
-                                progress.Progress.findOne({ goal_id: goal._id, achiever_id: achievementUser_id}, function(err, myProgress) {
+                                progress.Progress.findOne({ goal_id: goal._id, achiever_id: achieverId}, function(err, myProgress) {
                                     if (err) {
                                         console.log("error in app.js 6: couldn't find progress for user " + achieverId + ", " + err)
                                     } else {
@@ -1099,7 +1099,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                 if (index == goalTexts.length - 1) {
                                                     var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100
                                                     achievementDesc += '<div class="achievement-info">'
-                                                        +'<div id="userarea"><img src="content/img/user_has_no_image.jpg" /><a class="headerlink" href="javascript:void(0)" onclick="openAchievements(false, \'' + achievementUser_id + '\', false)">' + achieverName + '</a></div> '
+                                                        +'<div id="userarea"><img src="content/img/user_has_no_image.jpg" /><a class="headerlink" href="javascript:void(0)" onclick="openAchievements(false, \'' + achievementUser_id + '\', true)">' + achieverName + '</a></div> '
                                                         +'<div class="separerare"> </div>'
                                                         +'<div class="textarea"><h2>'
                                                         + currentAchievement.title
