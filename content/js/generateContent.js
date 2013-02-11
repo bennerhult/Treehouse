@@ -418,11 +418,7 @@ function getAchievementsContent(achieverId, lookingAtFriend, callback) {
 }
 
 function getAchievementContent() {
-    var achievementContent =
-        '<div id="app-container">' + nl  +
-            '<div id="achievementDesc"></div>' + nl  +
-        '</div>' + nl;
-    return achievementContent;
+    return '<div id="achievementDesc"></div>';
 }
 
 function getPublicAchievementContent() {
