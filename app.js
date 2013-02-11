@@ -1030,7 +1030,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
     }
 
     if(currentAchievement.goals) {
-        getUserNameForId(currentAchievement.createdBy, function(username) {
+        getUserNameForId(currentAchievement.createdBy, function(creatorName) {
             getUserNameForId(achieverId, function(achieverName) {
                 currentAchievement.goals.forEach(function(goal, goalIndex) {
                     progress.Progress.findOne({ goal_id: goal._id, achiever_id: achievementUser_id }, function(err,myProgress) {
@@ -1057,7 +1057,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                             goalTextsText += goalText
                                             if (index == goalTexts.length - 1) {
                                                 var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100
-                                                achievementDesc += '<div class="achievement-info"><div class="test"><div id="userarea"><img src="content/img/user_has_no_image.jpg" /><a class="headerlink">Linda Sporrek</a><p>shared an achievement with you</p></div>'
+                                                achievementDesc += '<div class="achievement-info"><div class="test"><div id="userarea"><img src="content/img/user_has_no_image.jpg" /><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentAchievement.createdBy + '\', true)">' + creatorName + '</a><p>shared an achievement with you</p></div>'
                                                 if (!checkingOtherPersonsAchievement) {
                                                     achievementDesc += '<div class="actionmenu sharerequest"><ul><li><a href="javascript:void(0)" onclick="confirmAchievement(\'' + currentAchievement._id + '\', \'' + achieverId + '\')"><img src="content/img/challengeaccepted.png" alt="challenge accepted" /></a></li><li class=""><a href="javascript:void(0)" onclick="ignoreAchievement(\'' + currentAchievement._id + '\', \'' + achieverId + '\')"><img src="content/img/ignore.png" alt="Ignore" /></a></li></ul></div>'
                                                 }
@@ -1077,10 +1077,6 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                 achievementDesc += '<div id="achievement-container">'
                                                 achievementDesc += goalTextsText
                                                 achievementDesc += '</div><div id="sharer-container"></div><div id="comparer-container"></div>'
-                                                achievementDesc += '<br />'
-                                                achievementDesc += '<p>'
-                                                achievementDesc += 'Creator: ' + username
-                                                achievementDesc += '</p>'
                                                 response.write(JSON.stringify(achievementDesc))
                                                 response.end('\n', 'utf-8')
                                             }
@@ -1155,7 +1151,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                     achievementDesc += '</div>'
 
                                                     achievementDesc += '<p>'
-                                                    achievementDesc += 'Creator: ' + username
+                                                    achievementDesc += 'Creator: ' + creatorName
                                                     achievementDesc += '</p>'
                                                    response.write(JSON.stringify(achievementDesc))
                                                     response.end('\n', 'utf-8')
