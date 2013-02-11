@@ -1107,7 +1107,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                         + currentAchievement.title
                                                         + '</h2>'
                                                         if (currentAchievement.createdBy != userId){
-                                                            achievementDesc +=    '<span id="creator"> by' + creatorName  + '</span>'
+                                                            achievementDesc += '<span id="creator"> by ' + creatorName  + '</span>'
                                                         }
                                                         achievementDesc +='<p id="unlocked">'
                                                         if(myPercentageFinished >= 100) {
