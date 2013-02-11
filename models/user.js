@@ -58,6 +58,7 @@ function getPrettyName(userId, callback) {
                 callback(myUser.username)
             }
         } else {
+            console.log("User not found for userId " + userId + ", error: " + err)
             callback("user not found")
         }
     })
