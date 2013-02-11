@@ -1063,7 +1063,9 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                 }
                                                 achievementDesc +=    '</div><div class="separerare"> </div><div class="textarea"><h2>'
                                                     + currentAchievement.title
-                                                    + '</h2><p id="achievementDescription">'
+                                                    + '</h2>'
+                                                achievementDesc +=    '<span id="creator"> by ' + creatorName  + '</span>'
+                                                achievementDesc += '<p id="achievementDescription">'
                                                     + currentAchievement.description
                                                     + '</p></div>'
                                                     + '<div class="imagearea"><img src="'
@@ -1103,7 +1105,11 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                         +'<div class="separerare"> </div>'
                                                         +'<div class="textarea"><h2>'
                                                         + currentAchievement.title
-                                                        + "</h2><p id='unlocked'>"
+                                                        + '</h2>'
+                                                        if (currentAchievement.createdBy != userId){
+                                                            achievementDesc +=    '<span id="creator"> by' + creatorName  + '</span>'
+                                                        }
+                                                        achievementDesc +='<p id="unlocked">'
                                                         if(myPercentageFinished >= 100) {
                                                                 achievementDesc += "Unlocked: " +  moment(latestProgress.latestUpdated).format("MMM Do YYYY")
                                                         }
@@ -1149,10 +1155,6 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                     achievementDesc += '<a href="https://twitter.com/share' + '?text=' + currentAchievement.title + '" class="twitter-share-button">Tweet</a>'
                                                     achievementDesc += '<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>'
                                                     achievementDesc += '</div>'
-
-                                                    achievementDesc += '<p>'
-                                                    achievementDesc += 'Creator: ' + creatorName
-                                                    achievementDesc += '</p>'
                                                    response.write(JSON.stringify(achievementDesc))
                                                     response.end('\n', 'utf-8')
 
