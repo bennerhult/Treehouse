@@ -897,9 +897,9 @@ app.get('/achievements_completed', function(request, response){
 
 function getAchievementList(request, response, completedAchievements) {
     app.set('current_achievement_id', null)
-    //if (!request.session.user_id) {
+    if (!request.session.user_id) {
         request.session.user_id = request.query.achieverId
-    //}
+    }
 
     var achievementsList = ""
     var goneThroughProgresses = 0
