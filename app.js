@@ -1119,11 +1119,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                         if (currentAchievement.createdBy != userId){
                                                             achievementDesc += '<span id="creator"> by ' + creatorName  + '</span>'
                                                         }
-                                                        achievementDesc +='<p id="unlocked">'
-                                                        if(myPercentageFinished >= 100) {
-                                                                achievementDesc += "Unlocked: " +  moment(latestProgress.latestUpdated).format("MMM Do YYYY")
-                                                        }
-                                                        achievementDesc += '</p><p id="achievementDescription">'
+                                                        achievementDesc += '<p id="achievementDescription">'
                                                         + currentAchievement.description
                                                         + '</p>'
                                                         + '<div id="fbLike" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="150px" data-show-faces="false" font="segoe ui"></div></div>'
@@ -1134,7 +1130,11 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                         +  currentAchievement.createdBy + ": " + currentAchievement.title
                                                         + '"/><span class="gradient-bg"></span><span class="progressbar"></span><div id="progressbar" class="progress-container"><span class="progress" style="width:'
                                                         + myPercentageFinished
-                                                        + '%;"></span></div></div><div class="clear"></div>'
+                                                        + '%;"></span></div>'
+                                                    if(myPercentageFinished >= 100) {
+                                                        achievementDesc += '<span class="unlockedDate"><div>Unlocked <br/>' +  moment(latestProgress.latestUpdated).format("MMM Do YYYY")  + '</div></span>'
+                                                    }
+                                                    achievementDesc += '</div><div class="clear"></div>'
 
                                                     if(!checkingOtherPersonsAchievement) {
                                                         achievementDesc += '<div id="achievementTabs"><a style="color:black" href="javascript:void(0)" onclick="progressTab()"><span id="progressTab">My progress</span></a><a style="color:black" href="javascript:void(0)" onclick="compareTab()"><span id="compareTab">Compare</span></a><a style="color:black" href="javascript:void(0)" onclick="shareTab()"><span id="shareTab">Share</span></a><div class="clear"></div></div>'
