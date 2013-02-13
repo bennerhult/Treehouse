@@ -379,8 +379,15 @@ app.get('/user', function(request, response){
 })
 
 app.get('/prettyName', function(request, response){
+    var userID
+    console.log("BBBBB:" + request.query.user_id )
+    if (request.query.user_id && request.query.user_id.length > 12) {
+        userID = request.query.user_id
+    } else {
+        userID = request.session.user_id
+    }
 
-    user.getPrettyName(request.session.user_id, function(prettyName) {
+    user.getPrettyName(userID, function(prettyName) {
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(prettyName))
         response.end('\n', 'utf-8')
@@ -784,6 +791,7 @@ app.get('/confirmAchievement', function(request, response){
 })
 
 function getUserNameForId(id, callback) {
+    console.log("AAAAAAAAAA: " + id)
     user.getPrettyName(id, function(prettyName) {
         callback(prettyName, id)
     })
@@ -1054,7 +1062,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                             goalTextsText += goalText
                                             if (index == goalTexts.length - 1) {
                                                 var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100
-                                                achievementDesc += '<div class="achievement-info"><div class="test"><div id="userarea"><img src="content/img/user_has_no_image.jpg" /><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentAchievement.createdBy + '\', true)">' + creatorName + '</a><p>shared an achievement with you</p></div>'
+                                                achievementDesc += '<div class="achievement-info"><div class="test"><div id="userarea"><img src="content/img/user_has_no_image.jpg" /><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentAchievement.createdBy + '\', ' + checkingOtherPersonsAchievement +')">' + creatorName + '</a><p>shared an achievement with you</p></div>'
                                                 if (!checkingOtherPersonsAchievement) {
                                                     achievementDesc += '<div class="actionmenu sharerequest"><ul><li><a href="javascript:void(0)" onclick="confirmAchievement(\'' + currentAchievement._id + '\', \'' + achieverId + '\')"><img src="content/img/challengeaccepted.png" alt="challenge accepted" /></a></li><li class=""><a href="javascript:void(0)" onclick="ignoreAchievement(\'' + currentAchievement._id + '\', \'' + achieverId + '\')"><img src="content/img/ignore.png" alt="Ignore" /></a></li></ul></div>'
                                                 }
@@ -1097,7 +1105,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                 goalTextsText += goalText
                                                 if (index == goalTexts.length - 1) {
                                                     var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100
-                                                    achievementDesc += '<div class="achievement-info"><div id="userarea"><img src="content/img/user_has_no_image.jpg" /><a class="headerlink" href="javascript:void(0)" onclick="openAchievements(false, \'' + achievementUser_id + '\', true)">' + achieverName + '</a></div> '
+                                                    achievementDesc += '<div class="achievement-info"><div id="userarea"><img src="content/img/user_has_no_image.jpg" /><a class="headerlink" href="javascript:void(0)" onclick="openAchievements(false, \'' + achievementUser_id + '\', ' + checkingOtherPersonsAchievement + ')">' + achieverName + '</a></div> '
                                                     if (!checkingOtherPersonsAchievement) {
                                                         achievementDesc += '<ul>'
                                                         if (myProgress.publiclyVisible) {
