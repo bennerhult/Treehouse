@@ -1097,9 +1097,22 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                 goalTextsText += goalText
                                                 if (index == goalTexts.length - 1) {
                                                     var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100
-                                                    achievementDesc += '<div class="achievement-info">'
-                                                        +'<div id="userarea"><img src="content/img/user_has_no_image.jpg" /><a class="headerlink" href="javascript:void(0)" onclick="openAchievements(false, \'' + achievementUser_id + '\', true)">' + achieverName + '</a></div> '
-                                                        +'<div class="separerare"> </div>'
+                                                    achievementDesc += '<div class="achievement-info"><div id="userarea"><img src="content/img/user_has_no_image.jpg" /><a class="headerlink" href="javascript:void(0)" onclick="openAchievements(false, \'' + achievementUser_id + '\', true)">' + achieverName + '</a></div> '
+                                                    if (!checkingOtherPersonsAchievement) {
+                                                        achievementDesc += '<ul>'
+                                                        if (myProgress.publiclyVisible) {
+                                                            achievementDesc += '<li id="unpublicizeButton" ><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unpublicize.png" /></a></li>'
+                                                            achievementDesc += '<li id="publicizeButton"  style="display:none"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
+                                                        }  else {
+                                                            achievementDesc += '<li id="unpublicizeButton" style="display:none"><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unpublicize.png" /></a></li>'
+                                                            achievementDesc += '<li id="publicizeButton" ><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
+                                                        }
+                                                        if (myPercentageFinished == 0 && !isAchievementShared) {
+                                                            achievementDesc += '<li id="editButton"  class="rightalign"><a href="javascript:void(0)" onclick="editAchievement(\'' + achieverId + '\')"><img src="content/img/edit.png" /></a></li>'
+                                                        }
+                                                        achievementDesc += '<li id="deleteButton" class="rightalign"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li></ul>'
+                                                    }
+                                                    achievementDesc += '<div class="separerare"> </div>'
                                                         +'<div class="textarea"><h2>'
                                                         + currentAchievement.title
                                                         + '</h2>'
@@ -1131,21 +1144,6 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                     achievementDesc += '</div>'
 
                                                     achievementDesc += '<div id="sharer-container"></div><div id="compare-container"></div><div class="actionmenu">'
-
-                                                    if (!checkingOtherPersonsAchievement) {
-                                                        achievementDesc += '<ul>'
-                                                        if (myProgress.publiclyVisible) {
-                                                            achievementDesc += '<li id="unpublicizeButton" ><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unpublicize.png" /></a></li>'
-                                                            achievementDesc += '<li id="publicizeButton"  style="display:none"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
-                                                        }  else {
-                                                            achievementDesc += '<li id="unpublicizeButton" style="display:none"><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unpublicize.png" /></a></li>'
-                                                            achievementDesc += '<li id="publicizeButton" ><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
-                                                        }
-                                                        if (myPercentageFinished == 0 && !isAchievementShared) {
-                                                            achievementDesc += '<li id="editButton"  class="rightalign"><a href="javascript:void(0)" onclick="editAchievement(\'' + achieverId + '\')"><img src="content/img/edit.png" /></a></li>'
-                                                        }
-                                                        achievementDesc += '<li id="deleteButton" class="rightalign"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li></ul>'
-                                                    }
                                                     achievementDesc += '<div class="clear"></div></div>'
                                                     achievementDesc += '<br />'
                                                     achievementDesc += '<div id="tweetAchievement" style="overflow:visible;">'
