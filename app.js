@@ -87,22 +87,19 @@ function authenticateFromLoginToken(request, response, initialCall) {
                 response.write(JSON.stringify(""))
                 response.end('\n', 'utf-8')
             } else {
-                console.log("token: " + token)
+                //console.log("token: " + token)
                 user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
                     if (user) {
-                        console.log("user: " + user)
+                        //console.log("user: " + user)
                         request.session.user_id = user.id
                         friendship.getNrOfRequests(request.session.user_id, function (nrOfFriendShipRequests) {
                             token.token = loginToken.randomToken()
                             token.save(function() {
                                 response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 2 * 604800000), path: '/' })
-                                //if (initialCall) {
-                                //    writeDefaultPage(request, response)
-                                //}   else {
-                                console.log("responsing well: " + nrOfFriendShipRequests)
-                                    response.writeHead(200, {'content-type': 'application/json' })
-                                    response.write(JSON.stringify(nrOfFriendShipRequests))
-                                    response.end('\n', 'utf-8')
+                                //console.log("responsing well: " + nrOfFriendShipRequests)
+                                response.writeHead(200, {'content-type': 'application/json' })
+                                response.write(JSON.stringify(nrOfFriendShipRequests))
+                                response.end('\n', 'utf-8')
                                 //}
                             })
                         })
@@ -162,7 +159,7 @@ app.get('/achievement', function(request, response) {
 })
 
 app.get('/', function(request, response){
-    //console.log("/")
+    console.log("/")
     writeDefaultPage(request, response)
 })
 
@@ -383,7 +380,7 @@ app.get('/user', function(request, response){
 
 app.get('/prettyName', function(request, response){
 
-    user.getPrettyName(request.query.user_id, function(prettyName) {
+    user.getPrettyName(request.session.user_id, function(prettyName) {
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(prettyName))
         response.end('\n', 'utf-8')
@@ -1467,7 +1464,6 @@ function writeGotoAppPage(response) {
 }
 
 function writeDefaultPage(request, response) {
-    //console.log("writeDefaultPage: " + request.session.user_id + ", " + request.session.nrOfFriendShipRequests)
     requestHandlers.indexPage(response, request.session.user_id, request.session.nrOfFriendShipRequests)
 }
 
