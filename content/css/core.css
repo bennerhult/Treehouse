@@ -1294,16 +1294,9 @@ span.progress{
    color: #131213;
    opacity: 1;
 }
-/*
-.sharerlistitem .separerare-part{
-    margin-bottom: 10px;
-}*/
 
 #compare-container {
     width: 100%;
-   /* margin: 0px 0% 10px 0%;*/
-/*    padding: 10px 10px 10px 10px;*/
-
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
@@ -1571,8 +1564,6 @@ h2{
     font-size: 15px;
     font-weight: bold;
     text-transform: capitalize;
-   /* padding-bottom: 5px;*/
-
 }
 
 h3{
@@ -1633,11 +1624,8 @@ p.user{
 }
 
 p.user span{
-
     color: #000;
     width: 65px;
-   /* display: block;
-    float: left;*/
 }
 
 p.ingress{
@@ -1654,7 +1642,6 @@ p.ingress{
 p#achievementDescription{
     text-transform: none;
     padding-top: 15px;
-    padding-left: 3px;
 }
 
 /*-- SKÄRMANPASSNING --*/
