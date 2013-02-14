@@ -1069,7 +1069,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                 achievementDesc +=    '</div><div class="separerare"> </div><div class="textarea"><h2>'
                                                     + currentAchievement.title
                                                     + '</h2>'
-                                                achievementDesc +=    '<span id="creator"> by ' + creatorName  + '</span>'
+                                                achievementDesc +=    '<p id="creator"> by ' + creatorName  + '</p>'
                                                 achievementDesc += '<p id="achievementDescription">'
                                                     + currentAchievement.description
                                                     + '</p></div>'
@@ -1126,7 +1126,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                         + currentAchievement.title
                                                         + '</h2>'
                                                         if (currentAchievement.createdBy != userId){
-                                                            achievementDesc += '<span id="creator"> by ' + creatorName  + '</span>'
+                                                            achievementDesc += '<p id="creator"> by ' + creatorName  + '</p>'
                                                         }
                                                         achievementDesc += '<p id="achievementDescription">'
                                                         + currentAchievement.description

@@ -1021,11 +1021,13 @@ input.file {
 
 
 
-#userarea p{
+#userarea p,
+p#creator{
     font-family: 'Philosopher', sans-serif;
     font-size: 13px;
     font-weight: bold;
     padding-top: 2px;
+    padding-bottom: 0px;
 }
 
 #userarea a.headerlink{
