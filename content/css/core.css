@@ -1147,8 +1147,10 @@ span.unlockedDate{
     font-size: 13px;
     width:90px;
     padding: 2px 0px;
+}
 
-
+span.achievementpage{
+    left: 3px;
 }
 
 span.unlockedDate div{

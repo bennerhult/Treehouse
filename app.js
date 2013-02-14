@@ -1141,7 +1141,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                         + myPercentageFinished
                                                         + '%;"></span></div>'
                                                     if(myPercentageFinished >= 100) {
-                                                        achievementDesc += '<span class="unlockedDate"><div>Unlocked <br/>' +  moment(latestProgress.latestUpdated).format("MMM Do YYYY")  + '</div></span>'
+                                                        achievementDesc += '<span class="unlockedDate achievementpage"><div>Unlocked <br/>' +  moment(latestProgress.latestUpdated).format("MMM Do YYYY")  + '</div></span>'
                                                     }
                                                     achievementDesc += '</div><div class="clear"></div>'
 
