@@ -36,9 +36,16 @@ body{
 
 #fbLike{
     padding-top: 20px;
+    float: left;
+    margin-right: 20px;
 }
 
 #tweetTreehouse{
+    margin-top: 20px;
+}
+
+#tweetAchievement{
+    float: left;
     margin-top: 20px;
 }
 

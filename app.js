@@ -1062,7 +1062,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                             goalTextsText += goalText
                                             if (index == goalTexts.length - 1) {
                                                 var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100
-                                                achievementDesc += '<div class="achievement-info"><div class="test"><div id="userarea"><img src="content/img/user_has_no_image.jpg" /><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentAchievement.createdBy + '\', ' + checkingOtherPersonsAchievement +')">' + creatorName + '</a><p>shared an achievement with you</p></div>'
+                                                achievementDesc += '<div class="achievement-info"><div class=""><div id="userarea"><img src="content/img/user_has_no_image.jpg" /><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentAchievement.createdBy + '\', ' + checkingOtherPersonsAchievement +')">' + creatorName + '</a><p>shared an achievement with you</p></div>'
                                                 if (!checkingOtherPersonsAchievement) {
                                                     achievementDesc += '<div class="actionmenu"><ul><li><a href="javascript:void(0)" onclick="confirmAchievement(\'' + currentAchievement._id + '\', \'' + achieverId + '\')"><img src="content/img/challengeaccepted.png" alt="challenge accepted" /></a></li><li class=""><a href="javascript:void(0)" onclick="ignoreAchievement(\'' + currentAchievement._id + '\', \'' + achieverId + '\')"><img src="content/img/ignore.png" alt="Ignore" /></a></li></ul></div>'
                                                 }
@@ -1131,7 +1131,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                         achievementDesc += '<p id="achievementDescription">'
                                                         + currentAchievement.description
                                                         + '</p>'
-                                                        + '<div id="fbLike" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="150px" data-show-faces="false" font="segoe ui"></div></div>'
+
                                                         + '</div>'
                                                         + '<div class="imagearea"><img src="'
                                                         + currentAchievement.imageURL
@@ -1152,12 +1152,12 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                     achievementDesc += goalTextsText
                                                     achievementDesc += '</div>'
 
-                                                    achievementDesc += '<div id="sharer-container"></div><div id="compare-container"></div></div>'
-                                                    achievementDesc += '<br />'
+                                                    achievementDesc += '<div id="sharer-container"></div><div id="compare-container"></div>'
+                                                    achievementDesc += '<div id="fbLike" style="overflow:visible;"><div class="fb-like" data-send="false" data-width="150px" data-show-faces="false" font="segoe ui"></div></div>'
                                                     achievementDesc += '<div id="tweetAchievement" style="overflow:visible;">'
                                                     achievementDesc += '<a href="https://twitter.com/share' + '?text=' + currentAchievement.title + '" class="twitter-share-button">Tweet</a>'
                                                     achievementDesc += '<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>'
-                                                    achievementDesc += '</div>'
+                                                    achievementDesc += '</div></div>'
                                                    response.write(JSON.stringify(achievementDesc))
                                                     response.end('\n', 'utf-8')
 
