@@ -349,6 +349,10 @@ body{
     color: #fff;
 }
 
+#emailForm #message{
+    font: 12px Verdana, Geneva, Arial, Helvetica, sans-serif;
+    color: #fff;
+}
 
 
 #emailForm input{
@@ -484,6 +488,7 @@ body{
     top: 0px;
     padding: 2px 4px;
     border-radius: 2px;
+
 }
 
 #menu ul li.icons div a{
@@ -760,6 +765,12 @@ body{
     color: #131213;
     float: left;
     font-size: 15px;
+}
+
+#message{
+    font-family: 'Philosopher', sans-serif;
+    font-size: 15px;
+    color: #131213;
 }
 
 #message .messagewrap .rightcontainer div.linkactions{
