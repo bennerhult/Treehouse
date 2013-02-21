@@ -62,7 +62,6 @@ function init(userId, friendShipRequests) {
 function fixMenu() {
     if (isiPhone){   //TODO eller stående iPade
         $('#menu').addClass('menu-fixed')
-        //$('#menuArea').addClass('menu-area-fixed')
     } else {
         $('#menu').addClass('menu-absolute')
     }
@@ -90,28 +89,6 @@ function setPublicMenu() {
         '</div>' + nl  +
         getTabMenu()
     $("#menuArea").html(menu)
-    fixMenu()
-}
-
-function setAchievementMenu(completed, achieverId, lookingAtFriend) {
-    var menu = '<div id="menu"><ul><li class="back"><a href="javascript:void(0)" onclick="openAchievements(' + completed + ', \'' + achieverId + '\', ' + lookingAtFriend + ')"><img src="content/img/back-1.png" alt=""/></a></li></ul></div>'
-    $("#menuArea").html(menu)
-    fixMenu()
-}
-
-function setCreateEditMenu(achievement) {
-    var text ='<div id="menu">' + nl  +
-        '<ul>' + nl  +
-        '<li class="back"><a href="javascript:void(0)" onclick="'
-    if (achievement) {
-        text += 'openAchievement(\'' + achievement._id + '\',\'' + currentUserId + '\', ' + false + ', ' +  false + ', ' + false + ', ' + false +  ')'
-    } else {
-        text += 'openAchievements(false, \'' + currentUserId + '\', false)'
-    }
-    text+='"><img src="content/img/back-1.png" alt=""/></a></li>' + nl  +
-        '</ul>' + nl  +
-        '</div>'
-    $("#menuArea").html(text)
     fixMenu()
 }
 

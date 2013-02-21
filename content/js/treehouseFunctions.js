@@ -445,14 +445,14 @@ function getAchievementsFromServer(completed, achieverId, lookingAtFriend, callb
 }
 
 /******************  share functions  ******************/
-function openShareNotification(achievementId, achieverId, sharerId, lookingAtFriend) {
-    insertContent(getAchievementContent(), setAchievementMenu(false, achieverId, lookingAtFriend), getNotification(achievementId, sharerId, achieverId))
+function openShareNotification(achievementId, achieverId, sharerId) {
+    insertContent(getAchievementContent(), setDefaultMenu(), getNotification(achievementId, sharerId, achieverId))
 }
 
 /******************  achievement functions  ******************/
-function openAchievement(achievementId, achieverId, publiclyVisible, completed, lookingAtFriend) {
+function openAchievement(achievementId, achieverId, publiclyVisible) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + achieverId)
-    insertContent(getAchievementContent(), setAchievementMenu(completed, achieverId, lookingAtFriend), getAchievement(achievementId, achieverId, publiclyVisible))
+    insertContent(getAchievementContent(), getAchievement(achievementId, achieverId, publiclyVisible))
 }
 
 function getNotification(achievementId, sharerId, achieverId) {
@@ -721,7 +721,7 @@ function editAchievement(userId) {
     editAchievementOnServer(
         function(data) {
             insertContent(getNewAchievementContent(data, userId))
-            setCreateEditMenu(data)
+            setDefaultMenu()
         }
     )
 }
