@@ -76,7 +76,11 @@ function setEmptyMenu() {
 function setDefaultMenu() {
     var menu = '<div id="menu"><ul>'
     menu +='<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>'
-    menu +='<li class="icons"><div><a href="#"><img src="content/img/friendsicon.png" alt="" /><span>1</span></a></div>'
+    menu +='<li class="icons"><div><a href="javascript:void(0)" onclick="openFriends()"><img src="content/img/friendsicon.png" alt="" />'
+    if (nrOfFriendShipRequests > 0) {
+        menu += '<span>' + nrOfFriendShipRequests + '</span>'
+    }
+    menu += '</a></div>'
     menu += '<div class="last"><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><img src="content/img/homeicon.png" alt="" /></a></div></li></ul></div>' + getTabMenu()
     $("#menuArea").html(menu)
     fixMenu()
@@ -343,13 +347,7 @@ function getTabMenu() {
     var menu = '<div id="tab-menu" class="slider-menu" style="display:none;">' + nl +
            '<ul>'
      if (loggedIn) {
-         menu +=    '<li><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><span><nobr>My achievements</nobr></span></a></li>'+ nl +
-                    '<li id="friendRequestRow"><a href="javascript:void(0)" onclick="openFriends()"><span>Friends'
-         if (nrOfFriendShipRequests > 0) {
-             menu += ' (' + nrOfFriendShipRequests + ')'
-         }
-         menu +=    '</span></a></li>' + nl +
-                    '<li><a href="javascript:void(0)" onclick="openUser()"><span>User</span></a></li>' +  nl +
+         menu +=    '<li><a href="javascript:void(0)" onclick="openUser()"><span>User</span></a></li>' +  nl +
                     '<li class="last"><a href="javascript:void(0)" onclick="signout()"><span>Sign out</span></a></li>'
      }  else {
          menu +=    '<li class="last"><a href="javascript:void(0)" onclick="showSignin()"><span><nobr>Sign in / Sign up</nobr></span></a></li>'
