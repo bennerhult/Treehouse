@@ -465,18 +465,35 @@ body{
     padding-right: 5px;
 }
 
-#menu ul li.logotext{
-
+#menu ul li.icons{
     width: 100%;
     text-align: center;
 }
 
-#menu ul li.logotext p{
-    font-size: 1.5em;
-    color: #fff;
-    padding-bottom: 0px;
-    padding-top: 4px;
+#menu ul li.icons div{
+    display: inline;
+    margin-right: 0px;
+    padding-top: 2px;
+    position: relative;
 }
+#menu ul li.icons div span{
+    background-color: #222222;
+    display: block;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    padding: 2px 4px;
+    border-radius: 2px;
+}
+
+#menu ul li.icons div a{
+    color: #ffffff;
+}
+
+#menu ul li.icons div.last{
+    margin-right: 0px;
+}
+
 
 #menu ul li.back{
     text-align: left;

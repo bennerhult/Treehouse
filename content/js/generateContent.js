@@ -76,8 +76,9 @@ function setEmptyMenu() {
 
 function setDefaultMenu() {
     var menu = '<div id="menu"><ul>'
-    menu += '<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>'
-    menu +=  '<li class="logotext"><p>treehouse</p></li></ul></div>' + getTabMenu()
+    menu +='<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>'
+    menu +='<li class="icons"><div><a href="#"><img src="content/img/friendsicon.png" alt="" /><span>1</span></a></div>'
+    menu += '<div class="last"><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><img src="content/img/homeicon.png" alt="" /></a></div></li></ul></div>' + getTabMenu()
     $("#menuArea").html(menu)
     fixMenu()
 }
@@ -85,8 +86,7 @@ function setDefaultMenu() {
 function setPublicMenu() {
     var menu = '<div id="menu">' + nl  +
         '<ul>' + nl  +
-        '<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>' +
-        '<li class="logotext"><p>treehouse</p></li></ul>' + nl  +
+        '<li class="icons"><a href="javascript:void(0)" onclick="showSignin()"><img src="content/img/signin.png" alt="" /></a></li></ul>' + nl  +
         '</div>' + nl  +
         getTabMenu()
     $("#menuArea").html(menu)
