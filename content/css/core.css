@@ -466,7 +466,7 @@ body{
     padding-top: 4px;
     float: left;
     padding-bottom: 2px;
-    padding-right: 5px;
+    /*padding-right: 5px;*/
 }
 
 #menu ul li.icons{
@@ -480,14 +480,57 @@ body{
     padding-top: 2px;
     position: relative;
 }
+
+#menu ul li.icons div img{
+    padding: 0px 4px;
+    -moz-box-shadow: inset 0 0 5px #ccc;
+    -webkit-box-shadow: inset 0 0 5px #ccc;
+    box-shadow: inset 0 0 5px #ccc;
+    border: 1px solid #5a5b5b;
+}
+
+#menu ul li.icons div.selected img{
+    background-color: #272929;
+}
+
+
+#menu ul li.icons div:first-child img{
+
+    border-bottom-left-radius: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    -moz-border-radius-bottomleft: 3px;
+
+    border-top-left-radius: 3px;
+    -webkit-border-top-left-radius: 3px;
+    -moz-border-radius-topleft: 3px;
+    border-right: 0px;
+
+}
+
+#menu ul li.icons div:last-child img{
+     border-bottom-right-radius: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+    -moz-border-radius-bottomright: 3px;
+
+    border-top-right-radius: 3px;
+    -webkit-border-top-right-radius: 3px;
+    -moz-border-radius-topright: 3px;
+
+}
+
+
+
 #menu ul li.icons div span{
-    background-color: #222222;
+    background-color: #a90505;
     display: block;
     position: absolute;
-    left: 0px;
-    top: 0px;
+    left: 4px;
+    top: -4px;
     padding: 2px 4px;
     border-radius: 2px;
+    -moz-box-shadow: inset 0 0 5px #fff;
+    -webkit-box-shadow: inset 0 0 5px #fff;
+    box-shadow: inset 0 0 5px #fff;
 
 }
 
@@ -495,20 +538,11 @@ body{
     color: #ffffff;
 }
 
-#menu ul li.icons div.last{
-    margin-right: 0px;
-}
-
-
-#menu ul li.back{
-    text-align: left;
-    padding-left: 5%;
-}
 
 
 #menu ul li#menuToggle{
     position: absolute;
-    left: 5%;
+    right: 5%;
     top: 0px;
 }
 
@@ -577,7 +611,7 @@ body{
     z-index: 20;
     position: absolute;
     top: 150px;
-    left: 5%;
+    right: 5%;
     -moz-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
     -webkit-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
     box-shadow:  1px 1px 5px rgba(0,0,0,0.5);

@@ -81,7 +81,7 @@ function setDefaultMenu() {
         menu += '<span>' + nrOfFriendShipRequests + '</span>'
     }
     menu += '</a></div>'
-    menu += '<div class="last"><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><img src="content/img/homeicon.png" alt="" /></a></div></li></ul></div>' + getTabMenu()
+    menu += '<div class=""><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><img src="content/img/homeicon.png" alt="" /></a></div></li></ul></div>' + getTabMenu()
     $("#menuArea").html(menu)
     fixMenu()
 }
