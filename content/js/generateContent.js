@@ -75,8 +75,8 @@ function setEmptyMenu() {
 
 function setDefaultMenu() {
     var menu = '<div id="menu"><ul>'
-    menu +='<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>'
     menu +='<li class="icons"><div><a href="javascript:void(0)" onclick="openFriends()"><img src="content/img/friendsicon.png" alt="" />'
+    menu +='<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>'
     if (nrOfFriendShipRequests > 0) {
         menu += '<span>' + nrOfFriendShipRequests + '</span>'
     }
