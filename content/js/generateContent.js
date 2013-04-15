@@ -65,6 +65,8 @@ function fixMenu() {
     } else {
         $('#menu').addClass('menu-absolute')
     }
+    $('#menuIconFriend').attr("class","")
+    $('#menuIconTree').attr("class","")
 }
 
 function setEmptyMenu() {
@@ -75,8 +77,8 @@ function setEmptyMenu() {
 
 function setDefaultMenu() {
     var menu = '<div id="menu"><ul>'
-    menu +='<li class="icons"><div><a href="javascript:void(0)" onclick="openFriends()"><img src="content/img/friendsicon.png" alt="" />'
     menu +='<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>'
+    menu +='<li class="icons"><div><a href="javascript:void(0)" onclick="openFriends()"><img src="content/img/friendsicon.png" alt="" />'
     if (nrOfFriendShipRequests > 0) {
         menu += '<span>' + nrOfFriendShipRequests + '</span>'
     }
@@ -296,6 +298,7 @@ function getFriendsFromServer(callback) {
 
 function openFriends() {
     $('#tab-menu').hide('fast')
+    $('#menuIconFriend').attr("class","selected")
     getFriendsContent(function(friendsContent) {
         insertContent(friendsContent, setDefaultMenu())
     })

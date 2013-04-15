@@ -395,6 +395,7 @@ function confirmFriendRequestOnServer(friendship_id, callback) {
 /******************  achievements functions  ******************/
 function openAchievements(completed, achieverId, lookingAtFriend) {
     window.history.pushState(null, null, "/")
+    $('#menuIconTree').attr("class","selected")
     $("#page-login").attr("id","page");
     $("#app-container-login").attr("id","app-container");
     getAchievementsContent(achieverId, lookingAtFriend, function(achievementsContent) {
