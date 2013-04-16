@@ -65,8 +65,7 @@ function fixMenu() {
     } else {
         $('#menu').addClass('menu-absolute')
     }
-    $('#menuIconFriend').attr("class","")
-    $('#menuIconTree').attr("class","")
+
 }
 
 function setEmptyMenu() {
@@ -75,20 +74,36 @@ function setEmptyMenu() {
     fixMenu()
 }
 
-function setDefaultMenu() {
+function setDefaultMenu(activePage) {
     var menu = '<div id="menu"><ul>'
     menu +='<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>'
-    menu +='<li class="icons"><div><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><img src="content/img/homeicon.png" alt="" />'
+    menu +='<li class="icons"><div id="menuIconTree"><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><img src="content/img/homeicon.png" alt="" />'
     menu += '</a></div>'
-    menu += '<div class=""><a href="javascript:void(0)" onclick="openFriends()"><img src="content/img/friendsicon.png" alt="" />'
+    menu += '<div id="menuIconFriend"><a href="javascript:void(0)" onclick="openFriends()"><img src="content/img/friendsicon.png" alt="" />'
     if (nrOfFriendShipRequests > 0) {
         menu += '<span>' + nrOfFriendShipRequests + '</span>'
     }
     menu += '</a></div></li></ul></div>' + getTabMenu()
     $("#menuArea").html(menu)
     fixMenu()
+    markActivePage(activePage)
 }
 
+function markActivePage(activePage) {
+    $('#menuIconFriend').attr("class","")
+    $('#menuIconTree').attr("class","")
+    switch (activePage) {
+        case 'friends' : $('#menuIconFriend').attr("class","selected")
+            break
+        //case 'user' : $('#menuIconFriend').attr("class","selected")
+        //case 'createAchievement' : $('#menuIconTree').attr("class","selected")
+        //case 'editAchievement' : $('#menuIconTree').attr("class","selected")
+        // case 'achievement' : $('#menuIconTree').attr("class","selected")
+        case 'achievements' : $('#menuIconTree').attr("class","selected")
+            break
+        //case 'notification' : $('#menuIconTree').attr("class","selected")
+    }
+}
 function setPublicMenu() {
     var menu = '<div id="menu">' + nl  +
         '<ul>' + nl  +
@@ -299,16 +314,15 @@ function getFriendsFromServer(callback) {
 
 function openFriends() {
     $('#tab-menu').hide('fast')
-    $('#menuIconFriend').attr("class","selected")
     getFriendsContent(function(friendsContent) {
-        insertContent(friendsContent, setDefaultMenu())
+        insertContent(friendsContent, setDefaultMenu('friends'))
     })
 }
 
 function openUser() {
     $('#tab-menu').hide('fast')
     getUserContent(function(userContent) {
-        insertContent(userContent, setDefaultMenu())
+        insertContent(userContent, setDefaultMenu('user'))
     })
 }
 
