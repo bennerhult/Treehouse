@@ -78,12 +78,13 @@ function setEmptyMenu() {
 function setDefaultMenu() {
     var menu = '<div id="menu"><ul>'
     menu +='<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>'
-    menu +='<li class="icons"><div><a href="javascript:void(0)" onclick="openFriends()"><img src="content/img/friendsicon.png" alt="" />'
+    menu +='<li class="icons"><div><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><img src="content/img/homeicon.png" alt="" />'
+    menu += '</a></div>'
+    menu += '<div class=""><a href="javascript:void(0)" onclick="openFriends()"><img src="content/img/friendsicon.png" alt="" />'
     if (nrOfFriendShipRequests > 0) {
         menu += '<span>' + nrOfFriendShipRequests + '</span>'
     }
-    menu += '</a></div>'
-    menu += '<div class=""><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><img src="content/img/homeicon.png" alt="" /></a></div></li></ul></div>' + getTabMenu()
+    menu += '</a></div></li></ul></div>' + getTabMenu()
     $("#menuArea").html(menu)
     fixMenu()
 }
