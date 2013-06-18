@@ -135,9 +135,9 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
                 '<div id="fb-root"></div>' + nl +
                 '<div id="page">' + nl +
 
-                 '<canvas id="world" style="z-index:998; position: absolute; left: 0px; top: 0px;"><p class="noCanvas">You need a <a href="http://www.google.com/chrome">modern browser</a> to view this.</p></canvas>' +
+                 '<canvas id="world" width="100%" height="100%" style="z-index:998; position: absolute; left: 0px; top: 0px;"><p class="noCanvas">You need a <a href="http://www.google.com/chrome">modern browser</a> to view this.</p></canvas>' +
 
-                   '<div id="web-menu">' + nl +
+    '<div id="web-menu">' + nl +
                     '<ul>' + nl +
                         '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart(), 0)"><span class="selected"><img src="content/img/logo-small.png" /></span></a></li>'  + nl +
                         '<li><a href="javascript:void(0)" onclick="showInfo(getAchievementInfo(), 1)"><span>Achievements</span></a> </li>'  + nl +

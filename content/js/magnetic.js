@@ -122,15 +122,19 @@ Magnetic=new (function(){
     function C(){
         /*i=r?window.innerWidth:800;
         j=r?window.innerHeight:550;*/
-        i = window.innerWidth; //adjusting for margins. Check on other than desktop!
-        j = window.innerHeight;
+        i =  $("#web-menu").width(); //adjusting for margins. Check on other than desktop!     //get correct wodth
+        j = $(window).height();// $("body").height();
+
         e.width=i;
         e.height=j;
         var a=(window.innerWidth-i)*0.5,
             b=(window.innerHeight-j)*0.5;
         e.style.position="absolute";
-        e.style.left=a+"px";
-        e.style.top=b+"px";
+        // e.style.left=a+"px";
+        // e.style.top=b+"px";
+
+         e.style.left=0+"px";
+        e.style.top=0+"px";
     }
 
     function P(){
