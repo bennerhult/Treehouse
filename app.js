@@ -1018,6 +1018,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
     var myQuantityFinished = 0
     var goalTexts = []
     var achievementDesc = ''
+
     var checkingOtherPersonsAchievement = !(achieverId === userId)
     var achievementUser_id
     if (isNotificationView) {

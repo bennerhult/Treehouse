@@ -56,6 +56,7 @@ function topAppPagePart() {
         tab + '<script type="application/javascript" src="content/js/generateContent.js"></script>' + nl +
         tab + '<script type="application/javascript" src="content/js/info.js"></script>' + nl +
         tab + '<script type="application/javascript" src="content/js/treehouseFunctions.js"></script>' + nl +
+        tab + '<script type="application/javascript" src="content/js/magnetic.js"></script>' + nl +
         tab + '<link rel="stylesheet" href="content/css/add2home.css">' + nl +
         tab + '<link rel="stylesheet" href="content/css/core.css" media="screen, projection, print" />' + nl +
         tab + '<link href="http://fonts.googleapis.com/css?family=Philosopher" rel="stylesheet" type="text/css">' + nl +
@@ -118,6 +119,7 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
                     tab + '<script type="application/javascript" src="content/js/generateContent.js"></script>' + nl +
                     tab + '<script type="application/javascript" src="content/js/info.js"></script>' + nl +
                     tab + '<script type="application/javascript" src="content/js/treehouseFunctions.js"></script>' + nl +
+                    tab + '<script type="application/javascript" src="content/js/magnetic.js"></script>' + nl +
                     tab + '<link rel="stylesheet" href="content/css/add2home.css">' + nl +
                     tab + '<link rel="stylesheet" href="content/css/core.css" media="screen, projection, print" />' + nl +
                     tab + '<link href="http://fonts.googleapis.com/css?family=Philosopher" rel="stylesheet" type="text/css">' + nl +
@@ -126,12 +128,16 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
                     tab + '$(document).ready(function() {' + nl  +
                     tab + 'init(\'' + userId  + '\', \'' + nrOfFriendShipRequests  + '\')' + nl  +
                     tab + 'rememberMe()'   +nl +
+                    tab + 'Magnetic.init()' + nl +
                     tab   + 'setTimeout(function(){addToHome.show(false)}, 100)})</script>' + nl +
                 tab + '</head>' + nl +
                 tab + ' <body>' + nl +
                 '<div id="fb-root"></div>' + nl +
                 '<div id="page">' + nl +
-                '<div id="web-menu">' + nl +
+
+                 '<canvas id="world" style="z-index:998; position: absolute; left: 0px; top: 0px;"><p class="noCanvas">You need a <a href="http://www.google.com/chrome">modern browser</a> to view this.</p></canvas>' +
+
+                   '<div id="web-menu">' + nl +
                     '<ul>' + nl +
                         '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart(), 0)"><span class="selected"><img src="content/img/logo-small.png" /></span></a></li>'  + nl +
                         '<li><a href="javascript:void(0)" onclick="showInfo(getAchievementInfo(), 1)"><span>Achievements</span></a> </li>'  + nl +
@@ -183,6 +189,7 @@ function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUr
             tab + '<script type="application/javascript" src="content/js/generateContent.js"></script>' + nl +
             tab + '<script type="application/javascript" src="content/js/info.js"></script>' + nl +
             tab + '<script type="application/javascript" src="content/js/treehouseFunctions.js"></script>' + nl +
+            tab + '<script type="application/javascript" src="content/js/magnetic.js"></script>' + nl +
             tab + '<link rel="stylesheet" href="content/css/add2home.css">' + nl +
             tab + '<link rel="stylesheet" href="content/css/core.css" media="screen, projection, print" />' + nl +
             tab + '<link href="http://fonts.googleapis.com/css?family=Philosopher" rel="stylesheet" type="text/css">' + nl +
