@@ -68,26 +68,29 @@ Magnetic=new (function(){
         }
     }
 
-    function J(a){
+    //key down
+    /*function J(a){
         if(a.keyCode==37)s(-1);
         else a.keyCode==39&&s(1)
-    }
+    } */
 
-    function K(a){
+    //touch
+    /*function K(a){
         if(a.touches.length==1){a.preventDefault();
             n=a.touches[0].pageX-(window.innerWidth-i)*0.5;
             o=a.touches[0].pageY-(window.innerHeight-j)*0.5;
             drawMagnet()
         }
-    }
+    } */
 
-    function L(a){
+    //touch
+    /*function L(a){
         if(a.touches.length==1){
             a.preventDefault();
             n=a.touches[0].pageX-(window.innerWidth-i)*0.5;
             o=a.touches[0].pageY-(window.innerHeight-j)*0.5
         }
-    }
+    } */
 
     function M(){
         w=false;
@@ -119,7 +122,7 @@ Magnetic=new (function(){
     function C(){
         /*i=r?window.innerWidth:800;
         j=r?window.innerHeight:550;*/
-        i = window.innerWidth;
+        i = window.innerWidth; //adjusting for margins. Check on other than desktop!
         j = window.innerHeight;
         e.width=i;
         e.height=j;
@@ -138,7 +141,8 @@ Magnetic=new (function(){
         var a,b,c,h,D,u;
         a=-1;
         h=0;
-        for(u=f.length; h<u; h++){
+        //Draw magnets
+        /*for(u=f.length; h<u; h++){
             b=f[h];
             if(b.dragging){
                 b.position.x+=(n-b.position.x)*0.2;
@@ -158,7 +162,7 @@ Magnetic=new (function(){
             d.arc(b.position.x,b.position.y,b.size,0,Math.PI*2,true);
             d.fill();
             b.connections=0
-        }
+        }   */
         a!=-1&&f.length>1&&f.splice(a,1);
         c=0;
         for(D=q.length; c<D; c++){
@@ -217,9 +221,11 @@ Magnetic=new (function(){
             //e.addEventListener("touchstart",K,false);
             //document.addEventListener("touchmove",L,false);
             //document.addEventListener("touchend",M,false);
-            for(var a=0; a<4; a++)z({
+
+            //create random magnets
+            /*for(var a=0; a<4; a++)z({
                 x:(i-300)*0.5+Math.random()*300,y:(j-300)*0.5+Math.random()*300
-            });
+            })*/
             C();
             setInterval(P,1E3/30)
         }
