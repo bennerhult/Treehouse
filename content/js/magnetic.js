@@ -11,6 +11,7 @@ Magnetic=new (function(){
            c.position.y=a.y;
            c.shift.x=a.x;
            c.shift.y=a.y;
+          c.size = 1.5+Math.random()*3.5;; //ERIK
            c.color=k[g].particleFill;
            q.push(c)
        }
@@ -79,47 +80,12 @@ Magnetic=new (function(){
         }
     }
 
-    //key down
-    /*function J(a){
-        if(a.keyCode==37)s(-1);
-        else a.keyCode==39&&s(1)
-    } */
-
-    //touch
-    /*function K(a){
-        if(a.touches.length==1){a.preventDefault();
-            n=a.touches[0].pageX-(window.innerWidth-i)*0.5;
-            o=a.touches[0].pageY-(window.innerHeight-j)*0.5;
-            drawMagnet()
-        }
-    } */
-
-    //touch
-    /*function L(a){
-        if(a.touches.length==1){
-            a.preventDefault();
-            n=a.touches[0].pageX-(window.innerWidth-i)*0.5;
-            o=a.touches[0].pageY-(window.innerHeight-j)*0.5
-        }
-    } */
-
     function M(){
         w=false;
         for(var a=0,b=f.length; a<b; a++){
             magnet=f[a];
             magnet.dragging=false}
     }
-
-    //keyboardLeft
-    /*function N(a){a.preventDefault();
-        s(-1)
-    } */
-
-    //keyboardRight
-    /*function O(a) {
-        a.preventDefault();
-        s(1)
-    } */
 
     //change css
     /*function s(a){
@@ -147,9 +113,11 @@ Magnetic=new (function(){
         e.style.top=0+"px";
     }
 
+   var counter = 0
+
     function P(){
         if(k[g].useFade){
-            d.fillStyle=k[g].fadeFill;
+           d.fillStyle=k[g].fadeFill;
             d.fillRect(0,0,d.canvas.width,d.canvas.height)
         } else d.clearRect(0,0,e.width,e.height);
         var a,b,c,h,D,u;
@@ -181,6 +149,7 @@ Magnetic=new (function(){
         c=0;
         for(D=q.length; c<D; c++){
             a=q[c];
+
             var y=-1,E=-1,l=null,v={x:0,y:0};
             h=0;
             for(u=f.length; h<u; h++){
@@ -203,23 +172,54 @@ Magnetic=new (function(){
             a.position.x=Math.max(Math.min(a.position.x,i-a.size/2),a.size/2);
             a.position.y=Math.max(Math.min(a.position.y,j-a.size/2),a.size/2);
             a.orbit+=(l.orbit-a.orbit)*0.1;
+
+          //  alert(a.size)
             d.beginPath();
             d.fillStyle=a.color;
             d.arc(a.position.x,a.position.y,a.size/2,0,Math.PI*2,true);
             d.fill()
+
+            if (a.size > 0.1) {
+                a.size -=  0.05
+            } else {
+                counter++
+                if (counter >= 2500) {
+                    q.splice(0, 200);
+                    counter = 0
+
+                }
+                //a.color = "000"
+                //var index = q.indexOf(a);
+                //q.splice(index, 1);
+
+
+            }
         }
+       // d.globalAlpha = (d.globalAlpha - 0.01)
+        //alert(d.globalAlpha)
+
     }
 
+    //test later
+    function get_random_color() {
+        var letters = '0123456789ABCDEF'.split('');
+        var color = '#';
+        for (var i = 0; i < 6; i++ ) {
+            color += letters[Math.round(Math.random() * 15)];
+        }
+        return color;
+    }
     function B(a,b){
         var c=b.x-a.x,h=b.y-a.y;
         return Math.sqrt(c*c+h*h)
     }
 
     var mobileClient=navigator.userAgent.toLowerCase().indexOf("android")!=-1||navigator.userAgent.toLowerCase().indexOf("iphone")!=-1||navigator.userAgent.toLowerCase().indexOf("ipad")!=-1,
-        i=mobileClient?window.innerWidth:800,j=mobileClient?window.innerHeight:550,F=20,p=300,e,d,t,q=[],f=[],n=window.innerWidth-i,o=window.innerHeight-j,w=false,x=0,g=0,k=[{glowA:"rgba(233,143,154,0.3)",glowB:"rgba(0,143,154,0.0)",particleFill:"#ffffff",fadeFill:"rgba(22,22,22,.6)",useFade:false},{glowA:"rgba(0,200,250,0.3)",glowB:"rgba(0,200,250,0.0)",particleFill:"#ffffff",fadeFill:"rgba(22,22,22,.6)",useFade:true},{glowA:"rgba(230,0,0,0.3)",glowB:"rgba(230,0,0,0.0)",particleFill:"#ffffff",fadeFill:"rgba(11,11,11,.6)",useFade:true},{glowA:"rgba(0,230,0,0.3)",glowB:"rgba(0,230,0,0.0)",
+        i=mobileClient?window.innerWidth:800,j=mobileClient?window.innerHeight:550,F=200,p=300,e,d,t,q=[],f=[],n=window.innerWidth-i,o=window.innerHeight-j,w=false,x=0,g=0,k=[{glowA:"rgba(233,143,154,0.3)",glowB:"rgba(0,143,154,0.0)",particleFill:"#ffffff",fadeFill:"rgba(22,22,22,.6)",useFade:false},{glowA:"rgba(0,200,250,0.3)",glowB:"rgba(0,200,250,0.0)",particleFill:"#ffffff",fadeFill:"rgba(22,22,22,.6)",useFade:true},{glowA:"rgba(230,0,0,0.3)",glowB:"rgba(230,0,0,0.0)",particleFill:"#ffffff",fadeFill:"rgba(11,11,11,.6)",useFade:true},{glowA:"rgba(0,230,0,0.3)",glowB:"rgba(0,230,0,0.0)",
     particleFill:"rgba(0,230,0,0.7)",fadeFill:"rgba(22,22,22,.6)",useFade:true},{glowA:"rgba(0,0,0,0.3)",glowB:"rgba(0,0,0,0.0)",particleFill:"#333333",fadeFill:"rgba(255,255,255,.6)",useFade:true},{glowA:"rgba(0,0,0,0.0)",glowB:"rgba(0,0,0,0.0)",particleFill:"#333333",fadeFill:"rgba(255,255,255,.2)",useFade:true},{glowA:"rgba(230,230,230,0)",glowB:"rgba(230,230,230,0.0)",particleFill:"#ffffff",fadeFill:"",useFade:false}];
 
     this.init=function(){
+
         $("#world").css( 'pointer-events', 'none' );
         //$("#world").css('background-color', 'black')
         document.body.addEventListener ("mousedown",fire,false);
@@ -249,7 +249,7 @@ Magnetic=new (function(){
 });
 
 function Particle(){
-    this.size=0.5+Math.random()*3.5;
+    this.size=1.5+Math.random()*3.5;
     this.position={x:0,y:0};
     this.shift={x:0,y:0};
     this.angle=0;
