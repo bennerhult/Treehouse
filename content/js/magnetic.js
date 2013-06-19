@@ -22,7 +22,7 @@ Magnetic=new (function(){
     }
 
 
-    function H(a){
+    function fire(a){
         a.preventDefault();
         drawMagnet(a)
     }
@@ -33,9 +33,10 @@ Magnetic=new (function(){
         //if((new Date).getTime()-x<1300){
         //z({x:n,y:o});
 
-        z({x: event.x,y: event.y});
+        z({x: event.x - getOffset(e).left,y: event.y - getOffset(e).top});
             //x=0
         //}
+       // alert(event.x + ", " + getOffset( e ).left  )
         x=(new Date).getTime();
         for(var a=0,b=f.length; a<b; a++){
             magnet=f[a];
@@ -43,6 +44,16 @@ Magnetic=new (function(){
                 magnet.dragging=true; break
             }
         }
+    }
+    function getOffset( el ) {
+        var _x = 0;
+        var _y = 0;
+        while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
+            _x += el.offsetLeft - el.scrollLeft;
+            _y += el.offsetTop - el.scrollTop;
+            el = el.offsetParent;
+        }
+        return { top: _y, left: _x };
     }
 
     /*
@@ -119,12 +130,11 @@ Magnetic=new (function(){
         for(var b=q.length; a<b; a++)q[a].color=k[g].particleFill
     }  */
 
-    function C(){
+    function drawCanvas(){
         /*i=r?window.innerWidth:800;
         j=r?window.innerHeight:550;*/
-        i =  $("#web-menu").width(); //adjusting for margins. Check on other than desktop!     //get correct wodth
-        j = $(window).height();// $("body").height();
-
+        i = $("#web-menu").width();
+        j= $("body").height();
         e.width=i;
         e.height=j;
         var a=(window.innerWidth-i)*0.5,
@@ -133,7 +143,7 @@ Magnetic=new (function(){
         // e.style.left=a+"px";
         // e.style.top=b+"px";
 
-         e.style.left=0+"px";
+        e.style.left=0+"px";
         e.style.top=0+"px";
     }
 
@@ -211,17 +221,18 @@ Magnetic=new (function(){
 
     this.init=function(){
         $("#world").css( 'pointer-events', 'none' );
-        document.body.addEventListener ("mousedown",H,false);
+        //$("#world").css('background-color', 'black')
+        document.body.addEventListener ("mousedown",fire,false);
         e=document.getElementById("world");
         if(e&&e.getContext){
             d=e.getContext("2d");
             if(mobileClient) e.style.border="none";
 
             //document.addEventListener("mousemove",G,false);
-            e.addEventListener("mousedown",H,false);
-            document.addEventListener("mouseup",I,false);
+            //e.addEventListener("mousedown",fire,false);
+            //document.addEventListener("mouseup",I,false);
             //document.addEventListener("keydown",J,false);
-            window.addEventListener("resize",C,false);
+            window.addEventListener("resize",drawCanvas,false);
             //e.addEventListener("touchstart",K,false);
             //document.addEventListener("touchmove",L,false);
             //document.addEventListener("touchend",M,false);
@@ -230,7 +241,7 @@ Magnetic=new (function(){
             /*for(var a=0; a<4; a++)z({
                 x:(i-300)*0.5+Math.random()*300,y:(j-300)*0.5+Math.random()*300
             })*/
-            C();
+            drawCanvas();
             setInterval(P,1E3/30)
         }
 
