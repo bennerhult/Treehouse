@@ -173,7 +173,7 @@ Magnetic=new (function(){
             d.fill()
 
             if (a.size >= 0.1) {
-                a.size -=  0.05
+                a.size -=  0.1
             } else {
                 //if (c < (magnets.length * 200)) {
 
@@ -183,9 +183,6 @@ Magnetic=new (function(){
                     //alert('added' + minimized.length )
                     minimized.push(a)
                 }
-
-
-                //om man har flera magneter blir det fler än 200 magneter
                 //if (counter >= particles.length) {
                 if (minimized.length >= particles.length) {
                     //particles.splice(0, (magnets.length * 200));   //remove 200 particles
@@ -225,13 +222,22 @@ Magnetic=new (function(){
     }
 
     var mobileClient=navigator.userAgent.toLowerCase().indexOf("android")!=-1||navigator.userAgent.toLowerCase().indexOf("iphone")!=-1||navigator.userAgent.toLowerCase().indexOf("ipad")!=-1,
-        i=mobileClient?window.innerWidth:800,j=mobileClient?window.innerHeight:550,F=200,p=300,e,d,t,particles=[],magnets=[],n=window.innerWidth-i,o=window.innerHeight-j,w=false,x=0,styles=[{glowA:"rgba(233,143,154,0.3)",glowB:"rgba(0,143,154,0.0)",particleFill:"#ffffff",fadeFill:"rgba(22,22,22,.6)",useFade:false}];
+        i=mobileClient?window.innerWidth:800,j=mobileClient?window.innerHeight:550,F=100,p=300,e,d,t,particles=[],magnets=[],n=window.innerWidth-i,o=window.innerHeight-j,w=false,x=0,styles=[{glowA:"rgba(233,143,154,0.3)",glowB:"rgba(0,143,154,0.0)",particleFill:"#ffffff",fadeFill:"rgba(22,22,22,.6)",useFade:false}];
 
     this.init=function(){
 
         $("#world").css( 'pointer-events', 'none' );
         //$("#world").css('background-color', 'black')
-        document.body.addEventListener ("mousedown",fire,false);
+
+
+        //document.body.addEventListener ("mousedown",fire,false);
+
+        //document.body.addEventListener ("mousedown",fire,false);
+        var els=document.body.getElementsByTagName("a");
+        for(var i=0;i<els.length;i++){
+            els[i].addEventListener ("mousedown",fire,false);
+        }
+
         e=document.getElementById("world");
         if(e&&e.getContext){
             d=e.getContext("2d");
@@ -253,8 +259,7 @@ Magnetic=new (function(){
             drawCanvas();
             setInterval(P,1E3/30)
         }
-
-    }
+   }
 });
 
 function Particle(){
@@ -262,10 +267,10 @@ function Particle(){
     this.position={x:0,y:0};
     this.shift={x:0,y:0};
     this.angle=0;
-    this.speed=0.01+this.size/4*0.03;
-    this.force=1-Math.random()*0.11;
+    this.speed=0.06+this.size/4*0.03;
+    this.force=0.3-Math.random()*0.11;
     this.color="#ffffff";
-    this.orbit=1;
+    this.orbit=0.2;
     this.magnet=null
 }
 
@@ -276,5 +281,3 @@ function Magnet(){
     this.connections=0;
     this.size=1
 }
-
-//Magnetic.init();
