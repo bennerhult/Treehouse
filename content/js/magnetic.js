@@ -157,22 +157,25 @@ Magnetic=new (function(){
             }
             if(a.magnet==null||a.magnet!=l)a.magnet=l;
             l.connections+=1;
-            a.angle+=a.speed;
-            a.shift.x+=(l.position.x+v.x*6-a.shift.x)*a.speed;
-            a.shift.y+=(l.position.y+v.y*6-a.shift.y)*a.speed;
-            a.position.x=a.shift.x+Math.cos(c+a.angle)*a.orbit*a.force;
-            a.position.y=a.shift.y+Math.sin(c+a.angle)*a.orbit*a.force;
-            a.position.x=Math.max(Math.min(a.position.x,i-a.size/2),a.size/2);
-            a.position.y=Math.max(Math.min(a.position.y,j-a.size/2),a.size/2);
-            a.orbit+=(l.orbit-a.orbit)*0.1;
+            if (a.size > 0) {
+                a.angle+=a.speed;
+                a.shift.x+=(l.position.x+v.x*6-a.shift.x)*a.speed;
+                a.shift.y+=(l.position.y+v.y*6-a.shift.y)*a.speed;
+                a.position.x=a.shift.x+Math.cos(c+a.angle)*a.orbit*a.force;
+                a.position.y=a.shift.y+Math.sin(c+a.angle)*a.orbit*a.force;
+                a.position.x=Math.max(Math.min(a.position.x,i-a.size/2),a.size/2);
+                a.position.y=Math.max(Math.min(a.position.y,j-a.size/2),a.size/2);
+                a.orbit+=(l.orbit-a.orbit)*0.1;
+
 
           //  alert(a.size)
             d.beginPath();
             d.fillStyle=a.color;
             d.arc(a.position.x,a.position.y,a.size/2,0,Math.PI*2,true);
             d.fill()
+            }
 
-            if (a.size >= 0.1) {
+            if (a.size >= 0) {
                 a.size -=  0.1
             } else {
                 //if (c < (magnets.length * 200)) {
