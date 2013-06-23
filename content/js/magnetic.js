@@ -107,36 +107,12 @@ Magnetic=new (function(){
    var counter = 0
 
     function P(){
-        /*if(styles[0].useFade){
-           //d.fillStyle=styles[0].fadeFill;
-            //d.fillRect(0,0,d.canvas.width,d.canvas.height)
-        } else*/
         d.clearRect(0,0,e.width,e.height);
         var a,b,c,h,D,u;
         a=-1;
         h=0;
         //Draw magnets
-        /*for(u=magnets.length; h<u; h++){
-            b=magnets[h];
-            if(b.dragging){
-                b.position.x+=(n-b.position.x)*0.2;
-                b.position.y+=(o-b.position.y)*0.2
-            } else if (b.position.x<0||b.position.y<0||b.position.x>i||b.position.y>j) a=h;
-            b.size+=(b.connections/3-b.size)*0.05;
-            b.size=Math.max(b.size,2);
-            c=d.createRadialGradient(b.position.x,b.position.y,0,b.position.x,b.position.y,b.size*10);
-            c.addColorStop(0,styles[0].glowA);
-            c.addColorStop(1,styles[0].glowB);
-            d.beginPath();
-            d.fillStyle=c;
-            d.arc(b.position.x,b.position.y,b.size*10,0,Math.PI*2,true);
-            d.fill();
-            d.beginPath();
-            d.fillStyle=c;
-            d.arc(b.position.x,b.position.y,b.size,0,Math.PI*2,true);
-            d.fill();
-            b.connections=0
-        }   */
+
         a!=-1&&magnets.length>1&&magnets.splice(a,1);
         c=0;
         var minimized=[]
@@ -167,47 +143,24 @@ Magnetic=new (function(){
                 a.position.y=Math.max(Math.min(a.position.y,j-a.size/2),a.size/2);
                 a.orbit+=(l.orbit-a.orbit)*0.1;
 
-
-          //  alert(a.size)
-            d.beginPath();
-            d.fillStyle=a.color;
-            d.arc(a.position.x,a.position.y,a.size/2,0,Math.PI*2,true);
-            d.fill()
+                d.beginPath();
+                d.fillStyle=a.color;
+                d.arc(a.position.x,a.position.y,a.size/2,0,Math.PI*2,true);
+                d.fill()
             }
 
             if (a.size >= 0) {
                 a.size -=  0.1
             } else {
-                //if (c < (magnets.length * 200)) {
-
-                //}
-                //if (minimized.contains())
                 if (minimized.indexOf(a) == -1) {
-                    //alert('added' + minimized.length )
                     minimized.push(a)
                 }
-                //if (counter >= particles.length) {
                 if (minimized.length >= particles.length) {
-                    //particles.splice(0, (magnets.length * 200));   //remove 200 particles
-                    //c -= 200
-                    //counter = 0
                     particles.splice(0)
                     magnets.splice(0)
-                    //alert("particles.length: " + particles.length + ", c: " + c)
-                    //magnets.splice(a.magnet)
-                    //a.magnet = null;
-
                 }
-                //a.color = "000"
-                //var index = particles.indexOf(a);
-                //particles.splice(index, 1);
-
-
             }
         }
-       // d.globalAlpha = (d.globalAlpha - 0.01)
-        //alert(d.globalAlpha)
-
     }
 
     //test later
