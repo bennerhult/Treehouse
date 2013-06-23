@@ -193,6 +193,8 @@ Magnetic=new (function(){
         for(var i=0;i<els.length;i++){
             els[i].addEventListener ("mousedown",fire,false);
         }
+        //document.body.getElementById("menuIconTree").addEventListener("mousedown",Magnetic.fire,false);
+        //document.body.getElementById("menuIconTree").addEventListener("mousedown",fire,false);
 
         e=document.getElementById("world");
         if(e&&e.getContext){
