@@ -3,7 +3,7 @@ Magnetic=new (function(){
         var b=new Magnet; 
         b.position.x=a.x;
         b.position.y=a.y;
-        f.push(b);
+        magnets.push(b);
         a=b.position;
        for(b=0; b<F; b++){
            var c=new Particle;
@@ -12,8 +12,8 @@ Magnetic=new (function(){
            c.shift.x=a.x;
            c.shift.y=a.y;
           c.size = 1.5+Math.random()*3.5;; //ERIK
-           c.color=k[g].particleFill;
-           q.push(c)
+           c.color=styles[0].particleFill;
+           particles.push(c)
        }
     }
 
@@ -39,7 +39,7 @@ Magnetic=new (function(){
         //}
        // alert(event.x + ", " + getOffset( e ).left  )
         x=(new Date).getTime();
-        for(var a=0,b=f.length; a<b; a++){
+        for(var a=0,b=magnets.length; a<b; a++){
             magnet=f[a];
             if(B(magnet.position,{x:n,y:o})<magnet.orbit*0.5){
                 magnet.dragging=true; break
@@ -65,7 +65,7 @@ Magnetic=new (function(){
      x=0
      }
      x=(new Date).getTime();
-     for(var a=0,b=f.length; a<b; a++){
+     for(var a=0,b=magnets.length; a<b; a++){
      magnet=f[a];
      if(B(magnet.position,{x:n,y:o})<magnet.orbit*0.5){
      magnet.dragging=true; break}
@@ -74,7 +74,7 @@ Magnetic=new (function(){
      */
     function I(){
         w=false;
-        for(var a=0,b=f.length; a<b; a++){
+        for(var a=0,b=magnets.length; a<b; a++){
             magnet=f[a];
             magnet.dragging=false
         }
@@ -82,19 +82,10 @@ Magnetic=new (function(){
 
     function M(){
         w=false;
-        for(var a=0,b=f.length; a<b; a++){
+        for(var a=0,b=magnets.length; a<b; a++){
             magnet=f[a];
             magnet.dragging=false}
     }
-
-    //change css
-    /*function s(a){
-        g+=a;
-        g=g<0?k.length-1:g;
-        g=g>k.length-1?0:g;
-        a=0;
-        for(var b=q.length; a<b; a++)q[a].color=k[g].particleFill
-    }  */
 
     function drawCanvas(){
         /*i=r?window.innerWidth:800;
@@ -116,16 +107,17 @@ Magnetic=new (function(){
    var counter = 0
 
     function P(){
-        if(k[g].useFade){
-           d.fillStyle=k[g].fadeFill;
-            d.fillRect(0,0,d.canvas.width,d.canvas.height)
-        } else d.clearRect(0,0,e.width,e.height);
+        /*if(styles[0].useFade){
+           //d.fillStyle=styles[0].fadeFill;
+            //d.fillRect(0,0,d.canvas.width,d.canvas.height)
+        } else*/
+        d.clearRect(0,0,e.width,e.height);
         var a,b,c,h,D,u;
         a=-1;
         h=0;
         //Draw magnets
-        /*for(u=f.length; h<u; h++){
-            b=f[h];
+        /*for(u=magnets.length; h<u; h++){
+            b=magnets[h];
             if(b.dragging){
                 b.position.x+=(n-b.position.x)*0.2;
                 b.position.y+=(o-b.position.y)*0.2
@@ -133,8 +125,8 @@ Magnetic=new (function(){
             b.size+=(b.connections/3-b.size)*0.05;
             b.size=Math.max(b.size,2);
             c=d.createRadialGradient(b.position.x,b.position.y,0,b.position.x,b.position.y,b.size*10);
-            c.addColorStop(0,k[g].glowA);
-            c.addColorStop(1,k[g].glowB);
+            c.addColorStop(0,styles[0].glowA);
+            c.addColorStop(1,styles[0].glowB);
             d.beginPath();
             d.fillStyle=c;
             d.arc(b.position.x,b.position.y,b.size*10,0,Math.PI*2,true);
@@ -145,15 +137,16 @@ Magnetic=new (function(){
             d.fill();
             b.connections=0
         }   */
-        a!=-1&&f.length>1&&f.splice(a,1);
+        a!=-1&&magnets.length>1&&magnets.splice(a,1);
         c=0;
-        for(D=q.length; c<D; c++){
-            a=q[c];
+        var minimized=[]
+        for(D=particles.length; c<D; c++){
+            a=particles[c];
 
             var y=-1,E=-1,l=null,v={x:0,y:0};
             h=0;
-            for(u=f.length; h<u; h++){
-                b=f[h];
+            for(u=magnets.length; h<u; h++){
+                b=magnets[h];
                 y=B(a.position, b.position)-b.orbit*0.5;
                 if(a.magnet!=b){
                     var m=b.position.x-a.position.x;
@@ -179,18 +172,35 @@ Magnetic=new (function(){
             d.arc(a.position.x,a.position.y,a.size/2,0,Math.PI*2,true);
             d.fill()
 
-            if (a.size > 0.1) {
+            if (a.size >= 0.1) {
                 a.size -=  0.05
             } else {
-                counter++
-                if (counter >= 2500) {
-                    q.splice(0, 200);
-                    counter = 0
+                //if (c < (magnets.length * 200)) {
+
+                //}
+                //if (minimized.contains())
+                if (minimized.indexOf(a) == -1) {
+                    //alert('added' + minimized.length )
+                    minimized.push(a)
+                }
+
+
+                //om man har flera magneter blir det fler än 200 magneter
+                //if (counter >= particles.length) {
+                if (minimized.length >= particles.length) {
+                    //particles.splice(0, (magnets.length * 200));   //remove 200 particles
+                    //c -= 200
+                    //counter = 0
+                    particles.splice(0)
+                    magnets.splice(0)
+                    //alert("particles.length: " + particles.length + ", c: " + c)
+                    //magnets.splice(a.magnet)
+                    //a.magnet = null;
 
                 }
                 //a.color = "000"
-                //var index = q.indexOf(a);
-                //q.splice(index, 1);
+                //var index = particles.indexOf(a);
+                //particles.splice(index, 1);
 
 
             }
@@ -215,8 +225,7 @@ Magnetic=new (function(){
     }
 
     var mobileClient=navigator.userAgent.toLowerCase().indexOf("android")!=-1||navigator.userAgent.toLowerCase().indexOf("iphone")!=-1||navigator.userAgent.toLowerCase().indexOf("ipad")!=-1,
-        i=mobileClient?window.innerWidth:800,j=mobileClient?window.innerHeight:550,F=200,p=300,e,d,t,q=[],f=[],n=window.innerWidth-i,o=window.innerHeight-j,w=false,x=0,g=0,k=[{glowA:"rgba(233,143,154,0.3)",glowB:"rgba(0,143,154,0.0)",particleFill:"#ffffff",fadeFill:"rgba(22,22,22,.6)",useFade:false},{glowA:"rgba(0,200,250,0.3)",glowB:"rgba(0,200,250,0.0)",particleFill:"#ffffff",fadeFill:"rgba(22,22,22,.6)",useFade:true},{glowA:"rgba(230,0,0,0.3)",glowB:"rgba(230,0,0,0.0)",particleFill:"#ffffff",fadeFill:"rgba(11,11,11,.6)",useFade:true},{glowA:"rgba(0,230,0,0.3)",glowB:"rgba(0,230,0,0.0)",
-    particleFill:"rgba(0,230,0,0.7)",fadeFill:"rgba(22,22,22,.6)",useFade:true},{glowA:"rgba(0,0,0,0.3)",glowB:"rgba(0,0,0,0.0)",particleFill:"#333333",fadeFill:"rgba(255,255,255,.6)",useFade:true},{glowA:"rgba(0,0,0,0.0)",glowB:"rgba(0,0,0,0.0)",particleFill:"#333333",fadeFill:"rgba(255,255,255,.2)",useFade:true},{glowA:"rgba(230,230,230,0)",glowB:"rgba(230,230,230,0.0)",particleFill:"#ffffff",fadeFill:"",useFade:false}];
+        i=mobileClient?window.innerWidth:800,j=mobileClient?window.innerHeight:550,F=200,p=300,e,d,t,particles=[],magnets=[],n=window.innerWidth-i,o=window.innerHeight-j,w=false,x=0,styles=[{glowA:"rgba(233,143,154,0.3)",glowB:"rgba(0,143,154,0.0)",particleFill:"#ffffff",fadeFill:"rgba(22,22,22,.6)",useFade:false}];
 
     this.init=function(){
 
