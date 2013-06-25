@@ -19,10 +19,9 @@ function showInfo(content, activeMenuNr) {
             $("#infoArea").fadeIn('fast', function() {
             })
         })
-
-        if (window.pageYOffset && window.pageYOffset > 0) {
-            $("html, body").animate({scrollTop: 0}, 100)
-        }
+    }
+    if (window.pageYOffset && window.pageYOffset > 0) {
+        $("html, body").animate({scrollTop: 0}, 100)
     }
 }
 
