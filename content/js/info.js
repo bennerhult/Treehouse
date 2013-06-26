@@ -75,7 +75,7 @@ function getMiscInfo() {
 function getFeatureInfo() {
     return (
         '<div>' +
-            '<h2>Share & compare</h2>' +
+            '<h2>Share &amp; compare</h2>' +
             '<p>Encourage your friends by sharing your achievements with them and compare your progress. Challenge accepted?</p>' +
             '<h2>Publicize</h2>' +
             '<p>When you want to share your feeling of accomplishment (the technical term would be brag) you can publicize your achievements. Once an achievement is publicized, you can easily like it and post to Facebook or copy the link and send it however you want. Even by trusty old email. If you do not publicize or share an achievement, only you can see it. Nothing wrong with tracking your success and be proud all by your lonesome.</p>' +
