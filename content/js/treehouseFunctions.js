@@ -453,6 +453,9 @@ function openShareNotification(achievementId, achieverId, sharerId) {
 function openAchievement(achievementId, achieverId, publiclyVisible) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + achieverId)
     insertContent(getAchievementContent(), getAchievement(achievementId, achieverId, publiclyVisible))
+
+
+
 }
 
 function getNotification(achievementId, sharerId, achieverId) {
@@ -494,6 +497,10 @@ function getAchievement(achievementId, userId, publiclyVisible) {
                         $("#tweetAchievement").hide()
                         $("#fbLikeWeb").show()
                         $("#tweetTreehouse").show()
+                    }
+                    var els=document.body.getElementsByClassName("addbutton");
+                    for(var i=0;i<els.length;i++){
+                        Magnetic.addFireListener(els[i])
                     }
                 }, achievementId, false, null, userId
             )

@@ -180,18 +180,16 @@ Magnetic=new (function(){
     var mobileClient=navigator.userAgent.toLowerCase().indexOf("android")!=-1||navigator.userAgent.toLowerCase().indexOf("iphone")!=-1||navigator.userAgent.toLowerCase().indexOf("ipad")!=-1,
         i=mobileClient?window.innerWidth:800,j=mobileClient?window.innerHeight:550,F=100,p=300,e,d,t,particles=[],magnets=[],n=window.innerWidth-i,o=window.innerHeight-j,w=false,x=0,styles=[{glowA:"rgba(233,143,154,0.3)",glowB:"rgba(0,143,154,0.0)",particleFill:"#ffffff",fadeFill:"rgba(22,22,22,.6)",useFade:false}];
 
-    this.init=function(){
+    this.addFireListener = function (element)  {
+        element.addEventListener("mousedown",fire,false);
+    }
 
+    this.init=function(){
         $("#world").css( 'pointer-events', 'none' );
         //$("#world").css('background-color', 'black')
-
-
-        //document.body.addEventListener ("mousedown",fire,false);
-
-        //document.body.addEventListener ("mousedown",fire,false);
         var els=document.body.getElementsByTagName("a");
         for(var i=0;i<els.length;i++){
-            els[i].addEventListener ("mousedown",fire,false);
+            els[i].addEventListener("mousedown",fire,false);
         }
         //document.body.getElementById("menuIconTree").addEventListener("mousedown",Magnetic.fire,false);
         //document.body.getElementById("menuIconTree").addEventListener("mousedown",fire,false);
@@ -219,6 +217,8 @@ Magnetic=new (function(){
         }
    }
 });
+
+
 
 function Particle(){
     this.size=1.5+Math.random()*3.5;
