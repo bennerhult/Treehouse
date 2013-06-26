@@ -871,7 +871,7 @@ function createNotificationDesc(nrOfAchievements, notifications, achieverId, loo
             + achieverId
             + '\', \''
             + notifications[i].createdBy
-            + ')"><img src="'
+            + '\')"><img src="'
             + notifications[i].imageURL
             + '" alt="'
             + notifications[i].title

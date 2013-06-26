@@ -22,30 +22,24 @@ Magnetic=new (function(){
         o=a.clientY-(window.innerHeight-j)*0.5
     }
 
-
     function fire(a){
         a.preventDefault();
         drawMagnet(a)
     }
 
-    //doubleClick
     function drawMagnet(event){
-        w=true;
-        //if((new Date).getTime()-x<1300){
-        //z({x:n,y:o});
-
+        w=true
         z({x: event.x - getOffset(e).left,y: event.y - getOffset(e).top});
-            //x=0
-        //}
-       // alert(event.x + ", " + getOffset( e ).left  )
         x=(new Date).getTime();
+        var magnet
         for(var a=0,b=magnets.length; a<b; a++){
-            magnet=f[a];
+            magnet=f[a]
             if(B(magnet.position,{x:n,y:o})<magnet.orbit*0.5){
                 magnet.dragging=true; break
             }
         }
     }
+
     function getOffset( el ) {
         var _x = 0;
         var _y = 0;
@@ -57,21 +51,6 @@ Magnetic=new (function(){
         return { top: _y, left: _x };
     }
 
-    /*
-     function A(){
-     w=true;
-     if((new Date).getTime()-x<300){
-     z({x:n,y:o});
-     x=0
-     }
-     x=(new Date).getTime();
-     for(var a=0,b=magnets.length; a<b; a++){
-     magnet=f[a];
-     if(B(magnet.position,{x:n,y:o})<magnet.orbit*0.5){
-     magnet.dragging=true; break}
-     }
-     }
-     */
     function I(){
         w=false;
         for(var a=0,b=magnets.length; a<b; a++){
@@ -97,14 +76,11 @@ Magnetic=new (function(){
         var a=(window.innerWidth-i)*0.5,
             b=(window.innerHeight-j)*0.5;
         e.style.position="absolute";
-        // e.style.left=a+"px";
-        // e.style.top=b+"px";
-
         e.style.left=0+"px";
         e.style.top=0+"px";
     }
 
-   var counter = 0
+    var counter = 0
 
     function P(){
         d.clearRect(0,0,e.width,e.height);
