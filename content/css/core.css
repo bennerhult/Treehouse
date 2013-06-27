@@ -432,47 +432,76 @@ body{
     height:  38px;
 }
 
-.menu-absolute {
-    position: absolute;
-}
-
-#menu{
+#TopMenuArea{
     position: relative;
+
     height: 38px;
     z-index: 1;
-    border-bottom: 1px solid rgb(82,81,79);
-    background-color: rgb(108,107,105);
-    background-image: linear-gradient(bottom, rgb(108,107,105) 18%, rgb(82,81,79) 51%, rgb(108,107,105) 57%);
-    background-image: -o-linear-gradient(bottom, rgb(108,107,105) 18%, rgb(82,81,79) 51%, rgb(108,107,105) 57%);
-    background-image: -moz-linear-gradient(bottom, rgb(108,107,105) 18%, rgb(82,81,79) 51%, rgb(108,107,105) 57%));
-    background-image: -webkit-linear-gradient(bottom, rgb(108,107,105) 18%, rgb(82,81,79) 51%, rgb(108,107,105) 57%));
-    background-image: -ms-linear-gradient(bottom, rgb(108,107,105) 18%, rgb(82,81,79) 51%, rgb(108,107,105) 57%);
+    border-bottom: 1px solid #4e6d3c;
 
-    background-image: -webkit-gradient(
-        linear,
-        left bottom,
-        left top,
-        color-stop(0.18, rgb(108,107,105)),
-        color-stop(0.51, rgb(82,81,79)),
-        color-stop(0.57, rgb(108,107,105))
-    );
+    background: #82a072; /* Old browsers */
+    background: -moz-linear-gradient(top,  #82a072 49%, #688b54 52%, #82a072 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(49%,#82a072), color-stop(52%,#688b54), color-stop(100%,#82a072)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #82a072 49%,#688b54 52%,#82a072 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #82a072 49%,#688b54 52%,#82a072 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #82a072 49%,#688b54 52%,#82a072 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #82a072 49%,#688b54 52%,#82a072 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#82a072', endColorstr='#82a072',GradientType=0 ); /* IE6-9 */
 
     text-align: left;
     width: 100%;
+}
 
+#TopMenuArea ul li{
+    display:inline;
+    width: 100%;
+    text-align: center;
+}
+
+#TopMenuArea ul li:first-child{
+    position: absolute;
+    left: 0px;
+}
+
+#TopMenuArea h2{
+    color: #ffffff;
+    font-size: 1.2em;
+    font-weight: normal;
+    padding-top: 8px;
+}
+
+/*
+.menu-absolute {
+    position: absolute;
+    top: 0px;
+}*/
+
+#menu{
+   /* position: relative;*/
+    position: absolute;
+    bottom: 0px;
+    height: 40px;
+    z-index: 2;
+    border-bottom: 1px solid rgb(82,81,79);
+    background-color: #131213;
+
+
+    text-align: left;
+    width: 100%;
 }
 
 #menu ul li{
-    padding-top: 4px;
     float: left;
-    padding-bottom: 2px;
-    /*padding-right: 5px;*/
+    width:  33.33%;
+    text-align: center;
 }
-
+/*
 #menu ul li.icons{
     width: 100%;
     text-align: center;
 }
+
+
 
 #menu ul li.icons div{
     display: inline;
@@ -482,50 +511,42 @@ body{
 }
 
 #menu ul li.icons div img{
-    padding: 0px 4px;
-    -moz-box-shadow: inset 0 0 5px #ccc;
-    -webkit-box-shadow: inset 0 0 5px #ccc;
-    box-shadow: inset 0 0 5px #ccc;
-    border: 1px solid #5a5b5b;
+
 }
 
 #menu ul li.icons div.selected img{
-    background-color: #272929;
+
 }
 
 
 #menu ul li.icons div:first-child img{
 
-    border-bottom-left-radius: 3px;
-    -webkit-border-bottom-left-radius: 3px;
-    -moz-border-radius-bottomleft: 3px;
 
-    border-top-left-radius: 3px;
-    -webkit-border-top-left-radius: 3px;
-    -moz-border-radius-topleft: 3px;
-    border-right: 0px;
 
 }
 
 #menu ul li.icons div:last-child img{
-     border-bottom-right-radius: 3px;
-    -webkit-border-bottom-right-radius: 3px;
-    -moz-border-radius-bottomright: 3px;
-
-    border-top-right-radius: 3px;
-    -webkit-border-top-right-radius: 3px;
-    -moz-border-radius-topright: 3px;
 
 }
 
+*/
+
+#menuIconFriend{
+    position: relative;
+}
+
+#menu ul li div.selected img{
 
 
-#menu ul li.icons div span{
+}
+
+#menu ul li div span{
     background-color: #a90505;
     display: block;
     position: absolute;
-    left: 4px;
-    top: -4px;
+    width: 10px;
+    left: 55%;
+    top: 7px;
     padding: 2px 4px;
     border-radius: 2px;
     -moz-box-shadow: inset 0 0 5px #fff;
@@ -534,16 +555,16 @@ body{
 
 }
 
-#menu ul li.icons div a{
+#menu ul li div a{
     color: #ffffff;
 }
 
 
 
 #menu ul li#menuToggle{
-    position: absolute;
+    /*position: absolute;
     right: 5%;
-    top: 0px;
+    top: 0px;*/
 }
 
 #menu ul li a{
@@ -591,6 +612,9 @@ body{
     background-color: #4a4b4c;
 }
 
+
+
+
 .actionmenu{
     margin-top: 0px;
     margin-bottom: 10px;
@@ -610,8 +634,8 @@ body{
 .slider-menu{
     z-index: 20;
     position: absolute;
-    top: 150px;
-    right: 5%;
+    bottom: 42px;
+    right: 2%;
     -moz-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
     -webkit-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
     box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
@@ -654,7 +678,7 @@ body{
 }
 
 .slider-menu ul li span{
-    background-color: #464646;
+    background-color: #131213;
 
     padding: 10px 80px 10px 20px;
     display: block;
@@ -662,7 +686,7 @@ body{
 }
 
 .slider-menu ul li span:hover{
-    background-color: #171616;
+    background-color: #464646;
 }
 
 .slider-menu ul li.last span{
@@ -687,6 +711,7 @@ body{
 
 #friendsList{
     margin-top: 20px;
+    padding-bottom: 50px;
 }
 
 #friendsList .header{
@@ -1038,7 +1063,7 @@ input.file {
     padding-top: 10px;
     margin-right: 5%;
     margin-left: 6%;
-    padding-bottom: 10px;
+    padding-bottom: 70px;
 }
 
 .addbutton{
@@ -1453,7 +1478,7 @@ span.progress{
 }
 
 .create-achievement{
-    margin: 10px 5% 10px 5%;
+    margin: 10px 5% 50px 5%;
 }
 
 .part-achievement{
@@ -1859,16 +1884,9 @@ p#achievementDescription{
         width: 100%;
     }
 
-    #menu{
-
+    #menu,
+    #TopMenuArea{
         position: fixed;
-
-        -webkit-border-top-left-radius: 0px;
-        -webkit-border-top-right-radius: 0px;
-        -moz-border-radius-topleft: 0px;
-        -moz-border-radius-topright: 0px;
-        border-top-left-radius: 0px;
-        border-top-right-radius: 0px;
     }
 
     .inputarea{
