@@ -370,19 +370,20 @@ function compareTab() {
 }
 
 function getTabMenu() {
-    var x = getCookie('rememberme')
+   /* var x = getCookie('rememberme')
     var loggedIn = false
     if (x) {
         loggedIn = true
-    }
+    }*/
     var menu = '<div id="tab-menu" class="slider-menu" style="display:none;">' + nl +
            '<ul>'
-     if (loggedIn) {
-         menu +=    '<li><a href="javascript:void(0)" onclick="openUser()"><span>User</span></a></li>' +  nl +
-                    '<li class="last"><a href="javascript:void(0)" onclick="signout()"><span>Sign out</span></a></li>'
-     }  else {
+    // if (loggedIn) {
+         menu +=    '<li class="last"><a href="javascript:void(0)" onclick="signout()"><span>Sign out</span></a></li>'  +  nl +
+                    '<li><a href="javascript:void(0)" onclick="openUser()"><span>User</span></a></li>'
+
+     /*}  else {
          menu +=    '<li class="last"><a href="javascript:void(0)" onclick="showSignin()"><span><nobr>Sign in / Sign up</nobr></span></a></li>'
-     }
+     } */
     menu += '</ul>' + nl +
             '</div>' + nl
     return menu
