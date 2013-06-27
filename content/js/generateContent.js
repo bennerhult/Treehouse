@@ -71,6 +71,7 @@ function fixMenu() {
 function setEmptyMenu() {
     var menu = ''
     $("#menuArea").html(menu)
+    $("#topMenuArea").html(menu)
     fixMenu()
 }
 
