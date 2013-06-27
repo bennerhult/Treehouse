@@ -140,6 +140,7 @@ app.get('/channel.html', function(request, response){
 
 //public achievement
 app.get('/achievement', function(request, response) {
+    console.log("you found it!")
     //TODO Erik: märkligt nog verkar denna inte användas
     var url_parts = url.parse(request.url, true)
     var currentAchievementId = url_parts.query.achievementId

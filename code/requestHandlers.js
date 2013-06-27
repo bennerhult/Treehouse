@@ -87,6 +87,7 @@ function topAppPagePart() {
         '<h1>Treehouse helps you track your achievements.</h1>' + nl +
         '<p class="ingress">Explore. Achieve. Play.</p>' + nl +
         '</div>' + nl +
+        '<div id="topMenuArea"></div>' + nl +
         '<div id="menuArea"></div>' + nl +
         '<div id="app-container-login">' + nl +
         '<div id="contentArea">'
@@ -230,6 +231,7 @@ function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUr
             '<h1>Treehouse helps you track your achievements.</h1>' + nl +
             '<p class="ingress">Explore. Achieve. Play.</p>' + nl +
             '</div>' + nl +
+            '<div id="topMenuArea"></div>' + nl +
             '<div id="menuArea"></div>' + nl +
             '<div id="app-container">' + nl +
             '<div id="contentArea">'
