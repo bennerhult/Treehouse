@@ -76,6 +76,11 @@ function setEmptyMenu() {
 }
 
 function setDefaultMenu(activePage) {
+    var topMenu =  '<div id="topMenu"><ul>'
+        +'<li><h2>Achievements</h2></li>'
+        +'<li>back</li>'
+        +'</ul></div>'
+
     var menu = '<div id="menu"><ul>'
     menu +='<li><div id="menuIconTree"><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><img src="content/img/homeicon.png" alt="" /></a></div></li>'
     menu +='<li><div id="menuIconFriend"><a href="javascript:void(0)" onclick="openFriends()"><img src="content/img/friendsicon.png" alt="" />'
@@ -86,6 +91,7 @@ function setDefaultMenu(activePage) {
     menu +='<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>'
     menu += '</ul></div>' + getTabMenu()
     $("#menuArea").html(menu)
+    $("#topMenuArea").html(topMenu)
     fixMenu()
     markActivePage(activePage)
 }
@@ -106,12 +112,18 @@ function markActivePage(activePage) {
     }
 }
 function setPublicMenu() {
+
+    var topMenu =  '<div id="topMenu"><ul>'
+        +'<li><h2>Achievements</h2></li>'
+        +'<li>back</li>'
+        +'</ul></div>'
     var menu = '<div id="menu">' + nl  +
         '<ul>' + nl  +
         '<li class="icons"><a href="javascript:void(0)" onclick="showSignin()"><img src="content/img/signin.png" alt="" /></a></li></ul>' + nl  +
         '</div>' + nl  +
         getTabMenu()
     $("#menuArea").html(menu)
+    $("#topMenuArea").html(topMenu)
     fixMenu()
 }
 

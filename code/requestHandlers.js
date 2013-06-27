@@ -157,12 +157,7 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
                 '<h1>Treehouse helps you track your achievements.</h1>' + nl +
                 '<p class="ingress">Explore. Achieve. Play.</p>' + nl +
                 '</div>' + nl +
-                '<div id="topMenuArea">' + nl +
-                    '<ul>' + nl +
-                        '<li><h2>Achievements</h2></li>' + nl +
-                        '<li>back</li>' + nl +
-                    '</ul>' + nl +
-                '</div>' + nl +
+                '<div id="topMenuArea"></div>' + nl +
                 '<div id="menuArea"></div>' + nl +
                 '<div id="app-container">' + nl +
                 '<div id="contentArea">'

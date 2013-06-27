@@ -432,7 +432,7 @@ body{
     height:  38px;
 }
 
-#TopMenuArea{
+#topMenu{
     position: relative;
 
     height: 38px;
@@ -452,18 +452,18 @@ body{
     width: 100%;
 }
 
-#TopMenuArea ul li{
+#topMenu ul li{
     display:inline;
     width: 100%;
     text-align: center;
 }
 
-#TopMenuArea ul li:first-child{
+#topMenu ul li:first-child{
     position: absolute;
     left: 0px;
 }
 
-#TopMenuArea h2{
+#topMenu h2{
     color: #ffffff;
     font-size: 1.2em;
     font-weight: normal;
@@ -1885,7 +1885,7 @@ p#achievementDescription{
     }
 
     #menu,
-    #TopMenuArea{
+    #topMenu{
         position: fixed;
     }
 
