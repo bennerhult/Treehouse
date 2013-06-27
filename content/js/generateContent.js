@@ -131,6 +131,15 @@ function markActivePage(activePage) {
     }
 } */
 
+function getTabMenu() {
+    var menu = '<div id="tab-menu" class="slider-menu" style="display:none;">' + nl +
+        '<ul>'  + nl +
+        '<li class="last"><a href="javascript:void(0)" onclick="signout()"><span>Sign out</span></a></li>'  +  nl +
+        '<li><a href="javascript:void(0)" onclick="openUser()"><span>User</span></a></li>'  + nl +
+        '</ul>' + nl +
+        '</div>' + nl
+    return menu
+}
 
 function insertContent(content, menuFunction, callback) {
     $("#contentArea").html(content)
@@ -372,22 +381,6 @@ function compareTab() {
     $('#achievement-container').hide()
     $('#sharer-container').hide()
     $('#compare-container').show()
-}
-
-function getTabMenu() {
-
-    var menu = '<div id="tab-menu" class="slider-menu" style="display:none;">' + nl +
-           '<ul>'
-    // if (loggedIn) {
-         menu +=    '<li class="last"><a href="javascript:void(0)" onclick="signout()"><span>Sign out</span></a></li>'  +  nl +
-                    '<li><a href="javascript:void(0)" onclick="openUser()"><span>User</span></a></li>'
-
-     /*}  else {
-         menu +=    '<li class="last"><a href="javascript:void(0)" onclick="showSignin()"><span><nobr>Sign in / Sign up</nobr></span></a></li>'
-     } */
-    menu += '</ul>' + nl +
-            '</div>' + nl
-    return menu
 }
 
 function getCookie(c_name) {
