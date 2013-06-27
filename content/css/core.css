@@ -102,12 +102,6 @@ body{
 
 }
 
-
-/*
-.selected {
-    background-color: #4a4b4c;
-}*/
-
 #web-menu ul li{
     float: left;
 }
@@ -437,16 +431,23 @@ body{
 
     height: 38px;
     z-index: 1;
-    border-bottom: 1px solid #4e6d3c;
+    border-bottom: 1px solid #5c5c5b;
 
-    background: #82a072; /* Old browsers */
-    background: -moz-linear-gradient(top,  #82a072 49%, #688b54 52%, #82a072 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(49%,#82a072), color-stop(52%,#688b54), color-stop(100%,#82a072)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #82a072 49%,#688b54 52%,#82a072 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #82a072 49%,#688b54 52%,#82a072 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #82a072 49%,#688b54 52%,#82a072 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #82a072 49%,#688b54 52%,#82a072 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#82a072', endColorstr='#82a072',GradientType=0 ); /* IE6-9 */
+    background-color: rgb(124,126,127);
+    background-image: linear-gradient(bottom, rgb(124,126,127) 18%, rgb(111,114,115) 51%, rgb(124,126,127) 57%);
+    background-image: -o-linear-gradient(bottom, rgb(124,126,127) 18%, rgb(111,114,115) 51%, rgb(124,126,127) 57%);
+    background-image: -moz-linear-gradient(bottom, rgb(124,126,127) 18%, rgb(111,114,115) 51%, rgb(124,126,127) 57%);
+    background-image: -webkit-linear-gradient(bottom, rgb(124,126,127) 18%, rgb(111,114,115) 51%, rgb(124,126,127) 57%);
+    background-image: -ms-linear-gradient(bottom, rgb(124,126,127) 18%, rgb(111,114,115) 51%, rgb(124,126,127) 57%);
+
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.18, rgb(124,126,127)),
+        color-stop(0.51, rgb(111,114,115)),
+        color-stop(0.57, rgb(124,126,127))
+    );
 
     text-align: left;
     width: 100%;
@@ -470,11 +471,6 @@ body{
     padding-top: 8px;
 }
 
-/*
-.menu-absolute {
-    position: absolute;
-    top: 0px;
-}*/
 
 #menu{
    /* position: relative;*/
@@ -495,41 +491,6 @@ body{
     width:  33.33%;
     text-align: center;
 }
-/*
-#menu ul li.icons{
-    width: 100%;
-    text-align: center;
-}
-
-
-
-#menu ul li.icons div{
-    display: inline;
-    margin-right: 0px;
-    padding-top: 2px;
-    position: relative;
-}
-
-#menu ul li.icons div img{
-
-}
-
-#menu ul li.icons div.selected img{
-
-}
-
-
-#menu ul li.icons div:first-child img{
-
-
-
-}
-
-#menu ul li.icons div:last-child img{
-
-}
-
-*/
 
 #menuIconFriend{
     position: relative;
@@ -560,12 +521,6 @@ body{
 }
 
 
-
-#menu ul li#menuToggle{
-    /*position: absolute;
-    right: 5%;
-    top: 0px;*/
-}
 
 #menu ul li a{
     text-decoration: none;
