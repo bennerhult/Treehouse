@@ -91,7 +91,7 @@ function setDefaultMenu(activePage) {
             menu += '<span>' + nrOfFriendShipRequests + '</span>'
         }
         menu += '</a></div></li>'
-        +'<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>'
+        +'<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab-selected.png" alt=""/></a></li>'
         menu += '</ul></div>' + getTabMenu()
     }  else {
         menu  = '<div id="menu">' + nl  +
