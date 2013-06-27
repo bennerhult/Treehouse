@@ -85,13 +85,13 @@ function setDefaultMenu(activePage) {
 
      if (loggedIn) {
        menu = '<div id="menu"><ul>'
-         +'<li><div id="menuIconTree"><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><img src="content/img/homeicon.png" alt="" /></a></div></li>'
-         +'<li><div id="menuIconFriend"><a href="javascript:void(0)" onclick="openFriends()"><img src="content/img/friendsicon.png" alt="" />'
+         +'<li><div id="menuIconTree"><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><img id="menuImageTree" src="content/img/homeicon.png" alt="" /></a></div></li>'
+         +'<li><div id="menuIconFriend"><a href="javascript:void(0)" onclick="openFriends()"><img id="menuImageFriends" src="content/img/friendsicon.png" alt="" />'
         if (nrOfFriendShipRequests > 0) {
             menu += '<span>' + nrOfFriendShipRequests + '</span>'
         }
         menu += '</a></div></li>'
-        +'<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>'
+        +'<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img id="menuImageTab" src="content/img/tree-tab.png" alt=""/></a></li>'
         menu += '</ul></div>' + getTabMenu()
     }  else {
         menu  = '<div id="menu">' + nl  +
@@ -103,33 +103,28 @@ function setDefaultMenu(activePage) {
     $("#menuArea").html(menu)
     setTopMenu()
     fixMenu()
-    //markActivePage(activePage)
+    markActivePage(activePage)
 }
 
 function setTopMenu() {
     var topMenu =  '<div id="topMenu"><ul>'
         +'<li><h2>Achievements</h2></li>'
-        +'<li>back</li>'
+        +'<li> </li>'
         +'</ul></div>'
 
     $("#topMenuArea").html(topMenu)
 }
-/*
+
 function markActivePage(activePage) {
-    $('#menuIconFriend').attr("class","")
-    $('#menuIconTree').attr("class","")
     switch (activePage) {
-        case 'friends' : $('#menuIconFriend').attr("class","selected")
+        case 'friends' :  $('#menuImageFriends').attr('src','content/img/friendsicon-selected.png')
             break
-        //case 'user' : $('#menuIconFriend').attr("class","selected")
-        //case 'createAchievement' : $('#menuIconTree').attr("class","selected")
-        //case 'editAchievement' : $('#menuIconTree').attr("class","selected")
-        // case 'achievement' : $('#menuIconTree').attr("class","selected")
-        case 'achievements' : $('#menuIconTree').attr("class","selected")
+        case 'achievements' : $('#menuImageTree').attr("src","content/img/homeicon-selected.png")
             break
-        //case 'notification' : $('#menuIconTree').attr("class","selected")
+        case 'user' : $('#menuImageTab').attr("src","content/img/tree-tab-selected.png")
+            break
     }
-} */
+}
 
 function getTabMenu() {
     var menu = '<div id="tab-menu" class="slider-menu" style="display:none;">' + nl +
