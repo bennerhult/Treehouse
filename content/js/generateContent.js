@@ -76,26 +76,45 @@ function setEmptyMenu() {
 }
 
 function setDefaultMenu(activePage) {
+    var menu
+     var x = getCookie('rememberme')
+     var loggedIn = false
+     if (x) {
+        loggedIn = true
+     }
+
+     if (loggedIn) {
+       menu = '<div id="menu"><ul>'
+         +'<li><div id="menuIconTree"><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><img src="content/img/homeicon.png" alt="" /></a></div></li>'
+         +'<li><div id="menuIconFriend"><a href="javascript:void(0)" onclick="openFriends()"><img src="content/img/friendsicon.png" alt="" />'
+        if (nrOfFriendShipRequests > 0) {
+            menu += '<span>' + nrOfFriendShipRequests + '</span>'
+        }
+        menu += '</a></div></li>'
+        +'<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>'
+        menu += '</ul></div>' + getTabMenu()
+    }  else {
+        menu  = '<div id="menu">' + nl  +
+            '<ul>' + nl  +
+            '<li class="icons"><a href="javascript:void(0)" onclick="showSignin()"><img src="content/img/signin.png" alt="" /></a></li></ul>' + nl  +
+            '</div>'
+    }
+
+    $("#menuArea").html(menu)
+    setTopMenu()
+    fixMenu()
+    //markActivePage(activePage)
+}
+
+function setTopMenu() {
     var topMenu =  '<div id="topMenu"><ul>'
         +'<li><h2>Achievements</h2></li>'
         +'<li>back</li>'
         +'</ul></div>'
 
-    var menu = '<div id="menu"><ul>'
-    menu +='<li><div id="menuIconTree"><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><img src="content/img/homeicon.png" alt="" /></a></div></li>'
-    menu +='<li><div id="menuIconFriend"><a href="javascript:void(0)" onclick="openFriends()"><img src="content/img/friendsicon.png" alt="" />'
-    if (nrOfFriendShipRequests > 0) {
-        menu += '<span>' + nrOfFriendShipRequests + '</span>'
-    }
-    menu += '</a></div></li>'
-    menu +='<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img src="content/img/tree-tab.png" alt=""/></a></li>'
-    menu += '</ul></div>' + getTabMenu()
-    $("#menuArea").html(menu)
     $("#topMenuArea").html(topMenu)
-    fixMenu()
-    markActivePage(activePage)
 }
-
+/*
 function markActivePage(activePage) {
     $('#menuIconFriend').attr("class","")
     $('#menuIconTree').attr("class","")
@@ -110,22 +129,8 @@ function markActivePage(activePage) {
             break
         //case 'notification' : $('#menuIconTree').attr("class","selected")
     }
-}
-function setPublicMenu() {
+} */
 
-    var topMenu =  '<div id="topMenu"><ul>'
-        +'<li><h2>Achievements</h2></li>'
-        +'<li>back</li>'
-        +'</ul></div>'
-    var menu = '<div id="menu">' + nl  +
-        '<ul>' + nl  +
-        '<li class="icons"><a href="javascript:void(0)" onclick="showSignin()"><img src="content/img/signin.png" alt="" /></a></li></ul>' + nl  +
-        '</div>' + nl  +
-        getTabMenu()
-    $("#menuArea").html(menu)
-    $("#topMenuArea").html(topMenu)
-    fixMenu()
-}
 
 function insertContent(content, menuFunction, callback) {
     $("#contentArea").html(content)
@@ -152,7 +157,7 @@ function showSignin(message) {
 
 function showLatestAchievement(achievementId, userId) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + userId)
-    insertContent(getPublicAchievementContent(), setPublicMenu(), getPublicAchievement(userId, achievementId))
+    insertContent(getPublicAchievementContent(), setDefaultMenu(), getPublicAchievement(userId, achievementId))
 }
 
 function insertLatestAchievement() {
@@ -370,11 +375,7 @@ function compareTab() {
 }
 
 function getTabMenu() {
-   /* var x = getCookie('rememberme')
-    var loggedIn = false
-    if (x) {
-        loggedIn = true
-    }*/
+
     var menu = '<div id="tab-menu" class="slider-menu" style="display:none;">' + nl +
            '<ul>'
     // if (loggedIn) {

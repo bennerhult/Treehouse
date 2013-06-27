@@ -200,7 +200,7 @@ function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUr
             tab + 'insertContent(getPublicAchievementContent(), function() {' + nl +
             tab + 'getPublicAchievement(\'' + achieverId + '\', \'' +currentAchievementId + '\')' + nl +
             tab + '})' + nl +
-            tab + 'setPublicMenu()' + nl +
+            tab + 'setDefaultMenu()' + nl +
             tab + '})' + nl +
             tab + '</script>' + nl +
             tab + '</head>' + nl +
