@@ -96,7 +96,7 @@ function setDefaultMenu(activePage) {
     }  else {
         menu  = '<div id="menu">' + nl  +
             '<ul>' + nl  +
-            '<li class="icons"><a href="javascript:void(0)" onclick="showSignin()"><img src="content/img/signin.png" alt="" /></a></li></ul>' + nl  +
+            '<li class="signIn"><a href="javascript:void(0)" onclick="showSignin()"><img src="content/img/signin.png" alt="" /></a></li></ul>' + nl  +
             '</div>'
     }
 

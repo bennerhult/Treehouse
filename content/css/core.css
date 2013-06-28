@@ -498,7 +498,11 @@ body{
 
 #menu ul li div.selected img{
 
+}
 
+#menu ul li.signIn{
+    width: 100%;
+    text-align: center;
 }
 
 #menu ul li div span{
@@ -513,14 +517,11 @@ body{
     -moz-box-shadow: inset 0 0 5px #fff;
     -webkit-box-shadow: inset 0 0 5px #fff;
     box-shadow: inset 0 0 5px #fff;
-
 }
 
 #menu ul li div a{
     color: #ffffff;
 }
-
-
 
 #menu ul li a{
     text-decoration: none;
