@@ -163,7 +163,9 @@ function showLatestAchievement(achievementId, userId) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + userId)
 
     //if user is not logged in, they have the rounded corner app-container-login
-    $("#app-container-login").attr("id","app-container");
+    if (document.getElementById("app-container-login")) {
+        $("#app-container-login").attr("id","app-container");
+    }
     insertContent(getPublicAchievementContent(), setDefaultMenu(), getPublicAchievement(userId, achievementId))
 }
 
