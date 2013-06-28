@@ -90,7 +90,7 @@ function authenticateFromLoginToken(request, response, initialCall) {
                 //console.log("token: " + token)
                 user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
                     if (user) {
-                        //console.log("user: " + user)
+                        console.log("user: " + user)
                         request.session.user_id = user.id
                         friendship.getNrOfRequests(request.session.user_id, function (nrOfFriendShipRequests) {
                             token.token = loginToken.randomToken()
@@ -895,9 +895,6 @@ app.get('/achievements_completed', function(request, response){
 
 function getAchievementList(request, response, completedAchievements) {
     app.set('current_achievement_id', null)
-    if (!request.session.user_id) {
-        request.session.user_id = request.query.achieverId
-    }
 
     var achievementsList = ""
     var goneThroughProgresses = 0
@@ -998,12 +995,11 @@ app.get('/achievementFromServer', function(request, response){
        app.set('current_achievement_id', currentAchievementId)
 
        achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
-
             if (request.session.user_id) {
-                //console.log("SMURF0")
+                console.log("SMURF0: " + request.session.user_id)
                 loadUser (request, response, function () { writeAchievementPage(response, achieverId, currentAchievement, request.session.user_id, isNotificationView, sharerId)})
             } else if (currentAchievement && currentProgress.publiclyVisible)    {
-                //console.log("SMURF1")
+                console.log("SMURF1: " + request.session.user_id)
                 writeAchievementPage(response, achieverId, currentAchievement, request.session.user_id, isNotificationView, sharerId)
             } else {
                 //console.log("SMURF2")
@@ -1021,6 +1017,9 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
     var achievementDesc = ''
 
     var checkingOtherPersonsAchievement = !(achieverId === userId)
+    console.log("achieverId: " + achieverId)
+    console.log("userId: " + userId)
+    console.log("checkingOtherPersonsAchievement: " + checkingOtherPersonsAchievement)
     var achievementUser_id
     if (isNotificationView) {
         achievementUser_id = sharerId
@@ -1099,6 +1098,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                 goalTextsText += goalText
                                                 if (index == goalTexts.length - 1) {
                                                     var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100
+
                                                     achievementDesc += '<div class="achievement-info"><div id="userarea"><img src="content/img/user_has_no_image.jpg" /><a class="headerlink" href="javascript:void(0)" onclick="openAchievements(false, \'' + achievementUser_id + '\', ' + checkingOtherPersonsAchievement + ')">' + achieverName + '</a></div> '
                                                     if (!checkingOtherPersonsAchievement) {
                                                         achievementDesc += '<div class="actionmenu"><ul>'
