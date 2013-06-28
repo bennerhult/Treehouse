@@ -1147,11 +1147,11 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                     achievementDesc += '</div>'
 
                                                     achievementDesc += '<div id="sharer-container"></div><div id="compare-container"></div>'
-                                                    achievementDesc += '<div id="fbLike" style="overflow:visible;"><div class="fb-like" data-href="http://treehouse.io/achievement?achievementId=' + currentAchievement._id + '&userId=' + userId + '" data-send="false" data-width="150px" data-show-faces="false" font="segoe ui"></div></div>'
+                                                    achievementDesc += '<div class="publicWrap"><div id="fbLike" style="overflow:visible;"><div class="fb-like" data-href="http://treehouse.io/achievement?achievementId=' + currentAchievement._id + '&userId=' + userId + '" data-send="false" data-width="150px" data-show-faces="false" font="segoe ui"></div></div>'
                                                     achievementDesc += '<div id="tweetAchievement" style="overflow:visible;">'
                                                     achievementDesc += '<a href="https://twitter.com/share' + '?text=' + currentAchievement.title + '" class="twitter-share-button">Tweet</a>'
                                                     achievementDesc += '<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>'
-                                                    achievementDesc += '</div></div>'
+                                                    achievementDesc += '</div><div class="clear"> </div></div></div>'
                                                    response.write(JSON.stringify(achievementDesc))
                                                     response.end('\n', 'utf-8')
 

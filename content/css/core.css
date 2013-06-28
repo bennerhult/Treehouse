@@ -32,6 +32,7 @@ body{
     float: left;
     text-align: right;
     margin-top: 20px;
+
 }
 
 #fbLike{
@@ -496,9 +497,14 @@ body{
     position: relative;
 }
 
-#menu ul li div.selected img{
+#menu ul li div.selected{
+    height: 39px;
+    background-color: #1b1a1b;
+}
 
-
+#menu ul li.signIn{
+    width: 100%;
+    text-align: center;
 }
 
 #menu ul li div span{
@@ -513,14 +519,11 @@ body{
     -moz-box-shadow: inset 0 0 5px #fff;
     -webkit-box-shadow: inset 0 0 5px #fff;
     box-shadow: inset 0 0 5px #fff;
-
 }
 
 #menu ul li div a{
     color: #ffffff;
 }
-
-
 
 #menu ul li a{
     text-decoration: none;
