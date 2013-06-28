@@ -60,11 +60,11 @@ function init(userId, friendShipRequests) {
 }
 
 function fixMenu() {
-    if (isiPhone){   //TODO eller stående iPade
+    //if (isiPhone){   //TODO eller stående iPade
        //$('#menu').addClass('menu-fixed')
-    } else {
+    //} else {
         $('#menu').addClass('menu-absolute')
-    }
+    //}
 
 }
 
