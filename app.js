@@ -996,10 +996,10 @@ app.get('/achievementFromServer', function(request, response){
 
        achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
             if (request.session.user_id) {
-                console.log("SMURF0: " + request.session.user_id)
+                //console.log("SMURF0: " + request.session.user_id)
                 loadUser (request, response, function () { writeAchievementPage(response, achieverId, currentAchievement, request.session.user_id, isNotificationView, sharerId)})
             } else if (currentAchievement && currentProgress.publiclyVisible)    {
-                console.log("SMURF1: " + request.session.user_id)
+                //console.log("SMURF1: " + request.session.user_id)
                 writeAchievementPage(response, achieverId, currentAchievement, request.session.user_id, isNotificationView, sharerId)
             } else {
                 //console.log("SMURF2")
