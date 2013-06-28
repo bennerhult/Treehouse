@@ -85,7 +85,7 @@ function setDefaultMenu(activePage) {
 
      if (loggedIn) {
        menu = '<div id="menu"><ul>'
-         +'<li><div id="menuIconTree"><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><img id="menuImageTree" src="content/img/homeicon.png" alt="" /></a></div></li>'
+         +'<li><div id="menuIconTree" class=""><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><img id="menuImageTree" src="content/img/homeicon.png" alt="" /></a></div></li>'
          +'<li><div id="menuIconFriend"><a href="javascript:void(0)" onclick="openFriends()"><img id="menuImageFriends" src="content/img/friendsicon.png" alt="" />'
         if (nrOfFriendShipRequests > 0) {
             menu += '<span>' + nrOfFriendShipRequests + '</span>'

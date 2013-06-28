@@ -497,8 +497,9 @@ body{
     position: relative;
 }
 
-#menu ul li div.selected img{
-
+#menu ul li div.selected{
+    height: 39px;
+    background-color: #1b1a1b;
 }
 
 #menu ul li.signIn{
