@@ -101,14 +101,14 @@ function setDefaultMenu(activePage) {
     }
 
     $("#menuArea").html(menu)
-    setTopMenu()
+    setTopMenu(activePage)
     fixMenu()
     markActivePage(activePage)
 }
 
-function setTopMenu() {
+function setTopMenu(title) {
     var topMenu =  '<div id="topMenu"><ul>'
-        +'<li><h2>Achievements</h2></li>'
+        +'<li><h2>' + title + '</h2></li>'
         +'<li> </li>'
         +'</ul></div>'
 
@@ -117,11 +117,11 @@ function setTopMenu() {
 
 function markActivePage(activePage) {
     switch (activePage) {
-        case 'friends' :  $('#menuImageFriends').attr('src','content/img/friendsicon-selected.png')
+        case 'Friends' :  $('#menuImageFriends').attr('src','content/img/friendsicon-selected.png')
             break
-        case 'achievements' : $('#menuImageTree').attr("src","content/img/homeicon-selected.png")
+        case 'Achievements' : $('#menuImageTree').attr("src","content/img/homeicon-selected.png")
             break
-        case 'user' : $('#menuImageTab').attr("src","content/img/tree-tab-selected.png")
+        case 'User' : $('#menuImageTab').attr("src","content/img/tree-tab-selected.png")
             break
     }
 }
@@ -136,11 +136,11 @@ function getTabMenu() {
     return menu
 }
 
-function insertContent(content, menuFunction, callback) {
+function insertContent(content, menuFunction, title, callback) {
     $("#contentArea").html(content)
     $("#fbLikeWeb").show()
     if (menuFunction) {
-        menuFunction()
+        menuFunction(title)
     }
     if (isiPhone && !isAppMode) {
         $("html, body").animate({scrollTop: 0}, 'fast')
@@ -342,14 +342,14 @@ function getFriendsFromServer(callback) {
 function openFriends() {
     $('#tab-menu').hide('fast')
     getFriendsContent(function(friendsContent) {
-        insertContent(friendsContent, setDefaultMenu('friends'))
+        insertContent(friendsContent, setDefaultMenu('Friends'))
     })
 }
 
 function openUser() {
     $('#tab-menu').hide('fast')
     getUserContent(function(userContent) {
-        insertContent(userContent, setDefaultMenu('user'))
+        insertContent(userContent, setDefaultMenu('User'))
     })
 }
 

@@ -198,10 +198,9 @@ function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUr
             tab + '$(document).ready(function() {' + nl +
             tab + 'init()' + nl +
             tab + 'Magnetic.init()' + nl +
-            tab + 'insertContent(getPublicAchievementContent(), function() {' + nl +
-            tab + 'getPublicAchievement(\'' + achieverId + '\', \'' +currentAchievementId + '\')' + nl +
+            tab + 'insertContent(getPublicAchievementContent(), setDefaultMenu(), \'' + title + '\', function() {' + nl +
+            tab + 'getPublicAchievement(\'' + achieverId + '\',  \'' +currentAchievementId + '\')' + nl +
             tab + '})' + nl +
-            tab + 'setDefaultMenu()' + nl +
             tab + '})' + nl +
             tab + '</script>' + nl +
             tab + '</head>' + nl +

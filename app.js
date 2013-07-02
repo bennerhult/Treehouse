@@ -913,7 +913,7 @@ function getAchievementList(request, response, completedAchievements) {
     progress.Progress.find({ achiever_id: achieverId}, {}, { sort: { 'latestUpdated' : -1 } }, function(err, progresses) {
         if (err) { console.log("error in app.js 1: couldn't find any progress for user " + achieverId) }
         if (progresses && progresses.length > 0) {
-            if (!lookingAtFriendsAchievements && !completedAchievements ) {achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent(), setDefaultMenu(\"createAchievement\"))'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare-part'>&nbsp;</div></div>" }
+            if (!lookingAtFriendsAchievements && !completedAchievements ) {achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent(), setDefaultMenu(\"Create Achievement\"))'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare-part'>&nbsp;</div></div>" }
             progresses.forEach(function(currentProgress, index) {
                 achievement.Achievement.findById(currentProgress.achievement_id, function(err2, myAchievement) {
                     if (err2) { console.log("error in app.js 2: couldn't find achievement for progress " + currentProgress.achievement_id) }
@@ -946,7 +946,7 @@ function getAchievementList(request, response, completedAchievements) {
                 })
             })
         } else {
-            if (!lookingAtFriendsAchievements) {achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent(), setDefaultMenu('achievement'))'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare-part'>&nbsp;</div></div>" }
+            if (!lookingAtFriendsAchievements) {achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent(), setDefaultMenu(\"Create Achivevement\"))'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare-part'>&nbsp;</div></div>" }
             getSharedAchievementNotifications(0, response, achievementsList, completedAchievements, achieverId, request.session.user_id)
         }
     })
