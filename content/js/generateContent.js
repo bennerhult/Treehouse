@@ -331,6 +331,7 @@ function getFriendsFromServer(callback) {
 }
 
 function openFriends() {
+    window.history.pushState(null, null, "/")
     getFriendsContent(function(friendsContent) {
         insertContent(friendsContent, setDefaultMenu('Friends'))
     })
