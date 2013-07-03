@@ -150,14 +150,13 @@ function showSignin(message) {
     })
 }
 
-function showLatestAchievement(achievementId, userId) {
+function showLatestAchievement(achievementId, userId, title) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + userId)
-
     //if user is not logged in, they have the rounded corner app-container-login
     if (document.getElementById("app-container-login")) {
         $("#app-container-login").attr("id","app-container");
     }
-    insertContent(getPublicAchievementContent(), setDefaultMenu('Latest achievement'), getPublicAchievement(userId, achievementId))
+    insertContent(getPublicAchievementContent(), setDefaultMenu(title), getPublicAchievement(userId, achievementId))
 }
 
 function insertLatestAchievement() {
