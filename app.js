@@ -835,9 +835,9 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
             + achievements[i]._id
             + '\', \''
             + achieverId
-            + '\', \''
+            + '\', '
             + progresses[i].publiclyVisible
-            + '\', \''
+            + ', \''
             + achievements[i].title
             + '\''
         achievementsList += ')"><img src="'
@@ -1110,7 +1110,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                             achievementDesc += '<li id="publicizeButton"  style="display:none"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
                                                         }  else {
                                                             achievementDesc += '<li id="unpublicizeButton" style="display:none"><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unpublicize.png" /></a></li>'
-                                                            achievementDesc += '<li id="publicizeButton" ><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
+                                                            achievementDesc += '<li id="publicizeButton"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
                                                         }
                                                         achievementDesc += '<li id="deleteButton" class="rightalign"><a href="javascript:void(0)" onclick="deleteAchievement()"><img src="content/img/delete.png" /></a></li>'
                                                         if (myPercentageFinished == 0 && !isAchievementShared) {
