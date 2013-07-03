@@ -101,11 +101,6 @@ function rememberMeOnServer(callback) {
     })
 }
 
-/******************  tab menu functions  ******************/
-function toggleTab() {
-    $('#tab-menu').slideToggle('fast');
-}
-
 /******************  sign out functions  ******************/
 function signout() {
     logOutFB()
@@ -392,13 +387,23 @@ function confirmFriendRequestOnServer(friendship_id, callback) {
     })
 }
 
+
+/******************  more menu ******************/
+function showMore() {
+    window.history.pushState(null, null, "/")
+    getMoreMenuContent(function(moreMenuContent) {
+        insertContent(moreMenuContent, setDefaultMenu('More'), 'More')
+    })
+}
+
+
 /******************  achievements functions  ******************/
 function openAchievements(completed, achieverId, lookingAtFriend) {
     window.history.pushState(null, null, "/")
     $("#page-login").attr("id","page");
     $("#app-container-login").attr("id","app-container");
     getAchievementsContent(achieverId, lookingAtFriend, function(achievementsContent) {
-        insertContent(achievementsContent, setDefaultMenu('Achievements'), getAchievements(completed, achieverId, lookingAtFriend))
+        insertContent(achievementsContent, setDefaultMenu('Achievements'), 'Achievements', getAchievements(completed, achieverId, lookingAtFriend))
     })
 }
 
@@ -408,7 +413,6 @@ function getAchievements(completed, achieverId, lookingAtFriend) {
             FB.XFBML.parse();
             $("#fbLikeWeb").show()
             $("#achievementList").html(data)
-            $('#tab-menu').hide('fast')
               if (completed) {
                  $("#completedSpan").attr("class","selected")
                  $("#inProgressSpan").removeClass()
@@ -724,10 +728,10 @@ function goalKeyPress(goalField) {
 }
 
 /******************  edit achievement functions  ******************/
-function editAchievement(userId) {
+function editAchievement() {
     editAchievementOnServer(
         function(data) {
-            insertContent(getNewAchievementContent(data, userId))
+            insertContent(getNewAchievementContent(data))
             setDefaultMenu('editAchievement')
         }
     )

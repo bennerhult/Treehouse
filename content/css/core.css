@@ -589,76 +589,6 @@ body{
     margin-right: 0px;
 }
 
-.slider-menu{
-    z-index: 20;
-    position: absolute;
-    bottom: 42px;
-    right: 2%;
-    -moz-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
-    -webkit-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
-    box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
-
-    border-bottom-left-radius: 3px;
-    -webkit-border-bottom-left-radius: 3px;
-    -moz-border-radius-bottomleft: 3px;
-
-    border-bottom-right-radius: 3px;
-    -webkit-border-bottom-right-radius: 3px;
-    -moz-border-radius-bottompright: 3px;
-}
-
-.slider-menu ul li{
-    font-family: 'Philosopher', sans-serif;
-    font-size: 18px;
-    color: #fff;
-    border-bottom: 1px solid #4f4d4d;
-
-}
-
-
-.slider-menu ul li.last{
-
-    border-bottom-left-radius: 3px;
-    -webkit-border-bottom-left-radius: 3px;
-    -moz-border-radius-bottomleft: 3px;
-
-    border-bottom-right-radius: 3px;
-    -webkit-border-bottom-right-radius: 3px;
-    -moz-border-radius-bottompright: 3px;
-}
-
-
-.slider-menu ul li a{
-    font-family: 'Philosopher', sans-serif;
-    font-size: 14px;
-    color: #fff;
-    text-decoration: none;
-}
-
-.slider-menu ul li span{
-    background-color: #131213;
-
-    padding: 10px 80px 10px 20px;
-    display: block;
-    border: 1px solid #6d6d6d;
-}
-
-.slider-menu ul li span:hover{
-    background-color: #464646;
-}
-
-.slider-menu ul li.last span{
-
-    border-bottom-left-radius: 3px;
-    -webkit-border-bottom-left-radius: 3px;
-    -moz-border-radius-bottomleft: 3px;
-
-    border-bottom-right-radius: 3px;
-    -webkit-border-bottom-right-radius: 3px;
-    -moz-border-radius-bottompright: 3px;
-}
-
-
 .tree-tab{
     text-align: center;
 }
@@ -809,6 +739,110 @@ body{
     position: relative;
 }
 
+
+
+/* -- moreList --*/
+
+#moreList{
+    margin-top: 20px;
+    padding-bottom: 50px;
+}
+
+#moreList .header{
+    border-top-left-radius: 3px;
+    -webkit-border-top-left-radius: 3px;
+    -moz-border-radius-topleft: 3px;
+
+    border-top-right-radius: 3px;
+    -webkit-border-top-right-radius: 3px;
+    -moz-border-radius-topright: 3px;
+
+    -moz-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
+    -webkit-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
+    box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
+
+    text-align: center;
+    color: #fff;
+    background-color: #000;
+    font: 14px 'Philosopher', sans-serif;
+    padding: 4px 0px;
+    font-weight: bold;
+}
+
+#moreList .more{
+    width: 100%;
+    border-bottom-left-radius: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    -moz-border-radius-bottomleft: 3px;
+
+    border-bottom-right-radius: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+    -moz-border-radius-bottomright: 3px;
+
+    background: #7e7b76; /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover,  #a8a7a5 0%, #7e7b76 90%); /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#a8a7a5), color-stop(90%,#7e7b76)); /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover,  #a8a7a5 0%,#7e7b76 90%); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover,  #a8a7a5 0%,#7e7b76 90%); /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover,  #a8a7a5 0%,#7e7b76 90%); /* IE10+ */
+    background: radial-gradient(center, ellipse cover,  #a8a7a5 0%,#7e7b76 90%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a8a7a5', endColorstr='#7e7b76',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+
+    -moz-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
+    -webkit-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
+    box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
+}
+
+#moreList .itemwrap{
+    position: relative;
+    margin-right: 5%;
+    margin-left: 5%;
+    padding-top: 15px;
+}
+
+#moreList .itemwrap span{
+    position: absolute;
+    bottom: 12px;
+}
+
+#moreList .itemwrap span.remove{
+    position: absolute;
+    bottom: 12px;
+    right: 0px;
+}
+
+#moreList .itemwrap span.confirm{
+    position: absolute;
+    bottom: 12px;
+    right: 50px;
+}
+
+#moreList .itemwrap span.ignore{
+    position: absolute;
+    bottom: 12px;
+    right: 0px;
+}
+
+#moreList .itemwrap span a{
+    font-family: 'Philosopher', sans-serif;
+    color: #131213;
+    text-decoration: underline;
+}
+
+#moreList .itemwrap h3{
+    font-size: 13px;
+}
+
+#moreList .itemwrap .leftcontainer{
+    float: left;
+    padding-bottom: 7px;
+    margin-right: 10px;
+}
+
+#moreList .itemwrap .rightcontainer{
+    float: left;
+}
 
 /*-- LOG IN / SIGN UP --*/
 
@@ -1736,11 +1770,6 @@ p#achievementDescription{
     #app-container,
     #app-container-login{
         height: 100%
-    }
-
-
-    .slider-menu{
-        position: fixed;
     }
 
     #page,

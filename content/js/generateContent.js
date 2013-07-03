@@ -91,8 +91,8 @@ function setDefaultMenu(activePage) {
             menu += '<span>' + nrOfFriendShipRequests + '</span>'
         }
         menu += '</a></div></li>'
-        +'<li id="menuToggle"><a href="javascript:void(0)" onclick="toggleTab()"><img id="menuImageTab" src="content/img/tree-tab.png" alt=""/></a></li>'
-        menu += '</ul></div>' + getTabMenu()
+        +'<li id="menuToggle"><a href="javascript:void(0)" onclick="showMore()"><img id="menuImageTab" src="content/img/tree-tab.png" alt=""/></a></li>'
+        menu += '</ul></div>'
     }  else {
         menu  = '<div id="menu">' + nl  +
             '<ul>' + nl  +
@@ -121,21 +121,12 @@ function markActivePage(activePage) {
             break
         case 'Achievements' : $('#menuImageTree').attr("src","content/img/homeicon-selected.png")
             break
-        case 'User' : $('#menuImageTab').attr("src","content/img/tree-tab-selected.png")
+        case 'More' : $('#menuImageTab').attr("src","content/img/tree-tab-selected.png")
             break
     }
 }
 
-function getTabMenu() {
-    var menu = '<div id="tab-menu" class="slider-menu" style="display:none;">' + nl +
-        '<ul>'  + nl +
-        '<li class="last"><a href="javascript:void(0)" onclick="signout()"><span>Sign out</span></a></li>'  +  nl +
-        '<li><a href="javascript:void(0)" onclick="openUser()"><span>User</span></a></li>'  + nl +
-        '</ul>' + nl +
-        '</div>' + nl
-    return menu
-}
-
+//title appears not to be used, but the value passed inline in menuFunction(inlinevalue)
 function insertContent(content, menuFunction, title, callback) {
     $("#contentArea").html(content)
     $("#fbLikeWeb").show()
@@ -340,14 +331,12 @@ function getFriendsFromServer(callback) {
 }
 
 function openFriends() {
-    $('#tab-menu').hide('fast')
     getFriendsContent(function(friendsContent) {
         insertContent(friendsContent, setDefaultMenu('Friends'))
     })
 }
 
 function openUser() {
-    $('#tab-menu').hide('fast')
     getUserContent(function(userContent) {
         insertContent(userContent, setDefaultMenu('User'))
     })
@@ -431,8 +420,32 @@ function getPublicAchievementContent() {
     )
 }
 
+function getMoreMenuContent(callback) {
+    callback(
+        '<div id="content">' +
+            '<div id="moreList">' +
+                '<div class="header">&nbsp;</div>' +
+                    '<div id="more" class="more">' +
+                        '<div class="itemwrap">' +
+                            '<div class="leftcontainer"></a></div>' +
+                            '<div class="rightcontainer"><h3><a class="headerlink" href="javascript:void(0)" onclick="signout()">Sign out</a></h3></div>' +
+                            '<div class="clear"></div>' +
+                            '<div class="separerare-part">&nbsp;</div>' +
+                        '</div>' +
+                        '<div class="itemwrap">' +
+                            '<div class="leftcontainer"></a></div>' +
+                            '<div class="rightcontainer"><h3><a class="headerlink" href="javascript:void(0)" onclick="openUser()">User</a></h3></div>' +
+                            '<div class="clear"></div>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+        '</div>')
+
+}
+
 //data if edit, null if create
-function getNewAchievementContent(data, userId) {
+function getNewAchievementContent(data) {
         var text ='<div id="app-container">' + nl  +
                 '<form id="createAchievementForm" action="javascript: createAchievement()">' + nl  +
                     '<div class="achievement-info">' + nl  +
