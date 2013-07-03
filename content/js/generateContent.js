@@ -127,11 +127,11 @@ function markActivePage(activePage) {
 }
 
 //title appears not to be used, but the value passed inline in menuFunction(inlinevalue)
-function insertContent(content, menuFunction, title, callback) {
+function insertContent(content, menuFunction, callback) {
     $("#contentArea").html(content)
     $("#fbLikeWeb").show()
     if (menuFunction) {
-        menuFunction(title)
+        menuFunction()
     }
     if (isiPhone && !isAppMode) {
         $("html, body").animate({scrollTop: 0}, 'fast')

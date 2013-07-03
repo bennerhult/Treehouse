@@ -392,7 +392,7 @@ function confirmFriendRequestOnServer(friendship_id, callback) {
 function showMore() {
     window.history.pushState(null, null, "/")
     getMoreMenuContent(function(moreMenuContent) {
-        insertContent(moreMenuContent, setDefaultMenu('More'), 'More')
+        insertContent(moreMenuContent, setDefaultMenu('More'))
     })
 }
 
@@ -403,7 +403,7 @@ function openAchievements(completed, achieverId, lookingAtFriend) {
     $("#page-login").attr("id","page");
     $("#app-container-login").attr("id","app-container");
     getAchievementsContent(achieverId, lookingAtFriend, function(achievementsContent) {
-        insertContent(achievementsContent, setDefaultMenu('Achievements'), 'Achievements', getAchievements(completed, achieverId, lookingAtFriend))
+        insertContent(achievementsContent, setDefaultMenu('Achievements'), getAchievements(completed, achieverId, lookingAtFriend))
     })
 }
 
@@ -456,10 +456,7 @@ function openShareNotification(achievementId, achieverId, sharerId) {
 /******************  achievement functions  ******************/
 function openAchievement(achievementId, achieverId, publiclyVisible) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + achieverId)
-    insertContent(getAchievementContent(), getAchievement(achievementId, achieverId, publiclyVisible))
-
-
-
+    insertContent(getAchievementContent(), setDefaultMenu('Achievement'), getAchievement(achievementId, achieverId, publiclyVisible))    //TODOvisa achievmentnamn i title
 }
 
 function getNotification(achievementId, sharerId, achieverId) {
@@ -731,8 +728,8 @@ function goalKeyPress(goalField) {
 function editAchievement() {
     editAchievementOnServer(
         function(data) {
-            insertContent(getNewAchievementContent(data))
-            setDefaultMenu('editAchievement')
+            insertContent(getNewAchievementContent(data),setDefaultMenu('Edit'))
+
         }
     )
 }
