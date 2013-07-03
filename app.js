@@ -483,10 +483,10 @@ function fillFriendsList(friendsList, pendings, userId, callback) {
             }
             getUserNameForId(currentFriendId, function(username, id) {
                 content +=   '<div class="itemwrap" id="friendshipid' + currentFriendship._id + '">'
-                content +=   '<div class="leftcontainer"><a href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')"><img src="content/img/user_has_no_image.jpg" /></a></div>'
+                content +=   '<div class="leftcontainer"><a href="javascript:void(0)" onclick="visitFriend(\'' + id + '\', \'' + username + '\')"><img src="content/img/user_has_no_image.jpg" /></a></div>'
                 content +=   '<div class="rightcontainer">'
                 content += '<h3>'
-                content +=  '<a class="headerlink" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')">' +username + '</a>'
+                content +=  '<a class="headerlink" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\', \'' + username + '\')">' +username + '</a>'
                 content += '</h3>'
                 content +=   ' <span class="remove"><a href="javascript:void(0)" onclick="removeFriendship(\'' + currentFriendship._id  + '\')">Remove</a></span>'
                 content +=   '</div>'
