@@ -141,7 +141,6 @@ app.get('/channel.html', function(request, response){
 //public achievement
 app.get('/achievement', function(request, response) {
     console.log("you found it!")
-    //TODO Erik: märkligt nog verkar denna inte användas
     var url_parts = url.parse(request.url, true)
     var currentAchievementId = url_parts.query.achievementId
     var userId  = url_parts.query.userId
@@ -645,7 +644,7 @@ app.get('/compareList', function(request, response){
                                 }
 
                                 if (goalIndex == currentAchievement.goals.length - 1 ) {
-                                    content += getCompareText(userName, myQuantityFinished, myQuantityTotal, index, compareList.length, currentCompare.achiever_id, request.query.achievementId, myProgress.publiclyVisible)
+                                    content += getCompareText(userName, myQuantityFinished, myQuantityTotal, index, compareList.length, currentCompare.achiever_id, request.query.achievementId, myProgress.publiclyVisible, currentAchievement.title)
 
                                     if (index == compareList.length -1) {
                                         response.writeHead(200, {'content-type': 'application/json' })
@@ -668,10 +667,10 @@ app.get('/compareList', function(request, response){
     })
 })
 
-function getCompareText(userName, finished, total, index, nrOfCompares, achieverId, achievementId, publiclyVisible) {
+function getCompareText(userName, finished, total, index, nrOfCompares, achieverId, achievementId, publiclyVisible, title) {
     compareText = '<div class="part-achievement">'
     + '<div class="progress-container">'
-    + '<h3><a class="headerlink" href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ')">'
+    + '<h3><a class="headerlink" href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + '\', \'' + title + ')">'
         + userName
     + '</a></h3>'
     + '<table border="0px">'
@@ -690,7 +689,7 @@ function getCompareText(userName, finished, total, index, nrOfCompares, achiever
             + '</td><td>&nbsp;</td><td>'
         var completed = finished >= total
         var isAchievementCreatedByMe = false
-        compareText    += '<div class="user-image"><a href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ')"><img src="content/img/user_has_no_image.jpg" alt="Visit friend!"/></a></div>'
+        compareText    += '<div class="user-image"><a href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + '\', \'' + title + ')"><img src="content/img/user_has_no_image.jpg" alt="Visit friend!"/></a></div>'
         compareText += '</td></tr></table>'
         compareText    += '<div class="clear"></div>'
         compareText    += '</div>'
@@ -784,8 +783,9 @@ app.get('/ignoreAchievement', function(request, response){
 
 app.get('/confirmAchievement', function(request, response){
     //console.log("/confirmAchievement")
-    shareholding.confirmShareHolding(request.query.achievementId, request.query.userId, function() {
+    shareholding.confirmShareHolding(request.query.achievementId, request.query.userId, function(title) {
         response.writeHead(200, {'content-type': 'application/json' })
+        response.write(JSON.stringify(title))
         response.end('\n', 'utf-8')
     })
 })
@@ -835,8 +835,11 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
             + achievements[i]._id
             + '\', \''
             + achieverId
-            + '\','
+            + '\', \''
             + progresses[i].publiclyVisible
+            + '\', \''
+            + achievements[i].title
+            + '\''
         achievementsList += ')"><img src="'
             + achievements[i].imageURL
             + '" alt="'

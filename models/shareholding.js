@@ -147,7 +147,7 @@ function confirmShareHolding(achievement_id, shareholder_id, callback){
                 if (index == currentAchievement.goals.length -1)  {
                     shareholding.confirmed = true
                     shareholding.save(function () {
-                        callback()
+                        callback(currentAchievement.title)
                     })
                 }
             })

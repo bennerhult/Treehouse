@@ -245,8 +245,8 @@ function shareToFriendOnServer(friendId, achievementId, callback) {
 }
 
 function confirmAchievement(achievementId, userId) {
-    confirmAchievementOnServer(achievementId, userId, function() {
-        openAchievement(achievementId, userId, false, false, false)
+    confirmAchievementOnServer(achievementId, userId, function(title) {
+        openAchievement(achievementId, userId, false, title)
     })
 }
 
@@ -264,7 +264,7 @@ function confirmAchievementOnServer(achievementId, userId, callback) {
         data: data,
         dataType: "json",
         statusCode: {
-            200: function() { callback() }
+            200: function(name) { callback(name) }
         }
     })
 }
@@ -457,9 +457,9 @@ function openShareNotification(achievementId, achieverId, sharerId) {
 }
 
 /******************  achievement functions  ******************/
-function openAchievement(achievementId, achieverId, publiclyVisible) {
+function openAchievement(achievementId, achieverId, publiclyVisible, title) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + achieverId)
-    insertContent(getAchievementContent(), setDefaultMenu('Achievement'), getAchievement(achievementId, achieverId, publiclyVisible))    //TODOvisa achievmentnamn i title
+    insertContent(getAchievementContent(), setDefaultMenu(title), getAchievement(achievementId, achieverId, publiclyVisible))
 }
 
 function getNotification(achievementId, sharerId, achieverId) {
