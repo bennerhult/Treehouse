@@ -96,6 +96,7 @@ function setDefaultMenu(activePage, visitsMainPage) {
         $("#menuArea").html(menu)
     }
     setTopMenu(activePage)
+
     if (visitsMainPage) {
         switch (activePage) {
             case 'Friends' :
@@ -114,6 +115,10 @@ function setDefaultMenu(activePage, visitsMainPage) {
                 $('#menuImageTab').attr("src","content/img/tree-tab-selected.png")
                 break
         }
+    }  else {
+        $('#menuImageFriends').attr('src','content/img/friendsicon.png')
+        $('#menuImageTree').attr('src','content/img/homeicon.png')
+        $('#menuImageTab').attr('src','content/img/tree-tab.png')
     }
 }
 
