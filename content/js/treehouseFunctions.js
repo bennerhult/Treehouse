@@ -398,12 +398,16 @@ function showMore() {
 
 
 /******************  achievements functions  ******************/
-function openAchievements(completed, achieverId, lookingAtFriend) {
+function openAchievements(completed, achieverId, lookingAtFriend, achieverName) {
     window.history.pushState(null, null, "/")
     $("#page-login").attr("id","page");
     $("#app-container-login").attr("id","app-container");
     getAchievementsContent(achieverId, lookingAtFriend, function(achievementsContent) {
-        insertContent(achievementsContent, setDefaultMenu('Achievements'), getAchievements(completed, achieverId, lookingAtFriend))
+          if (lookingAtFriend) {
+              insertContent(achievementsContent, setDefaultMenu(achieverName), getAchievements(completed, achieverId, lookingAtFriend))
+          }   else {
+              insertContent(achievementsContent, setDefaultMenu('Achievements'), getAchievements(completed, achieverId, lookingAtFriend))
+          }
     })
 }
 

@@ -1099,7 +1099,7 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
                                                 if (index == goalTexts.length - 1) {
                                                     var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100
 
-                                                    achievementDesc += '<div class="achievement-info"><div id="userarea"><img src="content/img/user_has_no_image.jpg" /><a class="headerlink" href="javascript:void(0)" onclick="openAchievements(false, \'' + achievementUser_id + '\', ' + checkingOtherPersonsAchievement + ')">' + achieverName + '</a></div> '
+                                                    achievementDesc += '<div class="achievement-info"><div id="userarea"><img src="content/img/user_has_no_image.jpg" /><a class="headerlink" href="javascript:void(0)" onclick="openAchievements(false, \'' + achievementUser_id + '\', ' + checkingOtherPersonsAchievement + ', \'' + achieverName + '\')">' + achieverName + '</a></div> '
                                                     if (!checkingOtherPersonsAchievement) {
                                                         achievementDesc += '<div class="actionmenu"><ul>'
                                                         if (myProgress.publiclyVisible) {
