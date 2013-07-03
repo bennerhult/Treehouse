@@ -30,12 +30,13 @@ function init(userId, friendShipRequests) {
         status: true,
         cookie: true,
         xfbml: true,
-        chanuser_hanelUrl : '//treehouse.io/channel.html',  //increases performance
+        channelUrl : '//treehouse.io/channel.html',  //increases performance
         oauth: true
     })
     insertLatestAchievement()
     $("#web-footer").html(footerContent)
     if (isiPad) {
+        /*
         jQuery(window).bind('orientationchange', function() {
             switch ( window.orientation ) {
                 case 0: //Portrait orientation. This is the default value.
@@ -50,6 +51,7 @@ function init(userId, friendShipRequests) {
                     break
             }
         })
+        */
     }  else {
         $("#banner").empty().remove()
     }
@@ -59,46 +61,57 @@ function init(userId, friendShipRequests) {
     }
 }
 
+
 function setEmptyMenu() {
-    var menu = ''
-    $("#menuArea").html(menu)
-    $("#topMenuArea").html(menu)
+    $("#menuArea").empty()
+     $("#topMenuArea").empty()
 }
 
 function setDefaultMenu(activePage, visitsMainPage) {
-    var menu
-     var x = getCookie('rememberme')
-     var loggedIn = false
-     if (x) {
-        loggedIn = true
-     }
-
-     if (loggedIn) {
-       menu = '<div id="menu" class="menu-absolute"><ul>'
-         +'<li><div id="menuIconTree"><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><img id="menuImageTree" src="content/img/homeicon.png" alt="" /></a></div></li>'
-         +'<li><div id="menuIconFriend"><a href="javascript:void(0)" onclick="openFriends()"><img id="menuImageFriends" src="content/img/friendsicon.png" alt="" />'
-        if (nrOfFriendShipRequests > 0) {
-            menu += '<span>' + nrOfFriendShipRequests + '</span>'
+    if($('#menuArea').is(':empty')) {
+        var menu
+        var x = getCookie('rememberme')
+        var loggedIn = false
+        if (x) {
+         loggedIn = true
         }
-        menu += '</a></div></li>'
-        +'<li id="menuToggle"><a href="javascript:void(0)" onclick="showMore()"><img id="menuImageTab" src="content/img/tree-tab.png" alt=""/></a></li>'
-        menu += '</ul></div>'
-    }  else {
-        menu  = '<div id="menu">' + nl  +
+
+        if (loggedIn) {
+            menu = '<div id="menu" class="menu-absolute"><ul>'
+            +'<li><div id="menuIconTree"><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId
+            + '\', false)"><img id="menuImageTree" src="content/img/homeicon.png" alt="" /></a></div></li>'
+            +'<li><div id="menuIconFriend"><a href="javascript:void(0)" onclick="openFriends()"><img id="menuImageFriends" src="content/img/friendsicon.png" alt="" />'
+            if (nrOfFriendShipRequests > 0) {
+               menu += '<span>' + nrOfFriendShipRequests + '</span>'
+            }
+            menu += '</a></div></li>'
+            +'<li id="menuToggle"><a href="javascript:void(0)" onclick="showMore()"><img id="menuImageTab" src="content/img/tree-tab.png" alt=""/></a></li>'
+            menu += '</ul></div>'
+        } else {
+            menu  = '<div id="menu">' + nl  +
             '<ul>' + nl  +
             '<li class="icons"><a href="javascript:void(0)" onclick="showSignin()"><img src="content/img/signin.png" alt="" /></a></li></ul>' + nl  +
             '</div>'
+        }
+        $("#menuArea").html(menu)
     }
-
-    $("#menuArea").html(menu)
     setTopMenu(activePage)
     if (visitsMainPage) {
         switch (activePage) {
-            case 'Friends' :  $('#menuImageFriends').attr('src','content/img/friendsicon-selected.png')
+            case 'Friends' :
+                $('#menuImageFriends').attr('src','content/img/friendsicon-selected.png')
+                $('#menuImageTree').attr('src','content/img/homeicon.png')
+                $('#menuImageTab').attr('src','content/img/tree-tab.png')
                 break
-            case 'Achievements' : $('#menuImageTree').attr("src","content/img/homeicon-selected.png")
+            case 'Achievements' :
+                $('#menuImageFriends').attr('src','content/img/friendsicon.png')
+                $('#menuImageTree').attr('src','content/img/homeicon-selected.png')
+                $('#menuImageTab').attr('src','content/img/tree-tab.png')
                 break
-            case 'More' : $('#menuImageTab').attr("src","content/img/tree-tab-selected.png")
+            case 'More' :
+                $('#menuImageFriends').attr('src','content/img/friendsicon.png')
+                $('#menuImageTree').attr('src','content/img/homeicon.png')
+                $('#menuImageTab').attr("src","content/img/tree-tab-selected.png")
                 break
         }
     }
