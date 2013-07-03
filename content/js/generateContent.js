@@ -96,7 +96,7 @@ function setDefaultMenu(activePage, visitsMainPage) {
         $("#menuArea").html(menu)
     }
     setTopMenu(activePage)
-
+    $(document).attr('title', 'Treehouse - ' + activePage);
     if (visitsMainPage) {
         switch (activePage) {
             case 'Friends' :
