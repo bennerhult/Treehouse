@@ -283,7 +283,7 @@ function ignoreAchievementOnServer(achievementId, userId, callback) {
 
 function visitFriend(friendId, userName) {
     getAchievementsContent(friendId, true, function(achievementsContent) {
-        insertContent(achievementsContent, setDefaultMenu(userName), getAchievements(false, friendId, true))
+        insertContent(achievementsContent, setDefaultMenu(userName, false), getAchievements(false, friendId, true))
     })
 }
 
@@ -391,7 +391,7 @@ function confirmFriendRequestOnServer(friendship_id, callback) {
 function showMore() {
     window.history.pushState(null, null, "/")
     getMoreMenuContent(function(moreMenuContent) {
-        insertContent(moreMenuContent, setDefaultMenu('More'))
+        insertContent(moreMenuContent, setDefaultMenu('More', true))
     })
 }
 
@@ -403,9 +403,9 @@ function openAchievements(completed, achieverId, lookingAtFriend, achieverName) 
     $("#app-container-login").attr("id","app-container");
     getAchievementsContent(achieverId, lookingAtFriend, function(achievementsContent) {
           if (lookingAtFriend) {
-              insertContent(achievementsContent, setDefaultMenu(achieverName), getAchievements(completed, achieverId, lookingAtFriend))
+              insertContent(achievementsContent, setDefaultMenu(achieverName, false), getAchievements(completed, achieverId, lookingAtFriend))
           }   else {
-              insertContent(achievementsContent, setDefaultMenu('Achievements'), getAchievements(completed, achieverId, lookingAtFriend))
+              insertContent(achievementsContent, setDefaultMenu('Achievements', true), getAchievements(completed, achieverId, lookingAtFriend))
           }
     })
 }
@@ -453,13 +453,13 @@ function getAchievementsFromServer(completed, achieverId, lookingAtFriend, callb
 
 /******************  share functions  ******************/
 function openShareNotification(achievementId, achieverId, sharerId) {
-    insertContent(getAchievementContent(), setDefaultMenu('Notification'), getNotification(achievementId, sharerId, achieverId))
+    insertContent(getAchievementContent(), setDefaultMenu('Challenge!', false), getNotification(achievementId, sharerId, achieverId))
 }
 
 /******************  achievement functions  ******************/
 function openAchievement(achievementId, achieverId, publiclyVisible, title) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + achieverId)
-    insertContent(getAchievementContent(), setDefaultMenu(title), getAchievement(achievementId, achieverId, publiclyVisible))
+    insertContent(getAchievementContent(), setDefaultMenu(title, false), getAchievement(achievementId, achieverId, publiclyVisible))
 }
 
 function getNotification(achievementId, sharerId, achieverId) {
@@ -731,7 +731,7 @@ function goalKeyPress(goalField) {
 function editAchievement() {
     editAchievementOnServer(
         function(data) {
-            insertContent(getNewAchievementContent(data),setDefaultMenu('Edit'))
+            insertContent(getNewAchievementContent(data),setDefaultMenu('Edit', false))
 
         }
     )

@@ -59,23 +59,13 @@ function init(userId, friendShipRequests) {
     }
 }
 
-function fixMenu() {
-    //if (isiPhone){   //TODO eller stående iPade
-       //$('#menu').addClass('menu-fixed')
-    //} else {
-        $('#menu').addClass('menu-absolute')
-    //}
-
-}
-
 function setEmptyMenu() {
     var menu = ''
     $("#menuArea").html(menu)
     $("#topMenuArea").html(menu)
-    fixMenu()
 }
 
-function setDefaultMenu(activePage) {
+function setDefaultMenu(activePage, visitsMainPage) {
     var menu
      var x = getCookie('rememberme')
      var loggedIn = false
@@ -84,7 +74,7 @@ function setDefaultMenu(activePage) {
      }
 
      if (loggedIn) {
-       menu = '<div id="menu"><ul>'
+       menu = '<div id="menu" class="menu-absolute"><ul>'
          +'<li><div id="menuIconTree"><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><img id="menuImageTree" src="content/img/homeicon.png" alt="" /></a></div></li>'
          +'<li><div id="menuIconFriend"><a href="javascript:void(0)" onclick="openFriends()"><img id="menuImageFriends" src="content/img/friendsicon.png" alt="" />'
         if (nrOfFriendShipRequests > 0) {
@@ -102,8 +92,16 @@ function setDefaultMenu(activePage) {
 
     $("#menuArea").html(menu)
     setTopMenu(activePage)
-    fixMenu()
-    markActivePage(activePage)
+    if (visitsMainPage) {
+        switch (activePage) {
+            case 'Friends' :  $('#menuImageFriends').attr('src','content/img/friendsicon-selected.png')
+                break
+            case 'Achievements' : $('#menuImageTree').attr("src","content/img/homeicon-selected.png")
+                break
+            case 'More' : $('#menuImageTab').attr("src","content/img/tree-tab-selected.png")
+                break
+        }
+    }
 }
 
 function setTopMenu(title) {
@@ -114,18 +112,6 @@ function setTopMenu(title) {
 
     $("#topMenuArea").html(topMenu)
 }
-
-function markActivePage(activePage) {
-    switch (activePage) {
-        case 'Friends' :  $('#menuImageFriends').attr('src','content/img/friendsicon-selected.png')
-            break
-        case 'Achievements' : $('#menuImageTree').attr("src","content/img/homeicon-selected.png")
-            break
-        case 'More' : $('#menuImageTab').attr("src","content/img/tree-tab-selected.png")
-            break
-    }
-}
-
 //title appears not to be used, but the value passed inline in menuFunction(inlinevalue)
 function insertContent(content, menuFunction, callback) {
     $("#contentArea").html(content)
@@ -156,7 +142,7 @@ function showLatestAchievement(achievementId, userId, title) {
     if (document.getElementById("app-container-login")) {
         $("#app-container-login").attr("id","app-container");
     }
-    insertContent(getPublicAchievementContent(), setDefaultMenu(title), getPublicAchievement(userId, achievementId))
+    insertContent(getPublicAchievementContent(), setDefaultMenu(title, false), getPublicAchievement(userId, achievementId))
 }
 
 function insertLatestAchievement() {
@@ -332,13 +318,13 @@ function getFriendsFromServer(callback) {
 function openFriends() {
     window.history.pushState(null, null, "/")
     getFriendsContent(function(friendsContent) {
-        insertContent(friendsContent, setDefaultMenu('Friends'))
+        insertContent(friendsContent, setDefaultMenu('Friends', true))
     })
 }
 
 function openUser() {
     getUserContent(function(userContent) {
-        insertContent(userContent, setDefaultMenu('User'))
+        insertContent(userContent, setDefaultMenu('User', false))
     })
 }
 
