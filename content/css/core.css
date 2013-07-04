@@ -502,6 +502,11 @@ body{
     background-color: #232123;
 }
 
+#menu ul li div:hover{
+    height: 39px;
+    background-color: #232123;
+}
+
 #menu ul li.signIn{
     width: 100%;
     text-align: center;
