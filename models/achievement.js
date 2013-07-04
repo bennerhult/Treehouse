@@ -74,23 +74,25 @@ function updateLatestAchievementIfNecessary(progressId, next) {
         progress.Progress.findOne({ _id: latestAchievement_progressId }, function(err,currentProgress) {
             if (progressId && currentProgress) {
                 if (progressId.equals(currentProgress._id)) {
-                    findPublicAchievement(function (publicId) {
-                        if (publicId) {
-                            latestAchievement.update(publicId)
-                        }   else {
-                            latestAchievement.update(-1)
-                        }
-                        if (next) {
-                            next()
-                        }
-                    })
+                    setNewPublicAchievement(next)
                 }
             } else {
-                if (next) {
-                    next()
-                }
+                setNewPublicAchievement(next)
             }
         })
+    })
+}
+
+function setNewPublicAchievement(next) {
+    findPublicAchievement(function (publicId) {
+        if (publicId) {
+            latestAchievement.update(publicId)
+        }   else {
+            latestAchievement.update(-1)
+        }
+        if (next) {
+            next()
+        }
     })
 }
 
@@ -125,12 +127,16 @@ function remove(achievement, userId, next)    {
 function removeSharedPartOfAchievement(achievement, userId, next)    {
     progress.Progress.find({ achiever_id: userId, achievement_id: achievement._id}, function(err, progresses) {
         progresses.forEach(function(currentProgress, index) {
-            currentProgress.remove()
             if (index == (progresses.length - 1)) {
-                updateLatestAchievementIfNecessary (progress._id, function() {
+                console.log("AAA")
+                currentProgress.remove()
+                updateLatestAchievementIfNecessary (currentProgress._id, function() {
+                    console.log("BBb")
+
                     next()
                 })
             }
+            currentProgress.remove()
         })
     })
 }
