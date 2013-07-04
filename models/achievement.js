@@ -128,11 +128,8 @@ function removeSharedPartOfAchievement(achievement, userId, next)    {
     progress.Progress.find({ achiever_id: userId, achievement_id: achievement._id}, function(err, progresses) {
         progresses.forEach(function(currentProgress, index) {
             if (index == (progresses.length - 1)) {
-                console.log("AAA")
                 currentProgress.remove()
                 updateLatestAchievementIfNecessary (currentProgress._id, function() {
-                    console.log("BBb")
-
                     next()
                 })
             }

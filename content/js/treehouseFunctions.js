@@ -703,6 +703,16 @@ function toggleImage(step) {
     $("#achievementImage").attr("src", imagePath + images[newPos])
 }
 
+function uploadImage() {
+    filepicker.setKey('AM9A7pbm3QPSe24aJU2M2z')
+
+    filepicker.pickAndStore({mimetype:"image/*"}, {location:"S3"},
+        function(InkBlobs){
+            console.log(JSON.stringify(InkBlobs))
+        }
+    )
+}
+
 function goalKeyPress(goalField) {
     var newLineNumber = $('#goalTable tr').length + 1
     if ($(goalField).closest("tr")[0].rowIndex + 2 == newLineNumber) {   //only add new goal line if the pressed goal line is the bottom one
