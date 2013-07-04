@@ -689,10 +689,59 @@ function createAchievementOnServer(callback) {
     })
 }
 
-var images = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png", "9.png", "10.png", "11.png", "12.png", "13.png", "14.png", "15.png", "16.png", "17.png", "18.png", "19.png", "20.png", "21.png", "22.png", "23.png", "24.png", "25.png", "26.png", "27.png", "28.png", "29.png", "30.png", "31.png", "32.png", "33.png", "34.png", "35.png", "36.png", "37.png", "38.png", "39.png", "40.png", "41.png", "42.png", "43.png", "44.png", "45.png", "46.png", "47.png", "48.png", "49.png"]
-var imagePath= "content/img/achievementImages/"
+var images = ["content/img/achievementImages/1.png",
+    "content/img/achievementImages/2.png",
+    "content/img/achievementImages/3.png",
+    "content/img/achievementImages/4.png",
+    "content/img/achievementImages/5.png",
+    "content/img/achievementImages/6.png",
+    "content/img/achievementImages/7.png",
+    "content/img/achievementImages/8.png",
+    "content/img/achievementImages/9.png",
+    "content/img/achievementImages/10.png",
+    "content/img/achievementImages/11.png",
+    "content/img/achievementImages/12.png",
+    "content/img/achievementImages/13.png",
+    "content/img/achievementImages/14.png",
+    "content/img/achievementImages/15.png",
+    "content/img/achievementImages/16.png",
+    "content/img/achievementImages/17.png",
+    "content/img/achievementImages/18.png",
+    "content/img/achievementImages/19.png",
+    "content/img/achievementImages/20.png",
+    "content/img/achievementImages/21.png",
+    "content/img/achievementImages/22.png",
+    "content/img/achievementImages/23.png",
+    "content/img/achievementImages/24.png",
+    "content/img/achievementImages/25.png",
+    "content/img/achievementImages/26.png",
+    "content/img/achievementImages/27.png",
+    "content/img/achievementImages/28.png",
+    "content/img/achievementImages/29.png",
+    "content/img/achievementImages/30.png",
+    "content/img/achievementImages/31.png",
+    "content/img/achievementImages/32.png",
+    "content/img/achievementImages/33.png",
+    "content/img/achievementImages/34.png",
+    "content/img/achievementImages/35.png",
+    "content/img/achievementImages/36.png",
+    "content/img/achievementImages/37.png",
+    "content/img/achievementImages/38.png",
+    "content/img/achievementImages/39.png",
+    "content/img/achievementImages/40.png",
+    "content/img/achievementImages/41.png",
+    "content/img/achievementImages/42.png",
+    "content/img/achievementImages/43.png",
+    "content/img/achievementImages/44.png",
+    "content/img/achievementImages/45.png",
+    "content/img/achievementImages/46.png",
+    "content/img/achievementImages/47.png",
+    "content/img/achievementImages/48.png",
+    "content/img/achievementImages/49.png"]
+
 function toggleImage(step) {
-    var currentImage = $("#achievementImage").attr("src").replace(imagePath, "")
+    var currentImage = $("#achievementImage").attr("src")
+
     var currentPos = jQuery.inArray(currentImage, images)
     var newPos = currentPos + step
     if (newPos  >= images.length) {
@@ -700,7 +749,7 @@ function toggleImage(step) {
     }   else if (newPos == -1) {
         newPos = images.length-1
     }
-    $("#achievementImage").attr("src", imagePath + images[newPos])
+    $("#achievementImage").attr("src", images[newPos])
 }
 
 function uploadImage() {
@@ -708,7 +757,12 @@ function uploadImage() {
 
     filepicker.pickAndStore({mimetype:"image/*"}, {location:"S3"},
         function(InkBlobs){
-            console.log(JSON.stringify(InkBlobs))
+            //add to array:
+
+            var currentImage = $("#achievementImage").attr("src")
+            var currentPos = jQuery.inArray(currentImage, images)
+            images.splice(currentPos, 0, InkBlobs[0].url)
+            $("#achievementImage").attr("src", InkBlobs[0].url)
         }
     )
 }
