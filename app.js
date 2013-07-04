@@ -76,13 +76,13 @@ function loadUser(request, response, next) {
 }
 
 function authenticateFromLoginToken(request, response, initialCall) {
-    console.log("authenticateFromLoginToken: " + initialCall)
+    //console.log("authenticateFromLoginToken: " + initialCall)
     if (request.cookies.rememberme)  {
-        console.log("cookie found")
+        //console.log("cookie found")
         var cookie = JSON.parse(request.cookies.rememberme)
         loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
             if (!token) {
-                console.log("no token!")
+                //console.log("no token!")
                 response.writeHead(404, {'content-type': 'application/json' })
                 response.write(JSON.stringify(""))
                 response.end('\n', 'utf-8')
@@ -90,7 +90,7 @@ function authenticateFromLoginToken(request, response, initialCall) {
                 //console.log("token: " + token)
                 user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
                     if (user) {
-                        console.log("user: " + user)
+                        //console.log("user: " + user)
                         request.session.user_id = user.id
                         friendship.getNrOfRequests(request.session.user_id, function (nrOfFriendShipRequests) {
                             token.token = loginToken.randomToken()
@@ -140,7 +140,7 @@ app.get('/channel.html', function(request, response){
 
 //public achievement
 app.get('/achievement', function(request, response) {
-    console.log("you found it!")
+    //console.log("you found it!")
     var url_parts = url.parse(request.url, true)
     var currentAchievementId = url_parts.query.achievementId
     var userId  = url_parts.query.userId
@@ -159,7 +159,7 @@ app.get('/achievement', function(request, response) {
 })
 
 app.get('/', function(request, response){
-    console.log("/")
+    //console.log("/")
     writeDefaultPage(request, response)
 })
 
@@ -887,7 +887,7 @@ function createNotificationDesc(nrOfAchievements, notifications, achieverId, loo
 }
 
 app.get('/achievements_inProgress', function(request, response){
-    console.log("/achievments_inProgress")
+    //console.log("/achievements_inProgress")
     getAchievementList(request, response, false)
 })
 
@@ -950,12 +950,12 @@ function getAchievementList(request, response, completedAchievements) {
             })
         } else {
             if (!lookingAtFriendsAchievements) {achievementsList += "<div class='achievement first'><div class='container'><a href='javascript:void(0)' onclick='insertContent(getNewAchievementContent(), setDefaultMenu(\"Create Achievement\", false))'><img src='content/img/empty.png' alt=''/></a></div><p>Create new achievement</p><div class='separerare-part'>&nbsp;</div></div>" }
-            getSharedAchievementNotifications(0, response, achievementsList, completedAchievements, achieverId, request.session.user_id)
+            getSharedAchievementNotifications(0, response, achievementsList, completedAchievements, achieverId, request.session.user_id, lookingAtFriendsAchievements)
         }
     })
 }
 
-function getSharedAchievementNotifications(nrOfAchievements, response, achievementsList, completedAchievements, achieverId, userId) {
+function getSharedAchievementNotifications(nrOfAchievements, response, achievementsList, completedAchievements, achieverId, userId, lookingAtFriendsAchievements) {
     if (completedAchievements) {
         finishAchievementsList(response, achievementsList, completedAchievements)
     } else {
@@ -963,17 +963,17 @@ function getSharedAchievementNotifications(nrOfAchievements, response, achieveme
             if (notifications) {
                 achievementsList += createNotificationDesc(nrOfAchievements, notifications, achieverId, achieverId != userId)
             }
-            finishAchievementsList(response, achievementsList, completedAchievements)
+            finishAchievementsList(response, achievementsList, completedAchievements, lookingAtFriendsAchievements)
         })
     }
 }
 
-function finishAchievementsList(response, achievementsList, completedAchievements) {
+function finishAchievementsList(response, achievementsList, completedAchievements, lookingAtFriendsAchievements) {
     if (achievementsList.length < 1) {
-        if (completedAchievements) {
-            achievementsList = "<div class='achievement first'><p class=''>You do not have any unlocked achievements yet.</p></div>"
-        }  else {
+        if (lookingAtFriendsAchievements) {
             achievementsList = "<div class='achievement first'><p class=''>Your friend has not a single shared or public progressing achievement. Sad but true.</p></div>"
+        }  else {
+            achievementsList = "<div class='achievement first'><p class=''>You do not have any unlocked achievements yet.</p></div>"
         }
     }
     response.writeHead(200, {'content-type': 'application/json' })
@@ -1020,9 +1020,9 @@ function writeAchievementPage(response, achieverId, currentAchievement, userId, 
     var achievementDesc = ''
 
     var checkingOtherPersonsAchievement = !(achieverId === userId)
-    console.log("achieverId: " + achieverId)
-    console.log("userId: " + userId)
-    console.log("checkingOtherPersonsAchievement: " + checkingOtherPersonsAchievement)
+    //console.log("achieverId: " + achieverId)
+    //console.log("userId: " + userId)
+    //console.log("checkingOtherPersonsAchievement: " + checkingOtherPersonsAchievement)
     var achievementUser_id
     if (isNotificationView) {
         achievementUser_id = sharerId
