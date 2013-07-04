@@ -75,28 +75,29 @@ function updateLatestAchievementIfNecessary(progressId, next) {
         progress.Progress.findOne({ _id: latestAchievement_progressId }, function(err,currentProgress) {
             console.log("ccc1: " + progressId)
 
-
             if (progressId && currentProgress) {
                 console.log("ccc2: " + currentProgress._id)
                 if (progressId.equals(currentProgress._id)) {
-                    findPublicAchievement(function (publicId) {
-                        console.log("ccc3: " + publicId)
-                        if (publicId) {
-                            latestAchievement.update(publicId)
-                        }   else {
-                            latestAchievement.update(-1)
-                        }
-                        if (next) {
-                            next()
-                        }
-                    })
+                    setNewPublicAchievement(next)
                 }
             } else {
-                if (next) {
-                    next()
-                }
+                setNewPublicAchievement(next)
             }
         })
+    })
+}
+
+function setNewPublicAchievement(next) {
+    findPublicAchievement(function (publicId) {
+        console.log("ccc3: " + publicId)
+        if (publicId) {
+            latestAchievement.update(publicId)
+        }   else {
+            latestAchievement.update(-1)
+        }
+        if (next) {
+            next()
+        }
     })
 }
 
