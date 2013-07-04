@@ -938,7 +938,7 @@ function getAchievementList(request, response, completedAchievements) {
                                             goneThroughProgresses +=  myAchievement.goals.length
                                             if (goneThroughProgresses == progresses.length) {
                                                 achievementsList += createAchievementDesc(achievementsToShow, progressesToShow, achieverId, percentages, completedAchievements, lookingAtFriendsAchievements,areAchievementsShared, isAchievementCreatedByMe)
-                                                getSharedAchievementNotifications(achievementsToShow.length, response, achievementsList, completedAchievements, achieverId, request.session.user_id)
+                                                getSharedAchievementNotifications(achievementsToShow.length, response, achievementsList, completedAchievements, achieverId, request.session.user_id, lookingAtFriendsAchievements)
                                             }
                                         })
                                     })
@@ -957,7 +957,7 @@ function getAchievementList(request, response, completedAchievements) {
 
 function getSharedAchievementNotifications(nrOfAchievements, response, achievementsList, completedAchievements, achieverId, userId, lookingAtFriendsAchievements) {
     if (completedAchievements) {
-        finishAchievementsList(response, achievementsList, completedAchievements)
+        finishAchievementsList(response, achievementsList, completedAchievements, lookingAtFriendsAchievements)
     } else {
         shareholding.getSharedAchievementNotifications(achieverId, userId, function(notifications) {
             if (notifications) {
