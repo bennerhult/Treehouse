@@ -479,7 +479,7 @@ body{
     bottom: 0px;
     height: 40px;
     z-index: 2;
-    border-bottom: 1px solid rgb(82,81,79);
+    border-top: 1px solid #000000;
     background-color: #131213;
 
 
@@ -499,7 +499,7 @@ body{
 
 #menu ul li div.selected{
     height: 39px;
-    background-color: #1b1a1b;
+    background-color: #232123;
 }
 
 #menu ul li.signIn{
