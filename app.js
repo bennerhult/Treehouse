@@ -567,7 +567,7 @@ app.get('/shareList', function(request, response){
             })
         }  else {
             response.writeHead(200, {'content-type': 'application/json' })
-            response.write(JSON.stringify(""))
+            response.write(JSON.stringify('<div id="sharerList"><p class="noshareandcompare">Add some friends to have someone to share with</p></div>'))
             response.end('\n', 'utf-8')
         }
     })
@@ -595,7 +595,7 @@ function fillShareList(friendsList, userId, achievementId, callback) {
                             content += ' <span id="shareholderid' + friendsList[index] + '"><a class="sharelink" href="javascript:void(0)" onclick="shareToFriend(\'' + friendsList[index] + '\',\'' + achievementId +  '\')">Share</a></span>'
                         } else {
                             if (alreadySharedToFriend.confirmed) {
-                                content += '<p class="alreadyshared"> Already got this!</p>'
+                                content += '<p class="alreadyshared">Already got this!</p>'
                             } else {
                                 content += '<p class="alreadyshared">Share request pending!</p>'
                             }
@@ -614,11 +614,6 @@ function fillShareList(friendsList, userId, achievementId, callback) {
                     })
                 })
             })
-            if (friendsList.length == 0) {
-                content += "<h3>Add some friends to have someone to share with</h3>"
-                content += '</div>'
-                callback(content)
-            }
         }
     })
 }
