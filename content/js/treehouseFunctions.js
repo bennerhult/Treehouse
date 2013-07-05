@@ -754,15 +754,20 @@ function toggleImage(step) {
 
 function uploadImage() {
     filepicker.setKey('AM9A7pbm3QPSe24aJU2M2z')
+    filepicker.pick(function(inkBlob){
+            filepicker.convert(inkBlob, {width: 96, height: 96},
+                function(convertedInkBlob){
+                    filepicker.store(convertedInkBlob, {mimetype:"image/*", location:"S3"},
+                        function(stored_inkBlob){
+                            var currentImage = $("#achievementImage").attr("src")
+                            var currentPos = jQuery.inArray(currentImage, images)
+                            images.splice(currentPos, 0, stored_inkBlob.url)
+                            $("#achievementImage").attr("src", stored_inkBlob.url)
+                        }
+                    );
+                }
+            );
 
-    filepicker.pickAndStore({mimetype:"image/*"}, {location:"S3"},
-        function(InkBlobs){
-            //add to array:
-
-            var currentImage = $("#achievementImage").attr("src")
-            var currentPos = jQuery.inArray(currentImage, images)
-            images.splice(currentPos, 0, InkBlobs[0].url)
-            $("#achievementImage").attr("src", InkBlobs[0].url)
         }
     )
 }
