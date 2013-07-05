@@ -755,21 +755,37 @@ function toggleImage(step) {
 function uploadImage() {
     filepicker.setKey('AM9A7pbm3QPSe24aJU2M2z')
     filepicker.pick(function(inkBlob){
-            filepicker.convert(inkBlob, {width: 96, height: 96},
-                function(convertedInkBlob){
-                    filepicker.store(convertedInkBlob, {mimetype:"image/*", location:"S3"},
-                        function(stored_inkBlob){
-                            var currentImage = $("#achievementImage").attr("src")
-                            var currentPos = jQuery.inArray(currentImage, images)
-                            images.splice(currentPos, 0, stored_inkBlob.url)
-                            $("#achievementImage").attr("src", stored_inkBlob.url)
-                        }
-                    );
+        filepicker.stat(inkBlob, {width: true, height: true},
+            function(metadata){
+                if (metadata.width == metadata.height) {
+                    resizeAndStore(inkBlob)
+                } else if (metadata.width > metadata.height) {
+                    filepicker.convert(inkBlob, {width: metadata.height, height: metadata.height,fit: 'crop'},  function(squareInkBlob){
+                        resizeAndStore(squareInkBlob)
+                    })
+                } else {
+                    filepicker.convert(inkBlob, {width: metadata.width, height: metadata.width, fit: 'crop'},  function(squareInkBlob2){
+                        resizeAndStore(squareInkBlob2)
+                    })
+                }
+            }
+        )
+    })
+}
+
+function resizeAndStore(inkBlob) {
+    filepicker.convert(inkBlob, {width: 96, height: 96},
+        function(convertedInkBlob){
+            filepicker.store(convertedInkBlob, {mimetype:"image/*", location:"S3"},
+                function(stored_inkBlob){
+                    var currentImage = $("#achievementImage").attr("src")
+                    var currentPos = jQuery.inArray(currentImage, images)
+                    images.splice(currentPos, 0, stored_inkBlob.url)
+                    $("#achievementImage").attr("src", stored_inkBlob.url)
                 }
             );
-
         }
-    )
+    );
 }
 
 function goalKeyPress(goalField) {
