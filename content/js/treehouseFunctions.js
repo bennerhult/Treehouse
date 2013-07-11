@@ -760,7 +760,7 @@ function uploadImage() {
     } else {
         options = "{container: 'modal'}"
     }
-    filepicker.pick(function(inkBlob){
+    filepicker.pick({container: 'window'}, function(inkBlob){
         filepicker.stat(inkBlob, {width: true, height: true},
             function(metadata){
                 if (metadata.width == metadata.height) {
