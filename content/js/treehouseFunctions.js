@@ -754,6 +754,12 @@ function toggleImage(step) {
 
 function uploadImage() {
     filepicker.setKey('AM9A7pbm3QPSe24aJU2M2z')
+    var options
+    if (isiOs) {
+        options = "{container: 'window'}"   //necessary for app mode
+    } else {
+        options = "{container: 'modal'}"
+    }
     filepicker.pick(function(inkBlob){
         filepicker.stat(inkBlob, {width: true, height: true},
             function(metadata){
