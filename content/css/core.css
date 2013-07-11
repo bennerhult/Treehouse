@@ -936,6 +936,11 @@ div.fileinputs {
 
 }
 
+div.fileupload {
+    position: relative;
+    text-align: center;
+}
+
 div.fakefile {
     position: absolute;
     top: 0px;
