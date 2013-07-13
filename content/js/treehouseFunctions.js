@@ -753,14 +753,22 @@ function toggleImage(step) {
 }
 
 function uploadImage() {
+    var container = 'modal'
+    if (isiOs) {
+        $('<iframe id="imageUploadFrame" class="imageUploadFrame" style="z-index:999;" >').appendTo('body');
+        container = 'imageUploadFrame'
+    }
     filepicker.setKey('AM9A7pbm3QPSe24aJU2M2z')
-    filepicker.pick(function(inkBlob){
+    filepicker.pick({container: container}, function(inkBlob){
+        if (isiOs) {
+            $("#imageUploadFrame").remove()
+        }
         filepicker.stat(inkBlob, {width: true, height: true},
             function(metadata){
                 if (metadata.width == metadata.height) {
                     resizeAndStore(inkBlob)
                 } else if (metadata.width > metadata.height) {
-                    filepicker.convert(inkBlob, {width: metadata.height, height: metadata.height,fit: 'crop'},  function(squareInkBlob){
+                    filepicker.convert(inkBlob, {width: metadata.height, height: metadata.height, fit: 'crop'},  function(squareInkBlob){
                         resizeAndStore(squareInkBlob)
                     })
                 } else {
