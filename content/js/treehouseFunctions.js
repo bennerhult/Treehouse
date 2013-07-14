@@ -753,6 +753,8 @@ function toggleImage(step) {
 
 function uploadImage() {
     $("#saveButton").hide()
+    $("#achievement-container").hide()
+    $("#message").html("Uploading image...")
     var container = 'modal'
     if (isiOs) {
         $('<iframe id="imageUploadFrame" class="imageUploadFrame" style="z-index:999;" >').appendTo('body');
@@ -765,8 +767,14 @@ function uploadImage() {
         }
         $("#achievementImage").attr("src", inkBlob.url)
 
-        //spärra från att spara under tiden
-        //progresbar tills det går att spara
+        $("#message").html('<div id="achievement-container">' +
+                            '<div class="part-achievement">' +
+                             '<div class="progress-container">' +
+                               '<h3>Converting image... </h3>' +
+                               '<table border="1px">' +
+                               '<tbody>' +
+                                '<tr><td class="bararea"><span class="progressbar" style="top: 25px;"></span><div id="progressbar-goal"><span id="progress" class="progress" style="top: 25px; width:0%"></span></div></div></td><td id="countarea" class="countarea"><h3> </h3></td><td></td></tr></tbody></table></div></div></div>')
+        var progressPercentTotal
         filepicker.stat(inkBlob, {width: true, height: true},
             function(metadata){
                 if (metadata.width == metadata.height) {
@@ -774,10 +782,20 @@ function uploadImage() {
                 } else if (metadata.width > metadata.height) {
                     filepicker.convert(inkBlob, {width: metadata.height, height: metadata.height, fit: 'crop'},  function(squareInkBlob){
                         resizeAndStore(squareInkBlob)
+                    }, function(errorMessage) {
+                        $("#message").html("Image conversion error: " + errorMessage)
+                    }, function(progressPercent) {
+                        progressPercentTotal = progressPercent/2
+                        $("#progress").attr("style",  "top: 25px; width:" + progressPercentTotal+  "%")
                     })
                 } else {
                     filepicker.convert(inkBlob, {width: metadata.width, height: metadata.width, fit: 'crop'},  function(squareInkBlob2){
                         resizeAndStore(squareInkBlob2)
+                    }, function(errorMessage) {
+                        $("#message").html("Image conversion error: " + errorMessage)
+                    }, function(progressPercent) {
+                        progressPercentTotal = progressPercent/2
+                        $("#progress").attr("style",  "top: 25px; width:" + progressPercentTotal+  "%")
                     })
                 }
             }
@@ -786,6 +804,7 @@ function uploadImage() {
 }
 
 function resizeAndStore(inkBlob) {
+    var progressPercentTotal
     filepicker.convert(inkBlob, {width: 96, height: 96},
         function(convertedInkBlob){
             filepicker.store(convertedInkBlob, {mimetype:"image/*", location:"S3"},
@@ -794,9 +813,16 @@ function resizeAndStore(inkBlob) {
                     var currentPos = jQuery.inArray(currentImage, images)
                     images.splice(currentPos, 0, stored_inkBlob.url)
                     $("#achievementImage").attr("src", stored_inkBlob.url)
+                    $("#message").html("")
                     $("#saveButton").show()
+                    $("#achievement-container").show()
                 }
             );
+        }, function(errorMessage) {
+            $("#message").html("Image conversion error: " + errorMessage)
+        }, function(progressPercent) {
+            progressPercentTotal = 50 + progressPercent/2
+            $("#progress").attr("style",  "top: 25px; width:" + progressPercentTotal+  "%")
         }
     );
 }
