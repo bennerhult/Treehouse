@@ -892,7 +892,7 @@ app.get('/achievements_completed', function(request, response){
 })
 
 function getAchievementList(request, response, completedAchievements) {
-    app.set('current_achievement_id', null)
+    request.session.current_achievement_id = null
 
     var achievementsList = ""
     var goneThroughProgresses = 0
@@ -990,7 +990,8 @@ app.get('/achievementFromServer', function(request, response){
 
    progress.Progress.findOne({ achievement_id: currentAchievementId, achiever_id: achieverId }, function(err,currentProgress) {
         //achievement.Achievement.findOne({ _id: currentProgress.achievement_id }, function(err,currentAchievement) {
-       app.set('current_achievement_id', currentAchievementId)
+       ////app.set('current_achievement_id', currentAchievementId)
+       request.session.current_achievement_id = currentAchievementId
 
        achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
             if (request.session.user_id) {
@@ -1258,7 +1259,7 @@ function finishCompletedAchievementsExist(response, completedFound) {
 
 app.get('/achievementPercentage', function(request, response){
     //console.log("/achievementPercentage")
-    calculateAchievementProgress(request.session.user_id, app.set('current_achievement_id'), function(achievementPercentageFinished) {
+    calculateAchievementProgress(request.session.user_id, request.session.current_achievement_id, function(achievementPercentageFinished) {
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(achievementPercentageFinished))
         response.end('\n', 'utf-8')
@@ -1285,7 +1286,7 @@ function calculateAchievementProgress(userId, achievementId, callback) {
 
 app.get('/progress', function(request, response){
     //console.log("/progress")
-    achievement.Achievement.findOne({ _id: app.set('current_achievement_id') }, function(err,currentAchievement) {
+    achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
         progress.markProgress(currentAchievement, request.session.user_id, request.query.goalId, function(quantityFinished) {
             response.writeHead(200, {'content-type': 'application/json' })
             response.write(JSON.stringify(quantityFinished))
@@ -1296,7 +1297,7 @@ app.get('/progress', function(request, response){
 
 app.get('/publicize', function(request, response){
     //console.log("/publicize")
-    progress.Progress.findOne({ achievement_id: app.set('current_achievement_id'), achiever_id: request.session.user_id }, function(err,currentAchievementProgress) {
+    progress.Progress.findOne({ achievement_id: request.session.current_achievement_id, achiever_id: request.session.user_id }, function(err,currentAchievementProgress) {
         achievement.publicize(currentAchievementProgress)
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify("ok"))
@@ -1306,9 +1307,9 @@ app.get('/publicize', function(request, response){
 
 app.get('/unpublicize', function(request, response){
     //console.log("/unpublicize")
-    progress.Progress.findOne({ achievement_id: app.set('current_achievement_id'), achiever_id: request.session.user_id }, function(err,currentProgress) {
+    progress.Progress.findOne({ achievement_id: request.session.current_achievement_id, achiever_id: request.session.user_id }, function(err,currentProgress) {
         achievement.unpublicize(currentProgress)
-        shareholding.isAchievementShared(app.set('current_achievement_id'), function(isShared) {
+        shareholding.isAchievementShared(request.session.current_achievement_id, function(isShared) {
             response.writeHead(200, {'content-type': 'application/json' })
             response.write(JSON.stringify(isShared))
             response.end('\n', 'utf-8')
@@ -1317,7 +1318,7 @@ app.get('/unpublicize', function(request, response){
 })
 
 app.get('/delete', loadUser, function(request, response){
-    achievement.Achievement.findOne({ _id: app.set('current_achievement_id') }, function(err,currentAchievement) {
+    achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
         if (currentAchievement) {
             shareholding.Shareholding.findOne({ sharer_id: request.session.user_id, achievement_id: currentAchievement._id }, function(err, sharehold) {
                 if (sharehold != null) {
@@ -1355,13 +1356,13 @@ app.get('/delete', loadUser, function(request, response){
                 }
             })
         } else {
-            console.log("trying to remove non-existing achievement " + app.set('current_achievement_id'))
+            console.log("trying to remove non-existing achievement " + request.session.current_achievement_id)
         }
     })
 })
 
 app.get('/editAchievement', loadUser, function(request, response){
-    achievement.Achievement.findOne({ _id: app.set('current_achievement_id') }, function(err,currentAchievement) {
+    achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
         if (request.session.user_id) {
             loadUser (request, response, function () {
                 response.writeHead(200, {'content-type': 'application/json' })
@@ -1412,9 +1413,8 @@ function finalizeAchievement (response, motherAchievement, titles, quantities, p
 
 app.get('/newAchievement', function(request, response){
     user.User.findById(request.session.user_id, function(err, user) {
-
         var motherAchievement;
-        achievement.Achievement.findOne({ _id: app.set('current_achievement_id') }, function(err,currentAchievement) {
+        achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
             motherAchievement = achievement.createAchievement(user._id, request.query.title, request.query.description, request.query.currentImage)
             var titles= JSON.parse(request.query.goalTitles)
             var quantities=request.query.goalQuantities.split(',')

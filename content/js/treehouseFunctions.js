@@ -635,11 +635,10 @@ function unpublicizeOnServer(callback) {
 function createAchievement(achieverId) {
    createAchievementOnServer(
     function(data) {
-            if (data == "ok") { //TODO: use ajax success/error instead
-                openAchievements(false, achieverId, false)
-            } else $("#message").html(data)
-        }
-    )
+        if (data == "ok") { //TODO: use ajax success/error instead
+            openAchievements(false, achieverId, false)
+        } else $("#message").html(data)
+    })
 }
 
 function createAchievementOnServer(callback) {
