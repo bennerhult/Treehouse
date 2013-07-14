@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#2013-07-14 15:50
+#2013-07-14 16:22
 
 CACHE:
 content/favicon.ico
@@ -14,14 +14,22 @@ content/img/back-1.png
 content/img/delete.png
 content/img/edit.png
 content/img/empty.png
+content/img/friendsicon.png
+content/img/friendsicon-selected.png
+content/img/homeicon.png
+content/img/homeicon-selected.png
 content/img/left-arrow.png
 content/img/right-arrow.png
 content/img/startup320x460.png
 content/img/publicize.png
 content/img/sharing.jpg
 content/img/tree-large.png
-content/img/logo-large.png
 content/img/tree-tab.png
+content/img/tree-tab-selected.png
+content/img/logo-large.png
+content/img/logo-small.png
+content/img/tree-tab.png
+content/img/unpublicize.png
 content/img/user_has_no_image.jpg
 content/img/x.gif
 content/img/achievementImages/1.png
@@ -77,6 +85,7 @@ content/js/add2home.js
 content/js/css3-mediaqueries.js
 content/js/generateContent.js
 content/js/info.js
+content/js/magnetic.js
 content/js/treehouseFunctions.js
 
 NETWORK:

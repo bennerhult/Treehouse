@@ -124,7 +124,7 @@ app.listen(port)
 console.log('Treehouse server started on port ' + port)
 
 app.get('/content/*', function(request, response){
-    //console.log("/content/*")
+    //console.log("/content/*: " + request.url)
     staticFiles.serve("." + request.url, response)
 })
 
@@ -140,7 +140,7 @@ app.get('/channel.html', function(request, response){
 
 //public achievement
 app.get('/achievement', function(request, response) {
-    //console.log("you found it!")
+    //console.log("/achievement")
     var url_parts = url.parse(request.url, true)
     var currentAchievementId = url_parts.query.achievementId
     var userId  = url_parts.query.userId
@@ -989,9 +989,7 @@ app.get('/achievementFromServer', function(request, response){
     var achieverId = url_parts.query.achieverId
 
    progress.Progress.findOne({ achievement_id: currentAchievementId, achiever_id: achieverId }, function(err,currentProgress) {
-        //achievement.Achievement.findOne({ _id: currentProgress.achievement_id }, function(err,currentAchievement) {
-       ////app.set('current_achievement_id', currentAchievementId)
-       request.session.current_achievement_id = currentAchievementId
+        request.session.current_achievement_id = currentAchievementId
 
        achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
             if (request.session.user_id) {

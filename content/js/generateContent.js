@@ -20,8 +20,6 @@ var currentUserId
 var nrOfFriendShipRequests
 var isAppMode = false
 
-
-
 function init(userId, friendShipRequests) {
     currentUserId = userId
     nrOfFriendShipRequests = friendShipRequests
@@ -61,7 +59,6 @@ function init(userId, friendShipRequests) {
     }
 }
 
-
 function setEmptyMenu() {
     $("#menuArea").empty()
      $("#topMenuArea").empty()
@@ -75,7 +72,6 @@ function setDefaultMenu(activePage, visitsMainPage) {
         if (x) {
          loggedIn = true
         }
-
         if (loggedIn) {
             menu = '<div id="menu" class="menu-absolute"><ul>'
             +'<li><div id="menuIconTree" class=""><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId
@@ -142,7 +138,7 @@ function setTopMenu(title) {
 
     $("#topMenuArea").html(topMenu)
 }
-//title appears not to be used, but the value passed inline in menuFunction(inlinevalue)
+
 function insertContent(content, menuFunction, callback) {
     $("#contentArea").html(content)
     $("#fbLikeWeb").show()

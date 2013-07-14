@@ -185,7 +185,7 @@ function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUr
             tab + '<meta property="og:url" content="http://treehouse.io' + url + '"/>' + nl +
             tab + '<link rel="icon" href="/content/favicon.ico" type="image/vnd.microsoft.icon">' + nl +
             tab + '<script type="text/javascript" src="content/js/css3-mediaqueries.js"></script>' + nl +
-            tab + '<script srmagnetc="content/ext/js/facebook.js" type="text/javascript"></script>' + nl +
+            tab + '<script src="content/ext/js/facebook.js" type="text/javascript"></script>' + nl +
             tab + '<script src="content/ext/js/jquery.1.7.2.min.js" type="text/javascript"></script>' + nl +
             tab + '<script type="application/javascript" src="content/js/add2home.js"></script>' + nl +
             tab + '<script type="application/javascript" src="content/js/generateContent.js"></script>' + nl +
