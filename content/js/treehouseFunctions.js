@@ -754,6 +754,8 @@ function toggleImage(step) {
 function uploadImage() {
     $("#saveButton").hide()
     $("#achievement-container").hide()
+    $("#fileinputs").hide()
+    $("#fileupload").hide()
     $("#message").html("Uploading image...")
     var container = 'modal'
     if (isiOs) {
@@ -773,7 +775,7 @@ function uploadImage() {
                                '<h3>Converting image... </h3>' +
                                '<table border="1px">' +
                                '<tbody>' +
-                                '<tr><td class="bararea"><span class="progressbar" style="top: 25px;"></span><div id="progressbar-goal"><span id="progress" class="progress" style="top: 25px; width:0%"></span></div></div></td><td id="countarea" class="countarea"><h3> </h3></td><td></td></tr></tbody></table></div></div></div>')
+                                '<tr><td class="bararea"><span class="progressbar" style="top: 25px;"></span><div id="progressbar-goal"><span id="progress" class="progress" style="top: 26px; width:0%"></span></div></div></td><td id="countarea" class="countarea"><h3> </h3></td><td></td></tr></tbody></table></div></div></div>')
         var progressPercentTotal
         filepicker.stat(inkBlob, {width: true, height: true},
             function(metadata){
@@ -785,8 +787,8 @@ function uploadImage() {
                     }, function(errorMessage) {
                         $("#message").html("Image conversion error: " + errorMessage)
                     }, function(progressPercent) {
-                        progressPercentTotal = progressPercent/2
-                        $("#progress").attr("style",  "top: 25px; width:" + progressPercentTotal+  "%")
+                        progressPercentTotal = (progressPercent/2)*(205/100)
+                        $("#progress").animate({ width: progressPercentTotal }, 500)
                     })
                 } else {
                     filepicker.convert(inkBlob, {width: metadata.width, height: metadata.width, fit: 'crop'},  function(squareInkBlob2){
@@ -794,8 +796,8 @@ function uploadImage() {
                     }, function(errorMessage) {
                         $("#message").html("Image conversion error: " + errorMessage)
                     }, function(progressPercent) {
-                        progressPercentTotal = progressPercent/2
-                        $("#progress").attr("style",  "top: 25px; width:" + progressPercentTotal+  "%")
+                        progressPercentTotal = (progressPercent/2)*(205/100)
+                        $("#progress").animate({ width: progressPercentTotal }, 500)
                     })
                 }
             }
@@ -814,15 +816,17 @@ function resizeAndStore(inkBlob) {
                     images.splice(currentPos, 0, stored_inkBlob.url)
                     $("#achievementImage").attr("src", stored_inkBlob.url)
                     $("#message").html("")
-                    $("#saveButton").show()
                     $("#achievement-container").show()
+                    $("#fileinputs").show()
+                    $("#fileupload").show()
+                    $("#saveButton").show()
                 }
             );
         }, function(errorMessage) {
             $("#message").html("Image conversion error: " + errorMessage)
         }, function(progressPercent) {
-            progressPercentTotal = 50 + progressPercent/2
-            $("#progress").attr("style",  "top: 25px; width:" + progressPercentTotal+  "%")
+            progressPercentTotal = (50 + progressPercent/2) *(205/100)
+           $("#progress").animate({ width: progressPercentTotal }, 500)
         }
     );
 }

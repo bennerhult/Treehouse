@@ -488,12 +488,12 @@ function getNewAchievementContent(data) {
                             text +='" width="96" height="96" alt="' + data.title + '" />' + nl  +
                             '<span class="gradient-bg"></span>' + nl  +
                         '</div>' + nl  +
-                        '<div class="fileinputs">' + nl  +
+                        '<div id="fileinputs" class="fileinputs">' + nl  +
                             '<ul>' + nl  +
                                 '<li><a href="javascript:void(0)" onclick="toggleImage(-1)"><img src="content/img/left-arrow.png" alt="" /></a></li>' + nl  +
                                 '<li class="last"><a href="javascript:void(0)" onclick="toggleImage(1)"><img src="content/img/right-arrow.png" alt="" /></a></li>' + nl  +
                             '</ul>' + nl  +
-                        '</div><div class="fileupload">' + nl  +
+                        '</div><div id="fileupload" class="fileupload">' + nl  +
                                 '<a href="javascript:void(0)" onclick="uploadImage()"><img src="content/img/upload.png" /></a>' + nl  +
                         '</div>' + nl  +
                     '</div>' + nl  +
