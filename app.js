@@ -673,7 +673,7 @@ function getCompareText(userName, finished, total, index, nrOfCompares, achiever
             + '<td class="bararea">'
                 + '<div class="progress-goal-container">'
                     + '<span class="progressbar"></span>'
-                    + '<div id="progressbar-goal"><span class="progress" style="width:'
+                    + '<div id="progressbar-goal"><span id="progress' + goal._id + '" class="progress" style="width:'
                                                 + (finished/total) * 100
                                              + '%;"></span></div></div>'
             + '</td>'
@@ -1184,7 +1184,7 @@ function getGoalText(goal, achievement, progressNumber, latestUpdated, progressP
                                     + '<td class="bararea">'
                                         + '<div class="progress-goal-container">'
                                             + '<span class="progressbar"></span>'
-                                            + '<div id="progressbar-goal' + goal._id + '"><span class="progress" style="width:'
+                                            + '<div id="progressbar-goal' + goal._id + '"><span class="progress" id="progress' + goal._id + '" style="width:'
                                                 + progressPercentage
                                              + '%;"></span></div></div>'
                                     + '</td>'

@@ -481,12 +481,11 @@ function getNewAchievementContent(data) {
                             '<div class="create-imagearea">' + nl  +
                             '<img id="achievementImage" src="'
                                 if (data)  {
-                                    text +=   data.imageURL
+                                    text +=   data.imageURL  + '" width="96" height="96" alt="' + data.title + '" />' + nl
                                 } else {
-                                    text +=   'content/img/achievementImages/1.png'
+                                    text +=   'content/img/achievementImages/1.png" width="96" height="96" alt="" />' + nl
                                 }
-                            text +='" width="96" height="96" alt="' + data.title + '" />' + nl  +
-                            '<span class="gradient-bg"></span>' + nl  +
+                         text += '<span class="gradient-bg"></span>' + nl  +
                         '</div>' + nl  +
                         '<div id="fileinputs" class="fileinputs">' + nl  +
                             '<ul>' + nl  +

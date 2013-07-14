@@ -548,9 +548,11 @@ function progress(goalId, quantityTotal) {
                 $("#unlocked").html("Achievement unlocked! You're awesome!")
             }
             var goalPercentageFinished = (quantityFinished / quantityTotal) * 100
-            $("#progressbar-goal" + goalId).html("<span class='progress' style='width:" + goalPercentageFinished + "%;'></span>")
+            //$("#progressbar-goal" + goalId).html("<span class='progress' style='width:" + goalPercentageFinished + "%;'></span>")
+            var goalWidth = goalPercentageFinished * (205/100)
+            $("#progress" + goalId).animate({ width: goalWidth }, 500)
             $("#countarea" + goalId).html("<h3>" + quantityFinished + "/" + quantityTotal + "</h3>")
-            $("#latestUpdated" + goalId).html(" k'ching!")
+            //$("#latestUpdated" + goalId).html(" k'ching!")
             if (goalPercentageFinished >= 100) {
                 $("#addbutton" + goalId).html("")
             }  else {
@@ -769,13 +771,7 @@ function uploadImage() {
         }
         $("#achievementImage").attr("src", inkBlob.url)
 
-        $("#message").html('<div id="achievement-container">' +
-                            '<div class="part-achievement">' +
-                             '<div class="progress-container">' +
-                               '<h3>Converting image... </h3>' +
-                               '<table border="1px">' +
-                               '<tbody>' +
-                                '<tr><td class="bararea"><span class="progressbar" style="top: 25px;"></span><div id="progressbar-goal"><span id="progress" class="progress" style="top: 26px; width:0%"></span></div></div></td><td id="countarea" class="countarea"><h3> </h3></td><td></td></tr></tbody></table></div></div></div>')
+        $("#message").html('<div id="achievement-container"><div class="part-achievement"><div class="progress-container"><h3>Converting image... </h3><table border="1px"><tbody><tr><td class="bararea"><span class="progressbar" style="top: 25px;"></span><div id="progressbar-goal"><span id="progress" class="progress" style="top: 26px; width:0%"></span></div></div></td><td id="countarea" class="countarea"><h3> </h3></td><td></td></tr></tbody></table></div></div></div>')
         var progressPercentTotal
         filepicker.stat(inkBlob, {width: true, height: true},
             function(metadata){
