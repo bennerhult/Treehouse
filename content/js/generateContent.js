@@ -485,7 +485,7 @@ function getNewAchievementContent(data) {
                                 } else {
                                     text +=   'content/img/achievementImages/1.png'
                                 }
-                            text +='" alt="" />' + nl  +
+                            text +='" width="96" height="96" alt="' + data.title + '" />' + nl  +
                             '<span class="gradient-bg"></span>' + nl  +
                         '</div>' + nl  +
                         '<div class="fileinputs">' + nl  +
@@ -524,9 +524,9 @@ function getNewAchievementContent(data) {
                 '</div>' + nl  +
                 ' <div class="create-achievement">' + nl
                     if (data) {
-                        text += '<input type="submit" class="button" value="Save achievement">' + nl
+                        text += '<input type="submit" id="saveButton" class="button" value="Save achievement">' + nl
                     }  else  {
-                        text += '<input type="submit" class="button" value="Create achievement">' + nl
+                        text += '<input type="submit" id="saveButton" class="button" value="Create achievement">' + nl
                     }
                      text += '<div id="message"></div>' + nl +
                             '</div>' + nl  +

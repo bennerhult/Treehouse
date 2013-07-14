@@ -752,6 +752,7 @@ function toggleImage(step) {
 }
 
 function uploadImage() {
+    $("#saveButton").hide()
     var container = 'modal'
     if (isiOs) {
         $('<iframe id="imageUploadFrame" class="imageUploadFrame" style="z-index:999;" >').appendTo('body');
@@ -762,6 +763,10 @@ function uploadImage() {
         if (isiOs) {
             $("#imageUploadFrame").remove()
         }
+        $("#achievementImage").attr("src", inkBlob.url)
+
+        //spärra från att spara under tiden
+        //progresbar tills det går att spara
         filepicker.stat(inkBlob, {width: true, height: true},
             function(metadata){
                 if (metadata.width == metadata.height) {
@@ -789,6 +794,7 @@ function resizeAndStore(inkBlob) {
                     var currentPos = jQuery.inArray(currentImage, images)
                     images.splice(currentPos, 0, stored_inkBlob.url)
                     $("#achievementImage").attr("src", stored_inkBlob.url)
+                    $("#saveButton").show()
                 }
             );
         }
