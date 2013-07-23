@@ -813,12 +813,14 @@ function resizeAndStore(inkBlob) {
                 var currentPos = jQuery.inArray(currentImage, images)
                 images.splice(currentPos, 0, convertedInkBlob.url)
                 $("#achievementImage").attr("src", convertedInkBlob.url)
-                $("#message").html("")
-                $("#achievement-container").show()
-                $("#fileinputs").show()
-                $("#fileupload").show()
-                $("#saveButton").show()
-                filepicker.remove(inkBlob, function(){}, function(FPError){})
+                filepicker.remove(inkBlob, function(){
+                    $("#message").html("")
+                    $("#achievement-container").show()
+                    $("#fileinputs").show()
+                    $("#fileupload").show()
+                    $("#saveButton").show()
+
+                }, function(FPError){})
         }, function(errorMessage) {
             $("#message").html("Image conversion error: " + errorMessage)
         }, function(progressPercent) {
