@@ -880,15 +880,10 @@ function deleteAchievement(achieverId) {
             if (data == "ok") { //TODO: use ajax success/error instead
                 openAchievements(false, achieverId, false)
             } else {
-
-                console.log("image is in S3: " + data)
                 var inkblob = {url: data, mimetype: 'data:image/png;base64', isWriteable: true};
                 filepicker.setKey('AM9A7pbm3QPSe24aJU2M2z')
                 filepicker.remove(inkblob, function(){
-                    console.log("Removed");
-                    achievement.remove(function () {
-                        openAchievements(false, achieverId, false)
-                    })
+                    openAchievements(false, achieverId, false)
                 });
             }
             insertLatestAchievement()
