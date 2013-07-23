@@ -779,16 +779,20 @@ function uploadImage() {
                     resizeAndStore(inkBlob)
                 } else if (metadata.width > metadata.height) {
                     filepicker.convert(inkBlob, {width: metadata.height, height: metadata.height, fit: 'crop'},  function(squareInkBlob){
-                        resizeAndStore(squareInkBlob)
+                        filepicker.remove(inkBlob, function(){
+                            resizeAndStore(squareInkBlob)
+                        })
                     }, function(errorMessage) {
                         $("#message").html("Image conversion error: " + errorMessage)
                     }, function(progressPercent) {
-                        progressPercentTotal = (progressPercent/2)*(205/100)
+                        progressPercentTotal = (progressPercent/2) * (205/100)
                         $("#progress").animate({ width: progressPercentTotal }, 500)
                     })
                 } else {
                     filepicker.convert(inkBlob, {width: metadata.width, height: metadata.width, fit: 'crop'},  function(squareInkBlob2){
-                        resizeAndStore(squareInkBlob2)
+                        filepicker.remove(inkBlob, function(){
+                            resizeAndStore(squareInkBlob2)
+                        })
                     }, function(errorMessage) {
                         $("#message").html("Image conversion error: " + errorMessage)
                     }, function(progressPercent) {
@@ -805,19 +809,16 @@ function resizeAndStore(inkBlob) {
     var progressPercentTotal
     filepicker.convert(inkBlob, {width: 96, height: 96},
         function(convertedInkBlob){
-            filepicker.store(convertedInkBlob, {mimetype:"image/*", location:"S3"},
-                function(stored_inkBlob){
-                    var currentImage = $("#achievementImage").attr("src")
-                    var currentPos = jQuery.inArray(currentImage, images)
-                    images.splice(currentPos, 0, stored_inkBlob.url)
-                    $("#achievementImage").attr("src", stored_inkBlob.url)
-                    $("#message").html("")
-                    $("#achievement-container").show()
-                    $("#fileinputs").show()
-                    $("#fileupload").show()
-                    $("#saveButton").show()
-                }
-            );
+                var currentImage = $("#achievementImage").attr("src")
+                var currentPos = jQuery.inArray(currentImage, images)
+                images.splice(currentPos, 0, convertedInkBlob.url)
+                $("#achievementImage").attr("src", convertedInkBlob.url)
+                $("#message").html("")
+                $("#achievement-container").show()
+                $("#fileinputs").show()
+                $("#fileupload").show()
+                $("#saveButton").show()
+                filepicker.remove(inkBlob, function(){}, function(FPError){})
         }, function(errorMessage) {
             $("#message").html("Image conversion error: " + errorMessage)
         }, function(progressPercent) {
@@ -876,6 +877,17 @@ function deleteAchievement(achieverId) {
         function(data) {
             if (data == "ok") { //TODO: use ajax success/error instead
                 openAchievements(false, achieverId, false)
+            } else {
+
+                console.log("image is in S3: " + data)
+                var inkblob = {url: data, mimetype: 'data:image/png;base64', isWriteable: true};
+                filepicker.setKey('AM9A7pbm3QPSe24aJU2M2z')
+                filepicker.remove(inkblob, function(){
+                    console.log("Removed");
+                    achievement.remove(function () {
+                        openAchievements(false, achieverId, false)
+                    })
+                });
             }
             insertLatestAchievement()
         }

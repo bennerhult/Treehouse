@@ -1347,7 +1347,16 @@ app.get('/delete', loadUser, function(request, response){
                         }
                         achievement.remove(currentAchievement, request.session.user_id, function () {
                             response.writeHead(200, {'content-type': 'application/json' })
-                            response.write(JSON.stringify('ok'))
+                            if (typeof String.prototype.startsWith != 'function') {
+                                String.prototype.startsWith = function (str){
+                                    return this.indexOf(str) == 0;
+                                };
+                            }
+                            if (currentAchievement.imageURL.startsWith("https:")) {
+                                response.write(JSON.stringify(currentAchievement.imageURL))
+                            } else {
+                                response.write(JSON.stringify('ok'))
+                            }
                             response.end('\n', 'utf-8')
                         })
                     })
