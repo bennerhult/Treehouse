@@ -3,11 +3,11 @@ What have you achieved today?
 [Go to the Treehouse!](http://www.treehouse.io)
 
 ##Project
-[Basecamp todo](https://lejbrinkbennerhult.basecamphq.com/projects/9535387-treehouse/todo_lists)
+[Basecamp Trello](https://trello.com/b/xTuMReiw/treehouse)
 
 [Heroku](https://api.heroku.com/myapps/treehouseapp)
 
-[MongoHQ](https://dblayer.com/treehouse/mongo/treehouse/)
+[MongoHQ](https://new.mongohq.com/treehouse/mongo/treehouse/collections)
 
 ##Git commands
 ###push

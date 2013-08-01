@@ -859,7 +859,6 @@ function editAchievement() {
     editAchievementOnServer(
         function(data) {
             insertContent(getNewAchievementContent(data),setDefaultMenu('Edit', false))
-
         }
     )
 }
