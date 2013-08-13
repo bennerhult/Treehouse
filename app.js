@@ -394,6 +394,17 @@ app.get('/prettyName', function(request, response){
     })
 })
 
+app.get('/setUserImage', function(request, response){
+    user.setImageURL(request.session.user_id , request.query.imageURL, function(error) {
+        if (error) {
+            response.writeHead(404, {'content-type': 'application/json' })
+        } else {
+            response.writeHead(200, {'content-type': 'application/json' })
+        }
+        response.end('\n', 'utf-8')
+    })
+})
+
 app.get('/setPrettyName', function(request, response){
     user.setPrettyName(request.session.user_id , request.query.firstName, request.query.lastName, function(error) {
         if (error) {
@@ -404,6 +415,7 @@ app.get('/setPrettyName', function(request, response){
         response.end('\n', 'utf-8')
     })
 })
+
 
 app.get('/upgradeToIssuer', function(request, response){
     user.User.findOne({ _id: request.session.user_id}, function(err, issuerProspect) {

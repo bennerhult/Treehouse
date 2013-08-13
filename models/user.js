@@ -20,7 +20,8 @@ module.exports = {
     User: User,
     createUser: createUser,
     setPrettyName : setPrettyName,
-    getPrettyName : getPrettyName
+    getPrettyName : getPrettyName,
+    setImageURL : setImageURL
 }
 
 function createUser(name, callback) {
@@ -36,14 +37,26 @@ function createUser(name, callback) {
 
 function setPrettyName(userId, firstName, lastName, callback)   {
     User.findOne({ _id: userId }, function(err,myUser) {
-       if (myUser) {
-           myUser.firstName = firstName
-           myUser.lastName = lastName
+        if (myUser) {
+            myUser.firstName = firstName
+            myUser.lastName = lastName
 
-           myUser.save(function (error) {
+            myUser.save(function (error) {
                 if (callback) callback(error)
             })
-       }
+        }
+    })
+}
+
+function setImageURL(userId, imageURL, callback)   {
+    User.findOne({ _id: userId }, function(err,myUser) {
+        if (myUser) {
+            myUser.imageURL = imageURL
+
+            myUser.save(function (error) {
+                if (callback) callback(error)
+            })
+        }
     })
 }
 

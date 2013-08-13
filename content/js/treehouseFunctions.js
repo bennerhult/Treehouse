@@ -130,15 +130,31 @@ function logOutFB() {    //TODO: do not log out the user from FB, just from the 
 function editUser() {
     var firstName = $("input[name=firstName]").val()
     var lastName = $("input[name=lastName]").val()
+    var imageURL = $("#userImage").attr("src")
 
     setPrettyNameOnServer(firstName, lastName, function(success) {
-        $("#message").html("Changes saved!")
+        setUserImageOnServer(imageURL, function(success) {
+            $("#message").html("Changes saved!")
+        })
     })
 }
 
 function setPrettyNameOnServer(firstName, lastName, callback) {
     var data = "firstName=" + firstName + "&lastName=" + lastName
     $.ajax("/setPrettyName", {
+        type: "GET",
+        data: data,
+        dataType: "json",
+        statusCode: {
+            200: function() { callback(true) },
+            404: function() { callback(false) }
+        }
+    })
+}
+
+function setUserImageOnServer(imageURL, callback) {
+    var data = "imageURL=" + imageURL
+    $.ajax("/setUserImage", {
         type: "GET",
         data: data,
         dataType: "json",
