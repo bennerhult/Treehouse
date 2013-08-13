@@ -217,8 +217,8 @@ function getLoginContent() {
 function getUserContent(callback) {
     getUserFromServer(function(user) {
         var content = '<div id="content">' + nl +
-            '<p><img src="' + user.imageURL + '"> ' + user.username + '</p><br />' + nl +
-            '<form action="javascript: editUser()">' + nl
+            '<p><img id="userImage" src="' + user.imageURL + '" width="96" height="96"> ' + user.username + '</p><br /><a href="javascript:void(0)" onclick="uploadUserImage()"><img src="content/img/upload.png" /></a><br/>' + nl +
+            '<form id="userForm" action="javascript: editUser()">' + nl
             if (user.firstName) {
                 content += '<input type="text" class="formstyle" name="firstName" placeholder="first name" value="' + user.firstName + '">' + nl
             }  else {
@@ -236,7 +236,7 @@ function getUserContent(callback) {
             '<div id="message"></div>'  + nl
              if (!user.isIssuer) {
                   content += '<div id="content">' + nl +
-                     '<form action="javascript: upgradeToIssuer()">' + nl +
+                     '<form id="issuerForm" action="javascript: upgradeToIssuer()">' + nl +
                      '<input type="submit" class="button" value="Upgrade to issuer">' + nl +
                      '</form>' + nl +
                      '<div id="issuerMessage"></div>'  + nl
