@@ -748,7 +748,7 @@ function toggleImage(step) {
     if (newPos  >= images.length) {
         newPos = 0
     }   else if (newPos == -1) {
-        newPos = images.length-1
+        newPos = uploadingimages.length-1
     }
     $("#achievementImage").attr("src", images[newPos])
 }
@@ -802,6 +802,13 @@ function uploadImage() {
                 }
             }
         )
+    },function(){
+        //user closed the modal window
+        $("#saveButton").show()
+        $("#achievement-container").show()
+        $("#fileinputs").show()
+        $("#fileupload").show()
+        $("#message").html("")
     })
 }
 
