@@ -458,6 +458,7 @@ function getMoreMenuContent(callback) {
 
 //data if edit, null if create
 function getNewAchievementContent(data) {
+        initImages()
         var text ='<div id="app-container">' + nl  +
                 '<form id="createAchievementForm" action="javascript: createAchievement()">' + nl  +
                     '<div class="achievement-info">' + nl  +
