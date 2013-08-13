@@ -217,7 +217,7 @@ function getLoginContent() {
 function getUserContent(callback) {
     getUserFromServer(function(user) {
         var content = '<div id="content">' + nl +
-            '<p>Logged in as: ' + user.username + '</p><br />' + nl +
+            '<p><img src="' + user.imageURL + '"> ' + user.username + '</p><br />' + nl +
             '<form action="javascript: editUser()">' + nl
             if (user.firstName) {
                 content += '<input type="text" class="formstyle" name="firstName" placeholder="first name" value="' + user.firstName + '">' + nl
