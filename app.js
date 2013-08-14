@@ -1052,8 +1052,8 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
     }
 
     if(currentAchievement.goals) {
-        getUserNameForId(currentAchievement.createdBy, function(creatorName) {
-            getUserNameForId(achiever._id, function(achieverName) {
+        getUserNameForId(currentAchievement.createdBy, function(creatorName, creatorId, creatorImageURL) {
+         getUserNameForId(achiever._id, function(achieverName) {
                 currentAchievement.goals.forEach(function(goal, goalIndex) {
                     progress.Progress.findOne({ goal_id: goal._id, achiever_id: achievementUser_id }, function(err,myProgress) {
                         if (err) {
@@ -1079,7 +1079,7 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                                             goalTextsText += goalText
                                             if (index == goalTexts.length - 1) {
                                                 var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100
-                                                achievementDesc += '<div class="achievement-info"><div class=""><div id="userarea"><img src="' + achiever.imageURL + '" /><a href="javascript:void(0)" onclick="openAchievements(false, \'' + achiever._id + '\', ' + checkingOtherPersonsAchievement +')">' + creatorName + '</a><p>shared an achievement with you</p></div>'
+                                                achievementDesc += '<div class="achievement-info"><div class=""><div id="userarea"><img src="' + creatorImageURL + '" /><a href="javascript:void(0)" onclick="openAchievements(false, \'' + achiever._id + '\', ' + checkingOtherPersonsAchievement +')">' + creatorName + '</a><p>shared an achievement with you</p></div>'
                                                 if (!checkingOtherPersonsAchievement) {
                                                     achievementDesc += '<div class="actionmenu"><ul><li><a href="javascript:void(0)" onclick="confirmAchievement(\'' + currentAchievement._id + '\', \'' + achiever._id + '\')"><img src="content/img/challengeaccepted.png" alt="challenge accepted" /></a></li><li class=""><a href="javascript:void(0)" onclick="ignoreAchievement(\'' + currentAchievement._id + '\', \'' + achiever._id + '\')"><img src="content/img/ignore.png" alt="Ignore" /></a></li></ul></div>'
                                                 }
