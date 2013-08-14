@@ -35,6 +35,7 @@ function createUser(name, callback) {
     })
 }
 
+
 function setPrettyName(userId, firstName, lastName, callback)   {
     User.findOne({ _id: userId }, function(err,myUser) {
         if (myUser) {
@@ -60,17 +61,18 @@ function setImageURL(userId, imageURL, callback)   {
     })
 }
 
+//TODO XXX rename to reflect that we get prettyName AND imageURL
 function getPrettyName(userId, callback) {
     User.findOne({ _id: userId }, function(err,myUser) {
         if (myUser){
             if (myUser.firstName && myUser.lastName) {
-                callback(myUser.firstName + " " + myUser.lastName)
+                callback(myUser.firstName + " " + myUser.lastName, myUser.imageURL)
             } else if (myUser.firstName) {
-                callback(myUser.firstName)
+                callback(myUser.firstName, myUser.imageURL)
             } else if (myUser.lastName) {
-                callback(myUser.lastName)
+                callback(myUser.lastName, myUser.imageURL)
             } else  {
-                callback(myUser.username)
+                callback(myUser.username, myUser.imageURL)
             }
         } else {
             console.log("User not found for userId " + userId + ", error: " + err)

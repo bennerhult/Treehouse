@@ -499,30 +499,28 @@ function fillFriendsList(friendsList, pendings, userId, callback) {
             } else {
                 currentFriendId = currentFriendship.friend1_id
             }
-            getUserNameForId(currentFriendId, function(username, id) {
-                user.User.findOne({ _id: currentFriendId }, function(err,currentFriend) {
-                    content +=   '<div class="itemwrap" id="friendshipid' + currentFriendship._id + '">'
-                    content +=   '<div class="leftcontainer"><a href="javascript:void(0)" onclick="visitFriend(\'' + id + '\', \'' + username + '\')"><img src="'+ currentFriend.imageURL + '" /></a></div>'
-                    content +=   '<div class="rightcontainer">'
-                    content += '<h3>'
-                    content +=  '<a class="headerlink" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\', \'' + username + '\')">' +username + '</a>'
-                    content += '</h3>'
-                    content +=   ' <span class="remove"><a href="javascript:void(0)" onclick="removeFriendship(\'' + currentFriendship._id  + '\')">Remove</a></span>'
-                    content +=   '</div>'
-                    content +=   '<div class="clear"></div>'
-                    if  (index < friendsList.length - 1 || pendings.length > 0)   {
-                        content +=   '<div class="separerare-part">&nbsp;</div>'
+            getUserNameForId(currentFriendId, function(username, id, imageURL) {
+                content +=   '<div class="itemwrap" id="friendshipid' + currentFriendship._id + '">'
+                content +=   '<div class="leftcontainer"><a href="javascript:void(0)" onclick="visitFriend(\'' + id + '\', \'' + username + '\')"><img width="56" height="56" src="'+ imageURL + '" /></a></div>'
+                content +=   '<div class="rightcontainer">'
+                content += '<h3>'
+                content +=  '<a class="headerlink" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\', \'' + username + '\')">' +username + '</a>'
+                content += '</h3>'
+                content +=   ' <span class="remove"><a href="javascript:void(0)" onclick="removeFriendship(\'' + currentFriendship._id  + '\')">Remove</a></span>'
+                content +=   '</div>'
+                content +=   '<div class="clear"></div>'
+                if  (index < friendsList.length - 1 || pendings.length > 0)   {
+                    content +=   '<div class="separerare-part">&nbsp;</div>'
+                }
+                content +=   '</div>'
+                if (index == friendsList.length - 1) {
+                    if (pendings.length > 0) {
+                        addPendings(content, pendings, userId, callback)
+                    }  else {
+                        content +=   '</div></div>'
+                        callback(content)
                     }
-                    content +=   '</div>'
-                    if (index == friendsList.length - 1) {
-                        if (pendings.length > 0) {
-                            addPendings(content, pendings, userId, callback)
-                        }  else {
-                            content +=   '</div></div>'
-                            callback(content)
-                        }
-                    }
-                })
+                }
 
             })
         })
@@ -808,8 +806,8 @@ app.get('/confirmAchievement', function(request, response){
 })
 
 function getUserNameForId(id, callback) {
-    user.getPrettyName(id, function(prettyName) {
-        callback(prettyName, id)
+    user.getPrettyName(id, function(prettyName, imageURL) {
+        callback(prettyName, id, imageURL)
     })
 }
 
