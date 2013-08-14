@@ -214,9 +214,10 @@ function signin(request, response, newUser) {
     var token = url_parts.query.token
     var appModeString = url_parts.query.appMode
     var appMode = (appModeString === 'true')
-    //console.log("signin: " + url_parts.query.email.toLowerCase())
+    console.log("signin: " + url_parts.query.email.toLowerCase())
     loginToken.LoginToken.findOne({ email: email, token: token }, function(err,myToken) {
         if (myToken) {
+            console.log("finding user by email")
             user.User.findOne({ username: email }, function(err,myUser) {
                 request.session.user_email = email      //TODO XXX   remove pga behövs inte längre
                 getDataForUser(myUser, request, response, newUser, appMode)
@@ -313,6 +314,7 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
                             response.write(JSON.stringify(nrOfFriendShipRequests))
                             response.end('\n', 'utf-8')
                         } else {
+                            console.log("standard login")
                             writeDefaultPage(request, response)
                         }
                     }
@@ -1015,7 +1017,7 @@ app.get('/achievementFromServer', function(request, response){
            user.User.findOne({ _id: achieverId }, function(err,currentAchiever) {
                if (request.session.user) {
 
-                   console.log("SMURF0: " + request.session.user_id)
+                   console.log("SMURF0: " + request.session.user._id)
                    loadUser (request, response, function () { writeAchievementPage(response, currentAchiever, currentAchievement, request.session.user._id, isNotificationView, sharerId)})
                } else if (currentAchievement && currentProgress.publiclyVisible)    {
 
@@ -1496,7 +1498,12 @@ function writeGotoAppPage(response) {
 }
 
 function writeDefaultPage(request, response) {
-    requestHandlers.indexPage(response, request.session.user._id, request.session.nrOfFriendShipRequests)
+    //console.log("default page called: " + request.session.user._id)
+    if (request.session.user) {
+        requestHandlers.indexPage(response, request.session.user._id, request.session.nrOfFriendShipRequests)
+    }   else {
+        requestHandlers.indexPage(response, null, null)
+    }
 }
 
 app.get('*', function(request, response){

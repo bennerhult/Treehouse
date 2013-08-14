@@ -21,9 +21,11 @@ var nrOfFriendShipRequests
 var isAppMode = false
 
 function init(userId, friendShipRequests) {
-    getUserFromServer(userId, function(user) {
-        currentUser = user
-    })
+    //if (!currentUser) {
+        getUserFromServer(userId, function(user) {
+            currentUser = user
+        })
+    //}
 
     nrOfFriendShipRequests = friendShipRequests
     FB.init({
