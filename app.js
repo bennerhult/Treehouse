@@ -500,27 +500,30 @@ function fillFriendsList(friendsList, pendings, userId, callback) {
                 currentFriendId = currentFriendship.friend1_id
             }
             getUserNameForId(currentFriendId, function(username, id) {
-                content +=   '<div class="itemwrap" id="friendshipid' + currentFriendship._id + '">'
-                content +=   '<div class="leftcontainer"><a href="javascript:void(0)" onclick="visitFriend(\'' + id + '\', \'' + username + '\')"><img src="content/img/user_has_no_image.jpg" /></a></div>'
-                content +=   '<div class="rightcontainer">'
-                content += '<h3>'
-                content +=  '<a class="headerlink" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\', \'' + username + '\')">' +username + '</a>'
-                content += '</h3>'
-                content +=   ' <span class="remove"><a href="javascript:void(0)" onclick="removeFriendship(\'' + currentFriendship._id  + '\')">Remove</a></span>'
-                content +=   '</div>'
-                content +=   '<div class="clear"></div>'
-                if  (index < friendsList.length - 1 || pendings.length > 0)   {
-                    content +=   '<div class="separerare-part">&nbsp;</div>'
-                }
-                content +=   '</div>'
-                if (index == friendsList.length - 1) {
-                    if (pendings.length > 0) {
-                        addPendings(content, pendings, userId, callback)
-                    }  else {
-                        content +=   '</div></div>'
-                        callback(content)
+                user.User.findOne({ _id: currentFriendId }, function(err,currentFriend) {
+                    content +=   '<div class="itemwrap" id="friendshipid' + currentFriendship._id + '">'
+                    content +=   '<div class="leftcontainer"><a href="javascript:void(0)" onclick="visitFriend(\'' + id + '\', \'' + username + '\')"><img src="'+ currentFriend.imageURL + '" /></a></div>'
+                    content +=   '<div class="rightcontainer">'
+                    content += '<h3>'
+                    content +=  '<a class="headerlink" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\', \'' + username + '\')">' +username + '</a>'
+                    content += '</h3>'
+                    content +=   ' <span class="remove"><a href="javascript:void(0)" onclick="removeFriendship(\'' + currentFriendship._id  + '\')">Remove</a></span>'
+                    content +=   '</div>'
+                    content +=   '<div class="clear"></div>'
+                    if  (index < friendsList.length - 1 || pendings.length > 0)   {
+                        content +=   '<div class="separerare-part">&nbsp;</div>'
                     }
-                }
+                    content +=   '</div>'
+                    if (index == friendsList.length - 1) {
+                        if (pendings.length > 0) {
+                            addPendings(content, pendings, userId, callback)
+                        }  else {
+                            content +=   '</div></div>'
+                            callback(content)
+                        }
+                    }
+                })
+
             })
         })
     } else {
@@ -1014,15 +1017,16 @@ app.get('/achievementFromServer', function(request, response){
            user.User.findOne({ _id: achieverId }, function(err,currentAchiever) {
                if (request.session.user) {
 
-                   //console.log("SMURF0: " + request.session.user_id)
+                   console.log("SMURF0: " + request.session.user_id)
                    loadUser (request, response, function () { writeAchievementPage(response, currentAchiever, currentAchievement, request.session.user._id, isNotificationView, sharerId)})
                } else if (currentAchievement && currentProgress.publiclyVisible)    {
 
                    //TODO XXX WEIRD to use request.session.user_id below, since the conditional says it does not exist here
-                   //console.log("SMURF1: " + request.session.user_id)
-                   writeAchievementPage(response, currentAchiever, currentAchievement, request.session.user._id, isNotificationView, sharerId)
+                   console.log("SMURF1: ")
+                   //writeAchievementPage(response, currentAchiever, currentAchievement, request.session.user._id, isNotificationView, sharerId)
+                   writeAchievementPage(response, currentAchiever, currentAchievement, null, isNotificationView, sharerId)
                } else {
-                   //console.log("SMURF2")
+                   console.log("SMURF2")
                    writeDefaultPage(request, response)
                }
 
