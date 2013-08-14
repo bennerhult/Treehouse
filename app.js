@@ -543,9 +543,9 @@ function addPendings(content, pendings, userId, callback) {
         } else {
             currentFriendId = currentFriendship.friend1_id
         }
-        getUserNameForId(currentFriendId, function(username, id) {
+        getUserNameForId(currentFriendId, function(username, id, imageURL) {
             content +=   '<div class="itemwrap" id="friendshipid' + currentFriendship._id + '">'
-            content +=   '<div class="leftcontainer"><a href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')"><img src="content/img/user_has_no_image.jpg" /></a></div>'
+            content +=   '<div class="leftcontainer"><a href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')"><img width="56" height="56" src="' + imageURL + '" /></a></div>'
             content +=   '<div class="rightcontainer">'
             content += '<h3>'
             content +=  '<a class="headerlink" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\')">Request: ' +username + '</a>'
