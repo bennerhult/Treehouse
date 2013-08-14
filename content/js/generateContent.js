@@ -256,6 +256,7 @@ function getUserFromServer(user_id, callback) {
     var data = "user_id=" + user_id
     $.ajax("/user", {
         type: "GET",
+        data: data,
         dataType: "json",
         statusCode: {
             200: function(user) { callback(user) }

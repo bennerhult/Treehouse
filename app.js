@@ -373,10 +373,10 @@ function getSignupErrorMessage (err){
 
 app.get('/user', function(request, response){
     var userID
-    if (request.query.user_id && request.query.user_id.length > 12) {
+    if (request.query.user_id && request.query.user_id.length >2) {
         userID = request.query.user_id
     } else {
-        userID = request.session.user._id
+       userID = request.session.user._id
     }
     user.User.findOne({ _id: userID }, function(err,foundUser) {
         if (foundUser)    {
@@ -1039,9 +1039,9 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
     var achievementDesc = ''
 
     var checkingOtherPersonsAchievement = !(achiever._id == userId)
-    console.log("achieverId: '" + achiever._id + "'")
-    console.log("userId: '" + userId + "'")
-    console.log("checkingOtherPersonsAchievement: " + checkingOtherPersonsAchievement)
+    //console.log("achieverId: '" + achiever._id + "'")
+    //console.log("userId: '" + userId + "'")
+    //console.log("checkingOtherPersonsAchievement: " + checkingOtherPersonsAchievement)
     var achievementUser_id
     if (isNotificationView) {
         achievementUser_id = sharerId
