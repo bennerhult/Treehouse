@@ -685,7 +685,7 @@ app.get('/compareList', function(request, response){
 function getCompareText(userName, finished, total, index, nrOfCompares, achieverId, achievementId, publiclyVisible, title, imageURL) {
     compareText = '<div class="part-achievement">'
     + '<div class="progress-container">'
-    + '<h3><a class="headerlink" href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + '\', \'' + title + ')">'
+    + '<h3><a class="headerlink" href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ', \'' + title + '\')">'
         + userName
     + '</a></h3>'
     + '<table border="0px">'
@@ -704,7 +704,7 @@ function getCompareText(userName, finished, total, index, nrOfCompares, achiever
             + '</td><td>&nbsp;</td><td>'
         var completed = finished >= total
         var isAchievementCreatedByMe = false
-        compareText    += '<div class="user-image"><a href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + '\', \'' + title + ')"><img width="56" height="56" src="' +imageURL + '" alt="Visit friend!"/></a></div>'
+        compareText    += '<div class="user-image"><a href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ', \'' + title + '\')"><img width="56" height="56" src="' +imageURL + '" alt="Visit friend!"/></a></div>'
         compareText += '</td></tr></table>'
         compareText    += '<div class="clear"></div>'
         compareText    += '</div>'
