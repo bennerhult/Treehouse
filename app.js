@@ -1015,7 +1015,7 @@ app.get('/achievementFromServer', function(request, response){
                if (request.session.user) {
 
                    //console.log("SMURF0: " + request.session.user_id)
-                   loadUser (request, response, function () { writeAchievementPage(response, currentAchiever, currentAchievement, request.session.user_id, isNotificationView, sharerId)})
+                   loadUser (request, response, function () { writeAchievementPage(response, currentAchiever, currentAchievement, request.session.user._id, isNotificationView, sharerId)})
                } else if (currentAchievement && currentProgress.publiclyVisible)    {
 
                    //TODO XXX WEIRD to use request.session.user_id below, since the conditional says it does not exist here
@@ -1039,9 +1039,9 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
     var achievementDesc = ''
 
     var checkingOtherPersonsAchievement = !(achiever._id == userId)
-    //console.log("achieverId: '" + achiever._id + "'")
-    //console.log("userId: '" + userId + "'")
-    //console.log("checkingOtherPersonsAchievement: " + checkingOtherPersonsAchievement)
+    console.log("achieverId: '" + achiever._id + "'")
+    console.log("userId: '" + userId + "'")
+    console.log("checkingOtherPersonsAchievement: " + checkingOtherPersonsAchievement)
     var achievementUser_id
     if (isNotificationView) {
         achievementUser_id = sharerId
