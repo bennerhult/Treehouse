@@ -298,9 +298,12 @@ function ignoreAchievementOnServer(achievementId, userId, callback) {
 }
 
 function visitFriend(friendId, userName) {
-    getAchievementsContent(friendId, true, function(achievementsContent) {   //TODO XXX
-        insertContent(achievementsContent, setDefaultMenu(userName, false), getAchievements(false, friendId, true))
+    getUserFromServer(friendId, function(friend) {
+        getAchievementsContent(friend, true, function(achievementsContent) {
+            insertContent(achievementsContent, setDefaultMenu(userName, false), getAchievements(false, friend._id, true))
+        })
     })
+
 }
 
 function addFriend(friendId) {
