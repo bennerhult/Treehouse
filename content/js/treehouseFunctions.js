@@ -46,7 +46,7 @@ function loginUsingFacebook() {
                             function(nrOfRequests, ok) {
                                 nrOfFriendShipRequests = nrOfRequests
                                 if (ok) { //TODO: use ajax success/error instead
-                                    openAchievements(false, currentUserId, false)
+                                    openAchievements(false, currentUser._id, false)
                                 } else {
                                     $("#message").html("Facebook did not play nice. Try regular login instead.")
                                 }
@@ -82,7 +82,7 @@ function rememberMe() {
         function(nrOfRequests, ok) {
             if (ok) { //TODO: use ajax success/error instead
                 nrOfFriendShipRequests = nrOfRequests
-                openAchievements(false, currentUserId, false)
+                openAchievements(false, currentUser._id, false)
             } else {
                 showSignin()
             }
@@ -268,7 +268,7 @@ function confirmAchievement(achievementId, userId) {
 
 function ignoreAchievement(achievementId, userId) {
     ignoreAchievementOnServer(achievementId, userId, function() {
-        openAchievements(false, userId, false)
+        openAchievements(false, userId, false)   //TODO XXX
     })
 }
 
@@ -298,7 +298,7 @@ function ignoreAchievementOnServer(achievementId, userId, callback) {
 }
 
 function visitFriend(friendId, userName) {
-    getAchievementsContent(friendId, true, function(achievementsContent) {
+    getAchievementsContent(friendId, true, function(achievementsContent) {   //TODO XXX
         insertContent(achievementsContent, setDefaultMenu(userName, false), getAchievements(false, friendId, true))
     })
 }
@@ -417,12 +417,14 @@ function openAchievements(completed, achieverId, lookingAtFriend, achieverName) 
     window.history.pushState(null, null, "/")
     $("#page-login").attr("id","page");
     $("#app-container-login").attr("id","app-container");
-    getAchievementsContent(achieverId, lookingAtFriend, function(achievementsContent) {
-          if (lookingAtFriend) {
-              insertContent(achievementsContent, setDefaultMenu(achieverName, false), getAchievements(completed, achieverId, lookingAtFriend))
-          }   else {
-              insertContent(achievementsContent, setDefaultMenu('Achievements', true), getAchievements(completed, achieverId, lookingAtFriend))
-          }
+    getUserFromServer(achieverId, function(achiever) {
+        getAchievementsContent(achiever, lookingAtFriend, function(achievementsContent) {
+              if (lookingAtFriend) {
+                  insertContent(achievementsContent, setDefaultMenu(achieverName, false), getAchievements(completed, achieverId, lookingAtFriend))
+              }   else {
+                  insertContent(achievementsContent, setDefaultMenu('Achievements', true), getAchievements(completed, achieverId, lookingAtFriend))
+              }
+        })
     })
 }
 
@@ -654,7 +656,7 @@ function createAchievement(achieverId) {
    createAchievementOnServer(
     function(data) {
         if (data == "ok") { //TODO: use ajax success/error instead
-            openAchievements(false, achieverId, false)
+            openAchievements(false, achieverId, false)          //TODO XXX
         } else $("#message").html(data)
     })
 }
@@ -979,12 +981,12 @@ function deleteAchievement(achieverId) {
     deleteAchievementOnServer(
         function(data) {
             if (data == "ok") { //TODO: use ajax success/error instead
-                openAchievements(false, achieverId, false)
+                openAchievements(false, achieverId, false)   //TODO XXX
             } else {
                 var inkblob = {url: data, mimetype: 'data:image/png;base64', isWriteable: true};
                 filepicker.setKey('AM9A7pbm3QPSe24aJU2M2z')
                 filepicker.remove(inkblob, function(){
-                    openAchievements(false, achieverId, false)
+                    openAchievements(false, achieverId, false)   //TODO XXX
                 });
             }
             insertLatestAchievement()

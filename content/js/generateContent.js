@@ -16,12 +16,15 @@ var footerContent = '<ul>' + nl +
 var isiPad = navigator.userAgent.match(/iPad/i) != null;
 var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
 var isiOs = isiPad || isiPhone
-var currentUserId
+var currentUser
 var nrOfFriendShipRequests
 var isAppMode = false
 
 function init(userId, friendShipRequests) {
-    currentUserId = userId
+    getUserFromServer(userId, function(user) {
+        currentUser = user
+    })
+
     nrOfFriendShipRequests = friendShipRequests
     FB.init({
         appId: '480961688595420',
@@ -74,7 +77,7 @@ function setDefaultMenu(activePage, visitsMainPage) {
         }
         if (loggedIn) {
             menu = '<div id="menu" class="menu-absolute"><ul>'
-            +'<li><div id="menuIconTree" class=""><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId
+            +'<li><div id="menuIconTree" class=""><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUser._id
             + '\', false)"><img id="menuImageTree" src="content/img/homeicon.png" alt="" /></a></div></li>'
             +'<li><div id="menuIconFriend" class=""><a href="javascript:void(0)" onclick="openFriends()"><img id="menuImageFriends" src="content/img/friendsicon.png" alt="" />'
             if (nrOfFriendShipRequests > 0) {
@@ -214,8 +217,8 @@ function getLoginContent() {
         )
 }
 
-function getUserContent(callback) {
-    getUserFromServer(function(user) {
+function getUserContent(userId, callback) {
+    getUserFromServer(userId, function(user) {
         var content = '<div id="content">' + nl +
             '<p><img id="userImage" src="' + user.imageURL + '" width="96" height="96"> ' + user.username + '</p><br /><a href="javascript:void(0)" onclick="uploadUserImage()"><img src="content/img/upload.png" /></a><br/>' + nl +
             '<form id="userForm" action="javascript: editUser()">' + nl
@@ -249,7 +252,8 @@ function getUserContent(callback) {
     })
 }
 
-function getUserFromServer(callback) {
+function getUserFromServer(user_id, callback) {
+    var data = "user_id=" + user_id
     $.ajax("/user", {
         type: "GET",
         dataType: "json",
@@ -349,7 +353,7 @@ function openFriends() {
 }
 
 function openUser() {
-    getUserContent(function(userContent) {
+    getUserContent(currentUser._id, function(userContent) {
         insertContent(userContent, setDefaultMenu('User', false))
     })
 }
@@ -396,11 +400,11 @@ function getCookie(c_name) {
     }
 }
 
-function getAchievementsContent(achieverId, lookingAtFriend, callback) {
-    getPrettyNameFromServer(achieverId, function(prettyName) {
-        var content =  '<div id="contentwrap"> <div id="userarea"><img src="content/img/user_has_no_image.jpg" /><p>' + prettyName + '</p></div> <div id="achievementListTabs"><a href="javascript:void(0)" onclick="getAchievements(false, \'' + achieverId + '\', ' + lookingAtFriend + ')"><span id="inProgressSpan" class="hoverDesktop">Challenges</span></a>'
+function getAchievementsContent(achiever, lookingAtFriend, callback) {
+    getPrettyNameFromServer(achiever._id, function(prettyName) {
+        var content =  '<div id="contentwrap"> <div id="userarea"><img src="' + achiever.imageURL + '" /><p>' + prettyName + '</p></div> <div id="achievementListTabs"><a href="javascript:void(0)" onclick="getAchievements(false, \'' + achiever._id + '\', ' + lookingAtFriend + ')"><span id="inProgressSpan" class="hoverDesktop">Challenges</span></a>'
 
-        content +=  '<a href="javascript:void(0)" onclick="getAchievements(true, \'' + achieverId + '\', ' + lookingAtFriend + ')"><span id="completedSpan" class="hoverDesktop">Unlocked</span></a></div>'
+        content +=  '<a href="javascript:void(0)" onclick="getAchievements(true, \'' + achiever._id + '\', ' + lookingAtFriend + ')"><span id="completedSpan" class="hoverDesktop">Unlocked</span></a></div>'
 
         content +=  '<div id="achievementList"></div></div>'
         callback(content)
