@@ -21,7 +21,6 @@ var nrOfFriendShipRequests
 var isAppMode = false
 
 function init(userId, friendShipRequests) {
-    //alert("boyahh: " + userId)
     if (userId) {
         getUserFromServer(userId, function(user) {
             currentUser = user
@@ -78,9 +77,13 @@ function setDefaultMenu(activePage, visitsMainPage) {
         if (x) {
          loggedIn = true
         }
+        var currentUserId
+        if (currentUser) {
+            currentUserId = currentUser._id
+        }
         if (loggedIn) {
             menu = '<div id="menu" class="menu-absolute"><ul>'
-            +'<li><div id="menuIconTree" class=""><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUser._id
+            +'<li><div id="menuIconTree" class=""><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId
             + '\', false)"><img id="menuImageTree" src="content/img/homeicon.png" alt="" /></a></div></li>'
             +'<li><div id="menuIconFriend" class=""><a href="javascript:void(0)" onclick="openFriends()"><img id="menuImageFriends" src="content/img/friendsicon.png" alt="" />'
             if (nrOfFriendShipRequests > 0) {
