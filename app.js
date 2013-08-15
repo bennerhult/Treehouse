@@ -857,7 +857,11 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
             + ', \''
             + achievements[i].title
             + '\''
-        achievementsList += ')"><img src="'
+        achievementsList += ')"><img'
+        if (sharedAchievements[i]) {
+            achievementsList += ' class="shared"'
+        }
+        achievementsList += ' src="'
             + achievements[i].imageURL
             + '" alt="'
             + achievements[i].title
@@ -1114,7 +1118,7 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                                     }
                                 }
                             })
-                        }   else {
+                        }  else {
                             shareholding.isAchievementShared(currentAchievement._id, function(isAchievementShared) {
                                 progress.Progress.findOne({ goal_id: goal._id, achiever_id: achiever._id}, function(err, myProgress) {
                                     if (err) {
