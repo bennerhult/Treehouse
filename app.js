@@ -1030,7 +1030,6 @@ app.get('/achievementFromServer', function(request, response){
         sharerId = url_parts.query.sharerId.trim()
     }
     var achieverId = url_parts.query.achieverId
-    console.log("B0")
    progress.Progress.findOne({ achievement_id: currentAchievementId, achiever_id: achieverId }, function(err,currentProgress) {
         request.session.current_achievement_id = currentAchievementId
 
@@ -1058,7 +1057,6 @@ app.get('/achievementFromServer', function(request, response){
 })
 
 function writeAchievementPage(response, achiever, currentAchievement, userId, isNotificationView, sharerId) {
-    console.log("A0")
     var myQuantityTotal = 0
     var myQuantityFinished = 0
     var goalTexts = []
@@ -1067,22 +1065,17 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
     var checkingOtherPersonsAchievement = !(achiever._id == userId)
     //console.log("achieverId: '" + achiever._id + "'")
     //console.log("userId: '" + userId + "'")
-    console.log("checkingOtherPersonsAchievement: " + checkingOtherPersonsAchievement)
+    //console.log("checkingOtherPersonsAchievement: " + checkingOtherPersonsAchievement)
     var achievementUser_id
     if (isNotificationView) {
         achievementUser_id = sharerId
     }  else {
         achievementUser_id = achiever._id
     }
-    console.log("A1")
     if(currentAchievement.goals) {
-        console.log("A2")
         getUserNameForId(currentAchievement.createdBy, function(creatorName, creatorId, creatorImageURL) {
-            console.log("A3")
          getUserNameForId(achiever._id, function(achieverName) {
-             console.log("A4")
                 currentAchievement.goals.forEach(function(goal, goalIndex) {
-                    console.log("A5")
                     progress.Progress.findOne({ goal_id: goal._id, achiever_id: achievementUser_id }, function(err,myProgress) {
                         if (err) {
                             console.log("error in app.js 3: couldn't find progress for user " + achieverId)
