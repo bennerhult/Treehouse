@@ -659,7 +659,7 @@ function createAchievement(achieverId) {
    createAchievementOnServer(
     function(data) {
         if (data == "ok") { //TODO: use ajax success/error instead
-            openAchievements(false, achieverId, false)          //TODO XXX
+            openAchievements(false, achieverId, false)
         } else $("#message").html(data)
     })
 }
