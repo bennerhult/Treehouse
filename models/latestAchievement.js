@@ -29,7 +29,9 @@ function getId(callback) {
 function update(id) {
     LatestAchievement.findOne({ ownId: 1 }, function(err,latestAchievement) {
         if (id == -1) {
-            latestAchievement.remove(function (err) {}) //someone unpublicized the last public achievement
+            if (latestAchievement) {
+                latestAchievement.remove(function (err) {})
+            } //someone unpublicized the last public achievement
         } else if (latestAchievement) {
             latestAchievement.id = id;
             latestAchievement.save(function (error) {})
