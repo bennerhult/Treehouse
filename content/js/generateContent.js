@@ -452,12 +452,12 @@ function getMoreMenuContent(callback) {
 }
 
 //data if edit, null if create
-function getNewAchievementContent(data) {
+function getNewAchievementContent(data, achieverId) {
         initImages()
         var text ='<div id="app-container">' + nl  +
-                '<form id="createAchievementForm" action="javascript: createAchievement()">' + nl  +
+                '<form id="createAchievementForm" action="javascript: createAchievement(\'' + achieverId + '\')">' + nl  +
                     '<div class="achievement-info">' + nl  +
-                        '<div class="inputarea">' + nl  +
+            '<div class="inputarea">' + nl  +
                             '<input type="text" class="formstyle" name="title" placeholder="title"'
                                     if (data)  {
                                         text +=  'value="' + data.title + '"'
