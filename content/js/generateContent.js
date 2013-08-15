@@ -429,24 +429,20 @@ function getPublicAchievementContent() {
 
 function getMoreMenuContent(callback) {
     callback(
-        '<div id="content">' +
+
             '<div id="moreList">' +
-                '<div class="header">&nbsp;</div>' +
-                    '<div id="more" class="more">' +
-                        '<div class="itemwrap">' +
-                            '<div class="leftcontainer"></a></div>' +
-                            '<div class="rightcontainer"><h3><a class="headerlink" href="javascript:void(0)" onclick="signout()">Sign out</a></h3></div>' +
-                            '<div class="clear"></div>' +
-                            '<div class="separerare-part">&nbsp;</div>' +
-                        '</div>' +
-                        '<div class="itemwrap">' +
-                            '<div class="leftcontainer"></a></div>' +
-                            '<div class="rightcontainer"><h3><a class="headerlink" href="javascript:void(0)" onclick="openUser()">User</a></h3></div>' +
-                            '<div class="clear"></div>' +
-                        '</div>' +
-                    '</div>' +
-                '</div>' +
-            '</div>' +
+                '<ul>' +
+
+                     '<li><a href="javascript:void(0)" onclick="openUser()"><img src="content/img/user.png" ></a></li>' +
+                      '<li><a href="javascript:void(0)" onclick="signout()"><img src="content/img/logout.png" ></a></li>' +
+
+                '</ul>' +
+
+
+
+
+
+
         '</div>')
 
 }
