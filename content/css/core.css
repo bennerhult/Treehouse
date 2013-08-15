@@ -968,6 +968,16 @@ input.file {
     box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
 }
 
+.achievement a img.shared{
+    border-color: #131213;
+}
+
+.achievement a img.request{
+    border-color: #ff0080;
+}
+
+
+
 .achievement a img{
     border: 3px solid #fff;
     -moz-border-radius: 5px;

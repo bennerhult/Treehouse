@@ -892,7 +892,7 @@ function createNotificationDesc(nrOfAchievements, notifications, achieverId, loo
             + achieverId
             + '\', \''
             + notifications[i].createdBy
-            + '\')"><img src="'
+            + '\')"><img class="request" src="'
             + notifications[i].imageURL
             + '" alt="'
             + notifications[i].title
