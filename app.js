@@ -748,7 +748,7 @@ app.get('/addFriend', function(request, response){
     friendship.createFriendship(request.session.user._id, request.query.friendId, function(ok) {
         if (ok) {
             user.User.findOne({ _id: request.query.friendId }, function(err, askedFriend) {
-                user.User.findOne({ _id: request.session.user._id}, function(err, askingFriend) {     //TODO XXX remove?
+                user.User.findOne({ _id: request.session.user._id}, function(err, askingFriend) {
                     emailUser(
                         askedFriend.username,
                         askingFriend.username + ' wants to be your friend on Treehouse',
@@ -1137,7 +1137,7 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                                                         }
                                                         achievementDesc += '<li id="deleteButton" class="rightalign"><a href="javascript:void(0)" onclick="deleteAchievement(\'' + achiever._id + '\')"><img src="content/img/delete.png" /></a></li>'
                                                         if (myPercentageFinished == 0 && !isAchievementShared) {
-                                                            achievementDesc += '<li id="editButton"  class="rightalign"><a href="javascript:void(0)" onclick="editAchievement()"><img src="content/img/edit.png" /></a></li>'
+                                                            achievementDesc += '<li id="editButton"  class="rightalign"><a href="javascript:void(0)" onclick="editAchievement(\'' + achiever._id + '\')"><img src="content/img/edit.png" /></a></li>'
                                                         }
                                                         achievementDesc += '</ul></div>'
                                                     }

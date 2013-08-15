@@ -962,10 +962,10 @@ function goalKeyPress(goalField) {
 }
 
 /******************  edit achievement functions  ******************/
-function editAchievement() {
+function editAchievement(achieverId) {
     editAchievementOnServer(
         function(data) {
-            insertContent(getNewAchievementContent(data),setDefaultMenu('Edit', false))
+            insertContent(getNewAchievementContent(data, achieverId),setDefaultMenu('Edit', false))
         }
     )
 }
@@ -984,12 +984,12 @@ function deleteAchievement(achieverId) {
     deleteAchievementOnServer(
         function(data) {
             if (data == "ok") { //TODO: use ajax success/error instead
-                openAchievements(false, achieverId, false)   //TODO XXX
+                openAchievements(false, achieverId, false)
             } else {
                 var inkblob = {url: data, mimetype: 'data:image/png;base64', isWriteable: true};
                 filepicker.setKey('AM9A7pbm3QPSe24aJU2M2z')
                 filepicker.remove(inkblob, function(){
-                    openAchievements(false, achieverId, false)   //TODO XXX
+                    openAchievements(false, achieverId, false)
                 });
             }
             insertLatestAchievement()
