@@ -571,16 +571,21 @@ function addPendings(content, pendings, userId, callback) {
 
 app.get('/shareList', function(request, response){
     var friendIds = new Array()
-    friendship.getFriends(request.session.user._id, function(friendsList) {
+    var userId
+    if (request.session.user) {
+        userId = request.session.user._id
+    }
+
+    friendship.getFriends(userId, function(friendsList) {
         if (friendsList.length > 0) {
             friendsList.forEach(function(currentFriendship, index) {
-                if (currentFriendship.friend1_id == request.session.user._id) {
+                if (currentFriendship.friend1_id == userId) {
                     friendIds.push(currentFriendship.friend2_id)
                 } else {
                     friendIds.push(currentFriendship.friend1_id)
                 }
                 if (index == friendsList.length -1) {
-                    fillShareList(friendIds, request.session.user._id, request.query.achievementId, function(content) {
+                    fillShareList(friendIds, userId, request.query.achievementId, function(content) {
                         response.writeHead(200, {'content-type': 'application/json' })
                         response.write(JSON.stringify(content))
                         response.end('\n', 'utf-8')
@@ -643,8 +648,11 @@ function fillShareList(friendsList, userId, achievementId, callback) {
 app.get('/compareList', function(request, response){
     var friendIds = new Array()
     var content = ""
-
-    shareholding.getCompares(request.query.achievementId, request.session.user._id, function(compareList) {
+    var userId
+    if (request.session.user) {
+        userId = request.session.user._id
+    }
+    shareholding.getCompares(request.query.achievementId, userId, function(compareList) {
         if (compareList && compareList.length > 0) {
             compareList.forEach(function(currentCompare, index) {
                 var myQuantityFinished = 0
