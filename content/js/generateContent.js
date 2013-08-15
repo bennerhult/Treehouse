@@ -222,7 +222,8 @@ function getLoginContent() {
 function getUserContent(userId, callback) {
     getUserFromServer(userId, function(user) {
         var content = '<div id="content">' + nl +
-            '<p><img id="userImage" src="' + user.imageURL + '" width="96" height="96"> ' + user.username + '</p><br /><a href="javascript:void(0)" onclick="uploadUserImage()"><img src="content/img/upload.png" /></a><br/>' + nl +
+            '<div id="userarea"><img id="userImage" src="' + user.imageURL + '" width="96" height="96"><p> ' + user.username + '</p></div>' +
+            '<a href="javascript:void(0)" onclick="uploadUserImage()"><img src="content/img/upload.png" /></a>' + nl +
             '<form id="userForm" action="javascript: editUser()">' + nl
             if (user.firstName) {
                 content += '<input type="text" class="formstyle" name="firstName" placeholder="first name" value="' + user.firstName + '">' + nl
@@ -240,7 +241,7 @@ function getUserContent(userId, callback) {
             '</form>' + nl +
             '<div id="message"></div>'  + nl
              if (!user.isIssuer) {
-                  content += '<div id="content">' + nl +
+                  content += '<div>' + nl +
                      '<form id="issuerForm" action="javascript: upgradeToIssuer()">' + nl +
                      '<input type="submit" class="button" value="Upgrade to issuer">' + nl +
                      '</form>' + nl +
