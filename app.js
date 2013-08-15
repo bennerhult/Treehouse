@@ -934,6 +934,11 @@ function getAchievementList(request, response, completedAchievements) {
     } else {
         achieverId = request.session.user._id
     }
+    var userId
+    if (request.session.user) {
+        userId = request.session.user._id
+    }
+
     progress.Progress.find({ achiever_id: achieverId}, {}, { sort: { 'latestUpdated' : -1 } }, function(err, progresses) {
         if (err) { console.log("error in app.js 1: couldn't find any progress for user " + achieverId) }
         if (progresses && progresses.length > 0) {
@@ -947,7 +952,7 @@ function getAchievementList(request, response, completedAchievements) {
                             calculateAchievementProgress(achieverId, myAchievement._id, function(achievementPercentageFinished) {
                                 shareholding.isAchievementShared(myAchievement._id, function(isAchievementShared) {
                                     shareholding.isAchievementCreatedByMe(achieverId, myAchievement._id, function(isAchievementCreatedByMe) {
-                                        shareholding.isAchievementSharedByMe(request.session.user._id, myAchievement._id, function(isAchievmentSharedByMe) {
+                                        shareholding.isAchievementSharedByMe(userId, myAchievement._id, function(isAchievmentSharedByMe) {
                                             if(!lookingAtFriendsAchievements || currentProgress.publiclyVisible || isAchievmentSharedByMe) {
                                                 if ((completedAchievements && achievementPercentageFinished == 100) || (!completedAchievements && achievementPercentageFinished < 100)) {
                                                         areAchievementsShared.push(isAchievementShared)
@@ -959,7 +964,7 @@ function getAchievementList(request, response, completedAchievements) {
                                             goneThroughProgresses +=  myAchievement.goals.length
                                             if (goneThroughProgresses == progresses.length) {
                                                 achievementsList += createAchievementDesc(achievementsToShow, progressesToShow, achieverId, percentages, completedAchievements, lookingAtFriendsAchievements,areAchievementsShared, isAchievementCreatedByMe)
-                                                getSharedAchievementNotifications(achievementsToShow.length, response, achievementsList, completedAchievements, achieverId, request.session.user._id, lookingAtFriendsAchievements)
+                                                getSharedAchievementNotifications(achievementsToShow.length, response, achievementsList, completedAchievements, achieverId, userId, lookingAtFriendsAchievements)
                                             }
                                         })
                                     })
@@ -971,7 +976,7 @@ function getAchievementList(request, response, completedAchievements) {
             })
         } else {
             if (!lookingAtFriendsAchievements) {achievementsList += '<div class="achievement first"><div class="container"><a href="javascript:void(0)" onclick="insertContent(getNewAchievementContent(null, \'' + achieverId + '\'), setDefaultMenu(\'Create Achievement\', false))"><img src="content/img/empty.png" alt=""/></a></div><p>Create new achievement</p><div class="separerare-part">&nbsp;</div></div>' }
-            getSharedAchievementNotifications(0, response, achievementsList, completedAchievements, achieverId, request.session.user._id, lookingAtFriendsAchievements)
+            getSharedAchievementNotifications(0, response, achievementsList, completedAchievements, achieverId, userId, lookingAtFriendsAchievements)
         }
     })
 }
@@ -1053,7 +1058,7 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
     var checkingOtherPersonsAchievement = !(achiever._id == userId)
     //console.log("achieverId: '" + achiever._id + "'")
     //console.log("userId: '" + userId + "'")
-    //console.log("checkingOtherPersonsAchievement: " + checkingOtherPersonsAchievement)
+    console.log("checkingOtherPersonsAchievement: " + checkingOtherPersonsAchievement)
     var achievementUser_id
     if (isNotificationView) {
         achievementUser_id = sharerId
@@ -1506,7 +1511,7 @@ function writeGotoAppPage(response) {
 }
 
 function writeDefaultPage(request, response) {
-    //console.log("default page called: " + request.session.user._id)
+    console.log("default page called: " + request.session.user._id)
     if (request.session.user) {
         requestHandlers.indexPage(response, request.session.user._id, request.session.nrOfFriendShipRequests)
     }   else {

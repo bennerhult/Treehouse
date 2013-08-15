@@ -97,6 +97,7 @@ function topAppPagePart() {
 
 
 function topIndexPart(userId, nrOfFriendShipRequests) {
+    console.log("top index part: " + userId)
             var text = '<!DOCTYPE html>' + nl +
             tab + '<html manifest="treehouse.manifest">' + nl +
                 tab + '<head>' + nl +
