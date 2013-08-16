@@ -208,7 +208,7 @@ function findFriends() {
                         } else {
                             if (responseobject.createdByCurrentUser ) {
                                 getUserFromServer(responseobject.id, function(friendInSpe) {
-                                    messageText = 'You have already sent a friend request to ' + friend_email + '<br /><a href="javascript:void(0)" style="color: black" onclick="visitFriend(\'' + friendInSpe._id + '\', \'' + friendInSpe.firstName +  ' ' +  friendInSpe.lastName + '\')">Visit!</a>'
+                                    messageText = 'You have already sent a friend request to ' + friend_email + '<br /><a href="javascript:void(0)" style="color: black" onclick="visitFriend(\'' + friendInSpe._id + '\', \'' + friendInSpe.firstName +  ' ' +  friendInSpe.lastName + '\')">Visit!</a>'     //TODO create a convenience method (see server side) that returns email if no first or last name
                                     $("#message").html(messageText)
                                 })
                             }  else {
