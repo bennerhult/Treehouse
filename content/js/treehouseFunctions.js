@@ -207,13 +207,17 @@ function findFriends() {
                             messageText = friend_email + " is already your friend!"
                         } else {
                             if (responseobject.createdByCurrentUser ) {
-                                messageText = "You have already sent a friend request to " + friend_email + "<br /><a href='javascript:void(0)' style='color: black' onclick='visitFriend(\"" + responseobject.id + "\")'>Visit!</a>"
+                                getUserFromServer(responseobject.id, function(friendInSpe) {
+                                    messageText = 'You have already sent a friend request to ' + friend_email + '<br /><a href="javascript:void(0)" style="color: black" onclick="visitFriend(\'' + friendInSpe._id + '\', \'' + friendInSpe.firstName +  ' ' +  friendInSpe.lastName + '\')">Visit!</a>'
+                                    $("#message").html(messageText)
+                                })
                             }  else {
                                 messageText = friend_email + " has already asked to be your friend. Check your friend requests!"
+                                $("#message").html(messageText)
                             }
 
                         }
-                        $("#message").html(messageText)
+
                     }
                 }, function(errorMessage) {
                     $("#message").html(errorMessage)
