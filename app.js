@@ -617,9 +617,9 @@ function fillShareList(friendsList, userId, achievementId, callback) {
         } else {
             friendsList.forEach(function(currentFriendship, index) {
                 shareholding.Shareholding.findOne({ sharer_id: userId, shareholder_id: friendsList[index], achievement_id: achievementId }, function(err, alreadySharedToFriend) {
-                    getUserNameForId(friendsList[index], function(username) {
+                    getUserNameForId(friendsList[index], function(username, id, imageURL) {
                         content +=   '<div class="sharerlistitem">'
-                        content +=   '<div class="leftcontainer"><img src="content/img/user_has_no_image.jpg" /></div>'
+                        content +=   '<div class="leftcontainer"><img width="56" height="56" src="' + imageURL +'" /></div>'
                         content +=   '<div class="rightcontainer">'
                         content +=   '<h3>'
                         content +=    username
