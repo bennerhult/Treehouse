@@ -145,17 +145,23 @@ app.get('/achievement', function(request, response) {
     var currentAchievementId = url_parts.query.achievementId
     var userId  = url_parts.query.userId
 
-    progress.Progress.findOne({ achievement_id: currentAchievementId, achiever_id: userId }, function(err,currentProgress) {
+  /*  if (request.session.user) {
+        showAchievementPage(request, response)
+        console.log("yes")
+    }   else {    */
+        progress.Progress.findOne({ achievement_id: currentAchievementId, achiever_id: userId }, function(err,currentProgress) {
 
-        if (currentProgress && currentProgress.publiclyVisible)    {
-            achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
-                request.session.current_achievement_id = currentAchievementId
-                requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, currentAchievement.imageURL, currentAchievement.title)
-            })
-        } else {
-            writeDefaultPage(request, response)
-        }
-    })
+            if (currentProgress && currentProgress.publiclyVisible)    {
+                achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
+                    request.session.current_achievement_id = currentAchievementId
+                    requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, currentAchievement.imageURL, currentAchievement.title)
+                })
+            } else {
+                writeDefaultPage(request, response)
+            }
+        })
+  //  }
+
 })
 
 app.get('/', function(request, response){
@@ -1020,7 +1026,10 @@ function finishAchievementsList(response, achievementsList, completedAchievement
 }
 
 app.get('/achievementFromServer', function(request, response){
-    //console.log("/achievementFromServer")
+    showAchievementPage(request, response)
+})
+
+function showAchievementPage(request, response) {
     var url_parts = url.parse(request.url, true)
     var currentAchievementId = url_parts.query.achievementId.trim()
     var isNotificationViewString = url_parts.query.isNotificationView.trim()
@@ -1030,31 +1039,30 @@ app.get('/achievementFromServer', function(request, response){
         sharerId = url_parts.query.sharerId.trim()
     }
     var achieverId = url_parts.query.achieverId
-   progress.Progress.findOne({ achievement_id: currentAchievementId, achiever_id: achieverId }, function(err,currentProgress) {
+    progress.Progress.findOne({ achievement_id: currentAchievementId, achiever_id: achieverId }, function(err,currentProgress) {
         request.session.current_achievement_id = currentAchievementId
 
-       achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
-           user.User.findOne({ _id: achieverId }, function(err,currentAchiever) {
-               if (request.session.user) {
+        achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
+            user.User.findOne({ _id: achieverId }, function(err,currentAchiever) {
+                if (request.session.user) {
 
-                   console.log("SMURF0: " + request.session.user._id)
-                   loadUser (request, response, function () { writeAchievementPage(response, currentAchiever, currentAchievement, request.session.user._id, isNotificationView, sharerId)})
-               } else if (currentAchievement && currentProgress.publiclyVisible)    {
+                    console.log("SMURF0: " + request.session.user._id)
+                    loadUser (request, response, function () { writeAchievementPage(response, currentAchiever, currentAchievement, request.session.user._id, isNotificationView, sharerId)})
+                } else if (currentAchievement && currentProgress.publiclyVisible)    {
 
-                   //TODO XXX WEIRD to use request.session.user_id below, since the conditional says it does not exist here
-                   console.log("SMURF1: ")
-                   //writeAchievementPage(response, currentAchiever, currentAchievement, request.session.user._id, isNotificationView, sharerId)
-                   writeAchievementPage(response, currentAchiever, currentAchievement, null, isNotificationView, sharerId)
-               } else {
-                   console.log("SMURF2")
-                   writeDefaultPage(request, response)
-               }
+                    //TODO XXX WEIRD to use request.session.user_id below, since the conditional says it does not exist here
+                    console.log("SMURF1: ")
+                    //writeAchievementPage(response, currentAchiever, currentAchievement, request.session.user._id, isNotificationView, sharerId)
+                    writeAchievementPage(response, currentAchiever, currentAchievement, null, isNotificationView, sharerId)
+                } else {
+                    console.log("SMURF2")
+                    writeDefaultPage(request, response)
+                }
 
-           })
+            })
         })
-  })
-
-})
+    })
+}
 
 function writeAchievementPage(response, achiever, currentAchievement, userId, isNotificationView, sharerId) {
     var myQuantityTotal = 0
@@ -1064,7 +1072,7 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
 
     var checkingOtherPersonsAchievement = !(achiever._id == userId)
     //console.log("achieverId: '" + achiever._id + "'")
-    //console.log("userId: '" + userId + "'")
+    console.log("userId: '" + userId + "'")
     //console.log("checkingOtherPersonsAchievement: " + checkingOtherPersonsAchievement)
     var achievementUser_id
     if (isNotificationView) {
@@ -1517,7 +1525,6 @@ function writeGotoAppPage(response) {
 }
 
 function writeDefaultPage(request, response) {
-    console.log("default page called: " + request.session.user._id)
     if (request.session.user) {
         requestHandlers.indexPage(response, request.session.user._id, request.session.nrOfFriendShipRequests)
     }   else {
