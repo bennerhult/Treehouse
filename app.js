@@ -1096,7 +1096,7 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                 })
                 progress.Progress.findOne({ achievement_id: currentAchievement._id, achiever_id: achiever._id}, {}, { sort: { 'latestUpdated' : -1 } }, function(err, latestProgress) {
                     currentAchievement.goals.forEach(function(goal, goalIndex) {
-                        if (isNotificationView) {
+                        if (isNotificationView) {   //TODO kan man fortfarande komma hit?
                             progress.Progress.findOne({   goal_id: goal._id }, function(err,myProgress) {
                                 if (err) {
                                     console.log("error in app.js 4: couldn't find progress for user " + achiever._id)
@@ -1124,7 +1124,7 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                                                 achievementDesc += '<p id="achievementDescription">'
                                                     + currentAchievement.description
                                                     + '</p></div>'
-                                                    + '<div class="imagearea"><img src="'
+                                                    + '<div class="imagearea"><img class="request" src="'
                                                     + currentAchievement.imageURL
                                                     +'" alt="'
                                                     +  currentAchievement.createdBy + ": " + currentAchievement.title
@@ -1185,7 +1185,11 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                                                         + '</p>'
 
                                                         + '</div>'
-                                                        + '<div class="imagearea"><img src="'
+                                                        + '<div class="imagearea"><img '
+                                                    if (isAchievementShared) {
+                                                        achievementDesc +=  'class = "shared"'
+                                                    }
+                                                    achievementDesc += 'src="'
                                                         + currentAchievement.imageURL
                                                         +'" alt="'
                                                         +  currentAchievement.createdBy + ": " + currentAchievement.title
