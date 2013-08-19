@@ -87,7 +87,7 @@ function setDefaultMenu(activePage, visitsMainPage) {
             + '\', false)"><img id="menuImageTree" src="content/img/homeicon.png" alt="" /></a></div></li>'
             +'<li><div id="menuIconFriend" class=""><a href="javascript:void(0)" onclick="openFriends()"><img id="menuImageFriends" src="content/img/friendsicon.png" alt="" />'
             if (nrOfFriendShipRequests > 0) {
-               menu += '<span>' + nrOfFriendShipRequests + '</span>'
+               menu += '<span id="nrOfFriendShipRequestsAlert">' + nrOfFriendShipRequests + '</span>'
             }
             menu += '</a></div></li>'
             +'<li><div id="menuToggle" class=""><a href="javascript:void(0)" onclick="showMore()"><img id="menuImageTab" src="content/img/tree-tab.png" alt=""/></a></div></li>'

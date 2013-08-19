@@ -390,6 +390,11 @@ function confirmFriendRequest(friendship_id) {
                 + '\')">Remove</a></span></div><div class="clear"></div></div>'
             nrOfFriendShipRequests--
             $("#myfriends").append(friendsRow)
+            if (nrOfFriendShipRequests > 0 ) {
+                $("#nrOfFriendShipRequestsAlert").html(nrOfFriendShipRequests)
+            } else {
+                $("#nrOfFriendShipRequestsAlert").remove()
+            }
 
             $("#friendshipid" + friendship_id).remove()
             var friendRequestRow = "<a href='javascript:void(0)' onclick='openFriends()'><span>Friends"
