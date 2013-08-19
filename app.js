@@ -401,7 +401,7 @@ app.get('/prettyName', function(request, response){
         userID = request.session.user._id
     }
 
-    user.getPrettyName(userID, function(prettyName) {
+    user.getPrettyNameAndImageURL(userID, function(prettyName) {
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(prettyName))
         response.end('\n', 'utf-8')
@@ -507,7 +507,7 @@ function fillFriendsList(friendsList, pendings, userId, callback) {
             } else {
                 currentFriendId = currentFriendship.friend1_id
             }
-            getUserNameForId(currentFriendId, function(username, id, imageURL) {
+            getPrettyNameIdAndImageURL(currentFriendId, function(username, id, imageURL) {
                 content +=   '<div class="itemwrap" id="friendshipid' + currentFriendship._id + '">'
                 content +=   '<div class="leftcontainer"><a href="javascript:void(0)" onclick="visitFriend(\'' + id + '\', \'' + username + '\')"><img width="56" height="56" src="'+ imageURL + '" /></a></div>'
                 content +=   '<div class="rightcontainer">'
@@ -552,7 +552,7 @@ function addPendings(content, pendings, userId, callback) {
         } else {
             currentFriendId = currentFriendship.friend1_id
         }
-        getUserNameForId(currentFriendId, function(username, id, imageURL) {
+        getPrettyNameIdAndImageURL(currentFriendId, function(username, id, imageURL) {
             content +=   '<div class="itemwrap" id="friendshipid' + currentFriendship._id + '">'
             content +=   '<div class="leftcontainer"><a href="javascript:void(0)" onclick="visitFriend(\'' + id + '\', \'' + username + '\')"><img width="56" height="56" src="' + imageURL + '" /></a></div>'
             content +=   '<div class="rightcontainer">'
@@ -618,7 +618,7 @@ function fillShareList(friendsList, userId, achievementId, callback) {
         } else {
             friendsList.forEach(function(currentFriendship, index) {
                 shareholding.Shareholding.findOne({ sharer_id: userId, shareholder_id: friendsList[index], achievement_id: achievementId }, function(err, alreadySharedToFriend) {
-                    getUserNameForId(friendsList[index], function(username, id, imageURL) {
+                    getPrettyNameIdAndImageURL(friendsList[index], function(username, id, imageURL) {
                         content +=   '<div class="sharerlistitem">'
                         content +=   '<div class="leftcontainer"><img width="56" height="56" src="' + imageURL +'" /></div>'
                         content +=   '<div class="rightcontainer">'
@@ -822,8 +822,8 @@ app.get('/confirmAchievement', function(request, response){
     })
 })
 
-function getUserNameForId(id, callback) {
-    user.getPrettyName(id, function(prettyName, imageURL) {
+function getPrettyNameIdAndImageURL(id, callback) {
+    user.getPrettyNameAndImageURL(id, function(prettyName, imageURL) {
         callback(prettyName, id, imageURL)
     })
 }
@@ -1082,8 +1082,8 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
         achievementUser_id = achiever._id
     }
     if(currentAchievement.goals) {
-        getUserNameForId(currentAchievement.createdBy, function(creatorName, creatorId, creatorImageURL) {
-         getUserNameForId(achiever._id, function(achieverName, achieverId, achieverImageURL) {
+        getPrettyNameIdAndImageURL(currentAchievement.createdBy, function(creatorName, creatorId, creatorImageURL) {
+            getPrettyNameIdAndImageURL(achiever._id, function(achieverName, achieverId, achieverImageURL) {
                 currentAchievement.goals.forEach(function(goal, goalIndex) {
                     progress.Progress.findOne({ goal_id: goal._id, achiever_id: achievementUser_id }, function(err,myProgress) {
                         if (err) {

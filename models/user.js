@@ -20,7 +20,7 @@ module.exports = {
     User: User,
     createUser: createUser,
     setPrettyName : setPrettyName,
-    getPrettyName : getPrettyName,
+    getPrettyNameAndImageURL : getPrettyNameAndImageURL,
     setImageURL : setImageURL
 }
 
@@ -61,8 +61,7 @@ function setImageURL(userId, imageURL, callback)   {
     })
 }
 
-//TODO XXX rename to reflect that we get prettyName AND imageURL
-function getPrettyName(userId, callback) {
+function getPrettyNameAndImageURL(userId, callback) {
     User.findOne({ _id: userId }, function(err,myUser) {
         if (myUser){
             if (myUser.firstName && myUser.lastName) {
