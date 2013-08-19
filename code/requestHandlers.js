@@ -173,7 +173,7 @@ function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUr
     console.log("topPublicAchievementPart: " + achieverId + ", " + url)
     return (
         '<!DOCTYPE html>' + nl +
-            tab + '<html  manifest="treehouse.manifest">' + nl +
+            tab + '<html>' + nl +
             tab + '<head>' + nl +
             tab + '<title>Treehouse - ' + title + '</title>' + nl +
             tab + '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' + nl +
