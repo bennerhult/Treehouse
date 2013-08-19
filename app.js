@@ -225,7 +225,7 @@ function signin(request, response, newUser) {
         if (myToken) {
             console.log("finding user by email")
             user.User.findOne({ username: email }, function(err,myUser) {
-                request.session.user_email = email      //TODO XXX   remove pga behövs inte längre
+                request.session.user_email = email      //TODO remove pga behövs inte längre då user ligger i session?
                 getDataForUser(myUser, request, response, newUser, appMode)
             })
         }  else {
@@ -1051,7 +1051,7 @@ function showAchievementPage(request, response) {
                     loadUser (request, response, function () { writeAchievementPage(response, currentAchiever, currentAchievement, request.session.user._id, isNotificationView, sharerId)})
                 } else if (currentAchievement && currentProgress.publiclyVisible)    {
 
-                    //TODO XXX WEIRD to use request.session.user_id below, since the conditional says it does not exist here
+                    //TODO WEIRD to use request.session.user_id below, since the conditional says it does not exist here
                     console.log("SMURF1: ")
                     //writeAchievementPage(response, currentAchiever, currentAchievement, request.session.user._id, isNotificationView, sharerId)
                     writeAchievementPage(response, currentAchiever, currentAchievement, null, isNotificationView, sharerId)
