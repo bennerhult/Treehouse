@@ -532,10 +532,11 @@ function fillFriendsList(friendsList, pendings, userId, callback) {
             })
         })
     } else {
-        content += '</div></div>'
+
         if (pendings.length > 0) {
             addPendings(content, pendings, userId, callback)
         }  else {
+            content += '</div></div>'
             callback(content)
         }
     }
