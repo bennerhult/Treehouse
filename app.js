@@ -1096,7 +1096,7 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                 })
                 progress.Progress.findOne({ achievement_id: currentAchievement._id, achiever_id: achiever._id}, {}, { sort: { 'latestUpdated' : -1 } }, function(err, latestProgress) {
                     currentAchievement.goals.forEach(function(goal, goalIndex) {
-                        if (isNotificationView) {   //TODO kan man fortfarande komma hit?
+                        if (isNotificationView) {
                             progress.Progress.findOne({   goal_id: goal._id }, function(err,myProgress) {
                                 if (err) {
                                     console.log("error in app.js 4: couldn't find progress for user " + achiever._id)
