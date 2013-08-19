@@ -381,7 +381,7 @@ function confirmFriendRequest(friendship_id) {
                 + responseobject.id
                 + '"><div class="leftcontainer"><a href="javascript:void(0)" onclick="visitFriend(\''
                 + responseobject.id
-                + '\')"><img src="' + friendInSpe.imageURL + '" /></a></div><div class="rightcontainer"><h3><a class="headerlink" href="javascript:void(0)" onclick="visitFriend(\''
+                + '\')"><img width="56" height="56" src="' + friendInSpe.imageURL + '" /></a></div><div class="rightcontainer"><h3><a class="headerlink" href="javascript:void(0)" onclick="visitFriend(\''
                 + responseobject.id
                 + '\')">'
                 + responseobject.username
