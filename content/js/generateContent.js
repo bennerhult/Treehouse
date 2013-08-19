@@ -26,7 +26,6 @@ function init(userId, friendShipRequests) {
             currentUser = user
         })
     }
-
     nrOfFriendShipRequests = friendShipRequests
     FB.init({
         appId: '480961688595420',

@@ -20,6 +20,7 @@ function indexPage(response, userId, nrOfFriendShipRequests) {
 }
 
 function publicAchievementPage(response, userId, currentAchievementId, url, imageUrl, title) {
+    console.log("writing public achievement page: " + userId )
     response.writeHead(200, { 'Content-Type': 'text/html' })
     response.write(topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, title) + bottomPart())
     response.end('\n', 'utf-8')
@@ -99,7 +100,7 @@ function topAppPagePart() {
 function topIndexPart(userId, nrOfFriendShipRequests) {
     console.log("top index part: " + userId)
             var text = '<!DOCTYPE html>' + nl +
-            tab + '<html manifest="treehouse.manifest">' + nl +
+            tab + '<html>' + nl +
                 tab + '<head>' + nl +
                     tab + '<title>Treehouse</title>' + nl +
                     tab + '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' + nl +
@@ -169,6 +170,7 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
 }
 
 function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUrl, title) {
+    console.log("topPublicAchievementPart: " + achieverId + ", " + url)
     return (
         '<!DOCTYPE html>' + nl +
             tab + '<html  manifest="treehouse.manifest">' + nl +

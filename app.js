@@ -140,27 +140,29 @@ app.get('/channel.html', function(request, response){
 
 //public achievement
 app.get('/achievement', function(request, response) {
-    //console.log("/achievement")
+    console.log("/achievement")
     var url_parts = url.parse(request.url, true)
     var currentAchievementId = url_parts.query.achievementId
     var userId  = url_parts.query.userId
 
-  /*  if (request.session.user) {
+   /* if (request.session.user) {
         showAchievementPage(request, response)
         console.log("yes")
-    }   else {    */
+    } else {   */
         progress.Progress.findOne({ achievement_id: currentAchievementId, achiever_id: userId }, function(err,currentProgress) {
 
             if (currentProgress && currentProgress.publiclyVisible)    {
+                console.log("AAA")
                 achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
                     request.session.current_achievement_id = currentAchievementId
                     requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, currentAchievement.imageURL, currentAchievement.title)
                 })
             } else {
+                console.log("BBB")
                 writeDefaultPage(request, response)
             }
         })
-  //  }
+    //}
 
 })
 
