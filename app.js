@@ -386,8 +386,18 @@ app.get('/user', function(request, response){
     if (request.query.user_id && request.query.user_id.length >2) {
         userID = request.query.user_id
     } else {
-       userID = request.session.user._id
+        userID = request.session.user._id
     }
+    user.User.findOne({ _id: userID }, function(err,foundUser) {
+        if (foundUser)    {
+            response.send(foundUser, { 'Content-Type': 'application/json' }, 200)
+        }
+    })
+})
+
+app.get('/currentUser', function(request, response){
+    var userID = request.session.user._id
+
     user.User.findOne({ _id: userID }, function(err,foundUser) {
         if (foundUser)    {
             response.send(foundUser, { 'Content-Type': 'application/json' }, 200)
@@ -951,11 +961,12 @@ function getAchievementList(request, response, completedAchievements) {
     } else {
         achieverId = request.session.user._id
     }
+
     var userId
     if (request.session.user) {
         userId = request.session.user._id
     }
-
+    console.log(lookingAtFriendsAchievements + ", " + achieverId + ", " + userId)
     progress.Progress.find({ achiever_id: achieverId}, {}, { sort: { 'latestUpdated' : -1 } }, function(err, progresses) {
         if (err) { console.log("error in app.js 1: couldn't find any progress for user " + achieverId) }
         if (progresses && progresses.length > 0) {

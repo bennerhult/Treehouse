@@ -222,8 +222,8 @@ function getLoginContent() {
         )
 }
 
-function getUserContent(userId, callback) {
-    getUserFromServer(userId, function(user) {
+function getUserContent(callback) {
+    getCurrentUserFromServer(function(user) {
         var content = '<div id="content">' + nl +
             '<p><img id="userImage" src="' + user.imageURL + '" width="96" height="96"> ' + user.username + '</p><br /><a href="javascript:void(0)" onclick="uploadUserImage()"><img src="content/img/upload.png" /></a><br/>' + nl +
             '<form id="userForm" action="javascript: editUser()">' + nl
@@ -262,6 +262,16 @@ function getUserFromServer(user_id, callback) {
     $.ajax("/user", {
         type: "GET",
         data: data,
+        dataType: "json",
+        statusCode: {
+            200: function(user) { callback(user) }
+        }
+    })
+}
+
+function getCurrentUserFromServer(callback) {
+    $.ajax("/currentUser", {
+        type: "GET",
         dataType: "json",
         statusCode: {
             200: function(user) { callback(user) }
@@ -359,7 +369,7 @@ function openFriends() {
 }
 
 function openUser() {
-    getUserContent(currentUser._id, function(userContent) {
+    getUserContent(function(userContent) {
         insertContent(userContent, setDefaultMenu('User', false))
     })
 }

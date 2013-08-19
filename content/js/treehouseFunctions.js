@@ -434,15 +434,19 @@ function openAchievements(completed, achieverId, lookingAtFriend, achieverName) 
     window.history.pushState(null, null, "/")
     $("#page-login").attr("id","page");
     $("#app-container-login").attr("id","app-container");
-    getUserFromServer(achieverId, function(achiever) {
-        getAchievementsContent(achiever, lookingAtFriend, function(achievementsContent) {
-              if (lookingAtFriend) {
-                  insertContent(achievementsContent, setDefaultMenu(achieverName, false), getAchievements(completed, achieverId, lookingAtFriend))
-              }   else {
-                  insertContent(achievementsContent, setDefaultMenu('Achievements', true), getAchievements(completed, achieverId, lookingAtFriend))
-              }
+    if (!lookingAtFriend ) {
+        getCurrentUserFromServer(function(achiever) {
+            getAchievementsContent(achiever, false, function(achievementsContent) {
+                    insertContent(achievementsContent, setDefaultMenu('Achievements', true), getAchievements(completed, achiever._id, false))
+            })
         })
-    })
+    }  else {
+       getUserFromServer(achieverId, function(achiever) {
+            getAchievementsContent(achiever, true, function(achievementsContent) {
+                    insertContent(achievementsContent, setDefaultMenu(achieverName, false), getAchievements(completed, achieverId, true))
+            })
+        })
+    }
 }
 
 function getAchievements(completed, achieverId, lookingAtFriend) {
