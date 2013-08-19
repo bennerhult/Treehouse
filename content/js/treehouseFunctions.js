@@ -275,7 +275,7 @@ function confirmAchievement(achievementId, userId) {
 
 function ignoreAchievement(achievementId, userId) {
     ignoreAchievementOnServer(achievementId, userId, function() {
-        openAchievements(false, userId, false)   //TODO XXX
+        openAchievements(false, userId, false)
     })
 }
 
