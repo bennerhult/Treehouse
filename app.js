@@ -520,11 +520,12 @@ function fillFriendsList(friendsList, pendings, userId, callback) {
                 if  (index < friendsList.length - 1 || pendings.length > 0)   {
                     content +=   '<div class="separerare-part">&nbsp;</div>'
                 }
+                content +=   '</div>'
                 if (index == friendsList.length - 1) {
                     if (pendings.length > 0) {
                         addPendings(content, pendings, userId, callback)
                     }  else {
-                        content +=   '</div></div>'
+                        content +=   '</div>'
                         callback(content)
                     }
                 }
