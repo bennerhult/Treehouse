@@ -531,6 +531,7 @@ function getAchievement(achievementId, userId, publiclyVisible) {
                         $("#fbLike").show()
                         $("#tweetAchievement").show()
                         $("#fbLikeWeb").hide()
+                        $("#editButton").hide()
                     } else {
                         $("#fbLike").hide()
                         $("#tweetAchievement").hide()
@@ -560,6 +561,7 @@ function getPublicAchievement(achieverId, achievementId) {
             $("#fbLike").show()
             $("#tweetAchievement").show()
             $("#fbLikeWeb").hide()
+            $("#editButton").hide()
         }, achievementId, false, null, achieverId
     )
 }

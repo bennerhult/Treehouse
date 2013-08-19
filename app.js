@@ -1168,8 +1168,9 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                                                             achievementDesc += '<li id="publicizeButton"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
                                                         }
                                                         achievementDesc += '<li id="deleteButton" class="rightalign"><a href="javascript:void(0)" onclick="deleteAchievement(\'' + achiever._id + '\')"><img src="content/img/delete.png" /></a></li>'
-                                                        if (myPercentageFinished == 0 && !isAchievementShared &&!myProgress.publiclyVisible) {
-                                                            achievementDesc += '<li id="editButton"  class="rightalign"><a href="javascript:void(0)" onclick="editAchievement(\'' + achiever._id + '\')"><img src="content/img/edit.png" /></a></li>'
+                                                        //if (myPercentageFinished == 0 && !isAchievementShared &&!myProgress.publiclyVisible) {
+                                                        if (myPercentageFinished == 0 && !isAchievementShared) {
+                                                            achievementDesc += '<li id="editButton" class="rightalign"><a href="javascript:void(0)" onclick="editAchievement(\'' + achiever._id + '\')"><img src="content/img/edit.png" /></a></li>'
                                                         }
                                                         achievementDesc += '</ul></div>'
                                                     }
