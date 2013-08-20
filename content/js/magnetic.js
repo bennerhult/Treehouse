@@ -33,7 +33,7 @@ Magnetic=new (function(){
         x=(new Date).getTime();
         var magnet
         for(var a=0,b=magnets.length; a<b; a++){
-            magnet=f[a]
+            magnet=magnets[a]
             if(B(magnet.position,{x:n,y:o})<magnet.orbit*0.5){
                 magnet.dragging=true; break
             }

@@ -27,6 +27,7 @@ function init(userId, friendShipRequests) {
         })
     }
     nrOfFriendShipRequests = friendShipRequests
+
     FB.init({
         appId: '480961688595420',
         status: true,
@@ -35,9 +36,7 @@ function init(userId, friendShipRequests) {
         channelUrl : '//treehouse.io/channel.html',  //increases performance
         oauth: true
     })
-    insertLatestAchievement(function() {
-        Magnetic.init()
-    })
+
     $("#web-footer").html(footerContent)
     if (isiPad) {
         /*
@@ -59,6 +58,8 @@ function init(userId, friendShipRequests) {
     }  else {
         $("#banner").empty().remove()
     }
+    Magnetic.init()
+    insertLatestAchievement()
 
     if (("standalone" in window.navigator) && window.navigator.standalone){
         isAppMode = true
@@ -181,14 +182,15 @@ function showLatestAchievement(achievementId, userId, title) {
     insertContent(getPublicAchievementContent(), setDefaultMenu(title, false), getPublicAchievement(userId, achievementId))
 }
 
-function insertLatestAchievement(callback) {
+function insertLatestAchievement() {
     $.ajax("/latestAchievementSplash" , {
         type: "GET",
         dataType: "json",
         success: function(content) {
             $("#latestAchievementSplash").html(content)
-            if (callback) {
-                callback()
+            var els=document.body.getElementsByClassName("latestAchievementLink");
+            for(var i=0;i<els.length;i++){
+                Magnetic.addFireListener(els[i])
             }
         }, error  : function()     {
             $("#latestAchievementSplash").html('')
