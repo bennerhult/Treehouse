@@ -35,7 +35,9 @@ function init(userId, friendShipRequests) {
         channelUrl : '//treehouse.io/channel.html',  //increases performance
         oauth: true
     })
-    insertLatestAchievement()
+    insertLatestAchievement(function() {
+        Magnetic.init()
+    })
     $("#web-footer").html(footerContent)
     if (isiPad) {
         /*
@@ -179,14 +181,15 @@ function showLatestAchievement(achievementId, userId, title) {
     insertContent(getPublicAchievementContent(), setDefaultMenu(title, false), getPublicAchievement(userId, achievementId))
 }
 
-function insertLatestAchievement() {
+function insertLatestAchievement(callback) {
     $.ajax("/latestAchievementSplash" , {
         type: "GET",
         dataType: "json",
         success: function(content) {
-            $("#latestAchievementSplash").html(content
-
-            )
+            $("#latestAchievementSplash").html(content)
+            if (callback) {
+                callback()
+            }
         }, error  : function()     {
             $("#latestAchievementSplash").html('')
         }
