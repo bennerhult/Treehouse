@@ -225,32 +225,36 @@ function getLoginContent() {
 function getUserContent(callback) {
     getCurrentUserFromServer(function(user) {
         var content = '<div id="content">' + nl +
-            '<p><img id="userImage" src="' + user.imageURL + '" width="96" height="96"> ' + user.username + '</p><br /><a href="javascript:void(0)" onclick="uploadUserImage()"><img src="content/img/upload.png" /></a><br/>' + nl +
+            '<div class="changeUserImage"><img id="userImage" src="' + user.imageURL + '" ></div>' +
+            '<a href="javascript:void(0)" onclick="uploadUserImage()"><img src="content/img/upload.png" style="margin-top: 8px;"/></a>' + nl +
+            '<div class="clear"> </div> <br />' + nl +
+            '<h2>Name</h2>' + nl +
             '<form id="userForm" action="javascript: editUser()">' + nl
-            if (user.firstName) {
-                content += '<input type="text" class="formstyle" name="firstName" placeholder="first name" value="' + user.firstName + '">' + nl
-            }  else {
-                content += '<input type="text" class="formstyle" name="firstName" placeholder="first name">' + nl
-            }
-            content += '<br /><br />'
-            if (user.lastName) {
-                content += '<input type="text" class="formstyle" name="lastName" placeholder="last name" value="' + user.lastName + '">' + nl
-            }  else {
-                content += '<input type="text" class="formstyle" name="lastName" placeholder="last name">' + nl
-            }
-            content += '<br />'
-            content += '<input type="submit" class="button" value="Save">' + nl +
+        if (user.firstName) {
+            content += '<input type="text" class="formstyle firstNameForm" name="firstName" placeholder="First name" value="' + user.firstName + '">' + nl
+        }  else {
+            content += '<input type="text" class="formstyle firstNameForm" name="firstName" placeholder="First name">' + nl
+        }
+
+        if (user.lastName) {
+            content += '<input type="text" class="formstyle lastNameForm" name="lastName" placeholder="Last name" value="' + user.lastName + '">' + nl
+        }  else {
+            content += '<input type="text" class="formstyle lastNameForm" name="lastName" placeholder="Last name">' + nl
+        }
+        content += '<br /><br /><h2>Email</h2><p> ' + user.username + '</p>'
+        content += '<input type="submit" class="button" value="Save">' + nl +
             '</form>' + nl +
-            '<div id="message"></div>'  + nl
-             if (!user.isIssuer) {
-                  content += '<div id="content">' + nl +
-                     '<form id="issuerForm" action="javascript: upgradeToIssuer()">' + nl +
-                     '<input type="submit" class="button" value="Upgrade to issuer">' + nl +
-                     '</form>' + nl +
-                     '<div id="issuerMessage"></div>'  + nl
-             }  else {
-                 content +=   '<div id="issuerMessage">You are an official Treehouse Issuer of Achievements: <b>' + user.issuerName + '</b></div>'
-             }
+            '<p id="message"></p>'  + nl +
+            '<div class="separerare"> </div> <h2>Issuer</h2> <p>Want to create achievements available for all? Apply by clicking below.</p>' + nl
+        if (!user.isIssuer) {
+            content += '<div>' + nl +
+                '<form id="issuerForm" action="javascript: upgradeToIssuer()">' + nl +
+                '<input type="submit" class="button" value="Upgrade to issuer">' + nl +
+                '</form>' + nl +
+                '<p id="issuerMessage"></p>'  + nl
+        }  else {
+            content +=   '<div id="issuerMessage">You are an official Treehouse Issuer of Achievements: <b>' + user.issuerName + '</b></div>'
+        }
 
         content +=   '</div>'
         callback(content)
