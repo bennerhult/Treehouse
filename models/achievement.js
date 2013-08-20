@@ -76,7 +76,9 @@ function updateLatestAchievementIfNecessary(progressId, next) {
                 if (progressId.equals(currentProgress._id)) {
                     setNewPublicAchievement(next)
                 } else {
-                    next()
+                    if (next) {
+                        next()
+                    }
                 }
             } else {
                 setNewPublicAchievement(next)
