@@ -15,7 +15,7 @@ function checkUser(appMode) {
                 }
             )
         } else {
-            $("#message").html("Sadly, we can only email to <i>real</i> addresses.")
+            $("#message").html("Sadly, we can only email <i>real</i> addresses.")
         }
     } else {
         $("#message").html("First law of Treehouse: First you type, then you press.")
