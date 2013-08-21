@@ -808,7 +808,12 @@ function uploadUserImage() {
         container = 'imageUploadFrame'
     }
     filepicker.setKey('AM9A7pbm3QPSe24aJU2M2z')
-    filepicker.pick({container: container}, function(inkBlob){
+    //BOX
+    //FTP
+    //VIDEO
+    //WEBCAM
+    filepicker.pick({container: container,
+                     services: ['COMPUTER', 'FACEBOOK', 'IMAGE_SEARCH', 'URL', 'INSTAGRAM', 'FLICKR', 'DROPBOX', 'PICASA', 'GOOGLE_DRIVE', 'SKYDRIVE','WEBDAV', 'EVERNOTE', 'GMAIL', 'GITHUB']}, function(inkBlob){
         if (isiOs) {
             $("#imageUploadFrame").remove()
         }
@@ -864,7 +869,8 @@ function uploadImage() {
         container = 'imageUploadFrame'
     }
     filepicker.setKey('AM9A7pbm3QPSe24aJU2M2z')
-    filepicker.pick({container: container}, function(inkBlob){
+    filepicker.pick({container: container,
+        services: ['COMPUTER', 'FACEBOOK', 'IMAGE_SEARCH', 'URL', 'INSTAGRAM', 'FLICKR', 'DROPBOX', 'PICASA', 'GOOGLE_DRIVE', 'SKYDRIVE','WEBDAV', 'EVERNOTE', 'GMAIL', 'GITHUB']}, function(inkBlob){
         if (isiOs) {
             $("#imageUploadFrame").remove()
         }
