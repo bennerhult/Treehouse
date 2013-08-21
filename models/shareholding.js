@@ -112,15 +112,19 @@ function getSharedAchievementNotifications(achieverId, userId, callback) {
 function getCompares(achievementId, userId, callback) {
     var compares = []
     var currentShareFriendId
+
     Shareholding.find({ achievement_id: achievementId, confirmed: true }, function(err, shareholdings) {
         if (shareholdings && shareholdings.length > 0) {
+            progress.Progress.findOne({ achiever_id: userId, achievement_id: achievementId }, function(err2,ownProgress) {
+                compares.push(ownProgress)
+            })
             shareholdings.forEach(function(shareholding, index) {
                 if (shareholding.shareholder_id == userId) {
                     currentShareFriendId =   shareholding.sharer_id
                 } else {
                     currentShareFriendId =   shareholding.shareholder_id
                 }
-                progress.Progress.findOne({ achiever_id: currentShareFriendId, achievement_id: shareholding.achievement_id }, function(err2,currentProgress) {
+                progress.Progress.findOne({ achiever_id: currentShareFriendId, achievement_id: shareholding.achievement_id }, function(err3,currentProgress) {
                     compares.push(currentProgress)
                     if (index == shareholdings.length -1) {
                         callback(compares)
