@@ -1703,6 +1703,10 @@ p#achievementDescription{
 
 @media screen and (max-width: 1000px) {
 
+    #menu{
+        bottom: -2px;
+    }
+
     .desktop{
         display: none;
     }
@@ -1832,6 +1836,10 @@ p#achievementDescription{
     #menu,
     #topMenu{
         position: fixed;
+    }
+
+    #menu{
+        bottom: 0px;
     }
 
     .inputarea{
