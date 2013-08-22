@@ -910,10 +910,11 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
 
 function createNotificationDesc(response, achievementsList, completedAchievements, nrOfAchievements, notifications, achieverId, lookingAtFriend) {
     var shortNames = new Array()
+
     for (var i in notifications) {
         user.getShortName(notifications[i].createdBy, function(prettyName) {
             shortNames.push(prettyName)
-            if (i >= notifications.length -1) {
+            if (shortNames.length == notifications.length) {
                 var notificationsList = ""
                 for (var j in notifications) {
                     if (nrOfAchievements == 0 && i == 0 && lookingAtFriend) {
@@ -938,12 +939,14 @@ function createNotificationDesc(response, achievementsList, completedAchievement
                     }
                     notificationsList += ' </div></span></a></div><p>'  + notifications[j].title
                         + '</p><div class="separerare-part">&nbsp;</div></div>'
+                    if (j >= notifications.length - 1) {
+                        achievementsList +=  notificationsList
+                        finishAchievementsList(response, achievementsList, completedAchievements, lookingAtFriend)
+                    }
                 }
-                achievementsList +=  notificationsList
-                finishAchievementsList(response, achievementsList, completedAchievements, lookingAtFriend)
+
             }
         })
-
     }
 }
 
