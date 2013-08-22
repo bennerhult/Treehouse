@@ -582,7 +582,8 @@ function getAchievementFromServer(callback,achievementId, isNotificationView, sh
 function progress(goalId, quantityTotal) {
     progressOnServer(function(quantityFinished) {
         achievementPercentageFinishedFromServer(function(achievementPercentageFinished) {
-            $("#progressbar").html("<span class='progress' style='width:" + achievementPercentageFinished + "%;'></span>")
+            //$("#progressbar").html("<span class='progress' style='width:" + achievementPercentageFinished + "%;'></span>")
+            $("#mainProgress").animate({ width: achievementPercentageFinished +"%" }, 500)
             $("#progressCompare").css("width", achievementPercentageFinished + "%")
 
             $("#countareaCompare").html("<h3>" + achievementPercentageFinished + "%</h3>")

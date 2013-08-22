@@ -1239,7 +1239,7 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                                                         + currentAchievement.imageURL
                                                         +'" alt="'
                                                         +  currentAchievement.createdBy + ": " + currentAchievement.title
-                                                        + '"/><span class="gradient-bg"></span><span class="progressbar"></span><div id="progressbar" class="progress-container"><span class="progress" style="width:'
+                                                        + '"/><span class="gradient-bg"></span><span class="progressbar"></span><div id="progressbar" class="progress-container"><span id="mainProgress" class="progress" style="width:'
                                                         + myPercentageFinished
                                                         + '%;"></span></div>'
                                                     if(myPercentageFinished >= 100) {
