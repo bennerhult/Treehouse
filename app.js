@@ -722,11 +722,19 @@ function getCompareText(prettyName, finished, total, index, nrOfCompares, achiev
             + '<td class="bararea">'
                 + '<div class="progress-goal-container">'
                     + '<span class="progressbar"></span>'
-                    + '<div id="progressbar-goal"><span id="progress' + goal._id + '" class="progress" style="width:'
+                    + '<div id="progressbar-goal"><span'
+        if (index==0) {
+            compareText += ' id="progressCompare"'
+        }
+        compareText += ' class="progress" style="width:'
                                                 + (finished/total) * 100
                                              + '%;"></span></div></div>'
             + '</td>'
-            + '<td id="countarea' + goal._id + '" class="countarea">'
+            + '<td'
+        if (index==0) {
+            compareText +=' id="countareaCompare"'
+        }
+        compareText += ' class="countarea">'
                 + '<h3>'
         + Math.floor((finished/total) * 100)
                 + '%</h3>'
@@ -1377,7 +1385,7 @@ function calculateAchievementProgress(userId, achievementId, callback) {
             progress.Progress.findOne({ achiever_id:  userId,  goal_id: goal._id}, function(err,myProgress) {
                 achievementCurrentProgress += myProgress.quantityFinished
                 if (goalIndex == currentAchievement.goals.length -1) {
-                    var achievementPercentageFinished = (achievementCurrentProgress/ achievementTotalProgress) * 100
+                    var achievementPercentageFinished = Math.floor((achievementCurrentProgress/ achievementTotalProgress) * 100)
                     callback(achievementPercentageFinished)
                 }
             })
