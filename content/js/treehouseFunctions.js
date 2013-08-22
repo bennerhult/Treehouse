@@ -593,7 +593,7 @@ function progress(goalId, quantityTotal) {
             var goalWidth = goalPercentageFinished * (205/100)
             $("#progress" + goalId).animate({ width: goalWidth }, 500)
             $("#countarea" + goalId).html("<h3>" + quantityFinished + "/" + quantityTotal + "</h3>")
-            //$("#latestUpdated" + goalId).html(" k'ching!")
+           $("#latestUpdated" + goalId).html(" (just updated)")
             if (goalPercentageFinished >= 100) {
                 $("#addbutton" + goalId).html("")
             }  else {
