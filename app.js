@@ -908,30 +908,43 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
 }
 
 
-function createNotificationDesc(nrOfAchievements, notifications, achieverId, lookingAtFriend) {
-    var notificationsList = ""
+function createNotificationDesc(response, achievementsList, completedAchievements, nrOfAchievements, notifications, achieverId, lookingAtFriend) {
+    var shortNames = new Array()
     for (var i in notifications) {
-        if (nrOfAchievements == 0 && i == 0 && lookingAtFriend) {
-            notificationsList += "<div class='achievement first'>"
-        }  else {
-            notificationsList += "<div class='achievement'>"
-        }
+        user.getShortName(notifications[i].createdBy, function(prettyName) {
+            shortNames.push(prettyName)
+            if (i >= notifications.length -1) {
+                var notificationsList = ""
+                for (var j in notifications) {
+                    if (nrOfAchievements == 0 && i == 0 && lookingAtFriend) {
+                        notificationsList += "<div class='achievement first'>"
+                    }  else {
+                        notificationsList += "<div class='achievement'>"
+                    }
 
-        notificationsList += '<div class="container"><a href="javascript:void(0)" onclick="openShareNotification(\''
-            + notifications[i]._id
-            + '\', \''
-            + achieverId
-            + '\', \''
-            + notifications[i].createdBy
-            + '\')"><img class="request" src="'
-            + notifications[i].imageURL
-            + '" alt="'
-            + notifications[i].title
-            + '"/><span class="gradient-bg"> </span><span class="request"><div>Challenged <br/>by Namn</div></span></a></div><p>'
-            + notifications[i].title
-            + '</p><div class="separerare-part">&nbsp;</div></div>'
+                    notificationsList += '<div class="container"><a href="javascript:void(0)" onclick="openShareNotification(\''
+                        + notifications[j]._id
+                        + '\', \''
+                        + achieverId
+                        + '\', \''
+                        + notifications[j].createdBy
+                        + '\')"><img class="request" src="'
+                        + notifications[j].imageURL
+                        + '" alt="'
+                        + notifications[j].title
+                        + '"/><span class="gradient-bg"> </span><span class="request"><div>Challenged <br/>'
+                    if(shortNames[j]) {
+                        notificationsList += 'by '+ shortNames[j] + ''
+                    }
+                    notificationsList += ' </div></span></a></div><p>'  + notifications[j].title
+                        + '</p><div class="separerare-part">&nbsp;</div></div>'
+                }
+                achievementsList +=  notificationsList
+                finishAchievementsList(response, achievementsList, completedAchievements, lookingAtFriend)
+            }
+        })
+
     }
-    return notificationsList
 }
 
 app.get('/achievements_inProgress', function(request, response){
@@ -1015,9 +1028,10 @@ function getSharedAchievementNotifications(nrOfAchievements, response, achieveme
     } else {
         shareholding.getSharedAchievementNotifications(achieverId, userId, function(notifications) {
             if (notifications) {
-                achievementsList += createNotificationDesc(nrOfAchievements, notifications, achieverId, achieverId != userId)
+                createNotificationDesc(response, achievementsList, completedAchievements, nrOfAchievements, notifications, achieverId, achieverId != userId)
+            }  else {
+                finishAchievementsList(response, achievementsList, completedAchievements, lookingAtFriendsAchievements)
             }
-            finishAchievementsList(response, achievementsList, completedAchievements, lookingAtFriendsAchievements)
         })
     }
 }
