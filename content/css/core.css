@@ -1719,10 +1719,6 @@ p#achievementDescription{
         top:0px;
     }
 
-    #contentwrap{
-        padding-top: 50px;
-    }
-
     #app-container,
     #app-container-login{
         position: relative;
@@ -1846,11 +1842,19 @@ p#achievementDescription{
     }
 
     #content{
-        padding-top: 70px;
+        padding-top: 50px;
+    }
+
+    #contentwrap{
+        padding-top: 50px;
     }
 
     .banner{
         display: block;
+    }
+
+    #moreList{
+        padding-top: 50px;
     }
 }
 
