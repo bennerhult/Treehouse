@@ -650,6 +650,16 @@ body{
     box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
 }
 
+#friendsList .friendrequest{
+    background-color: #787674;
+}
+
+#friendsList p{
+    color: #131213;
+    font-size: 13px;
+    padding-top: 5px;
+}
+
 #friendsList .itemwrap{
     position: relative;
    /* margin-right: 5%;
@@ -968,6 +978,13 @@ input.file {
     -moz-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
     -webkit-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
     box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+}
+
+
+.leftcontainer a img:hover{
+    -moz-box-shadow:  0px 0px 20px rgb(0,0,0);
+    -webkit-box-shadow:  0px 0px 20px rgb(0,0,0);
+    box-shadow:  0px 0px 20px rgb(0,0,0);
 }
 
 
