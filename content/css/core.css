@@ -970,16 +970,19 @@ input.file {
     box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
 }
 
-.achievement a img.shared{
-    border-color: #131213;
+
+.achievementIcons{
+    position: absolute;
+    right: 5%;
+    top: 0px;
 }
 
-/*
-.achievement a img.request{
-    border-color: #fff;
-
-
-}*/
+.achievementIcons ul li{
+    margin-bottom: 5px;
+}
+.achievementIcons ul li:last-child{
+    margin-bottom: 0px;
+}
 
 span.request{
     background-color: rgba(177,6,6,0.5);
@@ -998,9 +1001,6 @@ span.request div{
     text-align: center;
     width: 100%;
 }
-
-
-
 
 .achievement a img{
     border: 3px solid #fff;
