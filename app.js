@@ -565,11 +565,11 @@ function addPendings(content, pendings, userId, callback) {
             currentFriendId = currentFriendship.friend1_id
         }
         getPrettyNameIdAndImageURL(currentFriendId, function(username, id, imageURL) {
-            content +=   '<div class="itemwrap" id="friendshipid' + currentFriendship._id + '">'
+            content +=   '<div class="itemwrap friendrequest" id="friendshipid' + currentFriendship._id + '">'
             content +=   '<div class="leftcontainer"><a href="javascript:void(0)" onclick="visitFriend(\'' + id + '\', \'' + username + '\')"><img width="56" height="56" src="' + imageURL + '" /></a></div>'
             content +=   '<div class="rightcontainer">'
             content += '<h3>'
-            content +=  '<a class="headerlink" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\', \'' + username + '\')">Request: ' +username + '</a>'
+            content +=  '<a class="headerlink" href="javascript:void(0)" onclick="visitFriend(\'' + id + '\', \'' + username + '\')">'+username + '</a><p>wants to be your friend.</p>'
             content += '</h3>'
             content +=   ' <span class="confirm"><a style="color: #000" href="javascript:void(0)" onclick="confirmFriendRequest(\'' + currentFriendship._id + '\')">Confirm</a></span>'
             content +=   ' <span class="ignore"><a style="color: #000" href="javascript:void(0)" onclick="ignoreFriendRequest(\'' + currentFriendship._id + '\')">Ignore</a></span>'
