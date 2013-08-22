@@ -876,7 +876,10 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
             achievementsList += "<div class='achievement'>"
         }
         achievementsList += '<div class="achievementIcons"><ul>'
-        achievementsList += '<li><img src="content/img/public.png" /></li>'
+        if (progresses[i].publiclyVisible) {
+            achievementsList += '<li><img src="content/img/public.png" /></li>'
+        }
+
         if (sharedAchievements[i]) {
             achievementsList +=  '<li><img src="content/img/shared.png"  /></li>'
         }
@@ -930,7 +933,7 @@ function createNotificationDesc(response, achievementsList, completedAchievement
                         + achieverId
                         + '\', \''
                         + notifications[j].createdBy
-                        + '\')"><img class="request" src="'
+                        + '\')"><img src="'
                         + notifications[j].imageURL
                         + '" alt="'
                         + notifications[j].title
@@ -1155,7 +1158,7 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                                                 achievementDesc += '<p id="achievementDescription">'
                                                     + currentAchievement.description
                                                     + '</p></div>'
-                                                    + '<div class="imagearea"><img class="request" src="'
+                                                    + '<div class="imagearea"><img src="'
                                                     + currentAchievement.imageURL
                                                     +'" alt="'
                                                     +  currentAchievement.createdBy + ": " + currentAchievement.title
