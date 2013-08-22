@@ -875,20 +875,21 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
         } else {
             achievementsList += "<div class='achievement'>"
         }
-        achievementsList += '<div class="achievementIcons"><ul><li><img src="content/img/public.png" /></li><li><img src="content/img/shared.png"  /></li></ul></div><div class="container"><a href="javascript:void(0)" onclick="openAchievement(\''
-            + achievements[i]._id
-            + '\', \''
-            + achieverId
-            + '\', '
-            + progresses[i].publiclyVisible
-            + ', \''
-            + achievements[i].title
-            + '\''
-        achievementsList += ')"><img'
+        achievementsList += '<div class="achievementIcons"><ul>'
+        achievementsList += '<li><img src="content/img/public.png" /></li>'
         if (sharedAchievements[i]) {
-            achievementsList += ' class="shared"'
+            achievementsList +=  '<li><img src="content/img/shared.png"  /></li>'
         }
-        achievementsList += ' src="'
+        achievementsList += '</ul></div><div class="container"><a href="javascript:void(0)" onclick="openAchievement(\''
+                + achievements[i]._id
+                + '\', \''
+                + achieverId
+                + '\', '
+                + progresses[i].publiclyVisible
+                + ', \''
+                + achievements[i].title
+            + '\''
+        achievementsList += ')"><img src="'
             + achievements[i].imageURL
             + '" alt="'
             + achievements[i].title
