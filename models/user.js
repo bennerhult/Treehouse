@@ -20,6 +20,7 @@ module.exports = {
     User: User,
     createUser: createUser,
     setPrettyName : setPrettyName,
+    getShortName: getShortName,
     getPrettyNameAndImageURL : getPrettyNameAndImageURL,
     setImageURL : setImageURL
 }
@@ -57,6 +58,21 @@ function setImageURL(userId, imageURL, callback)   {
             myUser.save(function (error) {
                 if (callback) callback(error)
             })
+        }
+    })
+}
+
+function getShortName(userId, callback) {
+    User.findOne({ _id: userId }, function(err,myUser) {
+        if (myUser){
+            if (myUser.firstName) {
+                callback(myUser.firstName)
+            } else {
+                callback(null)
+            }
+        } else {
+            console.log("User not found for userId " + userId + ", error: " + err)
+            callback("user not found")
         }
     })
 }

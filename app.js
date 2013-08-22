@@ -875,20 +875,21 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
         } else {
             achievementsList += "<div class='achievement'>"
         }
-        achievementsList += '<div class="achievementIcons"><ul><li><img src="content/img/public.png" /></li><li><img src="content/img/shared.png"  /></li></ul></div><div class="container"><a href="javascript:void(0)" onclick="openAchievement(\''
-            + achievements[i]._id
-            + '\', \''
-            + achieverId
-            + '\', '
-            + progresses[i].publiclyVisible
-            + ', \''
-            + achievements[i].title
-            + '\''
-        achievementsList += ')"><img'
+        achievementsList += '<div class="achievementIcons"><ul>'
+        achievementsList += '<li><img src="content/img/public.png" /></li>'
         if (sharedAchievements[i]) {
-            achievementsList += ' class="shared"'
+            achievementsList +=  '<li><img src="content/img/shared.png"  /></li>'
         }
-        achievementsList += ' src="'
+        achievementsList += '</ul></div><div class="container"><a href="javascript:void(0)" onclick="openAchievement(\''
+                + achievements[i]._id
+                + '\', \''
+                + achieverId
+                + '\', '
+                + progresses[i].publiclyVisible
+                + ', \''
+                + achievements[i].title
+            + '\''
+        achievementsList += ')"><img src="'
             + achievements[i].imageURL
             + '" alt="'
             + achievements[i].title
@@ -908,30 +909,46 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
 }
 
 
-function createNotificationDesc(nrOfAchievements, notifications, achieverId, lookingAtFriend) {
-    var notificationsList = ""
-    for (var i in notifications) {
-        if (nrOfAchievements == 0 && i == 0 && lookingAtFriend) {
-            notificationsList += "<div class='achievement first'>"
-        }  else {
-            notificationsList += "<div class='achievement'>"
-        }
+function createNotificationDesc(response, achievementsList, completedAchievements, nrOfAchievements, notifications, achieverId, lookingAtFriend) {
+    var shortNames = new Array()
 
-        notificationsList += '<div class="container"><a href="javascript:void(0)" onclick="openShareNotification(\''
-            + notifications[i]._id
-            + '\', \''
-            + achieverId
-            + '\', \''
-            + notifications[i].createdBy
-            + '\')"><img class="request" src="'
-            + notifications[i].imageURL
-            + '" alt="'
-            + notifications[i].title
-            + '"/><span class="gradient-bg"> </span><span class="request"><div>Challenged <br/>by Namn</div></span></a></div><p>'
-            + notifications[i].title
-            + '</p><div class="separerare-part">&nbsp;</div></div>'
+    for (var i in notifications) {
+        user.getShortName(notifications[i].createdBy, function(prettyName) {
+            shortNames.push(prettyName)
+            if (shortNames.length == notifications.length) {
+                var notificationsList = ""
+                for (var j in notifications) {
+                    if (nrOfAchievements == 0 && i == 0 && lookingAtFriend) {
+                        notificationsList += "<div class='achievement first'>"
+                    }  else {
+                        notificationsList += "<div class='achievement'>"
+                    }
+
+                    notificationsList += '<div class="container"><a href="javascript:void(0)" onclick="openShareNotification(\''
+                        + notifications[j]._id
+                        + '\', \''
+                        + achieverId
+                        + '\', \''
+                        + notifications[j].createdBy
+                        + '\')"><img class="request" src="'
+                        + notifications[j].imageURL
+                        + '" alt="'
+                        + notifications[j].title
+                        + '"/><span class="gradient-bg"> </span><span class="request"><div>Challenged <br/>'
+                    if(shortNames[j]) {
+                        notificationsList += 'by '+ shortNames[j] + ''
+                    }
+                    notificationsList += ' </div></span></a></div><p>'  + notifications[j].title
+                        + '</p><div class="separerare-part">&nbsp;</div></div>'
+                    if (j >= notifications.length - 1) {
+                        achievementsList +=  notificationsList
+                        finishAchievementsList(response, achievementsList, completedAchievements, lookingAtFriend)
+                    }
+                }
+
+            }
+        })
     }
-    return notificationsList
 }
 
 app.get('/achievements_inProgress', function(request, response){
@@ -1015,9 +1032,10 @@ function getSharedAchievementNotifications(nrOfAchievements, response, achieveme
     } else {
         shareholding.getSharedAchievementNotifications(achieverId, userId, function(notifications) {
             if (notifications) {
-                achievementsList += createNotificationDesc(nrOfAchievements, notifications, achieverId, achieverId != userId)
+                createNotificationDesc(response, achievementsList, completedAchievements, nrOfAchievements, notifications, achieverId, achieverId != userId)
+            }  else {
+                finishAchievementsList(response, achievementsList, completedAchievements, lookingAtFriendsAchievements)
             }
-            finishAchievementsList(response, achievementsList, completedAchievements, lookingAtFriendsAchievements)
         })
     }
 }
