@@ -808,10 +808,13 @@ app.get('/confirmFriendRequest', function(request, response){
     //console.log("/confirmFR")
     friendship.confirmFriendRequest(request.query.friendship_id, function(friendId) {
         user.User.findOne({ _id: friendId}, function(err, foundUser) {
-            var responseobject = new Object()
-            responseobject.username = foundUser.username
-            responseobject.id = friendId
-            response.send(responseobject, { 'Content-Type': 'application/json' }, 200)
+            user.getPrettyNameAndImageURL(friendId, function(prettyName, imageURL) {
+                var responseobject = new Object()
+                responseobject.username = prettyName
+                responseobject.id = friendId
+                response.send(responseobject, { 'Content-Type': 'application/json' }, 200)
+            })
+
         })
     })
 })
