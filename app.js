@@ -927,7 +927,7 @@ function createNotificationDesc(nrOfAchievements, notifications, achieverId, loo
             + notifications[i].imageURL
             + '" alt="'
             + notifications[i].title
-            + '"/><span class="gradient-bg"> </span></a></div><p>Share request: '
+            + '"/><span class="gradient-bg"> </span><span class="request"><div>Challenged <br/>by Namn</div></span></a></div><p>'
             + notifications[i].title
             + '</p><div class="separerare-part">&nbsp;</div></div>'
     }

@@ -652,8 +652,8 @@ body{
 
 #friendsList .itemwrap{
     position: relative;
-    margin-right: 5%;
-    margin-left: 5%;
+   /* margin-right: 5%;
+    margin-left: 5%;*/
     padding-top: 15px;
 }
 
@@ -665,19 +665,19 @@ body{
 #friendsList .itemwrap span.remove{
     position: absolute;
     bottom: 12px;
-    right: 0px;
+    right: 5%;
 }
 
 #friendsList .itemwrap span.confirm{
     position: absolute;
     bottom: 12px;
-    right: 50px;
+    right: 60px;
 }
 
 #friendsList .itemwrap span.ignore{
     position: absolute;
     bottom: 12px;
-    right: 0px;
+    right: 5%;
 }
 
 
@@ -697,6 +697,8 @@ body{
     float: left;
     padding-bottom: 7px;
     margin-right: 10px;
+    margin-left: 5%;
+
 }
 
 #friendsList .itemwrap .rightcontainer{
@@ -972,9 +974,31 @@ input.file {
     border-color: #131213;
 }
 
+/*
 .achievement a img.request{
-    border-color: #ff0080;
+    border-color: #fff;
+
+
+}*/
+
+span.request{
+    background-color: rgba(177,6,6,0.5);
+    position: absolute;
+    top: 25px;
+    left: 5px;
+    color: #fff;
+    font-family: 'Philosopher', sans-serif;
+    font-size: 13px;
+    width:90px;
+    padding: 2px 0px;
 }
+
+span.request div{
+    position: relative;
+    text-align: center;
+    width: 100%;
+}
+
 
 
 
