@@ -882,7 +882,7 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
     var achievementsList = ""
     for (var i in achievements) {
         if ((completed || lookingAtFriendsAchievements) && i == 0) {
-            achievementsList += "<div class='achievement first'>"
+            achievementsList += "<div class='achievement'>"
         } else {
             achievementsList += "<div class='achievement'>"
         }
@@ -933,7 +933,7 @@ function createNotificationDesc(response, achievementsList, completedAchievement
                 var notificationsList = ""
                 for (var j in notifications) {
                     if (nrOfAchievements == 0 && i == 0 && lookingAtFriend) {
-                        notificationsList += "<div class='achievement first'>"
+                        notificationsList += "<div class='achievement'>"
                     }  else {
                         notificationsList += "<div class='achievement'>"
                     }
@@ -1001,7 +1001,7 @@ function getAchievementList(request, response, completedAchievements) {
     progress.Progress.find({ achiever_id: achieverId}, {}, { sort: { 'latestUpdated' : -1 } }, function(err, progresses) {
         if (err) { console.log("error in app.js 1: couldn't find any progress for user " + achieverId) }
         if (progresses && progresses.length > 0) {
-            if (!lookingAtFriendsAchievements && !completedAchievements ) {achievementsList += '<div class="achievement first"><div class="container"><a href="javascript:void(0)" onclick="insertContent(getNewAchievementContent(null, \'' + achieverId + '\'), setDefaultMenu(\'Create Achievement\', false))"><img src="content/img/empty.png" alt=""/></a></div><p>Create new achievement</p><div class="separerare-part">&nbsp;</div></div>' }
+            if (!lookingAtFriendsAchievements && !completedAchievements ) {achievementsList += '<div class="achievement"><div class="container"><a href="javascript:void(0)" onclick="insertContent(getNewAchievementContent(null, \'' + achieverId + '\'), setDefaultMenu(\'Create Achievement\', false))"><img src="content/img/empty.png" alt=""/></a></div><p>Create new achievement</p><div class="separerare-part">&nbsp;</div></div>' }
             progresses.forEach(function(currentProgress, index) {
                 achievement.Achievement.findById(currentProgress.achievement_id, function(err2, myAchievement) {
                     if (err2) { console.log("error in app.js 2: couldn't find achievement for progress " + currentProgress.achievement_id) }
@@ -1034,7 +1034,7 @@ function getAchievementList(request, response, completedAchievements) {
                 })
             })
         } else {
-            if (!lookingAtFriendsAchievements) {achievementsList += '<div class="achievement first"><div class="container"><a href="javascript:void(0)" onclick="insertContent(getNewAchievementContent(null, \'' + achieverId + '\'), setDefaultMenu(\'Create Achievement\', false))"><img src="content/img/empty.png" alt=""/></a></div><p>Create new achievement</p><div class="separerare-part">&nbsp;</div></div>' }
+            if (!lookingAtFriendsAchievements) {achievementsList += '<div class="achievement"><div class="container"><a href="javascript:void(0)" onclick="insertContent(getNewAchievementContent(null, \'' + achieverId + '\'), setDefaultMenu(\'Create Achievement\', false))"><img src="content/img/empty.png" alt=""/></a></div><p>Create new achievement</p><div class="separerare-part">&nbsp;</div></div>' }
             getSharedAchievementNotifications(0, response, achievementsList, completedAchievements, achieverId, userId, lookingAtFriendsAchievements)
         }
     })
@@ -1058,12 +1058,12 @@ function finishAchievementsList(response, achievementsList, completedAchievement
     if (achievementsList.length < 1) {
         if (lookingAtFriendsAchievements) {
             if (completedAchievements) {
-                achievementsList = "<div class='achievement first'><p>Your friend has nothing to brag about.</p></div>"
+                achievementsList = "<div class='achievement'><p>Your friend has nothing to brag about.</p></div>"
             } else {
-                achievementsList = "<div class='achievement first'><p>Your friend has not dared to show any challenges. Sad but true.</p></div>"
+                achievementsList = "<div class='achievement'><p>Your friend has not dared to show any challenges. Sad but true.</p></div>"
             }
          }  else {
-            achievementsList = "<div class='achievement first'><p>You do not have any unlocked achievements yet.</p></div>"
+            achievementsList = "<div class='achievement'><p>You do not have any unlocked achievements yet.</p></div>"
         }
     }
     response.writeHead(200, {'content-type': 'application/json' })
