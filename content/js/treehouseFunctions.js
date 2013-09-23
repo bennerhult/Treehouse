@@ -78,11 +78,13 @@ function checkFBUserOnServer(username, callback) {
 }
 
 function rememberMe() {
+
     rememberMeOnServer(
-        function(nrOfRequests, ok) {
+        function(id, ok) {
+            //alert("remember:  " + id)
             if (ok) { //TODO: use ajax success/error instead
-                nrOfFriendShipRequests = nrOfRequests
-                openAchievements(false, currentUser._id, false)
+                //nrOfFriendShipRequests = nrOfRequests
+                openAchievements(false, id, false)
             } else {
                 showSignin()
             }
