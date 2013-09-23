@@ -116,7 +116,9 @@ function getCompares(achievementId, userId, callback) {
     Shareholding.find({ achievement_id: achievementId, confirmed: true }, function(err, shareholdings) {
         if (shareholdings && shareholdings.length > 0) {
             progress.Progress.findOne({ achiever_id: userId, achievement_id: achievementId }, function(err2,ownProgress) {
-                compares.push(ownProgress)
+                if (ownProgress) {
+                    compares.push(ownProgress)
+                }
             })
             shareholdings.forEach(function(shareholding, index) {
                 if (shareholding.shareholder_id == userId) {
@@ -125,7 +127,9 @@ function getCompares(achievementId, userId, callback) {
                     currentShareFriendId =   shareholding.shareholder_id
                 }
                 progress.Progress.findOne({ achiever_id: currentShareFriendId, achievement_id: shareholding.achievement_id }, function(err3,currentProgress) {
-                    compares.push(currentProgress)
+                    if (currentProgress) {
+                        compares.push(currentProgress)
+                    }
                     if (index == shareholdings.length -1) {
                         callback(compares)
                     }
