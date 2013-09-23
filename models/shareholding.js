@@ -136,6 +136,7 @@ function getCompares(achievementId, userId, callback) {
         }
     })
 }
+
 function ignoreShareHolding(achievement_id, shareholder_id, callback) {
     Shareholding.findOne({ shareholder_id: shareholder_id, achievement_id: achievement_id }, function(err, shareholding) {
         shareholding.remove()

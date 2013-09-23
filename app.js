@@ -675,11 +675,13 @@ app.get('/compareList', function(request, response){
         userId = request.session.currentUser._id
     }
     shareholding.getCompares(request.query.achievementId, userId, function(compareList) {
+        console.log("---------------BADZ: " + compareList.length())
         if (compareList && compareList.length > 0) {
             compareList.forEach(function(currentCompare, index) {
+                console.log("Cc: " + currentCompare)
                 var myQuantityFinished = 0
                 var myQuantityTotal = 0
-                getPrettyNameIdAndImageURL(currentCompare.achiever_id, function(prettyName, id, imageURL) {
+                getPrettyNameIdAndImageURL( currentCompare.achiever_id, function(prettyName, id, imageURL) {
                     achievement.Achievement.findOne({ _id: request.query.achievementId }, function(err,currentAchievement) {
                         currentAchievement.goals.forEach(function(goal, goalIndex) {
                             progress.Progress.findOne({ goal_id: goal._id, achiever_id: currentCompare.achiever_id }, function(err,myProgress) {
