@@ -43,10 +43,10 @@ function loginUsingFacebook() {
                 FB.api('/me', function(apiResponse) {
                     if (apiResponse) {
                         checkFBUserOnServer(apiResponse.email,
-                            function(nrOfRequests, ok) {
-                                nrOfFriendShipRequests = nrOfRequests
+                            function(id, ok) {
+                                //nrOfFriendShipRequests = nrOfRequests
                                 if (ok) { //TODO: use ajax success/error instead
-                                    openAchievements(false, currentUser._id, false)
+                                    openAchievements(false, id, false)
                                 } else {
                                     $("#message").html("Facebook did not play nice. Try regular login instead.")
                                 }
@@ -78,7 +78,6 @@ function checkFBUserOnServer(username, callback) {
 }
 
 function rememberMe() {
-
     rememberMeOnServer(
         function(id, ok) {
             //alert("remember:  " + id)
