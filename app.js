@@ -310,25 +310,25 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
             response.write(JSON.stringify("That link is exhausted. Get a new one!"))
             response.end('\n', 'utf-8')
         }  else {
-            request.session.currentUser = myUser
-            request.session.user_email = myUser.username
+            //request.session.currentUser = myUser
+            //request.session.user_email = myUser.username
             loginToken.createToken(myUser.username, function(myToken) {
                 response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-                friendship.getNrOfRequests(request.session.currentUser._id, function (nrOfFriendShipRequests) {
-                    request.session.nrOfFriendShipRequests = nrOfFriendShipRequests
+                //friendship.getNrOfRequests(myUser._id, function (nrOfFriendShipRequests) {
+                    //request.session.nrOfFriendShipRequests = nrOfFriendShipRequests
                     if (appMode) {
                         writeGotoAppPage(response)
                     } else {
                         if (fbConnect) {
                             response.writeHead(200, {'content-type': 'application/json' })
-                            response.write(JSON.stringify(nrOfFriendShipRequests))
+                            response.write(JSON.stringify(yUser._id))
                             response.end('\n', 'utf-8')
                         } else {
                             console.log("standard login")
                             writeDefaultPage(request, response)
                         }
                     }
-                })
+                //})
             })
         }
     } else {    //Sign up
@@ -338,7 +338,7 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
                 response.write(JSON.stringify("Oddly enough, you already have an account. Sign in and you are good to go!"))
                 response.end('\n', 'utf-8')
             }  else {
-                request.session.currentUser = myUser
+                //request.session.currentUser = myUser
                 loginToken.createToken(myUser.username, function(myToken) {
                     response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
                     if (fbConnect) {
