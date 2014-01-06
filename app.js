@@ -310,7 +310,7 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
             response.write(JSON.stringify("That link is exhausted. Get a new one!"))
             response.end('\n', 'utf-8')
         }  else {
-            //request.session.currentUser = myUser
+            request.session.currentUser = myUser
             //request.session.user_email = myUser.username
             loginToken.createToken(myUser.username, function(myToken) {
                 response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
