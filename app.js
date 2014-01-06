@@ -321,7 +321,7 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
                     } else {
                         if (fbConnect) {
                             response.writeHead(200, {'content-type': 'application/json' })
-                            response.write(JSON.stringify(yUser._id))
+                            response.write(JSON.stringify(myUser._id))
                             response.end('\n', 'utf-8')
                         } else {
                             console.log("standard login")
