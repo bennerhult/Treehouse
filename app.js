@@ -239,19 +239,21 @@ function signin(request, response, newUser) {
 }
 
 app.get('/checkUser', function(request, response){
-    //console.log("/checkUser")
+    console.log("/checkUser")
     var username = request.query.username.toLowerCase()
     var appMode = request.query.appMode
 
     user.User.findOne({ username: username }, function(err,myUser) {
         if (myUser) {
             loginToken.createToken(myUser.username, function(myToken) {
+                console.log("myUser: " + username)
                 emailUser(
                     username,
                     'Sign in to Treehouse',
                     "<html>Click <a href='" + domain + "signin?email=" + username + "&token=" + myToken.token + '&appMode=' + appMode + "'>here</a> to sign in to Treehouse.</html>",
                     'Go to ' + domain + 'signin?email=' + username + '&token=' + myToken.token + '&appMode=' + appMode +  ' to sign in to Treehouse!',
                      function() {
+                         console.log("mail sent!")
                          response.writeHead(200, {'content-type': 'application/json' })
                          response.write(JSON.stringify('existing user'))
                          response.end('\n', 'utf-8')
