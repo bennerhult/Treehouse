@@ -8,7 +8,7 @@
     "dependencies": {
         "express": "3.4.7",
         "mongoose": "2.5.14",
-        "session-mongoose": "0.0.2",
+        "connect-mongo": "0.4.0",
         "underscore": "1.5.2",
         "emailjs": "0.3.6",
         "request": "2.30.0",

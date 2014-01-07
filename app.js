@@ -2,7 +2,7 @@ var fs = require('fs'),
     url = require('url'),
     express = require('express'),
     moment = require('moment'),
-    sessionMongoose = require("session-mongoose"),
+    connectmongo = require('connect-mongo'),
     _ = require("underscore")._,
     email   = require('emailjs')
 
@@ -19,6 +19,18 @@ var server  = email.server.connect({
     ssl:     false
 })
 
+var MongoStore = connectmongo(express);
+
+app.configure(function() {
+    app.use(express.cookieParser())
+    app.use(express.session({
+        store: new MongoStore({
+            url: db_uri
+        }),
+        secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4'
+    }))
+})
+
 app.configure('development', function() {
     domain = 'http://localhost:1337/'
     console.log("Treehouse in development mode.")
@@ -30,15 +42,7 @@ app.configure('production', function() {
     db_uri=process.env.DB_URI
 })
 
-var mongooseSessionStore = new sessionMongoose({
-    url: db_uri,
-    interval: 60000
-})
 
-app.configure(function() {
-    app.use(express.cookieParser())
-    app.use(express.session({ store: mongooseSessionStore, secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4' }))
-})
 
 var dburi = db_uri
 
@@ -91,7 +95,7 @@ function authenticateFromLoginToken(request, response) {
                 //console.log("token: " + token)
                 user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
                     if (user) {
-                        //console.log("user: " + user)
+                        console.log("user: " + user)
                         request.session.currentUser = user
 
                         friendship.getNrOfRequests(user._id, function (nrOfFriendShipRequests) {
@@ -401,14 +405,13 @@ app.get('/user', function(request, response){
 
 app.get('/currentUser', function(request, response){
     var userID = request.session.currentUser._id
-
     user.User.findOne({ _id: userID }, function(err,foundUser) {
         if (foundUser)    {
             response.send(foundUser, { 'Content-Type': 'application/json' }, 200)
         }
     })
 })
-          express.get
+
 app.get('/prettyName', function(request, response){
     var userID
     if (request.query.user_id && request.query.user_id.length > 12) {
