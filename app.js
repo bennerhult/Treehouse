@@ -21,15 +21,7 @@ var server  = email.server.connect({
 
 var MongoStore = connectmongo(express);
 
-app.configure(function() {
-    app.use(express.cookieParser())
-    app.use(express.session({
-        store: new MongoStore({
-            url: db_uri
-        }),
-        secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4'
-    }))
-})
+
 
 app.configure('development', function() {
     domain = 'http://localhost:1337/'
@@ -42,7 +34,15 @@ app.configure('production', function() {
     db_uri=process.env.DB_URI
 })
 
-
+app.configure(function() {
+    app.use(express.cookieParser())
+    app.use(express.session({
+        store: new MongoStore({
+            url: db_uri
+        }),
+        secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4'
+    }))
+})
 
 var dburi = db_uri
 
