@@ -1098,9 +1098,7 @@ function showAchievementPage(request, response) {
                     console.log("SMURF0: " + request.session.currentUser._id)
                     loadUser (request, response, function () { writeAchievementPage(response, currentAchiever, currentAchievement, request.session.currentUser._id, isNotificationView, sharerId)})
                 } else if (currentAchievement && currentProgress.publiclyVisible)    {
-
-                    //TODO WEIRD to use request.session.user_id below, since the conditional says it does not exist here
-                    console.log("SMURF1: ")
+                     console.log("SMURF1: ")
                     //writeAchievementPage(response, currentAchiever, currentAchievement, request.session.user._id, isNotificationView, sharerId)
                     writeAchievementPage(response, currentAchiever, currentAchievement, null, isNotificationView, sharerId)
                 } else {
