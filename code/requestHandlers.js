@@ -7,11 +7,10 @@ function gotoAppPage(response) {
 }
 
 function gotoAppPart() {
-    var content = '<div id="content">' +
+    return '<div id="content">' +
         '<div class="signup-logo"><img src="content/img/logo-large.png">' +
             '<p>You are now logged in. Close this browser and open your Treehouse app.</p>' +
         '</div>'
-    return content
 }
 
 function indexPage(response, userId, nrOfFriendShipRequests) {
@@ -27,7 +26,7 @@ function publicAchievementPage(response, userId, currentAchievementId, url, imag
 }
 
 function topAppPagePart() {
-    var text = '<!DOCTYPE html>' + nl +
+    return  '<!DOCTYPE html>' + nl +
         tab + '<html manifest="treehouse.manifest">' + nl +
         tab + '<head>' + nl +
         tab + '<title>Treehouse</title>' + nl +
@@ -93,13 +92,12 @@ function topAppPagePart() {
         '<div id="menuArea"></div>' + nl +
         '<div id="app-container-login">' + nl +
         '<div id="contentArea">'
-    return text
 }
 
 
 function topIndexPart(userId, nrOfFriendShipRequests) {
     console.log("top index part: " + userId)
-            var text = '<!DOCTYPE html>' + nl +
+           return '<!DOCTYPE html>' + nl +
             tab + '<html>' + nl +
                 tab + '<head>' + nl +
                     tab + '<title>Treehouse</title>' + nl +
@@ -138,7 +136,7 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
                 tab + ' <body>' + nl +
                 '<div id="fb-root"></div>' + nl +
                 '<div id="page">' + nl +
-                '<canvas id="world" width="100%" height="100%" style="z-index:998; position: absolute; left: 0px; top: 0px;"><p class="noCanvas">You need a <a href="http://www.google.com/chrome">modern browser</a> to view this.</p></canvas>' +
+                '<canvas id="world" width="100%" height="100%" style="z-index:998; position: absolute; left: 0; top: 0;"><p class="noCanvas">You need a <a href="http://www.google.com/chrome">modern browser</a> to view this.</p></canvas>' +
                 '<div id="web-menu">' + nl +
                     '<ul>' + nl +
                         '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart(), 0)"><span class="selected"><img src="content/img/logo-small.png" /></span></a></li>'  + nl +
@@ -165,7 +163,6 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
                 '<div id="menuArea"></div>' + nl +
                 '<div id="app-container">' + nl +
                 '<div id="contentArea">'
-   return text
 }
 
 function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUrl, title) {
@@ -211,7 +208,7 @@ function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUr
             tab + ' <body>' + nl +
             '<div id="fb-root"></div>' + nl +
             '<div id="page">' + nl +
-            '<canvas id="world" width="100%" height="100%" style="z-index:998; position: absolute; left: 0px; top: 0px;"><p class="noCanvas">You need a <a href="http://www.google.com/chrome">modern browser</a> to view this.</p></canvas>' +
+            '<canvas id="world" width="100%" height="100%" style="z-index:998; position: absolute; left: 0; top: 0;"><p class="noCanvas">You need a <a href="http://www.google.com/chrome">modern browser</a> to view this.</p></canvas>' +
             '<div id="web-menu">' + nl +
                 '<ul>' + nl +
                     '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart(), 0)"><span class="selected"><img src="content/img/logo-small.png" /></span></a></li>'  + nl +

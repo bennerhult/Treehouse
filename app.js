@@ -9,7 +9,7 @@ var fs = require('fs'),
 var db_uri = 'mongodb://localhost:27017/test'
 var domain = ''
 
-var app = express.createServer()
+var app = express()
 
 var server  = email.server.connect({
     user:    'pe3116x3',
