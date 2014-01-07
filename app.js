@@ -9,7 +9,7 @@ var fs = require('fs'),
 var db_uri = 'mongodb://localhost:27017/test'
 var domain = ''
 
-app = express.createServer()
+var app = express.createServer()
 
 var server  = email.server.connect({
     user:    'pe3116x3',
@@ -43,7 +43,8 @@ app.configure(function() {
 var dburi = db_uri
 
 module.exports = {
-    dburi: dburi
+    dburi: dburi,
+    app: app
 }
 
 var user = require('./models/user.js'),
