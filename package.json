@@ -11,7 +11,7 @@
         "session-mongoose": "0.0.2",
         "underscore": "1.5.2",
         "emailjs": "0.3.6",
-        "request": "2.11.4",
+        "request": "2.30.0",
         "moment": "2.5.0"
     },
     "repository" : {

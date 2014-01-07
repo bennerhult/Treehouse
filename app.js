@@ -408,7 +408,7 @@ app.get('/currentUser', function(request, response){
         }
     })
 })
-
+          express.get
 app.get('/prettyName', function(request, response){
     var userID
     if (request.query.user_id && request.query.user_id.length > 12) {
