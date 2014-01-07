@@ -12,6 +12,6 @@
         "underscore": "1.5.2",
         "emailjs": "0.3.6",
         "request": "2.11.4",
-        "moment": "1.7.2"
+        "moment": "2.5.0"
     }
 }
