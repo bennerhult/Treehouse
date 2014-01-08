@@ -4,7 +4,8 @@ var fs = require('fs'),
     moment = require('moment'),
     connectmongo = require('connect-mongo'),
     _ = require("underscore")._,
-    email   = require('emailjs')
+    email   = require('emailjs'),
+    mongoose = require('mongoose')
 
 var db_uri = 'mongodb://localhost:27017/test'
 var domain = ''
@@ -21,8 +22,6 @@ var server  = email.server.connect({
 
 var MongoStore = connectmongo(express);
 
-
-
 app.configure('development', function() {
     domain = 'http://localhost:1337/'
     console.log("Treehouse in development mode.")
@@ -34,22 +33,18 @@ app.configure('production', function() {
     db_uri=process.env.DB_URI
 })
 
+mongoose.connect(db_uri)
+
 app.configure(function() {
     app.use(express.cookieParser())
     app.use(express.session({
         store: new MongoStore({
-            url: db_uri
+            url: db_uri,
+            clear_interval: 3600
         }),
         secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4'
     }))
 })
-
-var dburi = db_uri
-
-module.exports = {
-    dburi: dburi,
-    app: app
-}
 
 var user = require('./models/user.js'),
     achievement = require('./models/achievement.js'),

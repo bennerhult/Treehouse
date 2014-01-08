@@ -1,10 +1,7 @@
 var mongoose = require('mongoose'),
-    treehouse = require('../app.js'),
     achievement = require('./achievement.js'),
     progress = require('./progress.js'),
     Schema = mongoose.Schema
-
-mongoose.connect(treehouse.dburi)
 
 var ShareholdingSchema = new Schema({
     created         : {type: Date, required: true},

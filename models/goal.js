@@ -1,8 +1,5 @@
 var mongoose = require('mongoose'),
-    treehouse = require('../app.js'),
     Schema = mongoose.Schema
-
-mongoose.connect(treehouse.dburi)
 
 var GoalSchema = new Schema({
     createdDate     : Date,

@@ -1,8 +1,5 @@
 var mongoose = require('mongoose'),
-    treehouse = require('../app.js'),
     Schema = mongoose.Schema
-
-mongoose.connect(treehouse.dburi)
 
 var FriendshipSchema = new Schema({
     created         : {type: Date, required: true},

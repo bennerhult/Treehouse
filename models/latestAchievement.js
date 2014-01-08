@@ -1,8 +1,5 @@
 var mongoose = require('mongoose'),
-    treehouse = require('../app.js'),
     Schema= mongoose.Schema
-
-mongoose.connect(treehouse.dburi)
 
 var LatestAchievementSchema = new Schema({
     ownId : {type: Number, required: true},   //singleton, so this is the only one and always = '1'

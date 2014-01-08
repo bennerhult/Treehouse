@@ -1,11 +1,8 @@
 var mongoose = require('mongoose'),
-    treehouse = require('../app.js'),
-    goalSchema = require('./goal.js'),
+    goal = require('./goal.js'),
     progress = require('./progress.js'),
     latestAchievement = require('./latestAchievement.js'),
     Schema= mongoose.Schema
-
-mongoose.connect(treehouse.dburi)
 
 var AchievementSchema = new Schema({
     createdDate         : {type: Date, required: true},
@@ -13,7 +10,7 @@ var AchievementSchema = new Schema({
     title               : {type: String, required: true},
     description         : {type: String},
     imageURL            : {type: String, required: true},
-    goals               : {type: [goalSchema], required: true}
+    goals               : {type: [goal.GoalSchema], required: true}
 })
 
 var Achievement = mongoose.model('Achievement', AchievementSchema)
