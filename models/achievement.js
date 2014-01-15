@@ -111,7 +111,7 @@ function unpublicize(oneProgress) {
 
 function remove(achievement, userId, next) {
     removeSharedPartOfAchievement(achievement, userId, function() {
-        progress.Progress.find({ achievement_id: achievement._id}, function(err, progresses ) {
+        progress.Progress.find({ achievement_id: achievement._id}, function(err, progresses) {
             if (progresses && progresses.length > 0) {
                 next()
             }  else {
