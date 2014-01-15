@@ -1,5 +1,5 @@
 var mongoose = require('mongoose'),
-    Schema= mongoose.Schema
+    Schema = mongoose.Schema
 
 var LatestAchievementSchema = new Schema({
     ownId : {type: Number, required: true},   //singleton, so this is the only one and always = '1'
@@ -38,6 +38,5 @@ function update(id) {
             latestAchievement.id = id
             latestAchievement.save(function (error) {})
         }
-
     })
 }

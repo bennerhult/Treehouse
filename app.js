@@ -999,7 +999,6 @@ function getAchievementList(request, response, completedAchievements) {
     if (request.session.currentUser) {
         userId = request.session.currentUser._id
     }
-    console.log(lookingAtFriendsAchievements + ", " + achieverId + ", " + userId)
     progress.Progress.find({ achiever_id: achieverId}, {}, { sort: { 'latestUpdated' : -1 } }, function(err, progresses) {
         if (err) { console.log("error in app.js 1: couldn't find any progress for user " + achieverId) }
         if (progresses && progresses.length > 0) {
@@ -1497,6 +1496,7 @@ app.get('/editAchievement', loadUser, function(request, response){
 })
 
 function saveAchievement(response, motherAchievement, titles, quantities, userId) {
+    console.log("saving achievement")
     var progressesToInit = new Array()
     if (titles.length === 0) {
         finalizeAchievement (response, motherAchievement, titles, quantities, progressesToInit)
@@ -1531,6 +1531,7 @@ function finalizeAchievement (response, motherAchievement, titles, quantities, p
 }
 
 app.get('/newAchievement', function(request, response){
+    console.log("newAchievement")
     user.User.findById(request.session.currentUser._id, function(err, user) {
         var motherAchievement;
         achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
@@ -1548,10 +1549,13 @@ app.get('/newAchievement', function(request, response){
             })
             if (!textInQuantities) {
                 if (currentAchievement)  {
+                    console.log("existing achievement")
                         achievement.remove(currentAchievement, request.session.currentUser._id, function() {
+                            console.log("remove done!")
                             saveAchievement(response, motherAchievement, titles, quantities, request.session.currentUser._id)
                         })
                 } else {
+                    console.log("NEW!")
                     saveAchievement(response, motherAchievement, titles, quantities, request.session.currentUser._id)
                 }
 
