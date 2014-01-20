@@ -560,7 +560,6 @@ function getPublicAchievement(achieverId, achievementId) {
             $("#sharer-container").hide()
             $("#compare-container").hide()
             FB.XFBML.parse();
-            $("#publicizeButton").hide()
             $("#addbutton").hide()
             $("#achievementTabs").hide()
             $("#fbLike").show()

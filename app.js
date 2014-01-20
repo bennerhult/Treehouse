@@ -152,8 +152,7 @@ app.get('/achievement', function(request, response) {
         console.log("yes")
     } else {   */
         progress.Progress.findOne({ achievement_id: currentAchievementId, achiever_id: userId }, function(err,currentProgress) {
-
-            if (currentProgress && currentProgress.publiclyVisible)    {
+            if (currentProgress && (currentProgress.publiclyVisible || userId == request.session.currentUser._id))    {
                 console.log("AAA")
                 achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
                     request.session.current_achievement_id = currentAchievementId
