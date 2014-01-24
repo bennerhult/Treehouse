@@ -9,9 +9,13 @@ What have you achieved today?
 
 [MongoHQ](https://new.mongohq.com/treehouse/mongo/treehouse/collections)
 
+Running tests
+`cd c://th/test`
+`casperjs test test.js`
+
 ##Git commands
 ###push
-`cd c://th`, alt. `d:` followed by `cd th`
+`cd c://th`
 
 `git add .`
 
@@ -27,7 +31,7 @@ What have you achieved today?
 Click Synchronize `ctrl-alt-y' in WebStorm
 
 ###restore
-`cd c://th`, alt. `d:` followed by `cd th`
+`cd c://th`
 
 `git checkout .` (. means all files, totally possible to restore just one file too)
 
@@ -55,11 +59,11 @@ See available versions for Node and NPM
 
 ##Mongo locally
 ####Start database
-`c://mongo/bin/mongod` alt `d://mongo/bin/mongod`
+`c://mongo/bin/mongod`
 
 
 ####Start database monitor
-`c://mongo/bin/mongo`, alt. `d://mongo/bin/mongo`
+`c://mongo/bin/mongo`
 
 
 #####Example find
@@ -76,7 +80,7 @@ See available versions for Node and NPM
 
 ##Local Node.js
 
-`cd c://th`, alt. `d:` followed by `cd th`
+`cd c://th`
 
 `node app.js`
 

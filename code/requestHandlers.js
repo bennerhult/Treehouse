@@ -130,7 +130,7 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
                     tab + '<script type="text/javascript">' + nl +
                     tab + '$(document).ready(function() {' + nl  +
                     tab + 'init(\'' + userId  + '\', \'' + nrOfFriendShipRequests  + '\')' + nl  +
-                    tab + 'rememberMe()'   +nl +
+                    tab + 'rememberMe()'   + nl +
                     tab   + 'setTimeout(function(){addToHome.show(false)}, 100)})</script>' + nl +
                 tab + '</head>' + nl +
                 tab + ' <body>' + nl +

@@ -78,7 +78,7 @@ function loadUser(request, response, next) {
 function authenticateFromLoginToken(request, response) {
     console.log("authenticateFromLoginToken")
     if (request.cookies.rememberme)  {
-        //console.log("cookie found")
+        console.log("cookie found")
         var cookie = JSON.parse(request.cookies.rememberme)
         loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
             if (!token) {
@@ -87,7 +87,7 @@ function authenticateFromLoginToken(request, response) {
                 response.write(JSON.stringify(""))
                 response.end('\n', 'utf-8')
             } else {
-                //console.log("token: " + token)
+                console.log("token: " + token)
                 user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
                     if (user) {
                         console.log("user: " + user)
@@ -115,6 +115,7 @@ function authenticateFromLoginToken(request, response) {
             }
         })
     }  else {
+        console.log("no coookie found!")
         response.writeHead(404, {'content-type': 'application/json' })
         response.write(JSON.stringify(""))   //typical first sign in
         response.end('\n', 'utf-8')
@@ -146,20 +147,27 @@ app.get('/achievement', function(request, response) {
     var url_parts = url.parse(request.url, true)
     var currentAchievementId = url_parts.query.achievementId
     var userId  = url_parts.query.userId
-
+    var loggedin = false
+    if (request.session) {
+        if (request.session.currentUser) {
+            if (request.session.currentUser._id == userId) {
+                loggedin=true
+            }
+        }
+    }
    /* if (request.session.user) {
         showAchievementPage(request, response)
         console.log("yes")
     } else {   */
         progress.Progress.findOne({ achievement_id: currentAchievementId, achiever_id: userId }, function(err,currentProgress) {
-            if (currentProgress && (currentProgress.publiclyVisible || userId == request.session.currentUser._id))    {
+            if (currentProgress && (currentProgress.publiclyVisible || loggedin))    {
                 console.log("AAA")
                 achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
                     request.session.current_achievement_id = currentAchievementId
                     requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, currentAchievement.imageURL, currentAchievement.title)
                 })
             } else {
-                console.log("BBB")
+                console.log("BBB: " + loggedin)
                 writeDefaultPage(request, response)
             }
         })
@@ -305,10 +313,12 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
     }
     if (myUser != null) {   //Sign in
         if (newUser) {  //user clicked sign up email twice
+            console.log("exhausted link")
             response.writeHead(200, {'content-type': 'application/json' })
             response.write(JSON.stringify("That link is exhausted. Get a new one!"))
             response.end('\n', 'utf-8')
         }  else {
+            console.log("adding user to session")
             request.session.currentUser = myUser
             //request.session.user_email = myUser.username
             loginToken.createToken(myUser.username, function(myToken) {
@@ -358,12 +368,11 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
 }
 
 app.get('/signout', function(request, response){
-    //console.log("/signout")
+    console.log("/signout")
     if (request.session) {
         response.clearCookie('rememberme', null)
         loginToken.remove(request.session.user_email)
         request.session.destroy()
-        console.log("BBB")
         requestHandlers.indexPage(response, null)
     }
 })
@@ -1587,7 +1596,7 @@ function writeDefaultPage(request, response) {
     if (request.session.currentUser) {
         requestHandlers.indexPage(response, request.session.currentUser._id, request.session.nrOfFriendShipRequests)
     }   else {
-        console.log("AAA")
+        console.log("A")
         requestHandlers.indexPage(response, null, null)
     }
 }
