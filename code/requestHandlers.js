@@ -14,6 +14,7 @@ function gotoAppPart() {
 }
 
 function indexPage(response, userId, nrOfFriendShipRequests) {
+    console.log("indexPage")
     response.writeHead(200, { 'Content-Type': 'text/html' })
     response.end(topIndexPart(userId, nrOfFriendShipRequests) + bottomPart(), 'utf-8')
 }
@@ -132,8 +133,8 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
                     tab + 'init(\'' + userId  + '\', \'' + nrOfFriendShipRequests  + '\')' + nl  +
                     tab + 'rememberMe()'   + nl +
                     tab   + 'setTimeout(function(){addToHome.show(false)}, 100)})</script>' + nl +
-                tab + '</head>' + nl +
-                tab + ' <body>' + nl +
+                    tab + '</head>' + nl +
+                    tab + ' <body>' + nl +
                 '<div id="fb-root"></div>' + nl +
                 '<div id="page">' + nl +
                 '<canvas id="world" width="100%" height="100%" style="z-index:998; position: absolute; left: 0; top: 0;"><p class="noCanvas">You need a <a href="http://www.google.com/chrome">modern browser</a> to view this.</p></canvas>' +

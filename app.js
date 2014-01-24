@@ -176,12 +176,12 @@ app.get('/achievement', function(request, response) {
 })
 
 app.get('/', function(request, response){
-    //console.log("/")
+    console.log("/")
     writeDefaultPage(request, response)
 })
 
 app.get('/rememberMe', function(request, response){
-    //console.log("rememberMe")
+    console.log("rememberMe")
     authenticateFromLoginToken(request, response)
 })
 
@@ -394,25 +394,31 @@ function getSignupErrorMessage (err){
 
 app.get('/user', function(request, response){
     var userID
-    if (request.query.user_id && request.query.user_id.length >2) {
+    if (request.query.user_id && request.query.user_id.length > 2 && request.query.user_id != 'null') {
         userID = request.query.user_id
-    } else {
+    } else if (request.query.user_id != 'null') {
         userID = request.session.currentUser._id
     }
+    console.log("USERID: " + userID)
     user.User.findOne({ _id: userID }, function(err,foundUser) {
         if (foundUser)    {
             response.send(foundUser, { 'Content-Type': 'application/json' }, 200)
+        }   else {
+            response.writeHead(404, {'content-type': 'application/json' })
+            response.end('\n', 'utf-8')
         }
     })
 })
 
 app.get('/currentUser', function(request, response){
-    var userID = request.session.currentUser._id
-    user.User.findOne({ _id: userID }, function(err,foundUser) {
-        if (foundUser)    {
-            response.send(foundUser, { 'Content-Type': 'application/json' }, 200)
-        }
-    })
+    if (request.session.currentUser) {
+        var userID = request.session.currentUser._id
+        user.User.findOne({ _id: userID }, function(err,foundUser) {
+            if (foundUser)    {
+                response.send(foundUser, { 'Content-Type': 'application/json' }, 200)
+            }
+        })
+    }
 })
 
 app.get('/prettyName', function(request, response){
