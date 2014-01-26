@@ -25,3 +25,17 @@ casper.test.begin('Testing Public Achievement', 3, function(test){
         test.done()
     })
 })
+
+casper.test.begin('Testing Private Achievement', 3, function(test){
+    casper.start('http://localhost:1337/achievement?achievementId=52dcfd394e67c8880c000002&userId=50b4ecda20d743b019000031')
+
+    casper.then(function(){
+        test.assertHttpStatus(200);
+        test.assertTitle('Treehouse', 'Private achievement not accesible when not signed in')
+        test.assertTextExists('connect below ', 'page body contains dom only text "by "')
+    })
+
+    casper.run(function(){
+        test.done()
+    })
+})
