@@ -18,7 +18,7 @@ casper.test.begin('Testing Public Achievement', 3, function(test){
     casper.then(function(){
         test.assertHttpStatus(200);
         test.assertTitle('Treehouse - aa', 'Public achievement has correct title')
-        test.assertTextExists('by ', 'page body contains dom only text "by "')
+        test.assertTextExists('by Erik Bennerhult', 'page body contains dom only text "by Erik Bennerhult"')
     })
 
     casper.run(function(){
@@ -26,13 +26,29 @@ casper.test.begin('Testing Public Achievement', 3, function(test){
     })
 })
 
+casper.test.begin('Testing Sign in Achievement', 2, function(test){
+    casper.start('http://localhost:1337/signin?email=erik@lejbrinkbennerhult.se&token=332450440445&appMode=false')
+
+    casper.then(function(){
+        test.assertHttpStatus(200);
+        test.assertTitle('Treehouse', 'Sign on show correct title')
+       // test.assertTextExists('Erik Bennerhult', 'page body contains dom only text "Erik Bennerhult"')
+
+    })
+
+    casper.run(function(){
+        test.done()
+    })
+})
+
+
 casper.test.begin('Testing Private Achievement', 3, function(test){
     casper.start('http://localhost:1337/achievement?achievementId=52dcfd394e67c8880c000002&userId=50b4ecda20d743b019000031')
 
     casper.then(function(){
         test.assertHttpStatus(200);
         test.assertTitle('Treehouse', 'Private achievement not accesible when not signed in')
-        test.assertTextExists('connect below ', 'page body contains dom only text "by "')
+        test.assertTextExists('connect below ', 'page body contains dom only text "connect below "')
     })
 
     casper.run(function(){
