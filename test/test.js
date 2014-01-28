@@ -26,7 +26,7 @@ casper.test.begin('Testing Public Achievement', 3, function(test){
     })
 })
 
-casper.test.begin('Testing Sign in Achievement', 2, function(test){
+casper.test.begin('Testing Sign in', 2, function(test){
     casper.start('http://localhost:1337/signin?email=erik@lejbrinkbennerhult.se&token=812566369631&appMode=false')
 
     casper.then(function(){
@@ -41,8 +41,24 @@ casper.test.begin('Testing Sign in Achievement', 2, function(test){
     })
 })
 
+
+casper.test.begin('Testing Private Achievement when signed in', 3, function(test){
+    casper.start('http://localhost:1337/achievement?achievementId=52dcfd394e67c8880c000002&userId=50b4ecda20d743b019000031')
+
+    casper.then(function(){
+        test.assertHttpStatus(200);
+        test.assertTitle('Treehouse - test 4', 'Private achievement accessible when signed in')
+        test.assertTextExists('test4', 'page body contains "test4"')
+    })
+
+    casper.run(function(){
+        test.done()
+    })
+})
+
+
 //TODO funkar bara när utloggad
-casper.test.begin('Testing Private Achievement', 3, function(test){
+casper.test.begin('Testing Private Achievement when signed out', 3, function(test){
     casper.start('http://localhost:1337/achievement?achievementId=52dcfd394e67c8880c000002&userId=50b4ecda20d743b019000031')
 
     casper.then(function(){
