@@ -49,11 +49,9 @@ casper.test.begin('Testing Start Page', 3, function(test){
 
 
  casper.test.begin('Testing creating new user', 1, function(test){
-     casper.start('http://localhost:1337/signup?email=tester@treehouse.io&token=' +loginToken + '&appMode=true')
-
+     casper.start('http://localhost:1337/signup?email=tester@treehouse.io&token=' +loginToken + '&appMode=false')
      casper.then(function(){
-         test.assertHttpStatus(200);     //user already exists
-         //loginToken = JSON.parse(this.getPageContent());
+         test.assertHttpStatus(200)
      })
 
      casper.thenOpen('http://localhost:1337/signout', function() {})
@@ -64,14 +62,15 @@ casper.test.begin('Testing Start Page', 3, function(test){
  })
 
  casper.test.begin('Testing Sign in', 3, function(test){
+     var token
      casper.start('http://localhost:1337/checkUser?username=tester@treehouse.io&appMode=false')
 
      casper.then(function(){
          test.assertHttpStatus(200);     //existing user
-         loginToken = JSON.parse(this.getPageContent());
+         token = JSON.parse(this.getPageContent());
      })
 
-     casper.thenOpen('http://localhost:1337/signin?email=tester@treehouse.io&token=' +loginToken + '&appMode=false')
+     casper.thenOpen('http://localhost:1337/signin?email=tester@treehouse.io&token=' + token + '&appMode=false')
 
      casper.then(function() {
          test.assertHttpStatus(200);

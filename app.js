@@ -98,11 +98,10 @@ function authenticateFromLoginToken(request, response) {
                             token.save(function() {
                                 request.session.nrOfFriendShipRequests = nrOfFriendShipRequests
                                 response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 2 * 604800000), path: '/' })
-                                //console.log("responsing well: " + nrOfFriendShipRequests)
+                                //console.log("responding well: " + nrOfFriendShipRequests + ', ' + user._id)
                                 response.writeHead(200, {'content-type': 'application/json' })
                                 response.write(JSON.stringify(user._id))
                                 response.end('\n', 'utf-8')
-                                //}
                             })
                         })
                     } else {
@@ -342,14 +341,13 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
         }
     } else {    //Sign up
         console.log("SIGN UP: " + appMode)
-        user.createUser(email, function (myUser,err) {
+        user.createUser(email, function (newUser,err) {
             if (err) {
                 response.writeHead(200, {'content-type': 'application/json' })
                 response.write(JSON.stringify("Oddly enough, you already have an account. Sign in and you are good to go!"))
                 response.end('\n', 'utf-8')
             }  else {
-                //request.session.currentUser = myUser
-                loginToken.createToken(myUser.username, function(myToken) {
+                loginToken.createToken(newUser.username, function(myToken) {
                     response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
                     if (fbConnect) {
                         response.writeHead(200, {'content-type': 'application/json' })
@@ -359,7 +357,9 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
                         if (appMode) {
                             writeGotoAppPage(response)
                         } else {
-                            writeDefaultPage(request, response)
+                            console.log("!!!!!!!!!!!!!!!!!!")
+                            request.session.currentUser = newUser
+                            writeDefaultPage(request, response, false)
                         }
                     }
                 })
