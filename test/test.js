@@ -28,6 +28,7 @@ casper.test.begin('Testing Start Page', 3, function(test){
     })
 })
 
+//TODO create mock achievement
 casper.test.begin('Testing Public Achievement', 3, function(test){
     casper.start('http://localhost:1337/achievement?achievementId=520a1ea4c6151500070003fe&userId=50c5f49c9400f66c170000fd')
 
@@ -43,12 +44,26 @@ casper.test.begin('Testing Public Achievement', 3, function(test){
 })
 
 
+casper.test.begin('Testing create user', 1, function(test){
+    casper.start('http://localhost:1337/checkUser?username=tester@treehouse.io&appMode=false')
+
+    casper.then(function(){
+        test.assertHttpStatus(201);     //new user
+        loginToken = JSON.parse(this.getPageContent());
+    })
+
+    casper.run(function(){
+        test.done()
+    })
+})
+
+
 casper.test.begin('Testing Sign in', 1, function(test){
-    casper.start('http://localhost:1337/checkUser?username=erik@lejbrinkbennerhult.se&appMode=false')
+    casper.start('http://localhost:1337/checkUser?username=tester@treehouse.io&appMode=false')
 
     casper.then(function(){
         test.assertHttpStatus(200);     //user already exists
-        loginToken = JSON.parse(this.getPageContent());
+        //loginToken = JSON.parse(this.getPageContent());
     })
 
     casper.run(function(){
