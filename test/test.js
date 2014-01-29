@@ -1,5 +1,19 @@
 var loginToken
 
+casper.test.begin('Testing sign out', 3, function(test){
+    casper.start('http://localhost:1337/signout')
+
+    casper.then(function(){
+        test.assertHttpStatus(200);
+        test.assertTitle('Treehouse', 'Correct title')
+        test.assertTextExists('connect below', 'page body contains "connect below"')
+    })
+
+    casper.run(function(){
+        test.done()
+    })
+})
+
 casper.test.begin('Testing Start Page', 3, function(test){
     casper.start('http://localhost:1337')
 
