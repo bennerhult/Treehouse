@@ -61,13 +61,12 @@ casper.test.begin('Testing Start Page', 3, function(test){
      })
  })
 
-var token2
 casper.test.begin('Testing create token 2', 1, function(test){
      casper.start('http://localhost:1337/checkUser?username=tester@treehouse.io&appMode=false')
 
      casper.then(function(){
          test.assertHttpStatus(200);     //existing user
-         token2 = JSON.parse(this.getPageContent())
+         loginToken = JSON.parse(this.getPageContent())
      })
 
      casper.run(function() {
@@ -76,7 +75,7 @@ casper.test.begin('Testing create token 2', 1, function(test){
  })
 
 casper.test.begin('Testing Sign in', 3, function(test){
-    casper.start('http://localhost:1337/signin?email=tester@treehouse.io&token=' + token2 + '&appMode=false')
+    casper.start('http://localhost:1337/signin?email=tester@treehouse.io&token=' + loginToken + '&appMode=false')
 
     casper.then(function() {
         test.assertHttpStatus(200);
