@@ -341,6 +341,7 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
             })
         }
     } else {    //Sign up
+        console.log("SIGN UP: " + appMode)
         user.createUser(email, function (myUser,err) {
             if (err) {
                 response.writeHead(200, {'content-type': 'application/json' })
@@ -1440,6 +1441,19 @@ app.get('/unpublicize', function(request, response){
     })
 })
 
+app.get('/deleteUser', function(request, response) {
+    console.log("/deleteUser")
+    var url_parts = url.parse(request.url, true)
+    var username  = url_parts.query.username
+    user.remove(username, function() {
+        response.writeHead(200, {'content-type': 'application/json' })
+        response.write(JSON.stringify('ok'))
+        response.end('\n', 'utf-8')
+    })
+
+
+})
+
 app.get('/delete', loadUser, function(request, response){
     achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
         if (currentAchievement) {
@@ -1600,6 +1614,7 @@ function writeGotoAppPage(response) {
 
 function writeDefaultPage(request, response) {
     if (request.session.currentUser) {
+        console.log("000 index page")
         requestHandlers.indexPage(response, request.session.currentUser._id, request.session.nrOfFriendShipRequests)
     }   else {
         console.log("A")

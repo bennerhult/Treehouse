@@ -19,6 +19,7 @@ module.exports = {
     setPrettyName : setPrettyName,
     getShortName: getShortName,
     getPrettyNameAndImageURL : getPrettyNameAndImageURL,
+    remove: remove,
     setImageURL : setImageURL
 }
 
@@ -70,6 +71,22 @@ function getShortName(userId, callback) {
         } else {
             console.log("User not found for userId " + userId + ", error: " + err)
             callback("user not found")
+        }
+    })
+}
+
+function remove(username, next) {
+    console.log("REMOVING USER: " + username)
+    User.findOne({username: username }, function(err,userToDelete) {
+        if (userToDelete) {
+            userToDelete.remove(function () {
+                console.log("USER REMOVED ")
+                if (next) {
+                    next()
+                }
+            })
+        } else {
+            next()
         }
     })
 }
