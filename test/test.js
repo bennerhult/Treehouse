@@ -88,26 +88,25 @@ casper.test.begin('Testing fetching userId', 1, function(test){
     })
 })
 
-//TODO set pretty name
-/*
- app.get('/setPrettyName', function(request, response){
- user.setPrettyName(request.session.currentUser._id , request.query.firstName, request.query.lastName, function(error) {
- if (error) {
- response.writeHead(404, {'content-type': 'application/json' })
- } else {
- response.writeHead(200, {'content-type': 'application/json' })
- }
- response.end('\n', 'utf-8')
- })
- })
- */
+casper.test.begin('Testing setting pretty name', 1, function(test){
+    casper.start('http://localhost:1337/setPrettyName?user_id=' + userId1 + '&firstName=Tester&lastName=Schmester')
+
+    casper.then(function() {
+        test.assertHttpStatus(200);
+    })
+
+    casper.run(function() {
+        test.done()
+    })
+})
+
 casper.test.begin('Testing Sign in', 3, function(test){
     casper.start('http://localhost:1337/signin?email=tester@treehouse.io&token=' + loginToken + '&appMode=false')
 
     casper.then(function() {
         test.assertHttpStatus(200);
         test.assertTitle('Treehouse - Achievements', 'Sign on show correct title')
-        test.assertTextExists('tester@treehouse.io', 'page contains "tester@treehouse.io"')
+        test.assertTextExists('Tester Schmester', 'page contains "Tester Schmester"')
     })
 
     casper.run(function() {

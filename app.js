@@ -464,7 +464,14 @@ app.get('/setUserImage', function(request, response){
 })
 
 app.get('/setPrettyName', function(request, response){
-    user.setPrettyName(request.session.currentUser._id , request.query.firstName, request.query.lastName, function(error) {
+    var userID
+    if (request.query.user_id && request.query.user_id.length > 12) {
+        userID = request.query.user_id
+    } else {
+        userID = request.session.currentUser._id
+    }
+
+    user.setPrettyName(userID , request.query.firstName, request.query.lastName, function(error) {
         if (error) {
             response.writeHead(404, {'content-type': 'application/json' })
         } else {
