@@ -4,13 +4,11 @@ function checkUser(appMode) {
     if (username) {
         if (username.match(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i)) {
             checkUserOnServer(username, appMode,
-                function(data) {
-                    if (data == "existing user") {
+                function(data, existingUser) {
+                    if (existingUser) {
                         $("#emailForm").html('We just sent you the old Treehouse email. Fetch email. Click link!')
-                    } else if (data == "new user") {
-                        $("#emailForm").html('We just sent you an email. Therein lies a link. Click it and you shall enter!')
                     } else {
-                        $("#message").html(data)
+                        $("#emailForm").html('We just sent you an email. Therein lies a link. Click it and you shall enter!')
                     }
                 }
             )
@@ -28,8 +26,10 @@ function checkUserOnServer(username, appMode, callback) {
         type: "GET",
         data: data,
         dataType: "json",
-        success: function(data) { if ( callback ) callback(data) },
-        error  : function()     { if ( callback ) callback(null) }
+        statusCode: {
+            200: function(returnData) { callback(returnData, true) },
+            201: function(returnData) { callback(returnData , false) }
+        }
     })
 }
 

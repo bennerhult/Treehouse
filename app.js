@@ -260,7 +260,7 @@ app.get('/checkUser', function(request, response){
                     'Go to ' + domain + 'signin?email=' + username + '&token=' + myToken.token + '&appMode=' + appMode +  ' to sign in to Treehouse!',
                      function() {
                          response.writeHead(200, {'content-type': 'application/json' })
-                         response.write(JSON.stringify('existing user'))
+                         response.write(JSON.stringify(myToken.token))
                          response.end('\n', 'utf-8')
                      }
                 )
@@ -273,8 +273,8 @@ app.get('/checkUser', function(request, response){
                     "<html>Click <a href='" + domain + "signup?email=" + username + "&token=" + myToken.token + '&appMode=' + appMode + "'>here</a> to start using Treehouse.</html>",
                     'Go to ' + domain + 'signup?email=' + username + '&token=' + myToken.token + '&appMode=' + appMode + ' to start using Treehouse!',
                     function() {
-                        response.writeHead(200, {'content-type': 'application/json' })
-                        response.write(JSON.stringify('new user'))
+                        response.writeHead(201, {'content-type': 'application/json' })
+                        response.write(JSON.stringify(myToken.token))
                         response.end('\n', 'utf-8')
                     }
                  )
