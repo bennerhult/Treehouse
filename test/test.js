@@ -1,4 +1,5 @@
 var loginToken
+var userId1
 
 casper.test.begin('Testing Start Page', 3, function(test){
     //initializing
@@ -61,7 +62,7 @@ casper.test.begin('Testing Start Page', 3, function(test){
      })
  })
 
-casper.test.begin('Testing create token 2', 1, function(test){
+casper.test.begin('Testing create token', 1, function(test){
      casper.start('http://localhost:1337/checkUser?username=tester@treehouse.io&appMode=false')
 
      casper.then(function(){
@@ -74,6 +75,32 @@ casper.test.begin('Testing create token 2', 1, function(test){
      })
  })
 
+casper.test.begin('Testing fetching userId', 1, function(test){
+    casper.start('http://localhost:1337/userIdForUsername?username=tester@treehouse.io')
+
+    casper.then(function() {
+        test.assertHttpStatus(200);
+        userId1 = JSON.parse(this.getPageContent())
+    })
+
+    casper.run(function() {
+        test.done()
+    })
+})
+
+//TODO set pretty name
+/*
+ app.get('/setPrettyName', function(request, response){
+ user.setPrettyName(request.session.currentUser._id , request.query.firstName, request.query.lastName, function(error) {
+ if (error) {
+ response.writeHead(404, {'content-type': 'application/json' })
+ } else {
+ response.writeHead(200, {'content-type': 'application/json' })
+ }
+ response.end('\n', 'utf-8')
+ })
+ })
+ */
 casper.test.begin('Testing Sign in', 3, function(test){
     casper.start('http://localhost:1337/signin?email=tester@treehouse.io&token=' + loginToken + '&appMode=false')
 
@@ -87,6 +114,8 @@ casper.test.begin('Testing Sign in', 3, function(test){
         test.done()
     })
 })
+
+
 //TODO create mock unit achievement
 /*
 casper.test.begin('Testing Private Achievement when signed in', 3, function(test){

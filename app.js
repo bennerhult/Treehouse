@@ -413,6 +413,18 @@ app.get('/user', function(request, response){
     })
 })
 
+app.get('/userIdForUsername', function(request, response){
+    var username = request.query.username
+    user.User.findOne({ username: username }, function(err,foundUser) {
+        if (foundUser)    {
+            response.send(foundUser._id, { 'Content-Type': 'application/json' }, 200)
+        } else {
+            response.writeHead(404, {'content-type': 'application/json' })
+            response.end('\n', 'utf-8')
+        }
+    })
+})
+
 app.get('/currentUser', function(request, response){
     if (request.session.currentUser) {
         var userID = request.session.currentUser._id
