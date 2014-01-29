@@ -230,7 +230,7 @@ function signin(request, response, newUser) {
     var token = url_parts.query.token
     var appModeString = url_parts.query.appMode
     var appMode = (appModeString === 'true')
-    console.log("signin: " + url_parts.query.email.toLowerCase())
+    console.log("signin: " + url_parts.query.email.toLowerCase() + ", " + token)
     loginToken.LoginToken.findOne({ email: email, token: token }, function(err,myToken) {
         if (myToken) {
             console.log("finding user by email")
@@ -239,6 +239,7 @@ function signin(request, response, newUser) {
                 getDataForUser(myUser, request, response, newUser, appMode)
             })
         }  else {
+            console.log("NO TOKEN")
             writeDefaultPage(request, response)
         }
     })
@@ -299,7 +300,7 @@ function emailUser(emailAddress, subject, html, altText, callback) {
 }
 
 function getDataForUser(myUser, request, response, newUser, appMode) {
-    //console.log("getDataForUser")
+    console.log("getDataForUser")
     var email
     var fbConnect = false
     if (request.session.user_email) {  //email sign up
@@ -321,6 +322,7 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
             request.session.currentUser = myUser
             //request.session.user_email = myUser.username
             loginToken.createToken(myUser.username, function(myToken) {
+                console.log("-----CREATING COOKIE-------------")
                 response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
                 //friendship.getNrOfRequests(myUser._id, function (nrOfFriendShipRequests) {
                     //request.session.nrOfFriendShipRequests = nrOfFriendShipRequests
