@@ -49,7 +49,7 @@ casper.test.begin('Testing Start Page', 3, function(test){
 
 
  casper.test.begin('Testing creating new user', 1, function(test){
-     casper.start('http://localhost:1337/signup?email=tester@treehouse.io&token=' +loginToken + '&appMode=false')
+     casper.start('http://localhost:1337/signup?email=tester@treehouse.io&token=' +loginToken + '&appMode=true')
 
      casper.then(function(){
          test.assertHttpStatus(200);     //user already exists
@@ -63,14 +63,11 @@ casper.test.begin('Testing Start Page', 3, function(test){
      })
  })
 
-
- //todo set pretty name
  casper.test.begin('Testing Sign in', 3, function(test){
      casper.start('http://localhost:1337/checkUser?username=tester@treehouse.io&appMode=false')
 
-     //TODO tänk igenom nedanför här
      casper.then(function(){
-         test.assertHttpStatus(201);     //new user
+         test.assertHttpStatus(200);     //existing user
          loginToken = JSON.parse(this.getPageContent());
      })
 
@@ -79,7 +76,7 @@ casper.test.begin('Testing Start Page', 3, function(test){
      casper.then(function() {
          test.assertHttpStatus(200);
          test.assertTitle('Treehouse - Achievements', 'Sign on show correct title')
-         test.assertTextExists('Tester Schmester', 'page body contains dom only text "Tester Schmester"')
+         test.assertTextExists('tester@treehouse.io', 'page body contains dom only text "Tester Schmester"')
      })
 
      casper.run(function() {
