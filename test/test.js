@@ -34,19 +34,7 @@ casper.test.begin('Testing Start Page', 3, function(test) {
      })
  })
 
-casper.test.begin('Testing faulty Sign in, bad token', 2, function(test){
-    casper.start('http://localhost:1337/signin?email=tester@treehouse.io&token=123456789&appMode=false')
 
-    casper.then(function() {
-        // test.assertHttpStatus(404);
-        test.assertTitle('Treehouse', 'correct title')
-        test.assertTextExists('connect below', 'shows login page')
-    })
-
-    casper.run(function() {
-        test.done()
-    })
-})
 
  casper.test.begin('Testing entering new user', 1, function(test){
      casper.start('http://localhost:1337/checkUser?username=tester@treehouse.io&appMode=false')
@@ -61,6 +49,31 @@ casper.test.begin('Testing faulty Sign in, bad token', 2, function(test){
      })
  })
 
+casper.test.begin('Testing faulty Sign in, bad token', 2, function(test){
+    casper.start('http://localhost:1337/signin?email=tester@treehouse.io&token=123456789&appMode=false')
+
+    casper.then(function() {
+        test.assertTitle('Treehouse', 'correct title')
+        test.assertTextExists('connect below', 'shows login page')
+    })
+
+    casper.run(function() {
+        test.done()
+    })
+})
+
+casper.test.begin('Testing faulty Sign in, bad email', 2, function(test){
+    casper.start('http://localhost:1337/signin?email=faulty@treehouse.io&token=' + loginToken + '&appMode=false')
+
+    casper.then(function() {
+        test.assertTitle('Treehouse', 'correct title')
+        test.assertTextExists('connect below', 'shows login page')
+    })
+
+    casper.run(function() {
+        test.done()
+    })
+})
 
  casper.test.begin('Testing creating new user', 1, function(test){
      casper.start('http://localhost:1337/signup?email=tester@treehouse.io&token=' + loginToken + '&appMode=false')
