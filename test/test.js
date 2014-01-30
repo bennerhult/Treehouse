@@ -139,8 +139,6 @@ casper.test.begin('Testing correct Sign in', 3, function(test){
         test.done()
     })
 })
-
-//TODO create mock unit achievement
 /*
 casper.test.begin('Testing Private Achievement when signed in', 3, function(test){
     casper.start('http://localhost:1337/achievement?achievementId=52dcfd394e67c8880c000002&userId=50b4ecda20d743b019000031')
@@ -155,20 +153,20 @@ casper.test.begin('Testing Private Achievement when signed in', 3, function(test
      test.done()
     })
  })
- */
- casper.test.begin('Testing sign out', 3, function(test){
-     casper.start('http://localhost:1337/signout')
+  */
+casper.test.begin('Testing sign out', 3, function(test){
+    casper.start('http://localhost:1337/signout')
 
-     casper.then(function(){
-         test.assertHttpStatus(200);
-         test.assertTitle('Treehouse', 'Correct title')
-         test.assertTextExists('connect below', 'page body contains "connect below"')
-     })
+    casper.then(function(){
+        test.assertHttpStatus(200);
+        test.assertTitle('Treehouse', 'Correct title')
+        test.assertTextExists('connect below', 'page body contains "connect below"')
+    })
 
-     casper.run(function(){
-        test.done()
-     })
- })
+    casper.run(function(){
+       test.done()
+    })
+})
 
 casper.test.begin('Testing reusing token ', 3, function(test){
     casper.start('http://localhost:1337/signin?email=tester@treehouse.io&token=' + loginToken + '&appMode=false')

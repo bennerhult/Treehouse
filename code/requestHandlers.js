@@ -50,6 +50,14 @@ function topAppPagePart() {
         tab + '<meta property="og:image" content="http://treehouse.io/content/img/treehouse.jpg"/>' + nl +
         tab + '<meta property="og:url" content="http://treehouse.io/"/>' + nl +
         tab + '<link rel="icon" href="/content/favicon.ico" type="image/vnd.microsoft.icon">' + nl +
+        tab + '<script> ' + nl +
+        tab + '(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){' + nl +
+        tab + '(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),' + nl +
+        tab + 'm=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)' + nl +
+        tab + '})(window,document,"script","//www.google-analytics.com/analytics.js","ga");' + nl +
+        tab + 'ga("create", "UA-47638344-1", "treehouse.io");' + nl +
+        tab + 'ga("send", "pageview");' + nl +
+        tab + '</script>  ' + nl +
         tab + '<script type="text/javascript" src="content/js/css3-mediaqueries.js"></script>' + nl +
         tab + '<script src="content/ext/js/facebook.js" type="text/javascript"></script>' + nl +
         tab + '<script src="content/ext/js/jquery-1.10.2.js" type="text/javascript"></script>' + nl +
@@ -115,6 +123,14 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
                     tab + '<meta property="og:image" content="http://treehouse.io/content/img/treehouse.jpg"/>' + nl +
                     tab + '<meta property="og:url" content="http://treehouse.io/"/>' + nl +
                     tab + '<link rel="icon" href="/content/favicon.ico" type="image/vnd.microsoft.icon">' + nl +
+                    tab + '<script> ' + nl +
+                    tab + '(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){' + nl +
+                    tab + '(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),' + nl +
+                    tab + 'm=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)' + nl +
+                    tab + '})(window,document,"script","//www.google-analytics.com/analytics.js","ga");' + nl +
+                    tab + 'ga("create", "UA-47638344-1", "treehouse.io");' + nl +
+                    tab + 'ga("send", "pageview");' + nl +
+                    tab + '</script>  ' + nl +
                     tab + '<script type="text/javascript" src="content/js/css3-mediaqueries.js"></script>' + nl +
                     tab + '<script src="content/ext/js/facebook.js" type="text/javascript"></script>' + nl +
                     tab + '<script src="content/ext/js/jquery-1.10.2.js" type="text/javascript"></script>' + nl +
@@ -184,6 +200,14 @@ function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUr
             tab + '<meta property="og:image" content="http://treehouse.io/' + imageUrl + '"/>' + nl +
             tab + '<meta property="og:url" content="http://treehouse.io' + url + '"/>' + nl +
             tab + '<link rel="icon" href="/content/favicon.ico" type="image/vnd.microsoft.icon">' + nl +
+            tab + '<script> ' + nl +
+            tab + '(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){' + nl +
+            tab + '(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),' + nl +
+            tab + 'm=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)' + nl +
+            tab + '})(window,document,"script","//www.google-analytics.com/analytics.js","ga");' + nl +
+            tab + 'ga("create", "UA-47638344-1", "treehouse.io");' + nl +
+            tab + 'ga("send", "pageview");' + nl +
+            tab + '</script>  ' + nl +
             tab + '<script type="text/javascript" src="content/js/css3-mediaqueries.js"></script>' + nl +
             tab + '<script src="content/ext/js/facebook.js" type="text/javascript"></script>' + nl +
             tab + '<script src="content/ext/js/jquery-1.10.2.js" type="text/javascript"></script>' + nl +
