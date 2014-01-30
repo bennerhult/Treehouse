@@ -1,7 +1,7 @@
 var loginToken
 var userId1
 
-casper.test.begin('Testing Start Page', 3, function(test){
+casper.test.begin('Testing Start Page', 3, function(test) {
     //initializing
     casper.start('http://localhost:1337/signout')
     casper.thenOpen('http://localhost:1337/deleteUser?username=tester@treehouse.io', function() {})
@@ -34,6 +34,19 @@ casper.test.begin('Testing Start Page', 3, function(test){
      })
  })
 
+casper.test.begin('Testing faulty Sign in, bad token', 2, function(test){
+    casper.start('http://localhost:1337/signin?email=tester@treehouse.io&token=123456789&appMode=false')
+
+    casper.then(function() {
+        // test.assertHttpStatus(404);
+        test.assertTitle('Treehouse', 'correct title')
+        test.assertTextExists('connect below', 'shows login page')
+    })
+
+    casper.run(function() {
+        test.done()
+    })
+})
 
  casper.test.begin('Testing entering new user', 1, function(test){
      casper.start('http://localhost:1337/checkUser?username=tester@treehouse.io&appMode=false')
@@ -100,7 +113,7 @@ casper.test.begin('Testing setting pretty name', 1, function(test){
     })
 })
 
-casper.test.begin('Testing Sign in', 3, function(test){
+casper.test.begin('Testing correct Sign in', 3, function(test){
     casper.start('http://localhost:1337/signin?email=tester@treehouse.io&token=' + loginToken + '&appMode=false')
 
     casper.then(function() {
@@ -113,7 +126,6 @@ casper.test.begin('Testing Sign in', 3, function(test){
         test.done()
     })
 })
-
 
 //TODO create mock unit achievement
 /*
