@@ -1299,8 +1299,10 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                                                    // achievementDesc += '<script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.async=true;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>'
 
                                                     achievementDesc +=    '<a class="twitter-share-button" href="https://twitter.com/share" data-via="Treehouse">Tweet</a><script type="text/javascript">// <![CDATA[ '
-                                                    achievementDesc +=' !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?"http":"https";if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document, "script", "twitter-wjs");// ]]></script> '
+                                                  //  achievementDesc +=' !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?"http":"https";if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document, "script", "twitter-wjs");// ]]></script> '
 
+
+                                                    achievementDesc += '<script type="text/javascript">$(window).load(function () {$.getScript("http://widgets.twimg.com/j/2/widget.js", function () {var twitter = new TWTR.Widget({version: 2,type: "search",id: "my_twitter_div",search: "BlackFishWeb",interval: 6000,title: "BlackFish Web",subject: "",width: 300,height: 250,theme: {shell: { background: "#1f1f1f",color: "#ffffff"},tweets: {background: "#1f1f1f",color: "#b8b8b8",links: "#ffffff"}},features: {scrollbar: false,loop: true,live: true,hashtags: true,timestamp: true,avatars: false,toptweets: true,behavior: "default"}}).render().start();})})</script>'
                                                     achievementDesc += '</div><div class="clear"> </div></div></div>'
                                                     response.write(JSON.stringify(achievementDesc))
                                                     response.end('\n', 'utf-8')
