@@ -402,7 +402,6 @@ app.get('/user', function(request, response){
     } else if (request.query.user_id != 'null') {
         userID = request.session.currentUser._id
     }
-    console.log("USERID: " + userID)
     user.User.findOne({ _id: userID }, function(err,foundUser) {
         if (foundUser)    {
             response.send(foundUser, { 'Content-Type': 'application/json' }, 200)
@@ -1293,16 +1292,20 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                                                     achievementDesc += '<div id="sharer-container"></div><div id="compare-container"></div>'
                                                     achievementDesc += '<div class="publicWrap"><div id="fbLike" style="overflow:visible;"><div class="fb-like" data-href="http://treehouse.io/achievement?achievementId=' + currentAchievement._id + '&userId=' + currentAchievement.createdBy + '" data-width="300px" font="segoe ui" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div></div>'
                                                     achievementDesc += '<div id="tweetAchievement" style="overflow:visible;">'
-                                                    achievementDesc += '<a href="https://twitter.com/share?url=' + encodeURIComponent("http://treehouse.io/achievement?achievementId=" + currentAchievement._id + "&userId=" + currentAchievement.createdBy) + '&text=' + currentAchievement.title + '" class="twitter-share-button">Tweet</a>'
+                                                    // achievementDesc += '<a href="https://twitter.com/share?url=' + encodeURIComponent("http://treehouse.io/achievement?achievementId=" + currentAchievement._id + "&userId=" + currentAchievement.createdBy) + '&text=' + currentAchievement.title + '" class="twitter-share-button" data-via="Treehouse">Tweet</a>'
+                                                    achievementDesc += '<a href="https://twitter.com/share" class="twitter-share-button" data-via="Treehouse">Tweet</a>'
+
                                                     //achievementDesc += '<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?"http":"https";if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.async=true;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document, "script", "twitter-wjs");</script>'
 
-                                                   achievementDesc += '<script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.async=true;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>'
+                                                   //achievementDesc += '<script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.async=true;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>'
 
                                                     //achievementDesc +=    '<a class="twitter-share-button" href="https://twitter.com/share" data-via="Treehouse">Tweet</a><script type="text/javascript">// <![CDATA[ '
                                                   //  achievementDesc +=' !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?"http":"https";if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document, "script", "twitter-wjs");// ]]></script> '
 
+                                                   //TWITTER + async achievementDesc +=       '<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?"http":"https";if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";js.async = true;fjs.parentNode.insertBefore(js,fjs);}}(document, "script", "twitter-wjs");</script>'
 
-                                                    //achievementDesc += '<script type="text/javascript">$(window).load(function () {$.getScript("http://widgets.twimg.com/j/2/widget.js", function () {var twitter = new TWTR.Widget({version: 2,type: "search",id: "my_twitter_div",search: "BlackFishWeb",interval: 6000,title: "BlackFish Web",subject: "",width: 300,height: 250,theme: {shell: { background: "#1f1f1f",color: "#ffffff"},tweets: {background: "#1f1f1f",color: "#b8b8b8",links: "#ffffff"}},features: {scrollbar: false,loop: true,live: true,hashtags: true,timestamp: true,avatars: false,toptweets: true,behavior: "default"}}).render().start();})})</script>'
+                                                    achievementDesc +='<script type="text/javascript">(function() {var s = document.createElement("SCRIPT");var c = document.getElementsByTagName("script")[0];s.type = "text/javascript";s.async = true;s.src = "http://platform.twitter.com/widgets.js";c.parentNode.insertBefore(s, c);})();</script>'
+                                                   // achievementDesc += '<script type="text/javascript">$(window).load(function () {$.getScript("http://widgets.twimg.com/j/2/widget.js", function () {var twitter = new TWTR.Widget({version: 2,type: "search",id: "my_twitter_div",search: "BlackFishWeb",interval: 6000,title: "BlackFish Web",subject: "",width: 300,height: 250,theme: {shell: { background: "#1f1f1f",color: "#ffffff"},tweets: {background: "#1f1f1f",color: "#b8b8b8",links: "#ffffff"}},features: {scrollbar: false,loop: true,live: true,hashtags: true,timestamp: true,avatars: false,toptweets: true,behavior: "default"}}).render().start();})})</script>'
                                                     achievementDesc += '</div><div class="clear"> </div></div></div>'
                                                     response.write(JSON.stringify(achievementDesc))
                                                     response.end('\n', 'utf-8')
