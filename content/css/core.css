@@ -29,10 +29,9 @@ body{
 }
 
 #fbLikeWeb {
+    padding-top: 20px;
     float: left;
-    text-align: right;
-    margin-top: 20px;
-
+    margin-right: 20px;
 }
 
 #fbLike{
@@ -42,6 +41,7 @@ body{
 }
 
 #tweetTreehouse{
+    float: left;
     margin-top: 20px;
 }
 
