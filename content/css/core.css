@@ -28,6 +28,21 @@ body{
     width: 1060px;
 }
 
+/*.fb_iframe_widget iframe {
+    overflow: visible!important;
+    width: 300px !important;
+}
+
+
+
+iframe.fb_ltr {
+    height: 209px;
+    width: 200px;
+} */
+
+.fb_iframe_widget>span { width: 240px !important; }
+.fb-like-box iframe { width: 240px !important; }
+
 #fbLikeWeb {
     padding-top: 20px;
     float: left;
