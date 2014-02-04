@@ -1,3 +1,20 @@
+function fbShare(caption, achLink) {
+//https://www.facebook.com/dialog/feed?app_id=480961688595420&display=popup&caption=' + currentAchievement.title + '&picture=http://treehouse.io/' + currentAchievement.imageURL + '&link=' + achLink + '&redirect_uri=' + achLink + '
+
+    //&display=popup
+    // //caption=' + currentAchievement.title + '&picture=http://treehouse.io/' + currentAchievement.imageURL + '
+    //
+    // link=' + achLink + '&redirect_uri=' + achLink + '
+
+    FB.ui({
+        method: 'feed',
+        app_id: '480961688595420',
+        link: achLink,
+        redirect_uri: achLink,
+        caption: caption
+    }, function(response){});
+}
+
 /******************  login functions  ******************/
 function checkUser(appMode) {
     var username = $("input[name=username]").val()
