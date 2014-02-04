@@ -206,7 +206,9 @@ app.get('/fbAppConnect', function(request, response){
                     var graph_parts = JSON.parse(graphBody)
                     var email  = graph_parts.email
                     user.User.findOne({ username: email }, function(err,myUser) {
-                        console.log("/fbAppConnect")
+                        console.log("/fbAppConnect: " + email)
+                        console.log("/err: " + err)
+                        console.log("/myUser: " + myUser)
                         getDataForUser(myUser, request, response, false)
                     })
                 }
