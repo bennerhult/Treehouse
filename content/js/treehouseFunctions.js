@@ -1,4 +1,4 @@
-function fbShare(caption, achLink) {
+function fbShare(caption, achLink, imageURL) {
 //https://www.facebook.com/dialog/feed?app_id=480961688595420&display=popup&caption=' + currentAchievement.title + '&picture=http://treehouse.io/' + currentAchievement.imageURL + '&link=' + achLink + '&redirect_uri=' + achLink + '
 
     //&display=popup
@@ -6,11 +6,16 @@ function fbShare(caption, achLink) {
     //
     // link=' + achLink + '&redirect_uri=' + achLink + '
 
+    if (!imageURL.startsWith('https:')) {
+        imageURL = 'http://treehouse.io/' + imageURL
+    }
+
     FB.ui({
         method: 'feed',
         app_id: '480961688595420',
         link: achLink,
         redirect_uri: achLink,
+        picture: imageURL,
         caption: caption
     }, function(response){});
 }
