@@ -1515,7 +1515,7 @@ app.get('/delete', loadUser, function(request, response){
                             if (typeof String.prototype.startsWith != 'function') {
                                 String.prototype.startsWith = function (str){
                                     return this.indexOf(str) == 0;
-                                };
+                                }
                             }
                             if (currentAchievement.imageURL.startsWith("https:")) {
                                 response.write(JSON.stringify(currentAchievement.imageURL))
