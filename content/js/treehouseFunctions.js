@@ -1,3 +1,27 @@
+/*window.fbAsyncInit = function () {
+    FB.init({
+        appId: '480961688595420',
+        status: true,
+        cookie: true,
+        xfbml: true,
+        oauth: true
+    });
+    FB.Event.subscribe('edge.create', function (response) {
+        alert('You liked the URL: ' + response);
+    });
+};
+(function (d) {
+    var js, id = 'facebook-jssdk';
+    if (d.getElementById(id)) {
+        return;
+    }
+    js = d.createElement('script');
+    js.id = id;
+    js.async = true;
+    js.src = "//connect.facebook.net/en_US/all.js";
+    d.getElementsByTagName('head')[0].appendChild(js);
+}(document));   */
+
 function fbShare(caption, achLink, imageURL) {
     if (typeof String.prototype.startsWith != 'function') {
         String.prototype.startsWith = function (str){
@@ -17,7 +41,6 @@ function fbShare(caption, achLink, imageURL) {
         caption: caption
     }, function(response){})
 }
-
 /******************  login functions  ******************/
 function checkUser(appMode) {
     var username = $("input[name=username]").val()

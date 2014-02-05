@@ -1291,14 +1291,23 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                                                     achievementDesc += goalTextsText
                                                     achievementDesc += '</div>'
 
-                                                    var achLink = domain + "achievement?achievementId=" + currentAchievement._id + "&userId=" + currentAchievement.createdBy
+                                                    //var achLink = domain + "achievement?achievementId=" + currentAchievement._id + "&userId=" + currentAchievement.createdBy
+                                                    var achLink = "http://treehouse.io/achievement?achievementId=" + currentAchievement._id + "&userId=" + currentAchievement.createdBy
+
+
                                                     var encodedAchLink = encodeURIComponent(achLink)
                                                     achievementDesc += '<div id="sharer-container"></div><div id="compare-container"></div>'
                                                    // achievementDesc += '<div class="publicWrap"><div id="fbLike" style="overflow:visible;"><iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ftreehouse.io&amp;width=292&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=true&amp;height=21&amp;appId=480961688595420" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:292px; height:21px;" allowTransparency="true"></iframe></div>'
                                                     achievementDesc += '<div class="publicWrap"><div id="fbLike" style="overflow:visible;">'
-                                                    achievementDesc += '<a href="http://www.facebook.com/plugins/like.php?=' + encodedAchLink + '&width&layout=standard&action=like&show_faces=true&share=false&height=80&appId=480961688595420">Like </a>'
+                                                    //achievementDesc += '<a href="http://www.facebook.com/plugins/like.php?=' + encodedAchLink + '&width&layout=standard&action=like&show_faces=true&share=false&height=80&appId=480961688595420">Like </a>'
                                                     //achievementDesc += '<div class="fb-like" data-href="http://treehouse.io/achievement?achievementId=' + currentAchievement._id + '&userId=' + currentAchievement.createdBy + '" data-width="300px" font="segoe ui" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>'
-                                                    achievementDesc += '<a onclick="fbShare(\''+ currentAchievement.title + '\', \'' +  achLink +'\', \'' + currentAchievement.imageURL + '\')" href="javascript:void(0)">share to fb</a>'
+
+                                                    achievementDesc +='<iframe src="//www.facebook.com/plugins/like.php?href=' + encodedAchLink + '&amp;width&amp;layout=button_count&amp;locale=en_US&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=80&amp;appId=480961688595420" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:80px;" allowTransparency="true"></iframe>'
+
+
+                                                    //achievementDesc += '<a onclick="fbLike(\''+ currentAchievement.title + '\', \'' +  achLink +'\', \'' + currentAchievement.imageURL + '\')" href="javascript:void(0)">like</a>'
+                                                    //achievementDesc += '<div class="fb-like-box" data-href=' + achLink + ' data-width="292" data-show-faces="true" data-stream="false" data-header="true"></div>'
+                                                    achievementDesc += '<a onclick="fbShare(\''+ currentAchievement.title + '\', \'' +  achLink +'\', \'' + currentAchievement.imageURL + '\')" href="javascript:void(0)">share</a>'
                                                     achievementDesc += '</div></div>'
                                                     achievementDesc += '<div id="tweetAchievement" style="overflow:visible;">'
                                                     achievementDesc += '<a href="https://twitter.com/share?url=' + encodedAchLink + '&text=' + currentAchievement.title + '" class="twitter-share-button" data-via="Treehouse">Tweet</a>'
