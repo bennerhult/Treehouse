@@ -572,7 +572,8 @@ function getAchievement(achievementId, userId, publiclyVisible) {
     })
 }
 
-function getPublicAchievement(achieverId, achievementId) {
+function getPublicAchievement(achieverId, achievementId, publiclyVisible) {
+    var isPublic =  (publiclyVisible === 'true')
     getAchievementFromServer(
         function(data) {
             $("#achievementDesc").html(data)
@@ -581,10 +582,18 @@ function getPublicAchievement(achieverId, achievementId) {
             FB.XFBML.parse();
             $("#addbutton").hide()
             $("#achievementTabs").hide()
-            $("#appcontainerSocial").show()
-            $("#tweetAchievement").show()
-            $("#fbLikeWeb").hide()
-            $("#editButton").hide()
+            if (isPublic) {
+                $("#appcontainerSocial").show()
+                $("#tweetAchievement").show()
+                $("#fbLikeWeb").hide()
+                $("#editButton").hide()
+            }  else {
+                $("#appcontainerSocial").hide()
+                $("#tweetAchievement").hide()
+                $("#fbLikeWeb").hide()
+                $("#editButton").show()
+            }
+
         }, achievementId, false, null, achieverId
     )
 }

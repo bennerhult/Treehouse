@@ -19,10 +19,10 @@ function indexPage(response, userId, nrOfFriendShipRequests) {
     response.end(topIndexPart(userId, nrOfFriendShipRequests) + bottomPart(), 'utf-8')
 }
 
-function publicAchievementPage(response, userId, currentAchievementId, url, imageUrl, title) {
+function publicAchievementPage(response, userId, currentAchievementId, url, imageUrl, title, publiclyVisible) {
     console.log("writing public achievement page: " + userId )
     response.writeHead(200, { 'Content-Type': 'text/html' })
-    response.write(topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, title) + bottomPart())
+    response.write(topPublicAchievementPart(userId, currentAchievementId, url, imageUrl, title, publiclyVisible) + bottomPart())
     response.end('\n', 'utf-8')
 }
 
@@ -182,7 +182,7 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
                 '<div id="contentArea">'
 }
 
-function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUrl, title) {
+function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUrl, title, publiclyVisible) {
     console.log("topPublicAchievementPart: " + achieverId + ", " + url)
     return (
         '<!DOCTYPE html>' + nl +
@@ -225,7 +225,7 @@ function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUr
             tab + '$(document).ready(function() {' + nl +
             tab + 'init()' + nl +
             tab + 'insertContent(getPublicAchievementContent(), setDefaultMenu(\'' + title + '\', false), function() {' + nl +
-            tab + 'getPublicAchievement(\'' + achieverId + '\',  \'' +currentAchievementId + '\')' + nl +
+            tab + 'getPublicAchievement(\'' + achieverId + '\',  \'' + currentAchievementId + '\',  \'' + publiclyVisible + '\')' + nl +
             tab + '})' + nl +
             tab + '})' + nl +
             tab + '</script>' + nl +

@@ -163,7 +163,7 @@ app.get('/achievement', function(request, response) {
                 console.log("AAA")
                 achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
                     request.session.current_achievement_id = currentAchievementId
-                    requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, currentAchievement.imageURL, currentAchievement.title)
+                    requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, currentAchievement.imageURL, currentAchievement.title, currentProgress.publiclyVisible)
                 })
             } else {
                 console.log("BBB: " + loggedin)
@@ -1217,7 +1217,7 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                                                 achievementDesc += '<div id="achievement-container">'
                                                 achievementDesc += goalTextsText
                                                 achievementDesc += '</div><div id="sharer-container"></div><div id="comparer-container"></div>'
-                                                response.write(JSON.stringify(achievementDesc))
+                                                response.write(JSON.stringify(achievementDesc), myProgress.publiclyVisible)
                                                 response.end('\n', 'utf-8')
                                             }
                                         })
