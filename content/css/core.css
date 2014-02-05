@@ -28,15 +28,6 @@ body{
     width: 1060px;
 }
 
-/*.fb_edge_widget_with_comment span.fb_edge_comment_widget iframe.fb_ltr {
-    display: none !important;
-} */
-
-/*
-.fb_iframe_widget>span { width: 240px !important; }
-.fb-like-box iframe { width: 240px !important; }
-  */
-
 #fbLikeWeb {
     padding-top: 20px;
     float: left;
