@@ -288,9 +288,28 @@ var addToHome = (function (w) {
     }
 
 
-    function clicked () {
+    /*function clicked () {
         w.sessionStorage.setItem('addToHomeSession', '1');
         isSessionActive = true;
+        close();
+    } */
+
+    function clicked () {
+        var canstore = true
+        var testKey = 'qeTest', storage = window.sessionStorage
+        try {
+            // Try and catch quota exceeded errors
+            storage.setItem(testKey, '1')
+            storage.removeItem(testKey)
+        } catch (error) {
+            if (error.code === DOMException.QUOTA_EXCEEDED_ERR && storage.length === 0)
+                canstore = true
+            else throw error
+        }
+        if (canstore = false){
+            isSessionActive = true;
+            sessionStorage.setItem('addToHomeSession', '1');
+        }
         close();
     }
 
