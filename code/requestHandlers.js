@@ -232,7 +232,6 @@ function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUr
             tab + ' <body>' + nl +
             '<div id="fb-root"></div>' + nl +
             '<div id="page">' + nl +
-            '<canvas id="world" width="100%" height="100%" style="z-index:998; position: absolute; left: 0; top: 0;"><p class="noCanvas">You need a <a href="http://www.google.com/chrome">modern browser</a> to view this.</p></canvas>' +
             '<div id="web-menu">' + nl +
                 '<ul>' + nl +
                     '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart(), 0)"><span class="selected"><img src="content/img/logo-small.png" /></span></a></li>'  + nl +
