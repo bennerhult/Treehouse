@@ -17,6 +17,7 @@ function fbShare(caption, achLink, imageURL) {
         caption: caption
     }, function(response){})
 }
+
 /******************  login functions  ******************/
 function checkUser(appMode) {
     var username = $("input[name=username]").val()

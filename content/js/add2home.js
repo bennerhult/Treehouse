@@ -249,6 +249,7 @@ var addToHome = (function (w) {
     }
 
     function clicked() {
+        alert('close')
         w.sessionStorage.removeItem('addToHomeSession');
         w.sessionStorage.setItem('addToHomeSession', '1')
         isSessionActive = true
