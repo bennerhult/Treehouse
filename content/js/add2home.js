@@ -252,6 +252,7 @@ var addToHome = (function (w) {
         balloon.style.webkitTransitionDuration = duration;
         balloon.style.webkitTransform = 'translate3d(' + posX + 'px,' + posY + 'px,0)';
 */
+        alert('close')
         clearInterval(positionInterval)
         clearTimeout(closeTimeout)
         closeTimeout = null
