@@ -161,7 +161,7 @@ Magnetic=new (function(){
     }
 
     this.init=function(){
-        //$("#world").css( 'pointer-events', 'none' )
+        $("#world").css( 'pointer-events', 'none' )
         //$("#world").css('background-color', 'black')
         var els=document.body.getElementsByTagName("a")
         for(var i=0;i<els.length;i++){

@@ -23,7 +23,7 @@ var addToHome = (function (w) {
 
         options = {
             autostart: true,			// Automatically open the balloon
-            returningVisitor: true,	    // Show the balloon to returning visitors only (setting this to true is highly recommended)
+            returningVisitor: false,	    // Show the balloon to returning visitors only (setting this to true is highly recommended)
             animationIn: 'drop',		// drop || bubble || fade
             animationOut: 'fade',		// drop || bubble || fade
             startDelay: 2000,			// 2 seconds from page load before the balloon appears
