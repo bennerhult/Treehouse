@@ -58,7 +58,7 @@ function init(userId, friendShipRequests) {
     }  else {
         $("#banner").empty().remove()
     }
-    //Magnetic.init()
+    Magnetic.init()
     insertLatestAchievement()
 
     if (("standalone" in window.navigator) && window.navigator.standalone){

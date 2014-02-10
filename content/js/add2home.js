@@ -287,13 +287,6 @@ var addToHome = (function (w) {
         balloon.style.webkitTransform = 'translate3d(' + posX + 'px,' + posY + 'px,0)';
     }
 
-
-    /*function clicked () {
-        w.sessionStorage.setItem('addToHomeSession', '1');
-        isSessionActive = true;
-        close();
-    } */
-
     function clicked () {
         var canstore = true
         var testKey = 'qeTest', storage = window.sessionStorage
