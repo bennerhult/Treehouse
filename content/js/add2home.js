@@ -216,7 +216,7 @@ var addToHome = (function (w) {
             posX = isIPad ? w.scrollX - startX : w.scrollX + Math.round((w.innerWidth - balloon.offsetWidth) / 2) - startX
         }
         balloon.style.webkitTransitionProperty = '-webkit-transform,opacity'
-
+        alert(options.animationOut)
         switch (options.animationOut) {
             case 'drop':
                 if (isIPad) {
@@ -249,7 +249,6 @@ var addToHome = (function (w) {
     }
 
     function clicked() {
-        alert('close')
         w.sessionStorage.removeItem('addToHomeSession');
         w.sessionStorage.setItem('addToHomeSession', '1')
         isSessionActive = true
