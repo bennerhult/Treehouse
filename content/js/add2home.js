@@ -199,7 +199,7 @@ var addToHome = (function (w) {
     }
 
     function close() {
-        clearInterval( positionInterval );
+        /*clearInterval( positionInterval );
         clearTimeout( closeTimeout );
         closeTimeout = null;
 
@@ -251,12 +251,10 @@ var addToHome = (function (w) {
         balloon.style.opacity = opacity;
         balloon.style.webkitTransitionDuration = duration;
         balloon.style.webkitTransform = 'translate3d(' + posX + 'px,' + posY + 'px,0)';
-
-        /*clearInterval(positionInterval)
+*/
+        clearInterval(positionInterval)
         clearTimeout(closeTimeout)
         closeTimeout = null
-
-        if ( !balloon ) return
 
         var posY = 0,
             posX = 0,
@@ -301,7 +299,7 @@ var addToHome = (function (w) {
         balloon.style.opacity = opacity
         balloon.style.webkitTransitionDuration = duration
         balloon.style.webkitTransform = 'translate3d(' + posX + 'px,' + posY + 'px,0)'
-        */
+
     }
 
     function clicked() {
