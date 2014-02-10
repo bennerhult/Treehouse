@@ -1,7 +1,3 @@
-/*!
- * Add to Homescreen v2.0.11 ~ Copyright (c) 2013 Matteo Spinelli, http://cubiq.org
- * Released under MIT license, http://cubiq.org/license
- */
 var addToHome = (function (w) {
     var nav = w.navigator,
         isIDevice = 'platform' in nav && (/iphone|ipod|ipad/gi).test(nav.platform),
@@ -23,7 +19,7 @@ var addToHome = (function (w) {
 
         options = {
             autostart: true,			// Automatically open the balloon
-            returningVisitor: false,	    // Show the balloon to returning visitors only (setting this to true is highly recommended)
+            returningVisitor: false,	 // Show the balloon to returning visitors only (setting this to true is highly recommended)
             animationIn: 'drop',		// drop || bubble || fade
             animationOut: 'fade',		// drop || bubble || fade
             startDelay: 2000,			// 2 seconds from page load before the balloon appears
@@ -144,16 +140,19 @@ var addToHome = (function (w) {
         balloon.innerHTML = touchIcon +
             options.message.replace('%device', platform).replace('%icon', OSVersion >= 4.2 ? '<span class="addToHomeShare"></span>' : '<span class="addToHomePlus">+</span>') +
             (options.arrow ? '<span class="addToHomeArrow"' + (OSVersion >= 7 && isIPad && touchIcon ? ' style="margin-left:-32px"' : '') + '></span>' : '') +
-            (options.closeButton ? '<span class="addToHomeClose">\u00D7</span>' : '');
+            (options.closeButton ? '<span class="addToHomeClose">\u00D7</span>' : '')
 
-        document.body.appendChild(balloon);
+        document.body.appendChild(balloon)
+        balloon.style.zIndex="999"
 
         // Add the close action
-        if ( options.closeButton ) balloon.addEventListener('click', clicked, false);
+        if ( options.closeButton ) balloon.addEventListener('click', clicked, false)
 
-        if ( !isIPad && OSVersion >= 6 ) window.addEventListener('orientationchange', orientationCheck, false);
+        if ( !isIPad && OSVersion >= 6 ) window.addEventListener('orientationchange', orientationCheck, false)
 
-        setTimeout(show, options.startDelay);
+
+
+        setTimeout(show, options.startDelay)
     }
 
     function show () {
