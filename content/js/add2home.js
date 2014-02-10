@@ -18,7 +18,6 @@ var addToHome = (function (w) {
         isReturningVisitor,
         balloon,
         overrideChecks,
-
         positionInterval,
         closeTimeout,
 
@@ -31,7 +30,7 @@ var addToHome = (function (w) {
             lifespan: 15000,			// 15 seconds before it is automatically destroyed
             bottomOffset: 14,			// Distance of the balloon from bottom
             expire: 0,					// Minutes to wait before showing the popup again (0 = always displayed)
-            message: '',				// Customize your message or force a language ('' = automatic)
+            message: 'en_us',				// Customize your message or force a language ('' = automatic)
             touchIcon: false,			// Display the touch icon
             arrow: true,				// Display the balloon arrow
             hookOnLoad: true,			// Should we hook to onload event? (really advanced usage)
