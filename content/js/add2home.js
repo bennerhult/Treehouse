@@ -304,6 +304,7 @@ var addToHome = (function (w) {
     }
 
     function clicked() {
+        clearTimeout(closeTimeout)
         w.sessionStorage.removeItem('addToHomeSession');
         w.sessionStorage.setItem('addToHomeSession', '1')
         isSessionActive = true
