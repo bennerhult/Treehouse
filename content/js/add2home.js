@@ -20,8 +20,8 @@ var addToHome = (function (w) {
         options = {
             autostart:false, // Automatically open the balloon
             returningVisitor:false, // Show the balloon to returning visitors only (setting this to true is HIGHLY RECOMMENDED)
-            animationIn:'drop', // drop || bubble || fade
-            animationOut:'fade', // drop || bubble || fade
+            animationIn:'drop', // drop || bubble
+            animationOut:'drop', // drop || bubble
             startDelay:2000, // 2 seconds from page load before the balloon appears
             lifespan:15000, // 15 seconds before it is automatically destroyed
             bottomOffset:14, // Distance of the balloon from bottom
@@ -216,7 +216,7 @@ var addToHome = (function (w) {
             posX = isIPad ? w.scrollX - startX : w.scrollX + Math.round((w.innerWidth - balloon.offsetWidth) / 2) - startX
         }
         balloon.style.webkitTransitionProperty = '-webkit-transform,opacity'
-        alert(options.animationOut)
+
         switch (options.animationOut) {
             case 'drop':
                 if (isIPad) {
