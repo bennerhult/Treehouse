@@ -74,17 +74,6 @@ function topAppPagePart() {
         tab + '</head>' + nl +
         tab + ' <body>' + nl +
         '<div id="fb-root"></div>' + nl +
-
-        tab + '<script>(function(d, s, id) {   ' + nl +
-    tab + 'var js, fjs = d.getElementsByTagName(s)[0];  ' + nl +
-    tab + 'if (d.getElementById(id)) return;         ' + nl +
-    tab + 'js = d.createElement(s); js.id = id;  ' + nl +
-    tab + 'js.async = true;        ' + nl +
-    tab + ' js.src = "content/ext/js/facebook.js";  ' + nl +
-    tab + ' fjs.parentNode.insertBefore(js, fjs);  ' + nl +
-    tab + ' }(document, "script", "facebook-jssdk"));</script> ' + nl +
-
-
         '<div id="page-login">' + nl +
         '<div id="web-menu">' + nl +
         '<ul>' + nl +
