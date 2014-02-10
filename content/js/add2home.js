@@ -199,9 +199,64 @@ var addToHome = (function (w) {
     }
 
     function close() {
-        clearInterval(positionInterval)
+        clearInterval( positionInterval );
+        clearTimeout( closeTimeout );
+        closeTimeout = null;
+
+        // check if the popup is displayed and prevent errors
+        if ( !balloon ) return;
+
+        var posY = 0,
+            posX = 0,
+            opacity = '1',
+            duration = '0';
+
+        if ( options.closeButton ) balloon.removeEventListener('click', clicked, false);
+        if ( !isIPad && OSVersion >= 6 ) window.removeEventListener('orientationchange', orientationCheck, false);
+
+        if ( OSVersion < 5 ) {
+            posY = isIPad ? w.scrollY - startY : w.scrollY + w.innerHeight - startY;
+            posX = isIPad ? w.scrollX - startX : w.scrollX + Math.round((w.innerWidth - balloon.offsetWidth)/2) - startX;
+        }
+
+        balloon.style.webkitTransitionProperty = '-webkit-transform,opacity';
+
+        switch ( options.animationOut ) {
+            case 'drop':
+                if ( isIPad ) {
+                    duration = '0.4s';
+                    opacity = '0';
+                    posY += 50;
+                } else {
+                    duration = '0.6s';
+                    posY += balloon.offsetHeight + options.bottomOffset + 50;
+                }
+                break;
+            case 'bubble':
+                if ( isIPad ) {
+                    duration = '0.8s';
+                    posY -= balloon.offsetHeight + options.bottomOffset + 50;
+                } else {
+                    duration = '0.4s';
+                    opacity = '0';
+                    posY -= 50;
+                }
+                break;
+            default:
+                duration = '0.8s';
+                opacity = '0';
+        }
+
+        balloon.addEventListener('webkitTransitionEnd', transitionEnd, false);
+        balloon.style.opacity = opacity;
+        balloon.style.webkitTransitionDuration = duration;
+        balloon.style.webkitTransform = 'translate3d(' + posX + 'px,' + posY + 'px,0)';
+
+        /*clearInterval(positionInterval)
         clearTimeout(closeTimeout)
         closeTimeout = null
+
+        if ( !balloon ) return
 
         var posY = 0,
             posX = 0,
@@ -246,6 +301,7 @@ var addToHome = (function (w) {
         balloon.style.opacity = opacity
         balloon.style.webkitTransitionDuration = duration
         balloon.style.webkitTransform = 'translate3d(' + posX + 'px,' + posY + 'px,0)'
+        */
     }
 
     function clicked() {
