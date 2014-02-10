@@ -145,7 +145,8 @@ var addToHome = (function (w) {
         document.body.appendChild(balloon)
 
         // Add the close action
-        if ( options.closeButton ) balloon.addEventListener('click', clicked, false)
+        if ( options.closeButton ) balloon.addEventListener('touchstart', clicked, false)
+        //balloon.addEventListener('click', clicked, false)
 
         if ( !isIPad && OSVersion >= 6 ) window.addEventListener('orientationchange', orientationCheck, false)
 
@@ -231,7 +232,7 @@ var addToHome = (function (w) {
         loaded();
     }
 
-    function close () {
+    function close() {
         clearInterval( positionInterval );
         clearTimeout( closeTimeout );
         closeTimeout = null;
