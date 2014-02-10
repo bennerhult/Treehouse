@@ -143,7 +143,6 @@ var addToHome = (function (w) {
             (options.closeButton ? '<span class="addToHomeClose">\u00D7</span>' : '')
 
         document.body.appendChild(balloon)
-        balloon.style.zIndex="999"
 
         // Add the close action
         if ( options.closeButton ) balloon.addEventListener('click', clicked, false)
@@ -172,6 +171,7 @@ var addToHome = (function (w) {
 
             balloon.style.top = startY + options.bottomOffset + 'px';
             balloon.style.left = Math.max(startX + iPadXShift - Math.round(balloon.offsetWidth / 2), 9) + 'px';
+            balloon.style.zIndex="999"
 
             switch ( options.animationIn ) {
                 case 'drop':
