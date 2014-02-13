@@ -236,9 +236,7 @@ function findFriends() {
                                 messageText = friend_email + " has already asked to be your friend. Check your friend requests!"
                                 $("#message").html(messageText)
                             }
-
                         }
-
                     }
                 }, function(errorMessage) {
                     $("#message").html(errorMessage)
@@ -710,14 +708,12 @@ function unpublicizeOnServer(callback) {
 /******************  new achievement functions  ******************/
 function createAchievement(achieverId) {
    createAchievementOnServer(
-    function(data) {
-        if (data == "ok") { //TODO: use ajax success/error instead
-            openAchievements(false, achieverId, false)
-        } else $("#message").html(data)
-    })
+       function(createdAchievementId) {openAchievements(false, achieverId, false)},
+       function(errorMessage) { $("#message").html(errorMessage.responseText)  }
+    )
 }
 
-function createAchievementOnServer(callback) {
+function createAchievementOnServer(onSuccess, onError) {
     var nrOfGoals =  $('#goalTable tr').length
     var data = "currentImage=" + $("#achievementImage").attr("src")
     var goalTitles = new Array()
@@ -744,7 +740,7 @@ function createAchievementOnServer(callback) {
         }
     }
 
-    for (var j in goalQuantities) {    //if any goalquantities are empty, remove goal
+    for (var j in goalQuantities) {    //if any goalQuantities are empty, remove goal
         if (!goalQuantities[j]) {
             goalTitles.splice(j, 1)
             goalQuantities.splice(j, 1)
@@ -759,8 +755,8 @@ function createAchievementOnServer(callback) {
         type: "GET",
         data: data,
         dataType: "json",
-        success: function(data) { if ( callback ) callback(data) },
-        error  : function()     { if ( callback ) callback(null) }
+        success: function(createdAchievementId) { if ( onSuccess ) onSuccess(createdAchievementId) },
+        error  : function(errorMessage)     { if ( onError ) onError(errorMessage) }
     })
 }
 

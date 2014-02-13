@@ -1,5 +1,6 @@
 var loginToken
 var userId1
+var achievementId1
 
 casper.test.begin('Testing Start Page', 3, function(test) {
     //initializing
@@ -135,6 +136,7 @@ casper.test.begin('Testing Create Achievement', 1, function(test){
 
     casper.then(function(){
         test.assertHttpStatus(200);
+        achievementId1 = JSON.parse(this.getPageContent())
     })
 
     casper.run(function(){

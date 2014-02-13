@@ -1579,9 +1579,9 @@ function saveAchievement(response, motherAchievement, titles, quantities, userId
 }
 
 function finalizeAchievement (response, motherAchievement, titles, quantities, progressesToInit) {
-    achievement.save(motherAchievement, function(err) {
+    achievement.save(motherAchievement, function(err, createdAchievementId) {
         if (err) {
-            response.writeHead(200, {'content-type': 'application/json' })
+            response.writeHead(400, {'content-type': 'application/json' })
             response.write(JSON.stringify(getNewAchievementErrorMessage(err)))
             response.end('\n', 'utf-8')
         } else {
@@ -1589,7 +1589,7 @@ function finalizeAchievement (response, motherAchievement, titles, quantities, p
                 myProgress.save(function (err) {})
             })
             response.writeHead(200, {'content-type': 'application/json' })
-            response.write(JSON.stringify('ok'))
+            response.write(JSON.stringify(createdAchievementId))
             response.end('\n', 'utf-8')
         }
     })
@@ -1612,7 +1612,7 @@ app.get('/newAchievement', function(request, response){
             _.each(titles, function (title, i) {
                 if (_.isNaN(parseInt(quantities[i]))) {
                     textInQuantities = true;
-                    response.writeHead(200, {'content-type': 'application/json' })
+                    response.writeHead(400, {'content-type': 'application/json' })
                     response.write(JSON.stringify("That's not a number!"))
                     response.end('\n', 'utf-8')
                 }

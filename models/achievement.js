@@ -50,7 +50,7 @@ function addGoalToAchievement(goal, achievement, userId, callback) {
 
 function save(achievement, callback) {
     achievement.save(function (error) {
-        callback(error)
+        callback(error, achievement._id)
     })
 }
 
