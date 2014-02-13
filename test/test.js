@@ -126,7 +126,8 @@ casper.test.begin('Testing correct Sign in', 3, function(test){
 //TODO create mock achievement
 
 //TODO add image
-//TODO add goals
+//TODO add goal
+//TODO add several goals
 //TODO remove achievement
 //TODO use created achievement below
 //TODO create a second achievement
@@ -134,7 +135,7 @@ casper.test.begin('Testing correct Sign in', 3, function(test){
 //TODO use public achievement below
 
 casper.test.begin('Testing Create Achievement', 2, function(test){
-    casper.start('http://localhost:1337/newAchievement?user_id=' + userId1 + '&title=TestAchievement&description=Testing achievement')
+    casper.start('http://localhost:1337/newAchievement?user_id=' + userId1 + '&title=TestAchievement&description=Testing achievement&currentImage=treehouse.io/content/img/achievementImages/1.png&goalTitles=["testGoal1"]&goalQuantities=2')
 
     casper.then(function(){
         test.assertHttpStatus(200);

@@ -1608,10 +1608,14 @@ app.get('/newAchievement', function(request, response){
         var motherAchievement;
         achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
             motherAchievement = achievement.createAchievement(user._id, request.query.title, request.query.description, request.query.currentImage)
-            var titles= JSON.parse(request.query.goalTitles)
-            var quantities=request.query.goalQuantities.split(',')
+console.log(motherAchievement)
+            var titles = JSON.parse(request.query.goalTitles)
+console.log(titles)
+            var quantities = request.query.goalQuantities.split(',')
+console.log(quantities[0] +" is a non-number: " + _.isNaN(parseInt(quantities[0])) )
             var textInQuantities = false;
             _.each(titles, function (title, i) {
+                console.log(_.isNaN(parseInt(quantities[i])))
                 if (_.isNaN(parseInt(quantities[i]))) {
                     textInQuantities = true;
                     response.writeHead(200, {'content-type': 'application/json' })
