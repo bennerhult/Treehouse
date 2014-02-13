@@ -19,23 +19,6 @@ casper.test.begin('Testing Start Page', 3, function(test) {
     })
 })
 
- //TODO create mock achievement
- casper.test.begin('Testing Public Achievement', 3, function(test){
-     casper.start('http://localhost:1337/achievement?achievementId=520a1ea4c6151500070003fe&userId=50c5f49c9400f66c170000fd')
-
-     casper.then(function(){
-         test.assertHttpStatus(200);
-         test.assertTitle('Treehouse - aa', 'Public achievement has correct title')
-         test.assertTextExists('by Erik Bennerhult', 'page body contains dom only text "by Erik Bennerhult"')
-     })
-
-     casper.run(function(){
-      test.done()
-     })
- })
-
-
-
  casper.test.begin('Testing entering new user', 1, function(test){
      casper.start('http://localhost:1337/checkUser?username=tester@treehouse.io&appMode=false')
 
@@ -139,6 +122,46 @@ casper.test.begin('Testing correct Sign in', 3, function(test){
         test.done()
     })
 })
+
+//TODO create mock achievement
+
+//TODO add image
+//TODO add goals
+//TODO remove achievement
+//TODO use created achievement below
+//TODO create a second achievement
+//TODO set second achievement to public
+//TODO use public achievement below
+
+casper.test.begin('Testing Create Achievement', 2, function(test){
+    casper.start('http://localhost:1337/newAchievement?user_id=' + userId1 + '&title=TestAchievement&description=Testing achievement')
+
+    casper.then(function(){
+        test.assertHttpStatus(200);
+        test.assertTitle('Treehouse - TestAchievement', 'Newly created achievement has correct title')
+       // test.assertTextExists('by Erik Bennerhult', 'page body contains dom only text "by Erik Bennerhult"')
+    })
+
+    casper.run(function(){
+        test.done()
+    })
+})
+
+
+casper.test.begin('Testing Public Achievement', 3, function(test){
+    casper.start('http://localhost:1337/achievement?achievementId=520a1ea4c6151500070003fe&userId=50c5f49c9400f66c170000fd')
+
+    casper.then(function(){
+        test.assertHttpStatus(200);
+        test.assertTitle('Treehouse - aa', 'Public achievement has correct title')
+        test.assertTextExists('by Erik Bennerhult', 'page body contains dom only text "by Erik Bennerhult"')
+    })
+
+    casper.run(function(){
+        test.done()
+    })
+})
+
 /*
 casper.test.begin('Testing Private Achievement when signed in', 3, function(test){
     casper.start('http://localhost:1337/achievement?achievementId=52dcfd394e67c8880c000002&userId=50b4ecda20d743b019000031')
