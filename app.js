@@ -1036,7 +1036,6 @@ function getAchievementList(request, response, completedAchievements) {
     progress.Progress.find({ achiever_id: achieverId}, {}, { sort: { 'latestUpdated' : -1 } }, function(err, progresses) {
         if (err) { console.log("error in app.js 1: couldn't find any progress for user " + achieverId) }
         if (progresses && progresses.length > 0) {
-            console.log("progresses.length: " + progresses.length)
             if (!lookingAtFriendsAchievements && !completedAchievements ) {achievementsList += '<div class="achievement"><div class="container"><a href="javascript:void(0)" onclick="insertContent(getNewAchievementContent(null, \'' + achieverId + '\'), setDefaultMenu(\'Create Achievement\', false))"><img src="content/img/empty.png" alt=""/></a></div><p>Create new achievement</p><div class="separerare-part">&nbsp;</div></div>' }
             progresses.forEach(function(currentProgress, index) {
                 achievement.Achievement.findById(currentProgress.achievement_id, function(err2, myAchievement) {
@@ -1044,7 +1043,7 @@ function getAchievementList(request, response, completedAchievements) {
                     if (myAchievement) {
                         if  (_.indexOf(achievementIdsGoneThrough, myAchievement._id.toString()) == -1) {
                             achievementIdsGoneThrough.push(myAchievement._id.toString())
-                            calculateAchievementProgress(achieverId, myAchievement._id, function(achievementPercentageFinished) {
+                             calculateAchievementProgressFromData(myAchievement.goals, progresses, function(achievementPercentageFinished) {
                                 shareholding.isAchievementShared(myAchievement._id, function(isAchievementShared) {
                                     shareholding.isAchievementCreatedByMe(achieverId, myAchievement._id, function(isAchievementCreatedByMe) {
                                         shareholding.isAchievementSharedByMe(userId, myAchievement._id, function(isAchievmentSharedByMe) {
@@ -1367,6 +1366,7 @@ function getGoalText(goal, achievement, progressNumber, latestUpdated, progressP
     return goalText
 }
 
+/*
 app.get('/completedAchievementsExist', function(request, response) {
     //console.log("/completedAchievementExist")
     var completedFound = false
@@ -1381,7 +1381,7 @@ app.get('/completedAchievementsExist', function(request, response) {
                     if (myAchievement) {
                         if  (_.indexOf(achievementIdsGoneThrough, myAchievement._id.toString()) == -1) {
                             achievementIdsGoneThrough.push(myAchievement._id.toString())
-                            calculateAchievementProgress(request.session.currentUser._id, myAchievement._id, function(achievementPercentageFinished) {
+                            calculateAchievementProgressFromData(myAchievement.goals, progresses, function(achievementPercentageFinished) {
                                 if(achievementPercentageFinished >= 100) {
                                     completedFound = true
                                 }
@@ -1409,7 +1409,7 @@ function finishCompletedAchievementsExist(response, completedFound) {
         response.write(JSON.stringify(false))
     }
     response.end('\n', 'utf-8')
-}
+}  */
 
 app.get('/achievementPercentage', function(request, response){
     //console.log("/achievementPercentage")
@@ -1421,30 +1421,31 @@ app.get('/achievementPercentage', function(request, response){
 })
 
 function calculateAchievementProgress(userId, achievementId, callback) {
+    achievement.Achievement.findOne({ _id: achievementId }, function(err,currentAchievement) {
+       progress.Progress.find({ achievement_id: achievementId, achiever_id:  userId}, function(err,progresses) {
+            calculateAchievementProgressFromData(currentAchievement.goals, progresses, callback)
+       })
+    })
+}
+
+function calculateAchievementProgressFromData(goals, progresses, callback) {
     var achievementCurrentProgress = 0
     var achievementTotalProgress = 0
     var goalsGoneThrough = 0
-    //TODO possible performance improvment: sometimes the code calling this has already read all data from DB. If so, pas it on to this method
-    //TODO for instance by creating a  calculateAchievementProgressFromData that they call, and this method calls too after getting the data
-    achievement.Achievement.findOne({ _id: achievementId }, function(err,currentAchievement) {
-        currentAchievement.goals.forEach(function(goal) {
-            achievementTotalProgress += goal.quantityTotal
-            progress.Progress.findOne({ achiever_id:  userId,  goal_id: goal._id}, function(err,myProgress) {
-                achievementCurrentProgress += myProgress.quantityFinished
-                goalsGoneThrough++
-                if (goalsGoneThrough == currentAchievement.goals.length) {
-
-                    console.log("currentAchievement.goals.length: " + currentAchievement.goals.length + ", " + achievementCurrentProgress)
-                    var achievementPercentageFinished = Math.floor((achievementCurrentProgress/ achievementTotalProgress) * 100)
-                    callback(achievementPercentageFinished)
-                }
-            })
-        })
+    var progressForGoal
+    goals.forEach(function(goal) {
+        achievementTotalProgress += goal.quantityTotal
+        progressForGoal = _.find(progresses, function(progressObj){return String(progressObj.goal_id) === String(goal._id)})
+         achievementCurrentProgress += progressForGoal.quantityFinished
+        goalsGoneThrough++
+        if (goalsGoneThrough === goals.length) {
+            var achievementPercentageFinished = Math.floor((achievementCurrentProgress/ achievementTotalProgress) * 100)
+            callback(achievementPercentageFinished)
+        }
     })
 }
 
 app.get('/progress', function(request, response){
-    //console.log("/progress")
     achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
         progress.markProgress(currentAchievement, request.session.currentUser._id, request.query.goalId, function(quantityFinished) {
             response.writeHead(200, {'content-type': 'application/json' })
@@ -1455,7 +1456,6 @@ app.get('/progress', function(request, response){
 })
 
 app.get('/publicize', function(request, response){
-    //console.log("/publicize")
     progress.Progress.findOne({ achievement_id: request.session.current_achievement_id, achiever_id: request.session.currentUser._id }, function(err,currentAchievementProgress) {
         achievement.publicize(currentAchievementProgress)
         response.writeHead(200, {'content-type': 'application/json' })
