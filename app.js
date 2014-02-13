@@ -517,6 +517,7 @@ app.get('/findFriends', function(request, response){
 
 app.get('/friendsList', function(request, response){
     var friendships = new Array()
+    var friendShipsGoneThrough = 0
     friendship.getPendingRequests(request.session.currentUser._id, function(pendings) {
         friendship.getFriends(request.session.currentUser._id, function(friendsList) {
             if (friendsList.length === 0) {
@@ -529,9 +530,10 @@ app.get('/friendsList', function(request, response){
             }  else {
                 var friendId
 
-                friendsList.forEach(function(currentFriendship, index) {
+                friendsList.forEach(function(currentFriendship) {
                     friendships.push(currentFriendship)
-                    if (index == friendsList.length -1) {
+                    friendShipsGoneThrough++
+                    if (friendShipsGoneThrough === friendsList.length) {
                         fillFriendsList(friendships, pendings, request.session.currentUser._id, function(content) {
                             response.writeHead(200, {'content-type': 'application/json' })
                             response.write(JSON.stringify(content))
