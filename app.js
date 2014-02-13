@@ -1596,26 +1596,20 @@ function finalizeAchievement (response, motherAchievement, titles, quantities, p
 }
 
 app.get('/newAchievement', function(request, response){
-    console.log("newAchievement")
     var userID
     if (request.query.user_id && request.query.user_id.length > 12) {
         userID = request.query.user_id
     } else {
         userID = request.session.currentUser._id
     }
-    console.log("userId: " + userID)
     user.User.findById(userID, function(err, user) {
         var motherAchievement;
         achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
             motherAchievement = achievement.createAchievement(user._id, request.query.title, request.query.description, request.query.currentImage)
-console.log(motherAchievement)
             var titles = JSON.parse(request.query.goalTitles)
-console.log(titles)
             var quantities = request.query.goalQuantities.split(',')
-console.log(quantities[0] +" is a non-number: " + _.isNaN(parseInt(quantities[0])) )
             var textInQuantities = false;
             _.each(titles, function (title, i) {
-                console.log(_.isNaN(parseInt(quantities[i])))
                 if (_.isNaN(parseInt(quantities[i]))) {
                     textInQuantities = true;
                     response.writeHead(200, {'content-type': 'application/json' })
