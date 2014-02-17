@@ -9,7 +9,7 @@ var footerContent = '<ul>' + nl +
     '<div class="clear"></div>' +
     '<div id="fbLikeWeb" style="overflow:visible;"><div class="fb-like" data-href="http://treehouse.io" data-width="200" font="segoe ui" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div></div>' +
     '<div id="tweetTreehouse" style="overflow:visible;">' +
-    '<a href="https://twitter.com/share?url=http://treehouse.io&text=Treehouse" class="twitter-share-button" data-via="Treehouse">Tweet</a>' +
+    '<a href="https://twitter.com/share?url=http://treehouse.io&text=Treehouse" class="twitter-share-button">Tweet</a>' +
     '<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>' +
     '</div>'
 

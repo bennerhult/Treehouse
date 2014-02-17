@@ -1303,7 +1303,7 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                                                     achievementDesc += '</div><div id="fbShare"><a onclick="fbShare(\''+ currentAchievement.title + '\', \'' +  achLink +'\', \'' + currentAchievement.imageURL + '\')" href="javascript:void(0)">share</a>'
                                                     achievementDesc += '</div>'
                                                     achievementDesc += '<div id="tweetAchievement" style="overflow:visible;">'
-                                                    achievementDesc += '<a href="https://twitter.com/share?url=' + encodedAchLink + '&text=' + currentAchievement.title + '" class="twitter-share-button" data-via="Treehouse">Tweet</a>'
+                                                    achievementDesc += '<a href="https://twitter.com/share?url=' + encodedAchLink + '&text=' + currentAchievement.title + '" class="twitter-share-button">Tweet</a>'
                                                     achievementDesc +='<script type="text/javascript">(function() {var s = document.createElement("SCRIPT");var c = document.getElementsByTagName("script")[0];s.type = "text/javascript";s.async = true;s.src = "http://platform.twitter.com/widgets.js";c.parentNode.insertBefore(s, c);})();</script>'
                                                     achievementDesc += '</div><div class="clear"> </div></div></div>'
                                                     response.write(JSON.stringify(achievementDesc))
