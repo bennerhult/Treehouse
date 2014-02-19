@@ -1597,7 +1597,8 @@ function finalizeAchievement (response, motherAchievement, titles, quantities, p
 
 app.get('/newAchievement', function(request, response){
     var userID
-    if (request.query.user_id && request.query.user_id.length > 12) {
+
+    if (query.user_id && query.user_id.length > 12) {
         userID = request.query.user_id
     } else {
         userID = request.session.currentUser._id
@@ -1606,7 +1607,7 @@ app.get('/newAchievement', function(request, response){
         var motherAchievement;
         achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
             motherAchievement = achievement.createAchievement(user._id, request.query.title, request.query.description, request.query.currentImage)
-            var titles = JSON.parse(request.query.goalTitles)
+            var titles = JSON.parse(query.goalTitles)
             var quantities = request.query.goalQuantities.split(',')
             var textInQuantities = false;
             _.each(titles, function (title, i) {

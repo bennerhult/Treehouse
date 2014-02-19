@@ -728,7 +728,7 @@ function createAchievementOnServer(onSuccess, onError) {
                 data += "&"
                 data +=  field.name
                 data += "="
-                data +=  field.value
+                data +=  encodeURIComponent(field.value)
             }
         }
     })
