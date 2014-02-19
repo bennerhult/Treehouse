@@ -1598,7 +1598,7 @@ function finalizeAchievement (response, motherAchievement, titles, quantities, p
 app.get('/newAchievement', function(request, response){
     var userID
 
-    if (query.user_id && query.user_id.length > 12) {
+    if (request.query.user_id && request.query.user_id.length > 12) {
         userID = request.query.user_id
     } else {
         userID = request.session.currentUser._id
