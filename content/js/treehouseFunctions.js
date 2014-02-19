@@ -721,7 +721,7 @@ function createAchievementOnServer(onSuccess, onError) {
     $("form#createAchievementForm :input").each(function(i, field) {
         if (field.name) {
             if (field.name.indexOf("goalTitle") == 0) {
-                goalTitles.push(field.value)
+                goalTitles.push(encodeURIComponent(field.value))
             } else if (field.name.indexOf("goalQuantity") == 0) {
                 goalQuantities.push(field.value)
             } else {
