@@ -706,36 +706,37 @@ app.get('/compareList', function(request, response){
     var friendIds = new Array()
     var content = ""
     var userId
+    var comparesGoneThrough = 0
     if (request.session.currentUser) {
         userId = request.session.currentUser._id
     }
     shareholding.getCompares(request.query.achievementId, userId, function(compareList) {
         if (compareList && compareList.length > 0) {
-            compareList.forEach(function(currentCompare, index) {
+            compareList.forEach(function(currentCompare) {
                 var myQuantityFinished = 0
                 var myQuantityTotal = 0
+                var goalsGoneThrough = 0
                 getPrettyNameIdAndImageURL( currentCompare.achiever_id, function(prettyName, id, imageURL) {
                     achievement.Achievement.findOne({ _id: request.query.achievementId }, function(err,currentAchievement) {
-                        currentAchievement.goals.forEach(function(goal, goalIndex) {
+                        currentAchievement.goals.forEach(function(goal) {
                             progress.Progress.findOne({ goal_id: goal._id, achiever_id: currentCompare.achiever_id }, function(err,myProgress) {
                                 if (err) {
                                     console.log("error in app.js 3: couldn't find progress for user " + currentCompare.achiever_id)
                                 } else {
+                                    goalsGoneThrough++
                                     myQuantityFinished += myProgress.quantityFinished
                                     myQuantityTotal += goal.quantityTotal
-                                }
-
-                                if (goalIndex == currentAchievement.goals.length - 1 ) {
-                                    content += getCompareText(prettyName, myQuantityFinished, myQuantityTotal, index, compareList.length, currentCompare.achiever_id, request.query.achievementId, myProgress.publiclyVisible, currentAchievement.title, imageURL)
-
-                                    if (index == compareList.length -1) {
-                                        response.writeHead(200, {'content-type': 'application/json' })
-                                        response.write(JSON.stringify(content))
-                                        response.end('\n', 'utf-8')
+                                    if (goalsGoneThrough === currentAchievement.goals.length) {
+                                        comparesGoneThrough++
+                                        content += getCompareText(prettyName, myQuantityFinished, myQuantityTotal, comparesGoneThrough, compareList.length, currentCompare.achiever_id, request.query.achievementId, myProgress.publiclyVisible, currentAchievement.title, imageURL)
+                                        if (comparesGoneThrough === compareList.length) {
+                                            response.writeHead(200, {'content-type': 'application/json' })
+                                            response.write(JSON.stringify(content))
+                                            response.end('\n', 'utf-8')
+                                        }
                                     }
                                 }
                             })
-
                         })
                     })
                 })
