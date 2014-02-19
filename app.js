@@ -1607,7 +1607,7 @@ app.get('/newAchievement', function(request, response){
         var motherAchievement;
         achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
             motherAchievement = achievement.createAchievement(user._id, request.query.title, request.query.description, request.query.currentImage)
-            var titles = JSON.parse(query.goalTitles)
+            var titles = JSON.parse(request.query.goalTitles)
             var quantities = request.query.goalQuantities.split(',')
             var textInQuantities = false;
             _.each(titles, function (title, i) {
