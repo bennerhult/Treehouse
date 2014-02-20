@@ -45,6 +45,42 @@ body{
     margin-right: 20px;
 }
 
+#fbShare a span{
+    display: block;
+    background: #4966b6; /* Old browsers */
+    background: -moz-linear-gradient(top,  #4966b6 0%, #3d58a3 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4966b6), color-stop(100%,#3d58a3)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #4966b6 0%,#3d58a3 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #4966b6 0%,#3d58a3 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #4966b6 0%,#3d58a3 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #4966b6 0%,#3d58a3 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4966b6', endColorstr='#3d58a3',GradientType=0 ); /* IE6-9 */
+
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    height: 20px;
+}
+
+#fbShare a span:hover{
+    background-image: none;
+    background-color: #536eba;
+}
+
+#fbShare a span img{
+    padding: 4px 4px 1px 4px;
+    float: left;
+}
+
+#fbShare a span p{
+    float: left;
+    color: #ffffff;
+    font-size: 11px;
+    padding: 3px 4px 0px 3px;
+    font-family: Arial;
+}
+
+
 #tweetAchievement{
     float: left;
     margin-top: 20px;
