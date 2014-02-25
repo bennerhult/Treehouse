@@ -942,7 +942,7 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
                 + ', \''
                 + achievements[i].title
             + '\''
-        achievementsList += ')"><img src="'
+        achievementsList += ')"><img width="96" height="96" src="'
             + achievements[i].imageURL
             + '" alt="'
             + achievements[i].title
