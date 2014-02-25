@@ -125,8 +125,6 @@ casper.test.begin('Testing correct Sign in', 3, function(test){
 })
 
 //TODO add several goals
-//TODO remove achievement
-//TODO use created achievement below
 //TODO create a second achievement
 //TODO set second achievement to public
 //TODO use public achievement below
@@ -145,13 +143,26 @@ casper.test.begin('Testing Create Achievement', 1, function(test){
 })
 
 
-casper.test.begin('Testing Public Achievement', 3, function(test){
-    casper.start('http://localhost:1337/achievement?achievementId=520a1ea4c6151500070003fe&userId=50c5f49c9400f66c170000fd')
+casper.test.begin('Testing Private Achievement when signed in', 3, function(test){
+    casper.start('http://localhost:1337/achievement?achievementId=' + achievementId1 + '&userId=' + userId1)
 
     casper.then(function(){
         test.assertHttpStatus(200);
-        test.assertTitle('Treehouse - aa', 'Public achievement has correct title')
-        test.assertTextExists('by Erik Bennerhult', 'page body contains dom only text "by Erik Bennerhult"')
+        test.assertTitle('Treehouse - TestAchievement', 'Public achievement has correct title')
+        test.assertTextExists('Tester Schmester', 'Public achievement has correct user')
+    })
+
+    casper.run(function(){
+        test.done()
+    })
+})
+
+casper.test.begin('Testing deleting Achievement when signed in', 2, function(test){
+    casper.start('http://localhost:1337/delete?achievementId=' + achievementId1)
+
+    casper.then(function(){
+        test.assertHttpStatus(200);
+        test.assertTextExists('ok', 'Delete reported ok')
     })
 
     casper.run(function(){
@@ -160,12 +171,13 @@ casper.test.begin('Testing Public Achievement', 3, function(test){
 })
 
 /*
-casper.test.begin('Testing Private Achievement when signed in', 3, function(test){
+casper.test.begin('Testing Public Achievement', 3, function(test){
     casper.start('http://localhost:1337/achievement?achievementId=52dcfd394e67c8880c000002&userId=50b4ecda20d743b019000031')
 
     casper.then(function(){
      test.assertHttpStatus(200);
      test.assertTitle('Treehouse - test4', 'Private achievement accessible when signed in')
+     test.assertTextExists('by Tester Schmester', 'Public achievement has correct user')
      test.assertTextExists('test4', 'page body contains "test4"')
     })
 

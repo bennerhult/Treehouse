@@ -1493,7 +1493,14 @@ app.get('/deleteUser', function(request, response) {
 })
 
 app.get('/delete', loadUser, function(request, response){
-    achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
+    var achievementId
+
+    if (request.query.achievementId && request.query.achievementId.length > 12) {
+        achievementId = request.query.achievementId
+    } else {
+        achievementId = request.session.current_achievement_id
+    }
+    achievement.Achievement.findOne({ _id: achievementId }, function(err,currentAchievement) {
         if (currentAchievement) {
             shareholding.Shareholding.findOne({ sharer_id: request.session.currentUser._id, achievement_id: currentAchievement._id }, function(err, sharehold) {
                 if (sharehold != null) {
