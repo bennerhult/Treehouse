@@ -72,7 +72,7 @@ function topAppPagePart() {
         tab + '<link href="http://fonts.googleapis.com/css?family=Philosopher" rel="stylesheet" type="text/css">' + nl +
         tab + '<link href="http://fonts.googleapis.com/css?family=Dosis" rel="stylesheet" type="text/css">' + nl +
         tab + '</head>' + nl +
-        tab + ' <body>' + nl +
+        tab + ' <body onresize="resize_canvas()">' + nl +
         '<div id="fb-root"></div>' + nl +
         '<div id="page-login">' + nl +
         '<div id="web-menu">' + nl +
@@ -150,10 +150,10 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
                     tab + 'rememberMe()'   + nl +
                     tab   + 'setTimeout(function(){addToHome.show(false)}, 100)})</script>' + nl +
                     tab + '</head>' + nl +
-                    tab + ' <body>' + nl +
+                    tab + ' <body onresize="resize_canvas()">' + nl +
                 '<div id="fb-root"></div>' + nl +
                 '<div id="page">' + nl +
-                '<canvas id="world" width="100%" height="100%" style="z-index:998; position: absolute; left: 0; top: 0;"><p class="noCanvas">You need a <a href="http://www.google.com/chrome">modern browser</a> to view this.</p></canvas>' +
+                '<canvas id="world" style="z-index:998; position: absolute; left: 0; top: 0;"><p class="noCanvas">You need a <a href="http://www.google.com/chrome">modern browser</a> to view this.</p></canvas>' +
                 '<div id="web-menu">' + nl +
                     '<ul>' + nl +
                         '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart(), 0)"><span class="selected"><img alt="Treehouse" src="content/img/logo-small.png" /></span></a></li>'  + nl +
@@ -230,10 +230,10 @@ function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUr
             tab + '})' + nl +
             tab + '</script>' + nl +
             tab + '</head>' + nl +
-            tab + ' <body>' + nl +
+            tab + ' <body onresize="resize_canvas()">' + nl +
             '<div id="fb-root"></div>' + nl +
             '<div id="page">' + nl +
-            '<canvas id="world" width="100%" height="100%" style="z-index:998; position: absolute; left: 0; top: 0;"><p class="noCanvas">You need a <a href="http://www.google.com/chrome">modern browser</a> to view this.</p></canvas>' +
+            '<canvas id="world" style="z-index:998; position: absolute; left: 0; top: 0;"><p class="noCanvas">You need a <a href="http://www.google.com/chrome">modern browser</a> to view this.</p></canvas>' +
             '<div id="web-menu">' + nl +
                 '<ul>' + nl +
                     '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart(), 0)"><span class="selected"><img alt="Treehouse" src="content/img/logo-small.png" /></span></a></li>'  + nl +
