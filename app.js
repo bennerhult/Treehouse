@@ -1301,7 +1301,7 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
 
                                                     achievementDesc +='<iframe width="95" src="//www.facebook.com/plugins/like.php?href=' + encodedAchLink + '&amp;width&amp;layout=button_count&amp;locale=en_US&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=80&amp;appId=480961688595420" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:80px;" allowTransparency="true"></iframe>'
 
-                                                    achievementDesc += '</div><div id="fbShare"><a onclick="fbShare(\''+ currentAchievement.title + '\', \'' +  achLink +'\', \'' + currentAchievement.imageURL + '\')" href="javascript:void(0)"><span><img src="content/img/f-icon.png"><p>share</p></span></a>'
+                                                    achievementDesc += '</div><div id="fbShare"><a onclick="fbShare(\''+ currentAchievement.title + '\', \'' +  achLink +'\', \'' + currentAchievement.imageURL + '\')" href="javascript:void(0)"><span><img src="content/img/f-icon.png"><p>Share</p></span></a>'
                                                     achievementDesc += '</div>'
                                                     achievementDesc += '<div id="tweetAchievement" style="overflow:visible;">'
                                                     achievementDesc += '<a href="https://twitter.com/share?url=' + encodedAchLink + '&text=' + currentAchievement.title + '" class="twitter-share-button">Tweet</a>'
