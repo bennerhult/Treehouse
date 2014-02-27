@@ -110,7 +110,6 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
             tab + '<html manifest="treehouse.manifest" lang="en">' + nl +
                 tab + '<head>' + nl +
                     tab + '<title>Treehouse</title>' + nl +
-               tab + '<meta name="majestic-site-verification" content="MJ12_05acf547-2643-4241-a84f-38182efaff95">' + nl +    //majestic
                     tab + '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' + nl +
                     tab + '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">' + nl +
                     tab + '<meta name="apple-mobile-web-app-capable" content="yes">' + nl +
