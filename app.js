@@ -124,17 +124,22 @@ app.listen(port)
 console.log('Treehouse server started on port ' + port)
 
 app.get('/content/*', function(request, response){
-    //console.log("/content/*: " + request.url)
     staticFiles.serve("." + request.url, response)
 })
 
 app.get('/treehouse.manifest', function(request, response){
-    //console.log("/treehouse.manifest")
+    staticFiles.serve("." + request.url, response)
+})
+
+app.get('/robots.txt', function(request, response){
+    staticFiles.serve("." + request.url, response)
+})
+
+app.get('/sitemap.xml', function(request, response){
     staticFiles.serve("." + request.url, response)
 })
 
 app.get('/channel.html', function(request, response){
-    //console.log("/channel.html")
     staticFiles.serve("." + request.url, response)
 })
 

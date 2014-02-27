@@ -1,13 +1,15 @@
 exports.ext = function () {
     var extTypes = {
-        "css"           : "text/css",
+        "css"         : "text/css",
         "gif"         : "image/gif",
         "html"        : "text/html",
         "ico"         : "image/vnd.microsoft.icon",
         "js"          : "application/javascript",
         "json"        : "application/json",
         "manifest"    : "text/cache-manifest",
-        "png"         : "image/png"
+        "png"         : "image/png",
+        "txt"         : "text/plain",
+        "xml"   : "application/xml"
 
     }
     return {
