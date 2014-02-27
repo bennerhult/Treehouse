@@ -28,8 +28,6 @@ Running tests
 
 `git merge origin/master`
 
-Click Synchronize `ctrl-alt-y' in WebStorm
-
 ###restore
 `cd c://th`
 
@@ -69,7 +67,7 @@ See available versions for Node and NPM
 #####Example find
 `db.achievements.find();`
 
-####Clear database
+####Clear database from all achievements
 `db.users.remove();`
 
 `db.achievements.remove();`
@@ -101,4 +99,3 @@ See available versions for Node and NPM
 [Underscore](http://documentcloud.github.com/underscore/)
 
 [Express](http://expressjs.com/)
-
