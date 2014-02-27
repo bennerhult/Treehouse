@@ -567,7 +567,6 @@ function getAchievement(achievementId, userId, publiclyVisible) {
                         $("#appcontainerSocial").show()
                         $("#tweetAchievement").show()
                         $("#fbLikeWeb").hide()
-                        //$("#editButton").hide()
                     } else {
                         $("#appcontainerSocial").hide()
                         $("#tweetAchievement").hide()
