@@ -567,7 +567,7 @@ function getAchievement(achievementId, userId, publiclyVisible) {
                         $("#appcontainerSocial").show()
                         $("#tweetAchievement").show()
                         $("#fbLikeWeb").hide()
-                        $("#editButton").hide()
+                        //$("#editButton").hide()
                     } else {
                         $("#appcontainerSocial").hide()
                         $("#tweetAchievement").hide()
@@ -598,12 +598,11 @@ function getPublicAchievement(achieverId, achievementId, publiclyVisible) {
                 $("#appcontainerSocial").show()
                 $("#tweetAchievement").show()
                 $("#fbLikeWeb").hide()
-                $("#editButton").hide()
             }  else {
                 $("#appcontainerSocial").hide()
                 $("#tweetAchievement").hide()
                 $("#fbLikeWeb").hide()
-                $("#editButton").show()
+                //$("#editButton").show()
             }
 
         }, achievementId, false, null, achieverId
@@ -673,7 +672,6 @@ function publicize() {
     publicizeOnServer(
         function() {
             FB.XFBML.parse();
-            $("#editButton").hide()
             $("#publicizeButton").hide()
             $("#unpublicizeButton").show()
             $("#appcontainerSocial").show()
