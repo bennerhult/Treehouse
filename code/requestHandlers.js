@@ -28,7 +28,7 @@ function publicAchievementPage(response, userId, currentAchievementId, url, imag
 
 function topAppPagePart() {
     return  '<!DOCTYPE html>' + nl +
-        tab + '<html manifest="treehouse.manifest">' + nl +
+        tab + '<html manifest="treehouse.manifest" lang="en">' + nl +
         tab + '<head>' + nl +
         tab + '<title>Treehouse</title>' + nl +
         tab + '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' + nl +
@@ -72,12 +72,12 @@ function topAppPagePart() {
         tab + '<link href="http://fonts.googleapis.com/css?family=Philosopher" rel="stylesheet" type="text/css">' + nl +
         tab + '<link href="http://fonts.googleapis.com/css?family=Dosis" rel="stylesheet" type="text/css">' + nl +
         tab + '</head>' + nl +
-        tab + ' <body>' + nl +
+        tab + ' <body onresize="resize_canvas()">' + nl +
         '<div id="fb-root"></div>' + nl +
         '<div id="page-login">' + nl +
         '<div id="web-menu">' + nl +
         '<ul>' + nl +
-        '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart(), 0)"><span class="selected"><img src="content/img/logo-small.png" /></span></a></li>'  + nl +
+        '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart(), 0)"><span class="selected"><img alt="Treehouse" src="content/img/logo-small.png" /></span></a></li>'  + nl +
         '<li><a href="javascript:void(0)" onclick="showInfo(getAbout(), 2)"><span>About</span></a> </li>'  + nl +
         '<li><a href="javascript:void(0)" onclick="showInfo(getMiscInfo(), 2)"><span>Miscellany</span></a> </li>'  + nl +
         '<li><a href="javascript:void(0)" onclick="showInfo(getAbout(), 3)"><span>About</span></a> </li>'  + nl +
@@ -107,7 +107,7 @@ function topAppPagePart() {
 function topIndexPart(userId, nrOfFriendShipRequests) {
     console.log("top index part: " + userId)
            return '<!DOCTYPE html>' + nl +
-            tab + '<html>' + nl +
+            tab + '<html manifest="treehouse.manifest" lang="en">' + nl +
                 tab + '<head>' + nl +
                     tab + '<title>Treehouse</title>' + nl +
                     tab + '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' + nl +
@@ -150,13 +150,13 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
                     tab + 'rememberMe()'   + nl +
                     tab   + 'setTimeout(function(){addToHome.show(false)}, 100)})</script>' + nl +
                     tab + '</head>' + nl +
-                    tab + ' <body>' + nl +
+                    tab + ' <body onresize="resize_canvas()">' + nl +
                 '<div id="fb-root"></div>' + nl +
                 '<div id="page">' + nl +
-                '<canvas id="world" width="100%" height="100%" style="z-index:998; position: absolute; left: 0; top: 0;"><p class="noCanvas">You need a <a href="http://www.google.com/chrome">modern browser</a> to view this.</p></canvas>' +
+                '<canvas id="world" style="z-index:998; position: absolute; left: 0; top: 0;"><p class="noCanvas">You need a <a href="http://www.google.com/chrome">modern browser</a> to view this.</p></canvas>' +
                 '<div id="web-menu">' + nl +
                     '<ul>' + nl +
-                        '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart(), 0)"><span class="selected"><img src="content/img/logo-small.png" /></span></a></li>'  + nl +
+                        '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart(), 0)"><span class="selected"><img alt="Treehouse" src="content/img/logo-small.png" /></span></a></li>'  + nl +
                         '<li><a href="javascript:void(0)" onclick="showInfo(getAchievementInfo(), 1)"><span>Achievements</span></a> </li>'  + nl +
                         '<li><a href="javascript:void(0)" onclick="showInfo(getMiscInfo(), 2)"><span>Miscellany</span></a> </li>'  + nl +
                         '<li><a href="javascript:void(0)" onclick="showInfo(getAbout(), 3)"><span>About</span></a> </li>'  + nl +
@@ -186,7 +186,7 @@ function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUr
     console.log("topPublicAchievementPart: " + achieverId + ", " + url)
     return (
         '<!DOCTYPE html>' + nl +
-            tab + '<html>' + nl +
+            tab + '<html manifest="treehouse.manifest" lang="en">' + nl +
             tab + '<head>' + nl +
             tab + '<title>Treehouse - ' + title + '</title>' + nl +
             tab + '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' + nl +
@@ -230,13 +230,13 @@ function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUr
             tab + '})' + nl +
             tab + '</script>' + nl +
             tab + '</head>' + nl +
-            tab + ' <body>' + nl +
+            tab + ' <body onresize="resize_canvas()">' + nl +
             '<div id="fb-root"></div>' + nl +
             '<div id="page">' + nl +
-            '<canvas id="world" width="100%" height="100%" style="z-index:998; position: absolute; left: 0; top: 0;"><p class="noCanvas">You need a <a href="http://www.google.com/chrome">modern browser</a> to view this.</p></canvas>' +
+            '<canvas id="world" style="z-index:998; position: absolute; left: 0; top: 0;"><p class="noCanvas">You need a <a href="http://www.google.com/chrome">modern browser</a> to view this.</p></canvas>' +
             '<div id="web-menu">' + nl +
                 '<ul>' + nl +
-                    '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart(), 0)"><span class="selected"><img src="content/img/logo-small.png" /></span></a></li>'  + nl +
+                    '<li class="first"><a href="javascript:void(0)" onclick="showInfo(getStart(), 0)"><span class="selected"><img alt="Treehouse" src="content/img/logo-small.png" /></span></a></li>'  + nl +
                     '<li><a href="javascript:void(0)" onclick="showInfo(getAchievementInfo(), 1)"><span>Achievements</span></a> </li>'  + nl +
                     '<li><a href="javascript:void(0)" onclick="showInfo(getMiscInfo(), 2)"><span>Miscellany</span></a> </li>'  + nl +
                     '<li><a href="javascript:void(0)" onclick="showInfo(getAbout(), 3)"><span>About</span></a> </li>'  + nl +

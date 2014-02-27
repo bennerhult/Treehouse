@@ -40,6 +40,19 @@ function checkUser(appMode) {
     }
 }
 
+function resize_canvas(){
+    var canvas = document.getElementById("world");
+    if (canvas.width  < window.innerWidth)
+    {
+        canvas.width  = window.innerWidth;
+    }
+
+    if (canvas.height < window.innerHeight)
+    {
+        canvas.height = window.innerHeight;
+    }
+}
+
 function checkUserOnServer(username, appMode, callback) {
     var data = "username=" + username + "&appMode=" + appMode
     $.ajax("/checkUser", {     
