@@ -68,8 +68,6 @@ See available versions for Node and NPM
 `db.achievements.find();`
 
 ####Clear database from all achievements
-`db.users.remove();`
-
 `db.achievements.remove();`
 
 `db.goals.remove();`
