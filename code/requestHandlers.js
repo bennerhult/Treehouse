@@ -1,6 +1,11 @@
 var nl = '\n'
 var tab = '\t'
 
+var today = new Date()
+var nextweek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+7)
+var nextWeekUTC = nextweek.toUTCString()
+
+
 function gotoAppPage(response) {
     response.writeHead(200, { 'Content-Type': 'text/html' })
     response.end(topAppPagePart() + gotoAppPart() + bottomPart(), 'utf-8')
@@ -32,6 +37,8 @@ function topAppPagePart() {
         tab + '<head>' + nl +
         tab + '<title>Treehouse</title>' + nl +
         tab + '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' + nl +
+        tab + '<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="PUBLIC">' + nl +
+        tab + '<META HTTP-EQUIV="EXPIRES" CONTENT="' + nextWeekUTC + '">' + nl +
         tab + '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">' + nl +
         tab + '<meta name="apple-mobile-web-app-capable" content="yes">' + nl +
         tab + '<meta name="apple-mobile-web-app-status-bar-style" content="black" />' + nl +
@@ -111,6 +118,8 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
                 tab + '<head>' + nl +
                     tab + '<title>Treehouse</title>' + nl +
                     tab + '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' + nl +
+                    tab + '<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="PUBLIC">' + nl +
+                    tab + '<META HTTP-EQUIV="EXPIRES" CONTENT="' + nextWeekUTC + '">' + nl +
                     tab + '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">' + nl +
                     tab + '<meta name="apple-mobile-web-app-capable" content="yes">' + nl +
                     tab + '<meta name="apple-mobile-web-app-status-bar-style" content="black" />' + nl +
@@ -190,6 +199,8 @@ function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUr
             tab + '<head>' + nl +
             tab + '<title>Treehouse - ' + title + '</title>' + nl +
             tab + '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' + nl +
+            tab + '<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="PUBLIC">' + nl +
+            tab + '<META HTTP-EQUIV="EXPIRES" CONTENT="' + nextWeekUTC + '">' + nl +
             tab + '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">' + nl +
             tab + '<meta name="apple-mobile-web-app-capable" content="yes">' + nl +
             tab + '<meta name="apple-mobile-web-app-status-bar-style" content="black" />' + nl +
