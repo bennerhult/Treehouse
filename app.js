@@ -758,7 +758,7 @@ app.get('/compareList', function(request, response){
 function getCompareText(prettyName, finished, total, index, nrOfCompares, achieverId, achievementId, publiclyVisible, title, imageURL) {
     compareText = '<div class="part-achievement">'
     + '<div class="progress-container">'
-    + '<h3><a class="headerlink" href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ', \'' + title + '\')">'
+    + '<h3><a class="headerlink" href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ', \'' +  title + '\')">'
         + prettyName
     + '</a></h3>'
     + '<table border="0px">'
@@ -945,7 +945,7 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
                 + '\', '
                 + progresses[i].publiclyVisible
                 + ', \''
-                + achievements[i].title
+                +  encodeURIComponent(achievements[i].title)
             + '\''
         achievementsList += ')"><img width="96" height="96" src="'
             + achievements[i].imageURL
