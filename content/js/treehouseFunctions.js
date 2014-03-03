@@ -728,13 +728,16 @@ function createAchievementOnServer(onSuccess, onError) {
     var data = "currentImage=" + $("#achievementImage").attr("src")
     var goalTitles = new Array()
     var goalQuantities = new Array()
+    var fieldValue
     $("form#createAchievementForm :input").each(function(i, field) {
         if (field.name) {
             if (field.name.indexOf("goalTitle") == 0) {
-                goalTitles.push(encodeURIComponent(field.value))
+                fieldValue = field.value.replace(/"/g, '&quot;')
+                goalTitles.push(encodeURIComponent(fieldValue))
             } else if (field.name.indexOf("goalQuantity") == 0) {
                 goalQuantities.push(field.value)
             } else {
+
                 data += "&"
                 data +=  field.name
                 data += "="
