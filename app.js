@@ -926,7 +926,7 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
     var titleWithSingleQuotationsEscaped
     var achievementsList = ""
     for (var i in achievements) {
-        titleWithSingleQuotationsEscaped = achievements[i].title.replace(/'/g, '&quot;')
+        titleWithSingleQuotationsEscaped = achievements[i].title.replace(/'/g, '&apos;')
         if ((completed || lookingAtFriendsAchievements) && i == 0) {
             achievementsList += "<div class='achievement'>"
         } else {
