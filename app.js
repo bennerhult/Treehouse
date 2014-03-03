@@ -923,8 +923,10 @@ app.get('/latestAchievementSplash', function(request, response) {
 })
 
 function createAchievementDesc(achievements,progresses, achieverId, percentages, completed, lookingAtFriendsAchievements, sharedAchievements, isAchievementCreatedByMe) {
+    var titleWithSingleQuotationsEscaped
     var achievementsList = ""
     for (var i in achievements) {
+        titleWithSingleQuotationsEscaped = achievements[i].title.replace(/'/g, '&quot;')
         if ((completed || lookingAtFriendsAchievements) && i == 0) {
             achievementsList += "<div class='achievement'>"
         } else {
@@ -945,7 +947,7 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
                 + '\', '
                 + progresses[i].publiclyVisible
                 + ', \''
-                +  encodeURIComponent(achievements[i].title)
+                +  encodeURIComponent(titleWithSingleQuotationsEscaped)
             + '\''
         achievementsList += ')"><img width="96" height="96" src="'
             + achievements[i].imageURL
