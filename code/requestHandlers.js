@@ -192,6 +192,7 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
 
 function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUrl, title, publiclyVisible) {
     console.log("topPublicAchievementPart: " + achieverId + ", " + url)
+    var titleWithSingleQuotationsEscaped = title.replace(/'/g, '&apos;')
     return (
         '<!DOCTYPE html>' + nl +
             tab + '<html manifest="treehouse.manifest" lang="en">' + nl +
@@ -234,7 +235,7 @@ function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUr
             tab + '<script type="text/javascript">' + nl +
             tab + '$(document).ready(function() {' + nl +
             tab + 'init()' + nl +
-            tab + 'insertContent(getPublicAchievementContent(), setDefaultMenu(\'' + title + '\', false), function() {' + nl +
+            tab + 'insertContent(getPublicAchievementContent(), setDefaultMenu(\'' + titleWithSingleQuotationsEscaped + '\', false), function() {' + nl +
             tab + 'getPublicAchievement(\'' + achieverId + '\',  \'' + currentAchievementId + '\',  \'' + publiclyVisible + '\')' + nl +
             tab + '})' + nl +
             tab + '})' + nl +
