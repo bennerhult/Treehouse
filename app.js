@@ -553,10 +553,11 @@ app.get('/friendsList', function(request, response){
 
 function fillFriendsList(friendsList, pendings, userId, callback) {
     var currentFriendId
+    var friendsGoneThrough = 0
     var content = '<div id="friendsList"><div class="header">Friends</div>'
     content +=   '<div id="myfriends" class="myfriends">'
     if (friendsList.length > 0) {
-        friendsList.forEach(function(currentFriendship, index) {
+        friendsList.forEach(function(currentFriendship) {
             if (currentFriendship.friend1_id == userId) {
                 currentFriendId = currentFriendship.friend2_id
             } else {
@@ -572,11 +573,13 @@ function fillFriendsList(friendsList, pendings, userId, callback) {
                 content +=   ' <span class="remove"><a href="javascript:void(0)" onclick="removeFriendship(\'' + currentFriendship._id  + '\')">Remove</a></span>'
                 content +=   '</div>'
                 content +=   '<div class="clear"></div>'
-                if  (index < friendsList.length - 1 || pendings.length > 0)   {
+                friendsGoneThrough++
+                if  (friendsGoneThrough < friendsList.length || pendings.length > 0)   {
                     content +=   '<div class="separerare-part">&nbsp;</div>'
                 }
                 content +=   '</div>'
-                if (index == friendsList.length - 1) {
+
+                if (friendsGoneThrough === friendsList.length) {
                     if (pendings.length > 0) {
                         addPendings(content, pendings, userId, callback)
                     }  else {
@@ -601,7 +604,8 @@ function fillFriendsList(friendsList, pendings, userId, callback) {
 
 function addPendings(content, pendings, userId, callback) {
     var currentFriendId
-    pendings.forEach(function(currentFriendship, index) {
+    var pendingsGoneThrough = 0
+    pendings.forEach(function(currentFriendship) {
         if (currentFriendship.friend1_id == userId) {
             currentFriendId = currentFriendship.friend2_id
         } else {
@@ -618,11 +622,12 @@ function addPendings(content, pendings, userId, callback) {
             content +=   ' <span class="ignore"><a style="color: #000" href="javascript:void(0)" onclick="ignoreFriendRequest(\'' + currentFriendship._id + '\')">Ignore</a></span>'
             content +=   '</div>'
             content +=   '<div class="clear"></div>'
-            if  (index < pendings.length - 1)   {
+            pendingsGoneThrough
+            if  (pendingsGoneThrough < pendings.length)   {
                 content +=   '<div class="separerare-part">&nbsp;</div>'
             }
             content +=   '</div>'
-            if (index == pendings.length - 1) {
+            if (pendingsGoneThrough === pendings.length) {
                 content += '</div></div>'
                 callback(content)
             }
