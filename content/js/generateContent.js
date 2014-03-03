@@ -103,7 +103,8 @@ function setDefaultMenu(activePage, visitsMainPage) {
         $("#menuArea").html(menu)
     }
     setTopMenu(activePage)
-    $(document).attr('title', 'Treehouse - ' + activePage);
+    var titleWithoutQuotationsEscaped = activePage.replace(/&apos;/g, '\'')
+    $(document).attr('title', 'Treehouse - ' + titleWithoutQuotationsEscaped);
     if (visitsMainPage) {
         switch (activePage) {
             case 'Achievements' :

@@ -530,7 +530,6 @@ function openShareNotification(achievementId, achieverId, sharerId) {
 /******************  achievement functions  ******************/
 function openAchievement(achievementId, achieverId, publiclyVisible, title) {
     window.history.pushState(null, null, "/achievement?achievementId=" + achievementId + "&userId=" + achieverId)
-    //alert("1: " + title + ", " + decodeURIComponent(title))
     insertContent(getAchievementContent(), setDefaultMenu(decodeURIComponent(title), false), getAchievement(achievementId, achieverId, publiclyVisible))
 }
 
