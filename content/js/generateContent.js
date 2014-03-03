@@ -180,7 +180,7 @@ function showLatestAchievement(achievementId, userId, title) {
     if (document.getElementById("app-container-login")) {
         $("#app-container-login").attr("id","app-container");
     }
-    insertContent(getPublicAchievementContent(), setDefaultMenu(title, false), getPublicAchievement(userId, achievementId, 'true'))
+    insertContent(getPublicAchievementContent(), setDefaultMenu(decodeURIComponent(title), false), getPublicAchievement(userId, achievementId, 'true'))
 }
 
 function insertLatestAchievement() {

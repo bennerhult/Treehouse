@@ -896,16 +896,17 @@ function getPrettyNameIdAndImageURL(id, callback) {
 }
 
 app.get('/latestAchievementSplash', function(request, response) {
-    //console.log("latestAchievementSplash")
     var latestAchievementId = latestAchievement.getId(function(latestProgressId) {
         progress.Progress.findOne({ _id: latestProgressId }, function(err,latestProgress) {
            if (latestProgress) {
                achievement.Achievement.findOne({ _id: latestProgress.achievement_id }, function(err,latestAchievement) {
                    response.writeHead(200, {'content-type': 'application/json' })
                    if (latestAchievement) {
+                       var titleWithQuotationsEscaped = encodeURIComponent(latestAchievement.title.replace(/'/g, '&apos;'))
+                       console.log(titleWithQuotationsEscaped)
                        content = '<h2>Latest Achievement</h2>' +
-                           '<p><a class="latestAchievementLink" href="javascript:void(0)" onclick="showLatestAchievement(\'' + latestAchievement._id + '\', \'' + latestProgress.achiever_id + '\', \'' + latestAchievement.title + '\')">' + latestAchievement.title + '</a></p>' +
-                           '<div><a class="latestAchievementLink" href="javascript:void(0)" onclick="showLatestAchievement(\'' + latestAchievement._id + '\', \'' + latestProgress.achiever_id + '\', \'' + latestAchievement.title + '\')"><img src="' + latestAchievement.imageURL + '" /></a></div>'
+                           '<p><a class="latestAchievementLink" href="javascript:void(0)" onclick="showLatestAchievement(\'' + latestAchievement._id + '\', \'' + latestProgress.achiever_id + '\', \'' + titleWithQuotationsEscaped + '\')">' + latestAchievement.title + '</a></p>' +
+                           '<div><a class="latestAchievementLink" href="javascript:void(0)" onclick="showLatestAchievement(\'' + latestAchievement._id + '\', \'' + latestProgress.achiever_id + '\', \'' + titleWithQuotationsEscaped + '\')"><img src="' + latestAchievement.imageURL + '" /></a></div>'
                    }
                    response.write(JSON.stringify(content))
                    response.end('\n', 'utf-8')
