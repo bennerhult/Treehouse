@@ -14,7 +14,7 @@ function fbShare(caption, achLink, imageURL) {
         link: achLink,
         redirect_uri: achLink,
         picture: imageURL,
-        caption: caption
+        caption: decodeURIComponent(caption)
     }, function(response){})
 }
 
