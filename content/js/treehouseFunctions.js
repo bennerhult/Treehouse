@@ -714,20 +714,30 @@ function unpublicizeOnServer(callback) {
 }
 /******************  new achievement functions  ******************/
 function createAchievement(achieverId) {
-    if (isiOs) {
-        $("#menu").show()
-    }
     createAchievementOnServer(
        function(createdAchievementId) {openAchievements(false, achieverId, false)},
        function(errorMessage) { $("#message").html(errorMessage.responseText.substring(1, errorMessage.responseText.length - 2))  }
     )
 }
 
-function createInputFieldMouseDown() {
+function hideMenu() {
     if (isiOs) {
         $("#menu").hide()
     }
 }
+
+function showMenu() {
+    if (isiOs) {
+        $("#menu").show()
+    }
+}
+
+$("#input").blur(function(event) {
+    alert("WOW")
+    // if (isiOs) {
+    $("#menu").show()
+    // }
+})
 
 function createAchievementOnServer(onSuccess, onError) {
     var nrOfGoals =  $('#goalTable tr').length

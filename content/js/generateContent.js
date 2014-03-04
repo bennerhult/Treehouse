@@ -515,17 +515,17 @@ function getNewAchievementContent(data, achieverId) {
                                 var orderNr
                                 for (var i in data.goals) {
                                     orderNr = i*1 + 1  //*1 to force numeric, not string
-                                    text +='<tr><td class="goal"><input type="text" class="formstyle" name="goalTitle' + orderNr + '" placeholder="goal" onmousedown="createInputFieldMouseDown()" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)"'
+                                    text +='<tr><td class="goal"><input type="text" class="formstyle" name="goalTitle' + orderNr + '" placeholder="goal" onfocusout="showMenu()" onfocus="hideMenu()" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)"'
                                     text +=  'value="' + data.goals[i].title + '"'
                                     text += '></td><td class="quantity"><input type="text" class="formstyle" name="goalQuantity' + orderNr + '" placeholder="1" id="goalQuantity' + orderNr + '" '
                                     text +=  'value="' + data.goals[i].quantityTotal + '"'
                                     text +='></td></tr>'
                                 }
                                 orderNr++
-                                text +='<tr><td class="goal"><input type="text" class="formstyle" name="goalTitle' + orderNr + '" placeholder="goal" onmousedown="createInputFieldMouseDown()" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)"></td><td class="quantity"><input type="text" class="formstyle" id="goalQuantity' + orderNr + '" placeholder="1" name="goalQuantity' + orderNr + '"></td></tr>'
+                                text +='<tr><td class="goal"><input type="text" class="formstyle" name="goalTitle' + orderNr + '" placeholder="goal" onfocusout="showMenu()" onfocus="hideMenu()" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)"></td><td class="quantity"><input type="text" class="formstyle" id="goalQuantity' + orderNr + '" placeholder="1" name="goalQuantity' + orderNr + '"></td></tr>'
 
                             } else {
-                                text += '<tr><td class="goal"><input type="text" class="formstyle" name="goalTitle1" placeholder="goal" onmousedown="createInputFieldMouseDown()" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)"></td><td class="quantity"><input type="text" class="formstyle" id="goalQuantity1" placeholder="1" name="goalQuantity1"></td></tr>'
+                                text += '<tr><td class="goal"><input type="text" class="formstyle" name="goalTitle1" placeholder="goal" onfocusout="showMenu()" onfocus="hideMenu()" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)"></td><td class="quantity"><input type="text" class="formstyle" id="goalQuantity1" placeholder="1" name="goalQuantity1"></td></tr>'
                             }
                         text += '</table>' + nl  +
                         '<div class="clear"></div>' + nl  +
