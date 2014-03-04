@@ -680,8 +680,8 @@ function fillShareList(friendsList, userId, achievementId, callback) {
         } else {
             var goneThrough= 0
             friendsList.forEach(function(currentFriendship) {
-                shareholding.Shareholding.findOne({ sharer_id: userId, shareholder_id: friendsList[index], achievement_id: achievementId }, function(err, alreadySharedToFriend) {
-                    getPrettyNameIdAndImageURL(friendsList[index], function(username, id, imageURL) {
+                shareholding.Shareholding.findOne({ sharer_id: userId, shareholder_id: friendsList[goneThrough], achievement_id: achievementId }, function(err, alreadySharedToFriend) {
+                    getPrettyNameIdAndImageURL(friendsList[goneThrough], function(username, id, imageURL) {
                         content +=   '<div class="sharerlistitem">'
                         content +=   '<div class="leftcontainer"><img width="56" height="56" src="' + imageURL +'" /></div>'
                         content +=   '<div class="rightcontainer">'
@@ -689,7 +689,7 @@ function fillShareList(friendsList, userId, achievementId, callback) {
                         content +=    username
                         content +=   '</h3>'
                         if (alreadySharedToFriend == null) {
-                            content += ' <span id="shareholderid' + friendsList[index] + '"><a class="sharelink" href="javascript:void(0)" onclick="shareToFriend(\'' + friendsList[index] + '\',\'' + achievementId +  '\')">Share</a></span>'
+                            content += ' <span id="shareholderid' + friendsList[goneThrough] + '"><a class="sharelink" href="javascript:void(0)" onclick="shareToFriend(\'' + friendsList[goneThrough] + '\',\'' + achievementId +  '\')">Share</a></span>'
                         } else {
                             if (alreadySharedToFriend.confirmed) {
                                 content += '<p class="alreadyshared">Already got this!</p>'
@@ -700,11 +700,11 @@ function fillShareList(friendsList, userId, achievementId, callback) {
                         content +=   '</div>'
                         content +=   '<div class="clear"></div>'
                         goneThrough++
-                        if (!(goneThrough == friendsList.length)) {
+                        if (!(goneThrough === friendsList.length)) {
                             content +=   '<div class="separerare-part">&nbsp;</div>'
                         }
                         content +=   '</div>'
-                        if (goneThrough == friendsList.length) {
+                        if (goneThrough === friendsList.length) {
                             content += '</div>'
                             callback(content)
                         }
