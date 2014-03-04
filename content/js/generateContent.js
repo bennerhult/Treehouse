@@ -476,12 +476,12 @@ function getNewAchievementContent(data, achieverId) {
                 '<form id="createAchievementForm" action="javascript: createAchievement(\'' + achieverId + '\')">' + nl  +
                     '<div class="achievement-info">' + nl  +
             '<div class="inputarea">' + nl  +
-                            '<input type="text" class="formstyle" name="title" placeholder="title"'
+                            '<input type="text" class="formstyle" name="title" placeholder="title" onblur="showMenu()" onfocus="hideMenu()" '
                                     if (data)  {
                                         text +=  'value="' + titleWithQuotationsEscaped + '"'
                                     }
                                text += '>' + nl  +
-                            '<textarea class="formstyle" name="description" placeholder="description">'
+                            '<textarea class="formstyle" name="description" placeholder="description"  onblur="showMenu()" onfocus="hideMenu()" >'
                                     if (data)  {
                                         text +=   data.description
                                     }
