@@ -761,9 +761,10 @@ app.get('/compareList', function(request, response){
 })
 
 function getCompareText(prettyName, finished, total, index, nrOfCompares, achieverId, achievementId, publiclyVisible, title, imageURL) {
+    var  titleWithSingleQuotationsEscaped = title.replace(/'/g, '&apos;')
     compareText = '<div class="part-achievement">'
     + '<div class="progress-container">'
-    + '<h3><a class="headerlink" href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ', \'' +  title + '\')">'
+    + '<h3><a class="headerlink" href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ', \'' +  encodeURIComponent(titleWithSingleQuotationsEscaped) + '\')">'
         + prettyName
     + '</a></h3>'
     + '<table border="0px">'
@@ -790,7 +791,7 @@ function getCompareText(prettyName, finished, total, index, nrOfCompares, achiev
             + '</td><td>&nbsp;</td><td>'
         var completed = finished >= total
         var isAchievementCreatedByMe = false
-        compareText    += '<div class="user-image"><a href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ', \'' + title + '\')"><img width="56" height="56" src="' +imageURL + '" alt="Visit friend!"/></a></div>'
+        compareText    += '<div class="user-image"><a href="javascript:void(0)" onclick="openAchievement(\'' + achievementId + '\', \'' + achieverId + '\', ' + publiclyVisible + ', \'' + encodeURIComponent(titleWithSingleQuotationsEscaped) + '\')"><img width="56" height="56" src="' +imageURL + '" alt="Visit friend!"/></a></div>'
         compareText += '</td></tr></table>'
         compareText    += '<div class="clear"></div>'
         compareText    += '</div>'
@@ -978,18 +979,15 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
 function createNotificationDesc(response, achievementsList, completedAchievements, nrOfAchievements, notifications, achieverId, lookingAtFriend) {
     var shortNames = new Array()
 
+    //TODO remove double loop blow! Looks weird!
     for (var i in notifications) {
         user.getShortName(notifications[i].createdBy, function(prettyName) {
             shortNames.push(prettyName)
             if (shortNames.length == notifications.length) {
                 var notificationsList = ""
                 for (var j in notifications) {
-                    if (nrOfAchievements == 0 && i == 0 && lookingAtFriend) {
-                        notificationsList += "<div class='achievement'>"
-                    }  else {
-                        notificationsList += "<div class='achievement'>"
-                    }
-
+                    var  titleWithSingleQuotationsEscaped = notifications[j].title //.replace(/'/g, '&apos;')
+                    notificationsList += "<div class='achievement'>"
                     notificationsList += '<div class="container"><a href="javascript:void(0)" onclick="openShareNotification(\''
                         + notifications[j]._id
                         + '\', \''
@@ -999,12 +997,12 @@ function createNotificationDesc(response, achievementsList, completedAchievement
                         + '\')"><img src="'
                         + notifications[j].imageURL
                         + '" alt="'
-                        + notifications[j].title
+                        + encodeURIComponent(titleWithSingleQuotationsEscaped)
                         + '"/><span class="gradient-bg"> </span><span class="request"><div>Challenged <br/>'
                     if(shortNames[j]) {
                         notificationsList += 'by '+ shortNames[j] + ''
                     }
-                    notificationsList += ' </div></span></a></div><p>'  + notifications[j].title
+                    notificationsList += ' </div></span></a></div><p>'  + encodeURIComponent(titleWithSingleQuotationsEscaped)
                         + '</p><div class="separerare-part">&nbsp;</div></div>'
                     if (j >= notifications.length - 1) {
                         achievementsList +=  notificationsList
@@ -1168,9 +1166,6 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
     var achievementDesc = ''
 
     var checkingOtherPersonsAchievement = !(achiever._id == userId)
-    //console.log("achieverId: '" + achiever._id + "'")
-    console.log("userId: '" + userId + "'")
-    //console.log("checkingOtherPersonsAchievement: " + checkingOtherPersonsAchievement)
     var achievementUser_id
     if (isNotificationView) {
         achievementUser_id = sharerId
@@ -1199,11 +1194,11 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                                 } else {
                                     var goalPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100
                                     goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, myProgress.latestUpdated, goalPercentageFinished, checkingOtherPersonsAchievement, goalTexts.length + 1 == currentAchievement.goals.length, isNotificationView))
-                                    if (goalTexts.length == currentAchievement.goals.length) {
+                                    if (goalTexts.length === currentAchievement.goals.length) {
                                         var goalTextsText = ""
                                         goalTexts.forEach(function(goalText, index) {
                                             goalTextsText += goalText
-                                            if (index == goalTexts.length - 1) {
+                                            if (index === goalTexts.length - 1) {
                                                 var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100
                                                 if (checkingOtherPersonsAchievement) {
                                                     achievementDesc += '<div class="achievement-info"><div class=""><div id="userarea"><img src="' + achieverImageURL + '" /><a href="javascript:void(0)" onclick="openAchievements(false, \'' + achiever._id + '\', ' + true +')">' + achieverName + '</a><p>has not accepted your challenge</p></div>'
@@ -1231,7 +1226,7 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                                                 achievementDesc += '<div id="achievement-container">'
                                                 achievementDesc += goalTextsText
                                                 achievementDesc += '</div><div id="sharer-container"></div><div id="comparer-container"></div>'
-                                                response.write(JSON.stringify(achievementDesc), myProgress.publiclyVisible)
+                                                response.write(JSON.stringify(achievementDesc))
                                                 response.end('\n', 'utf-8')
                                             }
                                         })
@@ -1339,9 +1334,9 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
 
 function getGoalText(goal, achievement, progressNumber, latestUpdated, progressPercentage, publicView, lastGoal, isNotificationView) {
     if (!latestUpdated) {
-        latestUpdated = "<span id='latestUpdated" + goal._id +"'></span>"
+        latestUpdated = '<span id="latestUpdated' + goal._id +'"></span>'
     }  else {
-        latestUpdated = "<span id='latestUpdated" + goal._id + "'> (" +  moment(latestUpdated).format("MMM Do YYYY") + ")</span>"
+        latestUpdated = '<span id="latestUpdated' + goal._id + '"> (' +  moment(latestUpdated).format('MMM Do YYYY') + ')</span>'
     }
     var goalText =  '<div class="part-achievement">'
                          + '<div class="progress-container">'
