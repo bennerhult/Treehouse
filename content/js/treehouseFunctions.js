@@ -237,7 +237,7 @@ function findFriends() {
                         })
                     } else {
                         if (responseobject.confirmed) {
-                            messageText = friend_email + " is already your friend!"
+                            $("#message").html(friend_email + " is already your friend!")
                         } else {
                             if (responseobject.createdByCurrentUser ) {
                                 getUserFromServer(responseobject.id, function(friendInSpe) {
