@@ -1642,7 +1642,6 @@ app.get('/newAchievement', function(request, response){
                 if (currentAchievement)  {
                     console.log("existing achievement")
                         achievement.remove(currentAchievement, request.session.currentUser._id, function() {
-                            console.log("remove done!")
                             saveAchievement(response, motherAchievement, titles, quantities, request.session.currentUser._id)
                         })
                 } else {

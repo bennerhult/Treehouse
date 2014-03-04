@@ -7,7 +7,8 @@ var footerContent = '<ul>' + nl +
     '<li class="last"><span id="latestAchievementSplash"></span></li>' + nl +
     '</ul>' +
     '<div class="clear"></div>' +
-    '<div id="fbLikeWeb" style="overflow:visible;"><div class="fb-like" data-href="http://treehouse.io" data-width="200" font="segoe ui" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div></div>' +
+    '<div id="fbLikeWeb" style="overflow:visible;"><div class="fb-like" data-href="http://treehouse.io" data-width="200" font="segoe ui" data-layout="standard" data-action="like" data-show-faces="true" data-share="false"></div></div>' +
+    '<div id="fbShare"><a onclick="fbShare(\'Treehouse\', \'http://treehouse.io\', \'content/img/treehouse.jpg\')" href="javascript:void(0)"><span><img src="content/img/f-icon.png"><p>Share</p></span></a></div>' +
     '<div id="tweetTreehouse" style="overflow:visible;">' +
     '<a href="https://twitter.com/share?url=http://treehouse.io&text=Treehouse" class="twitter-share-button">Tweet</a>' +
     '<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>' +
@@ -538,8 +539,7 @@ function getNewAchievementContent(data, achieverId) {
                     }
                      text += '<div id="message"></div>' + nl +
                             '</div>' + nl  +
-                            '</form>' + nl  +
-
-                        '</div>'
+                        '</form>' + nl  +
+                    '</div>'
     return text
 }
