@@ -59,6 +59,8 @@ See available versions for Node and NPM
 ####Start database
 `c://mongo/bin/mongod`
 
+`c://mongo/bin/mongod --dbpath c:/mongo_data`
+
 
 ####Start database monitor
 `c://mongo/bin/mongo`
