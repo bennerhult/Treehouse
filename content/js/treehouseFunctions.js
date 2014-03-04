@@ -167,7 +167,7 @@ function editUser() {
 
     setPrettyNameOnServer(firstName, lastName, function(success) {
         setUserImageOnServer(imageURL, function(success) {
-            $("#message").html("Changes saved!")
+            $("#message").html("<span class='successMessage'>Changes saved!</span>")
         })
     })
 }
@@ -347,7 +347,7 @@ function visitFriend(friendId, userName) {
 function addFriend(friendId) {
     addFriendOnServer(friendId, function(ok) {
         if (ok) {
-            $("#message").html("Friend request sent.")
+            $("#message").html("<span class='successMessage'>Friend request sent.</span>")
         }  else {
             $("#message").html("You have already requested to be friends.")
         }
