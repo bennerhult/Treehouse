@@ -721,9 +721,9 @@ function createAchievement(achieverId) {
 }
 
 function hideMenu() {
-    if (isiOs) {
+   if (isiOs) {
         $("#menu").hide()
-    }
+   }
 }
 
 function showMenu() {
@@ -731,13 +731,6 @@ function showMenu() {
         $("#menu").show()
     }
 }
-
-$("#input").blur(function(event) {
-    alert("WOW")
-    // if (isiOs) {
-    $("#menu").show()
-    // }
-})
 
 function createAchievementOnServer(onSuccess, onError) {
     var nrOfGoals =  $('#goalTable tr').length
@@ -1029,8 +1022,8 @@ function goalKeyPress(goalField) {
            $(goalQuantityField).val("1")
        }
        var newRow = $('<tr >' + nl  +
-           '<td class="goal"><input type="text" class="formstyle" name="goalTitle' + newLineNumber + '" placeholder="goal" onkeypress="isio(this)" onpaste="goalKeyPress(this)"></td>' + nl  +
-           '<td class="quantity"><input type="text" class="formstyle" id="goalQuantity' + newLineNumber + '" name="goalQuantity' + newLineNumber + '" placeholder="1"></td>' + nl  +
+           '<td class="goal"><input type="text" class="formstyle" name="goalTitle' + newLineNumber + '" placeholder="goal" onblur="showMenu()" onfocus="hideMenu()" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)"></td>' + nl  +
+           '<td class="quantity"><input type="text" class="formstyle" id="goalQuantity' + newLineNumber + '" name="goalQuantity' + newLineNumber + '" placeholder="1" onblur="showMenu()" onfocus="hideMenu()"></td>' + nl  +
            '</tr>')
        $("#goalTable").append(newRow)
        $(newRow)
