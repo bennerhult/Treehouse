@@ -465,7 +465,11 @@ function getMoreMenuContent(callback) {
 
 //data if edit, null if create
 function getNewAchievementContent(data, achieverId) {
-    var titleWithQuotationsEscaped = data.title.replace(/"/g, '&quot;')
+    var titleWithQuotationsEscaped = ""
+    if (data && data.title)  {
+        titleWithQuotationsEscaped = data.title.replace(/"/g, '&quot;')
+    }
+
     initImages()
         var text ='<div id="app-container">' + nl  +
                 '<form id="createAchievementForm" action="javascript: createAchievement(\'' + achieverId + '\')">' + nl  +
