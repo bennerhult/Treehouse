@@ -307,7 +307,7 @@ function getFriendsContent(callback) {
         var content = '<div id="content">' + nl +
             '<form action="javascript: findFriends()">' + nl +
             '<input type="text" class="formstyle" name="friend_email" placeholder="email">' + nl +
-            '<input type="submit" class="button" value="Find friend">' + nl +
+            '<input type="submit" class="button" value="Search">' + nl +
             '</form>' + nl +
             '<div id="message"></div>'
         content += friendsList
