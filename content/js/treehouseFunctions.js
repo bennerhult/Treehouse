@@ -270,7 +270,7 @@ function findFriendsOnServer(friend_email, callback, errorCallback) {
         data: data,
         dataType: "json",
         success: function(responseobject) { callback(responseobject) },
-        error:  function(errorMessage) { $("#message").html(errorMessage.responseText.substring(1, errorMessage.responseText.length - 1)) }
+        error:  function(errorMessage) { $("#message").html(errorMessage.responseText.substring(1, errorMessage.responseText.length - 2)) }
     })
 }
 
@@ -716,7 +716,7 @@ function unpublicizeOnServer(callback) {
 function createAchievement(achieverId) {
    createAchievementOnServer(
        function(createdAchievementId) {openAchievements(false, achieverId, false)},
-       function(errorMessage) { $("#message").html(errorMessage.responseText.substring(1, errorMessage.responseText.length - 1))  }
+       function(errorMessage) { $("#message").html(errorMessage.responseText.substring(1, errorMessage.responseText.length - 2))  }
     )
 }
 
