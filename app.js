@@ -646,13 +646,15 @@ app.get('/shareList', function(request, response){
 
     friendship.getFriends(userId, function(friendsList) {
         if (friendsList.length > 0) {
-            friendsList.forEach(function(currentFriendship, index) {
+            var friendsGoneThrough = 0
+            friendsList.forEach(function(currentFriendship) {
                 if (currentFriendship.friend1_id == userId) {
                     friendIds.push(currentFriendship.friend2_id)
                 } else {
                     friendIds.push(currentFriendship.friend1_id)
                 }
-                if (index == friendsList.length -1) {
+                friendsGoneThrough++
+                if (friendsGoneThrough === friendsList.length) {
                     fillShareList(friendIds, userId, request.query.achievementId, function(content) {
                         response.writeHead(200, {'content-type': 'application/json' })
                         response.write(JSON.stringify(content))
@@ -670,14 +672,14 @@ app.get('/shareList', function(request, response){
 
 function fillShareList(friendsList, userId, achievementId, callback) {
     content = '<div id="sharerList">'
-    var goneThrough= 0
     achievement.Achievement.findById( achievementId , function(err, foundAchievement) {
         if(foundAchievement.createdBy != userId) {
             content += '<p class="noshareandcompare">You can only share achievements you created yourself</p>'
             content += '</div>'
             callback(content)
         } else {
-            friendsList.forEach(function(currentFriendship, index) {
+            var goneThrough= 0
+            friendsList.forEach(function(currentFriendship) {
                 shareholding.Shareholding.findOne({ sharer_id: userId, shareholder_id: friendsList[index], achievement_id: achievementId }, function(err, alreadySharedToFriend) {
                     getPrettyNameIdAndImageURL(friendsList[index], function(username, id, imageURL) {
                         content +=   '<div class="sharerlistitem">'
@@ -1052,7 +1054,7 @@ function getAchievementList(request, response, completedAchievements) {
         if (err) { console.log("error in app.js 1: couldn't find any progress for user " + achieverId) }
         if (progresses && progresses.length > 0) {
             if (!lookingAtFriendsAchievements && !completedAchievements ) {achievementsList += '<div class="achievement"><div class="container"><a href="javascript:void(0)" onclick="insertContent(getNewAchievementContent(null, \'' + achieverId + '\'), setDefaultMenu(\'Create Achievement\', false))"><img src="content/img/empty.png" alt=""/></a></div><p>Create new achievement</p><div class="separerare-part">&nbsp;</div></div>' }
-            progresses.forEach(function(currentProgress, index) {
+            progresses.forEach(function(currentProgress) {
                 achievement.Achievement.findById(currentProgress.achievement_id, function(err2, myAchievement) {
                     if (err2) { console.log("error in app.js 2: couldn't find achievement for progress " + currentProgress.achievement_id) }
                     if (myAchievement) {
@@ -1176,7 +1178,7 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
     if(currentAchievement.goals) {
         getPrettyNameIdAndImageURL(currentAchievement.createdBy, function(creatorName, creatorId, creatorImageURL) {
             getPrettyNameIdAndImageURL(achiever._id, function(achieverName, achieverId, achieverImageURL) {
-                currentAchievement.goals.forEach(function(goal, goalIndex) {
+                currentAchievement.goals.forEach(function(goal) {
                     progress.Progress.findOne({ goal_id: goal._id, achiever_id: achievementUser_id }, function(err,myProgress) {
                         if (err) {
                             console.log("error in app.js 3: couldn't find progress for user " + achieverId)
@@ -1187,7 +1189,7 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                     })
                 })
                 progress.Progress.findOne({ achievement_id: currentAchievement._id, achiever_id: achiever._id}, {}, { sort: { 'latestUpdated' : -1 } }, function(err, latestProgress) {
-                    currentAchievement.goals.forEach(function(goal, goalIndex) {
+                    currentAchievement.goals.forEach(function(goal) {
                         if (isNotificationView) {
                             progress.Progress.findOne({   goal_id: goal._id }, function(err,myProgress) {
                                 if (err) {
@@ -1197,9 +1199,11 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                                     goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, myProgress.latestUpdated, goalPercentageFinished, checkingOtherPersonsAchievement, goalTexts.length + 1 == currentAchievement.goals.length, isNotificationView))
                                     if (goalTexts.length === currentAchievement.goals.length) {
                                         var goalTextsText = ""
-                                        goalTexts.forEach(function(goalText, index) {
+                                        var goalTextsGoneThrough = 0
+                                        goalTexts.forEach(function(goalText) {
                                             goalTextsText += goalText
-                                            if (index === goalTexts.length - 1) {
+                                            goalTextsGoneThrough++
+                                            if (goalTextsGoneThrough === goalTexts.length) {
                                                 var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100
                                                 if (checkingOtherPersonsAchievement) {
                                                     achievementDesc += '<div class="achievement-info"><div class=""><div id="userarea"><img src="' + achieverImageURL + '" /><a href="javascript:void(0)" onclick="openAchievements(false, \'' + achiever._id + '\', ' + true +')">' + achieverName + '</a><p>has not accepted your challenge</p></div>'
@@ -1244,9 +1248,11 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                                         goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, myProgress.latestUpdated ,goalPercentageFinished, checkingOtherPersonsAchievement, goalTexts.length + 1 == currentAchievement.goals.length, isNotificationView))
                                         if (goalTexts.length == currentAchievement.goals.length) {
                                             var goalTextsText = ""
-                                            goalTexts.forEach(function(goalText, index) {
+                                            var goalsGoneThrough = 0
+                                            goalTexts.forEach(function(goalText) {
                                                 goalTextsText += goalText
-                                                if (index == goalTexts.length - 1) {
+                                                goalsGoneThrough++
+                                                if (goalsGoneThrough === goalTexts.length) {
                                                     var myPercentageFinished = (myQuantityFinished / myQuantityTotal) * 100
 
                                                     achievementDesc += '<div class="achievement-info"><div id="userarea"><img src="' + achiever.imageURL + '" /><a class="headerlink" href="javascript:void(0)" onclick="openAchievements(false, \'' + achiever._id + '\', ' + checkingOtherPersonsAchievement + ', \'' + achieverName + '\')">' + achieverName + '</a></div> '
@@ -1471,9 +1477,11 @@ app.get('/delete', loadUser, function(request, response){
                     achievement.removeSharedPartOfAchievement(currentAchievement, request.session.currentUser._id, function () {
                             shareholding.Shareholding.find({ achievement_id: currentAchievement._id, confirmed: false }, function(err, notifications) {
                                 if (notifications) {
-                                    notifications.forEach(function(notification, index) {
+                                    var notificationsGoneThrough = 0
+                                    notifications.forEach(function(notification ) {
                                         notification.remove()
-                                        if (index == (notifications.length - 1)) {
+                                        notificationsGoneThrough++
+                                        if (notificationsGoneThrough === (notifications.length)) {
                                             response.writeHead(200, {'content-type': 'application/json' })
                                             response.write(JSON.stringify('ok'))
                                             response.end('\n', 'utf-8')
