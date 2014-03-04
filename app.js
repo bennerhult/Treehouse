@@ -503,7 +503,9 @@ app.get('/findFriends', function(request, response){
     user.User.findOne({ username: request.query.friend_email.toLowerCase() }, function(err,foundFriend) {
         if (foundFriend)    {
             if (request.session.currentUser._id == foundFriend._id ) {
-                response.send('Dissociative identity disorder?', { 'Content-Type': 'application/json' }, 404)
+                response.writeHead(400, {'content-type': 'application/json' })
+                response.write(JSON.stringify('Dissociative identity disorder?'))
+                response.end('\n', 'utf-8')
             }  else {
                 friendship.isFriendRequestExisting(foundFriend._id, request.session.currentUser._id, function (requestExists, confirmed, createdByCurrentUser) {
                     var responseobject = new Object()
@@ -515,7 +517,9 @@ app.get('/findFriends', function(request, response){
                 })
             }
         } else {
-            response.send(request.query.friend_email + ' does not appear to use Treehouse! Tell your friend about it and share the happiness!', { 'Content-Type': 'application/json' }, 404)
+            response.writeHead(400, {'content-type': 'application/json' })
+            response.write(JSON.stringify(request.query.friend_email + ' does not appear to use Treehouse! Tell your friend about it and share the happiness!'))
+            response.end('\n', 'utf-8')
         }
     })
 })

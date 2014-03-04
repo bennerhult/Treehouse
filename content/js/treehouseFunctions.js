@@ -99,7 +99,7 @@ function loginUsingFacebook() {
 
 function checkFBUserOnServer(username, callback) {
     var data = "username=" + username
-    $.ajax("/checkFBUser", {
+    var jqxhr = $.ajax("/checkFBUser", {
         type: "GET",
         data: data,
         dataType: "json",
@@ -265,14 +265,12 @@ function findFriends() {
 
 function findFriendsOnServer(friend_email, callback, errorCallback) {
     var data = "friend_email=" + friend_email
-    var jqxhr = $.ajax("/findFriends", {
+    $.ajax("/findFriends", {
         type: "GET",
         data: data,
         dataType: "json",
-        statusCode: {
-            200: function(responseobject) { callback(responseobject) },
-            404: function() { errorCallback(jqxhr.responseText ) }
-        }
+        success: function(responseobject) { callback(responseobject) },
+        error:  function(errorMessage) { $("#message").html(errorMessage.responseText.substring(1, errorMessage.responseText.length - 1)) }
     })
 }
 
@@ -718,7 +716,7 @@ function unpublicizeOnServer(callback) {
 function createAchievement(achieverId) {
    createAchievementOnServer(
        function(createdAchievementId) {openAchievements(false, achieverId, false)},
-       function(errorMessage) { $("#message").html(errorMessage.responseText)  }
+       function(errorMessage) { $("#message").html(errorMessage.responseText.substring(1, errorMessage.responseText.length - 1))  }
     )
 }
 
