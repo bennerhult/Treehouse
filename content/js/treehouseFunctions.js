@@ -714,10 +714,19 @@ function unpublicizeOnServer(callback) {
 }
 /******************  new achievement functions  ******************/
 function createAchievement(achieverId) {
-   createAchievementOnServer(
+    if (isiOs) {
+        $("#menu").show()
+    }
+    createAchievementOnServer(
        function(createdAchievementId) {openAchievements(false, achieverId, false)},
        function(errorMessage) { $("#message").html(errorMessage.responseText.substring(1, errorMessage.responseText.length - 2))  }
     )
+}
+
+function createInputFieldMouseDown() {
+    if (isiOs) {
+        $("#menu").hide()
+    }
 }
 
 function createAchievementOnServer(onSuccess, onError) {
@@ -1010,7 +1019,7 @@ function goalKeyPress(goalField) {
            $(goalQuantityField).val("1")
        }
        var newRow = $('<tr >' + nl  +
-           '<td class="goal"><input type="text" class="formstyle" name="goalTitle' + newLineNumber + '" placeholder="goal" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)"></td>' + nl  +
+           '<td class="goal"><input type="text" class="formstyle" name="goalTitle' + newLineNumber + '" placeholder="goal" onkeypress="isio(this)" onpaste="goalKeyPress(this)"></td>' + nl  +
            '<td class="quantity"><input type="text" class="formstyle" id="goalQuantity' + newLineNumber + '" name="goalQuantity' + newLineNumber + '" placeholder="1"></td>' + nl  +
            '</tr>')
        $("#goalTable").append(newRow)

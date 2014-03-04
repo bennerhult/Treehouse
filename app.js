@@ -1378,53 +1378,7 @@ function getGoalText(goal, achievement, progressNumber, latestUpdated, progressP
     return goalText
 }
 
-/*
-app.get('/completedAchievementsExist', function(request, response) {
-    //console.log("/completedAchievementExist")
-    var completedFound = false
-    var achievementIdsGoneThrough = new Array()
-    var goneThroughProgresses = 0
-    progress.Progress.find({ achiever_id: request.session.currentUser._id}, function(err, progresses) {
-        if (err) { console.log("error in app.js 8: couldn't find any progress for user " + request.session.currentUser._id) }
-        if (progresses && progresses.length > 0) {
-            progresses.forEach(function(currentProgress, index) {
-                achievement.Achievement.findById(currentProgress.achievement_id, function(err2, myAchievement) {
-                    if (err2) { console.log("error in app.js 9: couldn't find achievement for progress " + currentProgress.achievement_id) }
-                    if (myAchievement) {
-                        if  (_.indexOf(achievementIdsGoneThrough, myAchievement._id.toString()) == -1) {
-                            achievementIdsGoneThrough.push(myAchievement._id.toString())
-                            calculateAchievementProgressFromData(myAchievement.goals, progresses, function(achievementPercentageFinished) {
-                                if(achievementPercentageFinished >= 100) {
-                                    completedFound = true
-                                }
-                                goneThroughProgresses +=  myAchievement.goals.length
-                                if (goneThroughProgresses == progresses.length) {
-                                    finishCompletedAchievementsExist(response, completedFound)
-                                }
-                            })
-                        }
-                    }
-                })
-            })
-        } else {
-            finishCompletedAchievementsExist(response, false)
-        }
-    })
-
-})
-
-function finishCompletedAchievementsExist(response, completedFound) {
-    response.writeHead(200, {'content-type': 'application/json' })
-    if (completedFound) {
-        response.write(JSON.stringify(true))
-    } else {
-        response.write(JSON.stringify(false))
-    }
-    response.end('\n', 'utf-8')
-}  */
-
 app.get('/achievementPercentage', function(request, response){
-    //console.log("/achievementPercentage")
     calculateAchievementProgress(request.session.currentUser._id, request.session.current_achievement_id, function(achievementPercentageFinished) {
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(achievementPercentageFinished))
