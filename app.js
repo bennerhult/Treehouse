@@ -526,30 +526,27 @@ app.get('/findFriends', function(request, response){
 
 app.get('/friendsList', function(request, response){
     var friendships = new Array()
-    var friendShipsGoneThrough = 0
     friendship.getPendingRequests(request.session.currentUser._id, function(pendings) {
         friendship.getFriends(request.session.currentUser._id, function(friendsList) {
             if (friendsList.length === 0) {
-                var content = '<div id="friendsList"><div class="header">Friends</div><br />Add some friends!</div>'
-                fillFriendsList(friendships, pendings, request.session.currentUser._id, function(content) {
-                    response.writeHead(200, {'content-type': 'application/json' })
-                    response.write(JSON.stringify(content))
-                    response.end('\n', 'utf-8')
-                })
-            }  else {
+                fillFriendsList(friendships, pendings, request.session.currentUser._id, writeList)
+            } else {
                 var friendId
+                var nrOf = 0
 
                 friendsList.forEach(function(currentFriendship) {
                     friendships.push(currentFriendship)
-                    friendShipsGoneThrough++
-                    if (friendShipsGoneThrough === friendsList.length) {
-                        fillFriendsList(friendships, pendings, request.session.currentUser._id, function(content) {
-                            response.writeHead(200, {'content-type': 'application/json' })
-                            response.write(JSON.stringify(content))
-                            response.end('\n', 'utf-8')
-                        })
+                    nrOf++
+                    if (nrOf === friendsList.length) {
+                        fillFriendsList(friendships, pendings, request.session.currentUser._id, writeList)
                     }
                 })
+            }
+
+            function writeList(content) {
+                response.writeHead(200, {'content-type': 'application/json' })
+                response.write(JSON.stringify(content))
+                response.end('\n', 'utf-8')
             }
         })
     })
@@ -558,7 +555,7 @@ app.get('/friendsList', function(request, response){
 function fillFriendsList(friendsList, pendings, userId, callback) {
     var currentFriendId
     var friendsGoneThrough = 0
-    var content = '<div id="friendsList"><div class="header">Friends</div>'
+    var content = '<div id="friendsList"><div class="header">My friends</div>'
     content +=   '<div id="myfriends" class="myfriends">'
     if (friendsList.length > 0) {
         friendsList.forEach(function(currentFriendship) {
