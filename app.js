@@ -774,7 +774,7 @@ function getCompareText(prettyName, finished, total, index, nrOfCompares, achiev
                 + '<div class="progress-goal-container">'
                     + '<span class="progressbar"></span>'
                     + '<div id="progressbar-goal"><span'
-        if (index==0) {
+        if (index===0) {
             compareText += ' id="progressCompare"'
         }
         compareText += ' class="progress" style="width:'
@@ -796,7 +796,7 @@ function getCompareText(prettyName, finished, total, index, nrOfCompares, achiev
         compareText += '</td></tr></table>'
         compareText    += '<div class="clear"></div>'
         compareText    += '</div>'
-    if (index < nrOfCompares-1) {
+    if (index < nrOfCompares) {
         compareText += '<div class="separerare-part">&nbsp;</div>'
     }
     compareText += '</div>'
