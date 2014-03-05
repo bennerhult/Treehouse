@@ -30,6 +30,7 @@ app.configure('development', function() {
 app.configure('production', function() {
     domain = 'http://treehouse.io/'
     console.log("Treehouse in prod mode.")
+    //noinspection JSUnresolvedVariable
     db_uri=process.env.DB_URI
 })
 
@@ -58,7 +59,9 @@ var user = require('./models/user.js'),
     staticFiles = require('./code/staticFiles.js')
 
 function loadUser(request, response, next) {
+    //noinspection JSUnresolvedVariable
     if (request.session.currentUser) {
+        //noinspection JSUnresolvedVariable
         user.User.findById(request.session.currentUser._id, function(err, user) {
             if (user) {
                 next()
@@ -77,8 +80,10 @@ function loadUser(request, response, next) {
 
 function authenticateFromLoginToken(request, response) {
     console.log("authenticateFromLoginToken")
+    //noinspection JSUnresolvedVariable
     if (request.cookies.rememberme)  {
         console.log("cookie found")
+        //noinspection JSUnresolvedVariable
         var cookie = JSON.parse(request.cookies.rememberme)
         loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
             if (!token) {
@@ -142,15 +147,18 @@ app.get('/channel.html', function(request, response){
     staticFiles.serve("." + request.url, response)
 })
 
-//public achievement
 app.get('/achievement', function(request, response) {
     console.log("/achievement")
     var url_parts = url.parse(request.url, true)
+    //noinspection JSUnresolvedVariable
     var currentAchievementId = url_parts.query.achievementId
+    //noinspection JSUnresolvedVariable
     var userId  = url_parts.query.userId
     var loggedin = false
     if (request.session) {
+        //noinspection JSUnresolvedVariable
         if (request.session.currentUser) {
+            //noinspection JSUnresolvedVariable
             if (request.session.currentUser._id == userId) {
                 loggedin=true
             }
@@ -225,6 +233,7 @@ function signin(request, response, newUser) {
     var url_parts = url.parse(request.url, true)
     var email = url_parts.query.email.toLowerCase()
     var token = url_parts.query.token
+    //noinspection JSUnresolvedVariable
     var appModeString = url_parts.query.appMode
     var appMode = (appModeString === 'true')
     console.log("signin: " + url_parts.query.email.toLowerCase() + ", " + token)
@@ -232,7 +241,7 @@ function signin(request, response, newUser) {
         if (myToken) {
             console.log("finding user by email")
             user.User.findOne({ username: email }, function(err,myUser) {
-                request.session.user_email = email      //TODO remove pga behövs inte längre då user ligger i session?
+                request.session.user_email = email
                 getDataForUser(myUser, request, response, newUser, appMode)
             })
         }  else {
@@ -244,6 +253,7 @@ function signin(request, response, newUser) {
 
 app.get('/checkUser', function(request, response){
     var username = request.query.username.toLowerCase()
+    //noinspection JSUnresolvedVariable
     var appMode = request.query.appMode
 
     user.User.findOne({ username: username }, function(err,myUser) {
@@ -299,9 +309,11 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
     console.log("getDataForUser")
     var email
     var fbConnect = false
-    if (request.session.user_email) {  //email sign up
+    //noinspection JSUnresolvedVariable
+    if (request.session.user_email) {
+        //noinspection JSUnresolvedVariable
         email = request.session.user_email
-    } else {                           //fb connect
+    } else {
         if (request.query.username)      {
             email = request.query.username.toLowerCase()
             fbConnect = true
@@ -316,24 +328,20 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
         }  else {
             console.log("adding user to session")
             request.session.currentUser = myUser
-            //request.session.user_email = myUser.username
             loginToken.createToken(myUser.username, function(myToken) {
                 response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-                //friendship.getNrOfRequests(myUser._id, function (nrOfFriendShipRequests) {
-                    //request.session.nrOfFriendShipRequests = nrOfFriendShipRequests
-                    if (appMode) {
-                        writeGotoAppPage(response)
+                if (appMode) {
+                    writeGotoAppPage(response)
+                } else {
+                    if (fbConnect) {
+                        response.writeHead(200, {'content-type': 'application/json' })
+                        response.write(JSON.stringify(myUser._id))
+                        response.end('\n', 'utf-8')
                     } else {
-                        if (fbConnect) {
-                            response.writeHead(200, {'content-type': 'application/json' })
-                            response.write(JSON.stringify(myUser._id))
-                            response.end('\n', 'utf-8')
-                        } else {
-                            console.log("standard login")
-                            writeDefaultPage(request, response)
-                        }
+                        console.log("standard login")
+                        writeDefaultPage(request, response)
                     }
-                //})
+                }
             })
         }
     } else {    //Sign up
@@ -353,7 +361,6 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
                         if (appMode) {
                             writeGotoAppPage(response)
                         } else {
-                            console.log("!!!!!!!!!!!!!!!!!!")
                             request.session.currentUser = newUser
                             writeDefaultPage(request, response, false)
                         }
