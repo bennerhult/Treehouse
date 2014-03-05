@@ -164,8 +164,8 @@ app.get('/achievement', function(request, response) {
             achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
                 request.session.current_achievement_id = currentAchievementId
                 var imageUrl =currentAchievement.imageURL
-                if (!imageURL.startsWith('http:')) {
-                    imageURL = 'http://treehouse.io/' + imageURL
+                if (!imageUrl.startsWith('http:')) {
+                    imageUrl = 'http://treehouse.io/' + imageUrl
                 }
                 requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, imageUrl, currentAchievement.title, currentProgress.publiclyVisible)
             })
