@@ -623,7 +623,7 @@ function addPendings(content, pendings, userId, callback) {
             content +=   ' <span class="ignore"><a style="color: #000" href="javascript:void(0)" onclick="ignoreFriendRequest(\'' + currentFriendship._id + '\')">Ignore</a></span>'
             content +=   '</div>'
             content +=   '<div class="clear"></div>'
-            pendingsGoneThrough
+            pendingsGoneThrough++
             if  (pendingsGoneThrough < pendings.length)   {
                 content +=   '<div class="separerare-part">&nbsp;</div>'
             }
