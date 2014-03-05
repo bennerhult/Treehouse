@@ -158,12 +158,16 @@ app.get('/achievement', function(request, response) {
             }
         }
     }
-
+    if (typeof String.prototype.startsWith != 'function') {
+        String.prototype.startsWith = function (str){
+            return this.indexOf(str) == 0;
+        }
+    }
     progress.Progress.findOne({ achievement_id: currentAchievementId, achiever_id: userId }, function(err,currentProgress) {
         if (currentProgress && (currentProgress.publiclyVisible || loggedin))    {
             achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
                 request.session.current_achievement_id = currentAchievementId
-                var imageUrl =currentAchievement.imageURL
+                var imageUrl = "" + currentAchievement.imageURL
                 if (!imageUrl.startsWith('http:')) {
                     imageUrl = 'http://treehouse.io/' + imageUrl
                 }
