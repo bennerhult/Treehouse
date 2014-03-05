@@ -22,6 +22,12 @@ var server  = email.server.connect({
 
 var MongoStore = connectmongo(express);
 
+if (typeof String.prototype.startsWith != 'function') {
+    String.prototype.startsWith = function (str){
+        return this.indexOf(str) == 0;
+    }
+}
+
 app.configure('development', function() {
     domain = 'http://localhost:1337/'
     console.log("Treehouse in development mode.")
@@ -158,19 +164,12 @@ app.get('/achievement', function(request, response) {
             }
         }
     }
-    if (typeof String.prototype.startsWith != 'function') {
-        String.prototype.startsWith = function (str){
-            return this.indexOf(str) == 0;
-        }
-    }
     progress.Progress.findOne({ achievement_id: currentAchievementId, achiever_id: userId }, function(err,currentProgress) {
         if (currentProgress && (currentProgress.publiclyVisible || loggedin))    {
             achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
                 request.session.current_achievement_id = currentAchievementId
                 var imageUrl = "" + currentAchievement.imageURL
-
                 if (!imageUrl.startsWith('https')) {
-                    console.log(imageUrl)
                     imageUrl = 'http://treehouse.io/' + imageUrl
                 }
                 requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, imageUrl, currentAchievement.title, currentProgress.publiclyVisible)
