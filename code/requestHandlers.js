@@ -276,7 +276,6 @@ function bottomPart() {
                                 '</div>' + nl +
                             '</div>' + nl +
                         '</div>' + nl +
-
                         '<div class="clear"></div>' + nl +
                     '</div>' + nl +
                         '<div id="web-footer"></div>' + nl +
