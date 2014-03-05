@@ -163,7 +163,11 @@ app.get('/achievement', function(request, response) {
         if (currentProgress && (currentProgress.publiclyVisible || loggedin))    {
             achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
                 request.session.current_achievement_id = currentAchievementId
-                requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, currentAchievement.imageURL, currentAchievement.title, currentProgress.publiclyVisible)
+                var imageUrl =currentAchievement.imageURL
+                if (!imageURL.startsWith('http:')) {
+                    imageURL = 'http://treehouse.io/' + imageURL
+                }
+                requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, imageUrl, currentAchievement.title, currentProgress.publiclyVisible)
             })
         } else {
             writeDefaultPage(request, response)

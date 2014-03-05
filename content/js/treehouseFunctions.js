@@ -4,7 +4,7 @@ function fbShare(caption, achLink, imageURL) {
             return this.indexOf(str) == 0;
         }
     }
-    if (!imageURL.startsWith('https:')) {
+    if (!imageURL.startsWith('http:')) {
         imageURL = 'http://treehouse.io/' + imageURL
     }
 
