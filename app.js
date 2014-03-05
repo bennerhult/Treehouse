@@ -96,7 +96,6 @@ function authenticateFromLoginToken(request, response) {
                             token.save(function() {
                                 request.session.nrOfFriendShipRequests = nrOfFriendShipRequests
                                 response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 2 * 604800000), path: '/' })
-                                //console.log("responding well: " + nrOfFriendShipRequests + ', ' + user._id)
                                 response.writeHead(200, {'content-type': 'application/json' })
                                 response.write(JSON.stringify(user._id))
                                 response.end('\n', 'utf-8')
@@ -157,24 +156,19 @@ app.get('/achievement', function(request, response) {
             }
         }
     }
-   /* if (request.session.user) {
-        showAchievementPage(request, response)
-        console.log("yes")
-    } else {   */
-        progress.Progress.findOne({ achievement_id: currentAchievementId, achiever_id: userId }, function(err,currentProgress) {
-            if (currentProgress && (currentProgress.publiclyVisible || loggedin))    {
-                console.log("AAA")
-                achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
-                    request.session.current_achievement_id = currentAchievementId
-                    requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, currentAchievement.imageURL, currentAchievement.title, currentProgress.publiclyVisible)
-                })
-            } else {
-                console.log("BBB: " + loggedin)
-                writeDefaultPage(request, response)
-            }
-        })
-    //}
 
+    progress.Progress.findOne({ achievement_id: currentAchievementId, achiever_id: userId }, function(err,currentProgress) {
+        if (currentProgress && (currentProgress.publiclyVisible || loggedin))    {
+            console.log("AAA")
+            achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
+                request.session.current_achievement_id = currentAchievementId
+                requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, currentAchievement.imageURL, currentAchievement.title, currentProgress.publiclyVisible)
+            })
+        } else {
+            console.log("BBB: " + loggedin)
+            writeDefaultPage(request, response)
+        }
+    })
 })
 
 app.get('/', function(request, response){
@@ -195,7 +189,6 @@ app.get('/checkFBUser', function(request, response){
 })
 
 app.get('/fbAppConnect', function(request, response){
-    //console.log("/fbAppConnect")
     var url_parts = url.parse(request.url, true)
     var code = url_parts.query.code
     var accessTokenLink= 'https://graph.facebook.com/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://treehouse.io/fbAppConnect&code=' + code
@@ -221,12 +214,10 @@ app.get('/fbAppConnect', function(request, response){
 })
 
 app.get('/signin', function(request, response) {
-    //console.log("/signin")
     signin(request, response, false)
 })
 
 app.get('/signup', function(request, response) {
-    //console.log("/signup")
     signin(request, response, true)
 })
 
@@ -252,7 +243,6 @@ function signin(request, response, newUser) {
 }
 
 app.get('/checkUser', function(request, response){
-    //console.log("/checkUser")
     var username = request.query.username.toLowerCase()
     var appMode = request.query.appMode
 
@@ -525,29 +515,13 @@ app.get('/findFriends', function(request, response){
 })
 
 app.get('/friendsList', function(request, response){
-    var friendships = new Array()
     friendship.getPendingRequests(request.session.currentUser._id, function(pendings) {
         friendship.getFriends(request.session.currentUser._id, function(friendsList) {
-            if (friendsList.length === 0) {
-                fillFriendsList(friendships, pendings, request.session.currentUser._id, writeList)
-            } else {
-                var friendId
-                var nrOf = 0
-
-                friendsList.forEach(function(currentFriendship) {
-                    friendships.push(currentFriendship)
-                    nrOf++
-                    if (nrOf === friendsList.length) {
-                        fillFriendsList(friendships, pendings, request.session.currentUser._id, writeList)
-                    }
-                })
-            }
-
-            function writeList(content) {
+            fillFriendsList(friendsList, pendings, request.session.currentUser._id, function(content) {
                 response.writeHead(200, {'content-type': 'application/json' })
                 response.write(JSON.stringify(content))
                 response.end('\n', 'utf-8')
-            }
+            })
         })
     })
 })
@@ -806,7 +780,6 @@ function getCompareText(prettyName, finished, total, index, nrOfCompares, achiev
 }
 
 app.get('/shareToFriend', function(request, response){
-    //console.log("/shareToFriend")
     shareholding.createShareholding(request.session.currentUser._id, request.query.friendId, request.query.achievementId, function(ok) {
         if (ok) {
             user.User.findOne({ _id: request.query.friendId }, function(err, askedFriend) {
@@ -832,7 +805,6 @@ app.get('/shareToFriend', function(request, response){
 
 
 app.get('/addFriend', function(request, response){
-    //console.log("/addFriend")
     friendship.createFriendship(request.session.currentUser._id, request.query.friendId, function(ok) {
         if (ok) {
             user.User.findOne({ _id: request.query.friendId }, function(err, askedFriend) {
@@ -857,7 +829,6 @@ app.get('/addFriend', function(request, response){
 })
 
 app.get('/ignoreFriendRequest', function(request, response){
-    //console.log("/ignoreFR")
     friendship.removeFriendRequest(request.query.friendship_id, function() {
         request.session.nrOfFriendShipRequests--
         response.writeHead(200, {'content-type': 'application/json' })
@@ -866,7 +837,6 @@ app.get('/ignoreFriendRequest', function(request, response){
 })
 
 app.get('/confirmFriendRequest', function(request, response){
-    //console.log("/confirmFR")
     friendship.confirmFriendRequest(request.query.friendship_id, function(friendId) {
         user.User.findOne({ _id: friendId}, function(err, foundUser) {
             user.getPrettyNameAndImageURL(friendId, function(prettyName, imageURL) {
@@ -881,7 +851,6 @@ app.get('/confirmFriendRequest', function(request, response){
 })
 
 app.get('/ignoreAchievement', function(request, response){
-    //console.log("/ignoreAchievement")
     shareholding.ignoreShareHolding(request.query.achievementId, request.query.userId, function() {
         response.writeHead(200, {'content-type': 'application/json' })
         response.end('\n', 'utf-8')
@@ -890,7 +859,6 @@ app.get('/ignoreAchievement', function(request, response){
 
 
 app.get('/confirmAchievement', function(request, response){
-    //console.log("/confirmAchievement")
     shareholding.confirmShareHolding(request.query.achievementId, request.query.userId, function(title) {
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(title))
@@ -1019,12 +987,10 @@ function createNotificationDesc(response, achievementsList, completedAchievement
 }
 
 app.get('/achievements_inProgress', function(request, response){
-    //console.log("/achievements_inProgress")
     getAchievementList(request, response, false)
 })
 
 app.get('/achievements_completed', function(request, response){
-    //console.log("/achievements_completed")
     getAchievementList(request, response, true)
 })
 
@@ -1437,7 +1403,6 @@ app.get('/publicize', function(request, response){
 })
 
 app.get('/unpublicize', function(request, response){
-    //console.log("/unpublicize")
     progress.Progress.findOne({ achievement_id: request.session.current_achievement_id, achiever_id: request.session.currentUser._id }, function(err,currentProgress) {
         achievement.unpublicize(currentProgress)
         shareholding.isAchievementShared(request.session.current_achievement_id, function(isShared) {
@@ -1495,7 +1460,7 @@ app.get('/delete', loadUser, function(request, response){
                             })
 
                     })
-                }  else {       //childAchievement, shared to me
+                } else {
                     shareholding.Shareholding.findOne({ shareholder_id: request.session.currentUser._id, achievement_id: currentAchievement._id }, function(err, sharedToMe) {
                         if (sharedToMe != null) {
                             sharedToMe.remove()
@@ -1644,6 +1609,5 @@ function writeDefaultPage(request, response) {
 }
 
 app.get('*', function(request, response){
-   //console.log("*")
    response.redirect("/")
 })
