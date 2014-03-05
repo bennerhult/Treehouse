@@ -79,15 +79,12 @@ function loadUser(request, response, next) {
 }
 
 function authenticateFromLoginToken(request, response) {
-    console.log("authenticateFromLoginToken")
     //noinspection JSUnresolvedVariable
     if (request.cookies.rememberme)  {
-        console.log("cookie found")
         //noinspection JSUnresolvedVariable
         var cookie = JSON.parse(request.cookies.rememberme)
         loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
             if (!token) {
-                console.log("no token!")
                 response.writeHead(404, {'content-type': 'application/json' })
                 response.write(JSON.stringify(""))
                 response.end('\n', 'utf-8')
@@ -107,7 +104,6 @@ function authenticateFromLoginToken(request, response) {
                             })
                         })
                     } else {
-                        console.log("no user!")
                         response.writeHead(200, {'content-type': 'application/json' })
                         response.write(JSON.stringify("Bummer! We cannot find you in our records. Contact us at staff@treehouse.io if you want us to help you out."))
                         response.end('\n', 'utf-8')
@@ -116,7 +112,6 @@ function authenticateFromLoginToken(request, response) {
             }
         })
     }  else {
-        console.log("no coookie found!")
         response.writeHead(404, {'content-type': 'application/json' })
         response.write(JSON.stringify(""))   //typical first sign in
         response.end('\n', 'utf-8')
@@ -148,7 +143,6 @@ app.get('/channel.html', function(request, response){
 })
 
 app.get('/achievement', function(request, response) {
-    console.log("/achievement")
     var url_parts = url.parse(request.url, true)
     //noinspection JSUnresolvedVariable
     var currentAchievementId = url_parts.query.achievementId
@@ -167,30 +161,25 @@ app.get('/achievement', function(request, response) {
 
     progress.Progress.findOne({ achievement_id: currentAchievementId, achiever_id: userId }, function(err,currentProgress) {
         if (currentProgress && (currentProgress.publiclyVisible || loggedin))    {
-            console.log("AAA")
             achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
                 request.session.current_achievement_id = currentAchievementId
                 requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, currentAchievement.imageURL, currentAchievement.title, currentProgress.publiclyVisible)
             })
         } else {
-            console.log("BBB: " + loggedin)
             writeDefaultPage(request, response)
         }
     })
 })
 
 app.get('/', function(request, response){
-    console.log("/")
     writeDefaultPage(request, response)
 })
 
 app.get('/rememberMe', function(request, response){
-    console.log("rememberMe")
     authenticateFromLoginToken(request, response)
 })
 
 app.get('/checkFBUser', function(request, response){
-    console.log("/checkFbUser")
     user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
         getDataForUser(myUser, request, response, false)
     })
@@ -210,9 +199,6 @@ app.get('/fbAppConnect', function(request, response){
                     var graph_parts = JSON.parse(graphBody)
                     var email  = graph_parts.email
                     user.User.findOne({ username: email }, function(err,myUser) {
-                        console.log("/fbAppConnect: " + email)
-                        console.log("/err: " + err)
-                        console.log("/myUser: " + myUser)
                         getDataForUser(myUser, request, response, false)
                     })
                 }
@@ -236,16 +222,13 @@ function signin(request, response, newUser) {
     //noinspection JSUnresolvedVariable
     var appModeString = url_parts.query.appMode
     var appMode = (appModeString === 'true')
-    console.log("signin: " + url_parts.query.email.toLowerCase() + ", " + token)
     loginToken.LoginToken.findOne({ email: email, token: token }, function(err,myToken) {
         if (myToken) {
-            console.log("finding user by email")
             user.User.findOne({ username: email }, function(err,myUser) {
                 request.session.user_email = email
                 getDataForUser(myUser, request, response, newUser, appMode)
             })
         }  else {
-            console.log("NO TOKEN")
             writeDefaultPage(request, response)
         }
     })
@@ -306,7 +289,6 @@ function emailUser(emailAddress, subject, html, altText, callback) {
 }
 
 function getDataForUser(myUser, request, response, newUser, appMode) {
-    console.log("getDataForUser")
     var email
     var fbConnect = false
     //noinspection JSUnresolvedVariable
@@ -321,12 +303,10 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
     }
     if (myUser != null) {   //Sign in
         if (newUser) {  //user clicked sign up email twice
-            console.log("exhausted link")
             response.writeHead(200, {'content-type': 'application/json' })
             response.write(JSON.stringify("That link is exhausted. Get a new one!"))
             response.end('\n', 'utf-8')
         }  else {
-            console.log("adding user to session")
             request.session.currentUser = myUser
             loginToken.createToken(myUser.username, function(myToken) {
                 response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
@@ -338,7 +318,6 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
                         response.write(JSON.stringify(myUser._id))
                         response.end('\n', 'utf-8')
                     } else {
-                        console.log("standard login")
                         writeDefaultPage(request, response)
                     }
                 }
@@ -372,7 +351,6 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
 }
 
 app.get('/signout', function(request, response){
-    console.log("/signout")
     if (request.session) {
         response.clearCookie('rememberme', null)
         loginToken.remove(request.session.user_email)
@@ -887,7 +865,6 @@ app.get('/latestAchievementSplash', function(request, response) {
                    response.writeHead(200, {'content-type': 'application/json' })
                    if (latestAchievement) {
                        var titleWithQuotationsEscaped = encodeURIComponent(latestAchievement.title.replace(/'/g, '&apos;'))
-                       console.log(titleWithQuotationsEscaped)
                        content = '<h2>Latest Achievement</h2>' +
                            '<p><a class="latestAchievementLink" href="javascript:void(0)" onclick="showLatestAchievement(\'' + latestAchievement._id + '\', \'' + latestProgress.achiever_id + '\', \'' + titleWithQuotationsEscaped + '\')">' + latestAchievement.title + '</a></p>' +
                            '<div><a class="latestAchievementLink" href="javascript:void(0)" onclick="showLatestAchievement(\'' + latestAchievement._id + '\', \'' + latestProgress.achiever_id + '\', \'' + titleWithQuotationsEscaped + '\')"><img src="' + latestAchievement.imageURL + '" /></a></div>'
@@ -1119,14 +1096,10 @@ function showAchievementPage(request, response) {
         achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
             user.User.findOne({ _id: achieverId }, function(err,currentAchiever) {
                 if (request.session.currentUser) {
-                    console.log("SMURF0: " + request.session.currentUser._id)
                     loadUser (request, response, function () { writeAchievementPage(response, currentAchiever, currentAchievement, request.session.currentUser._id, isNotificationView, sharerId)})
                 } else if (currentAchievement && currentProgress.publiclyVisible)    {
-                     console.log("SMURF1: ")
-                    //writeAchievementPage(response, currentAchiever, currentAchievement, request.session.user._id, isNotificationView, sharerId)
                     writeAchievementPage(response, currentAchiever, currentAchievement, null, isNotificationView, sharerId)
                 } else {
-                    console.log("SMURF2")
                     writeDefaultPage(request, response)
                 }
 
@@ -1421,7 +1394,6 @@ app.get('/unpublicize', function(request, response){
 })
 
 app.get('/deleteUser', function(request, response) {
-    console.log("/deleteUser")
     var url_parts = url.parse(request.url, true)
     var username  = url_parts.query.username
     user.remove(username, function() {
@@ -1512,7 +1484,6 @@ app.get('/editAchievement', loadUser, function(request, response){
 })
 
 function saveAchievement(response, motherAchievement, titles, quantities, userId) {
-    console.log("saving achievement")
     var progressesToInit = new Array()
     if (titles.length === 0) {
         finalizeAchievement (response, motherAchievement, titles, quantities, progressesToInit)
@@ -1571,12 +1542,10 @@ app.get('/newAchievement', function(request, response){
             })
             if (!textInQuantities) {
                 if (currentAchievement)  {
-                    console.log("existing achievement")
-                        achievement.remove(currentAchievement, request.session.currentUser._id, function() {
-                            saveAchievement(response, motherAchievement, titles, quantities, request.session.currentUser._id)
-                        })
+                    achievement.remove(currentAchievement, request.session.currentUser._id, function() {
+                        saveAchievement(response, motherAchievement, titles, quantities, request.session.currentUser._id)
+                    })
                 } else {
-                    console.log("NEW!")
                     saveAchievement(response, motherAchievement, titles, quantities, request.session.currentUser._id)
                 }
 
@@ -1607,10 +1576,8 @@ function writeGotoAppPage(response) {
 
 function writeDefaultPage(request, response) {
     if (request.session.currentUser) {
-        console.log("000 index page")
         requestHandlers.indexPage(response, request.session.currentUser._id, request.session.nrOfFriendShipRequests)
     }   else {
-        console.log("A")
         requestHandlers.indexPage(response, null, null)
     }
 }
