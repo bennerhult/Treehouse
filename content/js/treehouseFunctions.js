@@ -77,8 +77,7 @@ function loginUsingFacebook() {
                     if (apiResponse) {
                         checkFBUserOnServer(apiResponse.email,
                             function(id, ok) {
-                                //nrOfFriendShipRequests = nrOfRequests
-                                if (ok) { //TODO: use ajax success/error instead
+                                if (ok) {
                                     openAchievements(false, id, false)
                                 } else {
                                     $("#message").html("Facebook did not play nice. Try regular login instead.")
@@ -113,8 +112,7 @@ function checkFBUserOnServer(username, callback) {
 function rememberMe() {
     rememberMeOnServer(
         function(id, ok) {
-            if (ok) { //TODO: use ajax success/error instead
-                //nrOfFriendShipRequests = nrOfRequests
+            if (ok) {
                 openAchievements(false, id, false)
             } else {
                 showSignin()
@@ -147,7 +145,7 @@ function signout() {
     })
 }
 
-function logOutFB() {    //TODO: do not log out the user from FB, just from the Treehouse-FB-app
+function logOutFB() {
     FB.getLoginStatus(function(response) {
         if (response.status === 'connected') {
             FB.logout()
@@ -241,7 +239,7 @@ function findFriends() {
                         } else {
                             if (responseobject.createdByCurrentUser ) {
                                 getUserFromServer(responseobject.id, function(friendInSpe) {
-                                    messageText = 'You have already sent a friend request to ' + friend_email + '<br /><a href="javascript:void(0)" style="color: black" onclick="visitFriend(\'' + friendInSpe._id + '\', \'' + friendInSpe.firstName +  ' ' +  friendInSpe.lastName + '\')">Visit!</a>'     //TODO create a convenience method (see server side) that returns email if no first or last name
+                                    messageText = 'You have already sent a friend request to ' + friend_email + '<br /><a href="javascript:void(0)" style="color: black" onclick="visitFriend(\'' + friendInSpe._id + '\', \'' + friendInSpe.firstName +  ' ' +  friendInSpe.lastName + '\')">Visit!</a>'
                                     $("#message").html(messageText)
                                 })
                             }  else {
@@ -1060,7 +1058,7 @@ function editAchievementOnServer(callback) {
 function deleteAchievement(achieverId) {
     deleteAchievementOnServer(
         function(data) {
-            if (data == "ok") { //TODO: use ajax success/error instead
+            if (data == "ok") {
                 openAchievements(false, achieverId, false)
             } else {
                 var inkblob = {url: data, mimetype: 'data:image/png;base64', isWriteable: true};

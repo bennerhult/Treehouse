@@ -938,7 +938,6 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
 function createNotificationDesc(response, achievementsList, completedAchievements, nrOfAchievements, notifications, achieverId, lookingAtFriend) {
     var shortNames = new Array()
 
-    //TODO remove double loop blow! Looks weird!
     for (var i in notifications) {
         user.getShortName(notifications[i].createdBy, function(prettyName) {
             shortNames.push(prettyName)
@@ -958,7 +957,7 @@ function createNotificationDesc(response, achievementsList, completedAchievement
                         + '" alt="'
                         + encodeURIComponent(titleWithSingleQuotationsEscaped)
                         + '"/><span class="gradient-bg"> </span><span class="request"><div>Challenged <br/>'
-                    if(shortNames[j]) {
+                    if (shortNames[j]) {
                         notificationsList += 'by '+ shortNames[j] + ''
                     }
                     notificationsList += ' </div></span></a></div><p>'  + encodeURIComponent(titleWithSingleQuotationsEscaped)
@@ -968,7 +967,6 @@ function createNotificationDesc(response, achievementsList, completedAchievement
                         finishAchievementsList(response, achievementsList, completedAchievements, lookingAtFriend)
                     }
                 }
-
             }
         })
     }
