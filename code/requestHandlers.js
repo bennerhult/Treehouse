@@ -189,6 +189,7 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
 
 function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUrl, title, publiclyVisible) {
     var titleWithSingleQuotationsEscaped = title.replace(/'/g, '&apos;')
+    var titleWithDoubleQuotationsEscaped = title.replace(/"/g, '&quot;')
     return (
         '<!DOCTYPE html>' + nl +
             tab + '<html manifest="treehouse.manifest" lang="en">' + nl +
@@ -202,7 +203,7 @@ function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUr
             tab + '<meta name="apple-mobile-web-app-status-bar-style" content="black" />' + nl +
             tab + '<link rel="apple-touch-icon" href="/content/treehouse-icon.png">' + nl +
             tab + '<meta property="og:site_name" content="Treehouse" />' + nl +
-            tab + '<meta property="og:title" content="Treehouse: ' + title + '" />' + nl +
+            tab + '<meta property="og:title" content="Treehouse: ' + titleWithDoubleQuotationsEscaped + '" />' + nl +
             tab + '<meta property="og:type" content="article" />' + nl +
             tab + '<meta property="og:image" content="' + imageUrl + '"/>' + nl +
             tab + '<meta property="og:url" content="http://treehouse.io' + url + '"/>' + nl +
