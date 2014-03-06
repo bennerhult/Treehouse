@@ -1261,7 +1261,7 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                                                     achievementDesc += '</div>'
 
                                                     //using public domain - localhost makes FB-like component not load since localhost is not registered as a Treehouse app domain
-                                                    var achLink = "http://treehouse.io/achievement?achievementId=" + currentAchievement._id + "&userId=" + currentAchievement.createdBy
+                                                    var achLink = "http://treehouse.io/achievement?achievementId=" + currentAchievement._id + "&userId=" + achiever._id
 
                                                     var encodedAchLink = encodeURIComponent(achLink)
                                                     achievementDesc += '<div id="sharer-container"></div><div id="compare-container"></div>'
