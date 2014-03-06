@@ -1064,9 +1064,8 @@ function deleteAchievement(achieverId) {
             } else {
                 var inkblob = {url: data, mimetype: 'data:image/png;base64', isWriteable: true};
                 filepicker.setKey('AM9A7pbm3QPSe24aJU2M2z')
-                filepicker.remove(inkblob, function(){
-                    openAchievements(false, achieverId, false)
-                });
+                filepicker.remove(inkblob, function(){})
+                openAchievements(false, achieverId, false)
             }
             insertLatestAchievement()
         }
