@@ -189,7 +189,7 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
 
 function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUrl, title, publiclyVisible) {
     var titleWithSingleQuotationsEscaped = title.replace(/'/g, '&apos;')
-    var titleWithDoubleQuotationsEscaped = title.replace(/"/g, '&quot;')
+    var titleWithDoubleQuotationsEscaped = title..replace(/(['"])/g, "\\$1"); //replace(/"/g, '&quot;')
     return (
         '<!DOCTYPE html>' + nl +
             tab + '<html manifest="treehouse.manifest" lang="en">' + nl +
