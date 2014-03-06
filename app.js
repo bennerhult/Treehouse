@@ -234,7 +234,6 @@ function signin(request, response, newUser) {
     loginToken.LoginToken.findOne({ email: email, token: token }, function(err,myToken) {
         if (myToken) {
             user.User.findOne({ username: email }, function(err,myUser) {
-                request.session.user_email = email
                 getDataForUser(myUser, request, response, newUser, appMode)
             })
         }  else {
@@ -298,17 +297,9 @@ function emailUser(emailAddress, subject, html, altText, callback) {
 }
 
 function getDataForUser(myUser, request, response, newUser, appMode) {
-    var email
     var fbConnect = false
-    //noinspection JSUnresolvedVariable
-    if (request.session.user_email) {
-        //noinspection JSUnresolvedVariable
-        email = request.session.user_email
-    } else {
-        if (request.query.username)      {
-            email = request.query.username.toLowerCase()
-            fbConnect = true
-        }
+    if (request.query.username)      {
+        fbConnect = true
     }
     if (myUser != null) {   //Sign in
         if (newUser) {  //user clicked sign up email twice
@@ -362,7 +353,7 @@ function getDataForUser(myUser, request, response, newUser, appMode) {
 app.get('/signout', function(request, response){
     if (request.session) {
         response.clearCookie('rememberme', null)
-        loginToken.remove(request.session.user_email)
+        loginToken.remove(request.session.username)
         request.session.destroy()
         requestHandlers.indexPage(response, null)
     }
