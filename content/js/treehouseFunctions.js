@@ -1,10 +1,11 @@
-function fbShare(caption, achLink, imageURL) {
-    if (typeof String.prototype.startsWith != 'function') {
-        String.prototype.startsWith = function (str){
-            return this.indexOf(str) == 0;
-        }
+if (typeof String.prototype.startsWith != 'function') {
+    String.prototype.startsWith = function (str){
+        return this.indexOf(str) == 0;
     }
-    if (!imageURL.startsWith('http:')) {
+}
+
+function fbShare(caption, achLink, imageURL) {
+    if (!imageURL.startsWith('https:')) {
         imageURL = 'http://treehouse.io/' + imageURL
     }
 
