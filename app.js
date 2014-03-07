@@ -855,6 +855,19 @@ app.get('/confirmAchievement', function(request, response){
     })
 })
 
+app.get('/newsfeed', function(request, response) {
+    var userId
+    if (request.session.currentUser) {
+        userId = request.session.currentUser._id
+    }
+    var newsfeed= "<div class='achievement'><p>"
+     + "Here you will be able to follow your friends achievements. Get started by adding some friends or creating your very own achievments!"
+     + "</p></div>"
+    response.writeHead(200, {'content-type': 'application/json' })
+    response.write(JSON.stringify(newsfeed))
+    response.end('\n', 'utf-8')
+})
+
 function getPrettyNameIdAndImageURL(id, callback) {
     user.getPrettyNameAndImageURL(id, function(prettyName, imageURL) {
         callback(prettyName, id, imageURL)

@@ -141,7 +141,6 @@ body{
 #web-menu a:focus span,
 #web-menu a span.selected{
     background-color: #4a4b4c;
-
 }
 
 #web-menu ul li{
@@ -528,12 +527,8 @@ body{
 
 #menu ul li{
     float: left;
-    width:  33.33%;
+    width:  25%;
     text-align: center;
-}
-
-#menuIconFriend{
-    position: relative;
 }
 
 #menu ul li div.selected{
@@ -612,9 +607,6 @@ body{
     background: none;
     background-color: #4a4b4c;
 }
-
-
-
 
 .actionmenu{
     margin-top: 0px;

@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#2014-03-06 14:14
+#2014-03-07 16:00
 
 CACHE:
 content/favicon.ico
@@ -17,8 +17,10 @@ content/img/empty.png
 content/img/facebook.png
 content/img/friendsicon.png
 content/img/friendsicon-selected.png
-content/img/homeicon.png
-content/img/homeicon-selected.png
+content/img/newsfeedicon.png
+content/img/newsfeedicon-selected.png
+content/img/treeicon.png
+content/img/treeicon-selected.png
 content/img/left-arrow.png
 content/img/logo-large.png
 content/img/logo-small.png

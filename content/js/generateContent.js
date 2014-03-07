@@ -87,8 +87,9 @@ function setDefaultMenu(activePage, visitsMainPage) {
         }
         if (loggedIn) {
             menu = '<div id="menu" class="menu-absolute"><ul>'
-            +'<li><div id="menuIconTree" class=""><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId
-            + '\', false)"><img id="menuImageTree" src="content/img/homeicon.png" alt="" /></a></div></li>'
+            +'<li><div id="menuIconNewsfeed" class=""><a href="javascript:void(0)" onclick="openNewsfeed()"><img id="menuImageNewsfeed" src="content/img/newsfeedicon.png" alt="" /></a></div></li>'
+            + '<li><div id="menuIconTree" class=""><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId
+                + '\', false)"><img id="menuImageTree" src="content/img/treeicon.png" alt="" /></a></div></li>'
             +'<li><div id="menuIconFriend" class=""><a href="javascript:void(0)" onclick="openFriends()"><img id="menuImageFriends" src="content/img/friendsicon.png" alt="" />'
             if (nrOfFriendShipRequests > 0) {
                menu += '<span id="nrOfFriendShipRequestsAlert">' + nrOfFriendShipRequests + '</span>'
@@ -109,8 +110,20 @@ function setDefaultMenu(activePage, visitsMainPage) {
     $(document).attr('title', 'Treehouse - ' + titleWithoutQuotationsEscaped);
     if (visitsMainPage) {
         switch (activePage) {
+            case 'Newsfeed' :
+                $('#menuImageNewsfeed').attr('src','content/img/newsfeedicon-selected.png')
+                $('#menuIconNewsfeed').addClass('selected')
+                $('#menuImageTree').attr('src','content/img/treeicon.png')
+                $('#menuIconTree').removeClass('selected')
+                $('#menuImageFriends').attr('src','content/img/friendsicon.png')
+                $('#menuIconFriend').removeClass('selected')
+                $('#menuImageTab').attr('src','content/img/tree-tab.png')
+                $('#menuToggle').removeClass('selected')
+                break
             case 'Achievements' :
-                $('#menuImageTree').attr('src','content/img/homeicon-selected.png')
+                $('#menuImageNewsfeed').attr('src','content/img/newsfeedicon.png')
+                $('#menuIconNewsfeed').removeClass('selected')
+                $('#menuImageTree').attr('src','content/img/treeicon-selected.png')
                 $('#menuIconTree').addClass('selected')
                 $('#menuImageFriends').attr('src','content/img/friendsicon.png')
                 $('#menuIconFriend').removeClass('selected')
@@ -118,7 +131,9 @@ function setDefaultMenu(activePage, visitsMainPage) {
                 $('#menuToggle').removeClass('selected')
                 break
             case 'Friends' :
-                $('#menuImageTree').attr('src','content/img/homeicon.png')
+                $('#menuImageNewsfeed').attr('src','content/img/newsfeedicon.png')
+                $('#menuIconNewsfeed').removeClass('selected')
+                $('#menuImageTree').attr('src','content/img/treeicon.png')
                 $('#menuIconTree').removeClass('selected')
                 $('#menuImageFriends').attr('src','content/img/friendsicon-selected.png')
                 $('#menuIconFriend').addClass('selected')
@@ -126,7 +141,9 @@ function setDefaultMenu(activePage, visitsMainPage) {
                 $('#menuToggle').removeClass('selected')
                 break
             case 'More' :
-                $('#menuImageTree').attr('src','content/img/homeicon.png')
+                $('#menuImageNewsfeed').attr('src','content/img/newsfeedicon.png')
+                $('#menuIconNewsfeed').removeClass('selected')
+                $('#menuImageTree').attr('src','content/img/treeicon.png')
                 $('#menuIconTree').removeClass('selected')
                 $('#menuImageFriends').attr('src','content/img/friendsicon.png')
                 $('#menuIconFriend').removeClass('selected')
@@ -135,7 +152,7 @@ function setDefaultMenu(activePage, visitsMainPage) {
                 break
         }
     }  else {
-        $('#menuImageTree').attr('src','content/img/homeicon.png')
+        $('#menuImageTree').attr('src','content/img/treeicon.png')
         $('#menuIconTree').removeClass('selected')
         $('#menuImageFriends').attr('src','content/img/friendsicon.png')
         $('#menuIconFriend').removeClass('selected')
@@ -426,6 +443,14 @@ function getCookie(c_name) {
             return unescape(y)
         }
     }
+}
+
+function getNewsfeedContent(achiever, callback) {
+    getPrettyNameFromServer(achiever._id, function(prettyName) {
+        var content =  '<div id="contentwrap"><div id="userarea"><img src="' + achiever.imageURL + '" /><p>' + prettyName + '</p></div>'
+        content +=  '<div id="achievementList"></div></div>'
+        callback(content)
+    })
 }
 
 function getAchievementsContent(achiever, lookingAtFriend, callback) {

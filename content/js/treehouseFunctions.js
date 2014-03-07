@@ -79,7 +79,7 @@ function loginUsingFacebook() {
                         checkFBUserOnServer(apiResponse.email,
                             function(id, ok) {
                                 if (ok) {
-                                    openAchievements(false, id, false)
+                                    openNewsfeed()
                                 } else {
                                     $("#message").html("Facebook did not play nice. Try regular login instead.")
                                 }
@@ -114,7 +114,7 @@ function rememberMe() {
     rememberMeOnServer(
         function(id, ok) {
             if (ok) {
-                openAchievements(false, id, false)
+                openNewsfeed()
             } else {
                 showSignin()
             }
@@ -453,6 +453,31 @@ function showMore() {
     window.history.pushState(null, null, "/")
     getMoreMenuContent(function(moreMenuContent) {
         insertContent(moreMenuContent, setDefaultMenu('More', true))
+    })
+}
+
+/******************  newsfeed functions  ******************/
+function openNewsfeed() {
+    getCurrentUserFromServer(function(achiever) {
+        getNewsfeedContent(achiever, function(newsfeedContent) {
+            insertContent(newsfeedContent, setDefaultMenu('Newsfeed', true), getNewsfeed())
+        })
+    })
+}
+
+function getNewsfeed() {
+    getNewsfeedFromServer(function(data) {
+            $("#achievementList").html(data)
+        }
+    )
+}
+
+function getNewsfeedFromServer(callback) {
+    $.ajax("/newsfeed", {
+        type: "GET",
+        dataType: "json",
+        success: function(data) { if ( callback ) callback(data) },
+        error  : function()     { if ( callback ) callback(null) }
     })
 }
 
