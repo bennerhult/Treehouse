@@ -217,14 +217,14 @@ app.get('/fbAppConnect', function(request, response){
 })
 
 app.get('/signin', function(request, response) {
-    signin(request, response, false)
+    signin(request, response)
 })
 
 app.get('/signup', function(request, response) {
-    signin(request, response, true)
+    signin(request, response)
 })
 
-function signin(request, response, isNewUser) {
+function signin(request, response) {
     var url_parts = url.parse(request.url, true)
     var email = url_parts.query.email.toLowerCase()
     var token = url_parts.query.token
@@ -295,7 +295,7 @@ function emailUser(emailAddress, subject, html, altText, callback) {
                 {data: html, alternative:true}
             ]
     }, function(err, message) {
-        if (err) console.log("error sending email: " + err)
+        if (err) console.log("error sending email: " + err + ", message: " + message)
     })
     if (callback) callback()
 }
@@ -355,32 +355,19 @@ function createUser(emailAdress, request, response, appMode) {
 app.get('/signout', function(request, response){
     if (request.session) {
         response.clearCookie('rememberme', null)
+        //noinspection JSUnresolvedVariable
         loginToken.remove(request.session.username)
         request.session.destroy(null)
         requestHandlers.indexPage(response, null)
     }
 })
 
-function getSignupErrorMessage (err){
-    var errorMessage = "Is that really you?"
-    if (err.errors) {
-        if (err.errors.username) {
-            if (err.errors.username.type == 'required') {
-                errorMessage  = "Hey, type an email!"
-            }  else if (err.errors.username.type == 'invalid_email') {
-                errorMessage  = "Is your email correct?"
-            }
-        }
-    }
-    return errorMessage
-}
-
-
 app.get('/user', function(request, response){
     var userID
     if (request.query.user_id && request.query.user_id.length > 2 && request.query.user_id != 'null') {
         userID = request.query.user_id
     } else if (request.query.user_id != 'null') {
+        //noinspection JSUnresolvedVariable
         userID = request.session.currentUser._id
     }
     user.User.findOne({ _id: userID }, function(err,foundUser) {
@@ -406,7 +393,9 @@ app.get('/userIdForUsername', function(request, response){
 })
 
 app.get('/currentUser', function(request, response){
+    //noinspection JSUnresolvedVariable
     if (request.session.currentUser) {
+        //noinspection JSUnresolvedVariable
         var userID = request.session.currentUser._id
         user.User.findOne({ _id: userID }, function(err,foundUser) {
             if (foundUser)    {
@@ -421,6 +410,7 @@ app.get('/prettyName', function(request, response){
     if (request.query.user_id && request.query.user_id.length > 12) {
         userID = request.query.user_id
     } else {
+        //noinspection JSUnresolvedVariable
         userID = request.session.currentUser._id
     }
 
@@ -433,6 +423,7 @@ app.get('/prettyName', function(request, response){
 })
 
 app.get('/setUserImage', function(request, response){
+    //noinspection JSUnresolvedVariable
     user.setImageURL(request.session.currentUser._id , request.query.imageURL, function(error) {
         if (error) {
             response.writeHead(404, {'content-type': 'application/json' })
@@ -448,6 +439,7 @@ app.get('/setPrettyName', function(request, response){
     if (request.query.user_id && request.query.user_id.length > 12) {
         userID = request.query.user_id
     } else {
+        //noinspection JSUnresolvedVariable
         userID = request.session.currentUser._id
     }
 
@@ -463,6 +455,7 @@ app.get('/setPrettyName', function(request, response){
 
 
 app.get('/upgradeToIssuer', function(request, response){
+    //noinspection JSUnresolvedVariable
     user.User.findOne({ _id: request.session.currentUser._id}, function(err, issuerProspect) {
         var text = "User " + issuerProspect.username + ", id: " +  issuerProspect._id + " wants to be an issuer. Make it so. 1. Confirm that the user is really the Issuer and willing to pay the corresponding fees. 2. Change user to issuer=true 3. Give the user an issuerName."
         emailUser('staff@treehouse.io', 'Issuer Request', text, text,  function(error) {
@@ -477,15 +470,18 @@ app.get('/upgradeToIssuer', function(request, response){
 })
 
 app.get('/findFriends', function(request, response){
+    //noinspection JSUnresolvedVariable
     user.User.findOne({ username: request.query.friend_email.toLowerCase() }, function(err,foundFriend) {
         if (foundFriend)    {
+            //noinspection JSUnresolvedVariable
             if (request.session.currentUser._id == foundFriend._id ) {
                 response.writeHead(400, {'content-type': 'application/json' })
                 response.write(JSON.stringify('Dissociative identity disorder?'))
                 response.end('\n', 'utf-8')
             }  else {
+                //noinspection JSUnresolvedVariable
                 friendship.isFriendRequestExisting(foundFriend._id, request.session.currentUser._id, function (requestExists, confirmed, createdByCurrentUser) {
-                    var responseobject = new Object()
+                    var responseobject = {}
                     responseobject.id = foundFriend._id
                     responseobject.confirmed = confirmed
                     responseobject.createdByCurrentUser = createdByCurrentUser
@@ -495,6 +491,7 @@ app.get('/findFriends', function(request, response){
             }
         } else {
             response.writeHead(400, {'content-type': 'application/json' })
+            //noinspection JSUnresolvedVariable
             response.write(JSON.stringify(request.query.friend_email + ' does not appear to use Treehouse! Tell your friend about it and share the happiness!'))
             response.end('\n', 'utf-8')
         }
@@ -502,8 +499,11 @@ app.get('/findFriends', function(request, response){
 })
 
 app.get('/friendsList', function(request, response){
+    //noinspection JSUnresolvedVariable
     friendship.getPendingRequests(request.session.currentUser._id, function(pendings) {
+        //noinspection JSUnresolvedVariable
         friendship.getFriends(request.session.currentUser._id, function(friendsList) {
+            //noinspection JSUnresolvedVariable
             fillFriendsList(friendsList, pendings, request.session.currentUser._id, function(content) {
                 response.writeHead(200, {'content-type': 'application/json' })
                 response.write(JSON.stringify(content))
@@ -599,9 +599,11 @@ function addPendings(content, pendings, userId, callback) {
 }
 
 app.get('/shareList', function(request, response){
-    var friendIds = new Array()
+    var friendIds = []
     var userId
+    //noinspection JSUnresolvedVariable
     if (request.session.currentUser) {
+        //noinspection JSUnresolvedVariable
         userId = request.session.currentUser._id
     }
 
@@ -616,6 +618,7 @@ app.get('/shareList', function(request, response){
                 }
                 friendsGoneThrough++
                 if (friendsGoneThrough === friendsList.length) {
+                    //noinspection JSUnresolvedVariable
                     fillShareList(friendIds, userId, request.query.achievementId, function(content) {
                         response.writeHead(200, {'content-type': 'application/json' })
                         response.write(JSON.stringify(content))
