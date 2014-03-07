@@ -344,7 +344,7 @@ function createUser(emailAdress, request, response, appMode) {
                         writeGotoAppPage(response)
                     } else {
                         request.session.currentUser = newUser
-                        writeDefaultPage(request, response, false)
+                        writeDefaultPage(request, response)
                     }
                 }
             })
@@ -356,7 +356,7 @@ app.get('/signout', function(request, response){
     if (request.session) {
         response.clearCookie('rememberme', null)
         loginToken.remove(request.session.username)
-        request.session.destroy()
+        request.session.destroy(null)
         requestHandlers.indexPage(response, null)
     }
 })
@@ -843,7 +843,6 @@ app.get('/ignoreAchievement', function(request, response){
         response.end('\n', 'utf-8')
     })
 })
-
 
 app.get('/confirmAchievement', function(request, response){
     shareholding.confirmShareHolding(request.query.achievementId, request.query.userId, function(title) {
