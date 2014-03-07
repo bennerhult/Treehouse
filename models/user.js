@@ -30,6 +30,8 @@ function createUser(name, callback) {
     user.imageURL = 'content/img/user_has_no_image.jpg'
     user.isIssuer = false
     user.save(function (error) {
+        console.log("name: " + name)
+        console.log("error: " + error)
         if (callback) callback(user, error)
     })
 }
@@ -76,11 +78,9 @@ function getShortName(userId, callback) {
 }
 
 function remove(username, next) {
-    console.log("REMOVING USER: " + username)
     User.findOne({username: username }, function(err,userToDelete) {
         if (userToDelete) {
             userToDelete.remove(function () {
-                console.log("USER REMOVED ")
                 if (next) {
                     next()
                 }

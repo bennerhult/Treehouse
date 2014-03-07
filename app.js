@@ -224,7 +224,7 @@ app.get('/signup', function(request, response) {
     signin(request, response, true)
 })
 
-function signin(request, response, newUser) {
+function signin(request, response, isNewUser) {
     var url_parts = url.parse(request.url, true)
     var email = url_parts.query.email.toLowerCase()
     var token = url_parts.query.token
@@ -234,9 +234,13 @@ function signin(request, response, newUser) {
     loginToken.LoginToken.findOne({ email: email, token: token }, function(err,myToken) {
         if (myToken) {
             user.User.findOne({ username: email }, function(err,myUser) {
-                getDataForUser(myUser, request, response, newUser, appMode)
+                if (myUser) {
+                    getDataForUser(myUser, request, response, appMode)
+                } else {
+                    createUser(email, request, response, appMode)
+                }
             })
-        }  else {
+        } else {
             writeDefaultPage(request, response)
         }
     })
@@ -296,58 +300,56 @@ function emailUser(emailAddress, subject, html, altText, callback) {
     if (callback) callback()
 }
 
-function getDataForUser(myUser, request, response, newUser, appMode) {
+function getDataForUser(myUser, request, response, appMode) {
     var fbConnect = false
-    if (request.query.username)      {
+    if (request.query.username) {
         fbConnect = true
     }
-    if (myUser != null) {   //Sign in
-        if (newUser) {  //user clicked sign up email twice
+    request.session.currentUser = myUser
+    loginToken.createToken(myUser.username, function(myToken) {
+        response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
+        if (appMode) {
+            writeGotoAppPage(response)
+        } else {
+            if (fbConnect) {
+                response.writeHead(200, {'content-type': 'application/json' })
+                response.write(JSON.stringify(myUser._id))
+                response.end('\n', 'utf-8')
+            } else {
+                writeDefaultPage(request, response)
+            }
+        }
+    })
+}
+
+function createUser(emailAdress, request, response, appMode) {
+    var fbConnect = false
+    if (request.query.username) {
+        fbConnect = true
+    }
+    user.createUser(emailAdress, function (newUser,err) {
+        if (err) {
             response.writeHead(200, {'content-type': 'application/json' })
-            response.write(JSON.stringify("That link is exhausted. Get a new one!"))
+            response.write(JSON.stringify("There was a problem creating your account. Contact staff@treehouse.io for more information."))
             response.end('\n', 'utf-8')
         }  else {
-            request.session.currentUser = myUser
-            loginToken.createToken(myUser.username, function(myToken) {
+            loginToken.createToken(emailAdress, function(myToken) {
                 response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-                if (appMode) {
-                    writeGotoAppPage(response)
+                if (fbConnect) {
+                    response.writeHead(200, {'content-type': 'application/json' })
+                    response.write(JSON.stringify('ok'))
+                    response.end('\n', 'utf-8')
                 } else {
-                    if (fbConnect) {
-                        response.writeHead(200, {'content-type': 'application/json' })
-                        response.write(JSON.stringify(myUser._id))
-                        response.end('\n', 'utf-8')
+                    if (appMode) {
+                        writeGotoAppPage(response)
                     } else {
-                        writeDefaultPage(request, response)
+                        request.session.currentUser = newUser
+                        writeDefaultPage(request, response, false)
                     }
                 }
             })
         }
-    } else {    //Sign up
-        user.createUser(email, function (newUser,err) {
-            if (err) {
-                response.writeHead(200, {'content-type': 'application/json' })
-                response.write(JSON.stringify("Oddly enough, you already have an account. Sign in and you are good to go!"))
-                response.end('\n', 'utf-8')
-            }  else {
-                loginToken.createToken(newUser.username, function(myToken) {
-                    response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-                    if (fbConnect) {
-                        response.writeHead(200, {'content-type': 'application/json' })
-                        response.write(JSON.stringify('ok'))
-                        response.end('\n', 'utf-8')
-                    } else {
-                        if (appMode) {
-                            writeGotoAppPage(response)
-                        } else {
-                            request.session.currentUser = newUser
-                            writeDefaultPage(request, response, false)
-                        }
-                    }
-                })
-            }
-        })
-    }
+    })
 }
 
 app.get('/signout', function(request, response){
