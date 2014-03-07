@@ -635,7 +635,7 @@ app.get('/shareList', function(request, response){
 })
 
 function fillShareList(friendsList, userId, achievementId, callback) {
-    content = '<div id="sharerList">'
+    var content = '<div id="sharerList">'
     achievement.Achievement.findById( achievementId , function(err, foundAchievement) {
         if(foundAchievement.createdBy != userId) {
             content += '<p class="noshareandcompare">You can only share achievements you created yourself</p>'
@@ -680,13 +680,17 @@ function fillShareList(friendsList, userId, achievementId, callback) {
 }
 
 app.get('/compareList', function(request, response){
-    var friendIds = new Array()
+    var friendIds = []
     var content = ""
     var userId
     var comparesGoneThrough = 0
+
+    //noinspection JSUnresolvedVariable
     if (request.session.currentUser) {
+        //noinspection JSUnresolvedVariable
         userId = request.session.currentUser._id
     }
+    //noinspection JSUnresolvedVariable
     shareholding.getCompares(request.query.achievementId, userId, function(compareList) {
         if (compareList && compareList.length > 0) {
             compareList.forEach(function(currentCompare) {
@@ -694,6 +698,7 @@ app.get('/compareList', function(request, response){
                 var myQuantityTotal = 0
                 var goalsGoneThrough = 0
                 getPrettyNameIdAndImageURL( currentCompare.achiever_id, function(prettyName, id, imageURL) {
+                    //noinspection JSUnresolvedVariable
                     achievement.Achievement.findOne({ _id: request.query.achievementId }, function(err,currentAchievement) {
                         currentAchievement.goals.forEach(function(goal) {
                             progress.Progress.findOne({ goal_id: goal._id, achiever_id: currentCompare.achiever_id }, function(err,myProgress) {
@@ -869,7 +874,7 @@ app.get('/latestAchievementSplash', function(request, response) {
                    response.writeHead(200, {'content-type': 'application/json' })
                    if (latestAchievement) {
                        var titleWithQuotationsEscaped = encodeURIComponent(latestAchievement.title.replace(/'/g, '&apos;'))
-                       content = '<h2>Latest Achievement</h2>' +
+                       var content = '<h2>Latest Achievement</h2>' +
                            '<p><a class="latestAchievementLink" href="javascript:void(0)" onclick="showLatestAchievement(\'' + latestAchievement._id + '\', \'' + latestProgress.achiever_id + '\', \'' + titleWithQuotationsEscaped + '\')">' + latestAchievement.title + '</a></p>' +
                            '<div><a class="latestAchievementLink" href="javascript:void(0)" onclick="showLatestAchievement(\'' + latestAchievement._id + '\', \'' + latestProgress.achiever_id + '\', \'' + titleWithQuotationsEscaped + '\')"><img src="' + latestAchievement.imageURL + '" /></a></div>'
                    }
@@ -878,7 +883,7 @@ app.get('/latestAchievementSplash', function(request, response) {
                })
            } else {
                response.writeHead(200, {'content-type': 'application/json' })
-               content = '<h2>Latest Achievement</h2>'   +
+               var content = '<h2>Latest Achievement</h2>'   +
                    '<p></p>' +
                    '<div></div>'
                response.write(JSON.stringify(content))
@@ -936,7 +941,7 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
 
 
 function createNotificationDesc(response, achievementsList, completedAchievements, nrOfAchievements, notifications, achieverId, lookingAtFriend) {
-    var shortNames = new Array()
+    var shortNames = []
 
     for (var i in notifications) {
         user.getShortName(notifications[i].createdBy, function(prettyName) {
