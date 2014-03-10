@@ -863,6 +863,25 @@ app.get('/newsfeed', function(request, response) {
     var newsfeed= "<div class='achievement'><p>"
      + "Here you will be able to follow your friends achievements. Get started by adding some friends or creating your very own achievments!"
      + "</p></div>"
+
+    friendship.getFriends(userId, function(friendsList) {
+        if (friendsList.length > 0) {
+            friendsList.forEach(function(currentFriendship) {
+                if (currentFriendship.friend1_id == userId) {
+                    currentFriendId = currentFriendship.friend2_id
+                } else {
+                    currentFriendId = currentFriendship.friend1_id
+                }
+                getPrettyNameIdAndImageURL(currentFriendId, function(username, id, imageURL) {
+                    //TODO for all new friend-progresses
+                    //TODO write info about new progresses
+                    //TODO link to friend
+                    //TODO link to friend-achievement
+                })
+            })
+        }
+    })
+
     response.writeHead(200, {'content-type': 'application/json' })
     response.write(JSON.stringify(newsfeed))
     response.end('\n', 'utf-8')
