@@ -47,7 +47,7 @@ app.configure(function() {
     app.use(express.session({
         store: new MongoStore({
             url: db_uri,
-            clear_interval: 3600
+            auto_reconnect: true
         }),
         secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4'
     }))

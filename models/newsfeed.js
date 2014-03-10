@@ -48,7 +48,7 @@ function updateNewsfeed(userId, news, callback) {
 }
 
 function getNewsfeed(user_Id, callback) {
-    console.log("GN1")
+    console.log("GN1: " + user_Id)
     Newsfeed.find({ userId: user_Id}, function(err, newsfeed) {
         console.log("GN2")
         if (newsfeed) {
