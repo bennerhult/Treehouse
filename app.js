@@ -61,7 +61,7 @@ var user = require('./models/user.js'),
     friendship = require('./models/friendship.js'),
     shareholding = require('./models/shareholding.js'),
     loginToken = require('./models/loginToken.js'),
-    requestHandlers = require('./code/requestHandlers.js'),
+    newsfeed = require('./models/newsfeed.js'),
     staticFiles = require('./code/staticFiles.js')
 
 function loadUser(request, response, next) {
@@ -860,37 +860,32 @@ app.get('/confirmAchievement', function(request, response){
     })
 })
 
-app.get('/newsfeed', function(request, response) {
+app.get('/newsfeed', function(request, response){
     var userId
     if (request.session.currentUser) {
         userId = request.session.currentUser._id
     }
-    var newsfeed= "<div class='achievement'><p>"
-     + "Here you will be able to follow your friends achievements. Get started by adding some friends or creating your very own achievments!"
-     + "</p></div>"
 
-    friendship.getFriends(userId, function(friendsList) {
-        if (friendsList.length > 0) {
-            friendsList.forEach(function(currentFriendship) {
-                if (currentFriendship.friend1_id == userId) {
-                    currentFriendId = currentFriendship.friend2_id
-                } else {
-                    currentFriendId = currentFriendship.friend1_id
-                }
-                getPrettyNameIdAndImageURL(currentFriendId, function(username, id, imageURL) {
-                    //TODO for all new friend-progresses
-                    //TODO write info about new progresses
-                    //TODO link to friend
-                    //TODO link to friend-achievement
-                })
-            })
-        }
+    newsfeed.getNewsfeed(userId, function(newsfeedFromServer) {
+        prettifyNewsfeed(newsfeedFromServer, function(prettifiedNewsfeed) {
+            response.writeHead(200, {'content-type': 'application/json' })
+            response.write(JSON.stringify(prettifiedNewsfeed))
+            response.end('\n', 'utf-8')
+        })
     })
-
-    response.writeHead(200, {'content-type': 'application/json' })
-    response.write(JSON.stringify(newsfeed))
-    response.end('\n', 'utf-8')
 })
+
+function prettifyNewsfeed (newsfeedFromServer, callback) {
+    var newsfeedContent
+    if (newsfeedFromServer.length === 0) {
+        newsfeedContent= "<div class='achievement'><p>Here you will be able to follow your friends achievements. Get started by adding some friends or creating your very own achievments!</p></div>"
+    }  else {
+        newsfeedContent =  "<div class='achievement'><p>Preetify here"
+            + newsfeedFromServer
+            +  "</p></div>"
+    }
+    callback(newsfeedContent)
+}
 
 function getPrettyNameIdAndImageURL(id, callback) {
     user.getPrettyNameAndImageURL(id, function(prettyName, imageURL) {
