@@ -61,6 +61,7 @@ var user = require('./models/user.js'),
     friendship = require('./models/friendship.js'),
     shareholding = require('./models/shareholding.js'),
     loginToken = require('./models/loginToken.js'),
+    requestHandlers = require('./code/requestHandlers.js'),
     newsfeed = require('./models/newsfeed.js'),
     staticFiles = require('./code/staticFiles.js')
 
@@ -865,27 +866,24 @@ app.get('/newsfeed', function(request, response){
     if (request.session.currentUser) {
         userId = request.session.currentUser._id
     }
-
     newsfeed.getNewsfeed(userId, function(newsfeedFromServer) {
-        prettifyNewsfeed(newsfeedFromServer, function(prettifiedNewsfeed) {
-            response.writeHead(200, {'content-type': 'application/json' })
-            response.write(JSON.stringify(prettifiedNewsfeed))
-            response.end('\n', 'utf-8')
-        })
+
+        //FAKE CONTENT
+       newsfeedFromServer = '{'
+           + '"Event":"Progress made"'
+           + ',"AchieverName":"Millhouse Manastorm"'
+            + ',"AchieverImageURL":"https://www.filepicker.io/api/file/mhkLpzLHRNmdh1MFfigE"'
+            + ',"AchievementName":"Defated a murLock"'
+            + ',"AchievementImageURL":"Millhouse Manastorm"'
+           + '}'
+
+        response.writeHead(200, {'content-type': 'application/json' })
+        response.write(JSON.stringify(newsfeedFromServer))
+        response.end('\n', 'utf-8')
     })
 })
 
-function prettifyNewsfeed (newsfeedFromServer, callback) {
-    var newsfeedContent
-    if (newsfeedFromServer.length === 0) {
-        newsfeedContent= "<div class='achievement'><p>Here you will be able to follow your friends achievements. Get started by adding some friends or creating your very own achievments!</p></div>"
-    }  else {
-        newsfeedContent =  "<div class='achievement'><p>Preetify here"
-            + newsfeedFromServer
-            +  "</p></div>"
-    }
-    callback(newsfeedContent)
-}
+
 
 function getPrettyNameIdAndImageURL(id, callback) {
     user.getPrettyNameAndImageURL(id, function(prettyName, imageURL) {

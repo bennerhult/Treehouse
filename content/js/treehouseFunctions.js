@@ -467,9 +467,14 @@ function openNewsfeed() {
 
 function getNewsfeed() {
     getNewsfeedFromServer(function(data) {
-            $("#achievementList").html(data)
+        if (data.length === 0) {
+            $("#achievementList").html("<div class='achievement'><p>Here you will be able to follow your friends achievements. Get started by adding some friends or create your very own achievements!</p></div>")
+        }  else {
+            var transform = {'tag':'p','html':'${AchieverName} (${Event})'}
+
+            $("#achievementList").json2html(data,transform) //, {'prepend':'<div class="achievement"><p>Prettify this', 'append':'</p></div>'}
         }
-    )
+    })
 }
 
 function getNewsfeedFromServer(callback) {
@@ -480,7 +485,6 @@ function getNewsfeedFromServer(callback) {
         error  : function()     { if ( callback ) callback(null) }
     })
 }
-
 
 /******************  achievements functions  ******************/
 function openAchievements(completed, achieverId, lookingAtFriend, achieverName) {
