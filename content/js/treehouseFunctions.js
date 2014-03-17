@@ -483,38 +483,30 @@ function getNewsfeedFromServer(callback) {
 }
 
 function newsfeedToHtml(newsfeed, callback) {
-    var newsfeedHtml = "<div class='achievement'><div class='container'>"
+    var newsfeedHtml = '<div class="achievement"><div class="container">'
     if (newsfeed.length === 0) {
-        newsfeedHtml += "Here you will be able to follow your friends achievements. Get started by adding some friends or create your very own achievements!"
+        newsfeedHtml += 'Here you will be able to follow your friends achievements. Get started by adding some friends or create your very own achievements!'
     }  else {
         var json = JSON.parse(newsfeed);
 
         if (json.EventType === "progress") {
-
-            /*
-             + ',"AchieverName":"Millhouse Manastorm"'
-             + ',"AchieverId":"53198378c88de328123c5185"'
-             + ',"AchievementId":"5327018447c7081c15347db4"'
-             + ',"AchievementName":"Defated a murLock"'
-             + ',"AchievementImageURL":"https://www.filepicker.io/api/file/mhkLpzLHRNmdh1MFfigE"'
-             */
-            newsfeedHtml += "<a href='javascript:void(0)' onclick='openAchievement(\'"
+            newsfeedHtml += '<a href="javascript:void(0)" onclick="openAchievement(\''
             + json.AchievementId
-            +"\', \'"
+            + '\', \''
             + json.AchieverId
-            +"\', false, \'"
+            + '\', false, \''
             + json.AchievementName
-            + "\')'><img width='96' height='96' src="
+            + '\')"><img width="96" height="96" src='
             + json.AchievementImageURL
-            + " alt="
-            + json.AchieverName + " just progressed " + json.AchievementName
-            + "><span class='gradient-bg'></span><span class='progressbar'></span><div class='progress-container-achievements'><span class='progress' style='width:0%'></span></div></a></div><p>"
-            + json.AchieverName + " just progressed " + json.AchievementName
-            + "</p><div class='separerare-part'>&nbsp;</div>"
+            + ' alt='
+            + json.AchieverName + ' just progressed ' + json.AchievementName
+            + '><div class="progress-container-achievements"></div></a></div><p>'
+            + json.AchieverName + ' just progressed ' + json.AchievementName
+            + '</p><div class="separerare-part">&nbsp;</div>'
         }
 
     }
-    callback(newsfeedHtml + "</div></div>")
+    callback(newsfeedHtml + '</div></div>')
 }
 
 /******************  achievements functions  ******************/
