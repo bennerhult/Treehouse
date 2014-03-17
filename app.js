@@ -872,9 +872,8 @@ app.get('/newsfeed', function(request, response){
        newsfeedFromServer = '{'
            + '"Event":"Progress made"'
            + ',"AchieverName":"Millhouse Manastorm"'
-            + ',"AchieverImageURL":"https://www.filepicker.io/api/file/mhkLpzLHRNmdh1MFfigE"'
+            + ',"AchievementImageURL":"https://www.filepicker.io/api/file/mhkLpzLHRNmdh1MFfigE"'
             + ',"AchievementName":"Defated a murLock"'
-            + ',"AchievementImageURL":"Millhouse Manastorm"'
            + '}'
 
         response.writeHead(200, {'content-type': 'application/json' })
