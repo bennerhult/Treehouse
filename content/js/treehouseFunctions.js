@@ -458,6 +458,7 @@ function showMore() {
 
 /******************  newsfeed functions  ******************/
 function openNewsfeed() {
+    window.history.pushState(null, null, "/")
     getCurrentUserFromServer(function(achiever) {
         getNewsfeedContent(achiever, function(newsfeedContent) {
             insertContent(newsfeedContent, setDefaultMenu('Newsfeed', true), getNewsfeed())
