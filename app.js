@@ -870,10 +870,12 @@ app.get('/newsfeed', function(request, response){
 
         //FAKE CONTENT
        newsfeedFromServer = '{'
-           + '"Event":"Progress made"'
+           + '"EventType":"progress"'
            + ',"AchieverName":"Millhouse Manastorm"'
-            + ',"AchievementImageURL":"https://www.filepicker.io/api/file/mhkLpzLHRNmdh1MFfigE"'
-            + ',"AchievementName":"Defated a murLock"'
+           + ',"AchieverId":"53198378c88de328123c5185"'
+           + ',"AchievementId":"5327018447c7081c15347db4"'
+           + ',"AchievementName":"Defated a murLock"'
+           + ',"AchievementImageURL":"https://www.filepicker.io/api/file/mhkLpzLHRNmdh1MFfigE"'
            + '}'
 
         response.writeHead(200, {'content-type': 'application/json' })

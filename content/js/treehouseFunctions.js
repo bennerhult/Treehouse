@@ -467,13 +467,9 @@ function openNewsfeed() {
 
 function getNewsfeed() {
     getNewsfeedFromServer(function(data) {
-        if (data.length === 0) {
-            $("#achievementList").html("<div class='achievement'><p>Here you will be able to follow your friends achievements. Get started by adding some friends or create your very own achievements!</p></div>")
-        }  else {
-            var transform = {'tag':'p','html':'${AchieverName} (${Event})'}
-
-            $("#achievementList").json2html(data,transform) //, {'prepend':'<div class="achievement"><p>Prettify this', 'append':'</p></div>'}
-        }
+        newsfeedToHtml(data, function(newsfeedHtml){
+            $("#achievementList").html(newsfeedHtml)
+        })
     })
 }
 
@@ -484,6 +480,41 @@ function getNewsfeedFromServer(callback) {
         success: function(data) { if ( callback ) callback(data) },
         error  : function()     { if ( callback ) callback(null) }
     })
+}
+
+function newsfeedToHtml(newsfeed, callback) {
+    var newsfeedHtml = "<div class='achievement'><div class='container'>"
+    if (newsfeed.length === 0) {
+        newsfeedHtml += "Here you will be able to follow your friends achievements. Get started by adding some friends or create your very own achievements!"
+    }  else {
+        var json = JSON.parse(newsfeed);
+
+        if (json.EventType === "progress") {
+
+            /*
+             + ',"AchieverName":"Millhouse Manastorm"'
+             + ',"AchieverId":"53198378c88de328123c5185"'
+             + ',"AchievementId":"5327018447c7081c15347db4"'
+             + ',"AchievementName":"Defated a murLock"'
+             + ',"AchievementImageURL":"https://www.filepicker.io/api/file/mhkLpzLHRNmdh1MFfigE"'
+             */
+            newsfeedHtml += "<a href='javascript:void(0)' onclick='openAchievement(\'"
+            + json.AchievementId
+            +"\', \'"
+            + json.AchieverId
+            +"\', false, \'"
+            + json.AchievementName
+            + "\')'><img width='96' height='96' src="
+            + json.AchievementImageURL
+            + " alt="
+            + json.AchieverName + " just progressed " + json.AchievementName
+            + "><span class='gradient-bg'></span><span class='progressbar'></span><div class='progress-container-achievements'><span class='progress' style='width:0%'></span></div></a></div><p>"
+            + json.AchieverName + " just progressed " + json.AchievementName
+            + "</p><div class='separerare-part'>&nbsp;</div>"
+        }
+
+    }
+    callback(newsfeedHtml + "</div></div>")
 }
 
 /******************  achievements functions  ******************/
