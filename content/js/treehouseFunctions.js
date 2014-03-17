@@ -487,24 +487,26 @@ function newsfeedToHtml(newsfeed, callback) {
     if (newsfeed.length === 0) {
         newsfeedHtml += 'Here you will be able to follow your friends achievements. Get started by adding some friends or create your very own achievements!'
     }  else {
-        var json = JSON.parse(newsfeed);
-
-        if (json.EventType === "progress") {
-            newsfeedHtml += '<a href="javascript:void(0)" onclick="openAchievement(\''
-            + json.AchievementId
-            + '\', \''
-            + json.AchieverId
-            + '\', false, \''
-            + json.AchievementName
-            + '\')"><img width="96" height="96" src='
-            + json.AchievementImageURL
-            + ' alt='
-            + json.AchieverName + ' just progressed ' + json.AchievementName
-            + '><div class="progress-container-achievements"></div></a></div><p>'
-            + json.AchieverName + ' just progressed ' + json.AchievementName
-            + '</p><div class="separerare-part">&nbsp;</div>'
+        var parsedNewsfeed = JSON.parse(newsfeed)
+        var newsItem
+        for (var i in parsedNewsfeed.newsEvents) {
+            newsItem = parsedNewsfeed.newsEvents[i]
+            if (newsItem.EventType === "progress") {
+                newsfeedHtml += '<a href="javascript:void(0)" onclick="openAchievement(\''
+                    + newsItem.AchievementId
+                    + '\', \''
+                    + newsItem.AchieverId
+                    + '\', false, \''
+                    + newsItem.AchievementName
+                    + '\')"><img width="96" height="96" src='
+                    + newsItem.AchievementImageURL
+                    + ' alt='
+                    + newsItem.AchieverName + ' just progressed ' + newsItem.AchievementName
+                    + '><div class="progress-container-achievements"></div></a></div><p>'
+                    + newsItem.AchieverName + ' just progressed ' + newsItem.AchievementName
+                    + '</p><div class="separerare-part">&nbsp;</div>'
+            }
         }
-
     }
     callback(newsfeedHtml + '</div></div>')
 }
