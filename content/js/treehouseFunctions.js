@@ -483,16 +483,18 @@ function getNewsfeedFromServer(callback) {
 }
 
 function newsfeedToHtml(newsfeed, callback) {
-    var newsfeedHtml = '<div class="achievement"><div class="container">'
+    var newsfeedHtml = ''
     if (newsfeed.length === 0) {
-        newsfeedHtml += 'Here you will be able to follow your friends achievements. Get started by adding some friends or create your very own achievements!'
+        newsfeedHtml += '<div class="achievement"><div class="container">Here you will be able to follow your friends achievements. Get started by adding some friends or create your very own achievements!</div></div>'
+        callback(newsfeedHtml)
     }  else {
         var parsedNewsfeed = JSON.parse(newsfeed)
         var newsItem
+        var newsFeedGoneThrough = 0
         for (var i in parsedNewsfeed.newsEvents) {
             newsItem = parsedNewsfeed.newsEvents[i]
             if (newsItem.EventType === "progress") {
-                newsfeedHtml += '<a href="javascript:void(0)" onclick="openAchievement(\''
+                newsfeedHtml += '<div class="achievement"><div class="container"><a href="javascript:void(0)" onclick="openAchievement(\''
                     + newsItem.AchievementId
                     + '\', \''
                     + newsItem.AchieverId
@@ -504,11 +506,15 @@ function newsfeedToHtml(newsfeed, callback) {
                     + newsItem.AchieverName + ' just progressed ' + newsItem.AchievementName
                     + '><div class="progress-container-achievements"></div></a></div><p>'
                     + newsItem.AchieverName + ' just progressed ' + newsItem.AchievementName
-                    + '</p><div class="separerare-part">&nbsp;</div>'
+                    + '</p><div class="separerare-part">&nbsp;</div></div></div>'
+                newsFeedGoneThrough++
+                if (newsFeedGoneThrough === parsedNewsfeed.newsEvents.length) {
+                    callback(newsfeedHtml)
+                }
             }
         }
     }
-    callback(newsfeedHtml + '</div></div>')
+
 }
 
 /******************  achievements functions  ******************/
