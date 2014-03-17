@@ -485,37 +485,34 @@ function getNewsfeedFromServer(callback) {
 
 function newsfeedToHtml(newsfeed, callback) {
     var newsfeedHtml = ''
-    if (newsfeed.length === 0) {
-        newsfeedHtml += '<div class="achievement"><div class="container">Here you will be able to follow your friends achievements. Get started by adding some friends or create your very own achievements!</div></div>'
-        callback(newsfeedHtml)
-    }  else {
-        var parsedNewsfeed = JSON.parse(newsfeed)
-        var newsItem
-        var newsFeedGoneThrough = 0
-        for (var i in parsedNewsfeed.newsEvents) {
-            newsItem = parsedNewsfeed.newsEvents[i]
-            if (newsItem.EventType === "progress") {
-                newsfeedHtml += '<div class="achievement"><div class="container"><a href="javascript:void(0)" onclick="openAchievement(\''
-                    + newsItem.AchievementId
-                    + '\', \''
-                    + newsItem.AchieverId
-                    + '\', false, \''
-                    + newsItem.AchievementName
-                    + '\')"><img width="96" height="96" src='
-                    + newsItem.AchievementImageURL
-                    + ' alt='
-                    + newsItem.AchieverName + ' just progressed ' + newsItem.AchievementName
-                    + '><div class="progress-container-achievements"></div></a></div><p>'
-                    + newsItem.AchieverName + ' just progressed ' + newsItem.AchievementName
-                    + '</p><div class="separerare-part">&nbsp;</div></div></div>'
-                newsFeedGoneThrough++
-                if (newsFeedGoneThrough === parsedNewsfeed.newsEvents.length) {
-                    callback(newsfeedHtml)
-                }
-            }
+    var newsItem
+    var newsFeedGoneThrough = 0
+    for (var i in newsfeed.newsItems) {
+        newsItem = newsfeed.newsItems[i]
+        if (newsItem.eventType === "progress") {
+            newsfeedHtml += '<div class="achievement"><div class="container"><a href="javascript:void(0)" onclick="openAchievement(\''
+                + newsItem.AchievementId
+                + '\', \''
+                + newsItem.AchieverId
+                + '\', false, \''
+                + newsItem.AchievementName
+                + '\')"><img width="96" height="96" src='
+                + newsItem.AchievementImageURL
+                + ' alt='
+                + newsItem.AchieverName + ' just progressed ' + newsItem.AchievementName
+                + '><div class="progress-container-achievements"></div></a></div><p>'
+                + newsItem.AchieverName + ' just progressed ' + newsItem.AchievementName
+                + '</p><div class="separerare-part">&nbsp;</div></div></div>'
+        }  else if (newsItem.eventType === "info") {
+            newsfeedHtml += '<div class="achievement"><div class="container"><p>'
+                + newsItem.newsJson
+                + '</p><div class="separerare-part">&nbsp;</div></div></div>'
+        }
+        newsFeedGoneThrough++
+        if (newsFeedGoneThrough === newsfeed.newsItems.length) {
+            callback(newsfeedHtml)
         }
     }
-
 }
 
 /******************  achievements functions  ******************/

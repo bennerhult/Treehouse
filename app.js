@@ -867,9 +867,8 @@ app.get('/newsfeed', function(request, response){
         userId = request.session.currentUser._id
     }
     newsfeed.getNewsfeed(userId, function(newsfeedFromServer) {
-
         //FAKE CONTENT
-         newsfeedFromServer =
+         /*newsfeedFromServer =
                '{'
                  + '"userId": "53198378c88de328123c5185"'
                  + ',"newsEvents": ['
@@ -891,7 +890,7 @@ app.get('/newsfeed', function(request, response){
                      + '}'
                  + ']'
                + '}'
-
+         */
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(newsfeedFromServer))
         response.end('\n', 'utf-8')
