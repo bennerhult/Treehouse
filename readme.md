@@ -91,6 +91,9 @@ See available versions for Node and NPM
 
 [Climb into your OWN Treehouse!](http://localhost:1337/)
 
+##To get newsfeedQueuer to find the database
+`set DB_URI=mongodb://localhost:27017/test`
+
 ####Simulate production environment
 `set NODE_ENV=production` (`set NODE_ENV=development` to restore)
 

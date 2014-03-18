@@ -7,7 +7,7 @@ var Agenda          = require('agenda'),
     progress        = require('./models/progress.js'),
     user            = require('./models/user.js')
 
-var db_uri = 'mongodb://localhost:27017/test'
+var db_uri=process.env.DB_URI
 mongoose.connect(db_uri)
 var agenda = new Agenda({db: { address: db_uri }})
 
