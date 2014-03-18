@@ -13,6 +13,13 @@ Running tests
 `cd c://th/test`
 `casperjs test test.js`
 
+##Check versions of Node and NPM
+`node -v`
+
+`npm -v`
+
+`npm list` (version of npm modules)
+
 ##Git commands
 ###push
 `cd c://th`
