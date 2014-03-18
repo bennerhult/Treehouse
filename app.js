@@ -869,30 +869,6 @@ app.get('/newsfeed', function(request, response){
         userId = request.session.currentUser._id
     }
     newsfeed.getNewsfeed(userId, function(newsfeedFromServer) {
-        //FAKE CONTENT
-         /*newsfeedFromServer =
-               '{'
-                 + '"userId": "53198378c88de328123c5185"'
-                 + ',"newsEvents": ['
-                     + '{'
-                         + '"EventType":"progress"'
-                         + ',"AchieverName":"Millhouse Manastorm"'
-                         + ',"AchieverId":"53198378c88de328123c5185"'
-                         + ',"AchievementId":"5327018447c7081c15347db4"'
-                         + ',"AchievementName":"Defated a murLock"'
-                         + ',"AchievementImageURL":"https://www.filepicker.io/api/file/mhkLpzLHRNmdh1MFfigE"'
-                     + '},'
-                     +'{'
-                         + '"EventType":"progress"'
-                         + ',"AchieverName":"Millhouse Manastorm"'
-                         + ',"AchieverId":"53198378c88de328123c5185"'
-                         + ',"AchievementId":"5327018447c7081c15347db4"'
-                         + ',"AchievementName":"Defated a murLock again"'
-                         + ',"AchievementImageURL":"https://www.filepicker.io/api/file/mhkLpzLHRNmdh1MFfigE"'
-                     + '}'
-                 + ']'
-               + '}'
-         */
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(newsfeedFromServer))
         response.end('\n', 'utf-8')
