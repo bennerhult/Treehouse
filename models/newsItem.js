@@ -12,7 +12,6 @@ var NewsItem = mongoose.model('NewsItem', NewsItemSchema)
 module.exports = {
     NewsItem: NewsItem,
     createNewsItem: createNewsItem
-    //NewsItemSchema: NewsItemSchema
 }
 
 function createNewsItem(eventType, newsJson, callback) {
