@@ -31,8 +31,9 @@ function markProgress(achiever_id, goal_id, next) {
         currentProgress.latestUpdated = new Date()
         currentProgress.quantityFinished+=1
         currentProgress.save(function (err) {
-            newsfeedEvent.addEvent("progress", achiever_id, currentProgress._id)
-            next(currentProgress.quantityFinished)
+            newsfeedEvent.addEvent("progress", achiever_id, currentProgress._id, function() {
+                next(currentProgress.quantityFinished)
+            })
         })
     })
 }

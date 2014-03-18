@@ -15,11 +15,15 @@ module.exports = {
     addEvent: addEvent
 }
 
-function addEvent(eventType, userId, objectId) {
+function addEvent(eventType, userId, objectId, callback) {
     var newsfeedEvent = new NewsfeedEvent()
     newsfeedEvent.createdDate = new Date()
     newsfeedEvent.eventType = eventType
     newsfeedEvent.userId = userId
     newsfeedEvent.objectId = objectId
-    newsfeedEvent.save()
+    newsfeedEvent.save(function (err) {
+       if (callback) {
+           callback
+       }
+    })
 }
