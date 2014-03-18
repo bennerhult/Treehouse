@@ -6,7 +6,7 @@ var NewsfeedSchema = new Schema({
     created         : {type: Date, required: true},
     latestUpdated   : {type: Date, required: true},
     userId          : {type: Schema.ObjectId, required: true},
-    newsItems        : {type: [newsItem.NewsItemSchema], required: true}
+    newsItems       : {type: [newsItem.NewsItemSchema], required: true}
 })
 
 var Newsfeed = mongoose.model('Newsfeed', NewsfeedSchema)
@@ -35,14 +35,14 @@ function createNewsfeed(userId, newsType, newsText, callback) {
 }
 
 function updateNewsfeed(userId, newsType, newsText, callback) {
-    Newsfeed.find({ userId: userId}, function(err, newsfeed) {
-       if (newsfeed) {
+    Newsfeed.findOne({ userId: userId}, function(err, currentNewsfeed) {
+       if (currentNewsfeed) {
            newsItem.createNewsItem(newsType, newsText, function(createdNewsItem) {
-               newsfeed.latestUpdated = new Date()
-               newsfeed.newsItems.push(createdNewsItem)
-               newsfeed.save(function () {
+               currentNewsfeed.latestUpdated = new Date()
+               currentNewsfeed.newsItems.push(createdNewsItem)
+               currentNewsfeed.save(function () {
                    if (callback) {
-                       callback(newsfeed)
+                       callback(currentNewsfeed)
                    }
                })
            })
@@ -51,9 +51,9 @@ function updateNewsfeed(userId, newsType, newsText, callback) {
 }
 
 function getNewsfeed(user_Id, callback) {
-    Newsfeed.findOne({ userId: user_Id}, function(err, newsfeed) {
-        if (newsfeed) {
-            callback(newsfeed)
+    Newsfeed.findOne({ userId: user_Id}, function(err, currentNewsfeed) {
+        if (currentNewsfeed) {
+            callback(currentNewsfeed)
         } else {
             createNewsfeed(user_Id, "info","Welcome to Treehouse! Get started by adding some friends or create your very own achievements!",  callback)
         }

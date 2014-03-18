@@ -24,15 +24,15 @@ module.exports = {
 }
 
 function markProgress(achiever_id, goal_id, next) {
-    Progress.findOne({ achiever_id: achiever_id,  goal_id: goal_id}, function(err,obj) {
-        if (!obj.created) {
-             obj.created = new Date()
+    Progress.findOne({ achiever_id: achiever_id,  goal_id: goal_id}, function(err,currentProgress) {
+        if (!currentProgress.created) {
+            currentProgress.created = new Date()
         }
-        obj.latestUpdated = new Date()
-        obj.quantityFinished+=1
-        obj.save(function (err) {
-            newsfeedEvent.addEvent("progress", achiever_id, goal_id)
-            next(obj.quantityFinished)
+        currentProgress.latestUpdated = new Date()
+        currentProgress.quantityFinished+=1
+        currentProgress.save(function (err) {
+            newsfeedEvent.addEvent("progress", achiever_id, currentProgress._id)
+            next(currentProgress.quantityFinished)
         })
     })
 }
