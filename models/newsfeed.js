@@ -2,14 +2,14 @@ var mongoose = require('mongoose'),
     newsItem = require('./newsItem.js'),
     Schema = mongoose.Schema
 
-var NewsFeedSchema = new Schema({
+var NewsfeedSchema = new Schema({
     created         : {type: Date, required: true},
     latestUpdated   : {type: Date, required: true},
     userId          : {type: Schema.ObjectId, required: true},
     newsItems        : {type: [newsItem.NewsItemSchema], required: true}
 })
 
-var Newsfeed = mongoose.model('Newsfeed', NewsFeedSchema)
+var Newsfeed = mongoose.model('Newsfeed', NewsfeedSchema)
 
 module.exports = {
     Newsfeed: Newsfeed,
