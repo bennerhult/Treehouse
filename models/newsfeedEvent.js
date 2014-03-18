@@ -21,9 +21,5 @@ function addEvent(eventType, userId, objectId, callback) {
     newsfeedEvent.eventType = eventType
     newsfeedEvent.userId = userId
     newsfeedEvent.objectId = objectId
-    newsfeedEvent.save(function (err) {
-       if (callback) {
-           callback
-       }
-    })
+    newsfeedEvent.save()
 }
