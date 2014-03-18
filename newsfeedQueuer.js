@@ -7,7 +7,6 @@ var Agenda          = require('agenda'),
     progress        = require('./models/progress.js'),
     user            = require('./models/user.js')
 
-//TODO split db_uri to vars
 var db_uri = 'mongodb://localhost:27017/test'
 mongoose.connect(db_uri)
 var agenda = new Agenda({db: { address: db_uri }})
@@ -44,7 +43,7 @@ agenda.define('populate newsfeeds', function(job, done) {
 })
 
 function addToNewsfeed(newsfeedEvent, currentProgress, currentAchievement, currentFriendId, done) {
-    if (currentProgress.publiclyVisible) {        //TODO or achievement is shared
+    if (currentProgress.publiclyVisible) {
         appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, function() {
             newsfeedEvent.remove()
             done()

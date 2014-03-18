@@ -22,34 +22,28 @@ function createNewsfeed(userId, newsType, newsText, callback) {
     var newsfeed = new Newsfeed()
     newsfeed.created = new Date()
     newsfeed.userId = userId
-
-    newsItem.createNewsItem(newsType, newsText, function(createdNewsItem) {
-        newsfeed.latestUpdated = new Date()
-        newsfeed.newsItems.push(createdNewsItem)
-        newsfeed.save(function () {
-            if (callback) {
-                callback(newsfeed)
-            }
-        })
-    })
+    finalizeNewsFeed(newsfeed, newsType, newsText, callback)
 }
 
 function updateNewsfeed(userId, newsType, newsText, callback) {
     Newsfeed.findOne({ userId: userId}, function(err, currentNewsfeed) {
        if (currentNewsfeed) {
-           newsItem.createNewsItem(newsType, newsText, function(createdNewsItem) {
-               currentNewsfeed.latestUpdated = new Date()
-               currentNewsfeed.newsItems.push(createdNewsItem)
-               currentNewsfeed.save(function () {
-                   if (callback) {
-                       callback(currentNewsfeed)
-                   }
-               })
-           })
+            finalizeNewsFeed(currentNewsfeed, newsType, newsText, callback)
        }
     })
 }
 
+function finalizeNewsFeed(currentNewsfeed, newsType, newsText, callback) {
+    newsItem.createNewsItem(newsType, newsText, function(createdNewsItem) {
+        currentNewsfeed.latestUpdated = new Date()
+        currentNewsfeed.newsItems.unshift(createdNewsItem)
+        currentNewsfeed.save(function () {
+            if (callback) {
+                callback(currentNewsfeed)
+            }
+        })
+    })
+}
 function getNewsfeed(user_Id, callback) {
     Newsfeed.findOne({ userId: user_Id}, function(err, currentNewsfeed) {
         if (currentNewsfeed) {
