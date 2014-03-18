@@ -14,14 +14,20 @@ var agenda = new Agenda({db: { address: db_uri }})
 
 agenda.define('populate newsfeeds', function(job, done) {
     newsfeedEvent.NewsfeedEvent.findOne({}, function(err, newsfeedEvent) {
+        var currentFriendId
         if (newsfeedEvent) {
              if (newsfeedEvent.eventType === "progress") {
                  progress.Progress.findById({_id:newsfeedEvent.objectId}, function(err, currentProgress) {
                      achievement.Achievement.findById({_id: currentProgress.achievement_id}, function(err, currentAchievement) {
                          friendship.getFriends(newsfeedEvent.userId, function(friendsList) {
                              if (friendsList.length > 0) {
-                                 friendsList.forEach(function(currentFriend) {
-                                     addToNewsfeed(newsfeedEvent, currentProgress, currentAchievement, currentFriend, done)
+                                 friendsList.forEach(function(currentFriendship) {
+                                     if (currentFriendship.friend1_id === newsfeedEvent.userId) {
+                                         currentFriendId = currentFriendship.friend2_id
+                                     } else {
+                                         currentFriendId = currentFriendship.friend1_id
+                                     }
+                                     addToNewsfeed(newsfeedEvent, currentProgress, currentAchievement, currentFriendId, done)
                                  })
                              }
                          })
@@ -37,9 +43,9 @@ agenda.define('populate newsfeeds', function(job, done) {
     })
 })
 
-function addToNewsfeed(newsfeedEvent, currentProgress, currentAchievement, currentFriend, done) {
+function addToNewsfeed(newsfeedEvent, currentProgress, currentAchievement, currentFriendId, done) {
     if (currentProgress.publiclyVisible) {        //TODO or achievement is shared
-        appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriend, function() {
+        appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, function() {
             newsfeedEvent.remove()
             done()
          })
@@ -49,8 +55,7 @@ function addToNewsfeed(newsfeedEvent, currentProgress, currentAchievement, curre
     }
 }
 
-function appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriend, callback) {
-    //TODO TEST append json to newsfeed
+function appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, callback) {
     user.getPrettyNameAndImageURL(newsfeedEvent.userId, function(prettyname, imageUrl) {
         var newsJson = '{'
             + '"EventType":"' + newsfeedEvent.eventType + '"'
@@ -60,8 +65,7 @@ function appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriend, 
             + ',"AchievementName":"' + currentAchievement.title + '"'
             + ',"AchievementImageURL":"' + currentAchievement.imageURL + '"'
             + '}'
-        console.log("updating newsfeed: " + newsJson)
-        newsfeed.updateNewsfeed(currentFriend._id, newsfeedEvent.eventType, newsJson, callback)
+        newsfeed.updateNewsfeed(currentFriendId, newsfeedEvent.eventType, newsJson, callback)
     })
     callback()
 }
