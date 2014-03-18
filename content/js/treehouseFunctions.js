@@ -490,18 +490,19 @@ function newsfeedToHtml(newsfeed, callback) {
     for (var i in newsfeed.newsItems) {
         newsItem = newsfeed.newsItems[i]
         if (newsItem.eventType === "progress") {
+            var newsJson = jQuery.parseJSON(newsItem.newsJson)
             newsfeedHtml += '<div class="achievement"><div class="container"><a href="javascript:void(0)" onclick="openAchievement(\''
-                + newsItem.AchievementId
+                + newsJson.AchievementId
                 + '\', \''
-                + newsItem.AchieverId
+                + newsJson.AchieverId
                 + '\', false, \''
-                + newsItem.AchievementName
+                + newsJson.AchievementName
                 + '\')"><img width="96" height="96" src='
-                + newsItem.AchievementImageURL
+                + newsJson.AchievementImageURL
                 + ' alt='
-                + newsItem.AchieverName + ' just progressed ' + newsItem.AchievementName
+                + newsJson.AchieverName + ' just progressed ' + newsJson.AchievementName
                 + '><div class="progress-container-achievements"></div></a></div><p>'
-                + newsItem.AchieverName + ' just progressed ' + newsItem.AchievementName
+                + newsJson.AchieverName + ' just progressed ' + newsJson.AchievementName
                 + '</p><div class="separerare-part">&nbsp;</div></div></div>'
         }  else if (newsItem.eventType === "info") {
             newsfeedHtml += '<div class="achievement"><div class="container"><p>'

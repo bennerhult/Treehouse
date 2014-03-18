@@ -56,14 +56,23 @@ function addToNewsfeed(newsfeedEvent, currentProgress, currentAchievement, curre
 
 function appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, callback) {
     user.getPrettyNameAndImageURL(newsfeedEvent.userId, function(prettyname, imageUrl) {
-        var newsJson = "{"
+       /* var newsJson = "{"
             + "'EventType':'" + newsfeedEvent.eventType + "'"
             + ",'AchieverName':'" + prettyname + "'"
             + ",'AchieverId':'" + newsfeedEvent.userId + "'"
             + ",'AchievementId':'" + currentAchievement._id + "'"
             + ",'AchievementName':'" + currentAchievement.title + "'"
             + ",'AchievementImageURL':'" + currentAchievement.imageURL + "'"
-            + "}"
+            + "}" */
+
+        var newsJson = '{'
+            + '"EventType":"' + newsfeedEvent.eventType + '"'
+            + ',"AchieverName":"' + prettyname +'"'
+            + ',"AchieverId":"' + newsfeedEvent.userId + '"'
+            + ',"AchievementId":"' + currentAchievement._id + '"'
+            + ',"AchievementName":"' + currentAchievement.title + '"'
+            + ',"AchievementImageURL":"' + currentAchievement.imageURL + '"'
+            + '}'
         newsfeed.updateNewsfeed(currentFriendId, newsfeedEvent.eventType, newsJson, callback)
     })
     callback()
