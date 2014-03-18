@@ -1410,12 +1410,10 @@ function calculateAchievementProgressFromData(goals, progresses, callback) {
 }
 
 app.get('/progress', function(request, response){
-    achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
-        progress.markProgress(currentAchievement, request.session.currentUser._id, request.query.goalId, function(quantityFinished) {
-            response.writeHead(200, {'content-type': 'application/json' })
-            response.write(JSON.stringify(quantityFinished))
-            response.end('\n', 'utf-8')
-        })
+    progress.markProgress(request.session.currentUser._id, request.query.goalId, function(quantityFinished) {
+        response.writeHead(200, {'content-type': 'application/json' })
+        response.write(JSON.stringify(quantityFinished))
+        response.end('\n', 'utf-8')
     })
 })
 

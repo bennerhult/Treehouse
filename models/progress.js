@@ -1,4 +1,5 @@
 var mongoose = require('mongoose'),
+    newsfeedEvent = require('./newsfeedEvent.js'),
     Schema = mongoose.Schema
 
 var ProgressSchema = new Schema({
@@ -22,7 +23,7 @@ module.exports = {
     getPercentageFinished: getPercentageFinished
 }
 
-function markProgress(currentAchievement, achiever_id, goal_id, next) {
+function markProgress(achiever_id, goal_id, next) {
     Progress.findOne({ achiever_id: achiever_id,  goal_id: goal_id}, function(err,obj) {
         if (!obj.created) {
              obj.created = new Date()
@@ -30,7 +31,8 @@ function markProgress(currentAchievement, achiever_id, goal_id, next) {
         obj.latestUpdated = new Date()
         obj.quantityFinished+=1
         obj.save(function (err) {
-          next(obj.quantityFinished)
+            newsfeedEvent.addEvent("progress", achiever_id, goal_id)
+            next(obj.quantityFinished)
         })
     })
 }
