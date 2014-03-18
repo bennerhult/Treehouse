@@ -34,7 +34,6 @@ function createNewsfeed(userId, newsType, newsText, callback) {
     })
 }
 
-
 function updateNewsfeed(userId, newsType, newsText, callback) {
     Newsfeed.find({ userId: userId}, function(err, newsfeed) {
        if (newsfeed) {
@@ -50,30 +49,6 @@ function updateNewsfeed(userId, newsType, newsText, callback) {
        }
     })
 }
-
-/*newsfeedFromServer =
- '{'
- + '"userId": "53198378c88de328123c5185"'
- + ',"newsEvents": ['
- + '{'
- + '"EventType":"progress"'
- + ',"AchieverName":"Millhouse Manastorm"'
- + ',"AchieverId":"53198378c88de328123c5185"'
- + ',"AchievementId":"5327018447c7081c15347db4"'
- + ',"AchievementName":"Defated a murLock"'
- + ',"AchievementImageURL":"https://www.filepicker.io/api/file/mhkLpzLHRNmdh1MFfigE"'
- + '},'
- +'{'
- + '"EventType":"progress"'
- + ',"AchieverName":"Millhouse Manastorm"'
- + ',"AchieverId":"53198378c88de328123c5185"'
- + ',"AchievementId":"5327018447c7081c15347db4"'
- + ',"AchievementName":"Defated a murLock again"'
- + ',"AchievementImageURL":"https://www.filepicker.io/api/file/mhkLpzLHRNmdh1MFfigE"'
- + '}'
- + ']'
- + '}'
- */
 
 function getNewsfeed(user_Id, callback) {
     Newsfeed.findOne({ userId: user_Id}, function(err, newsfeed) {

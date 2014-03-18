@@ -40,6 +40,8 @@ app.configure('production', function() {
     db_uri=process.env.DB_URI
 })
 
+exports.db_uri = db_uri
+
 mongoose.connect(db_uri)
 
 app.configure(function() {
