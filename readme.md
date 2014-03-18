@@ -15,7 +15,9 @@ Running tests
 
 ##Check versions of Node and NPM
 `node -v`
+
 `npm -v`
+
 `npm list` (version of npm modules)
 
 ##Git commands
