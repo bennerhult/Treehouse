@@ -9,29 +9,43 @@ var mongoose        = require('mongoose'),
 var db_uri=process.env.DB_URI
 mongoose.connect(db_uri)
 
-newsfeedEvent.NewsfeedEvent.findOne({}, function(err, newsfeedEvent) {
-    var currentFriendId
-    if (newsfeedEvent) {
-         if (newsfeedEvent.eventType === "progress") {
-             progress.Progress.findById(newsfeedEvent.objectId, function(err, currentProgress) {
-                 achievement.Achievement.findById(currentProgress.achievement_id, function(err, currentAchievement) {
-                     friendship.getFriends(newsfeedEvent.userId, function(friendsList) {
-                         if (friendsList.length > 0) {
-                             friendsList.forEach(function(currentFriendship) {
-                                 if (currentFriendship.friend1_id.equals(newsfeedEvent.userId)) {
-                                     currentFriendId = currentFriendship.friend2_id
-                                 } else {
-                                     currentFriendId = currentFriendship.friend1_id
-                                 }
-                                 addToNewsfeed(newsfeedEvent, currentProgress, currentAchievement, currentFriendId)
-                             })
-                         }
-                     })
-                 })
-             })
-         } else {
-            console.log("unhandled event type encountered: " + newsfeedEvent.eventType)
-         }
+newsfeedEvent.NewsfeedEvent.find({}, function(err, newsfeedEventList) {
+    if (newsfeedEventList.length > 0) {
+        var nrOfAppendsMade = 0
+        var nrOfAppendsToMake = 0
+        var nrOfNewsFeedsGoneThrough = 0
+        newsfeedEventList.forEach(function(newsfeedEvent) {
+            if (newsfeedEvent.eventType === "progress") {
+                progress.Progress.findById(newsfeedEvent.objectId, function(err, currentProgress) {
+                    achievement.Achievement.findById(currentProgress.achievement_id, function(err, currentAchievement) {
+                        friendship.getFriends(newsfeedEvent.userId, function(friendsList) {
+                            if (friendsList.length > 0) {
+                                nrOfAppendsToMake += friendsList.length
+                                nrOfNewsFeedsGoneThrough++
+                                friendsList.forEach(function(currentFriendship) {
+                                    var currentFriendId
+                                    if (currentFriendship.friend1_id.equals(newsfeedEvent.userId)) {
+                                        currentFriendId = currentFriendship.friend2_id
+                                    } else {
+                                        currentFriendId = currentFriendship.friend1_id
+                                    }
+                                    addToNewsfeed(newsfeedEvent, currentProgress, currentAchievement, currentFriendId, function() {
+                                        console.log(nrOfAppendsToMake)
+                                        nrOfAppendsMade++
+                                        if (nrOfNewsFeedsGoneThrough === newsfeedEventList.length && nrOfAppendsMade === nrOfAppendsToMake)  {
+                                            console.log("newsfeed cleared")
+                                            process.exit()
+                                        }
+                                    })
+                                })
+                            }
+                        })
+                    })
+                })
+             } else {
+                console.log("unhandled event type encountered: " + newsfeedEvent.eventType)
+             }
+         })
     } else {
         console.log("newsfeed clear")
         process.exit()
@@ -39,15 +53,14 @@ newsfeedEvent.NewsfeedEvent.findOne({}, function(err, newsfeedEvent) {
 })
 
 
-function addToNewsfeed(newsfeedEvent, currentProgress, currentAchievement, currentFriendId) {
+function addToNewsfeed(newsfeedEvent, currentProgress, currentAchievement, currentFriendId, callback) {
     if (currentProgress.publiclyVisible) {
         appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, function() {
             newsfeedEvent.remove()
-            process.exit()
+            callback()
          })
     } else {
         newsfeedEvent.remove()
-        process.exit()
     }
 
 }
