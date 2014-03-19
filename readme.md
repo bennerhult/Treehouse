@@ -105,6 +105,9 @@ See available versions for Node and NPM
 
  `node newsfeedQueuer.js`
 
+####administrate scheduling on Heroku
+[Heroku scheduler] (https://scheduler.heroku.com/dashboard)
+
 ##  Facebook admin
 [App admin page] (https://developers.facebook.com/apps/480961688595420/)
 
