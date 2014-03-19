@@ -4,6 +4,7 @@ var mongoose        = require('mongoose'),
     newsfeed        = require('./models/newsfeed.js'),
     newsfeedEvent   = require('./models/newsfeedEvent.js'),
     progress        = require('./models/progress.js'),
+    shareholding    = require('./models/shareholding.js'),
     user            = require('./models/user.js')
 
 var db_uri=process.env.DB_URI
@@ -53,15 +54,16 @@ newsfeedEvent.NewsfeedEvent.find({}, function(err, newsfeedEventList) {
 
 
 function addToNewsfeed(newsfeedEvent, currentProgress, currentAchievement, currentFriendId, callback) {
-    if (currentProgress.publiclyVisible) {
-        appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, function() {
+    shareholding.isAchievementSharedByMe(currentFriendId, currentAchievement._id, function(isAchievmentSharedByFriend) {
+        if (currentProgress.publiclyVisible || isAchievmentSharedByFriend) {
+            appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, function() {
+                newsfeedEvent.remove()
+                callback()
+             })
+        } else {
             newsfeedEvent.remove()
-            callback()
-         })
-    } else {
-        newsfeedEvent.remove()
-    }
-
+        }
+    })
 }
 
 function appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, callback) {
