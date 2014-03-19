@@ -30,7 +30,6 @@ newsfeedEvent.NewsfeedEvent.find({}, function(err, newsfeedEventList) {
                                         currentFriendId = currentFriendship.friend1_id
                                     }
                                     addToNewsfeed(newsfeedEvent, currentProgress, currentAchievement, currentFriendId, function() {
-                                        console.log(nrOfAppendsToMake)
                                         nrOfAppendsMade++
                                         if (nrOfNewsFeedsGoneThrough === newsfeedEventList.length && nrOfAppendsMade === nrOfAppendsToMake)  {
                                             console.log("newsfeed cleared")
