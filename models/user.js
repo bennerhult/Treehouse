@@ -30,15 +30,13 @@ function createUser(name, callback) {
     user.imageURL = 'content/img/user_has_no_image.jpg'
     user.isIssuer = false
     user.save(function (error) {
-        console.log("name: " + name)
-        console.log("error: " + error)
         if (callback) callback(user, error)
     })
 }
 
 
 function setPrettyName(userId, firstName, lastName, callback)   {
-    User.findOne({ _id: userId }, function(err,myUser) {
+    User.findById(userId, function(err,myUser) {
         if (myUser) {
             myUser.firstName = firstName
             myUser.lastName = lastName
@@ -51,7 +49,7 @@ function setPrettyName(userId, firstName, lastName, callback)   {
 }
 
 function setImageURL(userId, imageURL, callback)   {
-    User.findOne({ _id: userId }, function(err,myUser) {
+    User.findById(userId, function(err,myUser) {
         if (myUser) {
             myUser.imageURL = imageURL
 
@@ -63,7 +61,7 @@ function setImageURL(userId, imageURL, callback)   {
 }
 
 function getShortName(userId, callback) {
-    User.findOne({ _id: userId }, function(err,myUser) {
+    User.findById(userId , function(err,myUser) {
         if (myUser){
             if (myUser.firstName) {
                 callback(myUser.firstName)
@@ -78,7 +76,7 @@ function getShortName(userId, callback) {
 }
 
 function remove(username, next) {
-    User.findOne({username: username }, function(err,userToDelete) {
+    User.findOne({ username: username }, function(err,userToDelete) {
         if (userToDelete) {
             userToDelete.remove(function () {
                 if (next) {
@@ -92,7 +90,7 @@ function remove(username, next) {
 }
 
 function getPrettyNameAndImageURL(userId, callback) {
-    User.findOne({ _id: userId }, function(err,myUser) {
+    User.findById(userId , function(err,myUser) {
         if (myUser){
             if (myUser.firstName && myUser.lastName) {
                 callback(myUser.firstName + " " + myUser.lastName, myUser.imageURL)

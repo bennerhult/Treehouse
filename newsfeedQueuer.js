@@ -13,8 +13,8 @@ newsfeedEvent.NewsfeedEvent.findOne({}, function(err, newsfeedEvent) {
     var currentFriendId
     if (newsfeedEvent) {
          if (newsfeedEvent.eventType === "progress") {
-             progress.Progress.findById({_id:newsfeedEvent.objectId}, function(err, currentProgress) {
-                 achievement.Achievement.findById({_id: currentProgress.achievement_id}, function(err, currentAchievement) {
+             progress.Progress.findById(newsfeedEvent.objectId, function(err, currentProgress) {
+                 achievement.Achievement.findById(currentProgress.achievement_id, function(err, currentAchievement) {
                      friendship.getFriends(newsfeedEvent.userId, function(friendsList) {
                          if (friendsList.length > 0) {
                              friendsList.forEach(function(currentFriendship) {
@@ -63,5 +63,4 @@ function appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId
             + '}'
         newsfeed.updateNewsfeed(currentFriendId, newsfeedEvent.eventType, newsJson, callback)
     })
-    callback()
 }

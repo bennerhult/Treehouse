@@ -27,12 +27,9 @@ function createNewsfeed(userId, newsType, newsText, callback) {
 
 function updateNewsfeed(userId, newsType, newsText, callback) {
     Newsfeed.findOne({ userId: userId}, function(err, currentNewsfeed) {
-        console.log("updating newsfeed")
        if (currentNewsfeed) {
-           console.log("found existing newsfeed")
             finalizeNewsFeed(currentNewsfeed, newsType, newsText, callback)
        }   else {
-           console.log("created new newsfeed")
            createNewsfeed(userId, "info","Welcome to Treehouse! Get started by adding some friends or create your very own achievements!",  function(createdNewsfeed) {
                finalizeNewsFeed(createdNewsfeed, newsType, newsText, callback)
            })
