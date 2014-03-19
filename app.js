@@ -522,7 +522,7 @@ function fillFriendsList(friendsList, pendings, userId, callback) {
     content +=   '<div id="myfriends" class="myfriends">'
     if (friendsList.length > 0) {
         friendsList.forEach(function(currentFriendship) {
-            if (currentFriendship.friend1_id == userId) {
+            if (currentFriendship.friend1_id.equals(userId)) {
                 currentFriendId = currentFriendship.friend2_id
             } else {
                 currentFriendId = currentFriendship.friend1_id
@@ -570,7 +570,7 @@ function addPendings(content, pendings, userId, callback) {
     var currentFriendId
     var pendingsGoneThrough = 0
     pendings.forEach(function(currentFriendship) {
-        if (currentFriendship.friend1_id == userId) {
+        if (currentFriendship.friend1_id.equals(userId)) {
             currentFriendId = currentFriendship.friend2_id
         } else {
             currentFriendId = currentFriendship.friend1_id
@@ -613,7 +613,7 @@ app.get('/shareList', function(request, response){
         if (friendsList.length > 0) {
             var friendsGoneThrough = 0
             friendsList.forEach(function(currentFriendship) {
-                if (currentFriendship.friend1_id == userId) {
+                if (currentFriendship.friend1_id.equals(userId)) {
                     friendIds.push(currentFriendship.friend2_id)
                 } else {
                     friendIds.push(currentFriendship.friend1_id)

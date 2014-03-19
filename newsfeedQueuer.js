@@ -1,5 +1,4 @@
-var Agenda          = require('agenda'),
-    mongoose        = require('mongoose'),
+var mongoose        = require('mongoose'),
     achievement     = require('./models/achievement.js'),
     friendship      = require('./models/friendship.js'),
     newsfeed        = require('./models/newsfeed.js'),
@@ -9,49 +8,48 @@ var Agenda          = require('agenda'),
 
 var db_uri=process.env.DB_URI
 mongoose.connect(db_uri)
-var agenda = new Agenda({db: { address: db_uri }})
 
-agenda.define('populate newsfeeds', function(job, done) {
-    newsfeedEvent.NewsfeedEvent.findOne({}, function(err, newsfeedEvent) {
-        var currentFriendId
-        if (newsfeedEvent) {
-             if (newsfeedEvent.eventType === "progress") {
-                 progress.Progress.findById({_id:newsfeedEvent.objectId}, function(err, currentProgress) {
-                     achievement.Achievement.findById({_id: currentProgress.achievement_id}, function(err, currentAchievement) {
-                         friendship.getFriends(newsfeedEvent.userId, function(friendsList) {
-                             if (friendsList.length > 0) {
-                                 friendsList.forEach(function(currentFriendship) {
-                                     if (currentFriendship.friend1_id === newsfeedEvent.userId) {
-                                         currentFriendId = currentFriendship.friend2_id
-                                     } else {
-                                         currentFriendId = currentFriendship.friend1_id
-                                     }
-                                     addToNewsfeed(newsfeedEvent, currentProgress, currentAchievement, currentFriendId, done)
-                                 })
-                             }
-                         })
+newsfeedEvent.NewsfeedEvent.findOne({}, function(err, newsfeedEvent) {
+    var currentFriendId
+    if (newsfeedEvent) {
+         if (newsfeedEvent.eventType === "progress") {
+             progress.Progress.findById({_id:newsfeedEvent.objectId}, function(err, currentProgress) {
+                 achievement.Achievement.findById({_id: currentProgress.achievement_id}, function(err, currentAchievement) {
+                     friendship.getFriends(newsfeedEvent.userId, function(friendsList) {
+                         if (friendsList.length > 0) {
+                             friendsList.forEach(function(currentFriendship) {
+                                 if (currentFriendship.friend1_id.equals(newsfeedEvent.userId)) {
+                                     currentFriendId = currentFriendship.friend2_id
+                                 } else {
+                                     currentFriendId = currentFriendship.friend1_id
+                                 }
+                                 addToNewsfeed(newsfeedEvent, currentProgress, currentAchievement, currentFriendId)
+                             })
+                         }
                      })
                  })
-             } else {
-                 done()
-             }
-        } else {
-            console.log("newsfeed clear!")
-            done()
-        }
-    })
+             })
+         } else {
+            console.log("unhandled event type encountered: " + newsfeedEvent.eventType)
+         }
+    } else {
+        console.log("newsfeed clear")
+        process.exit()
+    }
 })
 
-function addToNewsfeed(newsfeedEvent, currentProgress, currentAchievement, currentFriendId, done) {
+
+function addToNewsfeed(newsfeedEvent, currentProgress, currentAchievement, currentFriendId) {
     if (currentProgress.publiclyVisible) {
         appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, function() {
             newsfeedEvent.remove()
-            done()
+            process.exit()
          })
     } else {
         newsfeedEvent.remove()
-        done()
+        process.exit()
     }
+
 }
 
 function appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, callback) {
@@ -67,7 +65,3 @@ function appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId
     })
     callback()
 }
-
-agenda.every('10 seconds', 'populate newsfeeds')
-
-agenda.start()
