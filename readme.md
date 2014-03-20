@@ -97,7 +97,7 @@ See available versions for Node and NPM
 
 ##newsfeedQueuer
 
-####Set this once to get it to find your datbase locally
+####Set this once to get it to find your database locally
 `set DB_URI=mongodb://localhost:27017/test`
 
 ####To run it locally
