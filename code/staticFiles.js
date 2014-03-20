@@ -16,9 +16,9 @@ function serveFile(fpath, response) {
                     var e = extTypes.ext.getExt(fpath)
                     var ct = extTypes.ext.getContentType(e)
 
-                    var stats = fs.statSync(fpath);
-                    var mtime = stats.mtime;
-                    var size = stats.size;
+                    var stats = fs.statSync(fpath)
+                    var mtime = stats.mtime
+                    var size = stats.size
 
                     response.writeHead(200, {
                         "Content-Type": ct,
@@ -35,5 +35,4 @@ function serveFile(fpath, response) {
         }
     })
 }
-
 exports.serve = serveFile
