@@ -1,7 +1,8 @@
 var mongoose = require('mongoose'),
     goal = require('./goal.js'),
-    progress = require('./progress.js'),
     latestAchievement = require('./latestAchievement.js'),
+    newsfeedEvent = require('./newsfeedEvent.js'),
+    progress = require('./progress.js'),
     Schema= mongoose.Schema
 
 var AchievementSchema = new Schema({
@@ -53,7 +54,8 @@ function publicize(oneProgress) {
         progresses.forEach(function(currentProgress, index) {
             currentProgress.publiclyVisible = true
             currentProgress.save()
-            if (index == (progresses.length -1)) {
+            if (index === (progresses.length -1)) {
+                newsfeedEvent.addEvent("publicize", oneProgress.achiever_id, oneProgress.achievement_id)
                 latestAchievement.update(oneProgress._id)
             }
         })

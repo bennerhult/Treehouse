@@ -42,16 +42,39 @@ newsfeedEvent.NewsfeedEvent.find({}, function(err, newsfeedEventList) {
                         })
                     })
                 })
-             } else {
+            } else if (newsfeedEvent.eventType === "publicize") {
+                achievement.Achievement.findById(newsfeedEvent.objectId, function(err, currentAchievement) {
+                    friendship.getFriends(newsfeedEvent.userId, function(friendsList) {
+                        if (friendsList.length > 0) {
+                            nrOfAppendsToMake += friendsList.length
+                            nrOfNewsFeedsGoneThrough++
+                            friendsList.forEach(function(currentFriendship) {
+                                var currentFriendId
+                                if (currentFriendship.friend1_id.equals(newsfeedEvent.userId)) {
+                                    currentFriendId = currentFriendship.friend2_id
+                                } else {
+                                    currentFriendId = currentFriendship.friend1_id
+                                }
+                                addToNewsfeed2(newsfeedEvent, currentAchievement, currentFriendId, function() {
+                                    nrOfAppendsMade++
+                                    if (nrOfNewsFeedsGoneThrough === newsfeedEventList.length && nrOfAppendsMade === nrOfAppendsToMake)  {
+                                        console.log("newsfeed cleared")
+                                        process.exit()
+                                    }
+                                })
+                            })
+                        }
+                    })
+                })
+            } else {
                 console.log("unhandled event type encountered: " + newsfeedEvent.eventType)
-             }
-         })
+            }
+        })
     } else {
         console.log("newsfeed clear")
         process.exit()
     }
 })
-
 
 function addToNewsfeed(newsfeedEvent, currentProgress, currentAchievement, currentFriendId, callback) {
     shareholding.isAchievementSharedByMe(currentFriendId, currentAchievement._id, function(isAchievmentSharedByFriend) {
@@ -59,11 +82,18 @@ function addToNewsfeed(newsfeedEvent, currentProgress, currentAchievement, curre
             appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, function() {
                 newsfeedEvent.remove()
                 callback()
-             })
+            })
         } else {
             newsfeedEvent.remove()
         }
     })
+}
+
+function addToNewsfeed2(newsfeedEvent, currentAchievement, currentFriendId, callback) {
+        appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, function() {
+            newsfeedEvent.remove()
+            callback()
+        })
 }
 
 function appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, callback) {

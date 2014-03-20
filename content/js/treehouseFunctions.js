@@ -504,6 +504,21 @@ function newsfeedToHtml(newsfeed, callback) {
                 + '><div class="progress-container-achievements"></div></a></div><p>'
                 + newsJson.AchieverName + ' just progressed ' + newsJson.AchievementName
                 + '</p><div class="separerare-part">&nbsp;</div></div></div>'
+        }  else if  (newsItem.eventType === "publicize") {
+            var newsJson = jQuery.parseJSON(newsItem.newsJson)
+            newsfeedHtml += '<div class="achievement"><div class="container"><a href="javascript:void(0)" onclick="openAchievement(\''
+                + newsJson.AchievementId
+                + '\', \''
+                + newsJson.AchieverId
+                + '\', false, \''
+                + newsJson.AchievementName
+                + '\')"><img width="96" height="96" src='
+                + newsJson.AchievementImageURL
+                + ' alt='
+                + newsJson.AchieverName + ' just progressed ' + newsJson.AchievementName
+                + '><div class="progress-container-achievements"></div></a></div><p>'
+                + newsJson.AchieverName + ' just publicized ' + newsJson.AchievementName
+                + '</p><div class="separerare-part">&nbsp;</div></div></div>'
         }  else if (newsItem.eventType === "info") {
             newsfeedHtml += '<div class="achievement"><div class="container"><p>'
                 + newsItem.newsJson
