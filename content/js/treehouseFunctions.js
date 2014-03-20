@@ -500,9 +500,9 @@ function newsfeedToHtml(newsfeed, callback) {
                 + '\')"><img width="96" height="96" src='
                 + newsJson.AchievementImageURL
                 + ' alt='
-                + newsJson.AchieverName + ' just progressed ' + newsJson.AchievementName
+                + newsJson.AchieverName + ' progressed ' + newsJson.AchievementName
                 + '><div class="progress-container-achievements"></div></a></div><p>'
-                + newsJson.AchieverName + ' just progressed ' + newsJson.AchievementName
+                + newsJson.AchieverName + ' progressed ' + newsJson.AchievementName
                 + '</p><div class="separerare-part">&nbsp;</div></div></div>'
         }  else if  (newsItem.eventType === "publicize") {
             var newsJson = jQuery.parseJSON(newsItem.newsJson)
@@ -515,9 +515,18 @@ function newsfeedToHtml(newsfeed, callback) {
                 + '\')"><img width="96" height="96" src='
                 + newsJson.AchievementImageURL
                 + ' alt='
-                + newsJson.AchieverName + ' just progressed ' + newsJson.AchievementName
+                + newsJson.AchieverName + ' progressed ' + newsJson.AchievementName
                 + '><div class="progress-container-achievements"></div></a></div><p>'
-                + newsJson.AchieverName + ' just publicized ' + newsJson.AchievementName
+                + newsJson.AchieverName + ' publicized ' + newsJson.AchievementName
+                + '</p><div class="separerare-part">&nbsp;</div></div></div>'
+        }  else if  (newsItem.eventType === "friends") {
+            var newsJson = jQuery.parseJSON(newsItem.newsJson)
+            newsfeedHtml += '<div class="achievement"><div class="container"><img width="96" height="96" src='
+                + newsJson.FriendImageURL
+                + ' alt='
+                + newsJson.AchieverName + ' became friends with ' + newsJson.FriendName
+                + '><div class="progress-container-achievements"></div></div><p>'
+                + newsJson.AchieverName + ' became friends with ' + newsJson.FriendName
                 + '</p><div class="separerare-part">&nbsp;</div></div></div>'
         }  else if (newsItem.eventType === "info") {
             newsfeedHtml += '<div class="achievement"><div class="container"><p>'

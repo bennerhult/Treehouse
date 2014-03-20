@@ -1,4 +1,5 @@
 var mongoose = require('mongoose'),
+    newsfeedEvent = require('./newsfeedEvent.js'),
     Schema = mongoose.Schema
 
 var FriendshipSchema = new Schema({
@@ -89,6 +90,7 @@ function confirmFriendRequest(friendship_id, callback) {
     Friendship.findOne({ _id: friendship_id}, function(err, friendshipToConfirm) {
         friendshipToConfirm.confirmed = true
         friendshipToConfirm.save(function () {
+            newsfeedEvent.addEvent("friends", friendshipToConfirm.friend1_id, friendshipToConfirm.friend2_id)
             callback(friendshipToConfirm.friend1_id)
         })
     })

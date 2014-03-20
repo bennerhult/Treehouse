@@ -66,6 +66,28 @@ newsfeedEvent.NewsfeedEvent.find({}, function(err, newsfeedEventList) {
                         }
                     })
                 })
+            } else if (newsfeedEvent.eventType === "friends") {
+                friendship.getFriends(newsfeedEvent.userId, function(friendsList) {
+                    if (friendsList.length > 0) {
+                        nrOfAppendsToMake += friendsList.length
+                        nrOfNewsFeedsGoneThrough++
+                        friendsList.forEach(function(currentFriendship) {
+                            var currentFriendId
+                            if (currentFriendship.friend1_id.equals(newsfeedEvent.userId)) {
+                                currentFriendId = currentFriendship.friend2_id
+                            } else {
+                                currentFriendId = currentFriendship.friend1_id
+                            }
+                            addToNewsfeed3(newsfeedEvent, newsfeedEvent.objectId, currentFriendId, function() {
+                                nrOfAppendsMade++
+                                if (nrOfNewsFeedsGoneThrough === newsfeedEventList.length && nrOfAppendsMade === nrOfAppendsToMake)  {
+                                    console.log("newsfeed cleared")
+                                    process.exit()
+                                }
+                            })
+                        })
+                    }
+                })
             } else {
                 console.log("unhandled event type encountered: " + newsfeedEvent.eventType)
             }
@@ -90,16 +112,38 @@ function addToNewsfeed(newsfeedEvent, currentProgress, currentAchievement, curre
 }
 
 function addToNewsfeed2(newsfeedEvent, currentAchievement, currentFriendId, callback) {
-        appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, function() {
-            newsfeedEvent.remove()
-            callback()
+    appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, function() {
+        newsfeedEvent.remove()
+        callback()
+    })
+}
+
+function addToNewsfeed3(newsfeedEvent, newFriendId, currentFriendId, callback) {
+    appendFriendJsonToNewsfeed(newsfeedEvent, newFriendId, currentFriendId, function() {
+        newsfeedEvent.remove()
+        callback()
+    })
+}
+
+function appendFriendJsonToNewsfeed(newsfeedEvent, newFriendId, currentFriendId, callback) {
+    user.getPrettyNameAndImageURL(newsfeedEvent.userId, function(prettyName) {
+        user.getPrettyNameAndImageURL(newFriendId, function(friendName, friendImageUrl) {
+            var newsJson = '{'
+                + '"AchieverName":"' + prettyName +'"'
+                + ',"AchieverId":"' + newsfeedEvent.userId + '"'
+                + ',"FriendName":"' + friendName + '"'
+                + ',"FriendId":"' + newsfeedEvent.userId + '"'
+                + ',"FriendImageURL":"' + friendImageUrl + '"'
+                + '}'
+            newsfeed.updateNewsfeed(currentFriendId, newsfeedEvent.eventType, newsJson, callback)
         })
+    })
 }
 
 function appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, callback) {
-    user.getPrettyNameAndImageURL(newsfeedEvent.userId, function(prettyname, imageUrl) {
+    user.getPrettyNameAndImageURL(newsfeedEvent.userId, function(prettyName) {
         var newsJson = '{'
-            + '"AchieverName":"' + prettyname +'"'
+            + '"AchieverName":"' + prettyName +'"'
             + ',"AchieverId":"' + newsfeedEvent.userId + '"'
             + ',"AchievementId":"' + currentAchievement._id + '"'
             + ',"AchievementName":"' + currentAchievement.title + '"'
