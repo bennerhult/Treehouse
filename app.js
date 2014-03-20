@@ -898,7 +898,12 @@ app.get('/latestAchievementSplash', function(request, response) {
                    response.end('\n', 'utf-8')
                })
            } else {
-               response.writeHead(200, {'content-type': 'application/json' })
+               var today = new Date().toUTCString()
+               response.writeHead(200, {
+                   "Content-Type": "application/json",
+                   "Last-Modified": today,
+                   "Expires": today
+               })
                var content = '<h2>Latest Achievement</h2>'   +
                    '<p></p>' +
                    '<div></div>'

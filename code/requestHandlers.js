@@ -4,7 +4,7 @@ var tab = '\t'
 var today = new Date()
 var nextweek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+7)
 var nextWeekUTC = nextweek.toUTCString()
-var lastModified= today.toUTCString() //2014-03-20@17:48:12 TMZ
+var lastModified= today.toUTCString()
 
 function gotoAppPage(response) {
     response.writeHead(200, { 'Content-Type': 'text/html' })
