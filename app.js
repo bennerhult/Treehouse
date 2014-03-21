@@ -343,6 +343,7 @@ function createUser(emailAdress, request, response, appMode) {
                     response.end('\n', 'utf-8')
                 } else {
                     if (appMode) {
+                        request.session.currentUser = newUser
                         writeGotoAppPage(response)
                     } else {
                         request.session.currentUser = newUser
