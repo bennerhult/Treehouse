@@ -970,7 +970,7 @@ function createNotificationDesc(response, achievementsList, completedAchievement
             if (shortNames.length == notifications.length) {
                 var notificationsList = ""
                 for (var j in notifications) {
-                    var  titleWithSingleQuotationsEscaped = notifications[j].title //.replace(/'/g, '&apos;')
+                    var  titleWithSingleQuotationsEscaped = notifications[j].title.replace(/'/g, '&apos;')
                     notificationsList += "<div class='achievement'>"
                     notificationsList += '<div class="container"><a href="javascript:void(0)" onclick="openShareNotification(\''
                         + notifications[j]._id
@@ -981,12 +981,12 @@ function createNotificationDesc(response, achievementsList, completedAchievement
                         + '\')"><img src="'
                         + notifications[j].imageURL
                         + '" alt="'
-                        + encodeURIComponent(titleWithSingleQuotationsEscaped)
+                        + titleWithSingleQuotationsEscaped
                         + '"/><span class="gradient-bg"> </span><span class="request"><div>Challenged <br/>'
                     if (shortNames[j]) {
                         notificationsList += 'by '+ shortNames[j] + ''
                     }
-                    notificationsList += ' </div></span></a></div><p>'  + encodeURIComponent(titleWithSingleQuotationsEscaped)
+                    notificationsList += ' </div></span></a></div><p>'  + titleWithSingleQuotationsEscaped
                         + '</p><div class="separerare-part">&nbsp;</div></div>'
                     if (j >= notifications.length - 1) {
                         achievementsList +=  notificationsList
