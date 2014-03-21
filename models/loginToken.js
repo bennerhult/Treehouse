@@ -43,7 +43,7 @@ function remove(email, callback)    {
             tokens.forEach(function(currentToken ) {
                 currentToken.remove()
                 tokensRemoved++
-                if (tokensRemoved === tokens.length) {
+                if (tokensRemoved >= tokens.length) {
                     callback()
                 }
             })
