@@ -529,9 +529,9 @@ function newsfeedToHtml(newsfeed, callback) {
                 + newsJson.AchieverName + ' became friends with ' + newsJson.FriendName
                 + '</p><div class="separerare-part">&nbsp;</div></div></div>'
         }  else if (newsItem.eventType === "info") {
-            newsfeedHtml += '<div class="achievement"><div class="container"><p>'
+            newsfeedHtml += '<div class="achievement"><p>'
                 + newsItem.newsJson
-                + '</p><div class="separerare-part">&nbsp;</div></div></div>'
+                + '</p><div class="separerare-part">&nbsp;</div></div>'
         }
         newsFeedGoneThrough++
         if (newsFeedGoneThrough === newsfeed.newsItems.length) {

@@ -25,12 +25,14 @@ function createNewsfeed(userId, newsType, newsText, callback) {
     finalizeNewsFeed(newsfeed, newsType, newsText, callback)
 }
 
+var welcomeMsgNewsFeed = "Welcome to Treehouse! Get started by adding some friends or create your very own achievements!"
+
 function updateNewsfeed(userId, newsType, newsText, callback) {
     Newsfeed.findOne({ userId: userId}, function(err, currentNewsfeed) {
        if (currentNewsfeed) {
             finalizeNewsFeed(currentNewsfeed, newsType, newsText, callback)
        }   else {
-           createNewsfeed(userId, "info","Welcome to Treehouse! Get started by adding some friends or create your very own achievements!",  function(createdNewsfeed) {
+           createNewsfeed(userId, "info", welcomeMsgNewsFeed,  function(createdNewsfeed) {
                finalizeNewsFeed(createdNewsfeed, newsType, newsText, callback)
            })
        }
@@ -54,7 +56,7 @@ function getNewsfeed(user_Id, callback) {
         if (currentNewsfeed) {
             callback(currentNewsfeed)
         } else {
-            createNewsfeed(user_Id, "info","Welcome to Treehouse! Get started by adding some friends or create your very own achievements!",  callback)
+            createNewsfeed(user_Id, "info", welcomeMsgNewsFeed, callback)
         }
     })
 }
