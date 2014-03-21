@@ -48,8 +48,10 @@ app.configure(function() {
     app.use(express.session({
         store: new MongoStore({
             url: db_uri,
-            auto_reconnect: true
+            auto_reconnect: true,
+            clear_interval: 3600
         }),
+        cookie: { maxAge: new Date(Date.now() + 2 * 604800000)},
         secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4'
     }))
 })
