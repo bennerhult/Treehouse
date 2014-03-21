@@ -358,7 +358,7 @@ app.get('/signout', function(request, response){
     if (request.session) {
         response.clearCookie('rememberme', null)
         //noinspection JSUnresolvedVariable
-        loginToken.remove(request.session.username, function() {
+        loginToken.remove(request.session.currentUser.username, function() {
             request.session.destroy(null)
             requestHandlers.indexPage(response, null)
         })

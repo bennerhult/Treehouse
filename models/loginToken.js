@@ -39,7 +39,7 @@ function cookieValue(token) {
 function remove(email, callback)    {
     var tokensRemoved  = 0
     LoginToken.find({email: email}, function(err, tokens) {
-        if (tokens) {
+        if (tokens && tokens.length > 0) {
             tokens.forEach(function(currentToken ) {
                 currentToken.remove()
                 tokensRemoved++
