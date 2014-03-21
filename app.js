@@ -343,7 +343,6 @@ function createUser(emailAdress, request, response, appMode) {
                     response.end('\n', 'utf-8')
                 } else {
                     if (appMode) {
-                        request.session.currentUser = newUser
                         writeGotoAppPage(response)
                     } else {
                         request.session.currentUser = newUser
@@ -359,9 +358,10 @@ app.get('/signout', function(request, response){
     if (request.session) {
         response.clearCookie('rememberme', null)
         //noinspection JSUnresolvedVariable
-        loginToken.remove(request.session.username)
-        request.session.destroy(null)
-        requestHandlers.indexPage(response, null)
+        loginToken.remove(request.session.username, function() {
+            request.session.destroy(null)
+            requestHandlers.indexPage(response, null)
+        })
     }
 })
 
