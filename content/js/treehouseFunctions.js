@@ -459,6 +459,8 @@ function showMore() {
 /******************  newsfeed functions  ******************/
 function openNewsfeed() {
     window.history.pushState(null, null, "/")
+    $("#page-login").attr("id","page");
+    $("#app-container-login").attr("id","app-container");
     getCurrentUserFromServer(function(achiever) {
         getNewsfeedContent(achiever, function(newsfeedContent) {
             insertContent(newsfeedContent, setDefaultMenu('Newsfeed', true), getNewsfeed())
@@ -543,8 +545,6 @@ function newsfeedToHtml(newsfeed, callback) {
 /******************  achievements functions  ******************/
 function openAchievements(completed, achieverId, lookingAtFriend, achieverName) {
     window.history.pushState(null, null, "/")
-    $("#page-login").attr("id","page");
-    $("#app-container-login").attr("id","app-container");
     if (!lookingAtFriend ) {
         getCurrentUserFromServer(function(achiever) {
             getAchievementsContent(achiever, false, function(achievementsContent) {

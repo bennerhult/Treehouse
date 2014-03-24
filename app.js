@@ -90,27 +90,22 @@ function loadUser(request, response, next) {
 
 function authenticateFromLoginToken(request, response) {
     //noinspection JSUnresolvedVariable
-    console.log("BADZTAMTERAZ cookie authenticate: " + request.cookies.rememberme)
     if (request.cookies.rememberme)  {
         //noinspection JSUnresolvedVariable
         var cookie = JSON.parse(request.cookies.rememberme)
-        console.log("BADZTAMTERAZ2: " + cookie)
         loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
             if (!token) {
-                console.log("BADZTAMTERAZ3 ")
                 response.writeHead(404, {'content-type': 'application/json' })
                 response.write(JSON.stringify(""))
                 response.end('\n', 'utf-8')
             } else {
                 user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
-                    console.log("BADZTAMTERAZ4: " + user)
                     if (user) {
                         request.session.currentUser = user
 
                         friendship.getNrOfRequests(user._id, function (nrOfFriendShipRequests) {
                             token.token = loginToken.randomToken()
                             token.save(function() {
-                                console.log("BADZTAMTERAZ5 " )
                                 request.session.nrOfFriendShipRequests = nrOfFriendShipRequests
                                 response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 2 * 604800000), path: '/' })
                                 response.writeHead(200, {'content-type': 'application/json' })
@@ -119,7 +114,6 @@ function authenticateFromLoginToken(request, response) {
                             })
                         })
                     } else {
-                        console.log("BADZTAMTERAZ6 ")
                         response.writeHead(200, {'content-type': 'application/json' })
                         response.write(JSON.stringify("Bummer! We cannot find you in our records. Contact us at staff@treehouse.io if you want us to help you out."))
                         response.end('\n', 'utf-8')
@@ -128,7 +122,6 @@ function authenticateFromLoginToken(request, response) {
             }
         })
     }  else {
-        console.log("BADZTAMTERAZ7 - first sign in ")
         response.writeHead(404, {'content-type': 'application/json' })
         response.write(JSON.stringify(""))   //typical first sign in
         response.end('\n', 'utf-8')
@@ -236,7 +229,6 @@ app.get('/signup', function(request, response) {
 })
 
 function signin(request, response) {
-    console.log("BADZTAM11 signin")
     var url_parts = url.parse(request.url, true)
     var email = url_parts.query.email.toLowerCase()
     var token = url_parts.query.token
@@ -244,20 +236,15 @@ function signin(request, response) {
     var appModeString = url_parts.query.appMode
     var appMode = (appModeString === 'true')
     loginToken.LoginToken.findOne({ email: email, token: token }, function(err,myToken) {
-        console.log("BADZTAM11 myToken:  "  +myToken)
         if (myToken) {
             user.User.findOne({ username: email }, function(err,myUser) {
-
                 if (myUser) {
-                    console.log("BADZTAM11 myUser:  "  +myUser)
                     getDataForUser(myUser, request, response, appMode)
                 } else {
-                    console.log("BADZTAM11 noUser:  " )
                     createUser(email, request, response, appMode)
                 }
             })
         } else {
-            console.log("BADZTAM11 noToken:  "  )
             writeDefaultPage(request, response)
         }
     })
@@ -323,17 +310,15 @@ function getDataForUser(myUser, request, response, appMode) {
         fbConnect = true
     }
     request.session.currentUser = myUser
-    console.log("BADZTAMTERAZ: GETDATAFORUSER")
     loginToken.createToken(myUser.username, function(myToken) {
         response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
         if (appMode) {
             writeGotoAppPage(response)
         } else {
             if (fbConnect) {
-                // response.writeHead(200, {'content-type': 'application/json' })
-                // response.write(JSON.stringify(myUser._id))
-                // response.end('\n', 'utf-8')
-                writeDefaultPage(request, response)
+                 response.writeHead(200, {'content-type': 'application/json' })
+                 response.write(JSON.stringify(myUser._id))
+                 response.end('\n', 'utf-8')
             } else {
                 writeDefaultPage(request, response)
             }
@@ -1619,7 +1604,6 @@ function writeGotoAppPage(response) {
 }
 
 function writeDefaultPage(request, response) {
-    console.log("BADZTAMTERAZ: " + request.session.currentUser)
     if (request.session.currentUser) {
         requestHandlers.indexPage(response, request.session.currentUser._id, request.session.nrOfFriendShipRequests)
     }   else {
