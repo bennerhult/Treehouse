@@ -316,10 +316,9 @@ function getDataForUser(myUser, request, response, appMode) {
             writeGotoAppPage(response)
         } else {
             if (fbConnect) {
-                writeDefaultPage(request, response)
-                // response.writeHead(200, {'content-type': 'application/json' })
-               // response.write(JSON.stringify(myUser._id))
-               // response.end('\n', 'utf-8')
+                 response.writeHead(200, {'content-type': 'application/json' })
+                 response.write(JSON.stringify(myUser._id))
+                 response.end('\n', 'utf-8')
             } else {
                 writeDefaultPage(request, response)
             }
@@ -1605,6 +1604,7 @@ function writeGotoAppPage(response) {
 }
 
 function writeDefaultPage(request, response) {
+    console.log("BADZTAMTERAZ: " + request.session.currentUser)
     if (request.session.currentUser) {
         requestHandlers.indexPage(response, request.session.currentUser._id, request.session.nrOfFriendShipRequests)
     }   else {
