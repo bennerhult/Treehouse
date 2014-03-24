@@ -93,19 +93,23 @@ function authenticateFromLoginToken(request, response) {
     if (request.cookies.rememberme)  {
         //noinspection JSUnresolvedVariable
         var cookie = JSON.parse(request.cookies.rememberme)
+        console.log("BADZTAMTERAZ2: " + cookie)
         loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
             if (!token) {
+                console.log("BADZTAMTERAZ3 ")
                 response.writeHead(404, {'content-type': 'application/json' })
                 response.write(JSON.stringify(""))
                 response.end('\n', 'utf-8')
             } else {
                 user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
+                    console.log("BADZTAMTERAZ4: " + user)
                     if (user) {
                         request.session.currentUser = user
 
                         friendship.getNrOfRequests(user._id, function (nrOfFriendShipRequests) {
                             token.token = loginToken.randomToken()
                             token.save(function() {
+                                console.log("BADZTAMTERAZ5 " )
                                 request.session.nrOfFriendShipRequests = nrOfFriendShipRequests
                                 response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 2 * 604800000), path: '/' })
                                 response.writeHead(200, {'content-type': 'application/json' })
@@ -114,6 +118,7 @@ function authenticateFromLoginToken(request, response) {
                             })
                         })
                     } else {
+                        console.log("BADZTAMTERAZ6 ")
                         response.writeHead(200, {'content-type': 'application/json' })
                         response.write(JSON.stringify("Bummer! We cannot find you in our records. Contact us at staff@treehouse.io if you want us to help you out."))
                         response.end('\n', 'utf-8')
