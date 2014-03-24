@@ -235,6 +235,7 @@ app.get('/signup', function(request, response) {
 })
 
 function signin(request, response) {
+    console.log("BADZTAM11 signin")
     var url_parts = url.parse(request.url, true)
     var email = url_parts.query.email.toLowerCase()
     var token = url_parts.query.token
@@ -242,15 +243,20 @@ function signin(request, response) {
     var appModeString = url_parts.query.appMode
     var appMode = (appModeString === 'true')
     loginToken.LoginToken.findOne({ email: email, token: token }, function(err,myToken) {
+        console.log("BADZTAM11 myToken:  "  +myToken)
         if (myToken) {
             user.User.findOne({ username: email }, function(err,myUser) {
+
                 if (myUser) {
+                    console.log("BADZTAM11 myUser:  "  +myUser)
                     getDataForUser(myUser, request, response, appMode)
                 } else {
+                    console.log("BADZTAM11 noUser:  " )
                     createUser(email, request, response, appMode)
                 }
             })
         } else {
+            console.log("BADZTAM11 noToken:  "  )
             writeDefaultPage(request, response)
         }
     })
