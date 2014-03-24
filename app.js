@@ -91,11 +91,14 @@ function loadUser(request, response, next) {
 function authenticateFromLoginToken(request, response) {
     //noinspection JSUnresolvedVariable
     console.log("BADZTAMTERAZ cookie authenticate: " + request.cookies.rememberme)
-    if (request.cookies.rememberme)  {
+    if (request.query.email)  {
+
+        http://treehouse.io/signin?email=erik@lejbrinkbennerhult.se&token=980069031645&appMode=true
+
         //noinspection JSUnresolvedVariable
-        var cookie = JSON.parse(request.cookies.rememberme)
-        console.log("BADZTAMTERAZ2: " + cookie)
-        loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
+        //var cookie = JSON.parse(request.cookies.rememberme)
+        //console.log("BADZTAMTERAZ2: " + cookie)
+        loginToken.LoginToken.findOne({ email: request.query.email }, function(err,token) {
             if (!token) {
                 console.log("BADZTAMTERAZ3 ")
                 response.writeHead(404, {'content-type': 'application/json' })
