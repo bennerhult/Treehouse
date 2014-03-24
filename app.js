@@ -90,6 +90,7 @@ function loadUser(request, response, next) {
 
 function authenticateFromLoginToken(request, response) {
     //noinspection JSUnresolvedVariable
+    console.log("BADZTAMTERAZ cookie authenticate: " + request.cookies.rememberme)
     if (request.cookies.rememberme)  {
         //noinspection JSUnresolvedVariable
         var cookie = JSON.parse(request.cookies.rememberme)
