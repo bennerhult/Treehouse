@@ -127,6 +127,7 @@ function authenticateFromLoginToken(request, response) {
             }
         })
     }  else {
+        console.log("BADZTAMTERAZ7 - first sign in ")
         response.writeHead(404, {'content-type': 'application/json' })
         response.write(JSON.stringify(""))   //typical first sign in
         response.end('\n', 'utf-8')
