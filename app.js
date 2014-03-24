@@ -316,6 +316,7 @@ function getDataForUser(myUser, request, response, appMode) {
         fbConnect = true
     }
     request.session.currentUser = myUser
+    console.log("BADZTAMTERAZ: GETDATAFORUSER")
     loginToken.createToken(myUser.username, function(myToken) {
         response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
         if (appMode) {
