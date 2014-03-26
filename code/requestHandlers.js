@@ -31,7 +31,7 @@ function publicAchievementPage(response, userId, currentAchievementId, url, imag
 
 function topAppPagePart() {
     return  '<!DOCTYPE html>' + nl +
-        tab + '<html manifest="treehouse.manifest" lang="en">' + nl +
+        tab + '<html manifest="treehouse.manifest" lang="en" xmlns:fb="http://www.facebook.com/2008/fbml">' + nl +
         tab + '<head>' + nl +
         tab + '<title>Treehouse</title>' + nl +
         tab + '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' + nl +
@@ -112,7 +112,7 @@ function topAppPagePart() {
 
 function topIndexPart(userId, nrOfFriendShipRequests) {
            return '<!DOCTYPE html>' + nl +
-            tab + '<html manifest="treehouse.manifest" lang="en">' + nl +
+            tab + '<html manifest="treehouse.manifest" lang="en" xmlns:fb="http://www.facebook.com/2008/fbml">' + nl +
                 tab + '<head>' + nl +
                     tab + '<title>Treehouse</title>' + nl +
                     tab + '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' + nl +
@@ -195,7 +195,7 @@ function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUr
     var titleWithDoubleQuotationsReplacedWithSingle = title.replace(/"/g, "'")
     return (
         '<!DOCTYPE html>' + nl +
-            tab + '<html manifest="treehouse.manifest" lang="en">' + nl +
+            tab + '<html manifest="treehouse.manifest" lang="en" xmlns:fb="http://www.facebook.com/2008/fbml">' + nl +
             tab + '<head>' + nl +
             tab + '<title>Treehouse - ' + title + '</title>' + nl +
             tab + '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' + nl +
