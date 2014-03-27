@@ -877,8 +877,6 @@ app.get('/newsfeed', function(request, response){
     })
 })
 
-
-
 function getPrettyNameIdAndImageURL(id, callback) {
     user.getPrettyNameAndImageURL(id, function(prettyName, imageURL) {
         callback(prettyName, id, imageURL)
@@ -962,7 +960,6 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
     }
     return achievementsList
 }
-
 
 function createNotificationDesc(response, achievementsList, completedAchievements, nrOfAchievements, notifications, achieverId, lookingAtFriend) {
     var shortNames = []
@@ -1357,7 +1354,6 @@ function getGoalText(goal, achievement, progressNumber, latestUpdated, progressP
      goalText    += '<div class="separerare-part">&nbsp;</div>'
     }
     goalText    += '</div>'
-
     return goalText
 }
 

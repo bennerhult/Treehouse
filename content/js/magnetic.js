@@ -29,7 +29,7 @@ Magnetic=new (function(){
 
     function drawMagnet(event){
         w=true
-        z({x: event.x - getOffset(e).left,y: event.y - getOffset(e).top});
+        z({x: window.event.clientX  - getOffset(e).left,y: window.event.clientY - getOffset(e).top});
         x=(new Date).getTime();
         var magnet
         for(var a=0,b=magnets.length; a<b; a++){
@@ -41,20 +41,20 @@ Magnetic=new (function(){
     }
 
     function getOffset( el ) {
-        var _x = 0;
-        var _y = 0;
+        var _x = 0
+        var _y = 0
         while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
-            _x += el.offsetLeft - el.scrollLeft;
-            _y += el.offsetTop - el.scrollTop;
-            el = el.offsetParent;
+            _x += el.offsetLeft - el.scrollLeft
+            _y += el.offsetTop - el.scrollTop
+            el = el.offsetParent
         }
-        return { top: _y, left: _x };
+        return { top: _y, left: _x }
     }
 
     function I(){
         w=false;
         for(var a=0,b=magnets.length; a<b; a++){
-            magnet=f[a];
+            var magnet=f[a]
             magnet.dragging=false
         }
     }
@@ -62,53 +62,49 @@ Magnetic=new (function(){
     function M(){
         w=false;
         for(var a=0,b=magnets.length; a<b; a++){
-            magnet=f[a];
+            var magnet=f[a]
             magnet.dragging=false}
     }
 
     function drawCanvas(){
-        /*i=r?window.innerWidth:800;
-        j=r?window.innerHeight:550;*/
-        i = $("#web-menu").width();
-        j= $("body").height();
-        e.width=i;
-        e.height=j;
+        i = $("#web-menu").width()
+        j= $("body").height()
+        e.width=i
+        e.height=j
         var a=(window.innerWidth-i)*0.5,
-            b=(window.innerHeight-j)*0.5;
-        e.style.position="absolute";
-        e.style.left=0+"px";
-        e.style.top=0+"px";
+            b=(window.innerHeight-j)*0.5
+        e.style.position="absolute"
+        e.style.left=0+"px"
+        e.style.top=0+"px"
     }
 
     var counter = 0
-
     function P(){
-        d.clearRect(0,0,e.width,e.height);
-        var a,b,c,h,D,u;
-        a=-1;
-        h=0;
+        d.clearRect(0,0,e.width,e.height)
+        var a,b,c,h,D,u
+        a=-1
+        h=0
         //Draw magnets
-
-        a!=-1&&magnets.length>1&&magnets.splice(a,1);
-        c=0;
+        a!=-1&&magnets.length>1&&magnets.splice(a,1)
+        c=0
         var minimized=[]
         for(D=particles.length; c<D; c++){
-            a=particles[c];
+            a=particles[c]
 
-            var y=-1,E=-1,l=null,v={x:0,y:0};
-            h=0;
+            var y=-1,E=-1,l=null,v={x:0,y:0}
+            h=0
             for(u=magnets.length; h<u; h++){
-                b=magnets[h];
-                y=B(a.position, b.position)-b.orbit*0.5;
+                b=magnets[h]
+                y=B(a.position, b.position)-b.orbit*0.5
                 if(a.magnet!=b){
-                    var m=b.position.x-a.position.x;
-                    if(m>-p&&m<p)v.x+=m/p; m=b.position.y-a.position.y;
-                    if(m>-p&&m<p)v.y+=m/p}if(l==null||y<E){E=y;
+                    var m=b.position.x-a.position.x
+                    if(m>-p&&m<p)v.x+=m/p; m=b.position.y-a.position.y
+                    if(m>-p&&m<p)v.y+=m/p}if(l==null||y<E){E=y
                     l=b
                 }
             }
             if(a.magnet==null||a.magnet!=l)a.magnet=l;
-            l.connections+=1;
+            l.connections+=1
             if (a.size > 0) {
                 a.angle+=a.speed;
                 a.shift.x+=(l.position.x+v.x*6-a.shift.x)*a.speed;
@@ -162,12 +158,10 @@ Magnetic=new (function(){
 
     this.init=function(){
         $("#world").css( 'pointer-events', 'none' )
-        //$("#world").css('background-color', 'black')
         var els=document.body.getElementsByTagName("a")
         for(var i=0;i<els.length;i++){
             els[i].addEventListener("mousedown",fire,false)
         }
-
         e=document.getElementById("world")
         if(e&&e.getContext){
             d=e.getContext("2d")
