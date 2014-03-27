@@ -1,41 +1,42 @@
 Magnetic=new (function(){
     function z(a){
-        var b=new Magnet; 
-        b.position.x=a.x;
-        b.position.y=a.y;
-        magnets.push(b);
-        a=b.position;
+        var b=new Magnet
+        b.position.x=a.x
+        b.position.y=a.y
+        magnets.push(b)
+        a=b.position
        for(b=0; b<F; b++){
-           var c=new Particle;
-           c.position.x=a.x;
-           c.position.y=a.y;
-           c.shift.x=a.x;
-           c.shift.y=a.y;
-          c.size = 1.5+Math.random()*3.5;; //ERIK
-           c.color=styles[0].particleFill;
+           var c=new Particle
+           c.position.x=a.x
+           c.position.y=a.y
+           c.shift.x=a.x
+           c.shift.y=a.y
+          c.size = 1.5+Math.random()*3.5
+           c.color=styles[0].particleFill
            particles.push(c)
        }
     }
 
     function G(a) {
-        n=a.clientX-(window.innerWidth-i)*0.5;
+        n=a.clientX-(window.innerWidth-i)*0.5
         o=a.clientY-(window.innerHeight-j)*0.5
     }
 
     function fire(a){
-        a.preventDefault();
+        a.preventDefault()
         drawMagnet(a)
     }
 
     function drawMagnet(event){
         w=true
-        z({x: window.event.clientX  - getOffset(e).left,y: window.event.clientY - getOffset(e).top});
-        x=(new Date).getTime();
+        z({x: window.event.clientX  - getOffset(e).left,y: window.event.clientY - getOffset(e).top})
+        x=(new Date).getTime()
         var magnet
         for(var a=0,b=magnets.length; a<b; a++){
             magnet=magnets[a]
             if(B(magnet.position,{x:n,y:o})<magnet.orbit*0.5){
-                magnet.dragging=true; break
+                magnet.dragging=true
+                break
             }
         }
     }
@@ -52,7 +53,7 @@ Magnetic=new (function(){
     }
 
     function I(){
-        w=false;
+        w=false
         for(var a=0,b=magnets.length; a<b; a++){
             var magnet=f[a]
             magnet.dragging=false
@@ -60,7 +61,7 @@ Magnetic=new (function(){
     }
 
     function M(){
-        w=false;
+        w=false
         for(var a=0,b=magnets.length; a<b; a++){
             var magnet=f[a]
             magnet.dragging=false}
@@ -103,21 +104,20 @@ Magnetic=new (function(){
                     l=b
                 }
             }
-            if(a.magnet==null||a.magnet!=l)a.magnet=l;
+            if(a.magnet==null||a.magnet!=l)a.magnet=l
             l.connections+=1
             if (a.size > 0) {
-                a.angle+=a.speed;
-                a.shift.x+=(l.position.x+v.x*6-a.shift.x)*a.speed;
-                a.shift.y+=(l.position.y+v.y*6-a.shift.y)*a.speed;
-                a.position.x=a.shift.x+Math.cos(c+a.angle)*a.orbit*a.force;
-                a.position.y=a.shift.y+Math.sin(c+a.angle)*a.orbit*a.force;
-                a.position.x=Math.max(Math.min(a.position.x,i-a.size/2),a.size/2);
-                a.position.y=Math.max(Math.min(a.position.y,j-a.size/2),a.size/2);
-                a.orbit+=(l.orbit-a.orbit)*0.1;
-
-                d.beginPath();
-                d.fillStyle=a.color;
-                d.arc(a.position.x,a.position.y,a.size/2,0,Math.PI*2,true);
+                a.angle+=a.speed
+                a.shift.x+=(l.position.x+v.x*6-a.shift.x)*a.speed
+                a.shift.y+=(l.position.y+v.y*6-a.shift.y)*a.speed
+                a.position.x=a.shift.x+Math.cos(c+a.angle)*a.orbit*a.force
+                a.position.y=a.shift.y+Math.sin(c+a.angle)*a.orbit*a.force
+                a.position.x=Math.max(Math.min(a.position.x,i-a.size/2),a.size/2)
+                a.position.y=Math.max(Math.min(a.position.y,j-a.size/2),a.size/2)
+                a.orbit+=(l.orbit-a.orbit)*0.1
+                d.beginPath()
+                d.fillStyle=a.color
+                d.arc(a.position.x,a.position.y,a.size/2,0,Math.PI*2,true)
                 d.fill()
             }
 
@@ -137,12 +137,12 @@ Magnetic=new (function(){
 
     //test later
     function get_random_color() {
-        var letters = '0123456789ABCDEF'.split('');
-        var color = '#';
+        var letters = '0123456789ABCDEF'.split('')
+        var color = '#'
         for (var i = 0; i < 6; i++ ) {
-            color += letters[Math.round(Math.random() * 15)];
+            color += letters[Math.round(Math.random() * 15)]
         }
-        return color;
+        return color
     }
     function B(a,b){
         var c=b.x-a.x,h=b.y-a.y
@@ -186,9 +186,9 @@ function Particle(){
 }
 
 function Magnet(){
-    this.orbit=100;
-    this.position={x:0,y:0};
-    this.dragging=false;
-    this.connections=0;
+    this.orbit=100
+    this.position={x:0,y:0}
+    this.dragging=false
+    this.connections=0
     this.size=1
 }
