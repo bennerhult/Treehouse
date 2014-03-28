@@ -185,7 +185,8 @@ casper.test.begin('Testing Public Achievement', 3, function(test){
      test.done()
     })
  })
-  */
+*/
+
 casper.test.begin('Testing sign out', 3, function(test){
     casper.start('http://localhost:1337/signout')
 

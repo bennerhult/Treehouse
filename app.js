@@ -357,13 +357,16 @@ function createUser(emailAdress, request, response, appMode) {
 }
 
 app.get('/signout', function(request, response){
+    console.log("Signout")
     if (request.session) {
         response.clearCookie('rememberme', null)
         //noinspection JSUnresolvedVariable
-        loginToken.remove(request.session.currentUser.username, function() {
-            request.session.destroy(null)
-            requestHandlers.indexPage(response, null)
-        })
+        if(request.session.currentUser) {
+            loginToken.remove(request.session.currentUser.username, function() {})
+        }
+        request.session.destroy(null)
+        console.log("indexpage")
+        requestHandlers.indexPage(response, null)
     }
 })
 
