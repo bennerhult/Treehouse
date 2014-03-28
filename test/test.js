@@ -115,7 +115,7 @@ casper.test.begin('Testing correct Sign in', 3, function(test){
 
     casper.then(function() {
         test.assertHttpStatus(200);
-        test.assertTitle('Treehouse - Achievements', 'Sign on show correct title')
+        test.assertTitle('Treehouse - Newsfeed', 'Sign on show correct title')
         test.assertTextExists('Tester Schmester', 'page contains "Tester Schmester"')
     })
 
