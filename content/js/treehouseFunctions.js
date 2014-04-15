@@ -128,7 +128,7 @@ function rememberMeOnServer(callback) {
         dataType: "json",
         statusCode: {
             200: function(returnData) { callback(returnData, true) },
-            404: function() { callback("", false) }
+            404: function(returnData) { callback(returnData, false) }
         }
     })
 }

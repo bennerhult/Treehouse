@@ -65,7 +65,7 @@ casper.test.begin('Testing faulty Sign in, bad email', 2, function(test){
          test.assertHttpStatus(200)
      })
 
-     casper.thenOpen('http://localhost:1337/signout', function() {})
+     casper.thenOpen('http://localhost:1337/signout3', function() {})
 
      casper.run(function(){
          test.done()
@@ -124,11 +124,6 @@ casper.test.begin('Testing correct Sign in', 3, function(test){
     })
 })
 
-//TODO add several goals
-//TODO create a second achievement
-//TODO set second achievement to public
-//TODO use public achievement below
-
 casper.test.begin('Testing Create Achievement', 1, function(test){
     casper.start('http://localhost:1337/newAchievement?user_id=' + userId1 + '&title=TestAchievement&description=Testing achievement&currentImage=treehouse.io/content/img/achievementImages/1.png&goalTitles=["testGoal1"]&goalQuantities=2')
 
@@ -141,7 +136,6 @@ casper.test.begin('Testing Create Achievement', 1, function(test){
         test.done()
     })
 })
-
 
 casper.test.begin('Testing Private Achievement when signed in', 3, function(test){
     casper.start('http://localhost:1337/achievement?achievementId=' + achievementId1 + '&userId=' + userId1)
@@ -157,7 +151,7 @@ casper.test.begin('Testing Private Achievement when signed in', 3, function(test
     })
 })
 
-casper.test.begin('Testing deleting Achievement when signed in', 2, function(test){
+casper.test.begin('Testing deleting Achievement when signed in', 2, function(test) {
     casper.start('http://localhost:1337/delete?achievementId=' + achievementId1)
 
     casper.then(function(){
@@ -170,24 +164,8 @@ casper.test.begin('Testing deleting Achievement when signed in', 2, function(tes
     })
 })
 
-/*
-casper.test.begin('Testing Public Achievement', 3, function(test){
-    casper.start('http://localhost:1337/achievement?achievementId=52dcfd394e67c8880c000002&userId=50b4ecda20d743b019000031')
-
-    casper.then(function(){
-     test.assertHttpStatus(200)
-     test.assertTitle('Treehouse - test4', 'Private achievement accessible when signed in')
-     test.assertTextExists('by Tester Schmester', 'Public achievement has correct user')
-     test.assertTextExists('test4', 'page body contains "test4"')
-    })
-
-    casper.run(function(){
-     test.done()
-    })
- })
-*/
-
-casper.test.begin('Testing sign out', 3, function(test){
+//TODO verkar cache:a - om man byter namn till signout2 i test och app så fungerar det. en gång.
+casper.test.begin('Testing sign out', 3, function(test) {
     casper.start('http://localhost:1337/signout')
 
     casper.then(function(){

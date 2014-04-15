@@ -23,7 +23,7 @@ var isAppMode = false
 
 
 function init(userId, friendShipRequests) {
-    if (userId && userId != 'null') {
+    if (userId && userId != null) {
         getUserFromServer(userId, function(user) {
             currentUser = user
         })

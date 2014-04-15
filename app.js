@@ -50,6 +50,8 @@ app.configure(function() {
             url: db_uri,
             auto_reconnect: true,
             clear_interval: 3600
+        }, function () {
+            console.log("DB connection open.");
         }),
         cookie: { maxAge: new Date(Date.now() + 2 * 604800000)},
         secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4'
@@ -102,7 +104,6 @@ function authenticateFromLoginToken(request, response) {
                 user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
                     if (user) {
                         request.session.currentUser = user
-
                         friendship.getNrOfRequests(user._id, function (nrOfFriendShipRequests) {
                             token.token = loginToken.randomToken()
                             token.save(function() {
@@ -114,7 +115,7 @@ function authenticateFromLoginToken(request, response) {
                             })
                         })
                     } else {
-                        response.writeHead(200, {'content-type': 'application/json' })
+                        response.writeHead(404, {'content-type': 'application/json' })
                         response.write(JSON.stringify("Bummer! We cannot find you in our records. Contact us at staff@treehouse.io if you want us to help you out."))
                         response.end('\n', 'utf-8')
                     }
@@ -282,7 +283,7 @@ app.get('/checkUser', function(request, response){
                         response.write(JSON.stringify(myToken.token))
                         response.end('\n', 'utf-8')
                     }
-                 )
+                )
             })
         }
     })
@@ -356,19 +357,19 @@ function createUser(emailAdress, request, response, appMode) {
     })
 }
 
+
 app.get('/signout', function(request, response){
-    console.log("Signout")
+    console.log("/signout")
+    response.clearCookie('rememberme', null)
     if (request.session) {
-        response.clearCookie('rememberme', null)
-        //noinspection JSUnresolvedVariable
-        if(request.session.currentUser) {
-            loginToken.remove(request.session.currentUser.username, function() {})
-        }
-        request.session.destroy(null)
-        console.log("indexpage")
-        requestHandlers.indexPage(response, null)
+
+        loginToken.remove(request.session.currentUser.username, function(){} )
+        request.session.destroy()
+
     }
+    requestHandlers.indexPage(response, null, 0)
 })
+
 
 app.get('/user', function(request, response){
     var userID
@@ -1606,7 +1607,7 @@ function writeDefaultPage(request, response) {
     if (request.session.currentUser) {
         requestHandlers.indexPage(response, request.session.currentUser._id, request.session.nrOfFriendShipRequests)
     }   else {
-        requestHandlers.indexPage(response, null, null)
+        requestHandlers.indexPage(response, null, 0)
     }
 }
 
