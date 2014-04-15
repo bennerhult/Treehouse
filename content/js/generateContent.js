@@ -23,7 +23,7 @@ var isAppMode = false
 
 
 function init(userId, friendShipRequests) {
-    if (userId && userId != null) {
+    if (userId && userId != 'null') {
         getUserFromServer(userId, function(user) {
             currentUser = user
         })
@@ -40,24 +40,7 @@ function init(userId, friendShipRequests) {
     })
 
     $("#web-footer").html(footerContent)
-    if (isiPad) {
-        /*
-        jQuery(window).bind('orientationchange', function() {
-            switch ( window.orientation ) {
-                case 0: //Portrait orientation. This is the default value.
-                    if ($("#achievementList"))   {
-                       // location.reload()
-                    }
-                    break
-                case 180: //Portrait orientation with the screen turned upside down.
-                    if ($("#achievementList"))   {
-                        //location.reload()
-                    }
-                    break
-            }
-        })
-        */
-    }  else {
+    if (!isiPad) {
         $("#banner").empty().remove()
     }
     Magnetic.init()
@@ -69,6 +52,7 @@ function init(userId, friendShipRequests) {
 }
 
 function setEmptyMenu() {
+    $(document).attr('title', 'Treehouse');
     $("#menuArea").empty()
      $("#topMenuArea").empty()
 }
@@ -188,6 +172,7 @@ function showSignin(message) {
     window.history.pushState(null, null, "/")
     $("#page").attr("id","page-login");
     $("#app-container").attr("id","app-container-login");
+
     insertContent(getLoginContent(), setEmptyMenu(), function() {
         $("#message").html(message)
     })

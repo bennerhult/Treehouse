@@ -140,9 +140,10 @@ function signout() {
     $.ajax("/signout", {
         type: "GET",
         dataType: "json",
-        success: function() { showSignin() },
-        error  : function() { showSignin() }
-
+        statusCode: {
+            200: function() {  showSignin() },
+            404: function() { showSignin() }
+        }
     })
 }
 

@@ -164,7 +164,6 @@ casper.test.begin('Testing deleting Achievement when signed in', 2, function(tes
     })
 })
 
-//TODO verkar cache:a - om man byter namn till signout2 i test och app så fungerar det. en gång.
 casper.test.begin('Testing sign out', 3, function(test) {
     casper.start('http://localhost:1337/signout')
 
