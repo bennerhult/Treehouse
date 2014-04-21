@@ -320,12 +320,13 @@ function getDataForUser(myUser, request, response, appMode) {
             writeGotoAppPage(response)
         } else {
             if (fbConnect) {
-                 response.writeHead(200, {'content-type': 'application/json' })
-                 response.write(JSON.stringify(myUser._id))
-                 response.end('\n', 'utf-8')
-            } else if (emailConnect) {
+                 //response.writeHead(200, {'content-type': 'application/json' })
+                 //response.write(JSON.stringify(myUser._id))
+                 //response.end('\n', 'utf-8')
                 writeDefaultPage(request, response)
-            } else {
+            } /*else if (emailConnect) {
+                writeDefaultPage(request, response)
+            } */else {
                 response.writeHead(200, {'content-type': 'application/json' })
                 response.write(JSON.stringify(myUser._id))
                 response.end('\n', 'utf-8')
