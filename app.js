@@ -307,7 +307,7 @@ function emailUser(emailAddress, subject, html, altText, callback) {
 
 function getDataForUser(myUser, request, response, appMode) {
     var fbConnect = false
-    if (!request.query.appMode) {
+    if (request.query.email) {
         fbConnect = true
     }
     request.session.currentUser = myUser
@@ -320,6 +320,7 @@ function getDataForUser(myUser, request, response, appMode) {
                  response.writeHead(200, {'content-type': 'application/json' })
                  response.write(JSON.stringify(myUser._id))
                  response.end('\n', 'utf-8')
+                writeDefaultPage(request, response)
             } else {
                 writeDefaultPage(request, response)
             }
