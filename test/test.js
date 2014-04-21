@@ -2,10 +2,23 @@ var loginToken
 var userId1
 var achievementId1
 
-casper.test.begin('Testing Start Page', 3, function(test) {
-    //initializing
+
+casper.test.begin('Testing signing out before signing in 1', 3, function(test) {
     casper.start('http://localhost:1337/signout')
-    casper.thenOpen('http://localhost:1337/deleteUser?username=tester@treehouse.io', function() {})
+
+    casper.then(function(){
+        test.assertHttpStatus(200)
+        test.assertTitle('Treehouse', 'Start page achievement has correct title')
+        test.assertTextExists('connect below', 'page body contains dom only text "connect below "')
+    })
+
+    casper.run(function(){
+        test.done()
+    })
+})
+
+casper.test.begin('Testing Start Page', 3, function(test) {
+    casper.start('http://localhost:1337/deleteUser?username=tester@treehouse.io', function() {})
 
     casper.thenOpen('http://localhost:1337', function() {})
 

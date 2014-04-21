@@ -359,6 +359,7 @@ function createUser(emailAdress, request, response, appMode) {
 
 
 app.get('/signout', function(request, response){
+    console.log("signout")
     response.clearCookie('rememberme', null)
     if (request.session) {
         if (request.session.currentUser) {
@@ -367,9 +368,10 @@ app.get('/signout', function(request, response){
         request.session.destroy()
     }
     //requestHandlers.signoutPage(response)
-    response.writeHead(200, {'content-type': 'application/json' })
-    response.write(JSON.stringify('signed out'))
-    response.end('\n', 'utf-8')
+    requestHandlers.indexPage(response, null, 0)
+    //response.writeHead(200, {'content-type': 'application/json' })
+    //response.write(JSON.stringify('signed out'))
+    //response.end('\n', 'utf-8')
 })
 
 

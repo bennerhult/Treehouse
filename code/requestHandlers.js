@@ -1,11 +1,6 @@
 var nl = '\n'
 var tab = '\t'
 
-var today = new Date()
-var nextweek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+7)
-var nextWeekUTC = nextweek.toUTCString()
-var lastModified= today.toUTCString()
-
 function gotoAppPage(response) {
     response.writeHead(200, { 'Content-Type': 'text/html' })
     response.end(topAppPagePart() + gotoAppPart() + bottomPart(), 'utf-8')
@@ -36,13 +31,10 @@ function publicAchievementPage(response, userId, currentAchievementId, url, imag
 
 function topAppPagePart() {
     return  '<!DOCTYPE html>' + nl +
-        tab + '<html manifest="treehouse.manifest" lang="en" xmlns:fb="http://www.facebook.com/2008/fbml">' + nl +
+        tab + '<html lang="en" xmlns:fb="http://www.facebook.com/2008/fbml">' + nl +
         tab + '<head>' + nl +
         tab + '<title>Treehouse</title>' + nl +
         tab + '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' + nl +
-        tab + '<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="PUBLIC">' + nl +
-        tab + '<META HTTP-EQUIV="EXPIRES" CONTENT="' + nextWeekUTC + '">' + nl +
-        tab + '<META HTTP-EQUIV="LAST-MODIFIED" CONTENT="' + lastModified + '">' + nl +
         tab + '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">' + nl +
         tab + '<meta name="apple-mobile-web-app-capable" content="yes">' + nl +
         tab + '<meta name="apple-mobile-web-app-status-bar-style" content="black" />' + nl +
@@ -116,13 +108,10 @@ function topAppPagePart() {
 
 function topSignoutPart() {
     return '<!DOCTYPE html>' + nl +
-        tab + '<html manifest="treehouse.manifest" lang="en" xmlns:fb="http://www.facebook.com/2008/fbml">' + nl +
+        tab + '<html lang="en" xmlns:fb="http://www.facebook.com/2008/fbml">' + nl +
         tab + '<head>' + nl +
         tab + '<title>Treehouse</title>' + nl +
         tab + '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' + nl +
-        tab + '<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="PUBLIC">' + nl +
-        tab + '<META HTTP-EQUIV="EXPIRES" CONTENT="' + nextWeekUTC + '">' + nl +
-        tab + '<META HTTP-EQUIV="LAST-MODIFIED" CONTENT="' + lastModified + '">' + nl +
         tab + '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">' + nl +
         tab + '<meta name="apple-mobile-web-app-capable" content="yes">' + nl +
         tab + '<meta name="apple-mobile-web-app-status-bar-style" content="black" />' + nl +
@@ -158,7 +147,7 @@ function topSignoutPart() {
         tab + '<link href="http://fonts.googleapis.com/css?family=Dosis" rel="stylesheet" type="text/css">' + nl +
         tab + '<script type="text/javascript">' + nl +
         tab + '$(document).ready(function() {' + nl  +
-        tab + 'signout()})</script>' + nl  +
+        tab + '})</script>' + nl  + //signout()
         tab + '</head>' + nl +
         tab + ' <body onresize="resize_canvas()">' + nl +
         '<div id="fb-root"></div>' + nl +
@@ -194,13 +183,10 @@ function topSignoutPart() {
 
 function topIndexPart(userId, nrOfFriendShipRequests) {
     return '<!DOCTYPE html>' + nl +
-        tab + '<html manifest="treehouse.manifest" lang="en" xmlns:fb="http://www.facebook.com/2008/fbml">' + nl +
+        tab + '<html lang="en" xmlns:fb="http://www.facebook.com/2008/fbml">' + nl +
         tab + '<head>' + nl +
         tab + '<title>Treehouse</title>' + nl +
         tab + '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' + nl +
-        tab + '<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="PUBLIC">' + nl +
-        tab + '<META HTTP-EQUIV="EXPIRES" CONTENT="' + nextWeekUTC + '">' + nl +
-        tab + '<META HTTP-EQUIV="LAST-MODIFIED" CONTENT="' + lastModified + '">' + nl +
         tab + '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">' + nl +
         tab + '<meta name="apple-mobile-web-app-capable" content="yes">' + nl +
         tab + '<meta name="apple-mobile-web-app-status-bar-style" content="black" />' + nl +
@@ -278,13 +264,10 @@ function topPublicAchievementPart(achieverId, currentAchievementId, url, imageUr
     var titleWithDoubleQuotationsReplacedWithSingle = title.replace(/"/g, "'")
     return (
         '<!DOCTYPE html>' + nl +
-            tab + '<html manifest="treehouse.manifest" lang="en" xmlns:fb="http://www.facebook.com/2008/fbml">' + nl +
+            tab + '<html lang="en" xmlns:fb="http://www.facebook.com/2008/fbml">' + nl +
             tab + '<head>' + nl +
             tab + '<title>Treehouse - ' + title + '</title>' + nl +
             tab + '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' + nl +
-            tab + '<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="PUBLIC">' + nl +
-            tab + '<META HTTP-EQUIV="EXPIRES" CONTENT="' + nextWeekUTC + '">' + nl +
-            tab + '<META HTTP-EQUIV="LAST-MODIFIED" CONTENT="' + lastModified + '">' + nl +
             tab + '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">' + nl +
             tab + '<meta name="apple-mobile-web-app-capable" content="yes">' + nl +
             tab + '<meta name="apple-mobile-web-app-status-bar-style" content="black" />' + nl +
