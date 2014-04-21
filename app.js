@@ -307,8 +307,11 @@ function emailUser(emailAddress, subject, html, altText, callback) {
 
 function getDataForUser(myUser, request, response, appMode) {
     var fbConnect = false
+    var emailConnect = false
     if (request.query.username) {
         fbConnect = true
+    } else if (request.query.email) {
+        emailConnect = true
     }
     request.session.currentUser = myUser
     loginToken.createToken(myUser.username, function(myToken) {
@@ -320,6 +323,8 @@ function getDataForUser(myUser, request, response, appMode) {
                  response.writeHead(200, {'content-type': 'application/json' })
                  response.write(JSON.stringify(myUser._id))
                  response.end('\n', 'utf-8')
+            } else if (emailConnect) {
+                writeDefaultPage(request, response)
             } else {
                 response.writeHead(200, {'content-type': 'application/json' })
                 response.write(JSON.stringify(myUser._id))
