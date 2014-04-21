@@ -322,7 +322,12 @@ function getDataForUser(myUser, request, response, appMode) {
                 // response.end('\n', 'utf-8')
                 writeDefaultPage(request, response)
             } else {
-                writeDefaultPage(request, response)
+
+
+                response.writeHead(200, {'content-type': 'application/json' }) //funkar med standalonelogin, inte med vanlig
+                 response.write(JSON.stringify(myUser._id))
+                 response.end('\n', 'utf-8')
+                //writeDefaultPage(request, response)
             }
         }
     })
