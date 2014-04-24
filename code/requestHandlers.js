@@ -43,7 +43,7 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
         tab + '<script src="content/ext/js/facebook.js" type="text/javascript"></script>' + nl +
         tab + '<script src="content/ext/js/jquery-1.10.2.js" type="text/javascript"></script>' + nl +
         tab + '<script type="application/javascript" src="content/js/add2home.js"></script>' + nl +
-        tab + '<script type="application/javascript" src="content/js/generateContent.js?" + thVersion + "></script>' + nl +
+        tab + '<script type="application/javascript" src="content/js/generateContent.js?' + thVersion + '></script>' + nl +
         tab + '<script type="application/javascript" src="content/js/info.js"></script>' + nl +
         tab + '<script type="application/javascript" src="content/js/treehouseFunctions.js"></script>' + nl +
         tab + '<script type="application/javascript" src="content/js/magnetic.js"></script>' + nl +
