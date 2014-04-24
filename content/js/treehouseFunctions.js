@@ -33,11 +33,11 @@ function resize_canvas(){
 }
 
 /******************  login functions  ******************/
-function checkUser(appMode) {
+function checkUser() {
     var username = $("input[name=username]").val()
     if (username) {
         if (username.match(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i)) {
-            checkUserOnServer(username, appMode,
+            checkUserOnServer(username,
                 function(data, existingUser) {
                     if (existingUser) {
                         $("#emailForm").html('We just sent you the old Treehouse email. Fetch email. Click link!')
@@ -54,8 +54,8 @@ function checkUser(appMode) {
     }
 }
 
-function checkUserOnServer(username, appMode, callback) {
-    var data = "username=" + username + "&appMode=" + appMode
+function checkUserOnServer(username, callback) {
+    var data = "username=" + username
     $.ajax("/checkUser", {     
         type: "GET",
         data: data,

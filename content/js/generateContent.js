@@ -204,32 +204,36 @@ function insertLatestAchievement() {
 }
 
 function getLoginContent() {
-    return (
-            '<div id="content">' + nl +
-                '<div class="signup-logo">' +
-                    '<img alt="Treehouse" src="content/img/logo-large.png" />' + nl +
-                    '<p>connect below to sign in / sign up</p>' + nl +
-                    '<form action="javascript: loginUsingFacebook()">' + nl +
-                        '<input type="image" src="content/img/facebook.png" alt="Facebook Connect"/>' + nl +
-                    '</form>' + nl +
-                '</div>' + nl +
-                '<div class="login-separator">' +
-                    '<ul>' +
-                        '<li><span></span></li>' +
-                        '<li>OR</li>' +
-                        '<li><span></span></li>' +
-                   '</ul>' +
-                    '<div class="clear"></div>' + nl +
-                '</div>' + nl +
-                '<div id="emailForm">' + nl +
-                    '<form action="javascript: checkUser(' + isAppMode + ')">' + nl +
-                        '<input type="text" class="formstyle" name="username" placeholder="email"">' + nl +
-                        '<input type="submit" class="button green" value="Sign in / Sign up">' + nl +
-                        '<div id="message"></div>' + nl +
-                    '</form>' + nl +
-                '</div>' + nl +
-            '</div>' + nl
-        )
+    var loginContent = '<div id="content">' +
+        '<div class="signup-logo">' +
+        '<img alt="Treehouse" src="content/img/logo-large.png" />' +
+        '<p>connect below to sign in / sign up</p>' +
+        '<form action="javascript: loginUsingFacebook()">' +
+        '<input type="image" src="content/img/facebook.png" alt="Facebook Connect"/>' +
+        '</form>' +
+        '</div>' +
+        '<div class="login-separator">' +
+        '<ul>' +
+        '<li><span></span></li>' +
+        '<li>OR</li>' +
+        '<li><span></span></li>' +
+        '</ul>' +
+        '<div class="clear"></div>' +
+        '</div>'
+
+        if (!isAppMode) {
+            loginContent += '<div id="emailForm">' +
+                '<form action="javascript: checkUser()">' +
+                '<input type="text" class="formstyle" name="username" placeholder="email"">' +
+                '<input type="submit" class="button green" value="Sign in / Sign up">' +
+                '<div id="message"></div>' +
+                '</form>' +
+                '</div>'
+        }
+
+        loginContent +=  '</div>' 
+
+    return loginContent
 }
 
 function getUserContent(callback) {

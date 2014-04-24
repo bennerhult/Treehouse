@@ -91,30 +91,22 @@ function loadUser(request, response, next) {
 }
 
 function authenticateFromLoginToken(request, response) {
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAA1")
     //noinspection JSUnresolvedVariable
     if (request.cookies.rememberme)  {
-        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA2")
         //noinspection JSUnresolvedVariable
         var cookie = JSON.parse(request.cookies.rememberme)
         loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
-            console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA3")
             if (!token) {
-                console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA4")
                 response.writeHead(404, {'content-type': 'application/json' })
                 response.write(JSON.stringify(""))
                 response.end('\n', 'utf-8')
             } else {
-                console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA5")
                 user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
-                    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA6")
                     if (user) {
-                        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA7")
                         request.session.currentUser = user
                         friendship.getNrOfRequests(user._id, function (nrOfFriendShipRequests) {
                             token.token = loginToken.randomToken()
                             token.save(function() {
-                                console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA8")
                                 request.session.nrOfFriendShipRequests = nrOfFriendShipRequests
                                 response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 2 * 604800000), path: '/' })
                                 response.writeHead(200, {'content-type': 'application/json' })
@@ -123,7 +115,6 @@ function authenticateFromLoginToken(request, response) {
                             })
                         })
                     } else {
-                        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA9")
                         response.writeHead(404, {'content-type': 'application/json' })
                         response.write(JSON.stringify("Bummer! We cannot find you in our records. Contact us at staff@treehouse.io if you want us to help you out."))
                         response.end('\n', 'utf-8')
@@ -132,7 +123,6 @@ function authenticateFromLoginToken(request, response) {
             }
         })
     }  else {
-        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA10")
         response.writeHead(404, {'content-type': 'application/json' })
         response.write(JSON.stringify(""))   //typical first sign in
         response.end('\n', 'utf-8')
@@ -243,16 +233,13 @@ function signin(request, response) {
     var url_parts = url.parse(request.url, true)
     var email = url_parts.query.email.toLowerCase()
     var token = url_parts.query.token
-    //noinspection JSUnresolvedVariable
-    var appModeString = url_parts.query.appMode
-    var appMode = (appModeString === 'true')
     loginToken.LoginToken.findOne({ email: email, token: token }, function(err,myToken) {
         if (myToken) {
             user.User.findOne({ username: email }, function(err,myUser) {
                 if (myUser) {
-                    getDataForUser(myUser, request, response, appMode)
+                    getDataForUser(myUser, request, response)
                 } else {
-                    createUser(email, request, response, appMode)
+                    createUser(email, request, response)
                 }
             })
         } else {
@@ -263,8 +250,6 @@ function signin(request, response) {
 
 app.get('/checkUser', function(request, response){
     var username = request.query.username.toLowerCase()
-    //noinspection JSUnresolvedVariable
-    var appMode = request.query.appMode
 
     user.User.findOne({ username: username }, function(err,myUser) {
         if (myUser) {
@@ -272,8 +257,8 @@ app.get('/checkUser', function(request, response){
                 emailUser(
                     username,
                     'Sign in to Treehouse',
-                    "<html>Click <a href='" + domain + "signin?email=" + username + "&token=" + myToken.token + '&appMode=' + appMode + "'>here</a> to sign in to Treehouse.</html>",
-                    'Go to ' + domain + 'signin?email=' + username + '&token=' + myToken.token + '&appMode=' + appMode +  ' to sign in to Treehouse!',
+                    "<html>Click <a href='" + domain + "signin?email=" + username + "&token=" + myToken.token + "'>here</a> to sign in to Treehouse.</html>",
+                    'Go to ' + domain + 'signin?email=' + username + '&token=' + myToken.token +  ' to sign in to Treehouse!',
                      function() {
                          response.writeHead(200, {'content-type': 'application/json' })
                          response.write(JSON.stringify(myToken.token))
@@ -286,8 +271,8 @@ app.get('/checkUser', function(request, response){
                 emailUser(
                     username,
                     'Welcome  to Treehouse',
-                    "<html>Click <a href='" + domain + "signup?email=" + username + "&token=" + myToken.token + '&appMode=' + appMode + "'>here</a> to start using Treehouse.</html>",
-                    'Go to ' + domain + 'signup?email=' + username + '&token=' + myToken.token + '&appMode=' + appMode + ' to start using Treehouse!',
+                    "<html>Click <a href='" + domain + "signup?email=" + username + "&token=" + myToken.token + "'>here</a> to start using Treehouse.</html>",
+                    'Go to ' + domain + 'signup?email=' + username + '&token=' + myToken.token + ' to start using Treehouse!',
                     function() {
                         response.writeHead(201, {'content-type': 'application/json' })
                         response.write(JSON.stringify(myToken.token))
@@ -315,35 +300,15 @@ function emailUser(emailAddress, subject, html, altText, callback) {
     if (callback) callback()
 }
 
-function getDataForUser(myUser, request, response, appMode) {
-   /* var fbConnect = false
-    if (request.query.email) {
-        fbConnect = true
-    }*/
+function getDataForUser(myUser, request, response) {
     request.session.currentUser = myUser
     loginToken.createToken(myUser.username, function(myToken) {
         response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-        if (appMode) {
-            writeGotoAppPage(response)
-        } else {
-            //if (fbConnect) {
-                // response.writeHead(200, {'content-type': 'application/json' })
-                // response.write(JSON.stringify(myUser._id))
-                // response.end('\n', 'utf-8')
-               // writeDefaultPage(request, response)
-            //} else {
-
-
-                //response.writeHead(200, {'content-type': 'application/json' })
-                 //response.write(JSON.stringify(myUser._id))
-                 //response.end('\n', 'utf-8')
-                writeDefaultPage(request, response)
-            //}
-        }
+        writeDefaultPage(request, response)
     })
 }
 
-function createUser(emailAdress, request, response, appMode) {
+function createUser(emailAdress, request, response) {
     var fbConnect = false
     if (request.query.username) {
         fbConnect = true
@@ -361,12 +326,8 @@ function createUser(emailAdress, request, response, appMode) {
                     response.write(JSON.stringify('ok'))
                     response.end('\n', 'utf-8')
                 } else {
-                    if (appMode) {
-                        writeGotoAppPage(response)
-                    } else {
-                        request.session.currentUser = newUser
-                        writeDefaultPage(request, response)
-                    }
+                    request.session.currentUser = newUser
+                    writeDefaultPage(request, response)
                 }
             })
         }
