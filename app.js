@@ -306,29 +306,29 @@ function emailUser(emailAddress, subject, html, altText, callback) {
 }
 
 function getDataForUser(myUser, request, response, appMode) {
-    var fbConnect = false
+   /* var fbConnect = false
     if (request.query.email) {
         fbConnect = true
-    }
+    }*/
     request.session.currentUser = myUser
     loginToken.createToken(myUser.username, function(myToken) {
         response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
         if (appMode) {
             writeGotoAppPage(response)
         } else {
-            if (fbConnect) {
+            //if (fbConnect) {
                 // response.writeHead(200, {'content-type': 'application/json' })
                 // response.write(JSON.stringify(myUser._id))
                 // response.end('\n', 'utf-8')
-                writeDefaultPage(request, response)
-            } else {
+               // writeDefaultPage(request, response)
+            //} else {
 
 
-                //response.writeHead(200, {'content-type': 'application/json' }) 
+                //response.writeHead(200, {'content-type': 'application/json' })
                  //response.write(JSON.stringify(myUser._id))
                  //response.end('\n', 'utf-8')
                 writeDefaultPage(request, response)
-            }
+            //}
         }
     })
 }

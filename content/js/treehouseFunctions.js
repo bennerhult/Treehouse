@@ -19,6 +19,19 @@ function fbShare(caption, achLink, imageURL) {
     }, function(response){})
 }
 
+function resize_canvas(){
+    var canvas = document.getElementById("world");
+    if (canvas.width  < window.innerWidth)
+    {
+        canvas.width  = window.innerWidth;
+    }
+
+    if (canvas.height < window.innerHeight)
+    {
+        canvas.height = window.innerHeight;
+    }
+}
+
 /******************  login functions  ******************/
 function checkUser(appMode) {
     var username = $("input[name=username]").val()
@@ -38,19 +51,6 @@ function checkUser(appMode) {
         }
     } else {
         $("#message").html("First law of Treehouse: First you type, then you press.")
-    }
-}
-
-function resize_canvas(){
-    var canvas = document.getElementById("world");
-    if (canvas.width  < window.innerWidth)
-    {
-        canvas.width  = window.innerWidth;
-    }
-
-    if (canvas.height < window.innerHeight)
-    {
-        canvas.height = window.innerHeight;
     }
 }
 
