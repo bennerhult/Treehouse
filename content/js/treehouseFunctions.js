@@ -818,7 +818,7 @@ function showMenu() {
 function createAchievementOnServer(onSuccess, onError) {
     var nrOfGoals =  $('#goalTable tr').length
     var data = "currentImage=" + $("#achievementImage").attr("src")
-    var goalTitles = new Array()
+    var goalTitles = []
     var goalQuantities = new Array()
     var fieldValue
     $("form#createAchievementForm :input").each(function(i, field) {

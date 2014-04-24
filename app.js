@@ -91,22 +91,30 @@ function loadUser(request, response, next) {
 }
 
 function authenticateFromLoginToken(request, response) {
+    console.log("AAAAAAAAAAAAAAAAAAAAAAAA1")
     //noinspection JSUnresolvedVariable
     if (request.cookies.rememberme)  {
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA2")
         //noinspection JSUnresolvedVariable
         var cookie = JSON.parse(request.cookies.rememberme)
         loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
+            console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA3")
             if (!token) {
+                console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA4")
                 response.writeHead(404, {'content-type': 'application/json' })
                 response.write(JSON.stringify(""))
                 response.end('\n', 'utf-8')
             } else {
+                console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA5")
                 user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
+                    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA6")
                     if (user) {
+                        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA7")
                         request.session.currentUser = user
                         friendship.getNrOfRequests(user._id, function (nrOfFriendShipRequests) {
                             token.token = loginToken.randomToken()
                             token.save(function() {
+                                console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA8")
                                 request.session.nrOfFriendShipRequests = nrOfFriendShipRequests
                                 response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 2 * 604800000), path: '/' })
                                 response.writeHead(200, {'content-type': 'application/json' })
@@ -115,6 +123,7 @@ function authenticateFromLoginToken(request, response) {
                             })
                         })
                     } else {
+                        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA9")
                         response.writeHead(404, {'content-type': 'application/json' })
                         response.write(JSON.stringify("Bummer! We cannot find you in our records. Contact us at staff@treehouse.io if you want us to help you out."))
                         response.end('\n', 'utf-8')
@@ -123,6 +132,7 @@ function authenticateFromLoginToken(request, response) {
             }
         })
     }  else {
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA10")
         response.writeHead(404, {'content-type': 'application/json' })
         response.write(JSON.stringify(""))   //typical first sign in
         response.end('\n', 'utf-8')
