@@ -207,22 +207,22 @@ function getLoginContent() {
     var loginContent = '<div id="content">' +
         '<div class="signup-logo">' +
         '<img alt="Treehouse" src="content/img/logo-large.png" />' +
-        '<p>connect below to sign in / sign up</p>' +
+        '<p>connect below to Sign in / Sign up</p>' +
         '<form action="javascript: loginUsingFacebook()">' +
         '<input type="image" src="content/img/facebook.png" alt="Facebook Connect"/>' +
         '</form>' +
-        '</div>' +
-        '<div class="login-separator">' +
-        '<ul>' +
-        '<li><span></span></li>' +
-        '<li>OR</li>' +
-        '<li><span></span></li>' +
-        '</ul>' +
-        '<div class="clear"></div>' +
         '</div>'
 
         if (!isAppMode) {
-            loginContent += '<div id="emailForm">' +
+            loginContent +=  '<div class="login-separator">' +
+                '<ul>' +
+                '<li><span></span></li>' +
+                '<li>OR</li>' +
+                '<li><span></span></li>' +
+                '</ul>' +
+                '<div class="clear"></div>' +
+                '</div>' +
+                '<div id="emailForm">' +
                 '<form action="javascript: checkUser()">' +
                 '<input type="text" class="formstyle" name="username" placeholder="email"">' +
                 '<input type="submit" class="button green" value="Sign in / Sign up">' +
@@ -231,7 +231,7 @@ function getLoginContent() {
                 '</div>'
         }
 
-        loginContent +=  '</div>' 
+        loginContent +=  '</div>'
 
     return loginContent
 }
