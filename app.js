@@ -933,7 +933,10 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
         achievementsList += '  <div class="progress-container-achievements"><span class="progress" style="width:'
             + percentages[i]
             + '%"> </span></div></a></div><p>'
-            + achievements[i].title
+        if (achievements[i].issuedAchievement) {
+                achievementsList += achievements[i].issuerName + ": " 
+        }
+        achievementsList +=  achievements[i].title
             + '</p>'
 
         achievementsList += '<div class="separerare-part">&nbsp;</div></div>'
@@ -1533,7 +1536,11 @@ app.get('/newAchievement', function(request, response){
     user.User.findById(userID, function(err, user) {
         var motherAchievement;
         achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
-            motherAchievement = achievement.createAchievement(user._id, request.query.title, request.query.description, request.query.currentImage, user.isIssuer)
+            if(!user.isIssuer) {
+                motherAchievement = achievement.createAchievement(user._id, request.query.title, request.query.description, request.query.currentImage)
+            } else {
+                motherAchievement = achievement.createIssuedAchievement(user._id, request.query.title, request.query.description, request.query.currentImage, user.issuerName)
+            }
             var titles = JSON.parse(request.query.goalTitles)
             var quantities = request.query.goalQuantities.split(',')
             var textInQuantities = false;

@@ -11,7 +11,8 @@ var AchievementSchema = new Schema({
     title               : {type: String, required: true},
     description         : {type: String},
     imageURL            : {type: String, required: true},
-    issuedAchievement            : {type: Boolean, required: false},
+    issuedAchievement   : {type: Boolean, required: false},
+    issuerName          : {type: String, required: false},
     goals               : {type: [goal.GoalSchema], required: true}
 })
 
@@ -20,6 +21,7 @@ var Achievement = mongoose.model('Achievement', AchievementSchema)
 module.exports = {
     Achievement: Achievement,
     createAchievement: createAchievement,
+    createIssuedAchievement: createIssuedAchievement,
     addGoalToAchievement: addGoalToAchievement,
     removeSharedPartOfAchievement: removeSharedPartOfAchievement,
     publicize: publicize,
@@ -29,14 +31,25 @@ module.exports = {
     findPublicAchievement: findPublicAchievement
 }
 
-function createAchievement(createdBy, title, description, imageURL, issuedAchievement) {
+function createAchievement(createdBy, title, description, imageURL) {
     var achievement = new Achievement()
     achievement.createdDate = new Date()
     achievement.createdBy = createdBy
     achievement.title = title
     achievement.description = description
     achievement.imageURL = imageURL
-    achievement.issuedAchievement = issuedAchievement
+    return achievement
+}
+
+function createIssuedAchievement(createdBy, title, description, imageURL, issuerName) {
+    var achievement = new Achievement()
+    achievement.createdDate = new Date()
+    achievement.createdBy = createdBy
+    achievement.title = title
+    achievement.description = description
+    achievement.imageURL = imageURL
+    achievement.issuedAchievement = true
+    achievement.issuerName = issuerName
     return achievement
 }
 
