@@ -11,6 +11,7 @@ var AchievementSchema = new Schema({
     title               : {type: String, required: true},
     description         : {type: String},
     imageURL            : {type: String, required: true},
+    issuedAchievement            : {type: Boolean, required: false},
     goals               : {type: [goal.GoalSchema], required: true}
 })
 
@@ -28,13 +29,14 @@ module.exports = {
     findPublicAchievement: findPublicAchievement
 }
 
-function createAchievement(createdBy, title, description, imageURL) {
+function createAchievement(createdBy, title, description, imageURL, issuedAchievement) {
     var achievement = new Achievement()
     achievement.createdDate = new Date()
     achievement.createdBy = createdBy
     achievement.title = title
     achievement.description = description
     achievement.imageURL = imageURL
+    achievement.issuedAchievement = issuedAchievement
     return achievement
 }
 
