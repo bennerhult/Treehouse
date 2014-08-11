@@ -627,6 +627,11 @@ function openAchievement(achievementId, achieverId, publiclyVisible, title) {
     insertContent(getAchievementContent(), setDefaultMenu(decodeURIComponent(title), false), getAchievement(achievementId, achieverId, publiclyVisible))
 }
 
+function openIssuedAchievement(achievementId, title) {
+    window.history.pushState(null, null, "/issuedAchievement?achievementId=" + achievementId)
+    insertContent(getAchievementContent(), setDefaultMenu(decodeURIComponent(title), false), getIssuedAchievement(achievementId))
+}
+
 function getNotification(achievementId, sharerId, achieverId) {
     getSharerList(achievementId, function (friendsList) {
         getAchievementFromServer(
@@ -641,6 +646,23 @@ function getNotification(achievementId, sharerId, achieverId) {
             }, achievementId, true, sharerId, achieverId
         )
     })
+}
+
+function getIssuedAchievement(achievementId) {
+    getIssuedAchievementFromServer(
+        function(data) {
+            $("#achievementDesc").html(data)
+            $('#progressTab').attr("class","selected")
+            $("#appcontainerSocial").hide()
+            $("#tweetAchievement").hide()
+            $("#fbLikeWeb").show()
+            $("#tweetTreehouse").show()
+            var els=document.body.getElementsByClassName("addbutton");
+            for(var i=0;i<els.length;i++){
+                Magnetic.addFireListener(els[i])
+            }
+        }, achievementId
+    )
 }
 
 function getAchievement(achievementId, userId, publiclyVisible) {
@@ -704,6 +726,15 @@ function getPublicAchievement(achieverId, achievementId, publiclyVisible) {
 
 function getAchievementFromServer(callback,achievementId, isNotificationView, sharerId, achieverId) {
     $.ajax("/achievementFromServer?achievementId= " + achievementId + "&isNotificationView=" + isNotificationView + "&sharerId=" + sharerId  + "&achieverId=" + achieverId,  {
+        type: "GET",
+        dataType: "json",
+        success: function(data) { if ( callback ) callback(data) },
+        error  : function()     { if ( callback ) callback(null) }
+    })
+}
+
+function getIssuedAchievementFromServer(callback,achievementId) {
+    $.ajax("/issuedAchievementFromServer?achievementId= " + achievementId,  {
         type: "GET",
         dataType: "json",
         success: function(data) { if ( callback ) callback(data) },
