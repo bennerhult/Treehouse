@@ -934,7 +934,7 @@ function createAchievementDesc(achievements,progresses, achieverId, percentages,
             + percentages[i]
             + '%"> </span></div></a></div><p>'
         if (achievements[i].issuedAchievement) {
-                achievementsList += achievements[i].issuerName + ": " 
+                achievementsList += achievements[i].issuerName + ": "
         }
         achievementsList +=  achievements[i].title
             + '</p>'
@@ -988,6 +988,17 @@ app.get('/achievements_inProgress', function(request, response){
 app.get('/achievements_completed', function(request, response){
     getAchievementList(request, response, true)
 })
+
+app.get('/achievements_issued', function(request, response){
+    getIssuedAchievements(request, response)
+})
+
+function getIssuedAchievements(request, response) {
+    var issuedList = "<div class='achievement'><p>No issued achievements found</p></div>"
+    response.writeHead(200, {'content-type': 'application/json' })
+    response.write(JSON.stringify(issuedList))
+    response.end('\n', 'utf-8')
+}
 
 function getAchievementList(request, response, completedAchievements) {
     request.session.current_achievement_id = null

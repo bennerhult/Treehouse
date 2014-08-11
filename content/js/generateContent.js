@@ -444,10 +444,9 @@ function getNewsfeedContent(achiever, callback) {
 
 function getAchievementsContent(achiever, lookingAtFriend, callback) {
     getPrettyNameFromServer(achiever._id, function(prettyName) {
-        var content =  '<div id="contentwrap"> <div id="userarea"><img src="' + achiever.imageURL + '" /><p>' + prettyName + '</p></div> <div id="achievementListTabs"><a href="javascript:void(0)" onclick="getAchievements(false, \'' + achiever._id + '\', ' + lookingAtFriend + ')"><span id="inProgressSpan" class="hoverDesktop">Challenges</span></a>'
-
-        content +=  '<a href="javascript:void(0)" onclick="getAchievements(true, \'' + achiever._id + '\', ' + lookingAtFriend + ')"><span id="completedSpan" class="hoverDesktop">Unlocked</span></a></div>'
-
+        var content =  '<div id="contentwrap"> <div id="userarea"><img src="' + achiever.imageURL + '" /><p>' + prettyName + '</p></div> <div id="achievementListTabs"><a href="javascript:void(0)" onclick="getAchievements(1, \'' + achiever._id + '\', ' + lookingAtFriend + ')"><span id="inProgressSpan" class="hoverDesktop">Progress</span></a>'
+        content +=  '<a href="javascript:void(0)" onclick="getAchievements(2, \'' + achiever._id + '\', ' + lookingAtFriend + ')"><span id="issuedSpan" class="hoverDesktop">Challenges</span></a>'
+        content +=  '<a href="javascript:void(0)" onclick="getAchievements(3, \'' + achiever._id + '\', ' + lookingAtFriend + ')"><span id="completedSpan" class="hoverDesktop">Unlocked</span></a></div>'
         content +=  '<div id="achievementList"></div></div>'
         callback(content)
     })

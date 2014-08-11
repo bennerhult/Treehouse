@@ -567,23 +567,29 @@ function getAchievements(completed, achieverId, lookingAtFriend) {
             FB.XFBML.parse();
             $("#fbLikeWeb").show()
             $("#achievementList").html(data)
-              if (completed) {
-                 $("#completedSpan").attr("class","selected")
-                 $("#inProgressSpan").removeClass()
-             } else {
-                 $("#inProgressSpan").attr("class","selected")
-                 $("#completedSpan").removeClass()
-             }
+             if (completed === 2) {
+                  $("#inProgressSpan").removeClass()
+                  $("#issuedSpan").attr("class","selected")
+                  $("#completedSpan").removeClass()
+             } else if (completed === 3) {
+                  $("#inProgressSpan").removeClass()
+                  $("#issuedSpan").removeClass()
+                  $("#completedSpan").attr("class","selected")
+             } else { //completed === 1
+                $("#inProgressSpan").attr("class","selected")
+                $("#issuedSpan").removeClass()
+                $("#completedSpan").removeClass()
+            }
         }
     )
 }
 
-function getAchievementsFromServer(completed, achieverId, lookingAtFriend, callback) {
+function getAchievementsFromServer(typeOfAchievements, achieverId, lookingAtFriend, callback) {
     var data = "lookingAtFriend=" + lookingAtFriend
     if (achieverId) {
          data += "&achieverId=" + achieverId
     }
-    if (completed) {
+    if (typeOfAchievements === 3) {
         $.ajax("/achievements_completed", {
             type: "GET",
             data: data,
@@ -591,7 +597,15 @@ function getAchievementsFromServer(completed, achieverId, lookingAtFriend, callb
             success: function(data) { if ( callback ) callback(data) },
             error  : function()     { if ( callback ) callback(null) }
         })
-    }  else {
+    }  else if (typeOfAchievements === 2) {
+        $.ajax("/achievements_issued", {
+            type: "GET",
+            data: data,
+            dataType: "json",
+            success: function(data) { if ( callback ) callback(data) },
+            error  : function()     { if ( callback ) callback(null) }
+        })
+    } else { //typeOfAchievements === 1
         $.ajax("/achievements_inProgress", {
             type: "GET",
             data: data,
