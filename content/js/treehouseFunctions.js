@@ -70,7 +70,7 @@ function checkUserOnServer(username, callback) {
 
 function loginUsingFacebook() {
     if (isAppMode || isiOs) {
-        window.location = "https://m.facebook.com/dialog/oauth?client_id=480961688595420&response_type=code&redirect_uri=http://treehouse.io/fbAppConnect&scope=email"
+        window.location = "https://m.facebook.com/dialog/oauth?client_id=480961688595420&response_type=code&redirect_uri=http://www.treehouse.io/fbAppConnect&scope=email"
     } else {
         FB.login(function(response) {
             if (response.authResponse) {
