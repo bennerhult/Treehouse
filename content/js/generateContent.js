@@ -207,7 +207,7 @@ function getLoginContent() {
     var loginContent = '<div id="content">' +
         '<div class="signup-logo">' +
         '<img alt="Treehouse" src="content/img/logo-large.png" />' +
-        '<p>connect below to Sign in / Sign up</p>' +
+        '<p>connect below to sign in / sign up</p>' +
         '<form action="javascript: loginUsingFacebook()">' +
         '<input type="image" src="content/img/facebook.png" alt="Facebook Connect"/>' +
         '</form>' +
