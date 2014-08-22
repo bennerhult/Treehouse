@@ -202,7 +202,7 @@ app.get('/checkFBUser', function(request, response){
 app.get('/fbAppConnect', function(request, response){
     var url_parts = url.parse(request.url, true)
     var code = url_parts.query.code
-    var accessTokenLink= 'https://graph.facebook.com/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://treehouse.io/fbAppConnect&code=' + code
+    var accessTokenLink= 'https://graph.facebook.com/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://www.treehouse.io/fbAppConnect&code=' + code
     var requestModule = require('request');
     requestModule.get(accessTokenLink, function (accessTokenError, accessTokenResponse, accessTokenBody) {
         if (!accessTokenError && accessTokenResponse.statusCode == 200) {
