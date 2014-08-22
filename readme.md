@@ -3,7 +3,7 @@ What have you achieved today?
 [Go to the Treehouse!](http://www.treehouse.io)
 
 ##Project
-[Basecamp Trello](https://trello.com/b/xTuMReiw/treehouse)
+[Trello](https://trello.com/b/xTuMReiw/treehouse)
 
 [Heroku](https://api.heroku.com/myapps/treehouseapp)
 
