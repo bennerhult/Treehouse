@@ -34,7 +34,7 @@ app.configure('development', function() {
 })
 
 app.configure('production', function() {
-    domain = 'http://treehouse.io/'
+    domain = 'http://www.treehouse.io/'
     console.log("Treehouse in prod mode.")
     //noinspection JSUnresolvedVariable
     db_uri=process.env.DB_URI
