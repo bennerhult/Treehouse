@@ -6,7 +6,7 @@ if (typeof String.prototype.startsWith != 'function') {
 
 function fbShare(caption, achLink, imageURL) {
     if (!imageURL.startsWith('https:')) {
-        imageURL = 'http://treehouse.io/' + imageURL
+        imageURL = 'http://www.treehouse.io/' + imageURL
     }
 
     FB.ui({
