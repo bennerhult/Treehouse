@@ -528,11 +528,9 @@ function fillFriendsList(friendsList, pendings, userId, callback) {
                         callback(content)
                     }
                 }
-
             })
         })
     } else {
-
         if (pendings.length > 0) {
             addPendings(content, pendings, userId, callback)
         }  else {
@@ -573,7 +571,6 @@ function addPendings(content, pendings, userId, callback) {
                 callback(content)
             }
         })
-
     })
 }
 
@@ -819,7 +816,6 @@ app.get('/confirmFriendRequest', function(request, response){
                 responseobject.id = friendId
                 response.send(responseobject, { 'Content-Type': 'application/json' }, 200)
             })
-
         })
     })
 })
