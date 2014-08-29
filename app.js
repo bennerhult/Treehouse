@@ -335,14 +335,14 @@ function createUser(emailAdress, request, response) {
         }  else {
             loginToken.createToken(emailAdress, function(myToken) {
                 response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-                if (fbConnect) {
+               /* if (fbConnect) {
                     response.writeHead(200, {'content-type': 'application/json' })
                     response.write(JSON.stringify('ok'))
                     response.end('\n', 'utf-8')
-                } else {
+                } else {*/
                     request.session.currentUser = newUser
                     writeDefaultPage(request, response)
-                }
+                //}
             })
         }
     })
