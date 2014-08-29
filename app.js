@@ -194,10 +194,16 @@ app.get('/rememberMe', function(request, response){
 })
 
 app.get('/checkFBUser', function(request, response){
-    user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
-        console.log("BADZTAM2: " + myUser )
-        getDataForUser(myUser, request, response)
-    })
+    //user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
+        //console.log("BADZTAM2: " + equest.query.username.toLowerCase()  )
+        //getDataForUser(myUser, request, response)
+        //request.session.currentUser = myUser
+            loginToken.createToken(request.query.username.toLowerCase() , function(myToken) {
+                response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
+                writeDefaultPage(request, response)
+            })
+       // }
+    //})
 })
 
 app.get('/fbAppConnect', function(request, response){
