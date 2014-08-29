@@ -1209,7 +1209,7 @@ function showIssuedAchievementPage(request, response) {
                                     +  currentAchievement.createdBy + ": " + currentAchievement.title
                                     + '"/><span class="gradient-bg"></span><span class="progressbar"></span><div id="progressbar" class="progress-container"><span id="mainProgress" class="progress" style="width:0%;"></span></div>'
                                 achievementDesc += '</div><div class="clear"></div>'
-                                achievementDesc += '<div id="achievementTabs"><a style="color:black" href="javascript:void(0)" onclick="progressTab()"><span id="progressTab">Goals</span></a><a style="color:black" href="javascript:void(0)" onclick="compareTab()"><span id="compareTab">Compare</span></a><div class="clear"></div></div>'
+                                achievementDesc += '<div id="achievementTabs"><a style="color:black" href="javascript:void(0)" onclick="progressTab()"><span id="progressTab">Goals</span></a><div class="clear"></div></div>'
                                 achievementDesc += '<div id="achievement-container">'
                                 achievementDesc += goalTextsText
                                 achievementDesc += '</div>'
