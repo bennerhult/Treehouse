@@ -58,7 +58,34 @@ function topIndexPart(userId, nrOfFriendShipRequests) {
         tab + 'setTimeout(function(){addToHome.show(false)}, 100)})</script>' + nl +
         tab + '</head>' + nl +
         tab + ' <body onresize="resize_canvas()">' + nl +
+
         '<div id="fb-root"></div>' + nl +
+        '<div class="preLogin none">' + nl +
+            '<div class="logo"><img src="content/img/logo-firstpage.png"></div>' + nl +
+            '<div class="content">' + nl +
+                '<h1>What did you do lately?</h1>' + nl +
+                '<div class="examplesWrap">' + nl +
+                    '<ul><li><a href=""><img src="content/img/achievementImages/50.png"><h2>Read the classics: Age of Enlightenment</h2><p>Discover the cultural movement in late 17th-century Europe emphasizing reason and individualism.</p></a></li>' +
+                    '<li><a href=""><img src="content/img/achievementImages/52.png"><h2>Botkyrka: the finnish heritage</h2><p>Did you know that Botkyrka shares some of its cultural heritage with Finland. Get to know why.</p></a></li>' +
+                    '<li><a href=""><img src="content/img/achievementImages/27.png"><h2>Stockholm Library Tour</h2><p>They\'re free, they\'re beautiful and they\'re good. Read you way through the capital of Sweden</p></a></li>' +
+                    '<li><a href=""><img src="content/img/achievementImages/51.png"><h2>Travel: East Asia Highlights</h2><p>Explore Bangkok, Go Jungle Trekking, Admire Angkor Wat. The possibilites are endless.</p></a></li>' +
+                    '<li><a href=""><img src="content/img/achievementImages/53.png"><h2>Botkyrka: industrial history</h2><p>During the 18th century, Botkyrka produced paper bills for the Swedish National Bank inspired by Dutch craftsmen.</p></a></li></ul></div><div class="clear"> ' +
+                '</div>' + nl +
+                '<div class="to-login-button"><a href=""><span>Get started / Log in</span></a></div>' + nl +
+                '<div class="wrap">' +
+                    '<div class="fiftywidth">' +
+                        '<h2>Deciding what to do next?</h2>' +
+                        '<p>The Treehouse app helps you track and share your achievements. Log in to get inspired by locals and people from all over the world.</p>' +
+                    '</div>' +
+                    '<div class="fiftywidth">' +
+                        '<h2>What are your friends doing?</h2>' +
+                        '<p>Find out what your friends are up to and issue challenges. Share your progress on Facebook or Twitter.</p>' +
+                    '</div>' +
+                    '<div class="clear"> </div>' +
+                '</div>' + nl +
+           '</div>' + nl +
+        '</div>' + nl +
+
         '<div id="page">' + nl +
         '<canvas id="world" style="z-index:998; position: absolute; left: 0; top: 0;"><p class="noCanvas">You need a <a href="http://www.google.com/chrome">modern browser</a> to view this.</p></canvas>' +
         '<div id="web-menu">' + nl +
