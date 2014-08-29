@@ -208,7 +208,7 @@ app.get('/checkFBUser', function(request, response){
         if (myUser) {
             getDataForUser(myUser, request, response)
         } else {
-            createUser(email, request, response)
+            createUser(request.query.username.toLowerCase(), request, response)
         }
     })
 })
