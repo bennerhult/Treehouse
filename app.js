@@ -34,7 +34,7 @@ app.configure('development', function() {
 })
 
 app.configure('production', function() {
-    domain = 'http://treehouse.io/'
+    domain = 'http://www.treehouse.io/'
     console.log("Treehouse in prod mode.")
     //noinspection JSUnresolvedVariable
     db_uri=process.env.DB_URI
@@ -175,7 +175,7 @@ app.get('/achievement', function(request, response) {
                 request.session.current_achievement_id = currentAchievementId
                 var imageUrl = "" + currentAchievement.imageURL
                 if (!imageUrl.startsWith('https')) {
-                    imageUrl = 'http://treehouse.io/' + imageUrl
+                    imageUrl = 'http://www.treehouse.io/' + imageUrl
                 }
                 requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, imageUrl, currentAchievement.title, currentProgress.publiclyVisible)
             })
@@ -1249,7 +1249,7 @@ function showIssuedAchievementPage(request, response) {
                                         achievementDesc += '</div>'
 
                                         //using public domain - localhost makes FB-like component not load since localhost is not registered as a Treehouse app domain
-                                        /*var achLink = "http://treehouse.io/achievement?achievementId=" + currentAchievement._id + "&userId=" + achiever._id
+                                        /*var achLink = "http://www.treehouse.io/achievement?achievementId=" + currentAchievement._id + "&userId=" + achiever._id
 
                                         var encodedAchLink = encodeURIComponent(achLink)
                                         achievementDesc += '<div id="sharer-container"></div><div id="compare-container"></div>'
@@ -1424,7 +1424,7 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                                                     achievementDesc += '</div>'
 
                                                     //using public domain - localhost makes FB-like component not load since localhost is not registered as a Treehouse app domain
-                                                    var achLink = "http://treehouse.io/achievement?achievementId=" + currentAchievement._id + "&userId=" + achiever._id
+                                                    var achLink = "http://www.treehouse.io/achievement?achievementId=" + currentAchievement._id + "&userId=" + achiever._id
 
                                                     var encodedAchLink = encodeURIComponent(achLink)
                                                     achievementDesc += '<div id="sharer-container"></div><div id="compare-container"></div>'
