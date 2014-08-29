@@ -195,7 +195,8 @@ app.get('/rememberMe', function(request, response){
 
 app.get('/checkFBUser', function(request, response){
     user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
-        getDataForUser(myUser, request, response, false)
+        console.log("BADZTAM: " + request.query.username.toLowerCase() )
+        getDataForUser(myUser, request, response)
     })
 })
 
@@ -213,7 +214,7 @@ app.get('/fbAppConnect', function(request, response){
                     var graph_parts = JSON.parse(graphBody)
                     var email  = graph_parts.email
                     user.User.findOne({ username: email }, function(err,myUser) {
-                        getDataForUser(myUser, request, response, false)
+                        getDataForUser(myUser, request, response)
                     })
                 }
             })
