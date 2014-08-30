@@ -36,7 +36,7 @@ app.configure('development', function() {
 })
 
 app.configure('production', function() {
-    domain = 'http://treehouse.io/'
+    domain = 'http://www.treehouse.io/'
     console.log("Treehouse in prod mode.")
     //noinspection JSUnresolvedVariable
     db_uri=process.env.DB_URI
@@ -177,7 +177,7 @@ app.get('/achievement', function(request, response) {
                 request.session.current_achievement_id = currentAchievementId
                 var imageUrl = "" + currentAchievement.imageURL
                 if (!imageUrl.startsWith('https')) {
-                    imageUrl = 'http://treehouse.io/' + imageUrl
+                    imageUrl = 'http://www.treehouse.io/' + imageUrl
                 }
                 requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, imageUrl, currentAchievement.title, currentProgress.publiclyVisible)
             })
@@ -197,7 +197,11 @@ app.get('/rememberMe', function(request, response){
 
 app.get('/checkFBUser', function(request, response){
     user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
-        getDataForUser(myUser, request, response, false)
+        if (myUser) {
+            getDataForUser(myUser, request, response)
+        } else {
+            createUser(request.query.username.toLowerCase(), request, response)
+        }
     })
 })
 
@@ -215,7 +219,7 @@ app.get('/fbAppConnect', function(request, response){
                     var graph_parts = JSON.parse(graphBody)
                     var email  = graph_parts.email
                     user.User.findOne({ username: email }, function(err,myUser) {
-                        getDataForUser(myUser, request, response, false)
+                        getDataForUser(myUser, request, response)
                     })
                 }
             })
@@ -311,10 +315,6 @@ function getDataForUser(myUser, request, response) {
 }
 
 function createUser(emailAdress, request, response) {
-    var fbConnect = false
-    if (request.query.username) {
-        fbConnect = true
-    }
     user.createUser(emailAdress, function (newUser,err) {
         if (err) {
             response.writeHead(200, {'content-type': 'application/json' })
@@ -323,14 +323,8 @@ function createUser(emailAdress, request, response) {
         }  else {
             loginToken.createToken(emailAdress, function(myToken) {
                 response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-                if (fbConnect) {
-                    response.writeHead(200, {'content-type': 'application/json' })
-                    response.write(JSON.stringify('ok'))
-                    response.end('\n', 'utf-8')
-                } else {
-                    request.session.currentUser = newUser
-                    writeDefaultPage(request, response)
-                }
+                request.session.currentUser = newUser
+                writeDefaultPage(request, response)
             })
         }
     })
@@ -536,11 +530,9 @@ function fillFriendsList(friendsList, pendings, userId, callback) {
                         callback(content)
                     }
                 }
-
             })
         })
     } else {
-
         if (pendings.length > 0) {
             addPendings(content, pendings, userId, callback)
         }  else {
@@ -581,7 +573,6 @@ function addPendings(content, pendings, userId, callback) {
                 callback(content)
             }
         })
-
     })
 }
 
@@ -827,7 +818,6 @@ app.get('/confirmFriendRequest', function(request, response){
                 responseobject.id = friendId
                 response.send(responseobject, { 'Content-Type': 'application/json' }, 200)
             })
-
         })
     })
 })
@@ -1190,92 +1180,61 @@ function showIssuedAchievementPage(request, response) {
     achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
         var goalTexts = []
         var achievementDesc = ''
-
         getPrettyNameIdAndImageURL(currentAchievement.createdBy, function(creatorName, creatorId, creatorImageURL) {
-            //getPrettyNameIdAndImageURL(achiever._id, function(achieverName, achieverId, achieverImageURL) {
-                //progress.Progress.findOne({ achievement_id: currentAchievement._id, achiever_id: achiever._id}, {}, { sort: { 'latestUpdated' : -1 } }, function(err, latestProgress) {
-                    currentAchievement.goals.forEach(function(goal) {
-                        if (err) {
-                            console.log("error in app.js: couldn't find goals for achievement " + currentAchievement._id + ", " + err)
-                        } else {
-                            goalTexts.push(getIssuedGoalText(goal, currentAchievement, goalTexts.length + 1 == currentAchievement.goals.length))
-                            if (goalTexts.length == currentAchievement.goals.length) {
-                                var goalTextsText = ""
-                                var goalsGoneThrough = 0
-                                goalTexts.forEach(function(goalText) {
-                                    goalTextsText += goalText
-                                    goalsGoneThrough++
-                                    if (goalsGoneThrough === goalTexts.length) {
-
-
-                                        achievementDesc += '<div class="achievement-info">' //<div id="userarea"><img src="' + creatorImageURL + '" /><a class="headerlink" href="javascript:void(0)" onclick="openAchievements(false, \'' + achiever._id + '\', ' + checkingOtherPersonsAchievement + ', \'' + achieverName + '\')">' + achieverName + '</a></div> '
-                                        //if (!checkingOtherPersonsAchievement) {
-                                            achievementDesc += '<div class="actionmenu"><ul>'
-                                            /*if (myProgress.publiclyVisible) {
-                                                achievementDesc += '<li id="unpublicizeButton" ><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unpublicize.png" /></a></li>'
-                                                achievementDesc += '<li id="publicizeButton"  style="display:none"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
-                                            }  else {
-                                                achievementDesc += '<li id="unpublicizeButton" style="display:none"><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unpublicize.png" /></a></li>'
-                                                achievementDesc += '<li id="publicizeButton"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
-                                            }*/
-                                            //achievementDesc += '<li id="deleteButton" class="rightalign"><a href="javascript:void(0)" onclick="deleteAchievement(\'' + achiever._id + '\')"><img src="content/img/delete.png" /></a></li>'
-                                            //if (myPercentageFinished == 0 && !isAchievementShared &&!myProgress.publiclyVisible) {
-                                            //if (myPercentageFinished == 0 && !isAchievementShared) {
-                                                //achievementDesc += '<li id="editButton" class="rightalign"><a href="javascript:void(0)" onclick="editAchievement(\'' + achiever._id + '\')"><img src="content/img/edit.png" /></a></li>'
-                                            //}
-                                            achievementDesc += '</ul></div>'
-                                        //}
-                                        achievementDesc += '<div class="separerare"> </div>'
-                                            +'<div class="textarea"><h2>'
-                                            + currentAchievement.title
-                                            + '</h2>'
-
-                                            achievementDesc += '<p id="creator"> by ' + currentAchievement.issuerName  + '</p>'
-
-
-                                        achievementDesc += '<p id="achievementDescription">'
-                                            + currentAchievement.description
-                                            + '</p>'
-
-                                            + '</div>'
-                                            + '<div class="imagearea"><img '
-                                        achievementDesc += 'src="'
-                                            + currentAchievement.imageURL
-                                            +'" alt="'
-                                            +  currentAchievement.createdBy + ": " + currentAchievement.title
-                                            + '"/><span class="gradient-bg"></span><span class="progressbar"></span><div id="progressbar" class="progress-container"><span id="mainProgress" class="progress" style="width:0%;"></span></div>'
-                                        achievementDesc += '</div><div class="clear"></div>'
-                                        achievementDesc += '<div id="achievementTabs"><a style="color:black" href="javascript:void(0)" onclick="progressTab()"><span id="progressTab">Goals</span></a><a style="color:black" href="javascript:void(0)" onclick="compareTab()"><span id="compareTab">Compare</span></a><div class="clear"></div></div>'
-                                        achievementDesc += '<div id="achievement-container">'
-                                        achievementDesc += goalTextsText
-                                        achievementDesc += '</div>'
-
-                                        //using public domain - localhost makes FB-like component not load since localhost is not registered as a Treehouse app domain
-                                        /*var achLink = "http://treehouse.io/achievement?achievementId=" + currentAchievement._id + "&userId=" + achiever._id
-
-                                        var encodedAchLink = encodeURIComponent(achLink)
-                                        achievementDesc += '<div id="sharer-container"></div><div id="compare-container"></div>'
-                                        achievementDesc += '<div id="appcontainerSocial" class="publicWrap"><div id="fbLike" style="overflow: visible">'
-
-                                        achievementDesc +='<iframe width="95" src="//www.facebook.com/plugins/like.php?href=' + encodedAchLink + '&amp;width&amp;layout=button_count&amp;locale=en_US&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=80&amp;appId=480961688595420" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:80px;" allowTransparency="true"></iframe>'
-
-                                        achievementDesc += '</div><div id="fbShare"><a onclick="fbShare(\''+ encodeURIComponent(currentAchievement.title) + '\', \'' +  achLink +'\', \'' + currentAchievement.imageURL + '\')" href="javascript:void(0)"><span><img src="content/img/f-icon.png"><p>Share</p></span></a>'
-                                        achievementDesc += '</div>'
-                                        achievementDesc += '<div id="tweetAchievement" style="overflow:visible;">'
-                                        achievementDesc += '<a href="https://twitter.com/share?url=' + encodedAchLink + '&text=' + currentAchievement.title + '" class="twitter-share-button">Tweet</a>'
-                                        achievementDesc +='<script type="text/javascript">(function() {var s = document.createElement("SCRIPT");var c = document.getElementsByTagName("script")[0];s.type = "text/javascript";s.async = true;s.src = "http://platform.twitter.com/widgets.js";c.parentNode.insertBefore(s, c);})();</script>'
-
-                                        */
-                                        achievementDesc += '</div><div class="clear"> </div></div></div>'
-                                        response.write(JSON.stringify(achievementDesc))
-                                        response.end('\n', 'utf-8')
-                                    }
-                                })
+             currentAchievement.goals.forEach(function(goal) {
+                if (err) {
+                    console.log("error in app.js: couldn't find goals for achievement " + currentAchievement._id + ", " + err)
+                } else {
+                    goalTexts.push(getIssuedGoalText(goal, currentAchievement, goalTexts.length + 1 == currentAchievement.goals.length))
+                    if (goalTexts.length == currentAchievement.goals.length) {
+                        var goalTextsText = ""
+                        var goalsGoneThrough = 0
+                        goalTexts.forEach(function(goalText) {
+                            goalTextsText += goalText
+                            goalsGoneThrough++
+                            if (goalsGoneThrough === goalTexts.length) {
+                                achievementDesc += '<div class="achievement-info"><div id="userarea"><img src="' + creatorImageURL + '" /><p id="creator">' + currentAchievement.issuerName + '</p></div> '
+                                achievementDesc += '<div class="actionmenu"><ul><li><a href="javascript:void(0)" onclick="acceptIssuedAchievement(\'' + currentAchievementId + '\')"><img src="content/img/challengeaccepted.png" alt="challenge accepted" /></a></li><li class=""></li></ul></div>'
+                                achievementDesc += '<div class="separerare"> </div>'
+                                    +'<div class="textarea"><h2>'
+                                    + currentAchievement.title
+                                    + '</h2>'
+                                achievementDesc += '<p id="creator"> by ' + currentAchievement.issuerName  + '</p>'
+                                achievementDesc += '<p id="achievementDescription">'
+                                    + currentAchievement.description
+                                    + '</p>'
+                                    + '</div>'
+                                    + '<div class="imagearea"><img '
+                                achievementDesc += 'src="'
+                                    + currentAchievement.imageURL
+                                    +'" alt="'
+                                    +  currentAchievement.createdBy + ": " + currentAchievement.title
+                                    + '"/><span class="gradient-bg"></span><span class="progressbar"></span><div id="progressbar" class="progress-container"><span id="mainProgress" class="progress" style="width:0%;"></span></div>'
+                                achievementDesc += '</div><div class="clear"></div>'
+                                achievementDesc += '<div id="achievementTabs"><a style="color:black" href="javascript:void(0)" onclick="progressTab()"><span id="progressTab">Goals</span></a><div class="clear"></div></div>'
+                                achievementDesc += '<div id="achievement-container">'
+                                achievementDesc += goalTextsText
+                                achievementDesc += '</div>'
+                                //using public domain - localhost makes FB-like component not load since localhost is not registered as a Treehouse app domain
+                                /*var achLink = "http://www.treehouse.io/achievement?achievementId=" + currentAchievement._id + "&userId=" + achiever._id
+                                var encodedAchLink = encodeURIComponent(achLink)
+                                achievementDesc += '<div id="sharer-container"></div><div id="compare-container"></div>'
+                                achievementDesc += '<div id="appcontainerSocial" class="publicWrap"><div id="fbLike" style="overflow: visible">'
+                                achievementDesc +='<iframe width="95" src="//www.facebook.com/plugins/like.php?href=' + encodedAchLink + '&amp;width&amp;layout=button_count&amp;locale=en_US&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=80&amp;appId=480961688595420" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:80px;" allowTransparency="true"></iframe>'
+                                achievementDesc += '</div><div id="fbShare"><a onclick="fbShare(\''+ encodeURIComponent(currentAchievement.title) + '\', \'' +  achLink +'\', \'' + currentAchievement.imageURL + '\')" href="javascript:void(0)"><span><img src="content/img/f-icon.png"><p>Share</p></span></a>'
+                                achievementDesc += '</div>'
+                                achievementDesc += '<div id="tweetAchievement" style="overflow:visible;">'
+                                achievementDesc += '<a href="https://twitter.com/share?url=' + encodedAchLink + '&text=' + currentAchievement.title + '" class="twitter-share-button">Tweet</a>'
+                                achievementDesc +='<script type="text/javascript">(function() {var s = document.createElement("SCRIPT");var c = document.getElementsByTagName("script")[0];s.type = "text/javascript";s.async = true;s.src = "http://platform.twitter.com/widgets.js";c.parentNode.insertBefore(s, c);})();</script>'
+                                */
+                                achievementDesc += '</div><div class="clear"> </div></div></div>'
+                                response.write(JSON.stringify(achievementDesc))
+                                response.end('\n', 'utf-8')
                             }
-                        }
-                    })
-               // })
-            //})
+                        })
+                    }
+                }
+            })
         })
     })
 }
@@ -1384,7 +1343,6 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                                                             achievementDesc += '<li id="publicizeButton"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
                                                         }
                                                         achievementDesc += '<li id="deleteButton" class="rightalign"><a href="javascript:void(0)" onclick="deleteAchievement(\'' + achiever._id + '\')"><img src="content/img/delete.png" /></a></li>'
-                                                        //if (myPercentageFinished == 0 && !isAchievementShared &&!myProgress.publiclyVisible) {
                                                         if (myPercentageFinished == 0 && !isAchievementShared) {
                                                             achievementDesc += '<li id="editButton" class="rightalign"><a href="javascript:void(0)" onclick="editAchievement(\'' + achiever._id + '\')"><img src="content/img/edit.png" /></a></li>'
                                                         }
@@ -1426,7 +1384,7 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                                                     achievementDesc += '</div>'
 
                                                     //using public domain - localhost makes FB-like component not load since localhost is not registered as a Treehouse app domain
-                                                    var achLink = "http://treehouse.io/achievement?achievementId=" + currentAchievement._id + "&userId=" + achiever._id
+                                                    var achLink = "http://www.treehouse.io/achievement?achievementId=" + currentAchievement._id + "&userId=" + achiever._id
 
                                                     var encodedAchLink = encodeURIComponent(achLink)
                                                     achievementDesc += '<div id="sharer-container"></div><div id="compare-container"></div>'

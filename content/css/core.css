@@ -20,13 +20,166 @@ body{
     background-color: #ffffff;
 }
 
-
 #page,
 #page-login{
     position: relative;
     margin: 20px auto;
     width: 1060px;
 }
+
+/* pre inloggningsidan */
+
+.preLogin{
+    background-color: #fff;
+}
+
+.preLogin .logo{
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #e5f0dc;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.preLogin .content{
+    width: 1060px;
+    margin: 50px auto;
+}
+
+.preLogin h1{
+    font: 20px Verdana;
+    font-weight: bold;
+    color: #535353;
+}
+
+.preLogin h2{
+    font: 20px Verdana;
+    font-weight: bold;
+    text-transform: none;
+    color: #535353;
+}
+
+.preLogin p{
+    font-family: Verdana;
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: normal;
+    padding-top: 10px;
+    color: #6f7c82;
+}
+
+.preLogin .examplesWrap p{
+    line-height: 17px;
+}
+
+.preLogin .examplesWrap{
+    background-color: #ffbbbb;
+}
+
+.preLogin .examplesWrap ul li{
+    float: left;
+    width: 20%;
+    text-align: center;
+}
+
+.preLogin .examplesWrap ul li a{
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    min-height: 280px;
+    width: 100%;
+    display: block;
+    color: #474444;
+    padding: 20px 20px 0px 20px;
+    border: 1px solid #e8e8e8;
+    border-right: 0px;
+    background: #ffffff;
+    background: -moz-linear-gradient(top, #ffffff 0%, #f1efef 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f1efef));
+    background: -webkit-linear-gradient(top, #ffffff 0%,#f1efef 100%);
+    background: -o-linear-gradient(top, #ffffff 0%,#f1efef 100%);
+    background: -ms-linear-gradient(top, #ffffff 0%,#f1efef 100%);
+    background: linear-gradient(to bottom, #ffffff 0%,#f1efef 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f1efef',GradientType=0 );
+    -webkit-transition: background-color 200ms ease;
+    -moz-transition: background-color 200ms ease;
+    -o-transition: background-color 200ms ease;
+    -ms-transition: background-color 200ms ease;
+    transition: background-color 200ms ease;
+    text-decoration: none;
+}
+
+.preLogin .examplesWrap ul li:last-child a{
+    border-right: 1px solid #e8e8e8;
+}
+
+.preLogin .examplesWrap ul li a:hover{
+    background-image: none;
+    background-color: #f1efef;
+}
+
+.preLogin .examplesWrap h2{
+    font-family: Verdana;
+    font-size: 15px;
+    font-weight: normal;
+    padding-top: 5px;
+    color: #474444;
+}
+
+.preLogin .to-login-button{
+   text-align: center;
+   margin: 40px 0px 80px 0px;
+}
+
+
+.preLogin .to-login-button span{
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
+    background: #53cc48; /* Old browsers */
+    background: -moz-linear-gradient(top,  #53cc48 0%, #289522 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#53cc48), color-stop(100%,#289522)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #53cc48 0%,#289522 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #53cc48 0%,#289522 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #53cc48 0%,#289522 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #53cc48 0%,#289522 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#53cc48', endColorstr='#289522',GradientType=0 ); /* IE6-9 */
+
+    padding: 10px 20px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+}
+
+.preLogin .to-login-button a{
+    color: #ffffff;
+}
+
+
+.preLogin .to-login-button span:hover{
+    background-image: none;
+    background-color: #289522;
+}
+
+.fiftywidth{
+    width: 50%;
+    float: left;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
+}
+
+.fiftywidth:nth-child(1){
+    padding-right: 15px;
+}
+
+.fiftywidth:nth-child(2){
+    padding-left: 15px;
+}
+
+/**/
 
 #fbLikeWeb {
     padding-top: 20px;
@@ -1766,6 +1919,11 @@ span.successMessage{
 
 
 @media screen and (max-width: 1080px) {
+
+    .preLogin .content{
+        width: 95%;
+    }
+
     #page,
     #page-login{
         width: 95%;
@@ -1774,6 +1932,12 @@ span.successMessage{
 
 
 @media screen and (max-width: 1000px) {
+
+    .preLogin .examplesWrap ul li{
+
+        width: 33%;
+    }
+
 
     #menu{
         bottom: -2px;
@@ -1829,8 +1993,6 @@ span.successMessage{
         -moz-box-shadow: inset 0px 0px 10px rgba(0,0,0,0.75);
         -webkit-box-shadow: inset 0px 0px 10px rgba(0,0,0,0.75);
         box-shadow: inset 0px 0px 10px rgba(0,0,0,0.75);
-
-
     }
 
     #page-login{
@@ -1843,10 +2005,7 @@ span.successMessage{
         background: -ms-radial-gradient(center, ellipse cover,  #767472 5%,#21201f 100%); /* IE10+ */
         background: radial-gradient(ellipse at center,  #767472 5%,#21201f 100%); /* W3C */
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#767472', endColorstr='#21201f',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
     }
-
-
 
 
     #app-container,
@@ -1857,14 +2016,11 @@ span.successMessage{
         -webkit-box-shadow: none;
         box-shadow: none;
         overflow: inherit;
-
     }
-
 
     html,body{height:100%;}
 
     html>body #page{height:auto; min-height:100%;}
-
 
     #main-container{
         padding-left: 0%;
@@ -1886,10 +2042,7 @@ span.successMessage{
         -webkit-border-radius: 0px;
         border-radius: 0px;
         right: 0%;
-
     }
-
-
 
     .web-wrap,
     #web-menu{
@@ -1938,8 +2091,28 @@ span.successMessage{
     }
 }
 
+@media screen and (max-width: 580px) {
+    .preLogin .examplesWrap ul li{
+        width: 50%;
+    }
+}
+
 
 @media screen and (max-width: 400px) {
+    .preLogin .examplesWrap ul li{
+        width: 100%;
+    }
+
+    .fiftywidth{
+        width: 100%;
+    }
+
+    .fiftywidth:nth-child(1){
+        padding: 0px;
+    }
+    .fiftywidth:nth-child(2){
+        padding: 0px;
+    }
 
     .banner{
         display: none;
