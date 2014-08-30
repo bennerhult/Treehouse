@@ -5,7 +5,8 @@ var fs = require('fs'),
     connectmongo = require('connect-mongo'),
     _ = require("underscore")._,
     email   = require('emailjs'),
-    mongoose = require('mongoose')
+    mongoose = require('mongoose'),
+    thSettings = require('./code/thSettings.js');
 
 var db_uri = 'mongodb://localhost:27017/test'
 var domain = ''
@@ -31,6 +32,7 @@ if (typeof String.prototype.startsWith != 'function') {
 app.configure('development', function() {
     domain = 'http://localhost:1337/'
     console.log("Treehouse in development mode.")
+    thSettings.init('development');
 })
 
 app.configure('production', function() {
@@ -38,8 +40,8 @@ app.configure('production', function() {
     console.log("Treehouse in prod mode.")
     //noinspection JSUnresolvedVariable
     db_uri=process.env.DB_URI
+    thSettings.init('production');
 })
-
 
 mongoose.connect(db_uri)
 
@@ -66,7 +68,7 @@ var user = require('./models/user.js'),
     friendship = require('./models/friendship.js'),
     shareholding = require('./models/shareholding.js'),
     loginToken = require('./models/loginToken.js'),
-    requestHandlers = require('./code/requestHandlers.js'),
+    requestHandlers = require('./code/requestHandlers.js')(thSettings),
     newsfeed = require('./models/newsfeed.js'),
     staticFiles = require('./code/staticFiles.js')
 
