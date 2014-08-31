@@ -39,16 +39,12 @@ function checkUser() {
         if (username.match(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i)) {
             checkUserOnServer(username,
                 function(data) {
-                    if(data.isNewUser) {
-                        if (data.isNewUser === false) {
-                            $("#emailForm").html('We just sent you the old Treehouse email. Fetch email. Click link!')
-                        } else {
-                            $("#emailForm").html('We just sent you an email. Therein lies a link. Click it and you shall enter!')
-                        }
-                    } else if(data.url) {
+                    if(data.url) {
                         document.location = data.url;
+                    } else if(data.isNewUser) {
+                        $("#emailForm").html('We just sent you an email. Therein lies a link. Click it and you shall enter!')
                     } else {
-                        //TODO: Log this error
+                        $("#emailForm").html('We just sent you the old Treehouse email. Fetch email. Click link!')
                     }
                 }
             )
