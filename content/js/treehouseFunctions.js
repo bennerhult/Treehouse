@@ -302,12 +302,30 @@ function confirmAchievement(achievementId, userId) {
     })
 }
 
+function acceptIssuedAchievement(achievementId, userId) {
+    acceptIssuedAchievementOnServer(achievementId, userId, function(title) {
+        openAchievement(achievementId, userId, false, title)
+    })
+}
+
+
 function ignoreAchievement(achievementId, userId) {
     ignoreAchievementOnServer(achievementId, userId, function() {
         openAchievements(false, userId, false)
     })
 }
 
+function acceptIssuedAchievementOnServer(achievementId, userId, callback) {
+    var data = "achievementId=" + achievementId + "&userId=" + userId
+    $.ajax("/acceptIssuedAchievement", {
+        type: "GET",
+        data: data,
+        dataType: "json",
+        statusCode: {
+            200: function(name) { callback(name) }
+        }
+    })
+}
 
 function confirmAchievementOnServer(achievementId, userId, callback) {
     var data = "achievementId=" + achievementId + "&userId=" + userId

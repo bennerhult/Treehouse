@@ -835,6 +835,14 @@ app.get('/confirmAchievement', function(request, response){
     })
 })
 
+app.get('/acceptIssuedAchievement', function(request, response){
+    shareholding.confirmShareHolding(request.query.achievementId, request.query.userId, function(title) {
+        response.writeHead(200, {'content-type': 'application/json' })
+        response.write(JSON.stringify(title))
+        response.end('\n', 'utf-8')
+    })
+})
+
 app.get('/newsfeed', function(request, response){
     var userId
     if (request.session.currentUser) {
@@ -1192,7 +1200,7 @@ function showIssuedAchievementPage(request, response) {
                             goalsGoneThrough++
                             if (goalsGoneThrough === goalTexts.length) {
                                 achievementDesc += '<div class="achievement-info"><div id="userarea"><img src="' + creatorImageURL + '" /><p id="creator">' + currentAchievement.issuerName + '</p></div> '
-                                achievementDesc += '<div class="actionmenu"><ul><li><a href="javascript:void(0)" onclick="acceptIssuedAchievement(\'' + currentAchievementId + '\')"><img src="content/img/challengeaccepted.png" alt="challenge accepted" /></a></li><li class=""></li></ul></div>'
+                                achievementDesc += '<div class="actionmenu"><ul><li><a href="javascript:void(0)" onclick="acceptIssuedAchievement(\'' + currentAchievementId + '\', \'' + request.session.currentUser._id + '\')"><img src="content/img/challengeaccepted.png" alt="challenge accepted" /></a></li><li class=""></li></ul></div>'
                                 achievementDesc += '<div class="separerare"> </div>'
                                     +'<div class="textarea"><h2>'
                                     + currentAchievement.title
