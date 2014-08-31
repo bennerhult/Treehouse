@@ -334,7 +334,8 @@ function getDataForUser(myUser, request, response) {
     request.session.currentUser = myUser
     loginToken.createToken(myUser.username, function(myToken) {
         response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-        writeDefaultPage(request, response)
+        //writeDefaultPage(request, response)
+        return("ok")
     })
 }
 
