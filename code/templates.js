@@ -8,7 +8,8 @@ module.exports = function (thSettings) {
     cache = dict();
 
     function readFileCached(fileName, options, callback) {
-        if(thSettings.isProduction() && cache.has(fileName)) {
+        //if(thSettings.isProduction() && cache.has(fileName)) { //cache disabled while debugging
+        if(false && cache.has(fileName)) {
             callback(cache.get(fileName));
         } else {
             fs.readFile(fileName, options, function (err, templateText) {
