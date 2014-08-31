@@ -5,7 +5,8 @@ var fs = require('fs'),
     connectmongo = require('connect-mongo'),
     _ = require("underscore")._,
     email   = require('emailjs'),
-    mongoose = require('mongoose')
+    mongoose = require('mongoose'),
+    thSettings = require('./code/thSettings.js');
 
 var db_uri = 'mongodb://localhost:27017/test'
 var domain = ''
@@ -31,6 +32,10 @@ if (typeof String.prototype.startsWith != 'function') {
 app.configure('development', function() {
     domain = 'http://localhost:1337/'
     console.log("Treehouse in development mode.")
+    thSettings.init({
+        envName : 'development',
+        autoLogin : process.env.TH_AUTOLOGIN && process.env.TH_AUTOLOGIN.toLowerCase() === 'true'
+    });
 })
 
 app.configure('production', function() {
@@ -38,8 +43,8 @@ app.configure('production', function() {
     console.log("Treehouse in prod mode.")
     //noinspection JSUnresolvedVariable
     db_uri=process.env.DB_URI
+    thSettings.init({ envName : 'production' });
 })
-
 
 mongoose.connect(db_uri)
 
@@ -66,7 +71,7 @@ var user = require('./models/user.js'),
     friendship = require('./models/friendship.js'),
     shareholding = require('./models/shareholding.js'),
     loginToken = require('./models/loginToken.js'),
-    requestHandlers = require('./code/requestHandlers.js'),
+    requestHandlers = require('./code/requestHandlers.js')(thSettings),
     newsfeed = require('./models/newsfeed.js'),
     staticFiles = require('./code/staticFiles.js')
 
@@ -253,38 +258,59 @@ function signin(request, response) {
 }
 
 app.get('/checkUser', function(request, response){
-    var username = request.query.username.toLowerCase()
+    var username = request.query.username.toLowerCase();
 
-    user.User.findOne({ username: username }, function(err,myUser) {
-        if (myUser) {
-            loginToken.createToken(myUser.username, function(myToken) {
+    user.User.findOne({ username: username }, function(err, myUser) {
+        var normalizedUsername = username;
+        if(myUser) {
+            normalizedUsername = myUser.username;
+        }
+
+        function createSignupLink(token) {
+            return domain + "signin?email=" + normalizedUsername + "&token=" + token
+        }
+
+        var onTokenCreated;
+        if(thSettings.isAutoLoginEnabled()) {
+            //Local testing - skip email and redirect to signup link directly
+            onTokenCreated = function (myToken) {
+                 response.writeHead(200, {'content-type': 'application/json' })
+                 response.write(JSON.stringify({ url : createSignupLink(myToken.token) }))
+                 response.end('\n', 'utf-8')
+            };
+        } else if (myUser) {
+            //Existing user
+            onTokenCreated = function (myToken) {
                 emailUser(
                     username,
                     'Sign in to Treehouse',
-                    "<html>Click <a href='" + domain + "signin?email=" + username + "&token=" + myToken.token + "'>here</a> to sign in to Treehouse.</html>",
-                    'Go to ' + domain + 'signin?email=' + username + '&token=' + myToken.token +  ' to sign in to Treehouse!',
+                    "<html>Click <a href='" + createSignupLink(myToken.token) + "'>here</a> to sign in to Treehouse.</html>",
+                    'Go to ' + createSignupLink(myToken.token) +  ' to sign in to Treehouse!',
                      function() {
                          response.writeHead(200, {'content-type': 'application/json' })
-                         response.write(JSON.stringify(myToken.token))
+                         response.write(JSON.stringify({ isNewUser : false }))
                          response.end('\n', 'utf-8')
                      }
                 )
-            })
+            };
         } else {
-            loginToken.createToken(username, function(myToken) {
+            //New user
+            onTokenCreated = function (myToken) {
                 emailUser(
                     username,
                     'Welcome  to Treehouse',
-                    "<html>Click <a href='" + domain + "signup?email=" + username + "&token=" + myToken.token + "'>here</a> to start using Treehouse.</html>",
-                    'Go to ' + domain + 'signup?email=' + username + '&token=' + myToken.token + ' to start using Treehouse!',
+                    "<html>Click <a href='" + createSignupLink(myToken.token) + "'>here</a> to start using Treehouse.</html>",
+                    'Go to ' + createSignupLink(myToken.token) + ' to start using Treehouse!',
                     function() {
-                        response.writeHead(201, {'content-type': 'application/json' })
-                        response.write(JSON.stringify(myToken.token))
+                        response.writeHead(200, {'content-type': 'application/json' })
+                        response.write(JSON.stringify({ isNewUser : true }))
                         response.end('\n', 'utf-8')
                     }
                 )
-            })
+            };
         }
+
+        loginToken.createToken(normalizedUsername, onTokenCreated);
     })
 })
 

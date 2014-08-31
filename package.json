@@ -12,7 +12,9 @@
         "underscore": "1.6.0",
         "emailjs": "0.3.6",
         "request": "2.34.0",
-        "moment": "2.5.1"
+        "moment": "2.5.1",
+        "dict":"~1.4.0",
+        "mustache":"~0.8.2"
     },
     "repository" : {
         "type" : "git",
