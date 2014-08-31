@@ -111,6 +111,16 @@ See available versions for Node and NPM
 ##  Facebook admin
 [App admin page] (https://developers.facebook.com/apps/480961688595420/)
 
+##Skip login email in development
+Create a file in the same folder as app.js called run.bat (it's in .gitignore) with this content:
+
+    SET TH_AUTOLOGIN=true
+    node app.js
+
+This will cause the server to send back the login link to the browser which will redirect the user directly there instead of sending an email. This setting only works in devlopment mode and you may need to clear the browser cache for this to work.
+
+
+
 ##The missing manual
 [jQuery Mobile](http://jquerymobile.com/)
 

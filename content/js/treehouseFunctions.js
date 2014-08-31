@@ -38,11 +38,17 @@ function checkUser() {
     if (username) {
         if (username.match(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i)) {
             checkUserOnServer(username,
-                function(data, existingUser) {
-                    if (existingUser) {
-                        $("#emailForm").html('We just sent you the old Treehouse email. Fetch email. Click link!')
+                function(data) {
+                    if(data.isNewUser) {
+                        if (data.isNewUser === false) {
+                            $("#emailForm").html('We just sent you the old Treehouse email. Fetch email. Click link!')
+                        } else {
+                            $("#emailForm").html('We just sent you an email. Therein lies a link. Click it and you shall enter!')
+                        }
+                    } else if(data.url) {
+                        document.location = data.url;
                     } else {
-                        $("#emailForm").html('We just sent you an email. Therein lies a link. Click it and you shall enter!')
+                        //TODO: Log this error
                     }
                 }
             )
@@ -56,13 +62,13 @@ function checkUser() {
 
 function checkUserOnServer(username, callback) {
     var data = "username=" + username
-    $.ajax("/checkUser", {     
+    $.ajax("/checkUser", {
         type: "GET",
         data: data,
         dataType: "json",
         statusCode: {
-            200: function(returnData) { callback(returnData, true) },
-            201: function(returnData) { callback(returnData , false) }
+            200: function(returnData) { callback(returnData) },
+            201: function(returnData) { callback(returnData) } //Legacy handler to prevent caching problems
         }
     })
 }

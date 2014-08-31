@@ -1,8 +1,15 @@
 module.exports = (function () {
-    var environmentName;
+    'use strict';
 
-    function init(envName) {
-        environmentName = envName;
+    var environmentName;
+    var autoLogin; //When this is true the server redirects directly to the signup link instead of emailing it to the user. Has no effect in production even if set.
+
+    function init(options) {
+        if(!options) {
+            options = {};
+        }
+        environmentName = options.envName;
+        autoLogin = options.autoLogin;
     }
 
     function explodeIfNotInitialized() {
@@ -21,9 +28,19 @@ module.exports = (function () {
         return environmentName && environmentName.toLowerCase() !== 'production';
     }
 
+    function isAutoLoginEnabled() {
+        explodeIfNotInitialized();
+        if(isDevelopment()) {
+            return autoLogin && autoLogin === true;
+        } else {
+            return false;
+        }
+    }
+
     return {
         init : init,
         isDevelopment : isDevelopment,
-        isProduction : isProduction
+        isProduction : isProduction,
+        isAutoLoginEnabled : isAutoLoginEnabled
     };
 }());
