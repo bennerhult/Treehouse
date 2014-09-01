@@ -174,7 +174,14 @@ function showSignin(message) {
     $("#app-container").attr("id","app-container-login");
 
     insertContent(getLoginContent(), setEmptyMenu(), function() {
-        $("#message").html(message)
+        $("#message").html(message);
+        try {
+            if(localStorage && localStorage.th_autologin_email) {
+                $('input[name=username]').val(localStorage.th_autologin_email);
+                $('#loginBtn').click();
+            }
+        } catch(err) {
+        }
     })
 }
 
@@ -225,7 +232,7 @@ function getLoginContent() {
                 '<div id="emailForm">' +
                 '<form action="javascript: checkUser()">' +
                 '<input type="text" class="formstyle" name="username" placeholder="email"">' +
-                '<input type="submit" class="button green" value="Sign in / Sign up">' +
+                '<input id="loginBtn" type="submit" class="button green" value="Sign in / Sign up">' +
                 '<div id="message"></div>' +
                 '</form>' +
                 '</div>'
