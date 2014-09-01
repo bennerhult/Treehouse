@@ -94,22 +94,8 @@ See available versions for Node and NPM
 ####Simulate production environment
 `set NODE_ENV=production` (`set NODE_ENV=development` to restore)
 
-
-##newsfeedQueuer
-
 ####Set this once to get it to find your database locally
 `set DB_URI=mongodb://localhost:27017/test`
-
-####To run it locally
- `cd c://th`
-
- `node newsfeedQueuer.js`
-
-####administrate scheduling on Heroku
-[Heroku scheduler] (https://scheduler.heroku.com/dashboard)
-
-##  Facebook admin
-[App admin page] (https://developers.facebook.com/apps/480961688595420/)
 
 ##Skip login email in development
 Create a file in the same folder as app.js called run.bat (it's in .gitignore) with this content:
@@ -121,6 +107,18 @@ This will cause the server to send back the login link to the browser which will
 
 To get all the way to zero click login, add a setting in localstorage called 'th_autologin_email' and put your email in there. All this does is have the email be autotyped in the email field and then simulates a click on the login button.
 
+##newsfeedQueuer
+
+####To run it locally
+ `cd c://th`
+
+ `node newsfeedQueuer.js`
+
+####administrate scheduling on Heroku
+[Heroku scheduler] (https://scheduler.heroku.com/dashboard)
+
+##  Facebook admin
+[App admin page] (https://developers.facebook.com/apps/480961688595420/)
 
 ##The missing manual
 [jQuery Mobile](http://jquerymobile.com/)
