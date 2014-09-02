@@ -3,3 +3,4 @@ node_modules
 resources
 *.bat
 .brackets.json
+**/Thumbs.db
