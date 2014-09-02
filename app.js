@@ -162,7 +162,11 @@ app.get('/treehouse.manifest', function(request, response){
 })
 
 app.get('/robots.txt', function(request, response){
-    staticFiles.serve("." + request.url, response)
+    if(thSettings.isTest()) {
+        staticFiles.serve("./test-robots.txt", response)
+    } else {
+        staticFiles.serve("." + request.url, response)
+    }
 })
 
 app.get('/sitemap.xml', function(request, response){

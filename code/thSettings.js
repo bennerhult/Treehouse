@@ -25,7 +25,12 @@ module.exports = (function () {
 
     function isDevelopment() {
         explodeIfNotInitialized();
-        return environmentName && environmentName.toLowerCase() !== 'production';
+        return environmentName && environmentName.toLowerCase() === 'development';
+    }
+
+    function isTest() {
+        explodeIfNotInitialized();
+        return environmentName && environmentName.toLowerCase() === 'test';
     }
 
     function isAutoLoginEnabled() {
@@ -41,6 +46,7 @@ module.exports = (function () {
         init : init,
         isDevelopment : isDevelopment,
         isProduction : isProduction,
+        isTest : isTest,
         isAutoLoginEnabled : isAutoLoginEnabled
     };
 }());
