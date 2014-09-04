@@ -1399,11 +1399,13 @@ function writeAchievementPage(response, achiever, currentAchievement, userId, is
                                                         }
                                                         achievementDesc += '</ul></div>'
                                                     }
-                                                    achievementDesc += '<div class="separerare"> </div>'
-                                                        +'<div class="textarea"><h2>'
-                                                        + currentAchievement.title
-                                                        + '</h2>'
-                                                    if (currentAchievement.createdBy != userId){
+                                                    achievementDesc += '<div class="separerare"> </div><div class="textarea"><h2>'
+
+                                                    if (currentAchievement.issuedAchievement) {
+                                                        achievementDesc += currentAchievement.issuerName  + ': '
+                                                    }
+                                                    achievementDesc += currentAchievement.title + '</h2>'
+                                                    if (currentAchievement.createdBy != userId &&  !currentAchievement.issuedAchievement) {
                                                         achievementDesc += '<p id="creator"> by ' + creatorName  + '</p>'
                                                     }
                                                     achievementDesc += '<p id="achievementDescription">'
