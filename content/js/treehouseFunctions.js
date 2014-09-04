@@ -1208,7 +1208,7 @@ function editAchievementOnServer(callback) {
 function deleteAchievement(achieverId) {
     deleteAchievementOnServer(
         function(data) {
-            if (data == "ok") {
+            if (data === "ok") {
                 openAchievements(false, achieverId, false)
             } else {
                 var inkblob = {url: data, mimetype: 'data:image/png;base64', isWriteable: true};
