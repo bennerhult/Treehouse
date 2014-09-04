@@ -1,4 +1,4 @@
-module.exports = function (thSettings) {
+module.exports = function (thSettings, user) {
     'use strict';
 
     var nl = '\n'
@@ -45,9 +45,44 @@ module.exports = function (thSettings) {
             context);
     }
 
+    function writeDefaultPage(request, response) {
+        if (request.session.currentUser) {
+            indexPage(response, request.session.currentUser._id, request.session.nrOfFriendShipRequests)
+        }   else {
+            indexPage(response, null, 0)
+        }
+    }
+
+    function getPrettyNameIdAndImageURL(id, callback) {
+        user.getPrettyNameAndImageURL(id, function(prettyName, imageURL) {
+            callback(prettyName, id, imageURL)
+        })
+    }
+
+    function loadUser(request, response, next) {
+        if (request.session.currentUser) {
+            user.User.findById(request.session.currentUser._id, function(err, user) {
+                if (user) {
+                    next()
+                } else {
+                    response.writeHead(200, {'content-type': 'application/json' })
+                    response.write(JSON.stringify(err.message))
+                    response.end('\n', 'utf-8')
+                }
+            })
+        } else {
+            response.writeHead(200, {'content-type': 'application/json' })
+            response.write(JSON.stringify("logged out 2"))
+            response.end('\n', 'utf-8')
+        }
+    }
+
     return {
         indexPage : indexPage,
-        publicAchievementPage : publicAchievementPage
+        publicAchievementPage : publicAchievementPage,
+        writeDefaultPage : writeDefaultPage,
+        getPrettyNameIdAndImageURL : getPrettyNameIdAndImageURL,
+        loadUser : loadUser
     };
 };
 

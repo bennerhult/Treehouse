@@ -4,3 +4,4 @@ resources
 *.bat
 .brackets.json
 **/Thumbs.db
+.jshintrc
