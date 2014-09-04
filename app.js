@@ -39,7 +39,7 @@ app.configure('development', function() {
 })
 
 app.configure('test', function() {
-    console.log("Treehouse in test mode (v1).")
+    console.log("Treehouse in test mode (v2).")
     if(!process.env.TH_DOMAIN) {
         throw "Missing environment variable TH_DOMAIN which is required in test. Should be the equilvalent of what is 'http://www.treehouse.io' in production";
     }
