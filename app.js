@@ -881,7 +881,7 @@ app.get('/confirmAchievement', function(request, response){
 })
 
 app.get('/acceptIssuedAchievement', function(request, response){
-    shareholding.confirmShareHolding(request.query.achievementId, request.query.userId, function(title) {
+    achievement.acceptIssuedAchievement(request.query.achievementId, request.query.userId, function(title) {
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(title))
         response.end('\n', 'utf-8')

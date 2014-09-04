@@ -22,6 +22,7 @@ module.exports = {
     Achievement: Achievement,
     createAchievement: createAchievement,
     createIssuedAchievement: createIssuedAchievement,
+    acceptIssuedAchievement: acceptIssuedAchievement,
     addGoalToAchievement: addGoalToAchievement,
     removeSharedPartOfAchievement: removeSharedPartOfAchievement,
     publicize: publicize,
@@ -51,6 +52,17 @@ function createIssuedAchievement(createdBy, title, description, imageURL, issuer
     achievement.issuedAchievement = true
     achievement.issuerName = issuerName
     return achievement
+}
+
+function acceptIssuedAchievement(achievement_id, achiever_id, callback) {
+    Achievement.findOne({ _id: achievement_id }, function(err,currentAchievement) {
+        currentAchievement.goals.forEach(function(goal, index) {
+            progress.createAndSaveProgress(achiever_id, achievement_id, goal._id)
+            if (index == currentAchievement.goals.length -1)  {
+                callback(currentAchievement.title)
+            }
+        })
+    })
 }
 
 function addGoalToAchievement(goal, achievement, userId, callback) {
