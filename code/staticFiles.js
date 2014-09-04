@@ -6,7 +6,6 @@ var nextweek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+7
 var nextWeekUTC = nextweek.toUTCString()
 
 function serveFile(fpath, response) {
-    console.log(fpath)
     fs.exists(fpath, function(exists) {
         if (exists) {
             fs.readFile(fpath, function (error, content) {
