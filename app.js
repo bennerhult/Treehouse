@@ -913,7 +913,7 @@ app.get('/latestAchievementSplash', function(request, response) {
     })
 })
 
-function createIssuedAchievementDesc(achievements, achieverId) {
+function createIssuedAchievementsDesc(achievements, achieverId) {
     var titleWithSingleQuotationsEscaped
     var title
     var achievementsList = ""
@@ -1052,7 +1052,7 @@ function getIssuedAchievements(request, response) {
                 goneThroughIssuedAchievements++
 
                 if (goneThroughIssuedAchievements === issuedAchievements.length) {
-                    issuedList += createIssuedAchievementDesc(issuedAchievements, request.session.userId)
+                    issuedList += createIssuedAchievementsDesc(issuedAchievements, request.session.userId)
                     response.writeHead(200, {'content-type': 'application/json' })
                     response.write(JSON.stringify(issuedList + "</p></div>"))
                     response.end('\n', 'utf-8')
