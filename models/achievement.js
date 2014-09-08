@@ -23,6 +23,7 @@ module.exports = {
     createAchievement: createAchievement,
     createIssuedAchievement: createIssuedAchievement,
     acceptIssuedAchievement: acceptIssuedAchievement,
+    userHasAcceptedAchievement: userHasAcceptedAchievement,
     addGoalToAchievement: addGoalToAchievement,
     removeSharedPartOfAchievement: removeSharedPartOfAchievement,
     publicize: publicize,
@@ -52,6 +53,16 @@ function createIssuedAchievement(createdBy, title, description, imageURL, issuer
     achievement.issuedAchievement = true
     achievement.issuerName = issuerName
     return achievement
+}
+
+function userHasAcceptedAchievement(achievement_id, achiever_id, callback) {
+    progress.Progress.findOne({ achievement_id: achievement_id, achiever_id: achiever_id}, function(err,currentAchievement) {
+        if (currentAchievement) {
+            callback(true)
+        } else {
+            callback(false)
+        }
+    })
 }
 
 function acceptIssuedAchievement(achievement_id, achiever_id, callback) {

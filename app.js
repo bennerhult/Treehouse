@@ -1042,6 +1042,7 @@ app.get('/achievements_issued', function(request, response){
 
 function getIssuedAchievements(request, response) {
     var issuedList = "<div class='achievement'><p>"
+    var issuedAchievementsToShow = new Array()
     var goneThroughIssuedAchievements = 0
     achievement.Achievement.find({ issuedAchievement: true}, {}, { sort: { 'createdDate' : -1 } }, function(err, issuedAchievements) {
         if (err) {
@@ -1049,14 +1050,25 @@ function getIssuedAchievements(request, response) {
         }
         if (issuedAchievements && issuedAchievements.length > 0) {
             issuedAchievements.forEach(function(currentAchievement) {
-                goneThroughIssuedAchievements++
+                achievement.userHasAcceptedAchievement(currentAchievement._id, request.session.currentUser._id, function(acceptedAlready) {
+                    goneThroughIssuedAchievements++
+                    if (!acceptedAlready) {
+                        issuedAchievementsToShow.push(currentAchievement)
+                    }
+                    if (goneThroughIssuedAchievements === issuedAchievements.length) {
+                        if(issuedAchievementsToShow.length > 0) {
+                            issuedList += createIssuedAchievementsDesc(issuedAchievementsToShow, request.session.userId)
+                            response.writeHead(200, {'content-type': 'application/json' })
+                            response.write(JSON.stringify(issuedList + "</p></div>"))
+                            response.end('\n', 'utf-8')
+                        } else {
+                            response.writeHead(200, {'content-type': 'application/json' })
+                            response.write(JSON.stringify(issuedList + "No new challenges found!</p></div>"))
+                            response.end('\n', 'utf-8')
+                        }
 
-                if (goneThroughIssuedAchievements === issuedAchievements.length) {
-                    issuedList += createIssuedAchievementsDesc(issuedAchievements, request.session.userId)
-                    response.writeHead(200, {'content-type': 'application/json' })
-                    response.write(JSON.stringify(issuedList + "</p></div>"))
-                    response.end('\n', 'utf-8')
-                }
+                    }
+                })
             })
         } else {
             response.writeHead(200, {'content-type': 'application/json' })
