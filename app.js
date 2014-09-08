@@ -175,18 +175,18 @@ app.get('/achievement', function(request, response) {
         }
     }
     progress.Progress.findOne({ achievement_id: currentAchievementId, achiever_id: userId }, function(err,currentProgress) {
-        if (currentProgress && (currentProgress.publiclyVisible || loggedin))    {
-            achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
+        achievement.Achievement.findOne({ _id: currentAchievementId }, function(err2,currentAchievement) {
+            if (currentProgress && (currentProgress.publiclyVisible || loggedin||currentAchievement.issuedAchievement))    {
                 request.session.current_achievement_id = currentAchievementId
                 var imageUrl = "" + currentAchievement.imageURL
                 if (!imageUrl.startsWith('https')) {
                     imageUrl = 'http://www.treehouse.io/' + imageUrl
                 }
                 requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, imageUrl, currentAchievement.title, currentProgress.publiclyVisible)
-            })
-        } else {
-            requestHandlers.writeDefaultPage(request, response)
-        }
+            } else {
+                requestHandlers.writeDefaultPage(request, response)
+            }
+        })
     })
 })
 
