@@ -138,6 +138,18 @@ app.get('/content/*', function(request, response){
     staticFiles.serve("." + request.url, response)
 })
 
+//********************************************
+//************** Register handlers ***********
+//********************************************
+if(!thSettings.isProduction()) {
+    var templates = require('./code/templates.js')(thSettings);
+    require('./code/preLoginPage.js')(app, templates, thSettings).registerHandlers();
+}
+
+//********************************************
+//********************************************
+//********************************************
+
 app.get('/treehouse.manifest', function(request, response){
     staticFiles.serve("." + request.url, response)
 })

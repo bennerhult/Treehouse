@@ -18,7 +18,19 @@ module.exports = function (thSettings) {
         });
     }
 
+    function serveHtmlFromTemplate(response, templateName, context) {
+        renderFile(
+            templateName,
+            context,
+            function (err, renderedPage) {
+                if(err) throw err;
+                response.writeHead(200, { 'Content-Type': 'text/html' })
+                response.end(renderedPage, 'utf-8')
+            });
+    }
+
     return {
-        renderFile : renderFile
+        renderFile : renderFile,
+        serveHtmlFromTemplate : serveHtmlFromTemplate
     };
 }
