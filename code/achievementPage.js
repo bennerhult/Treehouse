@@ -1,7 +1,7 @@
 module.exports = function (user, progress, moment, shareholding, achievement, url, requestHandlers) {
     'use strict';
 
-    function getGoalText(goal, achievement, progressNumber, latestUpdated, progressPercentage, publicView, lastGoal, isNotificationView) {
+    function getGoalText(goal, achievement, progressNumber, latestUpdated, progressPercentage, publicView, lastGoal, isNotificationView, achieverIsIssuer) {
         if (!latestUpdated) {
             latestUpdated = '<span id="latestUpdated' + goal._id +'"></span>'
         }  else {
@@ -29,7 +29,7 @@ module.exports = function (user, progress, moment, shareholding, achievement, ur
             + '</h3>'
             + '</td><td>'
         goalText    += '<div id="addbutton' + goal._id + '" class="addbutton">'
-        if (!isNotificationView && !publicView && progressPercentage < 100) {
+        if (!isNotificationView && !publicView && progressPercentage < 100 &&!achieverIsIssuer) {
             goalText    += '<a href="javascript:void(0)" onclick="progress(\'' + goal._id + '\', \'' +  goal.quantityTotal + '\')">'
                 + '<img src="content/img/+.png" alt="I did it!"/>'
                 + '</a>'
@@ -79,7 +79,7 @@ module.exports = function (user, progress, moment, shareholding, achievement, ur
                                         console.log("error in app.js 4: couldn't find progress for user " + achiever._id)
                                     } else {
                                         var goalPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100
-                                        goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, myProgress.latestUpdated, goalPercentageFinished, checkingOtherPersonsAchievement, goalTexts.length + 1 == currentAchievement.goals.length, isNotificationView))
+                                        goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, myProgress.latestUpdated, goalPercentageFinished, checkingOtherPersonsAchievement, goalTexts.length + 1 == currentAchievement.goals.length, isNotificationView, achiever.isIssuer))
                                         if (goalTexts.length === currentAchievement.goals.length) {
                                             var goalTextsText = ""
                                             var goalTextsGoneThrough = 0
@@ -128,7 +128,7 @@ module.exports = function (user, progress, moment, shareholding, achievement, ur
                                             console.log("error in app.js 6: couldn't find progress for user " + achiever._id + ", " + err)
                                         } else {
                                             var goalPercentageFinished = (myProgress.quantityFinished / goal.quantityTotal) * 100
-                                            goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, myProgress.latestUpdated ,goalPercentageFinished, checkingOtherPersonsAchievement, goalTexts.length + 1 == currentAchievement.goals.length, isNotificationView))
+                                            goalTexts.push(getGoalText(goal, currentAchievement, myProgress.quantityFinished, myProgress.latestUpdated ,goalPercentageFinished, checkingOtherPersonsAchievement, goalTexts.length + 1 == currentAchievement.goals.length, isNotificationView, achiever.isIssuer))
                                             if (goalTexts.length == currentAchievement.goals.length) {
                                                 var goalTextsText = ""
                                                 var goalsGoneThrough = 0
