@@ -184,7 +184,7 @@ module.exports = function (user, progress, moment, shareholding, achievement, ur
                                                         }
                                                         achievementDesc += '</div><div class="clear"></div>'
 
-                                                        if(!checkingOtherPersonsAchievement) {
+                                                        if(!checkingOtherPersonsAchievement && !achiever.isIssuer) {
                                                             achievementDesc += '<div id="achievementTabs"><a style="color:black" href="javascript:void(0)" onclick="progressTab()"><span id="progressTab">My progress</span></a><a style="color:black" href="javascript:void(0)" onclick="compareTab()"><span id="compareTab">Compare</span></a><a style="color:black" href="javascript:void(0)" onclick="shareTab()"><span id="shareTab">Share</span></a><div class="clear"></div></div>'
                                                         }
                                                         achievementDesc += '<div id="achievement-container">'
