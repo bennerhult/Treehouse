@@ -455,19 +455,24 @@ app.get('/setPrettyName', function(request, response){
     var userID
     if (request.query.user_id && request.query.user_id.length > 12) {
         userID = request.query.user_id
-    } else {
+    } else if (request.session.currentUser){
         //noinspection JSUnresolvedVariable
         userID = request.session.currentUser._id
     }
-
-    user.setPrettyName(userID , request.query.firstName, request.query.lastName, function(error) {
-        if (error) {
-            response.writeHead(404, {'content-type': 'application/json' })
-        } else {
-            response.writeHead(200, {'content-type': 'application/json' })
-        }
+    if (userID) {
+        user.setPrettyName(userID , request.query.firstName, request.query.lastName, function(error) {
+            if (error) {
+                response.writeHead(404, {'content-type': 'application/json' })
+            } else {
+                response.writeHead(200, {'content-type': 'application/json' })
+            }
+            response.end('\n', 'utf-8')
+        })
+    } else {
+        response.writeHead(500, {'content-type': 'application/json' })
         response.end('\n', 'utf-8')
-    })
+    }
+
 })
 
 
