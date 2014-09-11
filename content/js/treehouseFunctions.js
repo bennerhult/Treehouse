@@ -232,8 +232,13 @@ function findFriends() {
                         getUserFromServer(responseobject.id, function(friendInSpe) {
                             messageText = "<div class='messagewrap'><div class='leftcontainer'><img width='56' height='56' src='" + friendInSpe.imageURL + "' /></div>"
                             messageText +=   "<div class='rightcontainer'>"
-                            messageText += friend_email + ' found!<div class="linkactions"><span><a href="javascript:void(0)"" style="color: black" onclick="visitFriend(\'' + friendInSpe._id + '\', \'' + friendInSpe.firstName +  ' ' +  friendInSpe.lastName + '\')">Visit!</a></span>'
-                            messageText +=   "<span><a href='javascript:void(0)' style='color: black' onclick='addFriend(\"" + responseobject.id + "\")'>Add!</a></span></div>"
+                            if(!friendInSpe.isIssuer) {
+                                messageText += friend_email + ' found!<div class="linkactions"><span><a href="javascript:void(0)"" style="color: black" onclick="visitFriend(\'' + friendInSpe._id + '\', \'' + friendInSpe.firstName +  ' ' +  friendInSpe.lastName + '\')">Visit!</a></span>'
+                                messageText +=   "<span><a href='javascript:void(0)' style='color: black' onclick='addFriend(\"" + responseobject.id + "\")'>Add!</a></span></div>"
+
+                            } else {
+                                messageText += friend_email + ' is an issuer and can not be added as a friend.'
+                            }
                             messageText +=   "</div><div class='clear'></div></div>"
                             $("#message").html(messageText)
                         })
