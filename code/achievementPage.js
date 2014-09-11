@@ -58,8 +58,7 @@ module.exports = function (user, progress, moment, shareholding, achievement, ur
         }  else {
             achievementUser_id = achiever._id
         }
-        //if(currentAchievement.goals ) {
-        if(true ) {
+        if(currentAchievement.goals) {
             requestHandlers.getPrettyNameIdAndImageURL(currentAchievement.createdBy, function(creatorName, creatorId, creatorImageURL) {
                 requestHandlers.getPrettyNameIdAndImageURL(achiever._id, function(achieverName, achieverId, achieverImageURL) {
                     currentAchievement.goals.forEach(function(goal) {
