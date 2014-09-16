@@ -58,6 +58,7 @@ function setEmptyMenu() {
 }
 
 function setDefaultMenu(activePage, visitsMainPage) {
+    var currentUserIsIssuer = false
     if($('#menuArea').is(':empty')) {
         var menu
         var x = getCookie('rememberme')
@@ -68,12 +69,13 @@ function setDefaultMenu(activePage, visitsMainPage) {
         var currentUserId
         if (currentUser) {
             currentUserId = currentUser._id
+            currentUserIsIssuer = currentUser.isIssuer
         }
         if (loggedIn) {
             menu = '<div id="menu" class="menu-absolute"><ul>'
             +'<li><div id="menuIconNewsfeed" class=""><a href="javascript:void(0)" onclick="openNewsfeed()"><img id="menuImageNewsfeed" src="content/img/newsfeedicon.png" alt="" /></a></div></li>'
             + '<li><div id="menuIconTree" class=""><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><img id="menuImageTree" src="content/img/treeicon.png" alt="" /></a></div></li>'
-            if (currentUser.isIssuer) {
+            if (currentUserIsIssuer) {
                 menu += '<li>&nbsp;</li>'
             } else {
                 menu += '<li><div id="menuIconFriend" class=""><a href="javascript:void(0)" onclick="openFriends()"><img id="menuImageFriends" src="content/img/friendsicon.png" alt="" />'

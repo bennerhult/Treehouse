@@ -286,7 +286,11 @@ app.get('/checkUser', function(request, response){
         if(thSettings.isAutoLoginEnabled()) {
             //Local testing - skip email and redirect to signup link directly
             onTokenCreated = function (myToken) {
-                 response.writeHead(200, {'content-type': 'application/json' })
+                 if (myUser) {
+                    response.writeHead(200, {'content-type': 'application/json' })
+                 } else {
+                    response.writeHead(201, {'content-type': 'application/json' })
+                 }
                  response.write(JSON.stringify({ url : createSignupLink(myToken.token) }))
                  response.end('\n', 'utf-8')
             };
@@ -300,7 +304,7 @@ app.get('/checkUser', function(request, response){
                     'Go to ' + createSignupLink(myToken.token) +  ' to sign in to Treehouse!',
                      function() {
                          response.writeHead(200, {'content-type': 'application/json' })
-                         response.write(JSON.stringify({ isNewUser : false }))
+                         response.write(JSON.stringify( myToken.token))
                          response.end('\n', 'utf-8')
                      }
                 )
@@ -314,8 +318,8 @@ app.get('/checkUser', function(request, response){
                     "<html>Click <a href='" + createSignupLink(myToken.token) + "'>here</a> to start using Treehouse.</html>",
                     'Go to ' + createSignupLink(myToken.token) + ' to start using Treehouse!',
                     function() {
-                        response.writeHead(200, {'content-type': 'application/json' })
-                        response.write(JSON.stringify({ isNewUser : true }))
+                        response.writeHead(201, {'content-type': 'application/json' })
+                        response.write(JSON.stringify( myToken.token ))
                         response.end('\n', 'utf-8')
                     }
                 )

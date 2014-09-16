@@ -66,7 +66,7 @@ module.exports = function (thSettings, user) {
                     next()
                 } else {
                     response.writeHead(200, {'content-type': 'application/json' })
-                    response.write(JSON.stringify(err.message))
+                    response.write(JSON.stringify(err))
                     response.end('\n', 'utf-8')
                 }
             })

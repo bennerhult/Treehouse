@@ -40,7 +40,6 @@ casper.test.begin('Testing Start Page', 3, function(test) {
          test.assertHttpStatus(201)    //new user
          loginToken = JSON.parse(this.getPageContent())
      })
-
      casper.run(function(){
         test.done()
      })
