@@ -1089,7 +1089,7 @@ function getIssuedAchievements(request, response) {
             })
         } else {
             response.writeHead(200, {'content-type': 'application/json' })
-            response.write(JSON.stringify(issuedList + "No issued achievements found.</p></div>"))
+            response.write(JSON.stringify(issuedList + "No challenges found.</p></div>"))
             response.end('\n', 'utf-8')
         }
     })
