@@ -288,10 +288,12 @@ app.get('/checkUser', function(request, response){
             onTokenCreated = function (myToken) {
                  if (myUser) {
                     response.writeHead(200, {'content-type': 'application/json' })
+                    response.write(JSON.stringify({ url : createSignupLink(myToken.token) }))
                  } else {
                     response.writeHead(201, {'content-type': 'application/json' })
+                    //response.write(JSON.stringify(myToken.token))
+                     response.write(JSON.stringify({ url : createSignupLink(myToken.token) }))
                  }
-                 response.write(JSON.stringify({ url : createSignupLink(myToken.token) }))
                  response.end('\n', 'utf-8')
             };
         } else if (myUser) {

@@ -38,7 +38,12 @@ casper.test.begin('Testing Start Page', 3, function(test) {
 
      casper.then(function(){
          test.assertHttpStatus(201)    //new user
-         loginToken = JSON.parse(this.getPageContent())
+         if(JSON.parse(this.getPageContent()).url) { //autologin enabled
+             var link = JSON.parse(this.getPageContent()).url
+             loginToken = link.substring(link.indexOf("&token") + 7)
+         } else {
+             loginToken = JSON.parse(this.getPageContent())
+         }
      })
      casper.run(function(){
         test.done()
