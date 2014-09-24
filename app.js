@@ -144,6 +144,7 @@ app.get('/content/*', function(request, response){
 if(!thSettings.isProduction()) {
     var templates = require('./code/templates.js')(thSettings);
     require('./code/preLoginPage.js')(app, templates, thSettings).registerHandlers();
+    require('./code/loginPage.js')(app, templates, thSettings).registerHandlers();
 }
 
 //********************************************

@@ -2,8 +2,8 @@ module.exports = function (app, templates, thSettings) {
     'use strict';
 
     function registerHandlers() {
-        app.get('/login', function (request, response){
-            templates.serveHtmlFromTemplate(response, './server-templates/login.html', {});
+        app.get('/prelogin', function (request, response){
+            templates.serveHtmlFromTemplate(response, './server-templates/pre-login.html', {});
         });
     }
 
