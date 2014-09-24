@@ -145,6 +145,8 @@ if(!thSettings.isProduction()) {
     var templates = require('./code/templates.js')(thSettings);
     require('./code/preLoginPage.js')(app, templates, thSettings).registerHandlers();
     require('./code/loginPage.js')(app, templates, thSettings).registerHandlers();
+    require('./code/newsfeedPage.js')(app, templates, thSettings).registerHandlers();
+    require('./code/friendsPage.js')(app, templates, thSettings).registerHandlers();
 }
 
 //********************************************
