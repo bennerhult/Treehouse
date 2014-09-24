@@ -817,6 +817,26 @@ function progressOnServer(callback, goalId) {
     })
 }
 
+function issue() {
+    issueOnServer(
+        function() {
+            FB.XFBML.parse();
+            $("#issueButton").hide()
+            $("#editButton").hide()
+            $("#deleteButton").hide()
+        }
+    )
+}
+
+function issueOnServer(callback) {
+    $.ajax("/issue", {
+        type: "GET",
+        dataType: "json",
+        success: function() { if ( callback ) callback() },
+        error  : function()     { if ( callback ) callback(null) }
+    })
+}
+
 function publicize() {
     publicizeOnServer(
         function() {

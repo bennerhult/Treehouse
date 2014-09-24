@@ -1070,7 +1070,7 @@ function getIssuedAchievements(request, response) {
     var issuedList = "<div class='achievement'><p>"
     var issuedAchievementsToShow = new Array()
     var goneThroughIssuedAchievements = 0
-    achievement.Achievement.find({ issuedAchievement: true}, {}, { sort: { 'createdDate' : -1 } }, function(err, issuedAchievements) {
+    achievement.Achievement.find({ isIssued: true}, {}, { sort: { 'createdDate' : -1 } }, function(err, issuedAchievements) {
         if (err) {
             console.log("error in app.js: couldn't find any issued achievements")
         }
@@ -1346,6 +1346,18 @@ app.get('/progress', function(request, response){
         response.writeHead(200, {'content-type': 'application/json' })
         response.write(JSON.stringify(quantityFinished))
         response.end('\n', 'utf-8')
+    })
+})
+
+app.get('/issue', function(request, response){
+    achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
+        if (currentAchievement) {
+            achievement.issue(currentAchievement, function() {
+                response.writeHead(200, {'content-type': 'application/json' })
+                response.write(JSON.stringify("ok"))
+                response.end('\n', 'utf-8')
+            })
+        }
     })
 })
 

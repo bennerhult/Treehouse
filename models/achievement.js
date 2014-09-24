@@ -12,6 +12,7 @@ var AchievementSchema = new Schema({
     description         : {type: String},
     imageURL            : {type: String, required: true},
     issuedAchievement   : {type: Boolean, required: false},
+    isIssued            : {type: Boolean, required: false},
     issuerName          : {type: String, required: false},
     goals               : {type: [goal.GoalSchema], required: true}
 })
@@ -23,6 +24,7 @@ module.exports = {
     createAchievement: createAchievement,
     createIssuedAchievement: createIssuedAchievement,
     acceptIssuedAchievement: acceptIssuedAchievement,
+    issue: issue,
     userHasAcceptedAchievement: userHasAcceptedAchievement,
     addGoalToAchievement: addGoalToAchievement,
     removeSharedPartOfAchievement: removeSharedPartOfAchievement,
@@ -73,6 +75,13 @@ function acceptIssuedAchievement(achievement_id, achiever_id, callback) {
                 callback(currentAchievement.title)
             }
         })
+    })
+}
+
+function issue(achievement, callback) {
+    achievement.isIssued = true
+    achievement.save(function (error) {
+        callback(error)
     })
 }
 

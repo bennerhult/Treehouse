@@ -141,16 +141,24 @@ module.exports = function (user, progress, moment, shareholding, achievement, ur
                                                         achievementDesc += '<div class="achievement-info"><div id="userarea"><img src="' + achiever.imageURL + '" /><a class="headerlink" href="javascript:void(0)" onclick="openAchievements(false, \'' + achiever._id + '\', ' + checkingOtherPersonsAchievement + ', \'' + achieverName + '\')">' + achieverName + '</a></div> '
                                                         if (!checkingOtherPersonsAchievement) {
                                                             achievementDesc += '<div class="actionmenu"><ul>'
-                                                            if (myProgress.publiclyVisible) {
-                                                                achievementDesc += '<li id="unpublicizeButton" ><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unpublicize.png" /></a></li>'
-                                                                achievementDesc += '<li id="publicizeButton"  style="display:none"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
-                                                            }  else {
-                                                                achievementDesc += '<li id="unpublicizeButton" style="display:none"><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unpublicize.png" /></a></li>'
-                                                                achievementDesc += '<li id="publicizeButton"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
+                                                            if (currentAchievement.issuedAchievement) {
+                                                                if (!currentAchievement.isIssued) {
+                                                                    achievementDesc += '<li id="issueButton"><a href="javascript:void(0)" onclick="issue()"><img src="content/img/issue.png" /></a></li>'
+                                                                }
+                                                            } else {
+                                                                if (myProgress.publiclyVisible) {
+                                                                    achievementDesc += '<li id="unpublicizeButton"><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unpublicize.png" /></a></li>'
+                                                                    achievementDesc += '<li id="publicizeButton" style="display:none"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
+                                                                }  else {
+                                                                    achievementDesc += '<li id="unpublicizeButton" style="display:none"><a href="javascript:void(0)" onclick="unpublicize()"><img src="content/img/unpublicize.png" /></a></li>'
+                                                                    achievementDesc += '<li id="publicizeButton"><a href="javascript:void(0)" onclick="publicize()"><img src="content/img/publicize.png" /></a></li>'
+                                                                }
                                                             }
-                                                            achievementDesc += '<li id="deleteButton" class="rightalign"><a href="javascript:void(0)" onclick="deleteAchievement(\'' + achiever._id + '\')"><img src="content/img/delete.png" /></a></li>'
-                                                            if (myPercentageFinished == 0 && !isAchievementShared) {
-                                                                achievementDesc += '<li id="editButton" class="rightalign"><a href="javascript:void(0)" onclick="editAchievement(\'' + achiever._id + '\')"><img src="content/img/edit.png" /></a></li>'
+                                                            if (!currentAchievement.isIssued) {
+                                                                achievementDesc += '<li id="deleteButton" class="rightalign"><a href="javascript:void(0)" onclick="deleteAchievement(\'' + achiever._id + '\')"><img src="content/img/delete.png" /></a></li>'
+                                                                if (myPercentageFinished == 0 && !isAchievementShared) {
+                                                                    achievementDesc += '<li id="editButton" class="rightalign"><a href="javascript:void(0)" onclick="editAchievement(\'' + achiever._id + '\')"><img src="content/img/edit.png" /></a></li>'
+                                                                }
                                                             }
                                                             achievementDesc += '</ul></div>'
                                                         }
