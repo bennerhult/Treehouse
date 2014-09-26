@@ -165,12 +165,13 @@ table { border-collapse:collapse;border-spacing:0; }
     padding-left: 15px;
 }
 
+.none{
+    display: none;
+}
 
 /*Login*/
 
-.container{
-    background: #f4f4f4; /* Old browsers */
-    width: 100%;
+.loginContainer{
     -moz-box-shadow:  0px 0px 25px 2px rgba(0,0,0,0.5);
     -webkit-box-shadow:  0px 0px 25px 2px rgba(0,0,0,0.5);
     box-shadow:  0px 0px 25px 2px rgba(0,0,0,0.5);
@@ -195,52 +196,52 @@ table { border-collapse:collapse;border-spacing:0; }
     box-sizing: border-box;
 }
 
-.logo{
+.loginContainer .logo{
     text-align: center;
     padding-top: 20px;
     margin-bottom: 20px;
 }
 
-.fbConnect{
+.loginContainer .fbConnect{
     text-align: center;
 }
 
-.fbConnect input{
+.loginContainer .fbConnect input{
     margin-top: 60px;
 }
 
-.emailLogin{
+.loginContainer .emailLogin{
     margin: auto;
     width: 400px;
 }
 
-.message{
+.loginContainer .message{
     margin-top: 30px;
     text-align: center;
 }
 
-.connectSeparator{
+.loginContainer .connectSeparator{
     margin: 60px 40px;
 }
 
-.connectSeparator ul li{
+.loginContainer .connectSeparator ul li{
     float: left;
 }
 
-.connectSeparator ul li:first-child{
+.loginContainer .connectSeparator ul li:first-child{
     width: 40%;
 }
 
-.connectSeparator ul li:nth-child(2){
+.loginContainer .connectSeparator ul li:nth-child(2){
     width: 20%;
     text-align: center;
 }
 
-.connectSeparator ul li:last-child{
+.loginContainer .connectSeparator ul li:last-child{
     width: 40%;
 }
 
-.connectSeparator ul li:last-child span{
+.loginContainer .connectSeparator ul li:last-child span{
     height: 1px;
     width: 100%;
     display: block;
@@ -249,7 +250,7 @@ table { border-collapse:collapse;border-spacing:0; }
     background-image: -ms-linear-gradient( 180deg, rgb(80,78,76) 1%, rgb(85,84,84) 100%);
 }
 
-.connectSeparator ul li:first-child span{
+.loginContainer .connectSeparator ul li:first-child span{
     height: 1px;
     background-image: -moz-linear-gradient( 0deg, rgb(66,63,63) 0%, rgb(115,115,115) 50%, rgb(85,84,84) 100%);
     background-image: -webkit-linear-gradient( 0deg, rgb(66,63,63) 0%, rgb(115,115,115) 50%, rgb(85,84,84) 100%);
@@ -258,8 +259,177 @@ table { border-collapse:collapse;border-spacing:0; }
     display: block;
 }
 
+/* */
+
+.container{
+    position: relative;
+    background: #f4f4f4;
+
+    -moz-box-shadow:  0px 0px 25px 2px rgba(0,0,0,0.5);
+    -webkit-box-shadow:  0px 0px 25px 2px rgba(0,0,0,0.5);
+    box-shadow:  0px 0px 25px 2px rgba(0,0,0,0.5);
+
+    border-radius: 10px;
+    min-height: 800px;
+    width: 1000px;
+    margin: 30px auto;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
 
 
+h1{
+    font-size: 20px;
+    font-family: Verdana;
+    font-weight: normal;
+    color: #ffffff;
+}
+
+.contentWrap{
+    padding: 20px;
+}
+
+.userArea{
+    padding-bottom: 20px;
+}
+
+.userArea p{
+    color: #434648;
+}
+
+.userArea img{
+    float: left;
+    margin-right: 10px;
+    border: 3px solid #fff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
+    -moz-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+    -webkit-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+    box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+}
+
+.listWrap{
+    margin-bottom: 50px;
+
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+
+    background: #7e7b76; /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover,  #a8a7a5 0%, #7e7b76 90%); /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#a8a7a5), color-stop(90%,#7e7b76)); /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover,  #a8a7a5 0%,#7e7b76 90%); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover,  #a8a7a5 0%,#7e7b76 90%); /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover,  #a8a7a5 0%,#7e7b76 90%); /* IE10+ */
+    background: radial-gradient(center, ellipse cover,  #a8a7a5 0%,#7e7b76 90%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a8a7a5', endColorstr='#7e7b76',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+    -moz-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
+    -webkit-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
+    box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
+}
+
+.listWrap .item{
+    text-align: center;
+    padding: 20px;
+    border-bottom: 1px solid #b7b6b6;
+}
+
+.listWrap .item:last-child{
+    border: 0px;
+}
+
+
+.listWrap .item img{
+    border: 3px solid #fff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
+    -moz-box-shadow:  0px 0px 5px rgb(0,0,0);
+    -webkit-box-shadow:  0px 0px 5px rgb(0,0,0);
+    box-shadow:  0px 0px 5px rgb(0,0,0);
+    margin-bottom: 20px;
+}
+
+.listWrap .item img:hover{
+    -moz-box-shadow:  0px 0px 20px rgb(0,0,0);
+    -webkit-box-shadow:  0px 0px 20px rgb(0,0,0);
+    box-shadow:  0px 0px 20px rgb(0,0,0);
+}
+
+
+.navigationMenu{
+    padding: 10px;
+    border-bottom: 1px solid #5c5c5b;
+    width: 100%;
+    text-align: center;
+
+    background-color: rgb(124,126,127);
+    background-image: linear-gradient(bottom, rgb(124,126,127) 18%, rgb(111,114,115) 51%, rgb(124,126,127) 57%);
+    background-image: -o-linear-gradient(bottom, rgb(124,126,127) 18%, rgb(111,114,115) 51%, rgb(124,126,127) 57%);
+    background-image: -moz-linear-gradient(bottom, rgb(124,126,127) 18%, rgb(111,114,115) 51%, rgb(124,126,127) 57%);
+    background-image: -webkit-linear-gradient(bottom, rgb(124,126,127) 18%, rgb(111,114,115) 51%, rgb(124,126,127) 57%);
+    background-image: -ms-linear-gradient(bottom, rgb(124,126,127) 18%, rgb(111,114,115) 51%, rgb(124,126,127) 57%);
+
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.18, rgb(124,126,127)),
+        color-stop(0.51, rgb(111,114,115)),
+        color-stop(0.57, rgb(124,126,127))
+    );
+
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
+    border-radius: 10px;
+
+    border-bottomright-radius: 0px;
+    border-bottomleft-radius: 0px;
+    -webkit-border-bottom-right-radius: 0px;
+    -webkit-border-bottom-left-radius: 0px;
+    -moz-border-radius-bottomright: 0px;
+    -moz-border-radius-bottomleft: 0px;
+
+}
+
+.bottomMenu{
+    position: absolute;
+    bottom: 0px;
+    z-index: 2;
+    border-top: 1px solid #000000;
+    background-color: #131213;
+    text-align: left;
+    width: 100%;
+
+    border-bottom-left-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -moz-border-radius-bottomleft: 10px;
+
+    border-bottom-right-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    -moz-border-radius-bottomright: 10px;
+}
+
+.bottomMenu ul li{
+    float: left;
+    width:  25%;
+    text-align: center;
+}
+
+.bottomMenu ul li div.selected{
+    background-color: #232123;
+}
+
+.bottomMenu ul li div:hover{
+    background-color: #232123;
+}
 
 /*form and fontstyles*/
 
@@ -326,6 +496,7 @@ input.button:focus{
         width: 95%;
     }
 
+    .loginContainer,
     .container{
         width: 90%;
     }
@@ -339,6 +510,22 @@ input.button:focus{
 }
 
 @media screen and (max-width: 800px) {
+    html,body{height:100%;}
+
+    .loginContainer{
+        position: relative;
+        margin: 0 auto;
+        height:100%;
+        min-height:100%;
+        z-index: 1;
+        width: 100%;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border-radius: 0px;
+    }
+    html>body .loginContainer{height:auto; min-height:100%;}
+
     .container{
         position: relative;
         margin: 0 auto;
@@ -351,10 +538,16 @@ input.button:focus{
         box-shadow: none;
         border-radius: 0px;
     }
-
-    html,body{height:100%;}
-
     html>body .container{height:auto; min-height:100%;}
+
+    .topMenu,
+    .bottomMenu{
+        border-radius: 0px;
+    }
+
+    .bottomMenu{
+        position: fixed;
+    }
 }
 
 
@@ -363,7 +556,7 @@ input.button:focus{
         width: 50%;
     }
 
-    .emailLogin{
+    .loginContainer .emailLogin{
         width: 80%;
     }
 }
@@ -384,7 +577,7 @@ input.button:focus{
         padding: 0px;
     }
 
-    .logo img{
+    .loginContainer .logo img{
         width: 90%;
     }
 }

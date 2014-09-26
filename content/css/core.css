@@ -513,14 +513,12 @@ body{
 
 
 #menu{
-   /* position: relative;*/
     position: absolute;
     bottom: 0px;
     height: 40px;
     z-index: 2;
     border-top: 1px solid #000000;
     background-color: #131213;
-
 
     text-align: left;
     width: 100%;
