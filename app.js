@@ -6,10 +6,8 @@ var fs = require('fs'),
     _ = require("underscore")._,
     emailjs   = require('emailjs'),
     mongoose = require('mongoose'),
-    thSettings = require('./code/thSettings.js'),
-    events = require('events');
+    thSettings = require('./code/thSettings.js');
 
-var eventEmitter = new events.EventEmitter();
 var db_uri = 'mongodb://localhost:27017/test'
 var domain = ''
 
