@@ -29,8 +29,17 @@ module.exports = function (thSettings) {
             });
     }
 
+    function serveHtmlRaw(response, fileName) { //TODO: Serve directly from CDN instead
+        fs.readFile(fileName, { encoding : 'utf-8' }, function (err, fileText) {
+            if(err) throw err;
+            response.writeHead(200, { 'Content-Type': 'text/html' })
+            response.end(fileText, 'utf-8')
+        });
+    }
+
     return {
         renderFile : renderFile,
-        serveHtmlFromTemplate : serveHtmlFromTemplate
+        serveHtmlFromTemplate : serveHtmlFromTemplate,
+        serveHtmlRaw : serveHtmlRaw
     };
 }

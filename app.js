@@ -4,22 +4,45 @@ var fs = require('fs'),
     moment = require('moment'),
     connectmongo = require('connect-mongo'),
     _ = require("underscore")._,
-    email   = require('emailjs'),
+    emailjs   = require('emailjs'),
     mongoose = require('mongoose'),
-    thSettings = require('./code/thSettings.js');
+    thSettings = require('./code/thSettings.js'),
+    events = require('events');
 
+var eventEmitter = new events.EventEmitter();
 var db_uri = 'mongodb://localhost:27017/test'
 var domain = ''
 
 var app = express()
 
-var server  = email.server.connect({
-    user:    'pe3116x3',
-    password:'wPWHEybx',
-    host:    'amail3.space2u.com',
-    port:    2525,
-    ssl:     false
-})
+
+//TODO: Factor email out into it's own file
+var email = (function () {
+    var server  = emailjs.server.connect({
+        user:    'pe3116x3',
+        password:'wPWHEybx',
+        host:    'amail3.space2u.com',
+        port:    2525,
+        ssl:     false
+    })
+    function emailUser(emailAddress, subject, html, altText, callback) {
+        server.send({
+            text:    altText,
+            from:    'Treehouse <staff@treehouse.io>',
+            to:      '<' + emailAddress + '>',
+            subject: subject,
+            attachment:
+                [
+                    {data: html, alternative:true}
+                ]
+        }, function(err, message) {
+            if (err) console.log("error sending email: " + err + ", message: " + message)
+        })
+        if (callback) callback()
+    }
+
+    return { emailUser : emailUser };
+}());
 
 var MongoStore = connectmongo(express);
 
@@ -34,7 +57,8 @@ app.configure('development', function() {
     console.log("Treehouse in development mode.")
     thSettings.init({
         envName : 'development',
-        autoLogin : process.env.TH_AUTOLOGIN && process.env.TH_AUTOLOGIN.toLowerCase() === 'true'
+        autoLogin : process.env.TH_AUTOLOGIN && process.env.TH_AUTOLOGIN.toLowerCase() === 'true',
+        domain : domain
     });
 })
 
@@ -49,7 +73,8 @@ app.configure('test', function() {
     domain = process.env.TH_DOMAIN;
     db_uri = process.env.DB_URI;
     thSettings.init({
-        envName : 'test'
+        envName : 'test',
+        domain : domain
     });
 })
 
@@ -58,7 +83,10 @@ app.configure('production', function() {
     console.log("Treehouse in prod mode.")
     //noinspection JSUnresolvedVariable
     db_uri=process.env.DB_URI
-    thSettings.init({ envName : 'production' });
+    thSettings.init({
+        envName : 'production',
+        domain : domain
+    });
 })
 
 mongoose.connect(db_uri)
@@ -130,6 +158,8 @@ function authenticateFromLoginToken(request, response) {
     }
 }
 
+app.use(express.bodyParser());
+
 var port = process.env.PORT || 1337
 app.listen(port)
 console.log('Treehouse server started on port ' + port)
@@ -144,11 +174,10 @@ app.get('/content/*', function(request, response){
 if(!thSettings.isProduction()) {
     var templates = require('./code/templates.js')(thSettings);
     require('./code/preLoginPage.js')(app, templates, thSettings).registerHandlers();
-    require('./code/loginPage.js')(app, templates, thSettings).registerHandlers();
+    require('./code/loginPage.js')(app, templates, thSettings, user, loginToken, email).registerHandlers();
     require('./code/newsfeedPage.js')(app, templates, thSettings).registerHandlers();
     require('./code/friendsPage.js')(app, templates, thSettings).registerHandlers();
 }
-
 //********************************************
 //********************************************
 //********************************************
@@ -302,7 +331,7 @@ app.get('/checkUser', function(request, response){
         } else if (myUser) {
             //Existing user
             onTokenCreated = function (myToken) {
-                emailUser(
+                email.emailUser(
                     username,
                     'Sign in to Treehouse',
                     "<html>Click <a href='" + createSignupLink(myToken.token) + "'>here</a> to sign in to Treehouse.</html>",
@@ -317,7 +346,7 @@ app.get('/checkUser', function(request, response){
         } else {
             //New user
             onTokenCreated = function (myToken) {
-                emailUser(
+                email.emailUser(
                     username,
                     'Welcome  to Treehouse',
                     "<html>Click <a href='" + createSignupLink(myToken.token) + "'>here</a> to start using Treehouse.</html>",
@@ -334,22 +363,6 @@ app.get('/checkUser', function(request, response){
         loginToken.createToken(normalizedUsername, onTokenCreated);
     })
 })
-
-function emailUser(emailAddress, subject, html, altText, callback) {
-    server.send({
-        text:    altText,
-        from:    'Treehouse <staff@treehouse.io>',
-        to:      '<' + emailAddress + '>',
-        subject: subject,
-        attachment:
-            [
-                {data: html, alternative:true}
-            ]
-    }, function(err, message) {
-        if (err) console.log("error sending email: " + err + ", message: " + message)
-    })
-    if (callback) callback()
-}
 
 function getDataForUser(myUser, request, response) {
     request.session.currentUser = myUser
@@ -374,7 +387,6 @@ function createUser(emailAdress, request, response) {
         }
     })
 }
-
 
 app.get('/signout', function(request, response){
     response.clearCookie('rememberme', null)
@@ -489,7 +501,7 @@ app.get('/upgradeToIssuer', function(request, response){
     //noinspection JSUnresolvedVariable
     user.User.findOne({ _id: request.session.currentUser._id}, function(err, issuerProspect) {
         var text = "User " + issuerProspect.username + ", id: " +  issuerProspect._id + " wants to be an issuer. Make it so. 1. Confirm that the user is really the Issuer and willing to pay the corresponding fees. 2. Change user to issuer=true 3. Give the user an issuerName."
-        emailUser('staff@treehouse.io', 'Issuer Request', text, text,  function(error) {
+        email.emailUser('staff@treehouse.io', 'Issuer Request', text, text,  function(error) {
             if (error) {
                 response.writeHead(404, {'content-type': 'application/json' })
             } else {
@@ -807,7 +819,7 @@ app.get('/shareToFriend', function(request, response){
         if (ok) {
             user.User.findOne({ _id: request.query.friendId }, function(err, askedFriend) {
                 user.User.findOne({ _id: request.session.currentUser._id}, function(err, askingFriend) {
-                    emailUser(
+                    email.emailUser(
                         askedFriend.username,
                         askingFriend.username + ' just shared an Achievement with you!',
                         "<html>" + askingFriend.username  + " just shared an Achievement with you on Treehouse! Login and confirm?</html>",
@@ -832,7 +844,7 @@ app.get('/addFriend', function(request, response){
         if (ok) {
             user.User.findOne({ _id: request.query.friendId }, function(err, askedFriend) {
                 user.User.findOne({ _id: request.session.currentUser._id}, function(err, askingFriend) {
-                    emailUser(
+                    email.emailUser(
                         askedFriend.username,
                         askingFriend.username + ' wants to be your friend on Treehouse',
                         "<html>" + askingFriend.username  + " wants to be your friend on Treehouse! Login and confirm?</html>",

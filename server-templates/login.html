@@ -27,41 +27,48 @@
         ga("send", "pageview");
     </script>
     <script type="text/javascript" src="content/js/css3-mediaqueries.js"></script>
-    <script src="content/ext/js/jquery-1.10.2.js" type="text/javascript"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.1/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.3/angular.min.js"></script>
 
     <script src="content/js/login.js" type="text/javascript"></script>
     <link rel="stylesheet" href="content/css/core2.css" media="screen, projection, print" />
 </head>
-<body>
+<body ng-app="App" ng-cloak>
+    <div ng-controller="Ctrl">
+        <div class="loginContainer" ng-hide="isLoading">
+            <div class="logo">
+                <img alt="Treehouse" src="content/img/logo-large.png">
+            </div>
+            <div class="fbConnect">
+                <p>Connect below to sign in/ sign up</p>
+                <input type="image" src="content/img/facebook.png" alt="Facebook Connect">
+            </div>
 
-<div class="loginContainer">
-    <div class="logo">
-        <img alt="Treehouse" src="content/img/logo-large.png">
+            <div class="connectSeparator">
+                <ul>
+                    <li><span></span></li>
+                    <li><p>OR</p></li>
+                    <li><span></span></li>
+                </ul>
+                <div class="clear"> </div>
+            </div>
+
+            <div class="emailLogin">
+                <div ng-hide="isNewUser || isReturningUser">
+                    <form novalidate name="emailLoginForm">
+                        <ul>
+                            <li><input type="email" class="formstyle" placeholder="email" name="emailAddress" ng-model="emailAddress" required></li>
+                            <li><input type="button" class="button" value="Sign in / Sign up" ng-click="loginWithEmail($event)"></li>
+                        </ul>
+                        <div ng-show="isEmailInvalidShown()" class="message"><p>First law of Treehouse: First you type, then you press</p></div>
+                    </form>
+                </div>
+                <span ng-show="isNewUser">We just sent you an email. Therein lies a link. Click it and you shall enter!</span>
+                <span ng-show="isReturningUser">We just sent you the old Treehouse email. Fetch email. Click link!</span>
+            </div>
+        </div>
+        <div class="loginContainer" ng-show="isLoading">
+            Loading... TODO Spinner goes here
+        </div>
     </div>
-    <div class="fbConnect">
-        <p>Connect below to sign in/ sign up</p>
-        <input type="image" src="content/img/facebook.png" alt="Facebook Connect">
-    </div>
-
-    <div class="connectSeparator">
-
-        <ul>
-            <li><span></span></li>
-            <li><p>OR</p></li>
-            <li><span></span></li>
-        </ul>
-        <div class="clear"> </div>
-    </div>
-
-    <div class="emailLogin">
-        <ul>
-            <li><input type="text" class="formstyle"  placeholder="email"></li>
-            <li><input type="button" class="button" value="Sign in / Sign up"></li>
-        </ul>
-        <div class="message"><p>First law of Treehouse: First you type, then you press</p></div>
-    </div>
-</div>
-
 </body>
 </html>

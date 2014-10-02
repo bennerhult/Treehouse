@@ -3,6 +3,7 @@ module.exports = (function () {
 
     var environmentName;
     var autoLogin; //When this is true the server redirects directly to the signup link instead of emailing it to the user. Has no effect in production even if set.
+    var domain;
 
     function init(options) {
         if(!options) {
@@ -10,6 +11,7 @@ module.exports = (function () {
         }
         environmentName = options.envName;
         autoLogin = options.autoLogin;
+        domain = options.domain;
     }
 
     function explodeIfNotInitialized() {
@@ -42,11 +44,18 @@ module.exports = (function () {
         }
     }
 
+    function getDomain() {
+        if(!domain)
+            throw 'Domain was not set. Call init before using thSettings!';
+        return domain;
+    }
+
     return {
         init : init,
         isDevelopment : isDevelopment,
         isProduction : isProduction,
         isTest : isTest,
-        isAutoLoginEnabled : isAutoLoginEnabled
+        isAutoLoginEnabled : isAutoLoginEnabled,
+        getDomain : getDomain
     };
 }());
