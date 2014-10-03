@@ -1,8 +1,7 @@
 module.exports = (function () {
     'use strict';
 
-    var emailjs   = require('emailjs'),
-        moment = require('moment');
+    emailjs   = require('emailjs');
 
     var server  = emailjs.server.connect({
         user:    'pe3116x3',
