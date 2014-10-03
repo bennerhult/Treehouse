@@ -4,43 +4,14 @@ var fs = require('fs'),
     moment = require('moment'),
     connectmongo = require('connect-mongo'),
     _ = require("underscore")._,
-    emailjs   = require('emailjs'),
     mongoose = require('mongoose'),
-    thSettings = require('./code/thSettings.js');
+    thSettings = require('./code/thSettings.js'),
+    email = require('./code/email.js');
 
 var db_uri = 'mongodb://localhost:27017/test'
 var domain = ''
 
 var app = express()
-
-
-//TODO: Factor email out into it's own file
-var email = (function () {
-    var server  = emailjs.server.connect({
-        user:    'pe3116x3',
-        password:'wPWHEybx',
-        host:    'amail3.space2u.com',
-        port:    2525,
-        ssl:     false
-    })
-    function emailUser(emailAddress, subject, html, altText, callback) {
-        server.send({
-            text:    altText,
-            from:    'Treehouse <staff@treehouse.io>',
-            to:      '<' + emailAddress + '>',
-            subject: subject,
-            attachment:
-                [
-                    {data: html, alternative:true}
-                ]
-        }, function(err, message) {
-            if (err) console.log("error sending email: " + err + ", message: " + message)
-        })
-        if (callback) callback()
-    }
-
-    return { emailUser : emailUser };
-}());
 
 var MongoStore = connectmongo(express);
 
