@@ -24,7 +24,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email) 
                 }
 
                 function createSignupLink(token) {
-                    return thSettings.getDomain() + "signin?email=" + normalizedUsername + "&token=" + token
+                    return thSettings.getDomain() + "signin?email=" + normalizedUsername + "&token=" + token;
                 }
 
                 var onTokenCreated;
@@ -46,9 +46,9 @@ module.exports = function (app, templates, thSettings, user, loginToken, email) 
                             "<html>Click <a href='" + createSignupLink(myToken.token) + "'>here</a> to sign in to Treehouse.</html>",
                             'Go to ' + createSignupLink(myToken.token) +  ' to sign in to Treehouse!',
                              function() {
-                                 respondWithJson(response, { isNewUser : false  })
+                                 respondWithJson(response, { isNewUser : false  });
                              }
-                        )
+                        );
                     };
                 } else {
                     //New user
@@ -59,14 +59,14 @@ module.exports = function (app, templates, thSettings, user, loginToken, email) 
                             "<html>Click <a href='" + createSignupLink(myToken.token) + "'>here</a> to start using Treehouse.</html>",
                             'Go to ' + createSignupLink(myToken.token) + ' to start using Treehouse!',
                             function() {
-                                respondWithJson(response, { isNewUser : true  })
+                                respondWithJson(response, { isNewUser : true  });
                             }
-                        )
+                        );
                     };
                 }
 
                 loginToken.createToken(normalizedUsername, onTokenCreated);
-            })
+            });
         });
     }
 

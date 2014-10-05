@@ -1,7 +1,7 @@
 module.exports = (function () {
     'use strict';
 
-    emailjs   = require('emailjs');
+    var emailjs = require('emailjs');
 
     var server  = emailjs.server.connect({
         user:    'pe3116x3',
