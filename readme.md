@@ -131,3 +131,4 @@ To get all the way to zero click login, add a setting in localstorage called 'th
 
 ##Angular introduction
 - Part 1 - Simplest possible angular setup: http://jsfiddle.net/w7L223z3/
+- Part 2 - Handling clicks: http://jsfiddle.net/n017166L/1/
