@@ -88,4 +88,17 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
             }, {scope: 'email'})
         }
     }
+
+    function checkFBUserOnServer(username, callback) {
+        var data = "username=" + username
+        var jqxhr = $.ajax("/checkFBUser", {
+            type: "GET",
+            data: data,
+            dataType: "json",
+            statusCode: {
+                200: function(returnData) { callback(returnData, true) },
+                404: function() { callback(jqxhr.responseText , false) }
+            }
+        })
+    }
 });
