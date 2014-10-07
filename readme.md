@@ -128,3 +128,6 @@ To get all the way to zero click login, add a setting in localstorage called 'th
 [Underscore](http://documentcloud.github.com/underscore/)
 
 [Express](http://expressjs.com/)
+
+##Angular introduction
+- Part 1 - Simplest possible angular setup: http://jsfiddle.net/w7L223z3/
