@@ -137,13 +137,60 @@ app.get('/content/*', function(request, response){
     staticFiles.serve("." + request.url, response)
 })
 
+var auth = (function () {
+    'use strict';
+
+    function authenticateExistingUser(myUser, callback) {
+        loginToken.createToken(myUser.username, function(myToken) {
+            callback(null, true, { token : myToken, isNewUser : false, user : myUser });
+        })
+    }
+
+    function authenticateNewUser(emailAdress, callback) {
+        user.createUser(emailAdress, function (newUser, err) {
+            if (err) {
+                callback(err);
+            }  else {
+                loginToken.createToken(emailAdress, function(myToken) {
+                    callback(null, true, { token : myToken, isNewUser : true, user : newUser });
+                })
+            }
+        })
+    }
+
+    function authenticate(email, token, callback) {
+        email = email.toLowerCase();
+        loginToken.LoginToken.findOne({ email: email, token: token }, function(err, myToken) {
+            if(err) {
+                callback(err);
+            } else if (myToken) {
+                user.User.findOne({ username: email }, function(err, myUser) {
+                    if(err) {
+                        callback(err);
+                    } else  if (myUser) {
+                        authenticateExistingUser(myUser, callback)
+                    } else {
+                        authenticateNewUser(email, callback)
+                    }
+                })
+            } else {
+                callback(null, false);
+            }
+        })
+    }
+
+    return {
+        authenticate : authenticate
+    };
+}());
+
 //********************************************
 //************** Register handlers ***********
 //********************************************
 if(!thSettings.isProduction()) {
     var templates = require('./code/templates.js')(thSettings);
     require('./code/preLoginPage.js')(app, templates, thSettings).registerHandlers();
-    require('./code/loginPage.js')(app, templates, thSettings, user, loginToken, email).registerHandlers();
+    require('./code/loginPage.js')(app, templates, thSettings, user, loginToken, email, auth, url).registerHandlers();
     require('./code/newsfeedPage.js')(app, templates, thSettings).registerHandlers();
     require('./code/friendsPage.js')(app, templates, thSettings).registerHandlers();
 }
@@ -255,19 +302,20 @@ function signin(request, response) {
     var url_parts = url.parse(request.url, true)
     var email = url_parts.query.email.toLowerCase()
     var token = url_parts.query.token
-    loginToken.LoginToken.findOne({ email: email, token: token }, function(err,myToken) {
-        if (myToken) {
-            user.User.findOne({ username: email }, function(err,myUser) {
-                if (myUser) {
-                    getDataForUser(myUser, request, response)
-                } else {
-                    createUser(email, request, response)
-                }
-            })
+    auth.authenticate(email, token, function (err, isAuthenticated, data) {
+        if (err) {
+            response.writeHead(200, {'content-type': 'application/json' })
+            response.write(JSON.stringify("There was a problem creating your account. Contact staff@treehouse.io for more information."))
+            response.end('\n', 'utf-8')
+        } else if (!isAuthenticated) {
+            //TODO: Figure out why this is correct (moved over from the old code)
+            requestHandlers.writeDefaultPage(request, response)
         } else {
+            request.session.currentUser = data.user;
+            response.cookie('rememberme', loginToken.cookieValue(data.token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
             requestHandlers.writeDefaultPage(request, response)
         }
-    })
+    });
 }
 
 app.get('/checkUser', function(request, response){

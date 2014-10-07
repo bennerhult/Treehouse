@@ -1,4 +1,4 @@
-module.exports = function (app, templates, thSettings, user, loginToken, email) {
+module.exports = function (app, templates, thSettings, user, loginToken, email, auth, url) {
     'use strict';
 
     function respondWithJson(response, data) {
@@ -11,6 +11,24 @@ module.exports = function (app, templates, thSettings, user, loginToken, email) 
         app.get('/login2', function (request, response){
             templates.serveHtmlRaw(response, './server-templates/login.html');
         });
+
+        app.get('/signin2', function (request, response){
+            var url_parts = url.parse(request.url, true)
+            var email = url_parts.query.email.toLowerCase()
+            var token = url_parts.query.token
+            auth.authenticate(email, token, function (err, isAuthenticated, data) {
+                if (err) {
+                     response.redirect(302, thSettings.getDomain() + 'error?t=login'); //TODO: Build this page with the old error message under the login template
+                } else if (!isAuthenticated) {
+                    response.redirect(302, thSettings.getDomain() + 'login2');
+                } else {
+                    request.session.currentUser = data.user;
+                    response.cookie('rememberme', loginToken.cookieValue(data.token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
+                    response.redirect(302, thSettings.getDomain() + 'newsfeed2');
+                }
+            });
+        });
+
         app.post('/api/login2/authenticate', function (request, response) {
             if(!request.body.email) {
                 respondWithJson(response, { errMsg : 'Login failed (1)' });
@@ -24,7 +42,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email) 
                 }
 
                 function createSignupLink(token) {
-                    return thSettings.getDomain() + "signin?email=" + normalizedUsername + "&token=" + token;
+                    return thSettings.getDomain() + "signin2?email=" + normalizedUsername + "&token=" + token;
                 }
 
                 var onTokenCreated;
