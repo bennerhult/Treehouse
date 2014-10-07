@@ -2,6 +2,14 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
     'use strict';
 
     function init() {
+        FB.init({
+            appId: '480961688595420',
+            status: true,
+            cookie: true,
+            xfbml: true,
+            channelUrl : '//www.treehouse.io/channel.html',  //increases performance
+            oauth: true
+        })
         var autoLogin = false;
         try {
             if(localStorage && localStorage.th_autologin_email) {
@@ -51,4 +59,33 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
     };
 
     init();
+
+    $scope.loginUsingFacebook = function () {
+        //if (isAppMode || isiOs) {
+        if (false) {
+            window.location = "https://m.facebook.com/dialog/oauth?client_id=480961688595420&response_type=code&redirect_uri=http://www.treehouse.io/fbAppConnect&scope=email"
+        } else {
+            FB.login(function(response) {
+                if (response.authResponse) {
+                    FB.api('/me', function(apiResponse) {
+                        if (apiResponse) {
+                            checkFBUserOnServer(apiResponse.email,
+                                function(id, ok) {
+                                    if (ok) {
+                                        openNewsfeed()
+                                    } else {
+                                        $("#message").html("Facebook did not play nice. Try regular login instead.")
+                                    }
+                                }
+                            )
+                        } else {
+                            $("#message").html('Facebook did not play nice! Try regular login instead.')
+                        }
+                    })
+                } else {
+                    $("#message").html('No worries! Try regular login instead.')   //the user closed the fb-login dialogue
+                }
+            }, {scope: 'email'})
+        }
+    }
 });
