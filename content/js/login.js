@@ -90,9 +90,9 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
     }
 
     function checkFBUserOnServer(username, callback) {
-        var data = "username=" + username
-        var jqxhr = $scope.ajax("/checkFBUser", {
-            type: "GET",
+        var data = 'username=' + username
+        var jqxhr = $http.post('/checkFBUser', {
+            type: 'GET',
             data: data,
             dataType: "json",
             statusCode: {
