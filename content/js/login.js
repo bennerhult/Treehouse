@@ -10,6 +10,14 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
             channelUrl : '//www.treehouse.io/channel.html',  //increases performance
             oauth: true
         })
+
+        $scope.isiPad = navigator.userAgent.match(/iPad/i) != null;
+        $scope.isiPhone = navigator.userAgent.match(/iPhone/i) != null;
+        $scope.isiOs = $scope.isiPad || $scope.isiPhone
+        if (("standalone" in window.navigator) && window.navigator.standalone){
+            $scope.isAppMode = true
+        }
+
         var autoLogin = false;
         try {
             if(localStorage && localStorage.th_autologin_email) {
@@ -58,34 +66,30 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
         return $scope.emailLoginForm.emailAddress.$invalid;
     };
 
-    init();
-
     $scope.loginUsingFacebook = function () {
-        //if (isAppMode || isiOs) {
-        if (false) {
+        $scope.userClosedFBDialogue = false;
+        if ($scope.isAppMode || $scope.isiOs) {
             window.location = "https://m.facebook.com/dialog/oauth?client_id=480961688595420&response_type=code&redirect_uri=http://www.treehouse.io/fbAppConnect&scope=email"
         } else {
             FB.login(function(response) {
                 if (response.authResponse) {
                     FB.api('/me', function(apiResponse) {
                         if (apiResponse) {
-                            checkFBUserOnServer(apiResponse.email,
-                                function(id, ok) {
-                                    if (ok) {
-                                        openNewsfeed()
-                                    } else {
-                                        $("#message").html("Facebook did not play nice. Try regular login instead.")
-                                    }
+                            checkFBUserOnServer(apiResponse.email, function(id, ok) {
+                                if (ok) {
+                                    openNewsfeed()
+                                } else {
+                                    $scope.fbConnectError = true;
                                 }
-                            )
+                            });
                         } else {
-                            $("#message").html('Facebook did not play nice! Try regular login instead.')
+                            $scope.fbConnectError = true;
                         }
                     })
                 } else {
-                    $("#message").html('No worries! Try regular login instead.')   //the user closed the fb-login dialogue
+                    $scope.userClosedFBDialogue = true;
                 }
-            }, {scope: 'email'})
+            }, {scope: 'email'});
         }
     }
 
@@ -101,4 +105,6 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
             }
         })
     }
+
+    init();
 });
