@@ -97,8 +97,11 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
         var data = 'username=' + username
         var jqxhr = $http.post('/checkFBUser', {
             type: 'GET',
-            data: data,
-            dataType: "json",
+            //data: data,
+            //dataType: "json",
+            params: {
+                username : username
+            },
             statusCode: {
                 200: function(returnData) { callback(returnData, true) },
                 404: function() { callback(jqxhr.responseText , false) }
