@@ -44,7 +44,6 @@
                 <input type="image" src="content/img/facebook.png" alt="Facebook Connect" ng-click="loginUsingFacebook($event)">
                 <div ng-show="userClosedFBDialogue" class="message"><p>No worries! Try regular login instead.</p></div>
                 <div ng-show="fbConnectError" class="message"><p>Facebook did not play nice! Try regular login instead.</p></div>
-
             </div>
 
             <div class="connectSeparator">
@@ -66,12 +65,14 @@
                         <div ng-show="isEmailInvalidShown()" class="message"><p>First law of Treehouse: First you type, then you press</p></div>
                     </form>
                 </div>
-                <span ng-show="isNewUser">We just sent you an email. Therein lies a link. Click it and you shall enter!</span>
-                <span ng-show="isReturningUser">We just sent you the old Treehouse email. Fetch email. Click link!</span>
+                <div ng-show="isNewUser" class="message"><p>We just sent you an email. Therein lies a link. Click it and you shall enter!</p></div>
+                <div ng-show="isReturningUser" class="message"><p>We just sent you the old Treehouse email. Fetch email. Click link!</p></div>
             </div>
         </div>
         <div class="loginContainer" ng-show="isLoading">
-            Loading... TODO Spinner goes here
+            <div class="fullpageLoader">
+                <img src="content/img/ajax-loader.gif" alt="">
+            </div>
         </div>
     </div>
 </body>
