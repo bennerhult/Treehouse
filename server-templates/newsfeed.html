@@ -35,7 +35,7 @@
 <body ng-app="App">
 
 <div class="container" ng-controller="Ctrl">
-    <div class="navigationMenu"><h1>Newsfeed</h1></div>
+    <div class="navigation"><h1>Newsfeed</h1></div>
     <div class="contentWrap">
         <div class="userArea">
             <img src="content/img/user_has_no_image.jpg" >
@@ -43,13 +43,23 @@
             <div class="clear"> </div>
         </div>
 
-        <div class="listWrap" ng-if="newsItems">
-            <div class="item" ng-repeat="newsItem in newsItems">
-               <a href="#"><img src="content/img/empty.png" ></a>
-               <p><pre>{{newsItem | json}}</pre></p>
+        <div>
+            <div class="desktopMenu">
+                <ul>
+                    <li><a href="#"><span class="selected">Newsfeed</span></a></li>
+                    <li><a href="#"><span>Achievements</span></a></li>
+                    <li><a href="#"><span>Friends</span></a></li>
+                    <li><a href="#"><span>More</span></a></li>
+                </ul>
             </div>
+            <div class="listWrap" ng-if="newsItems">
+                <div class="item" ng-repeat="newsItem in newsItems">
+                   <a href="#"><img src="content/img/empty.png" ></a>
+                   <p><pre>{{newsItem | json}}</pre></p>
+                </div>
+            </div>
+            <div class="clear"> </div>
         </div>
-        <div class="clear"> </div>
     </div>
 
     <div class="bottomMenu">

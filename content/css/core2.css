@@ -336,6 +336,9 @@ h1{
     -moz-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
     -webkit-box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
     box-shadow:  1px 1px 5px rgba(0,0,0,0.5);
+
+    float: right;
+    width: 70%;
 }
 
 .listWrap .item{
@@ -368,7 +371,7 @@ h1{
 }
 
 
-.navigationMenu{
+.navigation{
     padding: 10px;
     border-bottom: 1px solid #5c5c5b;
     width: 100%;
@@ -405,22 +408,67 @@ h1{
 
 }
 
+.desktopMenu{
+    float: left;
+    width: 28%;
+}
+
+.desktopMenu ul li{
+    margin-bottom: 2px;
+}
+
+.desktopMenu ul li span{
+    width: 100%;
+    display: block;
+    background-color: #444444;
+    padding: 10px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.desktopMenu ul li span:hover,
+.desktopMenu ul li span.selected{
+    background-color: #232123;
+}
+
+
+.desktopMenu ul li:first-child span{
+    border-top-left-radius: 3px;
+    -webkit-border-top-left-radius: 3px;
+    -moz-border-radius-topleft: 3px;
+
+    border-top-right-radius: 3px;
+    -webkit-border-top-right-radius: 3px;
+    -moz-border-radius-topright: 3px;
+}
+
+.desktopMenu ul li:last-child span{
+    border-bottom-left-radius: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    -moz-border-radius-bottomleft: 3px;
+
+    border-bottom-right-radius: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+    -moz-border-radius-bottomright: 3px;
+}
+
+.desktopMenu ul li a{
+    color: #ffffff;
+    font-family: Verdana;
+    font-size: 14px;
+    text-decoration: none;
+}
+
 .bottomMenu{
-    position: absolute;
+    display: none;
+    position: fixed;
     bottom: 0px;
     z-index: 2;
     border-top: 1px solid #000000;
     background-color: #131213;
     text-align: left;
     width: 100%;
-
-    border-bottom-left-radius: 10px;
-    -webkit-border-bottom-left-radius: 10px;
-    -moz-border-radius-bottomleft: 10px;
-
-    border-bottom-right-radius: 10px;
-    -webkit-border-bottom-right-radius: 10px;
-    -moz-border-radius-bottomright: 10px;
 }
 
 .bottomMenu ul li{
@@ -559,13 +607,21 @@ input.button:focus{
     }
     html>body .container{height:auto; min-height:100%;}
 
-    .topMenu,
-    .bottomMenu{
+    .topMenu{
         border-radius: 0px;
     }
 
+    .desktopMenu{
+        display: none;
+    }
+
     .bottomMenu{
-        position: fixed;
+        display: inherit;
+    }
+
+    .listWrap{
+        float: none;
+        width: 100%;
     }
 }
 
