@@ -75,9 +75,10 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
                 if (response.authResponse) {
                     FB.api('/me', function(apiResponse) {
                         if (apiResponse) {
-                            checkFBUserOnServer(apiResponse.email, function(id, ok) {
+                            $scope.emailAddress = apiResponse.email;
+                            checkFBUserOnServer(function(id, ok) {
                                 if (ok) {
-                                    openNewsfeed()
+                                    openNewsfeed();
                                 } else {
                                     $scope.fbConnectError = true;
                                 }
@@ -93,20 +94,12 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
         }
     }
 
-    function checkFBUserOnServer(username, callback) {
-        var data = 'username=' + username
-        var jqxhr = $http.post('/checkFBUser', {
-            type: 'GET',
-            //data: data,
-            //dataType: "json",
-            params: {
-                username : username
-            },
-            statusCode: {
-                200: function(returnData) { callback(returnData, true) },
-                404: function() { callback(jqxhr.responseText , false) }
-            }
-        })
+    function checkFBUserOnServer(callback) {
+        $http.post('/api/login2/checkFBUser', { email : $scope.emailAddress }).success(function (result) {
+            callback(result, true);
+        }).error(function(result) {
+            callback(result , false) //TODO: erik, get the previously jqxhr.responseText and send as data
+        });
     }
 
     init();
