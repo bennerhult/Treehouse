@@ -82,9 +82,9 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
                             $scope.emailAddress = apiResponse.email;
                             //alert("fb email: " +  apiResponse.email)
                             $http.post('/api/login2/signinFB', { email : $scope.emailAddress }).success(function (result) {
-                                alert(thSettings.getDomain() + 'newsfeed2')
+                                alert('newsfeed2')
 
-                                response.redirect(302, thSettings.getDomain() + 'newsfeed2');
+                                response.redirect(302, '/newsfeed2');
                                 //callback(result, true);
                             }).error(function(result) {
                                 //TODO: How to present to user
