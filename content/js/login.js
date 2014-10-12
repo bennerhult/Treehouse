@@ -82,7 +82,6 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
                         if (apiResponse) {
                             $scope.emailAddress = apiResponse.email;
                             $http.post('/api/login2/signinFB', { email : $scope.emailAddress }).success(function (result) {
-                                //window.location = 'http://test.treehouse.io/newsfeed2'; //TODO pass url from loginPage.js, for correct domain
                                 window.location = result.url;
                             }).error(function(result) {
                                 //TODO: How to present to user

@@ -42,7 +42,6 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                     respondWithJson(response, { isNewUser : true });
                 }
                 request.session.currentUser = myUser;
-               //respondWithJson(response, { isNewUser : false });
                 respondWithJson(response, { url : thSettings.getDomain() + 'newsfeed2', isNewUser : false });
             })
         });
