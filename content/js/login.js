@@ -74,7 +74,8 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
         if ($scope.isAppMode || $scope.isiOs) {
             window.location = 'https://m.facebook.com/dialog/oauth?client_id=480961688595420&response_type=code&redirect_uri=http://www.treehouse.io/fbAppConnect&scope=email';
         } else {
-
+            //TODO fix rememberme function
+            //TODO what prevents a user from accessing newsfeed2 without being logged in?
             FB.login(function(response) {
                 if (response.authResponse) {
                     FB.api('/me', function(apiResponse) {
