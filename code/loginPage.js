@@ -29,34 +29,8 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
             });
         });
 
-        /*app.get('/fbAppConnect', function(request, response){
-            var url_parts = url.parse(request.url, true)
-            var code = url_parts.query.code
-            var accessTokenLink= 'https://graph.facebook.com/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://www.treehouse.io/fbAppConnect&code=' + code
-            var requestModule = require('request');
-            requestModule.get(accessTokenLink, function (accessTokenError, accessTokenResponse, accessTokenBody) {
-                if (!accessTokenError && accessTokenResponse.statusCode == 200) {
-                    var accessToken  = accessTokenBody.substring(accessTokenBody.indexOf('='))
-                    var graphLink = 'https://graph.facebook.com/me?access_token' + accessToken
-                    requestModule.get(graphLink, function (graphError, graphResponse, graphBody) {
-                        if (!graphError && graphResponse.statusCode == 200) {
-                            var graph_parts = JSON.parse(graphBody)
-                            var email  = graph_parts.email
-                            user.User.findOne({ username: email }, function(err,myUser) {
-                                if (err) {
-                                    console.log(err)
-                                }
-                                request.session.currentUser = myUser;
-                                response.cookie('rememberme', loginToken.cookieValue(data.token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-                                response.redirect(302, thSettings.getDomain() + 'newsfeed2');
-                            })
-                        }
-                    })
-                }
-            })
-        })*/
-
         app.post('/api/login2/signinFB', function (request, response){
+            console.log("signinFB");
             var url_parts = url.parse(request.url, true)
             var code = url_parts.query.code
             var accessTokenLink= 'https://graph.facebook.com/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://www.treehouse.io/fbAppConnect&code=' + code
@@ -66,6 +40,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                     var accessToken  = accessTokenBody.substring(accessTokenBody.indexOf('='))
                     var graphLink = 'https://graph.facebook.com/me?access_token' + accessToken
                     requestModule.get(graphLink, function (graphError, graphResponse, graphBody) {
+                        console.log("Grapherror: " + graphError)
                         if (!graphError && graphResponse.statusCode == 200) {
                             var graph_parts = JSON.parse(graphBody)
                             var email  = graph_parts.email
@@ -73,10 +48,10 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                                 if (err) {
                                     console.log(err)
                                 }
-                                request.session.currentUser = myUser;
-                                response.cookie('rememberme', loginToken.cookieValue(data.token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
                                 //response.redirect(302, thSettings.getDomain() + 'newsfeed2');
                                 if (myUser) {
+                                    request.session.currentUser = myUser;
+                                    response.cookie('rememberme', loginToken.cookieValue(data.token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
                                     respondWithJson(response, { isNewUser : false  });
                                 } else {
                                     respondWithJson(response, { isNewUser : true  }); //TODO create new user

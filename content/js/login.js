@@ -71,16 +71,20 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
         if ($scope.isAppMode || $scope.isiOs) {
             window.location = "https://m.facebook.com/dialog/oauth?client_id=480961688595420&response_type=code&redirect_uri=http://www.treehouse.io/fbAppConnect&scope=email"
         } else {
+
             FB.login(function(response) {
+                alert("calling2")
                 if (response.authResponse) {
+                    alert("calling3")
                     FB.api('/me', function(apiResponse) {
                         if (apiResponse) {
                             $scope.emailAddress = apiResponse.email;
+                            alert("calling4: " +  apiResponse.email)
                             $http.post('/api/login2/signinFB', { email : $scope.emailAddress }).success(function (result) {
                                 alert("true")
                                 //callback(result, true);
                             }).error(function(result) {
-                                alert("false")
+                                alert("false: " + result)
                                 //TODO: How to present to user
                             });
                         } else {
@@ -88,6 +92,7 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
                         }
                     })
                 } else {
+                    alert("closed")
                     $scope.userClosedFBDialogue = true;
                 }
             }, {scope: 'email'});
