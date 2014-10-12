@@ -56,7 +56,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
             })
         })*/
 
-        app.get('/api/login2/signinFB', function (request, response){
+        app.post('/api/login2/signinFB', function (request, response){
             if(!request.body.email) {
                 respondWithJson(response, { errMsg : 'Login failed (2)' });
                 return;
