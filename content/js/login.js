@@ -80,7 +80,7 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
                     FB.api('/me', function(apiResponse) {
                         if (apiResponse) {
                             $scope.emailAddress = apiResponse.email;
-                            alert("fb email: " +  apiResponse.email)
+                            //alert("fb email: " +  apiResponse.email)
                             $http.post('/api/login2/signinFB', { email : $scope.emailAddress }).success(function (result) {
                                 alert("true")
                                 //callback(result, true);
