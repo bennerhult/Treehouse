@@ -29,23 +29,21 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
             });
         });
 
-        app.post('/api/login2/signinFB', function (request, response){
+        app.get('/api/login2/signinFB', function (request, response){
             if(!request.body.email) {
-                respondWithJson(response, { errMsg : 'Login failed (2)' });
-                return;
+               // respondWithJson(response, { errMsg : 'Login failed (2)' });
+               // return;
+                //TODO how to handle this
             }
             var username = request.body.email.toLowerCase();
             user.User.findOne({ username: username }, function(err, myUser) {
-                if (myUser) {
-                    request.session.currentUser = myUser;
-                    //TODO set cookie
-                    //response.cookie('rememberme', loginToken.cookieValue(data.token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-                    //response.redirect(302, thSettings.getDomain() + 'newsfeed2');
-                    respondWithJson(response, { isNewUser : false });
-                } else {
-                    respondWithJson(response, { isNewUser : true });
-                    //response.redirect(302, thSettings.getDomain() + 'error?t=login'); //TODO: Build this page with the old error message under the login template
+                if (!myUser) {
+                    //TODO: create new user
                 }
+                request.session.currentUser = myUser;
+                response.cookie('rememberme', loginToken.cookieValue(data.token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
+                response.redirect(302, thSettings.getDomain() + 'newsfeed2');
+                //respondWithJson(response, { isNewUser : false });
             })
         });
 

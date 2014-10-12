@@ -72,7 +72,7 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
         }
         $scope.userClosedFBDialogue = false;
         if ($scope.isAppMode || $scope.isiOs) {
-            window.location = "https://m.facebook.com/dialog/oauth?client_id=480961688595420&response_type=code&redirect_uri=http://www.treehouse.io/fbAppConnect&scope=email"
+            window.location = 'https://m.facebook.com/dialog/oauth?client_id=480961688595420&response_type=code&redirect_uri=http://www.treehouse.io/fbAppConnect&scope=email';
         } else {
 
             FB.login(function(response) {
@@ -80,12 +80,8 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
                     FB.api('/me', function(apiResponse) {
                         if (apiResponse) {
                             $scope.emailAddress = apiResponse.email;
-                            //alert("fb email: " +  apiResponse.email)
-                            $http.post('/api/login2/signinFB', { email : $scope.emailAddress }).success(function (result) {
-                                alert('newsfeed2')
-
-                                response.redirect(302, '/newsfeed2');
-                                //callback(result, true);
+                            $http.get('/api/login2/signinFB', { email : $scope.emailAddress }).success(function (result) {
+                                //window.location =  '/newsfeed2';
                             }).error(function(result) {
                                 //TODO: How to present to user
                             });
