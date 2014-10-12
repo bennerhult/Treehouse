@@ -30,18 +30,23 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
         });
 
         app.get('/api/login2/signinFB', function (request, response){
-            if(!request.body.email) {
+            /*if(!request.body.email) {
                // respondWithJson(response, { errMsg : 'Login failed (2)' });
                // return;
-                //TODO how to handle this
-            }
-            var username = request.body.email.toLowerCase();
+                //TODO how to handle this?
+            }*/
+
+            var url_parts = url.parse(request.url, true)
+            var username = url_parts.query.email.toLowerCase()
+
+            //var username = request.body.email.toLowerCase();
             user.User.findOne({ username: username }, function(err, myUser) {
                 if (!myUser) {
                     //TODO: create new user
                 }
                 request.session.currentUser = myUser;
-                response.cookie('rememberme', loginToken.cookieValue(data.token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
+                //TODO set cookie
+                //response.cookie('rememberme', loginToken.cookieValue(data.token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
                 response.redirect(302, thSettings.getDomain() + 'newsfeed2');
                 //respondWithJson(response, { isNewUser : false });
             })
