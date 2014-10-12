@@ -36,7 +36,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
             }
             var username = request.body.email.toLowerCase();
             user.User.findOne({ username: username }, function(err, myUser) {
-                response.cookie('rememberme', loginToken.cookieValue(data.token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
+                //response.cookie('rememberme', loginToken.cookieValue(data.token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
                 if (!myUser) {
                     //TODO create new user
                     respondWithJson(response, { isNewUser : true });
@@ -100,7 +100,6 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                         );
                     };
                 }
-
                 loginToken.createToken(normalizedUsername, onTokenCreated);
             });
         });
