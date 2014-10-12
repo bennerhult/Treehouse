@@ -81,7 +81,7 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
                         if (apiResponse) {
                             $scope.emailAddress = apiResponse.email;
                             $http.post('/api/login2/signinFB', { email : $scope.emailAddress }).success(function (result) {
-                                //window.location =  'http://test.treehouse.io/newsfeed2';
+                                window.location = 'http://test.treehouse.io/newsfeed2';
                             }).error(function(result) {
                                 //TODO: How to present to user
                             });
