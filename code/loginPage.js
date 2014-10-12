@@ -40,8 +40,8 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                     request.session.currentUser = myUser;
                     //TODO set cookie
                     //response.cookie('rememberme', loginToken.cookieValue(data.token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-                    response.redirect(302, thSettings.getDomain() + 'newsfeed2');
-                    //respondWithJson(response, { isNewUser : false });
+                    //response.redirect(302, thSettings.getDomain() + 'newsfeed2');
+                    respondWithJson(response, { isNewUser : false });
                 } else {
                     respondWithJson(response, { isNewUser : true });
                     //response.redirect(302, thSettings.getDomain() + 'error?t=login'); //TODO: Build this page with the old error message under the login template
