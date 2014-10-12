@@ -78,7 +78,7 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
                             $scope.emailAddress = apiResponse.email;
                             $http.post('/api/login2/signinFB', { email : $scope.emailAddress }).success(function (result) {
                                 alert("true")
-                                callback(result, true);
+                                //callback(result, true);
                             }).error(function(result) {
                                 alert("false")
                                 //TODO: How to present to user

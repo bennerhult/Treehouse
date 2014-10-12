@@ -29,7 +29,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
             });
         });
 
-        app.get('/fbAppConnect', function(request, response){
+        /*app.get('/fbAppConnect', function(request, response){
             var url_parts = url.parse(request.url, true)
             var code = url_parts.query.code
             var accessTokenLink= 'https://graph.facebook.com/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://www.treehouse.io/fbAppConnect&code=' + code
@@ -54,9 +54,9 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                     })
                 }
             })
-        })
+        })*/
 
-        /*app.get('/signinFB', function (request, response){
+        app.get('/signinFB', function (request, response){
             if(!request.body.email) {
                 respondWithJson(response, { errMsg : 'Login failed (2)' });
                 return;
@@ -73,7 +73,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                 }
             })
         });
-*/
+
         app.post('/api/login2/authenticate', function (request, response) {
             if(!request.body.email) {
                 respondWithJson(response, { errMsg : 'Login failed (1)' });
