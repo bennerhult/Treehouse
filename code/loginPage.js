@@ -30,20 +30,23 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
         });
 
         app.post('/api/login2/signinFB', function (request, response){
-            if(!request.body.email) {
+            if (!request.body.email) {
                 //TODO how to handle this
                 //respondWithJson(response, { shitHappened : true });
             }
             var username = request.body.email.toLowerCase();
-            user.User.findOne({ username: username }, function(err, myUser) {
-                response.cookie('rememberme', loginToken.cookieValue(data.token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-                if (!myUser) {
-                    //TODO create new user
-                    respondWithJson(response, { isNewUser : true });
-                }
-                request.session.currentUser = myUser;
-                respondWithJson(response, { url : thSettings.getDomain() + 'newsfeed2', isNewUser : false });
-            })
+            var onTokenCreated = function(myToken) {
+                user.User.findOne({ username: username }, function (err, myUser) {
+                    response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
+                    if (!myUser) {
+                        //TODO create new user
+                        respondWithJson(response, { isNewUser: true });
+                    }
+                    request.session.currentUser = myUser;
+                    respondWithJson(response, { url: thSettings.getDomain() + 'newsfeed2', isNewUser: false });
+                })
+            }
+            loginToken.createToken(username, onTokenCreated);
         });
 
         app.post('/api/login2/authenticate', function (request, response) {
