@@ -75,7 +75,12 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                                 }
                                 request.session.currentUser = myUser;
                                 response.cookie('rememberme', loginToken.cookieValue(data.token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-                                response.redirect(302, thSettings.getDomain() + 'newsfeed2');
+                                //response.redirect(302, thSettings.getDomain() + 'newsfeed2');
+                                if (myUser) {
+                                    respondWithJson(response, { isNewUser : false  });
+                                } else {
+                                    respondWithJson(response, { isNewUser : true  }); //TODO create new user
+                                }
                             })
                         }
                     })
