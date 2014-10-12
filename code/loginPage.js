@@ -29,7 +29,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
             });
         });
 
-        app.post('/api/login2/signinFB', function (request, response){
+        /*app.post('/api/login2/signinFB', function (request, response){
             console.log("signinFB");
             var url_parts = url.parse(request.url, true)
             var code = url_parts.query.code
@@ -61,25 +61,28 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                     })
                 }
             })
-        });
-        /*app.post('/api/login2/signinFB', function (request, response){
+        });*/
+        app.post('/api/login2/signinFB', function (request, response){
             if(!request.body.email) {
                 respondWithJson(response, { errMsg : 'Login failed (2)' });
                 return;
             }
             var username = request.body.email.toLowerCase();
             user.User.findOne({ username: username }, function(err, myUser) {
-                var normalizedUsername = username;
+                //var normalizedUsername = username;
                 if (myUser) {
-                    normalizedUsername = myUser.username;
-                    request.session.currentUser = data.user;
-                    response.cookie('rememberme', loginToken.cookieValue(data.token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-                    response.redirect(302, thSettings.getDomain() + 'newsfeed2');
+                    //normalizedUsername = myUser.username;
+                    request.session.currentUser = myUser;
+                    //TODO set cookie
+                    //response.cookie('rememberme', loginToken.cookieValue(data.token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
+                    //response.redirect(302, thSettings.getDomain() + 'newsfeed2');
+                    respondWithJson(response, { isNewUser : false });
                 } else {
-                    response.redirect(302, thSettings.getDomain() + 'error?t=login'); //TODO: Build this page with the old error message under the login template
+                    respondWithJson(response, { isNewUser : true });
+                    //response.redirect(302, thSettings.getDomain() + 'error?t=login'); //TODO: Build this page with the old error message under the login template
                 }
             })
-        });*/
+        });
 
         app.post('/api/login2/authenticate', function (request, response) {
             if(!request.body.email) {
@@ -116,7 +119,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                             "<html>Click <a href='" + createSignupLink(myToken.token) + "'>here</a> to sign in to Treehouse.</html>",
                             'Go to ' + createSignupLink(myToken.token) +  ' to sign in to Treehouse!',
                              function() {
-                                 respondWithJson(response, { isNewUser : false  });
+                                 respondWithJson(response, { isNewUser : false });
                              }
                         );
                     };
@@ -129,7 +132,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                             "<html>Click <a href='" + createSignupLink(myToken.token) + "'>here</a> to start using Treehouse.</html>",
                             'Go to ' + createSignupLink(myToken.token) + ' to start using Treehouse!',
                             function() {
-                                respondWithJson(response, { isNewUser : true  });
+                                respondWithJson(response, { isNewUser : true });
                             }
                         );
                     };
