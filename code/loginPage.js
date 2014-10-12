@@ -31,8 +31,8 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
 
         app.post('/api/login2/signinFB', function (request, response){
             if (!request.body.email) {
-                //TODO how to handle this
-                //respondWithJson(response, { shitHappened : true });
+                respondWithJson(response, { errMsg : 'Login failed (2)' });
+                return;
             }
             var username = request.body.email.toLowerCase();
             var onTokenCreated = function(myToken) {
