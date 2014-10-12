@@ -29,6 +29,51 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
             });
         });
 
+        app.get('/fbAppConnect', function(request, response){
+            var url_parts = url.parse(request.url, true)
+            var code = url_parts.query.code
+            var accessTokenLink= 'https://graph.facebook.com/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://www.treehouse.io/fbAppConnect&code=' + code
+            var requestModule = require('request');
+            requestModule.get(accessTokenLink, function (accessTokenError, accessTokenResponse, accessTokenBody) {
+                if (!accessTokenError && accessTokenResponse.statusCode == 200) {
+                    var accessToken  = accessTokenBody.substring(accessTokenBody.indexOf('='))
+                    var graphLink = 'https://graph.facebook.com/me?access_token' + accessToken
+                    requestModule.get(graphLink, function (graphError, graphResponse, graphBody) {
+                        if (!graphError && graphResponse.statusCode == 200) {
+                            var graph_parts = JSON.parse(graphBody)
+                            var email  = graph_parts.email
+                            user.User.findOne({ username: email }, function(err,myUser) {
+                                if (err) {
+                                    console.log(err)
+                                }
+                                request.session.currentUser = myUser;
+                                response.cookie('rememberme', loginToken.cookieValue(data.token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
+                                response.redirect(302, thSettings.getDomain() + 'newsfeed2');
+                            })
+                        }
+                    })
+                }
+            })
+        })
+
+        /*app.get('/signinFB', function (request, response){
+            if(!request.body.email) {
+                respondWithJson(response, { errMsg : 'Login failed (2)' });
+                return;
+            }
+            var username = request.body.email.toLowerCase();
+            user.User.findOne({ username: username }, function(err, myUser) {
+                var normalizedUsername = username;
+                if (myUser) {
+                    request.session.currentUser = data.user;
+                    response.cookie('rememberme', loginToken.cookieValue(data.token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
+                    response.redirect(302, thSettings.getDomain() + 'newsfeed2');
+                } else {
+                    response.redirect(302, thSettings.getDomain() + 'error?t=login'); //TODO: Build this page with the old error message under the login template
+                }
+            })
+        });
+*/
         app.post('/api/login2/authenticate', function (request, response) {
             if(!request.body.email) {
                 respondWithJson(response, { errMsg : 'Login failed (1)' });

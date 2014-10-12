@@ -76,12 +76,10 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
                     FB.api('/me', function(apiResponse) {
                         if (apiResponse) {
                             $scope.emailAddress = apiResponse.email;
-                            checkFBUserOnServer(function(id, ok) {
-                                if (ok) {
-                                    openNewsfeed();
-                                } else {
-                                    $scope.fbConnectError = true;
-                                }
+                            $http.post('/api/login2/signinFB', { email : $scope.emailAddress }).success(function (result) {
+                                callback(result, true);
+                            }).error(function(result) {
+                                callback(result , false) //TODO: erik, get the previously jqxhr.responseText and send as data
                             });
                         } else {
                             $scope.fbConnectError = true;
@@ -92,14 +90,6 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
                 }
             }, {scope: 'email'});
         }
-    }
-
-    function checkFBUserOnServer(callback) {
-        $http.post('/api/login2/checkFBUser', { email : $scope.emailAddress }).success(function (result) {
-            callback(result, true);
-        }).error(function(result) {
-            callback(result , false) //TODO: erik, get the previously jqxhr.responseText and send as data
-        });
     }
 
     init();
