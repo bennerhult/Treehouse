@@ -80,8 +80,8 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
                     FB.api('/me', function(apiResponse) {
                         if (apiResponse) {
                             $scope.emailAddress = apiResponse.email;
-                            $http.get('/api/login2/signinFB', { email : $scope.emailAddress }).success(function (result) {
-                                //window.location =  '/newsfeed2';
+                            $http.post('/api/login2/signinFB', { email : $scope.emailAddress }).success(function (result) {
+                                window.location =  'http://test.treehouse.io/newsfeed2';
                             }).error(function(result) {
                                 //TODO: How to present to user
                             });
