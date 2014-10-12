@@ -66,7 +66,10 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
         return $scope.emailLoginForm.emailAddress.$invalid;
     };
 
-    $scope.loginUsingFacebook = function () {
+    $scope.loginUsingFacebook = function (evt) {
+        if(evt) {
+            evt.preventDefault();
+        }
         $scope.userClosedFBDialogue = false;
         if ($scope.isAppMode || $scope.isiOs) {
             window.location = "https://m.facebook.com/dialog/oauth?client_id=480961688595420&response_type=code&redirect_uri=http://www.treehouse.io/fbAppConnect&scope=email"
@@ -90,8 +93,7 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
                         }
                     })
                 } else {
-                    alert("closed")
-                    $scope.userClosedFBDialogue = true;
+                    $scope.userClosedFBDialogue = true; //TODO why is not error message shown on page?
                 }
             }, {scope: 'email'});
         }
