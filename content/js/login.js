@@ -72,7 +72,7 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
         }
         $scope.userClosedFBDialogue = false;
         if ($scope.isAppMode || $scope.isiOs) {
-            window.location = 'https://m.facebook.com/dialog/oauth?client_id=480961688595420&response_type=code&redirect_uri=' + document.domain + 'fbAppConnect&scope=email';
+            window.location = 'https://m.facebook.com/dialog/oauth?client_id=480961688595420&response_type=code&redirect_uri=http://' + document.domain + '/fbAppConnect&scope=email';
         } else {
             //TODO fix rememberme function
             //TODO what prevents a user from accessing newsfeed2 without being logged in?
