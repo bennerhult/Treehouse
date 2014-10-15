@@ -29,7 +29,6 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
             });
         });
 
-        //TODO: make this work, fb calls /fbAppConnect
         app.get('/fbAppConnect2', function (request, response){
             var url_parts = url.parse(request.url, true)
             var code = url_parts.query.code
