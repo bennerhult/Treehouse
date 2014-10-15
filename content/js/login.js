@@ -72,26 +72,28 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
         }
         $scope.userClosedFBDialogue = false;
         if ($scope.isAppMode || $scope.isiOs) {
+            //TODO: make this work, fb calls /fbAppConnect
             window.location = 'https://m.facebook.com/dialog/oauth?client_id=480961688595420&response_type=code&redirect_uri=http://' + document.domain + '/fbAppConnect&scope=email';
         } else {
             //TODO fix rememberme function
-            //TODO what prevents a user from accessing newsfeed2 without being logged in?
             FB.login(function(response) {
                 if (response.authResponse) {
                     FB.api('/me', function(apiResponse) {
                         if (apiResponse) {
-                            $scope.emailAddress = apiResponse.email;
-                            $http.post('/api/login2/signinFB', { email : $scope.emailAddress }).success(function (result) {
+                            $http.post('/api/login2/signinFB', { email : apiResponse.email }).success(function (result) {
                                 window.location = result.url;
                             }).error(function(result) {
-                                //TODO: How to present to user
+                                //TODO: present to user
+                                $scope.$apply();
                             });
                         } else {
                             $scope.fbConnectError = true;
+                            $scope.$apply();
                         }
                     })
                 } else {
-                    $scope.userClosedFBDialogue = true; //TODO why is not error message shown on page?
+                    $scope.userClosedFBDialogue = true;
+                    $scope.$apply();
                 }
             }, {scope: 'email'});
         }

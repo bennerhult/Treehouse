@@ -29,6 +29,10 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
             });
         });
 
+        function createSignupLink(email, token) {
+            return thSettings.getDomain() + "signin2?email=" + email + "&token=" + token;
+        }
+
         app.post('/api/login2/signinFB', function (request, response){
             if (!request.body.email) {
                 respondWithJson(response, { errMsg : 'Login failed (2)' });
@@ -43,7 +47,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                         respondWithJson(response, { isNewUser: true });
                     }
                     request.session.currentUser = myUser;
-                    respondWithJson(response, { url: thSettings.getDomain() + 'newsfeed2', isNewUser: false });
+                    respondWithJson(response, { url: createSignupLink(username, myToken.token) , isNewUser: false });
                 })
             }
             loginToken.createToken(username, onTokenCreated);
@@ -61,18 +65,14 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                     normalizedUsername = myUser.username;
                 }
 
-                function createSignupLink(token) {
-                    return thSettings.getDomain() + "signin2?email=" + normalizedUsername + "&token=" + token;
-                }
-
                 var onTokenCreated;
                 if(thSettings.isAutoLoginEnabled()) {
                     //Local testing - skip email and redirect to signup link directly
                     onTokenCreated = function (myToken) {
                          if (myUser) {
-                             respondWithJson(response, { url : createSignupLink(myToken.token), isNewUser : false });
+                             respondWithJson(response, { url : createSignupLink(normalizedUsername, myToken.token), isNewUser : false });
                          } else {
-                             respondWithJson(response, { url : createSignupLink(myToken.token), isNewUser : true });
+                             respondWithJson(response, { url : createSignupLink(normalizedUsername, myToken.token), isNewUser : true });
                          }
                     };
                 } else if (myUser) {
@@ -81,8 +81,8 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                         email.emailUser(
                             username,
                             'Sign in to Treehouse',
-                            "<html>Click <a href='" + createSignupLink(myToken.token) + "'>here</a> to sign in to Treehouse.</html>",
-                            'Go to ' + createSignupLink(myToken.token) +  ' to sign in to Treehouse!',
+                            "<html>Click <a href='" + createSignupLink(normalizedUsername, myToken.token) + "'>here</a> to sign in to Treehouse.</html>",
+                            'Go to ' + createSignupLink(normalizedUsername, myToken.token) +  ' to sign in to Treehouse!',
                              function() {
                                  respondWithJson(response, { isNewUser : false });
                              }
@@ -94,8 +94,8 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                         email.emailUser(
                             username,
                             'Welcome  to Treehouse',
-                            "<html>Click <a href='" + createSignupLink(myToken.token) + "'>here</a> to start using Treehouse.</html>",
-                            'Go to ' + createSignupLink(myToken.token) + ' to start using Treehouse!',
+                            "<html>Click <a href='" + createSignupLink(normalizedUsername, myToken.token) + "'>here</a> to start using Treehouse.</html>",
+                            'Go to ' + createSignupLink(normalizedUsername, myToken.token) + ' to start using Treehouse!',
                             function() {
                                 respondWithJson(response, { isNewUser : true });
                             }
