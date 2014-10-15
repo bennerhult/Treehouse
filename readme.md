@@ -103,7 +103,7 @@ Create a file in the same folder as app.js called run.bat (it's in .gitignore) w
     SET TH_AUTOLOGIN=true
     node app.js
 
-This will cause the server to send back the login link to the browser which will redirect the user directly there instead of sending an email. This setting only works in devlopment mode and you may need to clear the browser cache for this to work.
+This will cause the server to send back the login link to the browser which will redirect the user directly there instead of sending an email. This setting only works in development mode and you may need to clear the browser cache for this to work.
 
 To get all the way to zero click login, add a setting in localstorage called 'th_autologin_email' and put your email in there. All this does is have the email be autotyped in the email field and then simulates a click on the login button.
 
