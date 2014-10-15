@@ -29,6 +29,31 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
             });
         });
 
+        //TODO: make this work, fb calls /fbAppConnect
+        app.get('/fbAppConnect2', function (request, response){
+            var url_parts = url.parse(request.url, true)
+            var code = url_parts.query.code
+            var accessTokenLink= 'https://graph.facebook.com/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=' + thSettings.getDomain()+ 'fbAppConnec2t&code=' + code
+            var requestModule = require('request');
+            requestModule.get(accessTokenLink, function (accessTokenError, accessTokenResponse, accessTokenBody) {
+                if (!accessTokenError && accessTokenResponse.statusCode == 200) {
+                    var accessToken  = accessTokenBody.substring(accessTokenBody.indexOf('='))
+                    var graphLink = 'https://graph.facebook.com/me?access_token' + accessToken
+                    requestModule.get(graphLink, function (graphError, graphResponse, graphBody) {
+                        if (!graphError && graphResponse.statusCode == 200) {
+                            var graph_parts = JSON.parse(graphBody)
+                            var email  = graph_parts.email
+                            user.User.findOne({ username: email }, function(err,myUser) {
+                                request.session.currentUser = myUser;
+                                response.cookie('rememberme', loginToken.cookieValue(accessToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
+                                response.redirect(302, thSettings.getDomain() + 'newsfeed2');
+                            })
+                        }
+                    })
+                }
+            })
+        });
+
         function createSignupLink(email, token) {
             return thSettings.getDomain() + "signin2?email=" + email + "&token=" + token;
         }
@@ -55,7 +80,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
 
         app.post('/api/login2/authenticate', function (request, response) {
             if(!request.body.email) {
-                respondWithJson(response, { errMsg : 'Login failed (1)' });
+                respondWithJson(response, { errMsg : 'Login failed (3)' });
                 return;
             }
             var username = request.body.email.toLowerCase();
