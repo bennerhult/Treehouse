@@ -62,9 +62,11 @@
                             <li><input type="email" class="formstyle" placeholder="email" name="emailAddress" ng-model="emailAddress" required></li>
                             <li><input type="button" class="button" value="Sign in / Sign up" ng-click="loginWithEmail($event)"></li>
                         </ul>
-                        <div ng-show="isEmailInvalidShown()" class="message"><p>First law of Treehouse: First you type, then you press</p></div>
+                        <div ng-show="isEmailInvalidShown()" class="message"><p>First law of Treehouse: First you type, then you press.</p></div>
                     </form>
                 </div>
+
+                <div ng-show="authenticationFailure" class="message"><p>Oops! Something really, really bad just happened. Run and hide!</p></div>
                 <div ng-show="isNewUser" class="message"><p>We just sent you an email. Therein lies a link. Click it and you shall enter!</p></div>
                 <div ng-show="isReturningUser" class="message"><p>We just sent you the old Treehouse email. Fetch email. Click link!</p></div>
             </div>

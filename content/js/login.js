@@ -37,18 +37,18 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
             evt.preventDefault();
         }
 
-        $scope.hasLoginBeenClicked = true;
-
         if($scope.emailLoginForm.$invalid) {
             return;
         }
 
+        $scope.authenticationFailure = false;
+        $scope.hasLoginBeenClicked = true;
         $scope.isLoading = true;
 
         $http.post('/api/login2/authenticate', { email : $scope.emailAddress }).success(function (result) {
             $scope.isLoading = false;
             if(result.errMsg) {
-                console.log(result.errMsg); //TODO: How to present to user
+                $scope.authenticationFailure = true;
             } else if(result.url) {
                 document.location =  result.url;
             } else if (result.isNewUser) {
@@ -70,6 +70,7 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
         if(evt) {
             evt.preventDefault();
         }
+        $scope.fbConnectError = false;
         $scope.userClosedFBDialogue = false;
         if ($scope.isAppMode || $scope.isiOs) {
             //TODO: make this work, fb calls /fbAppConnect
@@ -83,7 +84,7 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
                             $http.post('/api/login2/signinFB', { email : apiResponse.email }).success(function (result) {
                                 window.location = result.url;
                             }).error(function(result) {
-                                //TODO: present to user
+                                $scope.fbConnectError = true;
                                 $scope.$apply();
                             });
                         } else {
