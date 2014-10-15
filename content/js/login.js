@@ -72,6 +72,7 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
         }
         $scope.fbConnectError = false;
         $scope.userClosedFBDialogue = false;
+        $scope.isAppMode //just for testing ios version on pc
         if ($scope.isAppMode || $scope.isiOs) {
             window.location = 'https://m.facebook.com/dialog/oauth?client_id=480961688595420&response_type=code&redirect_uri=http://' + document.domain + '/fbAppConnect2&scope=email';
         } else {
