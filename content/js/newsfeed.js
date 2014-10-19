@@ -5,4 +5,9 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http) {
         $scope.userEmail = result.userEmail;
         $scope.isLoading = false;
     });
+
+    $scope.gotoAchivement = function(evt, newsItem) {
+        evt.preventDefault();
+        console.log(newsItem); //TODO: Send the user to the clicked achievemetn (our own or the other users?)
+    }
 });
