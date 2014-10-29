@@ -75,7 +75,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
             var onTokenCreated = function(myToken) {
                 user.User.findOne({ username: username }, function (err, myUser) {
                     if (!myUser) {
-                        //TODO create user
+                        //TODO create user!
                         user.createUser(username, function (newUser,err) {
                             if (err) {
                                 respondWithJson(response, {errMsg: 'There was a problem creating your account. Contact staff@treehouse.io for more information.'})
