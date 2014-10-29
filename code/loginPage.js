@@ -24,7 +24,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                 } else if (!isAuthenticated) {
                     response.redirect(302, thSettings.getDomain() + 'login2');
                 } else {
-                    sendUserToDefaultPage(response, data.user, data.token)
+                    sendUserToDefaultPage(request, response, data.user, data.token)
                 }
             });
         });
@@ -43,7 +43,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                             var graph_parts = JSON.parse(graphBody)
                             var email  = graph_parts.email
                             user.User.findOne({ username: email }, function(err,myUser) {
-                                sendUserToDefaultPage(response, myUser, accessToken);
+                                sendUserToDefaultPage(request, response, myUser, accessToken);
                             })
                         }
                     })
@@ -55,7 +55,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
             return thSettings.getDomain() + "signin2?email=" + email + "&token=" + token;
         }
 
-        function sendUserToDefaultPage (response, user, token) {
+        function sendUserToDefaultPage (request, response, user, token) {
             setRememberMeCookie(response, token);
             request.session.currentUser = user;
             response.redirect(302, thSettings.getDomain() + 'newsfeed2');
@@ -80,7 +80,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                                 respondWithJson(response, {errMsg: 'There was a problem creating your account. Contact staff@treehouse.io for more information.'})
                             } else {
                                 loginToken.createToken(username, function (myToken) {
-                                    sendUserToDefaultPage(response, newUser, myToken);
+                                    sendUserToDefaultPage(request, response, newUser, myToken);
                                 })
                             }
                         });
