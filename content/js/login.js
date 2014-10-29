@@ -81,7 +81,8 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
                         if (apiResponse) {
                             $http.post('/api/login2/signinFB', { email : apiResponse.email }).success(function (result) {
                                 window.location = result.url;
-                            }).error(function() {
+                            }).error(function(errorMessage) {
+                                console.log(errorMessage)
                                 $scope.fbConnectError = true;
                                 $scope.$apply();
                             });
