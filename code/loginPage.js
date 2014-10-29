@@ -57,7 +57,6 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
 
         function sendUserToDefaultPage (response, user, token) {
             setRememberMeCookie(response, token);
-            response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
             request.session.currentUser = user;
             response.redirect(302, thSettings.getDomain() + 'newsfeed2');
         }
