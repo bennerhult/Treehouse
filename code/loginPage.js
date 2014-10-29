@@ -9,7 +9,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
 
     function registerHandlers() {
         app.get('/login2', function (request, response){
-            //TODO fix rememberme function
+            //TODO fix rememberme function!
             templates.serveHtmlRaw(response, './server-templates/login.html');
         });
 
