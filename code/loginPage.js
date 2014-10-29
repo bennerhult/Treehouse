@@ -62,7 +62,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
         }
 
         function setRememberMeCookie(response, token) {
-            response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
+            response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }); //604800000 equals one week
         }
 
         app.post('/api/login2/signinFB', function (request, response){
