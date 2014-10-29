@@ -1,6 +1,7 @@
 module.exports = function (app, templates, thSettings, user, loginToken, email, auth, url) {
     'use strict';
 
+    //TODO make sure an unauthenticated user does not get access
     function respondWithJson(response, data) {
         response.writeHead(200, {'content-type': 'application/json' });
         response.write(JSON.stringify(data));
@@ -23,9 +24,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                 } else if (!isAuthenticated) {
                     response.redirect(302, thSettings.getDomain() + 'login2');
                 } else {
-                    request.session.currentUser = data.user;
-                    response.cookie('rememberme', loginToken.cookieValue(data.token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-                    response.redirect(302, thSettings.getDomain() + 'newsfeed2');
+                    sendUserToDefaultPage(response, data.user, data.token)
                 }
             });
         });
@@ -44,9 +43,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                             var graph_parts = JSON.parse(graphBody)
                             var email  = graph_parts.email
                             user.User.findOne({ username: email }, function(err,myUser) {
-                                request.session.currentUser = myUser;
-                                response.cookie('rememberme', loginToken.cookieValue(accessToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-                                response.redirect(302, thSettings.getDomain() + 'newsfeed2');
+                                sendUserToDefaultPage(response, myUser, accessToken);
                             })
                         }
                     })
@@ -58,6 +55,17 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
             return thSettings.getDomain() + "signin2?email=" + email + "&token=" + token;
         }
 
+        function sendUserToDefaultPage (response, user, token) {
+            setRememberMeCookie(response, token);
+            response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
+            request.session.currentUser = user;
+            response.redirect(302, thSettings.getDomain() + 'newsfeed2');
+        }
+
+        function setRememberMeCookie(response, token) {
+            response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
+        }
+
         app.post('/api/login2/signinFB', function (request, response){
             if (!request.body.email) {
                 respondWithJson(response, { errMsg : 'Login failed (2)' });
@@ -66,11 +74,18 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
             var username = request.body.email.toLowerCase();
             var onTokenCreated = function(myToken) {
                 user.User.findOne({ username: username }, function (err, myUser) {
-                    response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
                     if (!myUser) {
-                        //TODO create new user
-                        respondWithJson(response, { isNewUser: true });
+                        user.createUser(username, function (newUser,err) {
+                            if (err) {
+                                respondWithJson(response, {errMsg: 'There was a problem creating your account. Contact staff@treehouse.io for more information.'})
+                            } else {
+                                loginToken.createToken(username, function (myToken) {
+                                    sendUserToDefaultPage(response, newUser, myToken);
+                                })
+                            }
+                        });
                     }
+                    setRememberMeCookie();
                     request.session.currentUser = myUser;
                     respondWithJson(response, { url: createSignupLink(username, myToken.token) , isNewUser: false });
                 })
