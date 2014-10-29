@@ -317,6 +317,25 @@ h1{
     box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
 }
 
+.newsUserArea p{
+    color: #ffffff;
+    text-align: left;
+    font-size: 12px;
+}
+
+.newsUserArea img{
+    float: left;
+    margin-right: 10px;
+    border: 3px solid #fff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
+    -moz-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+    -webkit-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+    box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+}
+
 .listWrap{
     margin-bottom: 50px;
 
@@ -347,10 +366,13 @@ h1{
     border-bottom: 1px solid #b7b6b6;
 }
 
+.listWrap .item p{
+    padding-bottom: 20px;
+}
+
 .listWrap .item:last-child{
     border: 0px;
 }
-
 
 .listWrap .item img{
     border: 3px solid #fff;
@@ -361,14 +383,8 @@ h1{
     -moz-box-shadow:  0px 0px 5px rgb(0,0,0);
     -webkit-box-shadow:  0px 0px 5px rgb(0,0,0);
     box-shadow:  0px 0px 5px rgb(0,0,0);
-    margin-bottom: 20px;
 }
 
-.listWrap .item img:hover{
-    -moz-box-shadow:  0px 0px 20px rgb(0,0,0);
-    -webkit-box-shadow:  0px 0px 20px rgb(0,0,0);
-    box-shadow:  0px 0px 20px rgb(0,0,0);
-}
 
 
 .navigation{
