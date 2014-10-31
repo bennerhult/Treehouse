@@ -85,9 +85,10 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                                 respondWithJson(response, {url: thSettings.getDomain() + 'newsfeed2'})
                             }
                         });
-                    }
-                    request.session.currentUser = myUser;
-                    respondWithJson(response, {url: thSettings.getDomain() + 'newsfeed2'})
+                    } else {
+                       request.session.currentUser = myUser;
+                       respondWithJson(response, {url: thSettings.getDomain() + 'newsfeed2'})
+                   }
                 })
             }
             loginToken.createToken(username, onTokenCreated);
