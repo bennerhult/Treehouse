@@ -65,16 +65,16 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
             response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }); //604800000 equals one week
         }
 
+        //TODO does not work!
         app.post('/api/login2/signinFB', function (request, response){
             if (!request.body.email) {
                 respondWithJson(response, { errMsg : 'Login failed (2)' });
                 return;
             }
             var username = request.body.email.toLowerCase();
-            var onTokenCreated = function(myToken) {
+            /*var onTokenCreated = function(myToken) {
                 user.User.findOne({ username: username }, function (err, myUser) {
                     if (!myUser) {
-                        //TODO create user!
                         user.createUser(username, function (newUser, err) {
                             if (err) {
                                 respondWithJson(response, {errMsg: 'There was a problem creating your account. Contact staff@treehouse.io for more information.'})
@@ -89,8 +89,9 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                     respondWithJson(response, {url: thSettings.getDomain() + 'newsfeed2'})
                     //respondWithJson(response, { url: createSignupLink(username, myToken.token) , isNewUser: false });
                 })
-            }
-            loginToken.createToken(username, onTokenCreated);
+            }*/
+            //loginToken.createToken(username, onTokenCreated);
+            respondWithJson(response, {url: thSettings.getDomain() + 'newsfeed2'})
         });
 
         app.post('/api/login2/authenticate', function (request, response) {
