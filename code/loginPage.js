@@ -79,9 +79,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                             if (err) {
                                 respondWithJson(response, {errMsg: 'There was a problem creating your account. Contact staff@treehouse.io for more information.'})
                             } else {
-                                loginToken.createToken(username, function (myToken) {
-                                    sendUserToDefaultPage(request, response, newUser, myToken);
-                                })
+                                sendUserToDefaultPage(request, response, newUser, myToken.token);
                             }
                         });
                     }
