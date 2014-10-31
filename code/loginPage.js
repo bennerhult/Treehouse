@@ -72,8 +72,10 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                 return;
             }
             var username = request.body.email.toLowerCase();
-            /*var onTokenCreated = function(myToken) {
-                user.User.findOne({ username: username }, function (err, myUser) {
+            var onTokenCreated = function(myToken) {
+                respondWithJson(response, {url: thSettings.getDomain() + 'newsfeed2'})
+
+                /*user.User.findOne({ username: username }, function (err, myUser) {
                     if (!myUser) {
                         user.createUser(username, function (newUser, err) {
                             if (err) {
@@ -88,10 +90,9 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                     request.session.currentUser = myUser;
                     respondWithJson(response, {url: thSettings.getDomain() + 'newsfeed2'})
                     //respondWithJson(response, { url: createSignupLink(username, myToken.token) , isNewUser: false });
-                })
-            }*/
-            //loginToken.createToken(username, onTokenCreated);
-            respondWithJson(response, {url: thSettings.getDomain() + 'newsfeed2'})
+                })*/
+            }
+            loginToken.createToken(username, onTokenCreated);
         });
 
         app.post('/api/login2/authenticate', function (request, response) {
