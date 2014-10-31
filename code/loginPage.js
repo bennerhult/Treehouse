@@ -66,12 +66,11 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
         }
 
         app.post('/api/login2/signinFB', function (request, response){
-            /*if (!request.body.email) {
+            if (!request.body.email) {
                 respondWithJson(response, { errMsg : 'Login failed (2)' });
                 return;
-            }*/
-            //var username = request.body.email.toLowerCase();
-            var username = request.query.username;
+            }
+            var username = request.body.email.toLowerCase();
             var onTokenCreated = function(myToken) {
                 user.User.findOne({ username: username }, function (err, myUser) {
                     if (!myUser) {
@@ -87,7 +86,8 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                     }
                     setRememberMeCookie();
                     request.session.currentUser = myUser;
-                    respondWithJson(response, { url: createSignupLink(username, myToken.token) , isNewUser: false });
+                    respondWithJson(response, {url: thSettings.getDomain() + 'newsfeed2'})
+                    //respondWithJson(response, { url: createSignupLink(username, myToken.token) , isNewUser: false });
                 })
             }
             loginToken.createToken(username, onTokenCreated);
