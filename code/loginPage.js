@@ -29,6 +29,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
             });
         });
 
+        //TODO create user if needed
         app.get('/fbAppConnect2', function (request, response){
             var url_parts = url.parse(request.url, true)
             var code = url_parts.query.code
@@ -64,7 +65,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
         function setRememberMeCookie(response, token) {
             response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }); //604800000 equals one week
         }
-        
+
         app.post('/api/login2/signinFB', function (request, response){
             if (!request.body.email) {
                 respondWithJson(response, { errMsg : 'Login failed (2)' });
