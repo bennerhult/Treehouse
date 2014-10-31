@@ -74,20 +74,18 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
             var username = request.body.email.toLowerCase();
             var onTokenCreated = function(myToken) {
                 user.User.findOne({ username: username }, function (err, myUser) {
-                   /* if (!myUser) {
+                   if (!myUser) {
                         user.createUser(username, function (newUser, err) {
                             if (err) {
                                 respondWithJson(response, {errMsg: 'There was a problem creating your account. Contact staff@treehouse.io for more information.'})
                             } else {
-                                respondWithJson(response, {url: thSettings.getDomain() + 'newsfeed2'})
-                                ////sendUserToDefaultPage(request, response, newUser, myToken.token);
+                                myUser = newUser;
                             }
                         });
-                    }*/
+                    }
                     setRememberMeCookie(response, myToken.token);
                     request.session.currentUser = myUser;
                     respondWithJson(response, {url: thSettings.getDomain() + 'newsfeed2'})
-                    //respondWithJson(response, { url: createSignupLink(username, myToken.token) , isNewUser: false });*/
                 })
             }
             loginToken.createToken(username, onTokenCreated);
