@@ -80,7 +80,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                                 respondWithJson(response, {errMsg: 'There was a problem creating your account. Contact staff@treehouse.io for more information.'})
                             } else {
                                 respondWithJson(response, {url: thSettings.getDomain() + 'newsfeed2'})
-                                //sendUserToDefaultPage(request, response, newUser, myToken.token);
+                                ////sendUserToDefaultPage(request, response, newUser, myToken.token);
                             }
                         });
                     }
