@@ -19,6 +19,8 @@ var app = express();
 //app.use(bodyParser.json({ extended: false }));
 //app.use(express.json());
 //app.use(express.urlencoded());
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 var MongoStore = require('connect-mongo')(session);
 
 if (typeof String.prototype.startsWith != 'function') {
