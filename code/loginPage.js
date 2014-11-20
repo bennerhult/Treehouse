@@ -44,7 +44,6 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                             var graph_parts = JSON.parse(graphBody)
                             var email  = graph_parts.email
                             user.User.findOne({ username: email }, function(err,myUser) {
-                                //sendUserToDefaultPage(request, response, myUser, accessToken);
                                 if (!myUser) {
                                     user.createUser(email, function (newUser, err) {
                                         if (err) {
@@ -56,8 +55,6 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                                 } else {
                                     sendUserToDefaultPage(request, response, myUser, accessToken);
                                 }
-
-
                             })
                         }
                     })

@@ -6,14 +6,18 @@ var fs = require('fs'),
     _ = require("underscore")._,
     mongoose = require('mongoose'),
     thSettings = require('./code/thSettings.js'),
-    email = require('./code/email.js');
+    email = require('./code/email.js'),
+    session = require('express-session'),
+    bodyParser = require('body-parser'),
+    cookieParser = require('cookie-parser');
 
-var db_uri = 'mongodb://localhost:27017/test'
-var domain = ''
-
-var app = express()
-
-var MongoStore = connectmongo(express);
+var db_uri = 'mongodb://localhost:27017/test';
+var domain = '';
+var app = express();
+//app.use(bodyParser());
+//app.use(express.json());
+//app.use(express.urlencoded());
+var MongoStore = require('connect-mongo')(session);
 
 if (typeof String.prototype.startsWith != 'function') {
     String.prototype.startsWith = function (str){
@@ -21,7 +25,8 @@ if (typeof String.prototype.startsWith != 'function') {
     }
 }
 
-app.configure('development', function() {
+var env = process.env.NODE_ENV || 'development';
+if ('development' == env) {
     domain = 'http://localhost:1337/'
     console.log("Treehouse in development mode.")
     thSettings.init({
@@ -29,9 +34,7 @@ app.configure('development', function() {
         autoLogin : process.env.TH_AUTOLOGIN && process.env.TH_AUTOLOGIN.toLowerCase() === 'true',
         domain : domain
     });
-})
-
-app.configure('test', function() {
+} else if ('test' == env)  {
     console.log("Treehouse in test mode (v2).")
     if(!process.env.TH_DOMAIN) {
         throw "Missing environment variable TH_DOMAIN which is required in test. Should be the equilvalent of what is 'http://www.treehouse.io' in production";
@@ -45,9 +48,7 @@ app.configure('test', function() {
         envName : 'test',
         domain : domain
     });
-})
-
-app.configure('production', function() {
+} else if ('production' == env) {
     domain = 'http://www.treehouse.io/'
     console.log("Treehouse in prod mode.")
     //noinspection JSUnresolvedVariable
@@ -56,24 +57,24 @@ app.configure('production', function() {
         envName : 'production',
         domain : domain
     });
-})
+}
 
 mongoose.connect(db_uri)
+app.use(cookieParser())
+app.use(session({
+    store: new MongoStore({
+        url: db_uri,
+        auto_reconnect: true,
+        clear_interval: 3600
+    }, function () {
+        console.log("DB connection open.");
+    }),
+    resave: true,
+    saveUninitialized: false,
+    cookie: { maxAge: new Date(Date.now() + 2 * 604800000)},
+    secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4'
+}))
 
-app.configure(function() {
-    app.use(express.cookieParser())
-    app.use(express.session({
-        store: new MongoStore({
-            url: db_uri,
-            auto_reconnect: true,
-            clear_interval: 3600
-        }, function () {
-            console.log("DB connection open.");
-        }),
-        cookie: { maxAge: new Date(Date.now() + 2 * 604800000)},
-        secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4'
-    }))
-})
 
 //Database models
 var user = require('./models/user.js'),
@@ -126,8 +127,6 @@ function authenticateFromLoginToken(request, response) {
         response.end('\n', 'utf-8')
     }
 }
-
-app.use(express.bodyParser());
 
 var port = process.env.PORT || 1337
 app.listen(port)
