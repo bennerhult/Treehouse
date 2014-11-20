@@ -14,11 +14,6 @@ var fs = require('fs'),
 var db_uri = 'mongodb://localhost:27017/test';
 var domain = '';
 var app = express();
-//app.use(bodyParser());
-//app.use(bodyParser.urlencoded({ extended: false }));
-//app.use(bodyParser.json({ extended: false }));
-//app.use(express.json());
-//app.use(express.urlencoded());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 var MongoStore = require('connect-mongo')(session);
