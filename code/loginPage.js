@@ -28,8 +28,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                 }
             });
         });
-
-        //TODO create user if needed
+        
         app.get('/fbAppConnect2', function (request, response){
             var url_parts = url.parse(request.url, true)
             var code = url_parts.query.code
