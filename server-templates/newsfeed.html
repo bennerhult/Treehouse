@@ -52,37 +52,39 @@
                 </ul>
             </div>
 
-            <div class="listWrap" ng-if="newsItems">
-                <div ng-repeat="newsItem in newsItems" ng-switch="newsItem.eventType" class="item">
+            <div class="content">
+                <div class="listWrap" ng-if="newsItems">
+                    <div ng-repeat="newsItem in newsItems" ng-switch="newsItem.eventType" class="item">
 
-                    <div ng-switch-when="info">
-                        <p>{{newsItem.newsJson}}</p>
-                    </div>
-
-                    <div ng-switch-when="friends">
-                        <div class="newsUserArea">
-                            <img src="content/img/user_has_no_image.jpg" >
-                            <p>{{newsItem.newsJson.AchieverName}}</p>
-                            <div class="clear"> </div>
+                        <div ng-switch-when="info">
+                            <p>{{newsItem.newsJson}}</p>
                         </div>
-                        <p>Became friends with {{newsItem.newsJson.FriendName}}</p>
-                        <img width="96" height="96" src="{{newsItem.newsJson.FriendImageURL}}" alt="{{newsItem.newsJson.AchieverName}} became friends with {{newsItem.newsJson.FriendName}}">
-                    </div>
 
-                    <div ng-switch-when="progress">
-                        <div class="newsUserArea">
-                            <img src="content/img/user_has_no_image.jpg" >
-                            <p>{{newsItem.newsJson.AchieverName}}</p>
-                            <div class="clear"> </div>
+                        <div ng-switch-when="friends">
+                            <div class="newsUserArea">
+                                <img src="content/img/user_has_no_image.jpg" >
+                                <p>{{newsItem.newsJson.AchieverName}}</p>
+                                <div class="clear"> </div>
+                            </div>
+                            <p>Became friends with {{newsItem.newsJson.FriendName}}</p>
+                            <img width="96" height="96" src="{{newsItem.newsJson.FriendImageURL}}" alt="{{newsItem.newsJson.AchieverName}} became friends with {{newsItem.newsJson.FriendName}}">
                         </div>
-                        <p>Has made a progress on "{{newsItem.newsJson.AchievementName}}"</p>
-                        <a ng-click="gotoAchivement($event, newsItem)">
-                            <img width="96" height="96" src="{{newsItem.newsJson.AchievementImageURL}}" alt="{{newsItem.newsJson.AchieverName}} progressed {{newsItem.newsJson.AchievementName}}">
-                        </a>
+
+                        <div ng-switch-when="progress">
+                            <div class="newsUserArea">
+                                <img src="content/img/user_has_no_image.jpg" >
+                                <p>{{newsItem.newsJson.AchieverName}}</p>
+                                <div class="clear"> </div>
+                            </div>
+                            <p>Has made a progress on "{{newsItem.newsJson.AchievementName}}"</p>
+                            <a ng-click="gotoAchivement($event, newsItem)">
+                                <img width="96" height="96" src="{{newsItem.newsJson.AchievementImageURL}}" alt="{{newsItem.newsJson.AchieverName}} progressed {{newsItem.newsJson.AchievementName}}">
+                            </a>
+                        </div>
+
+
+                        <div ng-switch-default><pre>{{newsItem | json}}</pre></div>
                     </div>
-
-
-                    <div ng-switch-default><pre>{{newsItem | json}}</pre></div>
                 </div>
             </div>
 
