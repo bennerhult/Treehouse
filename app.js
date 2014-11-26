@@ -130,7 +130,18 @@ function authenticateFromLoginToken(request, response) {
 var port = process.env.PORT || 1337
 app.listen(port)
 console.log('Treehouse server started on port ' + port)
-
+/*
+var Router = require('router')
+var router = new Router()
+router.use(function(req, res, next) {
+    console.log("Checking logged in status")
+    if(!req.user) { //req.user
+        res.redirect('/login2');
+    }
+    next();
+});
+app.use('/', router);
+*/
 app.get('/content/*', function(request, response){
     staticFiles.serve("." + request.url, response)
 })
