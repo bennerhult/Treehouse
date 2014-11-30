@@ -324,10 +324,12 @@ function signin(request, response) {
             response.writeHead(200, {'content-type': 'application/json' })
             response.write(JSON.stringify("There was a problem creating your account. Contact staff@treehouse.io for more information."))
             response.end('\n', 'utf-8')
-        } else {
+        } else if (isAuthenticated) {
             request.session.currentUser = data.user;
             response.cookie('rememberme', loginToken.cookieValue(data.token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-            requestHandlers.writeDefaultPage(request, response)
+            requestHandlers.writeDefaultPage(request, response);
+        } else {
+            response.redirect(302, thSettings.getDomain());
         }
     });
 }

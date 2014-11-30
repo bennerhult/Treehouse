@@ -1,14 +1,14 @@
 var nl = '\n'
 
 var footerContent = '<ul>' + nl +
-    '<li><span><h2>Explore</h2><p>All about sharing and comparing!</p><div><a href="javascript:void(0)" onclick="showInfo(getFeatureInfo(), -1)"><img src="../img/sharing.jpg"></a></div></span></li>' + nl +
+    '<li><span><h2>Explore</h2><p>All about sharing and comparing!</p><div><a href="javascript:void(0)" onclick="showInfo(getFeatureInfo(), -1)"><img src="../content/img/sharing.jpg"></a></div></span></li>' + nl +
     '<li><span><h2>Achieve</h2><p>In an ever changing world, achievements are forever. Nobody can take your achievements away!<br /><br /><a href="javascript:void(0)" onclick="showInfo(getAchievementInfo(), 1)">Achievements?</a></p></span></li>' + nl +
     '<li><span><h2>Play</h2><p>Let\'s have fun!<br /><br />Get the coveted <a href="javascript:void(0)" onclick="showInfo(getEarlyAdopterInfo(), -1)">Early Adopter Achievement</a></p></span></li>' + nl +
     '<li class="last"><span id="latestAchievementSplash"></span></li>' + nl +
     '</ul>' +
     '<div class="clear"></div>' +
     '<div id="fbLikeWeb" style="overflow:visible;"><div class="fb-like" data-href="http://www.treehouse.io" data-width="200" font="segoe ui" data-layout="standard" data-action="like" data-show-faces="true" data-share="false"></div></div>' +
-    '<div id="fbShare"><a onclick="fbShare(\'Treehouse\', \'http://www.treehouse.io\', \'content/img/treehouse.jpg\')" href="javascript:void(0)"><span><img src="../img/f-icon.png"><p>Share</p></span></a></div>' +
+    '<div id="fbShare"><a onclick="fbShare(\'Treehouse\', \'http://www.treehouse.io\', \'content/img/treehouse.jpg\')" href="javascript:void(0)"><span><img src="../content/img/f-icon.png"><p>Share</p></span></a></div>' +
     '<div id="tweetTreehouse" style="overflow:visible;">' +
     '<a href="https://twitter.com/share?url=http://www.treehouse.io&text=Treehouse" class="twitter-share-button">Tweet</a>' +
     '<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>' +
@@ -73,23 +73,23 @@ function setDefaultMenu(activePage, visitsMainPage) {
         }
         if (loggedIn) {
             menu = '<div id="menu" class="menu-absolute"><ul>'
-            +'<li><div id="menuIconNewsfeed" class=""><a href="javascript:void(0)" onclick="openNewsfeed()"><img id="menuImageNewsfeed" src="../img/newsfeedicon.png" alt="" /></a></div></li>'
-            + '<li><div id="menuIconTree" class=""><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><img id="menuImageTree" src="../img/treeicon.png" alt="" /></a></div></li>'
+            +'<li><div id="menuIconNewsfeed" class=""><a href="javascript:void(0)" onclick="openNewsfeed()"><img id="menuImageNewsfeed" src="../content/img/newsfeedicon.png" alt="" /></a></div></li>'
+            + '<li><div id="menuIconTree" class=""><a href="javascript:void(0)" onclick="openAchievements(false, \'' + currentUserId + '\', false)"><img id="menuImageTree" src="../content/img/treeicon.png" alt="" /></a></div></li>'
             if (currentUserIsIssuer) {
                 menu += '<li>&nbsp;</li>'
             } else {
-                menu += '<li><div id="menuIconFriend" class=""><a href="javascript:void(0)" onclick="openFriends()"><img id="menuImageFriends" src="../img/friendsicon.png" alt="" />'
+                menu += '<li><div id="menuIconFriend" class=""><a href="javascript:void(0)" onclick="openFriends()"><img id="menuImageFriends" src="../content/img/friendsicon.png" alt="" />'
                 if (nrOfFriendShipRequests > 0) {
                     menu += '<span id="nrOfFriendShipRequestsAlert">' + nrOfFriendShipRequests + '</span>'
                 }
                 menu += '</a></div></li>'
             }
-            menu += '<li><div id="menuToggle" class=""><a href="javascript:void(0)" onclick="showMore()"><img id="menuImageTab" src="../img/tree-tab.png" alt=""/></a></div></li>'
+            menu += '<li><div id="menuToggle" class=""><a href="javascript:void(0)" onclick="showMore()"><img id="menuImageTab" src="../content/img/tree-tab.png" alt=""/></a></div></li>'
             menu += '</ul></div>'
         } else {
             menu  = '<div id="menu">' + nl  +
             '<ul>' + nl  +
-            '<li class="signIn"><a href="javascript:void(0)" onclick="showSignin()"><img src="../img/signin.png" alt="" /></a></li></ul>' + nl  +
+            '<li class="signIn"><a href="javascript:void(0)" onclick="showSignin()"><img src="../content/img/signin.png" alt="" /></a></li></ul>' + nl  +
             '</div>'
         }
         $("#menuArea").html(menu)
@@ -218,10 +218,10 @@ function insertLatestAchievement() {
 function getLoginContent() {
     var loginContent = '<div id="content">' +
         '<div class="signup-logo">' +
-        '<img alt="Treehouse" src="../img/logo-large.png" />' +
+        '<img alt="Treehouse" src="../content/img/logo-large.png" />' +
         '<p>connect below to sign in / sign up</p>' +
         '<form action="javascript: loginUsingFacebook()">' +
-        '<input type="image" src="../img/facebook.png" alt="Facebook Connect"/>' +
+        '<input type="image" src="../content/img/facebook.png" alt="Facebook Connect"/>' +
         '</form>' +
         '</div>'
 
@@ -252,7 +252,7 @@ function getUserContent(callback) {
     getCurrentUserFromServer(function(user) {
         var content = '<div id="content">' + nl +
             '<div class="changeUserImage"><img id="userImage" src="' + user.imageURL + '" ></div>' +
-            '<a href="javascript:void(0)" onclick="uploadUserImage()"><img src="../img/upload.png" style="margin-top: 8px;"/></a>' + nl +
+            '<a href="javascript:void(0)" onclick="uploadUserImage()"><img src="../content/img/upload.png" style="margin-top: 8px;"/></a>' + nl +
             '<div class="clear"> </div> <br />' + nl +
             '<h2>Name</h2>' + nl +
             '<form id="userForm" action="javascript: editUser()">' + nl
@@ -484,8 +484,8 @@ function getMoreMenuContent(callback) {
         '<div id="moreList">' +
             '<ul>' +
 
-                 '<li><a href="javascript:void(0)" onclick="openUser()"><img src="../img/user.png" ></a></li>' +
-                  '<li><a href="javascript:void(0)" onclick="signout()"><img src="../img/logout.png" ></a></li>' +
+                 '<li><a href="javascript:void(0)" onclick="openUser()"><img src="../content/img/user.png" ></a></li>' +
+                  '<li><a href="javascript:void(0)" onclick="signout()"><img src="../content/img/logout.png" ></a></li>' +
 
             '</ul>' +
         '</div>')
@@ -527,11 +527,11 @@ function getNewAchievementContent(data, achieverId) {
                         '</div>' + nl  +
                         '<div id="fileinputs" class="fileinputs">' + nl  +
                             '<ul>' + nl  +
-                                '<li><a href="javascript:void(0)" onclick="toggleImage(-1)"><img src="../img/left-arrow.png" alt="" /></a></li>' + nl  +
-                                '<li class="last"><a href="javascript:void(0)" onclick="toggleImage(1)"><img src="../img/right-arrow.png" alt="" /></a></li>' + nl  +
+                                '<li><a href="javascript:void(0)" onclick="toggleImage(-1)"><img src="../content/img/left-arrow.png" alt="" /></a></li>' + nl  +
+                                '<li class="last"><a href="javascript:void(0)" onclick="toggleImage(1)"><img src="../content/img/right-arrow.png" alt="" /></a></li>' + nl  +
                             '</ul>' + nl  +
                         '</div><div id="fileupload" class="fileupload">' + nl  +
-                                '<a href="javascript:void(0)" onclick="uploadImage()"><img src="../img/upload.png" /></a>' + nl  +
+                                '<a href="javascript:void(0)" onclick="uploadImage()"><img src="../content/img/upload.png" /></a>' + nl  +
                         '</div>' + nl  +
                     '</div>' + nl  +
                     '<div class="clear"></div>' + nl  +
