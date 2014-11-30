@@ -64,4 +64,3 @@ module.exports = function (thSettings, user) {
         getPrettyNameIdAndImageURL : getPrettyNameIdAndImageURL
     };
 };
-

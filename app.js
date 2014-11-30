@@ -131,13 +131,13 @@ app.listen(port);
 console.log('Treehouse server started on port ' + port);
 
 var Router = require('router');
-var requireAccess = new Router();
 var publiclyAvailable = new Router();
+var requireAccess = new Router();
 
-//TODO flytta sådant som kräver inloggning till /app
-//TODO lösenordsskydda /api
-//TODO få requireAccess att fungera
-//TODO dubbelkolla att testerna kör
+publiclyAvailable.use(function(req, res, next) {
+    next();
+});
+
 requireAccess.use(function(req, res, next) {
     if(!req.session || !req.session.currentUser) {
         res.redirect('/login2');
@@ -146,13 +146,9 @@ requireAccess.use(function(req, res, next) {
     }
 });
 
-publiclyAvailable.use(function(req, res, next) {
-    next();
-});
-
 app.use('/', publiclyAvailable);
-//app.use('/api', requireAccess);
-app.use('/newsfeed2', requireAccess);
+app.use('/api', requireAccess);
+app.use('/app', requireAccess);
 
 app.get('/content/*', function(request, response){
     staticFiles.serve("." + request.url, response)

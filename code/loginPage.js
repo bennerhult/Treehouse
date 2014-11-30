@@ -68,7 +68,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
         function sendUserToDefaultPage (request, response, user, token) {
             setRememberMeCookie(response, token);
             request.session.currentUser = user;
-            response.redirect(302, thSettings.getDomain() + 'newsfeed2');
+            response.redirect(302, thSettings.getDomain() + 'app/newsfeed');
         }
 
         function setRememberMeCookie(response, token) {
@@ -91,12 +91,12 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                                 respondWithJson(response, {errMsg: 'There was a problem creating your account. Contact staff@treehouse.io for more information.'})
                             } else {
                                 request.session.currentUser = newUser;
-                                respondWithJson(response, {url: thSettings.getDomain() + 'newsfeed2'})
+                                respondWithJson(response, {url: thSettings.getDomain() + 'app/newsfeed'})
                             }
                         });
                     } else {
                        request.session.currentUser = myUser;
-                       respondWithJson(response, {url: thSettings.getDomain() + 'newsfeed2'})
+                       respondWithJson(response, {url: thSettings.getDomain() + 'app/newsfeed'})
                    }
                 })
             }
