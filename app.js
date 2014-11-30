@@ -134,8 +134,11 @@ var Router = require('router');
 var requireAccess = new Router();
 var publiclyAvailable = new Router();
 
+//TODO ta bort loadUser
 //TODO flytta sådant som kräver inloggning till /app
+//TODO lösenordsskydda /api
 //TODO få requireAccess att fungera
+//TODO dubbelkolla att testerna kör
 requireAccess.use(function(req, res, next) {
     if(!req.session || !req.session.currentUser) {
         res.redirect('/login2');
