@@ -1,8 +1,6 @@
 module.exports = function (thSettings, user) {
     'use strict';
-
-    var nl = '\n'
-    var tab = '\t'
+    
     var templates = require('./templates.js')(thSettings);
 
     function serveFromTemplate(response, templateName, context) {

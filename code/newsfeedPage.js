@@ -11,10 +11,6 @@ module.exports = function (app, templates, thSettings, newsfeed) {
 
     function registerHandlers() {
         app.get('/newsfeed2', function (request, response) {
-            if (!request.session || !request.session.currentUser) { //TODO: Common infrastructure for this.
-                response.redirect('/preLogin');
-                return;
-            }
             templates.serveHtmlRaw(response, './server-templates/newsfeed.html', {});
         });
         app.post('/api/newsfeed/init', function (request, response) {

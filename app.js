@@ -74,7 +74,6 @@ app.use(session({
     secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4'
 }))
 
-
 //Database models
 var user = require('./models/user.js'),
     achievement = require('./models/achievement.js'),
@@ -103,45 +102,56 @@ function authenticateFromLoginToken(request, response) {
                     if (user) {
                         request.session.currentUser = user
                         friendship.getNrOfRequests(user._id, function (nrOfFriendShipRequests) {
-                            token.token = loginToken.randomToken()
+                            token.token = loginToken.randomToken();
                             token.save(function() {
-                                request.session.nrOfFriendShipRequests = nrOfFriendShipRequests
-                                response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 2 * 604800000), path: '/' })
-                                response.writeHead(200, {'content-type': 'application/json' })
-                                response.write(JSON.stringify(user._id))
-                                response.end('\n', 'utf-8')
-                            })
+                                request.session.nrOfFriendShipRequests = nrOfFriendShipRequests;
+                                response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 2 * 604800000), path: '/' });
+                                response.writeHead(200, {'content-type': 'application/json' });
+                                response.write(JSON.stringify(user._id));
+                                response.end('\n', 'utf-8');
+                            });
                         })
                     } else {
-                        response.writeHead(404, {'content-type': 'application/json' })
-                        response.write(JSON.stringify("Bummer! We cannot find you in our records. Contact us at staff@treehouse.io if you want us to help you out."))
-                        response.end('\n', 'utf-8')
+                        response.writeHead(404, {'content-type': 'application/json' });
+                        response.write(JSON.stringify("Bummer! We cannot find you in our records. Contact us at staff@treehouse.io if you want us to help you out."));
+                        response.end('\n', 'utf-8');
                     }
                 })
             }
         })
     }  else {
-        response.writeHead(404, {'content-type': 'application/json' })
-        response.write(JSON.stringify(""))   //typical first sign in
-        response.end('\n', 'utf-8')
+        response.writeHead(404, {'content-type': 'application/json' });
+        response.write(JSON.stringify(""));   //typical first sign in
+        response.end('\n', 'utf-8');
     }
 }
 
-var port = process.env.PORT || 1337
-app.listen(port)
-console.log('Treehouse server started on port ' + port)
-/*
-var Router = require('router')
-var router = new Router()
-router.use(function(req, res, next) {
-    console.log("Checking logged in status")
-    if(!req.user) { //req.user
+var port = process.env.PORT || 1337;
+app.listen(port);
+console.log('Treehouse server started on port ' + port);
+
+var Router = require('router');
+var requireAccess = new Router();
+var publiclyAvailable = new Router();
+
+//TODO flytta sådant som kräver inloggning till /app
+//TODO få requireAccess att fungera
+requireAccess.use(function(req, res, next) {
+    if(!req.session || !req.session.currentUser) {
         res.redirect('/login2');
+    } else {
+        next();
     }
+});
+
+publiclyAvailable.use(function(req, res, next) {
     next();
 });
-app.use('/', router);
-*/
+
+app.use('/', publiclyAvailable);
+//app.use('/api', requireAccess);
+app.use('/newsfeed2', requireAccess);
+
 app.get('/content/*', function(request, response){
     staticFiles.serve("." + request.url, response)
 })
@@ -257,10 +267,6 @@ app.get('/achievement', function(request, response) {
             }
         })
     })
-})
-
-app.get('/', function(request, response){
-    requestHandlers.writeDefaultPage(request, response)
 })
 
 app.get('/rememberMe', function(request, response){
@@ -1491,6 +1497,10 @@ app.get('/delete', requestHandlers.loadUser, function(request, response){
             console.log("trying to remove non-existing achievement " + request.session.current_achievement_id)
         }
     })
+})
+
+app.get('/', function(req, res) {
+    requestHandlers.writeDefaultPage(req, res)
 })
 
 app.get('/editAchievement', requestHandlers.loadUser, function(request, response){
