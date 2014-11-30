@@ -246,11 +246,11 @@ module.exports = function (user, progress, moment, shareholding, achievement, ur
             achievement.Achievement.findOne({ _id: currentAchievementId }, function(err,currentAchievement) {
                 user.User.findOne({ _id: achieverId }, function(err,currentAchiever) {
                     if (request.session.currentUser) {
-                        requestHandlers.loadUser (request, response, function () { writeAchievementPage(response, currentAchiever, currentAchievement, request.session.currentUser._id, isNotificationView, sharerId)})
+                         writeAchievementPage(response, currentAchiever, currentAchievement, request.session.currentUser._id, isNotificationView, sharerId);
                     } else if (currentAchievement && (currentProgress.publiclyVisible || currentAchievement.issuedAchievement))    {
-                        writeAchievementPage(response, currentAchiever, currentAchievement, null, isNotificationView, sharerId)
+                        writeAchievementPage(response, currentAchiever, currentAchievement, null, isNotificationView, sharerId);
                     } else {
-                        requestHandlers.writeDefaultPage(request, response)
+                        requestHandlers.writeDefaultPage(request, response);
                     }
                 })
             })

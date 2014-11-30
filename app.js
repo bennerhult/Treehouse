@@ -134,7 +134,6 @@ var Router = require('router');
 var requireAccess = new Router();
 var publiclyAvailable = new Router();
 
-//TODO ta bort loadUser
 //TODO flytta sådant som kräver inloggning till /app
 //TODO lösenordsskydda /api
 //TODO få requireAccess att fungera
@@ -325,9 +324,6 @@ function signin(request, response) {
             response.writeHead(200, {'content-type': 'application/json' })
             response.write(JSON.stringify("There was a problem creating your account. Contact staff@treehouse.io for more information."))
             response.end('\n', 'utf-8')
-        } else if (!isAuthenticated) {
-            //TODO: Figure out why this is correct (moved over from the old code)
-            requestHandlers.writeDefaultPage(request, response)
         } else {
             request.session.currentUser = data.user;
             response.cookie('rememberme', loginToken.cookieValue(data.token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
@@ -1440,7 +1436,7 @@ app.get('/deleteUser', function(request, response) {
 
 })
 
-app.get('/delete', requestHandlers.loadUser, function(request, response){
+app.get('/delete', function(request, response){
     var achievementId
 
     if (request.query.achievementId && request.query.achievementId.length > 12) {
@@ -1506,19 +1502,11 @@ app.get('/', function(req, res) {
     requestHandlers.writeDefaultPage(req, res)
 })
 
-app.get('/editAchievement', requestHandlers.loadUser, function(request, response){
+app.get('/editAchievement', function(request, response){
     achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
-        if (request.session.currentUser) {
-            requestHandlers.loadUser (request, response, function () {
-                response.writeHead(200, {'content-type': 'application/json' })
-                response.write(JSON.stringify(currentAchievement))
-                response.end('\n', 'utf-8')
-            })
-        } else {
-            response.writeHead(200, {'content-type': 'application/json' })
-            response.write(JSON.stringify("You got thrown out! Sign in again."))
-            response.end('\n', 'utf-8')
-        }
+        response.writeHead(200, {'content-type': 'application/json' })
+        response.write(JSON.stringify(currentAchievement))
+        response.end('\n', 'utf-8')
     })
 })
 

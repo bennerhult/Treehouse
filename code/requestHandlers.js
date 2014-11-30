@@ -57,30 +57,11 @@ module.exports = function (thSettings, user) {
         })
     }
 
-    function loadUser(request, response, next) {
-        if (request.session.currentUser) {
-            user.User.findById(request.session.currentUser._id, function(err, user) {
-                if (user) {
-                    next()
-                } else {
-                    response.writeHead(200, {'content-type': 'application/json' })
-                    response.write(JSON.stringify(err))
-                    response.end('\n', 'utf-8')
-                }
-            })
-        } else {
-            response.writeHead(200, {'content-type': 'application/json' })
-            response.write(JSON.stringify("logged out 2"))
-            response.end('\n', 'utf-8')
-        }
-    }
-
     return {
         indexPage : indexPage,
         publicAchievementPage : publicAchievementPage,
         writeDefaultPage : writeDefaultPage,
-        getPrettyNameIdAndImageURL : getPrettyNameIdAndImageURL,
-        loadUser : loadUser
+        getPrettyNameIdAndImageURL : getPrettyNameIdAndImageURL
     };
 };
 
