@@ -788,7 +788,7 @@ function progress(goalId, quantityTotal) {
                 $("#addbutton" + goalId).html("")
             }  else {
                 $("#addbutton" + goalId).html('<a href="javascript:void(0)" onclick="progress(\'' + goalId + '\', \'' +  quantityTotal + '\')">'
-                    + '<img src="content/img/+.png" alt="I did it!"/>'
+                    + '<img src="../img/+.png" alt="I did it!"/>'
                     + '</a>')
             }
         })
