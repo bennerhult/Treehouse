@@ -62,7 +62,8 @@
                             <li><input type="email" class="formstyle" placeholder="email" name="emailAddress" ng-model="emailAddress" required></li>
                             <li><input type="submit" class="button" value="sign in / sign up"/><li>
                         </ul>
-                        <div ng-show="isEmailInvalidShown()" class="message"><p>First law of Treehouse: First you type, then you press.</p></div>
+                        <div ng-show="isEmailInvalid" class="message"><p>Please try a <i>real</i> email, ok?</p></div>
+                        <div ng-show="nothingEntered" class="message"><p>First law of Treehouse: First you type, then you press.</p></div>
                     </form>
                 </div>
 

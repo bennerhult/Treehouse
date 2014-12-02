@@ -1,7 +1,6 @@
 module.exports = function (app, templates, thSettings, user, loginToken, email, auth, url) {
     'use strict';
 
-    //TODO make sure an unauthenticated user does not get access
     function respondWithJson(response, data) {
         response.writeHead(200, {'content-type': 'application/json' });
         response.write(JSON.stringify(data));
@@ -10,7 +9,6 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
 
     function registerHandlers() {
         app.get('/login2', function (request, response){
-            //TODO fix rememberme function!
             templates.serveHtmlRaw(response, './server-templates/login.html');
         });
 

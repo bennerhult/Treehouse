@@ -31,18 +31,22 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
         }
     }
 
-    $scope.hasLoginBeenClicked = false;
     $scope.loginWithEmail = function (evt) {
         if(evt) {
             evt.preventDefault();
         }
-
         if($scope.emailLoginForm.$invalid) {
+           if($scope.emailLoginForm.emailAddress.$error.email) {
+               $scope.nothingEntered = false;
+               $scope.isEmailInvalid = true;
+            } else {
+               $scope.isEmailInvalid = false;
+               $scope.nothingEntered = true;
+             }
             return;
         }
 
         $scope.authenticationFailure = false;
-        $scope.hasLoginBeenClicked = true;
         $scope.isLoading = true;
 
         $http.post('/api/login2/authenticate', { email : $scope.emailAddress }).success(function (result) {
@@ -57,13 +61,6 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
                 $scope.isReturningUser = true;
             }
         });
-    };
-
-    $scope.isEmailInvalidShown = function () {
-        if(!$scope.hasLoginBeenClicked) {
-            return false;
-        }
-        return $scope.emailLoginForm.emailAddress.$invalid;
     };
 
     $scope.loginUsingFacebook = function (evt) {
@@ -89,7 +86,7 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
                             $scope.fbConnectError = true;
                             $scope.$apply();
                         }
-                    })
+                    });
                 } else {
                     $scope.userClosedFBDialogue = true;
                     $scope.$apply();
