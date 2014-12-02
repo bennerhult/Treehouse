@@ -49,7 +49,7 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
         $scope.authenticationFailure = false;
         $scope.isLoading = true;
 
-        $http.post('/api/login2/authenticate', { email : $scope.emailAddress }).success(function (result) {
+        $http.post('/api/login/authenticate', { email : $scope.emailAddress }).success(function (result) {
             $scope.isLoading = false;
             if(result.errMsg) {
                 $scope.authenticationFailure = true;
@@ -76,7 +76,7 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
                 if (response.authResponse) {
                     FB.api('/me', function(apiResponse) {
                         if (apiResponse) {
-                            $http.post('/api/login2/signinFB', { email : apiResponse.email }).success(function (result) {
+                            $http.post('/api/login/signinFB', { email : apiResponse.email }).success(function (result) {
                                 window.location = result.url;
                             }).error(function() {
                                 $scope.fbConnectError = true;

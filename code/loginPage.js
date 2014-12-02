@@ -73,7 +73,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
             response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }); //604800000 equals one week
         }
 
-        app.post('/api/login2/signinFB', function (request, response){
+        app.post('/api/login/signinFB', function (request, response){
             if (!request.body.email) {
                 respondWithJson(response, { errMsg : 'Login failed (2)' });
                 return;
@@ -101,7 +101,7 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
             loginToken.createToken(username, onTokenCreated);
         });
 
-        app.post('/api/login2/authenticate', function (request, response) {
+        app.post('/api/login/authenticate', function (request, response) {
             if(!request.body.email) {
                 respondWithJson(response, { errMsg : 'Login failed (3)' });
                 return;

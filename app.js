@@ -147,7 +147,7 @@ requireAccess.use(function(req, res, next) {
 });
 
 app.use('/', publiclyAvailable);
-app.use('/api', requireAccess);
+app.use('/api', publiclyAvailable);
 app.use('/app', requireAccess);
 
 app.get('/content/*', function(request, response){
