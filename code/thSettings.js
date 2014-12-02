@@ -2,7 +2,7 @@ module.exports = (function () {
     'use strict';
 
     var environmentName;
-    var autoLogin; //When this is true the server redirects directly to the signup link instead of emailing it to the user. Has no effect in production even if set.
+    var autoSignin; //When this is true the server redirects directly to the signup link instead of emailing it to the user. Has no effect in production even if set.
     var domain;
 
     function init(options) {
@@ -10,7 +10,7 @@ module.exports = (function () {
             options = {};
         }
         environmentName = options.envName;
-        autoLogin = options.autoLogin;
+        autoSignin = options.autoSignin;
         domain = options.domain;
     }
 
@@ -35,10 +35,10 @@ module.exports = (function () {
         return environmentName && environmentName.toLowerCase() === 'test';
     }
 
-    function isAutoLoginEnabled() {
+    function isAutoSigninEnabled() {
         explodeIfNotInitialized();
         if(isDevelopment()) {
-            return autoLogin && autoLogin === true;
+            return autoSignin && autoSignin === true;
         } else {
             return false;
         }
@@ -55,7 +55,7 @@ module.exports = (function () {
         isDevelopment : isDevelopment,
         isProduction : isProduction,
         isTest : isTest,
-        isAutoLoginEnabled : isAutoLoginEnabled,
+        isAutoSigninEnabled : isAutoSigninEnabled,
         getDomain : getDomain
     };
 }());

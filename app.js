@@ -30,7 +30,7 @@ if ('development' == env) {
     console.log("Treehouse in development mode.")
     thSettings.init({
         envName : 'development',
-        autoLogin : process.env.TH_AUTOLOGIN && process.env.TH_AUTOLOGIN.toLowerCase() === 'true',
+        autoSignin : process.env.TH_AUTOSIGNIN && process.env.TH_AUTOSIGNIN.toLowerCase() === 'true',
         domain : domain
     });
 } else if ('test' == env)  {
@@ -45,12 +45,12 @@ if ('development' == env) {
     db_uri = process.env.DB_URI;
     thSettings.init({
         envName : 'test',
+        autoSignin : true,
         domain : domain
     });
 } else if ('production' == env) {
     domain = 'http://www.treehouse.io/'
     console.log("Treehouse in prod mode.")
-    //noinspection JSUnresolvedVariable
     db_uri=process.env.DB_URI
     thSettings.init({
         envName : 'production',
@@ -88,9 +88,7 @@ var user = require('./models/user.js'),
     staticFiles = require('./code/staticFiles.js');
 
 function authenticateFromLoginToken(request, response) {
-    //noinspection JSUnresolvedVariable
     if (request.cookies.rememberme)  {
-        //noinspection JSUnresolvedVariable
         var cookie = JSON.parse(request.cookies.rememberme)
         loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
             if (!token) {
@@ -143,7 +141,7 @@ requireAccess.use(function(req, res, next) {
     if(req.session && req.session.currentUser) {
         next();
     } else {
-        res.redirect('/login2');
+        res.redirect('/signin');
     }
 });
 
@@ -162,6 +160,7 @@ app.get('app/content/*', function(request, response){
 var auth = (function () {
     'use strict';
 
+    //TODO check that emailed token exists instead?
     function authenticateExistingUser(myUser, callback) {
         loginToken.createToken(myUser.username, function(myToken) {
             callback(null, true, { token : myToken, isNewUser : false, user : myUser });
@@ -211,8 +210,8 @@ var auth = (function () {
 //********************************************
 if(!thSettings.isProduction()) {
     var templates = require('./code/templates.js')(thSettings);
-    require('./code/preLoginPage.js')(app, templates, thSettings).registerHandlers();
-    require('./code/loginPage.js')(app, templates, thSettings, user, loginToken, email, auth, url).registerHandlers();
+    require('./code/preSigninPage.js')(app, templates, thSettings).registerHandlers();
+    require('./code/signinPage.js')(app, templates, thSettings, user, loginToken, email, auth, url).registerHandlers();
     require('./code/newsfeedPage.js')(app, templates, thSettings, newsfeed).registerHandlers();
     require('./code/friendsPage.js')(app, templates, thSettings).registerHandlers();
 }
@@ -242,15 +241,11 @@ app.get('/channel.html', function(request, response){
 
 app.get('/achievement', function(request, response) {
     var url_parts = url.parse(request.url, true)
-    //noinspection JSUnresolvedVariable
     var currentAchievementId = url_parts.query.achievementId
-    //noinspection JSUnresolvedVariable
     var userId  = url_parts.query.userId
     var loggedin = false
     if (request.session) {
-        //noinspection JSUnresolvedVariable
         if (request.session.currentUser) {
-            //noinspection JSUnresolvedVariable
             if (request.session.currentUser._id == userId) {
                 loggedin=true
             }
@@ -349,7 +344,7 @@ app.get('/checkUser', function(request, response){
         }
 
         var onTokenCreated;
-        if(thSettings.isAutoLoginEnabled()) {
+        if(thSettings.isAutoSigninEnabled ()) {
             //Local testing - skip email and redirect to signup link directly
             onTokenCreated = function (myToken) {
                  if (myUser) {
@@ -357,13 +352,11 @@ app.get('/checkUser', function(request, response){
                     response.write(JSON.stringify({ url : createSignupLink(myToken.token) }))
                  } else {
                     response.writeHead(201, {'content-type': 'application/json' })
-                    //response.write(JSON.stringify(myToken.token))
                      response.write(JSON.stringify({ url : createSignupLink(myToken.token) }))
                  }
                  response.end('\n', 'utf-8')
             };
         } else if (myUser) {
-            //Existing user
             onTokenCreated = function (myToken) {
                 email.emailUser(
                     username,
@@ -439,7 +432,6 @@ app.get('/user', function(request, response){
     if (request.query.user_id && request.query.user_id.length > 2 && request.query.user_id != 'null') {
         userID = request.query.user_id
     } else if (request.query.user_id != 'null') {
-        //noinspection JSUnresolvedVariable
         userID = request.session.currentUser._id
     }
     user.User.findOne({ _id: userID }, function(err,foundUser) {
@@ -465,9 +457,7 @@ app.get('/userIdForUsername', function(request, response){
 })
 
 app.get('/currentUser', function(request, response){
-    //noinspection JSUnresolvedVariable
     if (request.session.currentUser) {
-        //noinspection JSUnresolvedVariable
         var userID = request.session.currentUser._id
         user.User.findOne({ _id: userID }, function(err,foundUser) {
             if (foundUser)    {
@@ -482,7 +472,6 @@ app.get('/prettyName', function(request, response){
     if (request.query.user_id && request.query.user_id.length > 12) {
         userID = request.query.user_id
     } else {
-        //noinspection JSUnresolvedVariable
         userID = request.session.currentUser._id
     }
 
@@ -495,7 +484,6 @@ app.get('/prettyName', function(request, response){
 })
 
 app.get('/setUserImage', function(request, response){
-    //noinspection JSUnresolvedVariable
     user.setImageURL(request.session.currentUser._id , request.query.imageURL, function(error) {
         if (error) {
             response.writeHead(404, {'content-type': 'application/json' })
@@ -511,7 +499,6 @@ app.get('/setPrettyName', function(request, response){
     if (request.query.user_id && request.query.user_id.length > 12) {
         userID = request.query.user_id
     } else if (request.session.currentUser){
-        //noinspection JSUnresolvedVariable
         userID = request.session.currentUser._id
     }
     if (userID) {
@@ -532,7 +519,6 @@ app.get('/setPrettyName', function(request, response){
 
 
 app.get('/upgradeToIssuer', function(request, response){
-    //noinspection JSUnresolvedVariable
     user.User.findOne({ _id: request.session.currentUser._id}, function(err, issuerProspect) {
         var text = "User " + issuerProspect.username + ", id: " +  issuerProspect._id + " wants to be an issuer. Make it so. 1. Confirm that the user is really the Issuer and willing to pay the corresponding fees. 2. Change user to issuer=true 3. Give the user an issuerName."
         email.emailUser('staff@treehouse.io', 'Issuer Request', text, text,  function(error) {
@@ -547,16 +533,13 @@ app.get('/upgradeToIssuer', function(request, response){
 })
 
 app.get('/findFriends', function(request, response){
-    //noinspection JSUnresolvedVariable
     user.User.findOne({ username: request.query.friend_email.toLowerCase() }, function(err,foundFriend) {
         if (foundFriend)    {
-            //noinspection JSUnresolvedVariable
             if (request.session.currentUser._id == foundFriend._id ) {
                 response.writeHead(400, {'content-type': 'application/json' })
                 response.write(JSON.stringify('Dissociative identity disorder?'))
                 response.end('\n', 'utf-8')
             }  else {
-                //noinspection JSUnresolvedVariable
                 friendship.isFriendRequestExisting(foundFriend._id, request.session.currentUser._id, function (requestExists, confirmed, createdByCurrentUser) {
                     var responseobject = {}
                     responseobject.id = foundFriend._id
@@ -568,7 +551,6 @@ app.get('/findFriends', function(request, response){
             }
         } else {
             response.writeHead(400, {'content-type': 'application/json' })
-            //noinspection JSUnresolvedVariable
             response.write(JSON.stringify(request.query.friend_email + ' does not appear to use Treehouse! Tell your friend about it and share the happiness!'))
             response.end('\n', 'utf-8')
         }
@@ -576,11 +558,8 @@ app.get('/findFriends', function(request, response){
 })
 
 app.get('/friendsList', function(request, response){
-    //noinspection JSUnresolvedVariable
     friendship.getPendingRequests(request.session.currentUser._id, function(pendings) {
-        //noinspection JSUnresolvedVariable
         friendship.getFriends(request.session.currentUser._id, function(friendsList) {
-            //noinspection JSUnresolvedVariable
             fillFriendsList(friendsList, pendings, request.session.currentUser._id, function(content) {
                 response.writeHead(200, {'content-type': 'application/json' })
                 response.write(JSON.stringify(content))
@@ -675,9 +654,7 @@ function addPendings(content, pendings, userId, callback) {
 app.get('/shareList', function(request, response){
     var friendIds = []
     var userId
-    //noinspection JSUnresolvedVariable
     if (request.session.currentUser) {
-        //noinspection JSUnresolvedVariable
         userId = request.session.currentUser._id
     }
 
@@ -692,7 +669,6 @@ app.get('/shareList', function(request, response){
                 }
                 friendsGoneThrough++
                 if (friendsGoneThrough === friendsList.length) {
-                    //noinspection JSUnresolvedVariable
                     fillShareList(friendIds, userId, request.query.achievementId, function(content) {
                         response.writeHead(200, {'content-type': 'application/json' })
                         response.write(JSON.stringify(content))
@@ -759,12 +735,9 @@ app.get('/compareList', function(request, response){
     var userId
     var comparesGoneThrough = 0
 
-    //noinspection JSUnresolvedVariable
     if (request.session.currentUser) {
-        //noinspection JSUnresolvedVariable
         userId = request.session.currentUser._id
     }
-    //noinspection JSUnresolvedVariable
     shareholding.getCompares(request.query.achievementId, userId, function(compareList) {
         if (compareList && compareList.length > 0) {
             compareList.forEach(function(currentCompare) {
@@ -772,7 +745,6 @@ app.get('/compareList', function(request, response){
                 var myQuantityTotal = 0
                 var goalsGoneThrough = 0
                 requestHandlers.getPrettyNameIdAndImageURL( currentCompare.achiever_id, function(prettyName, id, imageURL) {
-                    //noinspection JSUnresolvedVariable
                     achievement.Achievement.findOne({ _id: request.query.achievementId }, function(err,currentAchievement) {
                         currentAchievement.goals.forEach(function(goal) {
                             progress.Progress.findOne({ goal_id: goal._id, achiever_id: currentCompare.achiever_id }, function(err,myProgress) {

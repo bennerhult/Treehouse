@@ -10,11 +10,11 @@ table { border-collapse:collapse;border-spacing:0; }
 
 /* pre inloggningsidan */
 
-.preLogin{
+.preSignin{
     background-color: #fff;
 }
 
-.preLogin .logo{
+.preSignin .logo{
     background-color: #f7f7f7;
     border-bottom: 1px solid #e5f0dc;
     padding-top: 10px;
@@ -22,26 +22,26 @@ table { border-collapse:collapse;border-spacing:0; }
     text-align: center;
 }
 
-.preLogin .preLoginContent{
+.preSignin .preSigninContent{
     width: 1060px;
     margin: 50px auto;
 }
 
-.preLogin h1{
+.preSignin h1{
     font: 20px Verdana;
     font-weight: bold;
     color: #878787;
     margin-bottom: 15px;
 }
 
-.preLogin h2{
+.preSignin h2{
     font: 20px Verdana;
     font-weight: bold;
     color: #474444;
     margin-bottom: 0px;
 }
 
-.preLogin p{
+.preSignin p{
     font-family: Verdana;
     font-size: 12px;
     line-height: 20px;
@@ -50,21 +50,21 @@ table { border-collapse:collapse;border-spacing:0; }
     color: #6f7c82;
 }
 
-.preLogin .examplesWrap p{
+.preSignin .examplesWrap p{
     line-height: 17px;
 }
 
-.preLogin .examplesWrap{
+.preSignin .examplesWrap{
     background-color: #ffbbbb;
 }
 
-.preLogin .examplesWrap ul li{
+.preSignin .examplesWrap ul li{
     float: left;
     width: 20%;
     text-align: center;
 }
 
-.preLogin .examplesWrap ul li a{
+.preSignin .examplesWrap ul li a{
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -92,11 +92,11 @@ table { border-collapse:collapse;border-spacing:0; }
     cursor: default;
 }
 
-.preLogin .examplesWrap ul li:last-child a{
+.preSignin .examplesWrap ul li:last-child a{
     border-right: 1px solid #e8e8e8;
 }
 
-.preLogin .examplesWrap h3{
+.preSignin .examplesWrap h3{
     font-family: Verdana;
     font-size: 15px;
     line-height: 18px;
@@ -105,12 +105,12 @@ table { border-collapse:collapse;border-spacing:0; }
     color: #474444;
 }
 
-.preLogin .to-login-button{
+.preSignin .to-signin-button{
     text-align: center;
     margin: 60px 0px 80px 0px;
 }
 
-.preLogin .to-login-button span{
+.preSignin .to-signin-button span{
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -130,14 +130,14 @@ table { border-collapse:collapse;border-spacing:0; }
     border-radius: 2px;
 }
 
-.preLogin .to-login-button a{
+.preSignin .to-signin-button a{
     color: #ffffff;
     font-size: 16px;
     font: 16px Verdana, Geneva, Arial, Helvetica, sans-serif;
     text-decoration: none;
 }
 
-.preLogin .to-login-button span:hover{
+.preSignin .to-signin-button span:hover{
     background-image: none;
     background-color: #289522;
 }
@@ -176,9 +176,9 @@ table { border-collapse:collapse;border-spacing:0; }
 }
 
 
-/*Login*/
+/*Sign in*/
 
-.loginContainer{
+.signinContainer{
     -moz-box-shadow:  0px 0px 25px 2px rgba(0,0,0,0.5);
     -webkit-box-shadow:  0px 0px 25px 2px rgba(0,0,0,0.5);
     box-shadow:  0px 0px 25px 2px rgba(0,0,0,0.5);
@@ -203,52 +203,52 @@ table { border-collapse:collapse;border-spacing:0; }
     box-sizing: border-box;
 }
 
-.loginContainer .logo{
+.signinContainer .logo{
     text-align: center;
     padding-top: 20px;
     margin-bottom: 20px;
 }
 
-.loginContainer .fbConnect{
+.signinContainer .fbConnect{
     text-align: center;
 }
 
-.loginContainer .fbConnect input{
+.signinContainer .fbConnect input{
     margin-top: 60px;
 }
 
-.loginContainer .emailLogin{
+.signinContainer .emailSignin{
     margin: auto;
     width: 400px;
 }
 
-.loginContainer .message{
+.signinContainer .message{
     margin-top: 30px;
     text-align: center;
 }
 
-.loginContainer .connectSeparator{
+.signinContainer .connectSeparator{
     margin: 60px 40px;
 }
 
-.loginContainer .connectSeparator ul li{
+.signinContainer .connectSeparator ul li{
     float: left;
 }
 
-.loginContainer .connectSeparator ul li:first-child{
+.signinContainer .connectSeparator ul li:first-child{
     width: 40%;
 }
 
-.loginContainer .connectSeparator ul li:nth-child(2){
+.signinContainer .connectSeparator ul li:nth-child(2){
     width: 20%;
     text-align: center;
 }
 
-.loginContainer .connectSeparator ul li:last-child{
+.signinContainer .connectSeparator ul li:last-child{
     width: 40%;
 }
 
-.loginContainer .connectSeparator ul li:last-child span{
+.signinContainer .connectSeparator ul li:last-child span{
     height: 1px;
     width: 100%;
     display: block;
@@ -257,7 +257,7 @@ table { border-collapse:collapse;border-spacing:0; }
     background-image: -ms-linear-gradient( 180deg, rgb(80,78,76) 1%, rgb(85,84,84) 100%);
 }
 
-.loginContainer .connectSeparator ul li:first-child span{
+.signinContainer .connectSeparator ul li:first-child span{
     height: 1px;
     background-image: -moz-linear-gradient( 0deg, rgb(66,63,63) 0%, rgb(115,115,115) 50%, rgb(85,84,84) 100%);
     background-image: -webkit-linear-gradient( 0deg, rgb(66,63,63) 0%, rgb(115,115,115) 50%, rgb(85,84,84) 100%);
@@ -659,11 +659,11 @@ input.button:focus{
 
 @media screen and (max-width: 1080px) {
 
-    .preLogin .preLoginContent{
+    .preSignin .preSigninContent{
         width: 95%;
     }
 
-    .loginContainer,
+    .signinContainer,
     .container{
         width: 90%;
     }
@@ -671,7 +671,7 @@ input.button:focus{
 
 @media screen and (max-width: 1000px) {
 
-    .preLogin .examplesWrap ul li{
+    .preSignin .examplesWrap ul li{
         width: 33%;
     }
 }
@@ -679,7 +679,7 @@ input.button:focus{
 @media screen and (max-width: 800px) {
     html,body{height:100%;}
 
-    .loginContainer{
+    .signinContainer{
         position: relative;
         margin: 0 auto;
         height:100%;
@@ -691,7 +691,7 @@ input.button:focus{
         box-shadow: none;
         border-radius: 0px;
     }
-    html>body .loginContainer{height:auto; min-height:100%;}
+    html>body .signinContainer{height:auto; min-height:100%;}
 
     .container{
         position: relative;
@@ -728,17 +728,17 @@ input.button:focus{
 
 
 @media screen and (max-width: 580px) {
-    .preLogin .examplesWrap ul li{
+    .preSignin .examplesWrap ul li{
         width: 50%;
     }
 
-    .loginContainer .emailLogin{
+    .signinContainer .emailSignin{
         width: 80%;
     }
 }
 
 @media screen and (max-width: 400px) {
-    .preLogin .examplesWrap ul li{
+    .preSignin .examplesWrap ul li{
         width: 100%;
     }
 
@@ -753,7 +753,7 @@ input.button:focus{
         padding: 0px;
     }
 
-    .loginContainer .logo img{
+    .signinContainer .logo img{
         width: 90%;
     }
 }

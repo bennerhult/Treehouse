@@ -1,4 +1,4 @@
-module.exports = function (app, templates, thSettings, user, loginToken, email, auth, url) {
+module.exports = function (app, templates, thSettings, user, signinToken, email, auth, url) {
     'use strict';
 
     function respondWithJson(response, data) {
@@ -8,21 +8,21 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
     }
 
     function registerHandlers() {
-        app.get('/login2', function (request, response){
-            templates.serveHtmlRaw(response, './server-templates/login.html');
+        app.get('/signin2', function (request, response){
+            templates.serveHtmlRaw(response, './server-templates/signin.html');
         });
 
-        app.get('/signin2', function (request, response){
+        app.get('/signinByEmail', function (request, response){
             var url_parts = url.parse(request.url, true)
             var email = url_parts.query.email.toLowerCase()
             var token = url_parts.query.token
             auth.authenticate(email, token, function (err, isAuthenticated, data) {
                 if (err) {
-                     response.redirect(302, thSettings.getDomain() + 'error?t=login'); //TODO: Build this page with the old error message under the login template
+                     response.redirect(302, thSettings.getDomain() + 'error?t=login'); //TODO: Build this page with the old error message under the signin template and remove login wording
                 } else if (!isAuthenticated) {
-                    response.redirect(302, thSettings.getDomain() + 'login2');
+                    response.redirect(302, thSettings.getDomain() + 'signin2');
                 } else {
-                    sendUserToDefaultPage(request, response, data.user, data.token)
+                    sendUserToDefaultPage(request, response, data.user)
                 }
             });
         });
@@ -46,11 +46,11 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                                         if (err) {
                                             response.redirect(302, thSettings.getDomain() + 'error?t=login'); //TODO: Build this page with the old error message under the login template
                                         } else {
-                                            sendUserToDefaultPage(request, response, newUser, accessToken)
+                                            sendUserToDefaultPage(request, response, newUser)
                                         }
                                     });
                                 } else {
-                                    sendUserToDefaultPage(request, response, myUser, accessToken);
+                                    sendUserToDefaultPage(request, response, myUser);
                                 }
                             })
                         }
@@ -59,23 +59,18 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
             })
         });
 
-        function createSignupLink(email, token) {
-            return thSettings.getDomain() + "signin2?email=" + email + "&token=" + token;
+        function createSigninLink(email, token) {
+            return thSettings.getDomain() + "signinByEmail2?email=" + email + "&token=" + token;
         }
 
-        function sendUserToDefaultPage (request, response, user, token) {
-            setRememberMeCookie(response, token);
+        function sendUserToDefaultPage (request, response, user) {
             request.session.currentUser = user;
             response.redirect(302, thSettings.getDomain() + 'app/newsfeed');
         }
 
-        function setRememberMeCookie(response, token) {
-            response.cookie('rememberme', loginToken.cookieValue(token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }); //604800000 equals one week
-        }
-
-        app.post('/api/login/signinFB', function (request, response){
+        app.post('/api/signin/signinFB', function (request, response){
             if (!request.body.email) {
-                respondWithJson(response, { errMsg : 'Login failed (2)' });
+                respondWithJson(response, { errMsg : 'Sign in failed (2)' });
                 return;
             }
             var username = request.body.email.toLowerCase();
@@ -98,12 +93,12 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                    }
                 })
             }
-            loginToken.createToken(username, onTokenCreated);
+            signinToken.createToken(username, onTokenCreated);
         });
 
-        app.post('/api/login/authenticate', function (request, response) {
+        app.post('/api/signin/authenticate', function (request, response) {
             if(!request.body.email) {
-                respondWithJson(response, { errMsg : 'Login failed (3)' });
+                respondWithJson(response, { errMsg : 'Sign in failed (3)' });
                 return;
             }
             var username = request.body.email.toLowerCase();
@@ -114,13 +109,13 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                 }
 
                 var onTokenCreated;
-                if(thSettings.isAutoLoginEnabled()) {
-                    //Local testing - skip email and redirect to signup link directly
+                if(thSettings.isAutoSigninEnabled()) {
+                    //Local testing - skip email and redirect to sign up link directly
                     onTokenCreated = function (myToken) {
                          if (myUser) {
-                             respondWithJson(response, { url : createSignupLink(normalizedUsername, myToken.token), isNewUser : false });
+                             respondWithJson(response, { url : createSigninLink(normalizedUsername, myToken.token), isNewUser : false });
                          } else {
-                             respondWithJson(response, { url : createSignupLink(normalizedUsername, myToken.token), isNewUser : true });
+                             respondWithJson(response, { url : createSigninLink(normalizedUsername, myToken.token), isNewUser : true });
                          }
                     };
                 } else if (myUser) {
@@ -129,8 +124,8 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                         email.emailUser(
                             username,
                             'Sign in to Treehouse',
-                            "<html>Click <a href='" + createSignupLink(normalizedUsername, myToken.token) + "'>here</a> to sign in to Treehouse.</html>",
-                            'Go to ' + createSignupLink(normalizedUsername, myToken.token) +  ' to sign in to Treehouse!',
+                            "<html>Click <a href='" + createSigninLink(normalizedUsername, myToken.token) + "'>here</a> to sign in to Treehouse.</html>",
+                            'Go to ' + createSigninLink(normalizedUsername, myToken.token) +  ' to sign in to Treehouse!',
                              function() {
                                  respondWithJson(response, { isNewUser : false });
                              }
@@ -142,15 +137,15 @@ module.exports = function (app, templates, thSettings, user, loginToken, email, 
                         email.emailUser(
                             username,
                             'Welcome  to Treehouse',
-                            "<html>Click <a href='" + createSignupLink(normalizedUsername, myToken.token) + "'>here</a> to start using Treehouse.</html>",
-                            'Go to ' + createSignupLink(normalizedUsername, myToken.token) + ' to start using Treehouse!',
+                            "<html>Click <a href='" + createSigninLink(normalizedUsername, myToken.token) + "'>here</a> to start using Treehouse.</html>",
+                            'Go to ' + createSigninLink(normalizedUsername, myToken.token) + ' to start using Treehouse!',
                             function() {
                                 respondWithJson(response, { isNewUser : true });
                             }
                         );
                     };
                 }
-                loginToken.createToken(normalizedUsername, onTokenCreated);
+                signinToken.createToken(normalizedUsername, onTokenCreated);
             });
         });
     }

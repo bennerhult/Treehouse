@@ -1,6 +1,6 @@
 angular.module('App', []).controller('Ctrl', function ($scope) {
-    $scope.login = function (evt) {
+    $scope.signin = function (evt) {
         evt.preventDefault();
-        document.location = '/login2';
+        document.location = '/signin2';
     };
 });

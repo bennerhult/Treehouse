@@ -18,25 +18,25 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
             $scope.isAppMode = true
         }
 
-        var autoLogin = false;
+        var autoSignin = false;
         try {
-            if(localStorage && localStorage.th_autologin_email) {
-                $scope.emailAddress = localStorage.th_autologin_email;
-                autoLogin = true;
+            if(localStorage && localStorage.th_autosignin_email) {
+                $scope.emailAddress = localStorage.th_autosignin_email;
+                autoSignin = true;
             }
         } catch(err) {
         }
-        if(autoLogin) {
-            $timeout(function () { $scope.loginWithEmail(); }); //To have page init be done before we try to autologin. Avoids having to deal with things like emailLoginForm being null.
+        if(autoSignin) {
+            $timeout(function () { $scope.signinWithEmail(); }); //To have page init be done before we try to autosignin. Avoids having to deal with things like emailSigninForm being null.
         }
     }
 
-    $scope.loginWithEmail = function (evt) {
+    $scope.signinWithEmail = function (evt) {
         if(evt) {
             evt.preventDefault();
         }
-        if($scope.emailLoginForm.$invalid) {
-           if($scope.emailLoginForm.emailAddress.$error.email) {
+        if($scope.emailSigninForm.$invalid) {
+           if($scope.emailSigninForm.emailAddress.$error.email) {
                $scope.nothingEntered = false;
                $scope.isEmailInvalid = true;
             } else {
@@ -49,7 +49,7 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
         $scope.authenticationFailure = false;
         $scope.isLoading = true;
 
-        $http.post('/api/login/authenticate', { email : $scope.emailAddress }).success(function (result) {
+        $http.post('/api/signin/authenticate', { email : $scope.emailAddress }).success(function (result) {
             $scope.isLoading = false;
             if(result.errMsg) {
                 $scope.authenticationFailure = true;
@@ -76,7 +76,7 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
                 if (response.authResponse) {
                     FB.api('/me', function(apiResponse) {
                         if (apiResponse) {
-                            $http.post('/api/login/signinFB', { email : apiResponse.email }).success(function (result) {
+                            $http.post('/api/signin/signinFB', { email : apiResponse.email }).success(function (result) {
                                 window.location = result.url;
                             }).error(function() {
                                 $scope.fbConnectError = true;

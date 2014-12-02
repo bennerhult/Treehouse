@@ -97,16 +97,22 @@ See available versions for Node and NPM
 ####Set this once to get it to find your database locally
 `set DB_URI=mongodb://localhost:27017/test`
 
-##Skip login email in development
+##Skip sign in email in development
 Create a file in the same folder as app.js called run.bat (it's in .gitignore) with this content:
 
-    SET TH_AUTOLOGIN=true
+    SET TH_AUTOSIGNIN=true
     node app.js
 
-This will cause the server to send back the login link to the browser which will redirect the user directly there instead of sending an email. This setting only works in development mode and you may need to clear the browser cache for this to work.
+This will cause the server to send back the sign in link to the browser which will redirect the user directly there instead of sending an email. This setting only works in development mode and you may need to clear the browser cache for this to work.
 
-To get all the way to zero click login, add a setting in localstorage called 'th_autologin_email' and put your email in there. All this does is have the email be autotyped in the email field and then simulates a click on the login button.
+To get all the way to zero click sign in, add a setting in localstorage called 'th_autosignin_email' and put your email in there. All this does is have the email be autotyped in the email field and then simulates a click on the sign in button.
 
+##Skip sign in for easier testing
+First of all, install the Chrome extension [HTML5 localstorage manager](chrome-extension://giompennnhheakjcnobejbnjgbbkmdnd/options.html)
+
+Then open it and add the setting 'th_autosignin_email' and the email of your choice, your username.
+
+If you want to swap user for testing user interaction such as sharing or newsfeed, open the extension and swap to the new username you wish to use. Sign out and you will instantly be signed in as the new user.
 ##newsfeedQueuer
 
 ####To run it locally

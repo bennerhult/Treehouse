@@ -1766,7 +1766,7 @@ span.successMessage{
 
 @media screen and (max-width: 1080px) {
 
-    .preLogin .content{
+    .preSignin .content{
         width: 95%;
     }
 
@@ -1779,7 +1779,7 @@ span.successMessage{
 
 @media screen and (max-width: 1000px) {
 
-    .preLogin .examplesWrap ul li{
+    .preSignin .examplesWrap ul li{
 
         width: 33%;
     }
@@ -1938,14 +1938,14 @@ span.successMessage{
 }
 
 @media screen and (max-width: 580px) {
-    .preLogin .examplesWrap ul li{
+    .preSignin .examplesWrap ul li{
         width: 50%;
     }
 }
 
 
 @media screen and (max-width: 400px) {
-    .preLogin .examplesWrap ul li{
+    .preSignin .examplesWrap ul li{
         width: 100%;
     }
 
