@@ -139,10 +139,11 @@ publiclyAvailable.use(function(req, res, next) {
 });
 
 requireAccess.use(function(req, res, next) {
-    if(!req.session || !req.session.currentUser) {
-        res.redirect('/login2');
-    } else {
+    //TODO: om man går till prelogin eller index med cookie, ska man då skickas in i appen direkt?
+    if(req.session && req.session.currentUser) {
         next();
+    } else {
+        res.redirect('/login2');
     }
 });
 
