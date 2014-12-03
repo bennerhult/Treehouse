@@ -97,7 +97,7 @@ module.exports = function (app, templates, thSettings, user, signinToken, email,
 
         app.post('/api/signin/authenticate', function (request, response) {
             if(!request.body.email) {
-                respondWithJson(response, { errMsg : 'Sign in failed (3)' });//TODO show error message on page
+                respondWithJson(response, { errCode : 1 });
                 return;
             }
             var username = request.body.email.toLowerCase();

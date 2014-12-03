@@ -32,27 +32,49 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
     }
 
     $scope.signinWithEmail = function (evt) {
+        $scope.authenticationFailure = false;
+        $scope.authenticationFailure1 = false;
+        $scope.authenticationFailure2 = false;
+        $scope.authenticationFailure3 = false;
+        $scope.authenticationFailure4 = false;
+        $scope.authenticationFailure5 = false;
+        $scope.nothingEntered = false;
+        $scope.isEmailInvalid = false;
         if(evt) {
             evt.preventDefault();
         }
         if($scope.emailSigninForm.$invalid) {
            if($scope.emailSigninForm.emailAddress.$error.email) {
-               $scope.nothingEntered = false;
                $scope.isEmailInvalid = true;
             } else {
-               $scope.isEmailInvalid = false;
                $scope.nothingEntered = true;
              }
             return;
         }
-
-        $scope.authenticationFailure = false;
         $scope.isLoading = true;
 
         $http.post('/api/signin/authenticate', { email : $scope.emailAddress }).success(function (result) {
             $scope.isLoading = false;
-            if(result.errMsg) {
-                $scope.authenticationFailure = true;
+            if(result.errCode) {
+                switch(result.errCode) {
+                    case 1:
+                    $scope.authenticationFailure1 = true;
+                        break;
+                    case 2:
+                        $scope.authenticationFailure2 = true;
+                        break;
+                    case 3:
+                        $scope.authenticationFailure3 = true;
+                        break;
+                    case 4:
+                        $scope.authenticationFailure4 = true;
+                        break;
+                    case 5:
+                        $scope.authenticationFailure5 = true;
+                        break;
+                    default:
+                    $scope.authenticationFailure = true;
+                }
             } else if(result.url) {
                 document.location =  result.url;
             } else if (result.isNewUser) {
