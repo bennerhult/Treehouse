@@ -130,21 +130,30 @@ console.log('Treehouse server started on port ' + port);
 var Router = require('router');
 var publiclyAvailable = new Router();
 var requireAccess = new Router();
+var skipSigninPageIfReturningUser = new Router();
 
 publiclyAvailable.use(function(req, res, next) {
     next();
 });
 
 requireAccess.use(function(req, res, next) {
-    //TODO: om man går till prelogin eller index med cookie, ska man då skickas in i appen direkt?
     if(req.session && req.session.currentUser) {
         next();
     } else {
-        res.redirect('/signin');
+        res.redirect('/signin2');
+    }
+});
+
+skipSigninPageIfReturningUser.use(function(req, res, next) {
+    if(req.session && req.session.currentUser) {
+        res.redirect('/app/newsfeed');
+    } else {
+        next();
     }
 });
 
 app.use('/', publiclyAvailable);
+app.use('/signin2', skipSigninPageIfReturningUser);
 app.use('/api', publiclyAvailable);
 app.use('/app', requireAccess);
 
@@ -514,7 +523,6 @@ app.get('/setPrettyName', function(request, response){
     }
 
 })
-
 
 app.get('/upgradeToIssuer', function(request, response){
     user.User.findOne({ _id: request.session.currentUser._id}, function(err, issuerProspect) {
