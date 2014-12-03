@@ -75,7 +75,6 @@ module.exports = function (app, templates, thSettings, user, signinToken, email,
             }
             var username = request.body.email.toLowerCase();
             var onTokenCreated = function(myToken) {
-                setRememberMeCookie(response, myToken.token);
                 user.User.findOne({ username: username }, function (err, myUser) {
                    if (!myUser) {
                         user.createUser(username, function (newUser, err) {
