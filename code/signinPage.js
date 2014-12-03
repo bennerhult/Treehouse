@@ -18,8 +18,7 @@ module.exports = function (app, templates, thSettings, user, signinToken, email,
             var token = url_parts.query.token;
             auth.authenticate(email, token, function (err, isAuthenticated, data) {
                 if (err) {
-                    //TODO show error message on page
-                    response.redirect(302, thSettings.getDomain() + 'error?t=login');
+                    response.redirect(302, thSettings.getDomain() + 'signin2');
                 } else if (!isAuthenticated) {
                     response.redirect(302, thSettings.getDomain() + 'signin2');
                 } else {
