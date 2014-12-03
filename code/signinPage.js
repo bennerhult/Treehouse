@@ -44,9 +44,7 @@ module.exports = function (app, templates, thSettings, user, signinToken, email,
                             user.User.findOne({ username: email }, function(err,myUser) {
                                 if (!myUser) {
                                     user.createUser(email, function (newUser, err) {
-                                        if (err) {
-                                            return;
-                                        } else {
+                                        if (!err) {
                                             sendUserToDefaultPage(request, response, newUser);
                                         }
                                     });
@@ -74,13 +72,11 @@ module.exports = function (app, templates, thSettings, user, signinToken, email,
                 return;
             }
             var username = request.body.email.toLowerCase();
-            var onTokenCreated = function(myToken) {
+            var onTokenCreated = function() {
                 user.User.findOne({ username: username }, function (err, myUser) {
                    if (!myUser) {
                         user.createUser(username, function (newUser, err) {
-                            if (err) {
-                                return;
-                            } else {
+                            if (!err) {
                                 request.session.currentUser = newUser;
                                 respondWithJson(response, {url: thSettings.getDomain() + 'app/newsfeed'});
                             }
