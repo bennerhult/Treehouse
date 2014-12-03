@@ -13,50 +13,50 @@ module.exports = function (app, templates, thSettings, user, signinToken, email,
         });
 
         app.get('/signinByEmail', function (request, response){
-            var url_parts = url.parse(request.url, true)
-            var email = url_parts.query.email.toLowerCase()
-            var token = url_parts.query.token
+            var url_parts = url.parse(request.url, true);
+            var email = url_parts.query.email.toLowerCase();
+            var token = url_parts.query.token;
             auth.authenticate(email, token, function (err, isAuthenticated, data) {
                 if (err) {
                      response.redirect(302, thSettings.getDomain() + 'error?t=login'); //TODO: Build this page with the old error message under the signin template and remove login wording
                 } else if (!isAuthenticated) {
                     response.redirect(302, thSettings.getDomain() + 'signin2');
                 } else {
-                    sendUserToDefaultPage(request, response, data.user)
+                    sendUserToDefaultPage(request, response, data.user);
                 }
             });
         });
 
         app.get('/fbAppConnect2', function (request, response){
-            var url_parts = url.parse(request.url, true)
-            var code = url_parts.query.code
-            var accessTokenLink= 'https://graph.facebook.com/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=' + thSettings.getDomain()+ 'fbAppConnect2&code=' + code
+            var url_parts = url.parse(request.url, true);
+            var code = url_parts.query.code;
+            var accessTokenLink= 'https://graph.facebook.com/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=' + thSettings.getDomain()+ 'fbAppConnect2&code=' + code;
             var requestModule = require('request');
             requestModule.get(accessTokenLink, function (accessTokenError, accessTokenResponse, accessTokenBody) {
                 if (!accessTokenError && accessTokenResponse.statusCode == 200) {
                     var accessToken  = accessTokenBody.substring(accessTokenBody.indexOf('='))
-                    var graphLink = 'https://graph.facebook.com/me?access_token' + accessToken
+                    var graphLink = 'https://graph.facebook.com/me?access_token' + accessToken;
                     requestModule.get(graphLink, function (graphError, graphResponse, graphBody) {
                         if (!graphError && graphResponse.statusCode == 200) {
-                            var graph_parts = JSON.parse(graphBody)
-                            var email  = graph_parts.email
+                            var graph_parts = JSON.parse(graphBody);
+                            var email  = graph_parts.email;
                             user.User.findOne({ username: email }, function(err,myUser) {
                                 if (!myUser) {
                                     user.createUser(email, function (newUser, err) {
                                         if (err) {
                                             response.redirect(302, thSettings.getDomain() + 'error?t=login'); //TODO: Build this page with the old error message under the login template
                                         } else {
-                                            sendUserToDefaultPage(request, response, newUser)
+                                            sendUserToDefaultPage(request, response, newUser);
                                         }
                                     });
                                 } else {
                                     sendUserToDefaultPage(request, response, myUser);
                                 }
-                            })
+                            });
                         }
-                    })
+                    });
                 }
-            })
+            });
         });
 
         function createSigninLink(email, token) {
@@ -70,7 +70,7 @@ module.exports = function (app, templates, thSettings, user, signinToken, email,
 
         app.post('/api/signin/signinFB', function (request, response){
             if (!request.body.email) {
-                respondWithJson(response, { errMsg : 'Sign in failed (2)' });
+                respondWithJson(response, { errMsg : 'Sign in failed (2)' });//TODO show error message on page
                 return;
             }
             var username = request.body.email.toLowerCase();
@@ -97,7 +97,7 @@ module.exports = function (app, templates, thSettings, user, signinToken, email,
 
         app.post('/api/signin/authenticate', function (request, response) {
             if(!request.body.email) {
-                respondWithJson(response, { errMsg : 'Sign in failed (3)' });
+                respondWithJson(response, { errMsg : 'Sign in failed (3)' });//TODO show error message on page
                 return;
             }
             var username = request.body.email.toLowerCase();
