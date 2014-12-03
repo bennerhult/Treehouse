@@ -84,7 +84,7 @@ module.exports = function (app, templates, thSettings, user, signinToken, email,
                        request.session.currentUser = myUser;
                        respondWithJson(response, {url: thSettings.getDomain() + 'app/newsfeed'});
                    }
-                })
+                });
             }
             signinToken.createToken(username, onTokenCreated);
         });
@@ -92,7 +92,6 @@ module.exports = function (app, templates, thSettings, user, signinToken, email,
         app.post('/api/signin/authenticate', function (request, response) {
             if(!request.body.email) {
                 respondWithJson(response, { errCode : 1 });
-                return;
             }
             var username = request.body.email.toLowerCase();
             user.User.findOne({ username: username }, function(err, myUser) {
