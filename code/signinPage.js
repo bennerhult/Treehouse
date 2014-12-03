@@ -60,7 +60,7 @@ module.exports = function (app, templates, thSettings, user, signinToken, email,
         });
 
         function createSigninLink(email, token) {
-            return thSettings.getDomain() + "signinByEmail2?email=" + email + "&token=" + token;
+            return thSettings.getDomain() + "signinByEmail?email=" + email + "&token=" + token;
         }
 
         function sendUserToDefaultPage (request, response, user) {
@@ -107,7 +107,6 @@ module.exports = function (app, templates, thSettings, user, signinToken, email,
                 if(myUser) {
                     normalizedUsername = myUser.username;
                 }
-
                 var onTokenCreated;
                 if(thSettings.isAutoSigninEnabled()) {
                     //Local testing - skip email and redirect to sign up link directly
