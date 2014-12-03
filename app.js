@@ -159,7 +159,6 @@ app.get('app/content/*', function(request, response){
 var auth = (function () {
     'use strict';
 
-    //TODO check that emailed token exists instead?
     function authenticateExistingUser(myUser, callback) {
         loginToken.createToken(myUser.username, function(myToken) {
             callback(null, true, { token : myToken, isNewUser : false, user : myUser });
