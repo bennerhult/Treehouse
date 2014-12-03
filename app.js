@@ -45,7 +45,7 @@ if ('development' == env) {
     db_uri = process.env.DB_URI;
     thSettings.init({
         envName : 'test',
-        autoSignin : true,
+        autoSignin : 'true',
         domain : domain
     });
 } else if ('production' == env) {
