@@ -18,7 +18,8 @@ module.exports = function (app, templates, thSettings, user, signinToken, email,
             var token = url_parts.query.token;
             auth.authenticate(email, token, function (err, isAuthenticated, data) {
                 if (err) {
-                     response.redirect(302, thSettings.getDomain() + 'error?t=login'); //TODO: Build this page with the old error message under the signin template and remove login wording
+                    //TODO show error message on page
+                    response.redirect(302, thSettings.getDomain() + 'error?t=login');
                 } else if (!isAuthenticated) {
                     response.redirect(302, thSettings.getDomain() + 'signin2');
                 } else {
@@ -70,7 +71,6 @@ module.exports = function (app, templates, thSettings, user, signinToken, email,
 
         app.post('/api/signin/signinFB', function (request, response){
             if (!request.body.email) {
-                respondWithJson(response, { errMsg : 'Sign in failed (2)' });//TODO show error message on page
                 return;
             }
             var username = request.body.email.toLowerCase();
@@ -79,16 +79,15 @@ module.exports = function (app, templates, thSettings, user, signinToken, email,
                    if (!myUser) {
                         user.createUser(username, function (newUser, err) {
                             if (err) {
-                                //TODO show error message on page
-                                respondWithJson(response, {errMsg: 'There was a problem creating your account. Contact staff@treehouse.io for more information.'})
+                                return;
                             } else {
                                 request.session.currentUser = newUser;
-                                respondWithJson(response, {url: thSettings.getDomain() + 'app/newsfeed'})
+                                respondWithJson(response, {url: thSettings.getDomain() + 'app/newsfeed'});
                             }
                         });
                     } else {
                        request.session.currentUser = myUser;
-                       respondWithJson(response, {url: thSettings.getDomain() + 'app/newsfeed'})
+                       respondWithJson(response, {url: thSettings.getDomain() + 'app/newsfeed'});
                    }
                 })
             }
