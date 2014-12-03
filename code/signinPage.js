@@ -45,7 +45,7 @@ module.exports = function (app, templates, thSettings, user, signinToken, email,
                                 if (!myUser) {
                                     user.createUser(email, function (newUser, err) {
                                         if (err) {
-                                            response.redirect(302, thSettings.getDomain() + 'error?t=login'); //TODO: Build this page with the old error message under the login template
+                                            return;
                                         } else {
                                             sendUserToDefaultPage(request, response, newUser);
                                         }
