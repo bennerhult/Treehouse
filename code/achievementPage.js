@@ -261,4 +261,3 @@ module.exports = function (user, progress, moment, shareholding, achievement, ur
         showAchievementPage : showAchievementPage
     };
 }
-
