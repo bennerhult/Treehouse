@@ -24,7 +24,7 @@ module.exports = function (app, templates, thSettings, newsfeed, requestHandlers
                             }
                         });
                     }
-                    return respondWithJson(response, { prettyName : prettyName, newsItems : newsfeedFromServer.newsItems });
+                    return respondWithJson(response, { prettyName : prettyName, userImageURL : userImageURL, newsItems : newsfeedFromServer.newsItems });
                 });
             });
         });
