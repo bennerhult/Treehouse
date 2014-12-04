@@ -2,7 +2,7 @@
 <html lang="en" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
     <title>Treehouse</title>
-    <meta http-equiv="../content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
@@ -25,62 +25,40 @@
     </script>
     <script type="text/javascript" src="../content/js/css3-mediaqueries.js"></script>
     <script src="../content/ext/js/jquery-1.10.2.js" type="text/javascript"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.min.js"></script>
-    <script src="../content/js/newsfeed.js" type="text/javascript"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.1/angular.min.js"></script>
+    <script src="../content/js/signin.js" type="text/javascript"></script>
     <link rel="stylesheet" href="../content/css/core2.css" media="screen, projection, print" />
 </head>
-<body ng-app="App">
+<body>
+
 <div class="container" ng-controller="Ctrl">
-    <div class="navigation"><h1>Newsfeed</h1></div>
+    <div class="navigation"><h1>Treehouse</h1></div>
     <div class="contentWrap">
         <div class="userArea">
-            <img src="{{userImageURL}}" >
-            <p>{{prettyName}}</p>
+            <img src="../content/img/user_has_no_image.jpg" >
+            <p>asd</p>
             <div class="clear"> </div>
         </div>
+
         <div>
             <div class="desktopMenu">
                 <ul>
-                    <li><a href="#"><span class="selected">Newsfeed</span></a></li>
-                    <li><a href="#"><span>Achievements</span></a></li>
+                    <li><a href="/app/newsfeed"><span>Newsfeed</span></a></li>
+                    <li><a href="#"><span >Achievements</span></a></li>
                     <li><a href="/app/friends"><span>Friends</span></a></li>
-                    <li><a href="/app/more"><span>More</span></a></li>
+                    <li><a href="#"><span class="selected">More</span></a></li>
                 </ul>
             </div>
-            <div class="content">
-                <div class="listWrap" ng-if="newsItems">
-                    <div ng-repeat="newsItem in newsItems" ng-switch="newsItem.eventType" class="item">
 
-                        <div ng-switch-when="info">
-                            <p>{{newsItem.newsJson}}</p>
-                        </div>
-                        <div ng-switch-when="friends">
-                            <div class="newsUserArea">
-                                <img src="../content/img/user_has_no_image.jpg" >
-                                <p>{{newsItem.newsJson.AchieverName}}</p>
-                                <div class="clear"> </div>
-                            </div>
-                            <p>Became friends with {{newsItem.newsJson.FriendName}}</p>
-                            <img width="96" height="96" src="{{newsItem.newsJson.FriendImageURL}}" alt="{{newsItem.newsJson.AchieverName}} became friends with {{newsItem.newsJson.FriendName}}">
-                        </div>
-                        <div ng-switch-when="progress">
-                            <div class="newsUserArea">
-                                <img src="../content/img/user_has_no_image.jpg" >
-                                <p>{{newsItem.newsJson.AchieverName}}</p>
-                                <div class="clear"> </div>
-                            </div>
-                            <p>Has made a progress on "{{newsItem.newsJson.AchievementName}}"</p>
-                            <a ng-click="gotoAchivement($event, newsItem)">
-                                <img width="96" height="96" src="{{newsItem.newsJson.AchievementImageURL}}" alt="{{newsItem.newsJson.AchieverName}} progressed {{newsItem.newsJson.AchievementName}}">
-                            </a>
-                        </div>
-                        <div ng-switch-default><pre>{{newsItem | json}}</pre></div>
-                    </div>
+            <div class="content">
+                <div class="section">
+                    More
                 </div>
+                <div class="clear"> </div>
             </div>
-            <div class="clear"> </div>
         </div>
     </div>
+
     <div class="bottomMenu">
         <ul>
             <li>
@@ -99,10 +77,11 @@
                 </div>
             </li>
             <li>
-                <div class=""><a href="#"><img src="../content/img/tree-tab.png" alt=""></a></div>
+                <div class=""><a href="#"><img src="content/img/tree-tab.png" alt=""></a></div>
             </li>
         </ul>
     </div>
 </div>
+
 </body>
 </html>
