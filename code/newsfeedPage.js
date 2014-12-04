@@ -1,4 +1,4 @@
-module.exports = function (app, templates, thSettings, newsfeed) {
+module.exports = function (app, templates, thSettings, newsfeed, requestHandlers) {
     'use strict';
 
     var _ = require("underscore")._;
@@ -14,20 +14,18 @@ module.exports = function (app, templates, thSettings, newsfeed) {
             templates.serveHtmlRaw(response, './server-templates/newsfeed.html', {});
         });
         app.post('/api/newsfeed/init', function (request, response) {
-            if (!request.session || !request.session.currentUser) {
-                return respondWithJson(response, { errMsg : 'Not logged in' });
-            }
             var userId = request.session.currentUser._id;
-            newsfeed.getNewsfeed(userId, function(newsfeedFromServer) {
-                //TODO: Look up email and switch userId to email
-                if(newsfeedFromServer && newsfeedFromServer.newsItems) {
-                    _.each(newsfeedFromServer.newsItems, function (n) {
-                        if(n.eventType != 'info') {
-                            n.newsJson = JSON.parse(n.newsJson);
-                        }
-                    });
-                }
-                return respondWithJson(response, { userEmail : userId, newsItems : newsfeedFromServer.newsItems });
+            requestHandlers.getPrettyNameIdAndImageURL(userId, function(prettyName, myUserId, userImageURL) {
+                newsfeed.getNewsfeed(userId, function(newsfeedFromServer) {
+                    if(newsfeedFromServer && newsfeedFromServer.newsItems) {
+                        _.each(newsfeedFromServer.newsItems, function (n) {
+                            if(n.eventType != 'info') {
+                                n.newsJson = JSON.parse(n.newsJson);
+                            }
+                        });
+                    }
+                    return respondWithJson(response, { prettyName : prettyName, newsItems : newsfeedFromServer.newsItems });
+                });
             });
         });
     }
