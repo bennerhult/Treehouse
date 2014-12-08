@@ -114,58 +114,58 @@ function updateLatestAchievementIfNecessary(progressId, next) {
         progress.Progress.findOne({ _id: latestAchievement_progressId }, function(err,currentProgress) {
             if (progressId && currentProgress) {
                 if (progressId.equals(currentProgress._id)) {
-                    setNewPublicAchievement(next)
+                    setNewPublicAchievement(next);
                 } else {
                     if (next) {
-                        next()
+                        next();
                     }
                 }
             } else {
-                setNewPublicAchievement(next)
+                setNewPublicAchievement(next);
             }
-        })
-    })
+        });
+    });
 }
 
 function setNewPublicAchievement(next) {
     findPublicAchievement(function (publicId) {
         if (publicId) {
-            latestAchievement.update(publicId)
+            latestAchievement.update(publicId);
         }   else {
-            latestAchievement.update(-1)
+            latestAchievement.update(-1);
         }
         if (next) {
-            next()
+            next();
         }
-    })
+    });
 }
 
 function unpublicize(oneProgress) {
     progress.Progress.find({ achievement_id: oneProgress.achievement_id, achiever_id: oneProgress.achiever_id }, function(err,progresses) {
         progresses.forEach(function(currentProgress, index) {
-            currentProgress.publiclyVisible = false
-            currentProgress.save()
+            currentProgress.publiclyVisible = false;
+            currentProgress.save();
             if (index == (progresses.length -1)) {
-                updateLatestAchievementIfNecessary (oneProgress._id)
+                updateLatestAchievementIfNecessary (oneProgress._id);
             }
-        })
+        });
     })
 }
 
 function remove(achievement, userId, next) {
-    removeSharedPartOfAchievement(achievement, userId, function() {
-        progress.Progress.find({ achievement_id: achievement._id}, function(err, progresses) {
-            if (progresses && progresses.length > 0) {
-                next()
-            }  else {
+    progress.Progress.find({ achievement_id: achievement._id}, function(err, progresses) {
+        if (progresses && progresses.length > 0) {
+            next();
+        } else {
+            removeSharedPartOfAchievement(achievement, userId, function() {
                 achievement.remove(function () {
                     if (next) {
-                        next()
+                        next();
                     }
-                })
-            }
-        })
-    })
+                });
+            });
+        }
+    });
 }
 
 function removeSharedPartOfAchievement(achievement, userId, next)    {
@@ -173,22 +173,22 @@ function removeSharedPartOfAchievement(achievement, userId, next)    {
         progresses.forEach(function(currentProgress, index) {
             if (index == (progresses.length - 1)) {
                 if (currentProgress) {
-                    currentProgress.remove()
+                    currentProgress.remove();
                 }
-                updateLatestAchievementIfNecessary(currentProgress._id, next)
+                updateLatestAchievementIfNecessary(currentProgress._id, next);
             } else if (currentProgress) {
                 currentProgress.remove()
             }
-        })
-    })
+        });
+    });
 }
 
 function findPublicAchievement(callback) {
     progress.Progress.findOne({ publiclyVisible: true }, function(err,currentProgress) {
         if (currentProgress) {
-            callback(currentProgress._id)
+            callback(currentProgress._id);
         } else {
-            callback()
+            callback();
         }
-    })
+    });
 }
