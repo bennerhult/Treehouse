@@ -1071,7 +1071,7 @@ function createNotificationDesc(response, achievementsList, completedAchievement
                         + '</p><div class="separerare-part">&nbsp;</div></div>'
                     if (j >= notifications.length - 1) {
                         achievementsList +=  notificationsList
-                        finishAchievementsList(response, achievementsList, completedAchievements, lookingAtFriend)
+                        finishAchievementsList(response, achievementsList, completedAchievements, lookingAtFriend, achieverId)
                     }
                 }
             }
@@ -1155,7 +1155,6 @@ function getAchievementList(request, response, completedAchievements) {
     progress.Progress.find({ achiever_id: achieverId}, {}, { sort: { 'created' : -1 } }, function(err, progresses) {
         if (err) { console.log("error in app.js 1: couldn't find any progress for user " + achieverId) }
         if (progresses && progresses.length > 0) {
-            if (!lookingAtFriendsAchievements && !completedAchievements ) {achievementsList += '<div class="achievement"><div class="container"><a href="javascript:void(0)" onclick="insertContent(getNewAchievementContent(null, \'' + achieverId + '\'), setDefaultMenu(\'Create Achievement\', false))"><img src="content/img/empty.png" alt=""/></a></div><p>Create new achievement</p><div class="separerare-part">&nbsp;</div></div>' }
             progresses.forEach(function(currentProgress) {
                 achievement.Achievement.findById(currentProgress.achievement_id, function(err2, myAchievement) {
                     if (err2) { console.log("error in app.js 2: couldn't find achievement for progress " + currentProgress.achievement_id) }
@@ -1178,7 +1177,7 @@ function getAchievementList(request, response, completedAchievements) {
                                             goneThroughProgresses +=  myAchievement.goals.length
                                             if (goneThroughProgresses == progresses.length) {
                                                 achievementsList += createAchievementDesc(achievementsToShow, progressesToShow, achieverId, percentages, completedAchievements, lookingAtFriendsAchievements,areAchievementsShared, isAchievementCreatedByMe)
-                                                getSharedAchievementNotifications(achievementsToShow.length, response, achievementsList, completedAchievements, achieverId, userId, lookingAtFriendsAchievements)
+                                               getSharedAchievementNotifications(achievementsToShow.length, response, achievementsList, completedAchievements, achieverId, userId, lookingAtFriendsAchievements)
                                             }
                                         })
                                     })
@@ -1189,9 +1188,6 @@ function getAchievementList(request, response, completedAchievements) {
                 })
             })
         } else {
-            if (!lookingAtFriendsAchievements && !completedAchievements ) {
-                achievementsList += '<div class="achievement"><div class="container"><a href="javascript:void(0)" onclick="insertContent(getNewAchievementContent(null, \'' + achieverId + '\'), setDefaultMenu(\'Create Achievement\', false))"><img src="content/img/empty.png" alt=""/></a></div><p>Create new achievement</p><div class="separerare-part">&nbsp;</div></div>'
-            }
             getSharedAchievementNotifications(0, response, achievementsList, completedAchievements, achieverId, userId, lookingAtFriendsAchievements)
         }
     })
@@ -1199,19 +1195,19 @@ function getAchievementList(request, response, completedAchievements) {
 
 function getSharedAchievementNotifications(nrOfAchievements, response, achievementsList, completedAchievements, achieverId, userId, lookingAtFriendsAchievements) {
     if (completedAchievements) {
-        finishAchievementsList(response, achievementsList, completedAchievements, lookingAtFriendsAchievements)
+        finishAchievementsList(response, achievementsList, completedAchievements, lookingAtFriendsAchievements, achieverId)
     } else {
         shareholding.getSharedAchievementNotifications(achieverId, userId, function(notifications) {
             if (!lookingAtFriendsAchievements && notifications) {
                 createNotificationDesc(response, achievementsList, completedAchievements, nrOfAchievements, notifications, achieverId, achieverId != userId)
             }  else {
-                finishAchievementsList(response, achievementsList, completedAchievements, lookingAtFriendsAchievements)
+                finishAchievementsList(response, achievementsList, completedAchievements, lookingAtFriendsAchievements, achieverId)
             }
         })
     }
 }
 
-function finishAchievementsList(response, achievementsList, completedAchievements, lookingAtFriendsAchievements) {
+function finishAchievementsList(response, achievementsList, completedAchievements, lookingAtFriendsAchievements, achieverId) {
     if (achievementsList.length < 1) {
         if (lookingAtFriendsAchievements) {
             if (completedAchievements) {
@@ -1223,6 +1219,7 @@ function finishAchievementsList(response, achievementsList, completedAchievement
             achievementsList = "<div class='achievement'><p>You do not have any unlocked achievements yet.</p></div>"
         }
     }
+    if (!lookingAtFriendsAchievements && !completedAchievements ) {achievementsList += '<div class="achievement"><div class="container"><a href="javascript:void(0)" onclick="insertContent(getNewAchievementContent(null, \'' + achieverId + '\'), setDefaultMenu(\'Create Achievement\', false))"><img src="content/img/empty.png" alt=""/></a></div><p>Create new achievement</p><div class="separerare-part">&nbsp;</div></div>' }
     response.writeHead(200, {'content-type': 'application/json' })
     response.write(JSON.stringify(achievementsList))
     response.end('\n', 'utf-8')
