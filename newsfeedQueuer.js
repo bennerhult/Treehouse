@@ -22,106 +22,135 @@ newsfeedEvent.NewsfeedEvent.find({}, function(err, newsfeedEventList) {
                         friendship.getFriends(newsfeedEvent.userId, function(friendsList) {
                             if (friendsList.length > 0) {
                                 nrOfAppendsToMake += friendsList.length
-                                nrOfNewsFeedsGoneThrough++
+                                nrOfNewsFeedsGoneThrough++;
                                 friendsList.forEach(function(currentFriendship) {
-                                    var currentFriendId
+                                    var currentFriendId;
                                     if (currentFriendship.friend1_id.equals(newsfeedEvent.userId)) {
-                                        currentFriendId = currentFriendship.friend2_id
+                                        currentFriendId = currentFriendship.friend2_id;
                                     } else {
-                                        currentFriendId = currentFriendship.friend1_id
+                                        currentFriendId = currentFriendship.friend1_id;
                                     }
-                                    addToNewsfeed(newsfeedEvent, currentProgress, currentAchievement, currentFriendId, function() {
-                                        nrOfAppendsMade++
-                                        if (nrOfNewsFeedsGoneThrough === newsfeedEventList.length && nrOfAppendsMade === nrOfAppendsToMake)  {
-                                            console.log("newsfeed cleared")
-                                            process.exit()
+                                    addProgressEvent(newsfeedEvent, currentProgress, currentAchievement, currentFriendId, function() {
+                                        nrOfAppendsMade++;
+                                        if (nrOfNewsFeedsGoneThrough === newsfeedEventList.length && nrOfAppendsMade === nrOfAppendsToMake) {
+                                            console.log("newsfeed cleared");
+                                            process.exit();
                                         }
-                                    })
-                                })
+                                    });
+                                });
                             }
-                        })
-                    })
-                })
+                        });
+                    });
+                });
+            } else if (newsfeedEvent.eventType === "achievementRemoved") {
+                friendship.getFriends(newsfeedEvent.userId, function(friendsList) {
+                    if (friendsList.length > 0) {
+                        nrOfAppendsToMake += friendsList.length;
+                        nrOfNewsFeedsGoneThrough++;
+                        friendsList.forEach(function(currentFriendship) {
+                            var currentFriendId;
+                            if (currentFriendship.friend1_id.equals(newsfeedEvent.userId)) {
+                                currentFriendId = currentFriendship.friend2_id;
+                            } else {
+                                currentFriendId = currentFriendship.friend1_id;
+                            }
+                           addRemovedAchievementEvent(newsfeedEvent, currentFriendId, function() {
+                                nrOfAppendsMade++;
+                                if (nrOfNewsFeedsGoneThrough === newsfeedEventList.length && nrOfAppendsMade === nrOfAppendsToMake)  {
+                                    console.log("newsfeed cleared");
+                                    process.exit();
+                                }
+                            });
+                        });
+                    }
+                });
             } else if (newsfeedEvent.eventType === "publicize") {
                 achievement.Achievement.findById(newsfeedEvent.objectId, function(err, currentAchievement) {
                     friendship.getFriends(newsfeedEvent.userId, function(friendsList) {
                         if (friendsList.length > 0) {
-                            nrOfAppendsToMake += friendsList.length
-                            nrOfNewsFeedsGoneThrough++
+                            nrOfAppendsToMake += friendsList.length;
+                            nrOfNewsFeedsGoneThrough++;
                             friendsList.forEach(function(currentFriendship) {
-                                var currentFriendId
+                                var currentFriendId;
                                 if (currentFriendship.friend1_id.equals(newsfeedEvent.userId)) {
-                                    currentFriendId = currentFriendship.friend2_id
+                                    currentFriendId = currentFriendship.friend2_id;
                                 } else {
-                                    currentFriendId = currentFriendship.friend1_id
+                                    currentFriendId = currentFriendship.friend1_id;
                                 }
-                                addToNewsfeed2(newsfeedEvent, currentAchievement, currentFriendId, function() {
-                                    nrOfAppendsMade++
+                                addPublicationEvent(newsfeedEvent, currentAchievement, currentFriendId, function() {
+                                    nrOfAppendsMade++;
                                     if (nrOfNewsFeedsGoneThrough === newsfeedEventList.length && nrOfAppendsMade === nrOfAppendsToMake)  {
-                                        console.log("newsfeed cleared")
-                                        process.exit()
+                                        console.log("newsfeed cleared");
+                                        process.exit();
                                     }
-                                })
-                            })
+                                });
+                            });
                         }
-                    })
-                })
+                    });
+                });
             } else if (newsfeedEvent.eventType === "friends") {
                 friendship.getFriends(newsfeedEvent.userId, function(friendsList) {
                     if (friendsList.length > 0) {
-                        nrOfAppendsToMake += friendsList.length
-                        nrOfNewsFeedsGoneThrough++
+                        nrOfAppendsToMake += friendsList.length;
+                        nrOfNewsFeedsGoneThrough++;
                         friendsList.forEach(function(currentFriendship) {
-                            var currentFriendId
+                            var currentFriendId;
                             if (currentFriendship.friend1_id.equals(newsfeedEvent.userId)) {
-                                currentFriendId = currentFriendship.friend2_id
+                                currentFriendId = currentFriendship.friend2_id;
                             } else {
-                                currentFriendId = currentFriendship.friend1_id
+                                currentFriendId = currentFriendship.friend1_id;
                             }
-                            addToNewsfeed3(newsfeedEvent, newsfeedEvent.objectId, currentFriendId, function() {
-                                nrOfAppendsMade++
+                            addNewFriendEvent(newsfeedEvent, newsfeedEvent.objectId, currentFriendId, function() {
+                                nrOfAppendsMade++;
                                 if (nrOfNewsFeedsGoneThrough === newsfeedEventList.length && nrOfAppendsMade === nrOfAppendsToMake)  {
-                                    console.log("newsfeed cleared")
-                                    process.exit()
+                                    console.log("newsfeed cleared");
+                                    process.exit();
                                 }
-                            })
-                        })
+                            });
+                        });
                     }
-                })
+                });
             } else {
-                console.log("unhandled event type encountered: " + newsfeedEvent.eventType)
+                console.log("unhandled event type encountered: " + newsfeedEvent.eventType);
             }
-        })
+        });
     } else {
-        console.log("newsfeed clear")
-        process.exit()
+        console.log("newsfeed clear");
+        process.exit();
     }
-})
+});
 
-function addToNewsfeed(newsfeedEvent, currentProgress, currentAchievement, currentFriendId, callback) {
+function addProgressEvent(newsfeedEvent, currentProgress, currentAchievement, currentFriendId, callback) {
     shareholding.isAchievementSharedByMe(currentFriendId, currentAchievement._id, function(isAchievmentSharedByFriend) {
         if (currentProgress.publiclyVisible || isAchievmentSharedByFriend) {
             appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, function() {
-                newsfeedEvent.remove()
-                callback()
-            })
+                newsfeedEvent.remove();
+                callback();
+            });
         } else {
-            newsfeedEvent.remove()
+            newsfeedEvent.remove();
         }
     })
 }
 
-function addToNewsfeed2(newsfeedEvent, currentAchievement, currentFriendId, callback) {
-    appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, function() {
-        newsfeedEvent.remove()
-        callback()
-    })
+function addRemovedAchievementEvent(newsfeedEvent, currentFriendId, callback) {
+    removeAchievementFromNewsfeed(newsfeedEvent, currentFriendId, function() {
+        newsfeedEvent.remove();
+        callback();
+    });
 }
 
-function addToNewsfeed3(newsfeedEvent, newFriendId, currentFriendId, callback) {
+function addPublicationEvent(newsfeedEvent, currentAchievement, currentFriendId, callback) {
+    appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, function() {
+        newsfeedEvent.remove();
+        callback();
+    });
+}
+
+function addNewFriendEvent(newsfeedEvent, newFriendId, currentFriendId, callback) {
     appendFriendJsonToNewsfeed(newsfeedEvent, newFriendId, currentFriendId, function() {
-        newsfeedEvent.remove()
-        callback()
+        newsfeedEvent.remove();
+        callback();
     })
 }
 
@@ -134,10 +163,10 @@ function appendFriendJsonToNewsfeed(newsfeedEvent, newFriendId, currentFriendId,
                 + ',"FriendName":"' + friendName + '"'
                 + ',"FriendId":"' + newsfeedEvent.userId + '"'
                 + ',"FriendImageURL":"' + friendImageUrl + '"'
-                + '}'
-            newsfeed.updateNewsfeed(currentFriendId, newsfeedEvent.eventType, newsJson, callback)
-        })
-    })
+                + '}';
+            newsfeed.updateNewsfeed(currentFriendId, newsfeedEvent.eventType, newsJson, callback);
+        });
+    });
 }
 
 function appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, callback) {
@@ -148,7 +177,11 @@ function appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId
             + ',"AchievementId":"' + currentAchievement._id + '"'
             + ',"AchievementName":"' + currentAchievement.title + '"'
             + ',"AchievementImageURL":"' + currentAchievement.imageURL + '"'
-            + '}'
-        newsfeed.updateNewsfeed(currentFriendId, newsfeedEvent.eventType, newsJson, callback)
-    })
+            + '}';
+        newsfeed.updateNewsfeed(currentFriendId, newsfeedEvent.eventType, newsJson, callback);
+    });
+}
+
+function removeAchievementFromNewsfeed(newsfeedEvent, userId, callback) {
+    newsfeed.removeFromNewsfeed(userId, newsfeedEvent.id, callback);
 }

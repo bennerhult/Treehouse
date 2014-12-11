@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
     goal = require('./goal.js'),
     latestAchievement = require('./latestAchievement.js'),
+    newsfeed = require('./newsfeed.js'),
     newsfeedEvent = require('./newsfeedEvent.js'),
     progress = require('./progress.js'),
     Schema= mongoose.Schema
@@ -153,18 +154,19 @@ function unpublicize(oneProgress) {
 }
 
 function remove(achievement, userId, next) {
-    progress.Progress.find({ achievement_id: achievement._id}, function(err, progresses) {
-        if (progresses && progresses.length > 0) {
-            next();
-        } else {
-            removeSharedPartOfAchievement(achievement, userId, function() {
+    removeSharedPartOfAchievement(achievement, userId, function() {
+        progress.Progress.find({ achievement_id: achievement._id}, function(err, progresses) {
+            if (progresses && progresses.length > 0) {
+                next();
+            }  else {
                 achievement.remove(function () {
+                    newsfeedEvent.addEvent("achievementRemoved", userId, achievement._id);
                     if (next) {
                         next();
                     }
                 });
-            });
-        }
+            }
+        });
     });
 }
 
@@ -177,7 +179,7 @@ function removeSharedPartOfAchievement(achievement, userId, next)    {
                 }
                 updateLatestAchievementIfNecessary(currentProgress._id, next);
             } else if (currentProgress) {
-                currentProgress.remove()
+                currentProgress.remove();
             }
         });
     });

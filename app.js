@@ -90,7 +90,7 @@ function authenticateFromLoginToken(request, response) {
     if (request.cookies.rememberme)  {
         var cookie = JSON.parse(request.cookies.rememberme)
         loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
-            if (!token) {
+            if (!token || !token.email) {
                 response.writeHead(404, {'content-type': 'application/json' })
                 response.write(JSON.stringify(""))
                 response.end('\n', 'utf-8')

@@ -39,11 +39,7 @@ module.exports = (function () {
         explodeIfNotInitialized();
         if(isDevelopment()) {
             return autoSignin && autoSignin === true;
-        } else if(isTest()) {
-            return true;
-        } else {
-            return false;
-        }
+        } else return !!isTest();
     }
 
     function getDomain() {
