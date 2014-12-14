@@ -11,7 +11,7 @@ var db_uri=process.env.DB_URI
 mongoose.connect(db_uri)
 
 newsfeedEvent.NewsfeedEvent.find({}, function(err, newsfeedEventList) {
-    if (newsfeedEventList.length > 0) {
+    if (newsfeedEventList && newsfeedEventList.length > 0) {
         var nrOfAppendsMade = 0
         var nrOfAppendsToMake = 0
         var nrOfNewsFeedsGoneThrough = 0

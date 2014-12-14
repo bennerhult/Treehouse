@@ -90,11 +90,7 @@ function authenticateFromLoginToken(request, response) {
     if (request.cookies.rememberme)  {
         var cookie = JSON.parse(request.cookies.rememberme)
         loginToken.LoginToken.findOne({ email: cookie.email }, function(err,token) {
-            if (!token || !token.email) {
-                response.writeHead(404, {'content-type': 'application/json' })
-                response.write(JSON.stringify(""))
-                response.end('\n', 'utf-8')
-            } else {
+            if (token && token.email) {
                 user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
                     if (user) {
                         request.session.currentUser = user
@@ -114,6 +110,10 @@ function authenticateFromLoginToken(request, response) {
                         response.end('\n', 'utf-8');
                     }
                 })
+            } else {
+                response.writeHead(404, {'content-type': 'application/json' })
+                response.write(JSON.stringify(""))
+                response.end('\n', 'utf-8')
             }
         })
     }  else {
