@@ -91,6 +91,26 @@ See available versions for Node and NPM
 
 [Climb into your OWN Treehouse!](http://localhost:1337/)
 
+#### test environment
+[URL](http://treehouseapp-test.herokuapp.com/)
+[New URL](http://treehouseapp-test.herokuapp.com/preSignin)
+
+The web server is Heroku, the database is a MongoDB on Compose (former MongoHQ). This mirrors the setup in production.
+DB user: testtreehouser
+DB pw: simple
+DB connection string: mongodb://testtreehouser:simple@dogen.mongohq.com:10014/treehouse-test
+
+To set environment variables and such, log into the [Heroku dashboard](https://dashboard.heroku.com).
+
+##see logs
+Command prompt:
+
+    heroku logs -app treehouseapp-test
+
+##deployment
+By checking in code to the master branch on the Treehouse-project on GitHub, the code is automagically deployed to the test environment. A manual deploy can be made from the [Heroku dashboard](https://dashboard.heroku.com).
+
+.
 ####Simulate production environment
 `set NODE_ENV=production` (`set NODE_ENV=development` to restore)
 

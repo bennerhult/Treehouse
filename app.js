@@ -38,7 +38,7 @@ if ('development' == env) {
     if(!process.env.DB_URI) {
         throw "Missing environment variable DB_URI which is required in test. Should be the equilvalent of what is 'mongodb://localhost:27017/test' in when developing locally";
     }
-    domain = 'http://test.treehouse.io/';
+    domain = process.env.TH_DOMAIN;
     db_uri = process.env.DB_URI;
     thSettings.init({
         envName : 'test',
