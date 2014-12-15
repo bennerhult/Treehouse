@@ -1347,162 +1347,172 @@ function calculateAchievementProgress(userId, achievementId, callback) {
 }
 
 function calculateAchievementProgressFromData(goals, progresses, callback) {
-    var achievementCurrentProgress = 0
-    var achievementTotalProgress = 0
-    var goalsGoneThrough = 0
-    var progressForGoal
+    var achievementCurrentProgress = 0;
+    var achievementTotalProgress = 0;
+    var goalsGoneThrough = 0;
+    var progressForGoal;
     goals.forEach(function(goal) {
-        achievementTotalProgress += goal.quantityTotal
+        achievementTotalProgress += goal.quantityTotal;
         progressForGoal = _.find(progresses, function(progressObj){return String(progressObj.goal_id) === String(goal._id)})
-         achievementCurrentProgress += progressForGoal.quantityFinished
-        goalsGoneThrough++
+         achievementCurrentProgress += progressForGoal.quantityFinished;
+        goalsGoneThrough++;
         if (goalsGoneThrough === goals.length) {
-            var achievementPercentageFinished = Math.floor((achievementCurrentProgress/ achievementTotalProgress) * 100)
-            callback(achievementPercentageFinished)
+            var achievementPercentageFinished = Math.floor((achievementCurrentProgress/ achievementTotalProgress) * 100);
+            callback(achievementPercentageFinished);
         }
-    })
+    });
 }
 
 app.get('/progress', function(request, response){
     progress.markProgress(request.session.currentUser._id, request.query.goalId, function(quantityFinished) {
-        response.writeHead(200, {'content-type': 'application/json' })
-        response.write(JSON.stringify(quantityFinished))
-        response.end('\n', 'utf-8')
-    })
-})
+        response.writeHead(200, {'content-type': 'application/json' });
+        response.write(JSON.stringify(quantityFinished));
+        response.end('\n', 'utf-8');
+    });
+});
 
 app.get('/issue', function(request, response){
     achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
         if (currentAchievement) {
             achievement.issue(currentAchievement, function() {
-                response.writeHead(200, {'content-type': 'application/json' })
-                response.write(JSON.stringify("ok"))
-                response.end('\n', 'utf-8')
-            })
+                response.writeHead(200, {'content-type': 'application/json' });
+                response.write(JSON.stringify("ok"));
+                response.end('\n', 'utf-8');
+            });
         }
-    })
-})
+    });
+});
 
 app.get('/publicize', function(request, response){
     progress.Progress.findOne({ achievement_id: request.session.current_achievement_id, achiever_id: request.session.currentUser._id }, function(err,currentAchievementProgress) {
-        achievement.publicize(currentAchievementProgress)
-        response.writeHead(200, {'content-type': 'application/json' })
-        response.write(JSON.stringify("ok"))
-        response.end('\n', 'utf-8')
-    })
-})
+        achievement.publicize(currentAchievementProgress);
+        response.writeHead(200, {'content-type': 'application/json' });
+        response.write(JSON.stringify("ok"));
+        response.end('\n', 'utf-8');
+    });
+});
 
 app.get('/unpublicize', function(request, response){
     progress.Progress.findOne({ achievement_id: request.session.current_achievement_id, achiever_id: request.session.currentUser._id }, function(err,currentProgress) {
-        achievement.unpublicize(currentProgress)
+        achievement.unpublicize(currentProgress);
         shareholding.isAchievementShared(request.session.current_achievement_id, function(isShared) {
-            response.writeHead(200, {'content-type': 'application/json' })
-            response.write(JSON.stringify(isShared))
-            response.end('\n', 'utf-8')
-        })
-    })
-})
+            response.writeHead(200, {'content-type': 'application/json' });
+            response.write(JSON.stringify(isShared));
+            response.end('\n', 'utf-8');
+        });
+    });
+});
 
 app.get('/deleteUser', function(request, response) {
-    var url_parts = url.parse(request.url, true)
-    var username  = url_parts.query.username
+    var url_parts = url.parse(request.url, true);
+    var username  = url_parts.query.username;
     user.remove(username, function() {
-        response.writeHead(200, {'content-type': 'application/json' })
-        response.write(JSON.stringify('ok'))
-        response.end('\n', 'utf-8')
-    })
-
-
-})
+        response.writeHead(200, {'content-type': 'application/json' });
+        response.write(JSON.stringify('ok'));
+        response.end('\n', 'utf-8');
+    });
+});
 
 app.get('/delete', function(request, response){
     var achievementId;
-
+    console.log("delete1")
     if (request.query.achievementId && request.query.achievementId.length > 12) {
         achievementId = request.query.achievementId;
+        console.log("delete2")
     } else {
         achievementId = request.session.current_achievement_id;
+        console.log("delete2b")
     }
     achievement.Achievement.findOne({ _id: achievementId }, function(err,currentAchievement) {
+        console.log("delete3")
         if (currentAchievement) {
+            console.log("delete4")
             shareholding.Shareholding.findOne({ sharer_id: request.session.currentUser._id, achievement_id: currentAchievement._id }, function(err, sharehold) {
                 if (sharehold != null) {
-                    sharehold.remove()
+                    console.log("delete5")
+                    sharehold.remove();
                     achievement.removeIndividualPartOfAchievement(currentAchievement, request.session.currentUser._id, function () {
-                            shareholding.Shareholding.find({ achievement_id: currentAchievement._id, confirmed: false }, function(err, notifications) {
-                                if (notifications) {
-                                    var notificationsGoneThrough = 0
-                                    notifications.forEach(function(notification ) {
-                                        notification.remove()
-                                        notificationsGoneThrough++
-                                        if (notificationsGoneThrough === (notifications.length)) {
-                                            response.writeHead(200, {'content-type': 'application/json' })
-                                            response.write(JSON.stringify('ok'))
-                                            response.end('\n', 'utf-8')
-                                        }
-                                    })
-                                } else {
-                                    response.writeHead(200, {'content-type': 'application/json' })
-                                    response.write(JSON.stringify('ok'))
-                                    response.end('\n', 'utf-8')
-                                }
-                            })
+                        shareholding.Shareholding.find({ achievement_id: currentAchievement._id, confirmed: false }, function(err, notifications) {
+                            if (notifications && notifications.length > 0) {
+                                console.log("delete6: " + notifications.length)
+                                var notificationsGoneThrough = 0;
+                                notifications.forEach(function(notification ) {
+                                    notification.remove();
 
-                    })
+                                    notificationsGoneThrough++;
+                                    console.log("deletea: " + notificationsGoneThrough)
+                                    if (notificationsGoneThrough === (notifications.length)) {
+                                        console.log("delete7")
+                                        response.writeHead(200, {'content-type': 'application/json' });
+                                        response.write(JSON.stringify('ok'));
+                                        response.end('\n', 'utf-8');
+                                    }
+                                });
+                            } else {
+                                console.log("delete8")
+                                response.writeHead(200, {'content-type': 'application/json' });
+                                response.write(JSON.stringify('ok'));
+                                response.end('\n', 'utf-8');
+                            }
+                        });
+                    });
                 } else {
                     shareholding.Shareholding.findOne({ shareholder_id: request.session.currentUser._id, achievement_id: currentAchievement._id }, function(err, sharedToMe) {
+                        console.log("delete9")
                         if (sharedToMe != null) {
-                            sharedToMe.remove()
+                            sharedToMe.remove();
+                            console.log("delete10")
                         }
                         achievement.remove(currentAchievement, request.session.currentUser._id, function () {
+                            console.log("delete11")
                             response.writeHead(200, {'content-type': 'application/json' })
-                            if (typeof String.prototype.startsWith != 'function') {
+                           /* if (typeof String.prototype.startsWith != 'function') {
                                 String.prototype.startsWith = function (str){
                                     return this.indexOf(str) == 0;
                                 }
-                            }
-                            if (currentAchievement.imageURL.startsWith("https:")) {
-                                response.write(JSON.stringify(currentAchievement.imageURL))
-                            } else {
-                                response.write(JSON.stringify('ok'))
-                            }
-                            response.end('\n', 'utf-8')
+                            }*/
+                            //if (currentAchievement.imageURL.startsWith("https:")) {
+                              //  response.write(JSON.stringify(currentAchievement.imageURL));
+                            //} else {
+                                response.write(JSON.stringify('ok'));
+                           // }
+                            response.end('\n', 'utf-8');
                         })
-                    })
+                    });
                 }
-            })
+            });
         } else {
-            console.log("trying to remove non-existing achievement " + request.session.current_achievement_id)
+            console.log("trying to remove non-existing achievement " + request.session.current_achievement_id);
         }
-    })
-})
+    });
+});
 
 app.get('/', function(req, res) {
-    requestHandlers.writeDefaultPage(req, res)
-})
+    requestHandlers.writeDefaultPage(req, res);
+});
 
-app.get('/editAchievement', function(request, response){
+app.get('/editAchievement', function(request, response) {
     achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
-        response.writeHead(200, {'content-type': 'application/json' })
-        response.write(JSON.stringify(currentAchievement))
-        response.end('\n', 'utf-8')
-    })
-})
+        response.writeHead(200, {'content-type': 'application/json' });
+        response.write(JSON.stringify(currentAchievement));
+        response.end('\n', 'utf-8');
+    });
+});
 
 function saveAchievement(response, motherAchievement, titles, quantities, userId) {
-    var progressesToInit = new Array()
+    var progressesToInit = new Array();
     if (titles.length === 0) {
-        finalizeAchievement (response, motherAchievement, titles, quantities, progressesToInit)
+        finalizeAchievement (response, motherAchievement, titles, quantities, progressesToInit);
     } else {
         _.each(titles, function (title, i) {
-            var goalToBeCreated  = goal.prepareGoal(title, quantities[i])
+            var goalToBeCreated  = goal.prepareGoal(title, quantities[i]);
             achievement.addGoalToAchievement(goalToBeCreated, motherAchievement, userId, function (progress) {
-                progressesToInit.push(progress)
-            })
+                progressesToInit.push(progress);
+            });
             if (i === titles.length - 1) {
-                finalizeAchievement (response, motherAchievement, titles, quantities, progressesToInit)
+                finalizeAchievement (response, motherAchievement, titles, quantities, progressesToInit);
             }
-        })
+        });
     }
 }
 
@@ -1524,12 +1534,12 @@ function finalizeAchievement (response, motherAchievement, titles, quantities, p
 }
 
 app.get('/newAchievement', function(request, response){
-    var userID
+    var userID;
 
     if (request.query.user_id && request.query.user_id.length > 12) {
-        userID = request.query.user_id
+        userID = request.query.user_id;
     } else {
-        userID = request.session.currentUser._id
+        userID = request.session.currentUser._id;
     }
     user.User.findById(userID, function(err, user) {
         var motherAchievement;

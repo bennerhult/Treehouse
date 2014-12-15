@@ -45,8 +45,8 @@ newsfeedEvent.NewsfeedEvent.find({}, function(err, newsfeedEventList) {
             } else if (newsfeedEvent.eventType === "achievementRemoved") {
                 console.log("type achievementRemoved found")
                 friendship.getFriends(newsfeedEvent.userId, function(friendsList) {
+                    var nrOFFriendsGoneThrough = 0;
                     if (friendsList.length > 0) {
-                        console.log(friendsList.length + " friend(s) found!")
                         nrOfAppendsToMake += friendsList.length;
                         nrOfNewsFeedsGoneThrough++;
                         friendsList.forEach(function(currentFriendship) {
@@ -58,12 +58,14 @@ newsfeedEvent.NewsfeedEvent.find({}, function(err, newsfeedEventList) {
                             }
                             newsfeed.removeFromNewsfeed(currentFriendId, newsfeedEvent.objectId, function() {
                                 nrOfAppendsMade++;
+                                nrOFFriendsGoneThrough++;
+                                if (nrOFFriendsGoneThrough === friendsList.length) {
+                                    newsfeedEvent.remove();
+                                }
                                 if (nrOfNewsFeedsGoneThrough === newsfeedEventList.length && nrOfAppendsMade === nrOfAppendsToMake)  {
-                                    //newsfeedEvent.remove(); //TODO restore after testing
                                     console.log("newsfeed cleared");
                                     process.exit();
                                 }
-                                callback();
                             });
                         });
                     } else {

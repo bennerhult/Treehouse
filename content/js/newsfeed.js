@@ -9,6 +9,6 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http) {
 
     $scope.gotoAchievement = function(evt, newsItem) {
         evt.preventDefault();
-        console.log(newsItem); //TODO: Send the user to the clicked achievement (our own or the other users?)
+        console.log(newsItem); //TODO: Send the user to the clicked achievement (our own or the other users?) - ERIK: the other users!
     }
 });

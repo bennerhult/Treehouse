@@ -160,7 +160,6 @@ function remove(achievement, userId, next) {
                 achievement.remove(function () {});
             }
         });
-        console.log("adding event!");//TODO remove after testing
         newsfeedEvent.addEvent("achievementRemoved", userId, achievement._id);
         if (next) {
             next();
@@ -169,7 +168,6 @@ function remove(achievement, userId, next) {
 }
 
 function removeIndividualPartOfAchievement(achievement, userId, next)    {
-    console.log("removeIndividualPartOfAchievement")
     progress.Progress.find({ achiever_id: userId, achievement_id: achievement._id}, function(err, progresses) {
         progresses.forEach(function(currentProgress, index) {
             if (index == (progresses.length - 1)) {
