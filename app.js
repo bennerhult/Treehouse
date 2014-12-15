@@ -35,22 +35,19 @@ if ('development' == env) {
     });
 } else if ('test' == env)  {
     console.log("Treehouse in test mode")
-    if(!process.env.TH_DOMAIN) {
-        throw "Missing environment variable TH_DOMAIN which is required in test. Should be the equilvalent of what is 'http://www.treehouse.io' in production";
-    }
     if(!process.env.DB_URI) {
         throw "Missing environment variable DB_URI which is required in test. Should be the equilvalent of what is 'mongodb://localhost:27017/test' in when developing locally";
     }
-    domain = process.env.TH_DOMAIN;
+    domain = 'http://test.treehouse.io/';
     db_uri = process.env.DB_URI;
     thSettings.init({
         envName : 'test',
         domain : domain
     });
 } else if ('production' == env) {
-    domain = 'http://www.treehouse.io/'
+    domain = 'http://www.treehouse.io/';
     console.log("Treehouse in prod mode.")
-    db_uri=process.env.DB_URI
+    db_uri=process.env.DB_URI;
     thSettings.init({
         envName : 'production',
         domain : domain
