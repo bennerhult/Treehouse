@@ -93,7 +93,7 @@ function authenticateFromLoginToken(request, response) {
             if (token && token.email) {
                 user.User.findOne({ username: token.email.toLowerCase() }, function(err, user) {
                     if (user) {
-                        request.session.currentUser = user
+                        request.session.currentUser = user;
                         friendship.getNrOfRequests(user._id, function (nrOfFriendShipRequests) {
                             token.token = loginToken.randomToken();
                             token.save(function() {
@@ -109,13 +109,13 @@ function authenticateFromLoginToken(request, response) {
                         response.write(JSON.stringify("Bummer! We cannot find you in our records. Contact us at staff@treehouse.io if you want us to help you out."));
                         response.end('\n', 'utf-8');
                     }
-                })
+                });
             } else {
                 response.writeHead(404, {'content-type': 'application/json' })
                 response.write(JSON.stringify(""))
                 response.end('\n', 'utf-8')
             }
-        })
+        });
     }  else {
         response.writeHead(404, {'content-type': 'application/json' });
         response.write(JSON.stringify(""));   //typical first sign in

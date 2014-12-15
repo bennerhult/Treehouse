@@ -15,7 +15,7 @@ module.exports = (function () {
     }
 
     function explodeIfNotInitialized() {
-        //To prevent accidentaly running as development in production because init was never called
+        //To prevent accidentally running as development in production because init was never called
         if(!environmentName)
             throw 'Environment name was not set. Call init before using thSettings!';
     }
@@ -39,7 +39,7 @@ module.exports = (function () {
         explodeIfNotInitialized();
         if(isDevelopment()) {
             return autoSignin && autoSignin === true;
-        } else return !!isTest();
+        } else return isTest();
     }
 
     function getDomain() {
