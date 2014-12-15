@@ -43,8 +43,10 @@ newsfeedEvent.NewsfeedEvent.find({}, function(err, newsfeedEventList) {
                     });
                 });
             } else if (newsfeedEvent.eventType === "achievementRemoved") {
+                console.log("type achievementRemoved found")
                 friendship.getFriends(newsfeedEvent.userId, function(friendsList) {
                     if (friendsList.length > 0) {
+                        console.log(friendsList.length + " friend(s) found!")
                         nrOfAppendsToMake += friendsList.length;
                         nrOfNewsFeedsGoneThrough++;
                         friendsList.forEach(function(currentFriendship) {
@@ -54,14 +56,24 @@ newsfeedEvent.NewsfeedEvent.find({}, function(err, newsfeedEventList) {
                             } else {
                                 currentFriendId = currentFriendship.friend1_id;
                             }
-                           addRemovedAchievementEvent(newsfeedEvent, currentFriendId, function() {
+                            newsfeed.removeFromNewsfeed(currentFriendId, newsfeedEvent.objectId, function() {
                                 nrOfAppendsMade++;
                                 if (nrOfNewsFeedsGoneThrough === newsfeedEventList.length && nrOfAppendsMade === nrOfAppendsToMake)  {
+                                    //newsfeedEvent.remove(); //TODO restore after testing
                                     console.log("newsfeed cleared");
                                     process.exit();
                                 }
+                                callback();
                             });
                         });
+                    } else {
+                        nrOfNewsFeedsGoneThrough++;
+                        console.log("No friends found for user " + newsfeedEvent.userId + " and achievement " + newsfeedEvent.objectId);
+                        newsfeedEvent.remove();
+                        if (nrOfNewsFeedsGoneThrough === newsfeedEventList.length && nrOfAppendsMade === nrOfAppendsToMake)  {
+                            console.log("newsfeed cleared");
+                            process.exit();
+                        }
                     }
                 });
             } else if (newsfeedEvent.eventType === "publicize") {
@@ -133,13 +145,6 @@ function addProgressEvent(newsfeedEvent, currentProgress, currentAchievement, cu
     })
 }
 
-function addRemovedAchievementEvent(newsfeedEvent, currentFriendId, callback) {
-    removeAchievementFromNewsfeed(newsfeedEvent, currentFriendId, function() {
-        newsfeedEvent.remove();
-        callback();
-    });
-}
-
 function addPublicationEvent(newsfeedEvent, currentAchievement, currentFriendId, callback) {
     appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, function() {
         newsfeedEvent.remove();
@@ -180,8 +185,4 @@ function appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId
             + '}';
         newsfeed.updateNewsfeed(currentFriendId, newsfeedEvent.eventType, newsJson, callback);
     });
-}
-
-function removeAchievementFromNewsfeed(newsfeedEvent, userId, callback) {
-    newsfeed.removeFromNewsfeed(userId, newsfeedEvent.id, callback);
 }

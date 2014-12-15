@@ -1416,19 +1416,19 @@ app.get('/deleteUser', function(request, response) {
 })
 
 app.get('/delete', function(request, response){
-    var achievementId
+    var achievementId;
 
     if (request.query.achievementId && request.query.achievementId.length > 12) {
-        achievementId = request.query.achievementId
+        achievementId = request.query.achievementId;
     } else {
-        achievementId = request.session.current_achievement_id
+        achievementId = request.session.current_achievement_id;
     }
     achievement.Achievement.findOne({ _id: achievementId }, function(err,currentAchievement) {
         if (currentAchievement) {
             shareholding.Shareholding.findOne({ sharer_id: request.session.currentUser._id, achievement_id: currentAchievement._id }, function(err, sharehold) {
                 if (sharehold != null) {
                     sharehold.remove()
-                    achievement.removeSharedPartOfAchievement(currentAchievement, request.session.currentUser._id, function () {
+                    achievement.removeIndividualPartOfAchievement(currentAchievement, request.session.currentUser._id, function () {
                             shareholding.Shareholding.find({ achievement_id: currentAchievement._id, confirmed: false }, function(err, notifications) {
                                 if (notifications) {
                                     var notificationsGoneThrough = 0
