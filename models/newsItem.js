@@ -1,13 +1,13 @@
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema
+    Schema = mongoose.Schema;
 
 var NewsItemSchema = new Schema({
     createdDate     : Date,
     eventType       : {type: String, required: true},
     newsJson        : {type: String, required: true}
-})
+});
 
-var NewsItem = mongoose.model('NewsItem', NewsItemSchema)
+var NewsItem = mongoose.model('NewsItem', NewsItemSchema);
 
 module.exports = {
     NewsItem: NewsItem,
@@ -15,9 +15,9 @@ module.exports = {
 }
 
 function createNewsItem(eventType, newsJson, callback) {
-    var newsItem = new NewsItem()
-    newsItem.createdDate = new Date()
-    newsItem.eventType = eventType
-    newsItem.newsJson = newsJson
-    callback(newsItem)
+    var newsItem = new NewsItem();
+    newsItem.createdDate = new Date();
+    newsItem.eventType = eventType;
+    newsItem.newsJson = newsJson;
+    callback(newsItem);
 }

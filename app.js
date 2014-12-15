@@ -1415,41 +1415,30 @@ app.get('/deleteUser', function(request, response) {
 
 app.get('/delete', function(request, response){
     var achievementId;
-    console.log("delete1")
     if (request.query.achievementId && request.query.achievementId.length > 12) {
         achievementId = request.query.achievementId;
-        console.log("delete2")
     } else {
         achievementId = request.session.current_achievement_id;
-        console.log("delete2b")
     }
     achievement.Achievement.findOne({ _id: achievementId }, function(err,currentAchievement) {
-        console.log("delete3")
         if (currentAchievement) {
-            console.log("delete4")
             shareholding.Shareholding.findOne({ sharer_id: request.session.currentUser._id, achievement_id: currentAchievement._id }, function(err, sharehold) {
                 if (sharehold != null) {
-                    console.log("delete5")
                     sharehold.remove();
                     achievement.removeIndividualPartOfAchievement(currentAchievement, request.session.currentUser._id, function () {
                         shareholding.Shareholding.find({ achievement_id: currentAchievement._id, confirmed: false }, function(err, notifications) {
                             if (notifications && notifications.length > 0) {
-                                console.log("delete6: " + notifications.length)
                                 var notificationsGoneThrough = 0;
                                 notifications.forEach(function(notification ) {
                                     notification.remove();
-
                                     notificationsGoneThrough++;
-                                    console.log("deletea: " + notificationsGoneThrough)
                                     if (notificationsGoneThrough === (notifications.length)) {
-                                        console.log("delete7")
                                         response.writeHead(200, {'content-type': 'application/json' });
                                         response.write(JSON.stringify('ok'));
                                         response.end('\n', 'utf-8');
                                     }
                                 });
                             } else {
-                                console.log("delete8")
                                 response.writeHead(200, {'content-type': 'application/json' });
                                 response.write(JSON.stringify('ok'));
                                 response.end('\n', 'utf-8');
@@ -1458,24 +1447,21 @@ app.get('/delete', function(request, response){
                     });
                 } else {
                     shareholding.Shareholding.findOne({ shareholder_id: request.session.currentUser._id, achievement_id: currentAchievement._id }, function(err, sharedToMe) {
-                        console.log("delete9")
                         if (sharedToMe != null) {
                             sharedToMe.remove();
-                            console.log("delete10")
                         }
                         achievement.remove(currentAchievement, request.session.currentUser._id, function () {
-                            console.log("delete11")
                             response.writeHead(200, {'content-type': 'application/json' })
-                           /* if (typeof String.prototype.startsWith != 'function') {
+                            if (typeof String.prototype.startsWith != 'function') {
                                 String.prototype.startsWith = function (str){
                                     return this.indexOf(str) == 0;
                                 }
-                            }*/
-                            //if (currentAchievement.imageURL.startsWith("https:")) {
-                              //  response.write(JSON.stringify(currentAchievement.imageURL));
-                            //} else {
+                            }
+                            if (currentAchievement.imageURL.startsWith("https:")) {
+                                response.write(JSON.stringify(currentAchievement.imageURL));
+                            } else {
                                 response.write(JSON.stringify('ok'));
-                           // }
+                            }
                             response.end('\n', 'utf-8');
                         })
                     });

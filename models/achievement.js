@@ -160,7 +160,6 @@ function remove(achievement, userId, next) {
                 achievement.remove(function () {});
             }
         });
-        newsfeedEvent.addEvent("achievementRemoved", userId, achievement._id);
         if (next) {
             next();
         }
@@ -174,6 +173,7 @@ function removeIndividualPartOfAchievement(achievement, userId, next)    {
                 if (currentProgress) {
                     currentProgress.remove();
                 }
+                newsfeedEvent.addEvent("achievementRemoved", userId, achievement._id);
                 updateLatestAchievementIfNecessary(currentProgress._id, next);
             } else if (currentProgress) {
                 currentProgress.remove();

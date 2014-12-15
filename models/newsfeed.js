@@ -30,8 +30,7 @@ function createNewsfeed(userId, newsType, newsText, callback) {
 var welcomeMsgNewsFeed = "Welcome to Treehouse! Get started by adding some friends or create your very own achievements!";
 
 function removeFromNewsfeed(userId, currentAchievementId, callback) {
-    console.log("removing from newsfeed for user " + userId + " and achievement " + currentAchievementId); //TODO remove after testing
-    Newsfeed.findOne({ userId: userId}, function(err, currentNewsfeed) {
+   Newsfeed.findOne({ userId: userId}, function(err, currentNewsfeed) {
         if (currentNewsfeed) {
             currentNewsfeed.latestUpdated = new Date();
             currentNewsfeed.newsItems = _.reject(currentNewsfeed.newsItems, function(newsItem) {
@@ -42,8 +41,6 @@ function removeFromNewsfeed(userId, currentAchievementId, callback) {
                     callback(currentNewsfeed);
                 }
             });
-        } else {
-            console.log("nothing to remove from newsfeed for userID " + userId + ", and achievementId " + currentAchievementId )//TODO: remove after testing
         }
     });
 }
