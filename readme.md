@@ -92,7 +92,7 @@ See available versions for Node and NPM
 [Climb into your OWN Treehouse!](http://localhost:1337/)
 
 #### test environment
-[URL](http://treehouseapp-test.herokuapp.com/)
+[URL](http://test.treehouse.io/)
 [New URL](http://treehouseapp-test.herokuapp.com/preSignin)
 
 The web server is Heroku, the database is a MongoDB on Compose (former MongoHQ). This mirrors the setup in production.
@@ -106,6 +106,10 @@ To set environment variables and such, log into the [Heroku dashboard](https://d
 Command prompt:
 
     heroku logs -app treehouseapp-test
+
+Visit the Papertrail app:
+    [Papertrail for test](https://papertrailapp.com/systems/treehouseapp-test/)
+    [Papertrail for prod](https://papertrailapp.com/systems/treehouseapp/)
 
 ##deployment
 By checking in code to the master branch on the Treehouse-project on GitHub, the code is automagically deployed to the test environment. A manual deploy can be made from the [Heroku dashboard](https://dashboard.heroku.com).
