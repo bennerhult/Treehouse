@@ -1,3 +1,4 @@
+require('newrelic');
 var fs = require('fs'),
     url = require('url'),
     express = require('express'),
