@@ -146,6 +146,7 @@ function unpublicize(oneProgress) {
             currentProgress.publiclyVisible = false;
             currentProgress.save();
             if (index == (progresses.length -1)) {
+                newsfeedEvent.addEvent("achievementUnpublicized", oneProgress.achiever_id, oneProgress.achievement_id);
                 updateLatestAchievementIfNecessary (oneProgress._id);
             }
         });
@@ -154,7 +155,6 @@ function unpublicize(oneProgress) {
 
 function remove(achievement, userId, next) {
     removeIndividualPartOfAchievement(achievement, userId, function() {
-        console.log("removing " +  achievement._id)
         progress.Progress.find({ achievement_id: achievement._id}, function(err, progresses) {
             if (!(progresses && progresses.length > 0)) {
                 achievement.remove(function () {});

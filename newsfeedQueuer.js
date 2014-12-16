@@ -42,8 +42,7 @@ newsfeedEvent.NewsfeedEvent.find({}, function(err, newsfeedEventList) {
                         });
                     });
                 });
-            } else if (newsfeedEvent.eventType === "achievementRemoved") {
-                console.log("type achievementRemoved found")
+            } else if (newsfeedEvent.eventType === "achievementRemoved" || newsfeedEvent.eventType === "achievementUnpublicized" ) {
                 friendship.getFriends(newsfeedEvent.userId, function(friendsList) {
                     var nrOFFriendsGoneThrough = 0;
                     if (friendsList.length > 0) {
@@ -70,7 +69,6 @@ newsfeedEvent.NewsfeedEvent.find({}, function(err, newsfeedEventList) {
                         });
                     } else {
                         nrOfNewsFeedsGoneThrough++;
-                        console.log("No friends found for user " + newsfeedEvent.userId + " and achievement " + newsfeedEvent.objectId);
                         newsfeedEvent.remove();
                         if (nrOfNewsFeedsGoneThrough === newsfeedEventList.length && nrOfAppendsMade === nrOfAppendsToMake)  {
                             console.log("newsfeed cleared");
