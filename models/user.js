@@ -27,7 +27,7 @@ function createUser(name, callback) {
     var user = new User()
     user.created = new Date()
     user.username = name
-    user.imageURL = 'content/img/user_has_no_image.jpg'
+    user.imageURL = '../content/img/user_has_no_image.jpg'
     user.isIssuer = false
     user.save(function (error) {
         if (callback) callback(user, error)
