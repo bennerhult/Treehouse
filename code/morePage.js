@@ -1,4 +1,4 @@
-module.exports = function (app, templates, requestHandlers) {
+module.exports = function (app, templates, requestHandlers, thSettings) {
     'use strict';
 
     function respondWithJson(response, data) {
@@ -16,6 +16,12 @@ module.exports = function (app, templates, requestHandlers) {
             requestHandlers.getPrettyNameIdAndImageURL(userId, function(prettyName, myUserId, userImageURL) {
                 return respondWithJson(response, { prettyName : prettyName, userImageURL : userImageURL });
             });
+        });
+        app.post('/api/more/signout', function (request, response) {
+            if (request.session) {
+                request.session.destroy();
+            }
+            return respondWithJson(response, {url: thSettings.getDomain() + 'app/signin2'});
         });
     }
 

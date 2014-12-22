@@ -13,10 +13,7 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
 
         $scope.isiPad = navigator.userAgent.match(/iPad/i) != null;
         $scope.isiPhone = navigator.userAgent.match(/iPhone/i) != null;
-        $scope.isiOs = $scope.isiPad || $scope.isiPhone
-        if (("standalone" in window.navigator) && window.navigator.standalone){
-            $scope.isAppMode = true
-        }
+        $scope.isiOs = $scope.isiPad || $scope.isiPhone;
 
         var autoSignin = false;
         try {

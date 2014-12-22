@@ -8,6 +8,9 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http) {
 
     $scope.signout = function(evt) {
         evt.preventDefault();
-        console.log("signing out"); //TODO: Sign out and send to start page
+
+        $http.post('/api/more/signout', {}).success(function(result) {
+            document.location =  result.url;
+        });
     }
 });
