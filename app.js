@@ -216,9 +216,9 @@ if(!thSettings.isProduction()) {
     var templates = require('./code/templates.js')(thSettings);
     require('./code/preSigninPage.js')(app, templates, thSettings).registerHandlers();
     require('./code/signinPage.js')(app, templates, thSettings, user, loginToken, email, auth, url).registerHandlers();
-    require('./code/newsfeedPage.js')(app, templates, thSettings, newsfeed, requestHandlers).registerHandlers();
-    require('./code/friendsPage.js')(app, templates, thSettings).registerHandlers();
-    require('./code/morePage.js')(app, templates, thSettings).registerHandlers();
+    require('./code/newsfeedPage.js')(app, templates, newsfeed, requestHandlers).registerHandlers();
+    require('./code/friendsPage.js')(app, templates,requestHandlers).registerHandlers();
+    require('./code/morePage.js')(app, templates, requestHandlers).registerHandlers();
 }
 //********************************************
 //********************************************

@@ -1,4 +1,4 @@
-module.exports = function (app, templates, thSettings, newsfeed, requestHandlers) {
+module.exports = function (app, templates, newsfeed, requestHandlers) {
     'use strict';
 
     var _ = require("underscore")._;

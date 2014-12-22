@@ -1,9 +1,21 @@
-module.exports = function (app, templates, thSettings) {
+module.exports = function (app, templates, requestHandlers) {
     'use strict';
+
+    function respondWithJson(response, data) {
+        response.writeHead(200, {'content-type': 'application/json' });
+        response.write(JSON.stringify(data));
+        response.end('\n', 'utf-8');
+    }
 
     function registerHandlers() {
         app.get('/app/friends', function (request, response){
-            templates.serveHtmlFromTemplate(response, './server-templates/friends.html', {});
+            templates.serveHtmlRaw(response, './server-templates/friends.html', {});
+        });
+        app.post('/api/friends/init', function (request, response) {
+            var userId = request.session.currentUser._id;
+            requestHandlers.getPrettyNameIdAndImageURL(userId, function(prettyName, myUserId, userImageURL) {
+                return respondWithJson(response, { prettyName : prettyName, userImageURL : userImageURL });
+            });
         });
     }
 
