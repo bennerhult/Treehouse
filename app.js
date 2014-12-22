@@ -213,7 +213,7 @@ var auth = (function () {
 //************** Register handlers ***********
 //********************************************
 if(!thSettings.isProduction()) {
-    var templates = require('./code/templates.js')(thSettings);
+    var templates = require('./code/templates.js')();
     require('./code/preSigninPage.js')(app, templates, thSettings).registerHandlers();
     require('./code/signinPage.js')(app, templates, thSettings, user, loginToken, email, auth, url).registerHandlers();
     require('./code/newsfeedPage.js')(app, templates, newsfeed, requestHandlers).registerHandlers();

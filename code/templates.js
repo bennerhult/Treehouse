@@ -1,4 +1,4 @@
-module.exports = function (thSettings) {
+module.exports = function () {
     'use strict';
     var dict = require('dict'),
         mustache = require('mustache'), //https://github.com/janl/mustache.js
