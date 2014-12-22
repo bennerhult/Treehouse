@@ -5,16 +5,16 @@ var mongoose        = require('mongoose'),
     newsfeedEvent   = require('./models/newsfeedEvent.js'),
     progress        = require('./models/progress.js'),
     shareholding    = require('./models/shareholding.js'),
-    user            = require('./models/user.js')
+    user            = require('./models/user.js');
 
-var db_uri=process.env.DB_URI
-mongoose.connect(db_uri)
+var db_uri=process.env.DB_URI;
+mongoose.connect(db_uri);
 
 newsfeedEvent.NewsfeedEvent.find({}, function(err, newsfeedEventList) {
     if (newsfeedEventList && newsfeedEventList.length > 0) {
-        var nrOfAppendsMade = 0
-        var nrOfAppendsToMake = 0
-        var nrOfNewsFeedsGoneThrough = 0
+        var nrOfAppendsMade = 0;
+        var nrOfAppendsToMake = 0;
+        var nrOfNewsFeedsGoneThrough = 0;
         newsfeedEventList.forEach(function(newsfeedEvent) {
             if (newsfeedEvent.eventType === "progress") {
                 progress.Progress.findById(newsfeedEvent.objectId, function(err, currentProgress) {
@@ -30,13 +30,19 @@ newsfeedEvent.NewsfeedEvent.find({}, function(err, newsfeedEventList) {
                                     } else {
                                         currentFriendId = currentFriendship.friend1_id;
                                     }
-                                    addProgressEvent(newsfeedEvent, currentProgress, currentAchievement, currentFriendId, function() {
-                                        nrOfAppendsMade++;
-                                        if (nrOfNewsFeedsGoneThrough === newsfeedEventList.length && nrOfAppendsMade === nrOfAppendsToMake) {
-                                            console.log("newsfeed cleared");
-                                            process.exit();
-                                        }
-                                    });
+                                    function addProgressEvent(newsfeedEvent, currentProgress, currentAchievement, currentFriendId, callback) {
+                                        shareholding.isAchievementSharedByMe(currentFriendId, currentAchievement._id, function(isAchievmentSharedByFriend) {
+                                            if (currentProgress.publiclyVisible || isAchievmentSharedByFriend) {
+                                                appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, function() {
+                                                    newsfeedEvent.remove();
+                                                    nrOfAppendsMade++;
+                                                    exitIfNewsfeedIsCleared(nrOfNewsFeedsGoneThrough, newsfeedEventList.length, nrOfAppendsMade, nrOfAppendsToMake);
+                                                });
+                                            } else {
+                                                newsfeedEvent.remove();
+                                            }
+                                        })
+                                    }
                                 });
                             }
                         });
@@ -61,19 +67,13 @@ newsfeedEvent.NewsfeedEvent.find({}, function(err, newsfeedEventList) {
                                 if (nrOFFriendsGoneThrough === friendsList.length) {
                                     newsfeedEvent.remove();
                                 }
-                                if (nrOfNewsFeedsGoneThrough === newsfeedEventList.length && nrOfAppendsMade === nrOfAppendsToMake)  {
-                                    console.log("newsfeed cleared");
-                                    process.exit();
-                                }
+                                exitIfNewsfeedIsCleared(nrOfNewsFeedsGoneThrough, newsfeedEventList.length, nrOfAppendsMade, nrOfAppendsToMake);
                             });
                         });
                     } else {
                         nrOfNewsFeedsGoneThrough++;
                         newsfeedEvent.remove();
-                        if (nrOfNewsFeedsGoneThrough === newsfeedEventList.length && nrOfAppendsMade === nrOfAppendsToMake)  {
-                            console.log("newsfeed cleared");
-                            process.exit();
-                        }
+                        exitIfNewsfeedIsCleared(nrOfNewsFeedsGoneThrough, newsfeedEventList.length, nrOfAppendsMade, nrOfAppendsToMake);
                     }
                 });
             } else if (newsfeedEvent.eventType === "publicize") {
@@ -89,12 +89,10 @@ newsfeedEvent.NewsfeedEvent.find({}, function(err, newsfeedEventList) {
                                 } else {
                                     currentFriendId = currentFriendship.friend1_id;
                                 }
-                                addPublicationEvent(newsfeedEvent, currentAchievement, currentFriendId, function() {
+                                appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, function() {
+                                    newsfeedEvent.remove();
                                     nrOfAppendsMade++;
-                                    if (nrOfNewsFeedsGoneThrough === newsfeedEventList.length && nrOfAppendsMade === nrOfAppendsToMake)  {
-                                        console.log("newsfeed cleared");
-                                        process.exit();
-                                    }
+                                    exitIfNewsfeedIsCleared(nrOfNewsFeedsGoneThrough, newsfeedEventList.length, nrOfAppendsMade, nrOfAppendsToMake);
                                 });
                             });
                         }
@@ -112,13 +110,11 @@ newsfeedEvent.NewsfeedEvent.find({}, function(err, newsfeedEventList) {
                             } else {
                                 currentFriendId = currentFriendship.friend1_id;
                             }
-                            addNewFriendEvent(newsfeedEvent, newsfeedEvent.objectId, currentFriendId, function() {
+                            appendFriendJsonToNewsfeed(newsfeedEvent, newsfeedEvent.objectId, currentFriendId, function() {
+                                newsfeedEvent.remove();
                                 nrOfAppendsMade++;
-                                if (nrOfNewsFeedsGoneThrough === newsfeedEventList.length && nrOfAppendsMade === nrOfAppendsToMake)  {
-                                    console.log("newsfeed cleared");
-                                    process.exit();
-                                }
-                            });
+                                exitIfNewsfeedIsCleared(nrOfNewsFeedsGoneThrough, newsfeedEventList.length, nrOfAppendsMade, nrOfAppendsToMake);
+                            })
                         });
                     }
                 });
@@ -132,32 +128,14 @@ newsfeedEvent.NewsfeedEvent.find({}, function(err, newsfeedEventList) {
     }
 });
 
-function addProgressEvent(newsfeedEvent, currentProgress, currentAchievement, currentFriendId, callback) {
-    shareholding.isAchievementSharedByMe(currentFriendId, currentAchievement._id, function(isAchievmentSharedByFriend) {
-        if (currentProgress.publiclyVisible || isAchievmentSharedByFriend) {
-            appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, function() {
-                newsfeedEvent.remove();
-                callback();
-            });
-        } else {
-            newsfeedEvent.remove();
-        }
-    })
+function exitIfNewsfeedIsCleared(nrOfNewsFeedsGoneThrough, newsfeedEventListLength, nrOfAppendsMade, nrOfAppendsToMake) {
+    if (nrOfNewsFeedsGoneThrough === nnewsfeedEventListLength && nrOfAppendsMade === nrOfAppendsToMake) {
+        console.log("newsfeed cleared");
+        process.exit();
+    }
+
 }
 
-function addPublicationEvent(newsfeedEvent, currentAchievement, currentFriendId, callback) {
-    appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, function() {
-        newsfeedEvent.remove();
-        callback();
-    });
-}
-
-function addNewFriendEvent(newsfeedEvent, newFriendId, currentFriendId, callback) {
-    appendFriendJsonToNewsfeed(newsfeedEvent, newFriendId, currentFriendId, function() {
-        newsfeedEvent.remove();
-        callback();
-    })
-}
 
 function appendFriendJsonToNewsfeed(newsfeedEvent, newFriendId, currentFriendId, callback) {
     user.getPrettyNameAndImageURL(newsfeedEvent.userId, function(prettyName) {
