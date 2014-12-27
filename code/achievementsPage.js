@@ -14,7 +14,10 @@ module.exports = function (app, templates, user, progress, moment, shareholding,
         app.post('/api/achievements/init', function (request, response) {
             var userId = request.session.currentUser._id;
             requestHandlers.getPrettyNameIdAndImageURL(userId, function(prettyName, myUserId, userImageURL) {
-                return respondWithJson(response, { prettyName : prettyName, userImageURL : userImageURL });
+                console.log("userId; " + userId)
+                achievement.getAchievementList(userId, function(achievementList) {
+                    return respondWithJson(response, { prettyName : prettyName, userImageURL : userImageURL, achievementList: achievementList });
+                });
             });
         });
     }

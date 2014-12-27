@@ -1,4 +1,5 @@
 var mongoose = require('mongoose'),
+    async = require('async')
     goal = require('./goal.js'),
     latestAchievement = require('./latestAchievement.js'),
     newsfeedEvent = require('./newsfeedEvent.js'),
@@ -32,7 +33,8 @@ module.exports = {
     unpublicize: unpublicize,
     remove: remove,
     save: save,
-    findPublicAchievement: findPublicAchievement
+    findPublicAchievement: findPublicAchievement,
+    getAchievementList: getAchievementList
 }
 
 function createAchievement(createdBy, title, description, imageURL) {
@@ -55,6 +57,24 @@ function createIssuedAchievement(createdBy, title, description, imageURL, issuer
     achievement.issuedAchievement = true;
     achievement.issuerName = issuerName;
     return achievement;
+}
+
+function getAchievementList(achieverId, callback) {
+    var achievementList = [];
+    var progressIndex = 0;
+
+    progress.Progress.find({ achiever_id: achieverId}, {}, { sort: { 'created' : -1 } }, function(err, progresses) {
+        if (progresses && progresses.length > 0) {
+            async.each(progresses, function( currentProgress, achievmentProcessed) {
+                Achievement.findById(currentProgress.achievement_id, function (err2, myAchievement) {
+                    achievementList.push(myAchievement);
+                    achievmentProcessed();
+                });
+            }, function(){
+                callback(achievementList);
+            });
+        }
+    });
 }
 
 function userHasAcceptedAchievement(achievement_id, achiever_id, callback) {

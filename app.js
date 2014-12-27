@@ -219,10 +219,9 @@ if(!thSettings.isProduction()) {
     require('./code/newsfeedPage.js')(app, templates, newsfeed, requestHandlers).registerHandlers();
     require('./code/friendsPage.js')(app, templates,requestHandlers).registerHandlers();
     require('./code/morePage.js')(app, templates, requestHandlers, thSettings).registerHandlers();
-    require('./code/achievementPage.js')(app, templates, user, progress, moment, shareholding, achievement, url, requestHandlers).registerHandlers();
+    require('./code/achievementsPage.js')(app, templates, user, progress, moment, shareholding, achievement, url, requestHandlers).registerHandlers();
 }
 
-// var achievementPage =
 //********************************************
 //********************************************
 //********************************************
@@ -1224,6 +1223,7 @@ function finishAchievementsList(response, achievementsList, completedAchievement
     response.write(JSON.stringify(achievementsList))
     response.end('\n', 'utf-8')
 }
+var achievementPage = require('./code/achievementsPage.js')(user, progress, moment, shareholding, achievement, url, requestHandlers);
 
 app.get('/achievementFromServer', function(request, response){
     achievementPage.showAchievementPage(request, response)
