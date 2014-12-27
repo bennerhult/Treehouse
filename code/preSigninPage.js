@@ -3,7 +3,7 @@ module.exports = function (app, templates, thSettings) {
 
     function registerHandlers() {
         app.get('/preSignin', function (request, response){
-            templates.serveHtmlFromTemplate(response, './server-templates/pre-signin.html', {});
+            templates.serveHtmlRaw(response, './server-templates/pre-signin.html');
         });
     }
 

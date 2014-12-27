@@ -18,17 +18,6 @@ module.exports = function () {
         });
     }
 
-    function serveHtmlFromTemplate(response, templateName, context) {
-        renderFile(
-            templateName,
-            context,
-            function (err, renderedPage) {
-                if(err) throw err;
-                response.writeHead(200, { 'Content-Type': 'text/html' })
-                response.end(renderedPage, 'utf-8')
-            });
-    }
-
     function serveHtmlRaw(response, fileName) { //TODO: Serve directly from CDN instead
         fs.readFile(fileName, { encoding : 'utf-8' }, function (err, fileText) {
             if(err) throw err;
@@ -39,7 +28,6 @@ module.exports = function () {
 
     return {
         renderFile : renderFile,
-        serveHtmlFromTemplate : serveHtmlFromTemplate,
         serveHtmlRaw : serveHtmlRaw
     };
 }
