@@ -6,4 +6,9 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http) {
         $scope.userImageURL = result.userImageURL;
         $scope.isLoading = false;
     });
+
+    $scope.gotoAchievement = function(evt, achievement) {
+        evt.preventDefault();
+        console.log("opening achievement")
+    }
 });

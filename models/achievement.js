@@ -1,5 +1,5 @@
 var mongoose = require('mongoose'),
-    async = require('async')
+    async = require('async'),
     goal = require('./goal.js'),
     latestAchievement = require('./latestAchievement.js'),
     newsfeedEvent = require('./newsfeedEvent.js'),
@@ -61,14 +61,13 @@ function createIssuedAchievement(createdBy, title, description, imageURL, issuer
 
 function getAchievementList(achieverId, callback) {
     var achievementList = [];
-    var progressIndex = 0;
 
     progress.Progress.find({ achiever_id: achieverId}, {}, { sort: { 'created' : -1 } }, function(err, progresses) {
         if (progresses && progresses.length > 0) {
-            async.each(progresses, function( currentProgress, achievmentProcessed) {
+            async.each(progresses, function( currentProgress, achievementProcessed) {
                 Achievement.findById(currentProgress.achievement_id, function (err2, myAchievement) {
                     achievementList.push(myAchievement);
-                    achievmentProcessed();
+                    achievementProcessed();
                 });
             }, function(){
                 callback(achievementList);

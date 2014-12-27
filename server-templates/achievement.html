@@ -31,7 +31,7 @@
 </head>
 <body ng-app="App">
 <div class="container" ng-controller="Ctrl">
-    <div class="navigation"><h1>Achievements</h1></div>
+    <div class="navigation"><h1>Achievement</h1></div>
     <div class="contentWrap">
         <div class="userArea">
             <img width="50" height="50" src="{{userImageURL}}" >
@@ -47,13 +47,15 @@
                     <li><a href="app/more"><span>More</span></a></li>
                 </ul>
             </div>
+
             <div class="content">
                 <div class="listWrap" ng-if="achievementList">
                     <div class="header">My achievements</div>
                     <div ng-repeat="achievement in achievementList" class="item">
+
                         <div>
-                            <p><a href="#" ng-click="gotoAchievement($event, achievement)">{{achievement.title}}</a></p>
-                           <img href="#" ng-click="gotoAchievement($event, achievement)" width="96" height="96" src="{{achievement.imageURL}}" alt="{{achievement.title}}">
+                            <p><a ng-click="gotoAchievement($event, achievement)">{{achievement.title}}</a></p>
+                           <img width="96" height="96" src="{{achievement.imageURL}}" alt="{{achievement.title}}">
                         </div>
                     </div>
                 </div>
@@ -61,6 +63,7 @@
             </div>
         </div>
     </div>
+
     <div class="bottomMenu">
         <ul>
             <li>
