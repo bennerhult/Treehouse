@@ -2,8 +2,7 @@ var achievementApp = angular.module('App', ['ngRoute']);
 
 achievementApp.factory("achievementService",function(){
     var service = {};
-    service.achievement = 0;
-
+   
     service.setAchievement = function(currentAchievement){
         this.achievement = currentAchievement;
     }
@@ -13,11 +12,17 @@ achievementApp.factory("achievementService",function(){
 
 achievementApp.config(function($routeProvider, $locationProvider) {
     $routeProvider
-        //TODO 5 dölj listan när achievement visas
-        //TODO 4 visa achievement snyggt
-        //TODO 3 kunna refresha ett achievement
-        //TODO 2 dela upp achievment/achievmentList till två moduler
-        //TODO 1 flytta alla sidor till singlePageApp
+        //TODO flytta alla sidor till singlePageApp
+            //TODO friends
+            //TODO more
+            //TODO newsfeed
+            //TODO signin2
+            //TODO preSignin
+        //TODO dela upp achievment/achievmentList till två moduler
+        //TODO visa achievement snyggt
+        //TODO kunna refresha ett achievement
+
+
         .when('/app/achievement', {
             templateUrl: '/server-templates/achievement.html',
             controller: 'achievementController'
