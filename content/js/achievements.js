@@ -2,7 +2,6 @@ var achievementApp = angular.module('App', ['ngRoute']);
 
 achievementApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider
-        //TODO Resource interpreted as Image but transferred with MIME type text/html: "http://localhost:1337/". achievements:38
         //TODO visa achievement snyggt
         //TODO fixa pretty URLS https://scotch.io/quick-tips/pretty-urls-in-angularjs-removing-the-hashtag
         //TODO kunna refresha ett achievement
