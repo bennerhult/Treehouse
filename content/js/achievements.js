@@ -2,7 +2,6 @@ var achievementApp = angular.module('App', ['ngRoute']);
 
 achievementApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider
-        // TODO åtgära redirect loop
         // TODO återställ router/brandvägg
         //TODO skicka med achievementId
         //TODO skicka med userid

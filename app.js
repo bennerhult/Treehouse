@@ -123,7 +123,7 @@ function authenticateFromLoginToken(request, response) {
 var port = process.env.PORT || 1337;
 app.listen(port);
 console.log('Treehouse server started on port ' + port);
-/*
+
 var Router = require('router');
 var publiclyAvailable = new Router();
 var requireAccess = new Router();
@@ -153,7 +153,7 @@ app.use('/', publiclyAvailable);
 app.use('/signin2', skipSigninPageIfReturningUser);
 app.use('/api', publiclyAvailable);
 app.use('/app', requireAccess);
-*/
+
 app.get('/content/*', function(request, response){
     staticFiles.serve("." + request.url, response)
 })
