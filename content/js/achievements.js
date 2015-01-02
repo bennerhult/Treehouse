@@ -2,7 +2,7 @@ var achievementApp = angular.module('App', ['ngRoute']);
 
 achievementApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider
-        // TODO återställ router/brandvägg
+        //TODO fixa more-länk från app/achievements/achievement
         //TODO skicka med achievementId
         //TODO skicka med userid
         //TODO visa achievement snyggt
