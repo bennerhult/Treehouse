@@ -11,14 +11,13 @@ achievementApp.factory("achievementService",function(){
     return service;
 });
 
-achievementApp.config(['$routeProvider', function($routeProvider) {
+achievementApp.config(function($routeProvider, $locationProvider) {
     $routeProvider
-        //TODO 5 visa achievement snyggt
-        //TODO 4 kunna refresha ett achievement
-        //TODO 3 dela upp achievment/achievmentList till två moduler
-        //TODO 2 fixa pretty URLS https://scotch.io/quick-tips/pretty-urls-in-angularjs-removing-the-hashtag
+        //TODO 4 visa achievement snyggt
+        //TODO 3 kunna refresha ett achievement
+        //TODO 2 dela upp achievment/achievmentList till två moduler
         //TODO 1 flytta alla sidor till singlePageApp
-        .when('/achievement', {
+        .when('/app/achievement', {
             templateUrl: '/server-templates/achievement.html',
             controller: 'achievementController'
         })
@@ -26,8 +25,8 @@ achievementApp.config(['$routeProvider', function($routeProvider) {
             redirectTo: '/'
         });*/
 
-    //$locationProvider.html5Mode(true);
-}]);
+   $locationProvider.html5Mode(true);
+});
 
 achievementApp.controller('Ctrl', function($scope, $http, achievementService) {
     $scope.isLoading = true;
