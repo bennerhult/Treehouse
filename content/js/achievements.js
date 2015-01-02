@@ -13,7 +13,6 @@ achievementApp.factory("achievementService",function(){
 
 achievementApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider
-        //TODO 6 kunna växla genom att klicka flera på raken eller dölja listan emellan?
         //TODO 5 visa achievement snyggt
         //TODO 4 kunna refresha ett achievement
         //TODO 3 dela upp achievment/achievmentList till två moduler
@@ -26,6 +25,8 @@ achievementApp.config(['$routeProvider', function($routeProvider) {
         /*.otherwise({
             redirectTo: '/'
         });*/
+
+    //$locationProvider.html5Mode(true);
 }]);
 
 achievementApp.controller('Ctrl', function($scope, $http, achievementService) {
@@ -39,7 +40,6 @@ achievementApp.controller('Ctrl', function($scope, $http, achievementService) {
     });
 
     $scope.openAchievement = function (chosenAchievement) {
-        console.log("opening achievement: " + chosenAchievement )
         achievementService.setAchievement(chosenAchievement);
     };
 });
