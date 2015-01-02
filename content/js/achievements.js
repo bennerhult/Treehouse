@@ -2,18 +2,16 @@ var achievementApp = angular.module('App', ['ngRoute']);
 
 achievementApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider
-        //TODO fixa more-länk från app/achievements/achievement
-        //TODO skicka med achievementId
-        //TODO skicka med userid
+        //TODO Resource interpreted as Image but transferred with MIME type text/html: "http://localhost:1337/". achievements:38
         //TODO visa achievement snyggt
-        //TODO kunna refresha ett achievement
         //TODO fixa pretty URLS https://scotch.io/quick-tips/pretty-urls-in-angularjs-removing-the-hashtag
+        //TODO kunna refresha ett achievement
         //TODO flytta alla sidor till singlePageApp
-        .when('/achievement', { ///:userId ///{{achievement._id}} i länken
+        .when('/achievement/:achievementId', {
             templateUrl: '/server-templates/achievement.html',
-            controller: 'Ctrl'
-        });
-       /* .otherwise({
+            controller: 'achievementController'
+        })
+        /*.otherwise({
             redirectTo: '/'
         });*/
 }]);
@@ -26,4 +24,8 @@ achievementApp.controller('Ctrl', function($scope, $http) {
         $scope.userImageURL = result.userImageURL;
         $scope.isLoading = false;
     });
+});
+
+achievementApp.controller('achievementController', function($scope,  $routeParams) {
+    $scope.achievementId = $routeParams.achievementId;
 });
