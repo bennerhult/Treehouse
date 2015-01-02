@@ -2,12 +2,11 @@ var achievementApp = angular.module('App', ['ngRoute']);
 
 achievementApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider
-        //TODO skicka med userid
         //TODO skicka med achievementId
-        //TODO visa achievement
+        //TODO skicka med userid
+        //TODO visa achievement snyggt
         //TODO återställ router/brandvägg
         //TODO kunna refresha ett achievement
-        //TODO fixa lokala achievementBilder
         //TODO flytta alla sidor till singlePageApp
         .when('/achievement', { ///:userId ///{{achievement._id}} i länken
             templateUrl: '/server-templates/achievement.html',
