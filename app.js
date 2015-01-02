@@ -1476,9 +1476,9 @@ app.get('/delete', function(request, response){
     });
 });
 
-/*ERIKapp.get('/', function(req, res) {
+app.get('/', function(req, res) {
     requestHandlers.writeDefaultPage(req, res);
-});*/
+});
 
 app.get('/editAchievement', function(request, response) {
     achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {

@@ -2,11 +2,13 @@ var achievementApp = angular.module('App', ['ngRoute']);
 
 achievementApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider
+        // TODO åtgära redirect loop
+        // TODO återställ router/brandvägg
         //TODO skicka med achievementId
         //TODO skicka med userid
         //TODO visa achievement snyggt
-        //TODO återställ router/brandvägg
         //TODO kunna refresha ett achievement
+        //TODO fixa pretty URLS https://scotch.io/quick-tips/pretty-urls-in-angularjs-removing-the-hashtag
         //TODO flytta alla sidor till singlePageApp
         .when('/achievement', { ///:userId ///{{achievement._id}} i länken
             templateUrl: '/server-templates/achievement.html',
