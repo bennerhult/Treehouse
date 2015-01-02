@@ -59,7 +59,7 @@ app.use(cookieParser())
 app.use(session({
     store: new MongoStore({
         url: db_uri,
-        auto_reconnect: true,
+        autoReconnect: true,
         clear_interval: 3600
     }, function () {
         console.log("DB connection open.");
@@ -123,7 +123,7 @@ function authenticateFromLoginToken(request, response) {
 var port = process.env.PORT || 1337;
 app.listen(port);
 console.log('Treehouse server started on port ' + port);
-
+/*
 var Router = require('router');
 var publiclyAvailable = new Router();
 var requireAccess = new Router();
@@ -153,7 +153,7 @@ app.use('/', publiclyAvailable);
 app.use('/signin2', skipSigninPageIfReturningUser);
 app.use('/api', publiclyAvailable);
 app.use('/app', requireAccess);
-
+*/
 app.get('/content/*', function(request, response){
     staticFiles.serve("." + request.url, response)
 })
@@ -225,6 +225,10 @@ if(!thSettings.isProduction()) {
 //********************************************
 //********************************************
 //********************************************
+
+app.get('/server-templates/*', function(request, response){
+    staticFiles.serve("." + request.url, response)
+})
 
 app.get('/treehouse.manifest', function(request, response){
     staticFiles.serve("." + request.url, response)
@@ -1472,9 +1476,9 @@ app.get('/delete', function(request, response){
     });
 });
 
-app.get('/', function(req, res) {
+/*ERIKapp.get('/', function(req, res) {
     requestHandlers.writeDefaultPage(req, res);
-});
+});*/
 
 app.get('/editAchievement', function(request, response) {
     achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {

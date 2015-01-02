@@ -11,10 +11,12 @@ module.exports = function (app, templates, user, progress, moment, shareholding,
         app.get('/app/achievements', function (request, response){
             templates.serveHtmlRaw(response, './server-templates/achievements.html', {});
         });
+        app.get('/app/achievement', function (request, response){
+            templates.serveHtmlRaw(response, './server-templates/achievements.html', {});
+        })
         app.post('/api/achievements/init', function (request, response) {
             var userId = request.session.currentUser._id;
             requestHandlers.getPrettyNameIdAndImageURL(userId, function(prettyName, myUserId, userImageURL) {
-                console.log("userId; " + userId)
                 achievement.getAchievementList(userId, function(achievementList) {
                     return respondWithJson(response, { prettyName : prettyName, userImageURL : userImageURL, achievementList: achievementList });
                 });
