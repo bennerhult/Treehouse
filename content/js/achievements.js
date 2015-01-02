@@ -13,12 +13,17 @@ achievementApp.factory("achievementService",function(){
 
 achievementApp.config(function($routeProvider, $locationProvider) {
     $routeProvider
+        //TODO 5 dölj listan när achievement visas
         //TODO 4 visa achievement snyggt
         //TODO 3 kunna refresha ett achievement
         //TODO 2 dela upp achievment/achievmentList till två moduler
         //TODO 1 flytta alla sidor till singlePageApp
         .when('/app/achievement', {
             templateUrl: '/server-templates/achievement.html',
+            controller: 'achievementController'
+        })
+        .when('/app/achievements2', {
+            templateUrl: '/server-templates/achievements2.html',
             controller: 'achievementController'
         })
         /*.otherwise({
