@@ -55,10 +55,10 @@
             <div class="content">
                 <div class="listWrap" ng-if="achievementList">
                     <div class="header">My achievements</div>
-                    <div ng-repeat="achievement in achievementList" class="item">
+                    <div ng-repeat="currentAchievement in achievementList" class="item">
                         <div>
-                            <p><a href="#achievement/{{achievement._id}}">{{achievement.title}}</a></p>
-                            <a href="#achievement/{{achievement._id}}"><img width="96" height="96" ng-src="{{achievement.imageURL}}" alt="{{achievement.title}}"></a>
+                            <p><a href="#achievement" ng-click="openAchievement(currentAchievement);">{{currentAchievement.title}}</a></p>
+                            <a href="#achievement" ng-click="openAchievement(currentAchievement);"><img width="96" height="96" ng-src="{{currentAchievement.imageURL}}" alt="{{currentAchievement.title}}"></a>
                         </div>
                     </div>
                 </div>
