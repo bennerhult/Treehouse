@@ -215,12 +215,12 @@ var auth = (function () {
 if(!thSettings.isProduction()) {
     var templates = require('./code/templates.js')();
     require('./code/allPages.js')(app, requestHandlers, templates).registerHandlers();
-    require('./code/preSigninPage.js')(app, templates, thSettings).registerHandlers();
+    require('./code/preSigninPage.js')(app, templates).registerHandlers();
     require('./code/signinPage.js')(app, templates, thSettings, user, loginToken, email, auth, url).registerHandlers();
     require('./code/newsfeedPage.js')(app, templates, newsfeed).registerHandlers();
-    require('./code/friendsPage.js')(app, templates,requestHandlers).registerHandlers();
+    require('./code/friendsPage.js')().registerHandlers();
     require('./code/morePage.js')(app, templates, requestHandlers, thSettings).registerHandlers();
-    require('./code/achievementsPage.js')(app, templates, user, progress, moment, shareholding, achievement, url, requestHandlers).registerHandlers();
+    require('./code/achievementsPage.js')(app, templates, requestHandlers, user, progress, moment, shareholding, achievement, url).registerHandlers();
 }
 
 //********************************************
@@ -1581,13 +1581,13 @@ function getNewAchievementErrorMessage (err){
 }
 
 function writeGotoAppPage(response) {
-    requestHandlers.gotoAppPage(response)
+    requestHandlers.gotoAppPage(response);
 }
 
 app.get('/app/*', function(request, response){
-    response.redirect("/app/th/")
-})
+    response.redirect("/app/th/");
+});
 
 app.get('*', function(request, response){
-   response.redirect("/")
-})
+   response.redirect("/");
+});

@@ -18,7 +18,6 @@ achievementApp.config(function($routeProvider, $locationProvider) {
         //TODO flytta alla sidor till singlePageApp
             //TODO signin2
             //TODO preSignin
-        //TODO gå igenom (app, templates, thSettings, user, loginToken, email, auth, url och ta bort onödiga
         //TODO kunna refresha ett achievement
         //TODO visa achievement snyggt
         //TODO ta bort dupliceringen av respondWithJson

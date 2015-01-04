@@ -1,4 +1,4 @@
-module.exports = function (app, templates, user, progress, moment, shareholding, achievement, url, requestHandlers) {
+module.exports = function (app, templates, requestHandlers, user, progress, moment, shareholding, achievement, url) {
     'use strict';
 
     function respondWithJson(response, data) {

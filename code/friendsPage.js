@@ -1,4 +1,4 @@
-module.exports = function (app, templates, requestHandlers) {
+module.exports = function () {
     'use strict';
 
     function respondWithJson(response, data) {

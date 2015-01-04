@@ -1,4 +1,4 @@
-module.exports = function (app, templates, thSettings) {
+module.exports = function (app, templates) {
     'use strict';
 
     function registerHandlers() {
