@@ -8,15 +8,6 @@ module.exports = function (app, templates, requestHandlers, thSettings) {
     }
 
     function registerHandlers() {
-        /*app.get('/app/more2', function (request, response){
-            templates.serveHtmlRaw(response, './server-templates/more.html', {});
-        });/*
-        /*app.post('/api/more/init', function (request, response) {
-            var userId = request.session.currentUser._id;
-            requestHandlers.getPrettyNameIdAndImageURL(userId, function(prettyName, myUserId, userImageURL) {
-                return respondWithJson(response, { prettyName : prettyName, userImageURL : userImageURL });
-            });
-        });*/
         app.post('/api/more/signout', function (request, response) {
             if (request.session) {
                 request.session.destroy();

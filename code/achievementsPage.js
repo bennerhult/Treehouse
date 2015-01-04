@@ -8,15 +8,12 @@ module.exports = function (app, templates, user, progress, moment, shareholding,
     }
 
     function registerHandlers() {
-        app.get('/app/achievements2', function (request, response){
+        app.get('/app/achievements', function (request, response) {
             templates.serveHtmlRaw(response, './server-templates/achievements.html', {});
         });
         app.post('/api/achievements/init', function (request, response) {
-            var userId = request.session.currentUser._id;
-            requestHandlers.getPrettyNameIdAndImageURL(userId, function(prettyName, myUserId, userImageURL) {
-                achievement.getAchievementList(userId, function(achievementList) {
-                    return respondWithJson(response, { prettyName : prettyName, userImageURL : userImageURL, achievementList: achievementList });
-                });
+            achievement.getAchievementList(request.session.currentUser._id, function(achievementList) {
+                return respondWithJson(response, { achievementList: achievementList });
             });
         });
     }

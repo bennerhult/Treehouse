@@ -8,15 +8,7 @@ module.exports = function (app, templates, requestHandlers) {
     }
 
     function registerHandlers() {
-        app.get('/app/friends', function (request, response){
-            templates.serveHtmlRaw(response, './server-templates/friends.html', {});
-        });
-        app.post('/api/friends/init', function (request, response) {
-            var userId = request.session.currentUser._id;
-            requestHandlers.getPrettyNameIdAndImageURL(userId, function(prettyName, myUserId, userImageURL) {
-                return respondWithJson(response, { prettyName : prettyName, userImageURL : userImageURL });
-            });
-        });
+
     }
 
     return {
