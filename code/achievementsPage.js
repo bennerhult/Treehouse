@@ -8,7 +8,7 @@ module.exports = function (app, templates, user, progress, moment, shareholding,
     }
 
     function registerHandlers() {
-        app.get('/app/achievements', function (request, response){
+        app.get('/app/achievements2', function (request, response){
             templates.serveHtmlRaw(response, './server-templates/achievements.html', {});
         });
         app.post('/api/achievements/init', function (request, response) {
