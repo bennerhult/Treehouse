@@ -57,9 +57,8 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
     }
 });
 
-//TODO testa hela single page app på test
-//TODO presignin, ta bort ng-click="signin($event)
-//TODO ta bort thPAge-loadingen på signin2 och newsfeed?
+//TODO testa hela single page app och telefonläge på test
+//TODO ta bort thPage-loadingen på signin2 och newsfeed?
 //TODO visa achievement snyggt
 //TODO kunna refresha ett achievement
 //TODO kunna refresha achievements/friends/more/newsfeed
