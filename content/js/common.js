@@ -57,7 +57,8 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
     }
 });
 
-//TODO flytta preSignin
+//TODO testa hela single page app på test
+//TODO presignin, ta bort ng-click="signin($event)
 //TODO ta bort thPAge-loadingen på signin2 och newsfeed?
 //TODO visa achievement snyggt
 //TODO kunna refresha ett achievement
