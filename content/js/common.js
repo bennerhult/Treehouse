@@ -57,8 +57,8 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
     }
 });
 
-
 //TODO flytta preSignin
+//TODO ta bort thPAge-loadingen på signin2 och newsfeed?
 //TODO visa achievement snyggt
 //TODO kunna refresha ett achievement
 //TODO kunna refresha achievements/friends/more/newsfeed

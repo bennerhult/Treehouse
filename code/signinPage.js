@@ -4,7 +4,6 @@ module.exports = function (app, templates, requestHandlers, thSettings, user, si
     function registerHandlers() {
         app.get('/signin2', function (request, response){
             templates.serveHtmlRaw(response, './server-templates/treehouse.html', {});
-            //templates.serveHtmlRaw(response, './server-templates/signin.html');
         });
 
         app.get('/signinByEmail', function (request, response){
