@@ -6,6 +6,14 @@ treehouseApp.controller('newsfeedController', function($scope, $http, pageServic
     $http.post('/api/newsfeed/init', {}).success(function(result) {
         $scope.newsItems = result.newsItems;
         $scope.isLoading = false;
+
+
+    });
+
+    $http.post('/api/init', {}).success(function(result) {
+        $scope.prettyName = result.prettyName;
+        $scope.userImageURL = result.userImageURL;
+        $scope.isLoading = false;
     });
 
     $scope.gotoAchievement = function(evt, newsItem) {

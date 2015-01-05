@@ -1,3 +1,4 @@
+<div ng-include src="'/server-templates/includes/userInfo.html'"></div>
 <div class="content">
     <div class="listWrap" ng-if="newsItems">
         <div ng-repeat="newsItem in newsItems" ng-switch="newsItem.eventType" class="item">
@@ -29,3 +30,5 @@
         </div>
     </div>
 </div>
+<div ng-include src="'/server-templates/includes/desktopMenu.html'"></div>
+<div ng-include src="'/server-templates/includes/bottomMenu.html'"></div>

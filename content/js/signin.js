@@ -28,14 +28,6 @@ treehouseApp.controller('signinController', function ($scope, $http, $timeout) {
         }
     }
 
-    function initUser() {
-        $http.post('/api/init', {}).success(function(result) {
-            $scope.prettyName = result.prettyName;
-            $scope.userImageURL = result.userImageURL;
-            $scope.isLoading = false;
-        });
-    }
-
     $scope.signinWithEmail = function (evt) {
         $scope.authenticationFailure1 = false;
         $scope.nothingEntered = false;
@@ -64,7 +56,6 @@ treehouseApp.controller('signinController', function ($scope, $http, $timeout) {
             } else {
                 $scope.isReturningUser = true;
             }
-           // initUser();
         });
     };
 
@@ -81,7 +72,6 @@ treehouseApp.controller('signinController', function ($scope, $http, $timeout) {
                 if (response.authResponse) {
                     FB.api('/me', function(apiResponse) {
                         if (apiResponse) {
-                            //initUser();
                             $http.post('/api/signin/signinFB', { email : apiResponse.email }).success(function (result) {
                                 window.location = result.url;
                             }).error(function() {
