@@ -1,7 +1,31 @@
-var achievementApp = angular.module('App', ['ngRoute']);
+var treehouseApp = angular.module('App', ['ngRoute']);
 
-achievementApp.controller('commonController', function($scope, $http, $location) {
+treehouseApp.factory("achievementService",function() {
+    var service = {};
+
+    service.setAchievement = function(currentAchievement){
+        this.achievement = currentAchievement;
+    }
+
+    return service;
+});
+
+treehouseApp.factory('pageService', function() {
+    var service = {};
+
+    service.setTitle = function(title){
+        this.pageTitle = title;
+    }
+
+    return service;
+});
+
+treehouseApp.controller('commonController', function($scope, $http, $location, pageService) {
+    "use strict";
     $scope.isLoading = true;
+    $scope.pageService = pageService;
+    pageService.setTitle('Treehouse');
+
     $http.post('/api/init', {}).success(function(result) {
         $scope.prettyName = result.prettyName;
         $scope.userImageURL = result.userImageURL;
@@ -17,20 +41,9 @@ achievementApp.controller('commonController', function($scope, $http, $location)
     }
 });
 
-achievementApp.factory("achievementService",function(){
-    var service = {};
-
-    service.setAchievement = function(currentAchievement){
-        this.achievement = currentAchievement;
-    }
-
-    return service;
-});
-
-//TODO rätt meny och titel
 //TODO flytta alla sidor till singlePageApp
-//TODO signin2
-//TODO preSignin
+    //TODO signin2
+    //TODO preSignin
 //TODO kunna refresha ett achievement
 //TODO kunna refresha achievements/friends/more/newsfeed
 //TODO visa achievement snyggt

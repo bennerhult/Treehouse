@@ -1,4 +1,4 @@
-achievementApp.config(function($routeProvider, $locationProvider) {
+treehouseApp.config(function($routeProvider, $locationProvider) {
     $routeProvider
         .when('/app/more', {
             templateUrl: '/server-templates/more.html',

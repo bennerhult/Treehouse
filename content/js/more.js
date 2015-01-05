@@ -1,4 +1,7 @@
-achievementApp.controller('moreController', function($scope, $http) {
+treehouseApp.controller('moreController', function($scope, $http, pageService) {
+    "use strict";
+    pageService.setTitle('More');
+
     $scope.signout = function(evt) {
         evt.preventDefault();
 

@@ -1,6 +1,8 @@
-achievementApp.controller('newsfeedController', function($scope, $http) {
+treehouseApp.controller('newsfeedController', function($scope, $http, pageService) {
     "use strict";
     $scope.isLoading = true;
+    pageService.setTitle('Newsfeed');
+
     $http.post('/api/newsfeed/init', {}).success(function(result) {
         $scope.newsItems = result.newsItems;
         $scope.isLoading = false;
