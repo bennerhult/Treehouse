@@ -1,4 +1,4 @@
-angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) {
+treehouseApp.controller('signinController', function ($scope, $http, $timeout) {
     'use strict';
 
     function init() {
@@ -26,6 +26,14 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
         if(autoSignin) {
             $timeout(function () { $scope.signinWithEmail(); }); //To have page init be done before we try to autosignin. Avoids having to deal with things like emailSigninForm being null.
         }
+    }
+
+    function initUser() {
+        $http.post('/api/init', {}).success(function(result) {
+            $scope.prettyName = result.prettyName;
+            $scope.userImageURL = result.userImageURL;
+            $scope.isLoading = false;
+        });
     }
 
     $scope.signinWithEmail = function (evt) {
@@ -56,6 +64,7 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
             } else {
                 $scope.isReturningUser = true;
             }
+           // initUser();
         });
     };
 
@@ -72,6 +81,7 @@ angular.module('App', []).controller('Ctrl', function ($scope, $http, $timeout) 
                 if (response.authResponse) {
                     FB.api('/me', function(apiResponse) {
                         if (apiResponse) {
+                            //initUser();
                             $http.post('/api/signin/signinFB', { email : apiResponse.email }).success(function (result) {
                                 window.location = result.url;
                             }).error(function() {

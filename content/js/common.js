@@ -26,12 +26,6 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
     $scope.pageService = pageService;
     pageService.setTitle('Treehouse');
 
-    $http.post('/api/init', {}).success(function(result) {
-        $scope.prettyName = result.prettyName;
-        $scope.userImageURL = result.userImageURL;
-        $scope.isLoading = false;
-    });
-
     $scope.getClass = function(path) {
         if ($location.path().substr(0, path.length) == path) {
             return "selected";
@@ -41,9 +35,15 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
     }
 });
 
-//TODO flytta alla sidor till singlePageApp
-    //TODO signin2
-    //TODO preSignin
+
+//TODO flytta preSignin
+//TODO flytta api/init till inloggning
+//TODO snygga till signin2
+//TODO få signout att fungera
+//TODO ta bort allPages.js
+
+//TODO http://localhost:1337/signin2 The "fb-root" div has not been created, auto-creating
+//TODO http://localhost:1337/signin2 Received message of type object from http://localhost:1337, expected a string
 //TODO visa achievement snyggt
 //TODO kunna refresha ett achievement
 //TODO kunna refresha achievements/friends/more/newsfeed
