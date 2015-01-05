@@ -3,10 +3,11 @@ module.exports = function (app, requestHandlers, templates) {
 
     function registerHandlers() {
         app.post('/api/init', function (request, response) {
-            var userId = request.session.currentUser._id;
-            requestHandlers.getPrettyNameIdAndImageURL(userId, function(prettyName, myUserId, userImageURL) {
-                return requestHandlers.respondWithJson(response, { prettyName : prettyName, userImageURL : userImageURL});
-            });
+            if (request.session &&request.session.currentUser) {
+                requestHandlers.getPrettyNameIdAndImageURL(request.session.currentUser._id, function(prettyName, myUserId, userImageURL) {
+                    return requestHandlers.respondWithJson(response, { prettyName : prettyName, userImageURL : userImageURL});
+                });
+            }
         });
 
         app.get('/app/th', function (request, response) {
