@@ -34,9 +34,9 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
 
     $scope.getClass = function(path) {
         if ($location.path().substr(0, path.length) == path) {
-            return "selected"
+            return "selected";
         } else {
-            return ""
+            return "";
         }
     }
 });
@@ -44,6 +44,6 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
 //TODO flytta alla sidor till singlePageApp
     //TODO signin2
     //TODO preSignin
+//TODO visa achievement snyggt
 //TODO kunna refresha ett achievement
 //TODO kunna refresha achievements/friends/more/newsfeed
-//TODO visa achievement snyggt
