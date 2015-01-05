@@ -1,13 +1,7 @@
-module.exports = function (app, templates, newsfeed) {
+module.exports = function (app, templates, requestHandlers, newsfeed) {
     'use strict';
 
     var _ = require("underscore")._;
-
-    function respondWithJson(response, data) {
-        response.writeHead(200, {'content-type': 'application/json' });
-        response.write(JSON.stringify(data));
-        response.end('\n', 'utf-8');
-    }
 
     function registerHandlers() {
         app.get('/app/newsfeed', function (request, response) {
@@ -22,7 +16,7 @@ module.exports = function (app, templates, newsfeed) {
                         }
                     });
                 }
-                return respondWithJson(response, { newsItems : newsfeedFromServer.newsItems });
+                return requestHandlers.respondWithJson(response, { newsItems : newsfeedFromServer.newsItems });
             });
         });
     }

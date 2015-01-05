@@ -1,11 +1,5 @@
-module.exports = function (app, templates, thSettings, user, signinToken, email, auth, url) {
+module.exports = function (app, templates, requestHandlers, thSettings, user, signinToken, email, auth, url) {
     'use strict';
-
-    function respondWithJson(response, data) {
-        response.writeHead(200, {'content-type': 'application/json' });
-        response.write(JSON.stringify(data));
-        response.end('\n', 'utf-8');
-    }
 
     function registerHandlers() {
         app.get('/signin2', function (request, response){
@@ -77,12 +71,12 @@ module.exports = function (app, templates, thSettings, user, signinToken, email,
                         user.createUser(username, function (newUser, err) {
                             if (!err) {
                                 request.session.currentUser = newUser;
-                                respondWithJson(response, {url: thSettings.getDomain() + 'app/newsfeed'});
+                                requestHandlers.respondWithJson(response, {url: thSettings.getDomain() + 'app/newsfeed'});
                             }
                         });
                     } else {
                        request.session.currentUser = myUser;
-                       respondWithJson(response, {url: thSettings.getDomain() + 'app/newsfeed'});
+                       requestHandlers.respondWithJson(response, {url: thSettings.getDomain() + 'app/newsfeed'});
                    }
                 });
             }
@@ -91,7 +85,7 @@ module.exports = function (app, templates, thSettings, user, signinToken, email,
 
         app.post('/api/signin/authenticate', function (request, response) {
             if(!request.body.email) {
-                respondWithJson(response, { errCode : 1 });
+                requestHandlers.respondWithJson(response, { errCode : 1 });
             }
             var username = request.body.email.toLowerCase();
             user.User.findOne({ username: username }, function(err, myUser) {
@@ -104,9 +98,9 @@ module.exports = function (app, templates, thSettings, user, signinToken, email,
                     //Local testing - skip email and redirect to sign up link directly
                     onTokenCreated = function (myToken) {
                          if (myUser) {
-                             respondWithJson(response, { url : createSigninLink(normalizedUsername, myToken.token), isNewUser : false });
+                             requestHandlers.respondWithJson(response, { url : createSigninLink(normalizedUsername, myToken.token), isNewUser : false });
                          } else {
-                             respondWithJson(response, { url : createSigninLink(normalizedUsername, myToken.token), isNewUser : true });
+                             requestHandlers.respondWithJson(response, { url : createSigninLink(normalizedUsername, myToken.token), isNewUser : true });
                          }
                     };
                 } else if (myUser) {
@@ -118,7 +112,7 @@ module.exports = function (app, templates, thSettings, user, signinToken, email,
                             "<html>Click <a href='" + createSigninLink(normalizedUsername, myToken.token) + "'>here</a> to sign in to Treehouse.</html>",
                             'Go to ' + createSigninLink(normalizedUsername, myToken.token) +  ' to sign in to Treehouse!',
                              function() {
-                                 respondWithJson(response, { isNewUser : false });
+                                 requestHandlers.respondWithJson(response, { isNewUser : false });
                              }
                         );
                     };
@@ -131,7 +125,7 @@ module.exports = function (app, templates, thSettings, user, signinToken, email,
                             "<html>Click <a href='" + createSigninLink(normalizedUsername, myToken.token) + "'>here</a> to start using Treehouse.</html>",
                             'Go to ' + createSigninLink(normalizedUsername, myToken.token) + ' to start using Treehouse!',
                             function() {
-                                respondWithJson(response, { isNewUser : true });
+                                requestHandlers.respondWithJson(response, { isNewUser : true });
                             }
                         );
                     };

@@ -1,19 +1,13 @@
 module.exports = function (app, templates, requestHandlers, user, progress, moment, shareholding, achievement, url) {
     'use strict';
 
-    function respondWithJson(response, data) {
-        response.writeHead(200, {'content-type': 'application/json' });
-        response.write(JSON.stringify(data));
-        response.end('\n', 'utf-8');
-    }
-
     function registerHandlers() {
         app.get('/app/achievements', function (request, response) {
             templates.serveHtmlRaw(response, './server-templates/achievements.html', {});
         });
         app.post('/api/achievements/init', function (request, response) {
             achievement.getAchievementList(request.session.currentUser._id, function(achievementList) {
-                return respondWithJson(response, { achievementList: achievementList });
+                return requestHandlers.respondWithJson(response, { achievementList: achievementList });
             });
         });
     }

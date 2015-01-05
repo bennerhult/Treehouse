@@ -57,10 +57,17 @@ module.exports = function (thSettings, user) {
         })
     }
 
+    function respondWithJson(response, data) {
+        response.writeHead(200, {'content-type': 'application/json' });
+        response.write(JSON.stringify(data));
+        response.end('\n', 'utf-8');
+    }
+
     return {
         indexPage : indexPage,
         publicAchievementPage : publicAchievementPage,
         writeDefaultPage : writeDefaultPage,
-        getPrettyNameIdAndImageURL : getPrettyNameIdAndImageURL
+        getPrettyNameIdAndImageURL : getPrettyNameIdAndImageURL,
+        respondWithJson : respondWithJson
     };
 };

@@ -47,4 +47,3 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
 //TODO kunna refresha ett achievement
 //TODO kunna refresha achievements/friends/more/newsfeed
 //TODO visa achievement snyggt
-//TODO ta bort dupliceringen av respondWithJson
