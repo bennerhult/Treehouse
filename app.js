@@ -1252,10 +1252,6 @@ app.get('/publicize', function(request, response){
     });
 });
 
-app.get('/', function(req, res) {
-    requestHandlers.writeDefaultPage(req, res);
-});
-
 app.get('/editAchievement', function(request, response) {
     achievement.Achievement.findOne({ _id: request.session.current_achievement_id }, function(err,currentAchievement) {
         response.writeHead(200, {'content-type': 'application/json' });

@@ -93,7 +93,6 @@ See available versions for Node and NPM
 
 #### test environment
 [URL](http://test.treehouse.io/)
-[New URL](http://treehouseapp-test.herokuapp.com/preSignin)
 
 The web server is Heroku, the database is a MongoDB on Compose (former MongoHQ). This mirrors the setup in production.
 DB user: testtreehouser

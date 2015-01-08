@@ -1,6 +1,6 @@
 treehouseApp.config(function($routeProvider, $locationProvider) {
     $routeProvider
-        .when('/preSignin', {
+        .when('/', {
             templateUrl: '/server-templates/info.html',
             controller: 'infoController'
         })
