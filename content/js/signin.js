@@ -14,6 +14,7 @@ treehouseApp.controller('signinController', function ($scope, $http, $timeout) {
         $scope.isiPad = navigator.userAgent.match(/iPad/i) != null;
         $scope.isiPhone = navigator.userAgent.match(/iPhone/i) != null;
         $scope.isiOs = $scope.isiPad || $scope.isiPhone;
+        $scope.isLoading = false;
 
         var autoSignin = false;
         try {
