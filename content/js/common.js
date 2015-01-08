@@ -56,11 +56,3 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
         }
     }
 });
-
-//TODO testa hela single page app och telefonläge på test
-//TODO ta bort thPage-loadingen på signin2 och newsfeed?
-//TODO visa achievement snyggt
-//TODO kunna refresha ett achievement
-//TODO kunna refresha achievements/friends/more/newsfeed
-//TODO http://localhost:1337/signin2 The "fb-root" div has not been created, auto-creating
-//TODO kolla upp ng-cloak
