@@ -29,6 +29,7 @@ treehouseApp.controller('signinController', function ($scope, $http, $timeout) {
     }
 
     $scope.signinWithEmail = function (evt) {
+        $scope.isLoading = true;
         $scope.authenticationFailure1 = false;
         $scope.nothingEntered = false;
         $scope.isEmailInvalid = false;
@@ -43,7 +44,6 @@ treehouseApp.controller('signinController', function ($scope, $http, $timeout) {
              }
             return;
         }
-        $scope.isLoading = true;
 
         $http.post('/api/signin/authenticate', { email : $scope.emailAddress }).success(function (result) {
             $scope.isLoading = false;
@@ -65,7 +65,6 @@ treehouseApp.controller('signinController', function ($scope, $http, $timeout) {
         }
         $scope.fbConnectError = false;
         $scope.userClosedFBDialogue = false;
-        $scope.isLoading = false;
         if ($scope.isAppMode || $scope.isiOs) {
             window.location = 'https://m.facebook.com/dialog/oauth?client_id=480961688595420&response_type=code&redirect_uri=http://' + document.domain + '/fbAppConnect2&scope=email';
         } else {
