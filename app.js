@@ -270,7 +270,7 @@ app.get('/achievement', function(request, response) {
                 var imageUrl = "" + currentAchievement.imageURL
                 if (!imageUrl.startsWith('https')) {
                     imageUrl = 'http://www.treehouse.io/' + imageUrl
-                }
+                }a
                 requestHandlers.publicAchievementPage(response, userId, currentAchievementId, request.url, imageUrl, currentAchievement.title, currentProgress.publiclyVisible)
             } else {
                 requestHandlers.writeDefaultPage(request, response)
