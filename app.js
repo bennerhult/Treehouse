@@ -279,138 +279,6 @@ app.get('/achievement', function(request, response) {
     })
 })
 
-app.get('/rememberMe', function(request, response){
-    authenticateFromLoginToken(request, response)
-})
-
-app.get('/checkFBUser', function(request, response){
-    user.User.findOne({ username: request.query.username.toLowerCase() }, function(err,myUser) {
-        if (myUser) {
-            getDataForUser(myUser, request, response)
-        } else {
-            createUser(request.query.username.toLowerCase(), request, response)
-        }
-    })
-})
-
-app.get('/fbAppConnect', function(request, response){
-    var url_parts = url.parse(request.url, true)
-    var code = url_parts.query.code
-    var accessTokenLink= 'https://graph.facebook.com/oauth/access_token?client_id=480961688595420&client_secret=c0a52e2b21f053355b43ffb704e3c555&redirect_uri=http://www.treehouse.io/fbAppConnect&code=' + code
-    var requestModule = require('request');
-    requestModule.get(accessTokenLink, function (accessTokenError, accessTokenResponse, accessTokenBody) {
-        if (!accessTokenError && accessTokenResponse.statusCode == 200) {
-             var accessToken  = accessTokenBody.substring(accessTokenBody.indexOf('='))
-            var graphLink = 'https://graph.facebook.com/me?access_token' + accessToken
-            requestModule.get(graphLink, function (graphError, graphResponse, graphBody) {
-                if (!graphError && graphResponse.statusCode == 200) {
-                    var graph_parts = JSON.parse(graphBody)
-                    var email  = graph_parts.email
-                    user.User.findOne({ username: email }, function(err,myUser) {
-                        getDataForUser(myUser, request, response)
-                    })
-                }
-            })
-        }
-    })
-})
-
-app.get('/signin', function(request, response) {
-    signin(request, response)
-})
-
-app.get('/signup', function(request, response) {
-    signin(request, response)
-})
-
-function signin(request, response) {
-    var url_parts = url.parse(request.url, true)
-    var email = url_parts.query.email.toLowerCase()
-    var token = url_parts.query.token
-    auth.authenticate(email, token, function (err, isAuthenticated, data) {
-        if (err) {
-            response.writeHead(200, {'content-type': 'application/json' })
-            response.write(JSON.stringify("There was a problem creating your account. Contact staff@treehouse.io for more information."))
-            response.end('\n', 'utf-8')
-        } else if (isAuthenticated) {
-            request.session.currentUser = data.user;
-            response.cookie('rememberme', loginToken.cookieValue(data.token), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-            requestHandlers.writeDefaultPage(request, response);
-        } else {
-            response.redirect(302, thSettings.getDomain());
-        }
-    });
-}
-
-app.get('/checkUser', function(request, response){
-    var username = request.query.username.toLowerCase();
-
-    user.User.findOne({ username: username }, function(err, myUser) {
-        var normalizedUsername = username;
-        if(myUser) {
-            normalizedUsername = myUser.username;
-        }
-
-        function createSignupLink(token) {
-            return domain + "signin?email=" + normalizedUsername + "&token=" + token
-        }
-
-        var onTokenCreated;
-        if(thSettings.isAutoSigninEnabled ()) {
-            //Local testing - skip email and redirect to signup link directly
-            onTokenCreated = function (myToken) {
-                 if (myUser) {
-                    response.writeHead(200, {'content-type': 'application/json' })
-                    response.write(JSON.stringify({ url : createSignupLink(myToken.token) }))
-                 } else {
-                    response.writeHead(201, {'content-type': 'application/json' })
-                     response.write(JSON.stringify({ url : createSignupLink(myToken.token) }))
-                 }
-                 response.end('\n', 'utf-8')
-            };
-        } else if (myUser) {
-            onTokenCreated = function (myToken) {
-                email.emailUser(
-                    username,
-                    'Sign in to Treehouse',
-                    "<html>Click <a href='" + createSignupLink(myToken.token) + "'>here</a> to sign in to Treehouse.</html>",
-                    'Go to ' + createSignupLink(myToken.token) +  ' to sign in to Treehouse!',
-                     function() {
-                         response.writeHead(200, {'content-type': 'application/json' })
-                         response.write(JSON.stringify( myToken.token))
-                         response.end('\n', 'utf-8')
-                     }
-                )
-            };
-        } else {
-            //New user
-            onTokenCreated = function (myToken) {
-                email.emailUser(
-                    username,
-                    'Welcome  to Treehouse',
-                    "<html>Click <a href='" + createSignupLink(myToken.token) + "'>here</a> to start using Treehouse.</html>",
-                    'Go to ' + createSignupLink(myToken.token) + ' to start using Treehouse!',
-                    function() {
-                        response.writeHead(201, {'content-type': 'application/json' })
-                        response.write(JSON.stringify( myToken.token ))
-                        response.end('\n', 'utf-8')
-                    }
-                )
-            };
-        }
-
-        loginToken.createToken(normalizedUsername, onTokenCreated);
-    })
-})
-
-function getDataForUser(myUser, request, response) {
-    request.session.currentUser = myUser
-    loginToken.createToken(myUser.username, function(myToken) {
-        response.cookie('rememberme', loginToken.cookieValue(myToken), { expires: new Date(Date.now() + 12 * 604800000), path: '/' }) //604800000 equals one week
-        requestHandlers.writeDefaultPage(request, response)
-    })
-}
-
 function createUser(emailAdress, request, response) {
     user.createUser(emailAdress, function (newUser,err) {
         if (err) {
@@ -426,18 +294,6 @@ function createUser(emailAdress, request, response) {
         }
     })
 }
-
-app.get('/signout', function(request, response){
-    response.clearCookie('rememberme', null)
-    if (request.session) {
-        if (request.session.currentUser) {
-            loginToken.remove(request.session.currentUser.username, function(){} )
-        }
-        request.session.destroy()
-    }
-    requestHandlers.indexPage(response, null, 0)
-})
-
 
 app.get('/user', function(request, response){
     var userID
@@ -1580,14 +1436,6 @@ function getNewAchievementErrorMessage (err){
     return errorMessage
 }
 
-function writeGotoAppPage(response) {
-    requestHandlers.gotoAppPage(response);
-}
-
 app.get('/app/*', function(request, response){
     response.redirect("/app/th/");
-});
-
-app.get('*', function(request, response){
-   response.redirect("/");
 });
