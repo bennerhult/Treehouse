@@ -137,7 +137,7 @@ requireAccess.use(function(req, res, next) {
     if(req.session && req.session.currentUser) {
         next();
     } else {
-        res.redirect('/signin2');
+        res.redirect('/signin');
     }
 });
 
@@ -150,7 +150,7 @@ skipSigninPageIfReturningUser.use(function(req, res, next) {
 });
 
 app.use('/', publiclyAvailable);
-app.use('/signin2', skipSigninPageIfReturningUser);
+app.use('/signin', skipSigninPageIfReturningUser);
 app.use('/api', publiclyAvailable);
 app.use('/app', requireAccess);
 

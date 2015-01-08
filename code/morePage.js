@@ -6,7 +6,7 @@ module.exports = function (app, templates, requestHandlers, thSettings) {
             if (request.session) {
                 request.session.destroy();
             }
-            return requestHandlers.respondWithJson(response, {url: thSettings.getDomain() + 'app/signin2'});
+            return requestHandlers.respondWithJson(response, {url: thSettings.getDomain() + 'app/signin'});
         });
     }
 

@@ -2,7 +2,7 @@ module.exports = function (app, templates, requestHandlers, thSettings, user, si
     'use strict';
 
     function registerHandlers() {
-        app.get('/signin2', function (request, response){
+        app.get('/signin', function (request, response){
             templates.serveHtmlRaw(response, './server-templates/treehouse.html', {});
         });
 
@@ -12,9 +12,9 @@ module.exports = function (app, templates, requestHandlers, thSettings, user, si
             var token = url_parts.query.token;
             auth.authenticate(email, token, function (err, isAuthenticated, data) {
                 if (err) {
-                    response.redirect(302, thSettings.getDomain() + 'signin2');
+                    response.redirect(302, thSettings.getDomain() + 'signin');
                 } else if (!isAuthenticated) {
-                    response.redirect(302, thSettings.getDomain() + 'signin2');
+                    response.redirect(302, thSettings.getDomain() + 'signin');
                 } else {
                     sendUserToDefaultPage(request, response, data.user);
                 }
