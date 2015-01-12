@@ -67,7 +67,7 @@ module.exports = function (app, templates, requestHandlers, thSettings, user, si
             var username = request.body.email.toLowerCase();
             var onTokenCreated = function() {
                 user.User.findOne({ username: username }, function (err, myUser) {
-                   if (!myUser) {
+                    if (!myUser) {
                         user.createUser(username, function (newUser, err) {
                             if (!err) {
                                 request.session.currentUser = newUser;
@@ -75,9 +75,9 @@ module.exports = function (app, templates, requestHandlers, thSettings, user, si
                             }
                         });
                     } else {
-                       request.session.currentUser = myUser;
-                       requestHandlers.respondWithJson(response, {url: thSettings.getDomain() + 'app/newsfeed'});
-                   }
+                        request.session.currentUser = myUser;
+                        requestHandlers.respondWithJson(response, {url: thSettings.getDomain() + 'app/newsfeed'});
+                    }
                 });
             }
             signinToken.createToken(username, onTokenCreated);
