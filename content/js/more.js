@@ -6,7 +6,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
         evt.preventDefault();
         $scope.isConverting = true;
         $scope.conversionError = false;
-        
+
         //TODO visa progress på sidan
         //TODO propagera felmeddelanden
         //TODO fix error handling in morePage.js, copied from signinPage
@@ -23,9 +23,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
             /*if (isiOs) {
                 $("#imageUploadFrame").remove()
             }*/
-            $scope.$apply(function () {
-                pageService.setUserImageURL(inkBlob.url);
-            });
+            pageService.setUserImageURL(inkBlob.url);
             var progressPercentTotal;
             filepicker.stat(inkBlob, {width: true, height: true},
                 function(metadata){
@@ -68,10 +66,8 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
         var progressPercentTotal;
         filepicker.convert(inkBlob, {width: 96, height: 96},
             function(convertedInkBlob){
-                $scope.$apply(function () {
-                    pageService.setUserImageURL(convertedInkBlob.url);
-                    $scope.isConverting = false;
-                });
+                pageService.setUserImageURL(convertedInkBlob.url);
+                $scope.isConverting = false;
                 saveUserImage(convertedInkBlob.url, function (success) { //TODO show error message
                     //$("#userForm").show(); //TODO
                     //$("#issuerForm").show(); //TODO
