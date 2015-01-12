@@ -6,9 +6,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
         evt.preventDefault();
         $scope.isConverting = true;
         $scope.conversionError = false;
-
-        //TODO uppdatera userbilden i userInfo.HTML direkt efter bildbyte
-        //TODO uppdatera till bilden DIREKT innan conversion börjar
+        
         //TODO gör om inloggningsknappen till ng
         //TODO visa progress på sidan
         //TODO fixa for iOs
