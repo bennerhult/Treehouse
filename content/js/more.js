@@ -22,7 +22,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
             /*if (isiOs) {
                 $("#imageUploadFrame").remove()
             }*/
-            $("#userImage").attr("src", inkBlob.url); //TODO
+            $("#userImage").attr("src", inkBlob.url);
 
             var progressPercentTotal;
             filepicker.stat(inkBlob, {width: true, height: true},
@@ -49,7 +49,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
                             $scope.conversionError = true; // TODO propagate error message
                         }, function(progressPercent) {
                             progressPercentTotal = (progressPercent/2)*(205/100)
-                            $("#progress").animate({ width: progressPercentTotal }, 500);
+                            //$("#progress").animate({ width: progressPercentTotal }, 500); //TODO
                         });
                     }
                 }
@@ -67,16 +67,17 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
         filepicker.convert(inkBlob, {width: 96, height: 96},
             function(convertedInkBlob){
                 $("#userImage").attr("src", convertedInkBlob.url);
-                filepicker.remove(inkBlob, function(){
-                    $("#message").html("");
-                    $("#userForm").show();
-                    $("#issuerForm").show();
+                $scope.isConverting = false;
+                $scope.$apply();
+                filepicker.remove(inkBlob, function() {
+                    //$("#userForm").show(); //TODO
+                    //$("#issuerForm").show(); //TODO
                 }, function(FPError){});
             }, function(errorMessage) {
                 $scope.conversionError = true; // TODO propagate error message
             }, function(progressPercent) {
                 progressPercentTotal = (50 + progressPercent/2) *(205/100);
-                $("#progress").animate({ width: progressPercentTotal }, 500);
+                //$("#progress").animate({ width: progressPercentTotal }, 500); //TODO
             }
         );
     }
