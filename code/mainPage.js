@@ -10,9 +10,6 @@ module.exports = function (app, requestHandlers, templates) {
             }
         });
 
-        app.get('/app/th', function (request, response) {
-            templates.serveHtmlRaw(response, './server-templates/treehouse.html', {});
-        });
     }
 
     return {

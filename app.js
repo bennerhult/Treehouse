@@ -199,5 +199,5 @@ app.get('/channel.html', function(request, response){
 })
 
 app.get('/app/*', function(request, response){
-    response.redirect("/app/th/");
+    response.redirect("/app/newsfeed/");
 });

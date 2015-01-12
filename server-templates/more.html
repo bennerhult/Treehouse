@@ -1,8 +1,10 @@
 <div ng-include src="'/server-templates/includes/userInfo.html'"></div>
 <div class="content">
     <div class="section">
-        <div class="changeUserImage"><img width="50" height="50" ng-src="{{userImageURL}}" ></div>
+        <div class="changeUserImage"><img id="userImage" width="50" height="50" ng-src="{{userImageURL}}" ></div>
         <a href="javascript:void(0)" ng-click="uploadUserImage($event)"><img src="../content/img/upload.png" style="margin-top: 8px;"/></a>
+        <div ng-show="isConverting" class="message"><p>Converting image...</p></div>
+        <div ng-show="conversionError" class="message"><p>Image conversion error! Try another image.</p></div>
         <form novalidate ng-submit="signout($event)" name="signoutForm">
             <ul>
                 <li><input type="submit" class="button" value="sign out"/><li>
