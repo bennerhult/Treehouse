@@ -6,12 +6,12 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
         evt.preventDefault();
         $scope.isConverting = true;
         $scope.conversionError = false;
-        
-        //TODO gör om inloggningsknappen till ng
+
+        //TODO stabilisera userbilden efter uppladdning
         //TODO visa progress på sidan
         //TODO fixa for iOs
 
-        var container = 'modal'
+        var container = 'modal';
         /*if (isiOs) {
             $('<iframe id="imageUploadFrame" class="imageUploadFrame" style="z-index:999;" >').appendTo('body');
             container = 'imageUploadFrame';
@@ -22,8 +22,9 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
             /*if (isiOs) {
                 $("#imageUploadFrame").remove()
             }*/
-            $scope.userImageURL = inkBlob.url;
-            $scope.$apply();
+            $scope.$apply(function () {
+                $scope.userImageURL = inkBlob.url;
+            });
 
             var progressPercentTotal;
             filepicker.stat(inkBlob, {width: true, height: true},
@@ -66,9 +67,11 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
         var progressPercentTotal;
         filepicker.convert(inkBlob, {width: 96, height: 96},
             function(convertedInkBlob){
-                $scope.userImageURL = convertedInkBlob.url;
-                $scope.isConverting = false;
-                $scope.$apply();
+                $scope.$apply(function () {
+                    $scope.userImageURL = convertedInkBlob.url;
+                    $scope.isConverting = false;
+                });
+                //$scope.$apply();
                 saveUserImage(convertedInkBlob.url, function (success) { //TODO show error message
                     //$("#userForm").show(); //TODO
                     //$("#issuerForm").show(); //TODO

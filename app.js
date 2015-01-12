@@ -14,8 +14,8 @@ var fs = require('fs'),
 var db_uri = 'mongodb://localhost:27017/test';
 var domain = '';
 var app = express();
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 var MongoStore = require('connect-mongo')(session);
 
 if (typeof String.prototype.startsWith != 'function') {
@@ -26,15 +26,15 @@ if (typeof String.prototype.startsWith != 'function') {
 
 var env = process.env.NODE_ENV || 'development';
 if ('development' == env) {
-    domain = 'http://localhost:1337/'
-    console.log("Treehouse in development mode.")
+    domain = 'http://localhost:1337/';
+    console.log("Treehouse in development mode.");
     thSettings.init({
         envName : 'development',
         autoSignin : process.env.TH_AUTOSIGNIN && process.env.TH_AUTOSIGNIN.toLowerCase() === 'true',
         domain : domain
     });
 } else if ('test' == env)  {
-    console.log("Treehouse in test mode")
+    console.log("Treehouse in test mode");
     if(!process.env.DB_URI) {
         throw "Missing environment variable DB_URI which is required in test. Should be the equivalent of 'mongodb://localhost:27017/test' when developing locally";
     }
@@ -46,7 +46,7 @@ if ('development' == env) {
     });
 } else if ('production' == env) {
     domain = 'http://www.treehouse.io/';
-    console.log("Treehouse in prod mode.")
+    console.log("Treehouse in prod mode.");
     db_uri=process.env.DB_URI;
     thSettings.init({
         envName : 'production',
@@ -54,8 +54,8 @@ if ('development' == env) {
     });
 }
 
-mongoose.connect(db_uri)
-app.use(cookieParser())
+mongoose.connect(db_uri);
+app.use(cookieParser());
 app.use(session({
     store: new MongoStore({
         url: db_uri,
@@ -115,11 +115,11 @@ app.use('/api', publiclyAvailable);
 app.use('/app', requireAccess);
 
 app.get('/content/*', function(request, response){
-    staticFiles.serve("." + request.url, response)
+    staticFiles.serve("." + request.url, response);
 })
 
 app.get('app/content/*', function(request, response){
-    staticFiles.serve("." + request.url, response)
+    staticFiles.serve("." + request.url, response);
 })
 
 var auth = (function () {
@@ -128,7 +128,7 @@ var auth = (function () {
     function authenticateExistingUser(myUser, callback) {
         loginToken.createToken(myUser.username, function(myToken) {
             callback(null, true, { token : myToken, isNewUser : false, user : myUser });
-        })
+        });
     }
 
     function authenticateNewUser(emailAdress, callback) {
@@ -138,9 +138,9 @@ var auth = (function () {
             }  else {
                 loginToken.createToken(emailAdress, function(myToken) {
                     callback(null, true, { token : myToken, isNewUser : true, user : newUser });
-                })
+                });
             }
-        })
+        });
     }
 
     function authenticate(email, token, callback) {
@@ -153,15 +153,15 @@ var auth = (function () {
                     if(err) {
                         callback(err);
                     } else  if (myUser) {
-                        authenticateExistingUser(myUser, callback)
+                        authenticateExistingUser(myUser, callback);
                     } else {
-                        authenticateNewUser(email, callback)
+                        authenticateNewUser(email, callback);
                     }
                 })
             } else {
                 callback(null, false);
             }
-        })
+        });
     }
 
     return {
@@ -178,26 +178,26 @@ require('./code/friendsPage.js')().registerHandlers();
 require('./code/morePage.js')(app, templates, requestHandlers, user, thSettings).registerHandlers();
 require('./code/achievementsPage.js')(app, templates, requestHandlers, user, progress, moment, shareholding, achievement, url).registerHandlers();
 
-app.get('/server-templates/*', function(request, response){
-    staticFiles.serve("." + request.url, response)
-})
+app.get('/server-templates/*', function(request, response) {
+    staticFiles.serve("." + request.url, response);
+});
 
-app.get('/robots.txt', function(request, response){
+app.get('/robots.txt', function(request, response) {
     if(thSettings.isTest()) {
-        staticFiles.serve("./test-robots.txt", response)
+        staticFiles.serve("./test-robots.txt", response);
     } else {
-        staticFiles.serve("." + request.url, response)
+        staticFiles.serve("." + request.url, response);
     }
-})
+});
 
-app.get('/sitemap.xml', function(request, response){
-    staticFiles.serve("." + request.url, response)
-})
+app.get('/sitemap.xml', function(request, response) {
+    staticFiles.serve("." + request.url, response);
+});
 
-app.get('/channel.html', function(request, response){
-    staticFiles.serve("." + request.url, response)
-})
+app.get('/channel.html', function(request, response) {
+    staticFiles.serve("." + request.url, response);
+});
 
-app.get('/app/*', function(request, response){
+app.get('/app/*', function(request, response) {
     response.redirect("/app/newsfeed/");
 });
