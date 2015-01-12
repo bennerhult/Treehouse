@@ -7,8 +7,10 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
         $scope.isConverting = true;
         $scope.conversionError = false;
 
+        //TODO uppdatera userbilden i userInfo.HTML direkt efter bildbyte
+        //TODO uppdatera till bilden DIREKT innan conversion börjar
+        //TODO gör om inloggningsknappen till ng
         //TODO visa progress på sidan
-        //TODO spara uppladdade bilden
         //TODO fixa for iOs
 
         var container = 'modal'
@@ -59,20 +61,20 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
             //$("#userForm").show();
             //$("#issuerForm").show();
         })
-
     }
 
-    function userResizeAndStore(inkBlob) {
+    function userResizeAndStore(inkBlob) {  //TODO rename
         var progressPercentTotal;
         filepicker.convert(inkBlob, {width: 96, height: 96},
             function(convertedInkBlob){
                 $("#userImage").attr("src", convertedInkBlob.url);
                 $scope.isConverting = false;
                 $scope.$apply();
-                filepicker.remove(inkBlob, function() {
+                saveUserImage(convertedInkBlob.url, function (success) { //TODO show error message
                     //$("#userForm").show(); //TODO
                     //$("#issuerForm").show(); //TODO
-                }, function(FPError){});
+                    filepicker.remove(inkBlob, function() {}, function(FPError){});
+                });
             }, function(errorMessage) {
                 $scope.conversionError = true; // TODO propagate error message
             }, function(progressPercent) {
@@ -80,6 +82,12 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
                 //$("#progress").animate({ width: progressPercentTotal }, 500); //TODO
             }
         );
+    }
+
+    function saveUserImage(imageURL, callback) { //TODO byt till scope.imageUrl
+        $http.post('/api/more/setUserImage', { imageURL : imageURL }).success(function(error) {
+            callback(error);
+        });
     }
 
     $scope.signout = function(evt) {
