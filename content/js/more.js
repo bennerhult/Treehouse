@@ -6,9 +6,10 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
         evt.preventDefault();
         $scope.isConverting = true;
         $scope.conversionError = false;
-
-        //TODO stabilisera userbilden efter uppladdning
+        
         //TODO visa progress på sidan
+        //TODO propagera felmeddelanden
+        //TODO fix error handling in morePage.js, copied from signinPage
         //TODO fixa for iOs
 
         var container = 'modal';
@@ -23,7 +24,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
                 $("#imageUploadFrame").remove()
             }*/
             $scope.$apply(function () {
-                $scope.userImageURL = inkBlob.url;
+                pageService.setUserImageURL(inkBlob.url);
             });
             var progressPercentTotal;
             filepicker.stat(inkBlob, {width: true, height: true},
@@ -68,7 +69,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
         filepicker.convert(inkBlob, {width: 96, height: 96},
             function(convertedInkBlob){
                 $scope.$apply(function () {
-                    $scope.userImageURL = convertedInkBlob.url;
+                    pageService.setUserImageURL(convertedInkBlob.url);
                     $scope.isConverting = false;
                 });
                 saveUserImage(convertedInkBlob.url, function (success) { //TODO show error message

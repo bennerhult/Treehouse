@@ -11,7 +11,7 @@ module.exports = function (app, templates, requestHandlers, user, thSettings) {
 
         app.post('/api/more/setUserImage', function (request, response) {
             if(!request.body.imageURL) {
-                requestHandlers.respondWithJson(response, { errCode : 1 }); //TODO, fix error handling, copied from signinPage
+                requestHandlers.respondWithJson(response, { errCode : 1 });
             }
             user.setImageURL(request.session.currentUser._id , request.body.imageURL, function(error) {
                 return requestHandlers.respondWithJson(response, {error: error});
@@ -22,4 +22,4 @@ module.exports = function (app, templates, requestHandlers, user, thSettings) {
     return {
         registerHandlers : registerHandlers
     };
-};
+}

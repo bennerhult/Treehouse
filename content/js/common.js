@@ -17,6 +17,10 @@ treehouseApp.factory('pageService', function() {
         this.pageTitle = title;
     }
 
+    service.setUserImageURL = function(userImageURL){
+        this.userImageURL = userImageURL;
+    }
+
     return service;
 });
 
@@ -28,7 +32,7 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
 
     $http.post('/api/init', {}).success(function(result) {
         $scope.prettyName = result.prettyName;
-        $scope.userImageURL = result.userImageURL;
+        pageService.setUserImageURL(result.userImageURL);
         $scope.isLoading = false;
     });
 
