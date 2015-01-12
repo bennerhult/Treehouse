@@ -25,7 +25,6 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
             $scope.$apply(function () {
                 $scope.userImageURL = inkBlob.url;
             });
-
             var progressPercentTotal;
             filepicker.stat(inkBlob, {width: true, height: true},
                 function(metadata){
@@ -58,8 +57,9 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
             );
         },function(){
             //user closed the modal window
-            //$("#userForm").show();
-            //$("#issuerForm").show();
+            $scope.$apply(function () {
+                $scope.isConverting = false;
+            });
         })
     }
 
@@ -71,7 +71,6 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
                     $scope.userImageURL = convertedInkBlob.url;
                     $scope.isConverting = false;
                 });
-                //$scope.$apply();
                 saveUserImage(convertedInkBlob.url, function (success) { //TODO show error message
                     //$("#userForm").show(); //TODO
                     //$("#issuerForm").show(); //TODO
