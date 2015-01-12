@@ -24,7 +24,8 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
             /*if (isiOs) {
                 $("#imageUploadFrame").remove()
             }*/
-            $("#userImage").attr("src", inkBlob.url);
+            $scope.userImageURL = inkBlob.url;
+            $scope.$apply();
 
             var progressPercentTotal;
             filepicker.stat(inkBlob, {width: true, height: true},
@@ -67,7 +68,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
         var progressPercentTotal;
         filepicker.convert(inkBlob, {width: 96, height: 96},
             function(convertedInkBlob){
-                $("#userImage").attr("src", convertedInkBlob.url);
+                $scope.userImageURL = convertedInkBlob.url;
                 $scope.isConverting = false;
                 $scope.$apply();
                 saveUserImage(convertedInkBlob.url, function (success) { //TODO show error message
