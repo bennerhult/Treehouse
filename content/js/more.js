@@ -35,7 +35,8 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
                                 userResizeAndStore(squareInkBlob);
                             })
                         }, function(errorMessage) {
-                            $scope.conversionError = true; // TODO propagate error message
+                            $scope.conversionError = true;
+                            $scope.errorMessage = errorMessage;
                         }, function(progressPercent) {
                             progressPercentTotal = (progressPercent/2) * (205/100);
                             $("#progress").animate({ width: progressPercentTotal }, 500);
@@ -46,7 +47,8 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
                                 userResizeAndStore(squareInkBlob2);
                             })
                         }, function(errorMessage) {
-                            $scope.conversionError = true; // TODO propagate error message
+                            $scope.conversionError = true;
+                            $scope.errorMessage = errorMessage;
                         }, function(progressPercent) {
                             progressPercentTotal = (progressPercent/2)*(205/100)
                             //$("#progress").animate({ width: progressPercentTotal }, 500); //TODO
@@ -74,7 +76,8 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
                     filepicker.remove(inkBlob, function() {}, function(FPError){});
                 });
             }, function(errorMessage) {
-                $scope.conversionError = true; // TODO propagate error message
+                $scope.conversionError = true;
+                $scope.errorMessage = errorMessage;
             }, function(progressPercent) {
                 progressPercentTotal = (50 + progressPercent/2) *(205/100);
                 //$("#progress").animate({ width: progressPercentTotal }, 500); //TODO
