@@ -394,7 +394,15 @@ h2{
 }
 
 .section{
-    margin-bottom: 20px;
+   padding-bottom: 20px;
+}
+
+.bottomborder{
+    border-bottom: 1px solid #ccc;
+}
+
+.topborder{
+    border-top: 1px solid #ccc;
 }
 
 .content{
@@ -449,8 +457,6 @@ h2{
     -webkit-box-shadow:  0px 0px 5px rgb(0,0,0);
     box-shadow:  0px 0px 5px rgb(0,0,0);
 }
-
-
 
 .navigation{
     padding: 10px;
@@ -566,6 +572,20 @@ h2{
     background-color: #232123;
 }
 
+/*More page*/
+
+.morePage .section{
+    margin-top: 15px;
+}
+
+.morePage input{
+    margin-bottom: 20px;
+}
+
+.morePage p{
+    color: #444444;
+}
+
 /*form and fontstyles*/
 
 
@@ -595,6 +615,14 @@ p{
     font-family: Verdana;
     font-size: 14px;
     color: #ffffff;
+}
+
+h3{
+    font-family: Verdana;
+    font-size: 14px;
+    font-weight: bold;
+    color: #444444;
+    margin-bottom: 4px;
 }
 
 input.button{
@@ -634,6 +662,33 @@ input.button:focus{
     background-color: #bcbbbb;
 }
 
+button.grey{
+    font-family: Verdana;
+    font-size: 16px;
+    text-transform: capitalize;
+    height: 37px;
+    border: 1px solid #6d6d6d;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    color: #404040;
+    background: #ffffff;
+    background: -moz-linear-gradient(top, #ffffff 0%, #bcbbbb 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#bcbbbb));
+    background: -webkit-linear-gradient(top, #ffffff 0%,#bcbbbb 100%);
+    background: -o-linear-gradient(top, #ffffff 0%,#bcbbbb 100%);
+    background: -ms-linear-gradient(top, #ffffff 0%,#bcbbbb 100%);
+    background: linear-gradient(to bottom, #ffffff 0%,#bcbbbb 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#bcbbbb',GradientType=0 );
+
+    cursor: pointer;
+}
+
+
+button.grey:hover{
+    background-image: none;
+    background-color: #bcbbbb;
+}
 
 /*skärmanpassning*/
 

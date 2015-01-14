@@ -1,12 +1,37 @@
 <div ng-include src="'/server-templates/includes/userInfo.html'"></div>
-<div class="content">
-    <div class="section">
-        <a href="javascript:void(0)" ng-click="uploadUserImage($event)"><img src="../content/img/upload.png" style="margin-top: 8px;"/></a>
-        <div ng-show="isConverting" class="message"><p>Converting image...</p></div>
-        <div ng-show="conversionError" class="message"><p>Image conversion error! Try another image?</p></div>
-        <a href="javascript:void(0)" ng-click="signout($event)"><img src="../content/img/logout.png" style="margin-top: 8px;"/></a>
-    </div>
-    <div class="clear"></div>
-</div>
 <div ng-include src="'/server-templates/includes/desktopMenu.html'"></div>
+<div class="content">
+    <div class="morePage">
+        <div class="section bottomborder">
+            <a href="javascript:void(0)" ng-click="signout($event)"><img src="../content/img/logout.png" /></a>
+        </div>
+        <div class="section bottomborder">
+            <h2>My profile</h2>
+            <div class="userArea">
+                <img src="../content/img/user_has_no_image.jpg" >
+
+                <div class="">
+                    <a href="javascript:void(0)" ng-click="uploadUserImage($event)"><button class="grey">Change picture</button></a>
+                    <div ng-show="isConverting" class="message"><p>Converting image...</p></div>
+                    <div ng-show="conversionError" class="message"><p>Image conversion error! Try another image?</p></div>
+                </div>
+            </div>
+
+            <div class="section">
+                <input type="text" class="formstyle" placeholder="Profile name">
+                <h3>Email</h3>
+                <p>test@test.se</p>
+            </div>
+        </div>
+
+
+
+        <div class="section bottomborder">
+            <h2>Issuer</h2>
+            <p>Want to create achievements available for all? Apply by clicking below.</p>
+            <input type="button" class="button" value="Upgrade to issuer">
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
 <div ng-include src="'/server-templates/includes/bottomMenu.html'"></div>

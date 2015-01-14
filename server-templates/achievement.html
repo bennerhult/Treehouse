@@ -1,14 +1,13 @@
 <div ng-include src="'/server-templates/includes/userInfo.html'"></div>
-<div>
-    <div class="content">
-        <div class="header">My achievement {{achievementId}}</div>
-        <div>
-            Title: {{achievement.title}}
-            <img width="96" height="96" ng-src="{{achievement.imageURL}}" alt="{{achievement.title}}">
-        </div>
-
-        <div class="clear"> </div>
-    </div>
-</div>
 <div ng-include src="'/server-templates/includes/desktopMenu.html'"></div>
+<div class="content">
+    <div class="header">My achievement {{achievementId}}</div>
+    <div>
+        Title: {{achievement.title}}
+        <img width="96" height="96" ng-src="{{achievement.imageURL}}" alt="{{achievement.title}}">
+    </div>
+
+    <div class="clear"> </div>
+</div>
+<div class="clear"></div>
 <div ng-include src="'/server-templates/includes/bottomMenu.html'"></div>
