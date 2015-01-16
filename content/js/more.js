@@ -5,10 +5,9 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
     $scope.uploadUserImage = function(evt) {
         evt.preventDefault();
         $scope.isConverting = true;
-        $scope.conversionError = false;
+        $scope.errorState = false;
 
         //TODO visa progress på sidan
-        //TODO propagera felmeddelanden
         //TODO fix error handling in morePage.js, copied from signinPage
         //TODO fixa for iOs
 
@@ -35,7 +34,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
                                 userResizeAndStore(squareInkBlob);
                             })
                         }, function(errorMessage) {
-                            $scope.conversionError = true;
+                            $scope.errorState = true;
                             $scope.errorMessage = errorMessage;
                         }, function(progressPercent) {
                             progressPercentTotal = (progressPercent/2) * (205/100);
@@ -47,7 +46,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
                                 userResizeAndStore(squareInkBlob2);
                             })
                         }, function(errorMessage) {
-                            $scope.conversionError = true;
+                            $scope.errorState = true;
                             $scope.errorMessage = errorMessage;
                         }, function(progressPercent) {
                             progressPercentTotal = (progressPercent/2)*(205/100)
@@ -70,13 +69,18 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
             function(convertedInkBlob){
                 pageService.setUserImageURL(convertedInkBlob.url);
                 $scope.isConverting = false;
-                saveUserImage(convertedInkBlob.url, function (success) { //TODO show error message
+                saveUserImage(convertedInkBlob.url, function (error) {
                     //$("#userForm").show(); //TODO
                     //$("#issuerForm").show(); //TODO
-                    filepicker.remove(inkBlob, function() {}, function(FPError){});
+                    $scope.errorState = true;
+                    $scope.errorMessage = error;
+                    filepicker.remove(inkBlob, function() {}, function(fpError){
+                        $scope.errorState = true;
+                        $scope.errorMessage = fpError;
+                    });
                 });
             }, function(errorMessage) {
-                $scope.conversionError = true;
+                $scope.errorState = true;
                 $scope.errorMessage = errorMessage;
             }, function(progressPercent) {
                 progressPercentTotal = (50 + progressPercent/2) *(205/100);

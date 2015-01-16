@@ -13,7 +13,7 @@
                 <div class="">
                     <a href="javascript:void(0)" ng-click="uploadUserImage($event)"><button class="grey">Change picture</button></a>
                     <div ng-show="isConverting" class="message"><p>Converting image...</p></div>
-                    <div ng-show="conversionError" class="message"><p>Image conversion error: {{errorMessage}}. Try another image?</p></div>
+                    <div ng-show="errorState" class="message"><p>{{errorMessage}}</p></div>
                 </div>
             </div>
 
