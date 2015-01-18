@@ -10,6 +10,15 @@ table { border-collapse:collapse;border-spacing:0; }
 
 
 /* Tillagt av Erik, Linda sortera in och ta bort denna kommentar */
+
+iframe.imageUploadFrame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width:100%;
+    height:100%;
+}
+
 span.progressbar{
     -moz-border-radius: 2px;
     -webkit-border-radius: 2px;
