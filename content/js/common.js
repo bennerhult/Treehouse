@@ -21,6 +21,10 @@ treehouseApp.factory('pageService', function() {
         this.userImageURL = userImageURL;
     }
 
+    service.setisiOs = function(isiOs){
+        this.isiOs = isiOs;
+    }
+
     return service;
 });
 

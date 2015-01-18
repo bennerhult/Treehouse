@@ -13,7 +13,7 @@ treehouseApp.controller('signinController', function ($scope, $http, $timeout) {
 
         $scope.isiPad = navigator.userAgent.match(/iPad/i) != null;
         $scope.isiPhone = navigator.userAgent.match(/iPhone/i) != null;
-        $scope.isiOs = $scope.isiPad || $scope.isiPhone;
+        pageService.isiOs = $scope.isiPad || $scope.isiPhone;
         //TODO add scope.isAppMode
         $scope.isLoading = false;
 
@@ -67,7 +67,7 @@ treehouseApp.controller('signinController', function ($scope, $http, $timeout) {
         }
         $scope.fbConnectError = false;
         $scope.userClosedFBDialogue = false;
-        if ($scope.isAppMode || $scope.isiOs) {
+        if ($scope.isAppMode || pageService.isiOs) {
             window.location = 'https://m.facebook.com/dialog/oauth?client_id=480961688595420&response_type=code&redirect_uri=http://' + document.domain + '/fbAppConnect&scope=email';
         } else {
             FB.login(function(response) {
