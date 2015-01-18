@@ -27,11 +27,11 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
             filepicker.stat(inkBlob, {width: true, height: true},
                 function(metadata){
                     if (metadata.width == metadata.height) {
-                        userResizeAndStore(inkBlob);
+                        resizeAndStoreUserImage(inkBlob);
                     } else if (metadata.width > metadata.height) {
                         filepicker.convert(inkBlob, {width: metadata.height, height: metadata.height, fit: 'crop'},  function(squareInkBlob){
                             filepicker.remove(inkBlob, function(){
-                                userResizeAndStore(squareInkBlob);
+                                resizeAndStoreUserImage(squareInkBlob);
                             })
                         }, function(errorMessage) {
                             $scope.errorState = true;
@@ -43,7 +43,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
                     } else {
                         filepicker.convert(inkBlob, {width: metadata.width, height: metadata.width, fit: 'crop'},  function(squareInkBlob2){
                             filepicker.remove(inkBlob, function(){
-                                userResizeAndStore(squareInkBlob2);
+                                resizeAndStoreUserImage(squareInkBlob2);
                             })
                         }, function(errorMessage) {
                             $scope.errorState = true;
@@ -63,7 +63,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
         })
     }
 
-    function userResizeAndStore(inkBlob) {  //TODO rename
+    function resizeAndStoreUserImage(inkBlob) {
         var progressPercentTotal;
         filepicker.convert(inkBlob, {width: 96, height: 96},
             function(convertedInkBlob){
