@@ -6,20 +6,18 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
         evt.preventDefault();
         $scope.isConverting = true;
         $scope.errorState = false;
-
-        //TODO fixa for iOs
-
+        
         var container = 'modal';
-        /*if (isiOs) {
+        if ( $scope.isiOs) {
             $('<iframe id="imageUploadFrame" class="imageUploadFrame" style="z-index:999;" >').appendTo('body');
             container = 'imageUploadFrame';
-        }*/
+        }
         filepicker.setKey('AM9A7pbm3QPSe24aJU2M2z');
         filepicker.pick({container: container,
             services: ['COMPUTER', 'FACEBOOK', 'IMAGE_SEARCH', 'URL', 'INSTAGRAM', 'FLICKR', 'DROPBOX', 'PICASA', 'GOOGLE_DRIVE', 'SKYDRIVE','WEBDAV', 'EVERNOTE', 'GMAIL', 'GITHUB']}, function(inkBlob){
-            /*if (isiOs) {
-                $("#imageUploadFrame").remove()
-            }*/
+            if ($scope.isiOs) {
+                $("#imageUploadFrame").remove();
+            }
             pageService.setUserImageURL(inkBlob.url);
             filepicker.stat(inkBlob, {width: true, height: true},
                 function(metadata){
