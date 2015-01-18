@@ -7,7 +7,6 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
         $scope.isConverting = true;
         $scope.errorState = false;
 
-        //TODO visa progress på sidan
         //TODO fixa for iOs
 
         var container = 'modal';
@@ -22,7 +21,6 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
                 $("#imageUploadFrame").remove()
             }*/
             pageService.setUserImageURL(inkBlob.url);
-            var progressPercentTotal;
             filepicker.stat(inkBlob, {width: true, height: true},
                 function(metadata){
                     if (metadata.width == metadata.height) {
@@ -38,8 +36,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
                                 $scope.errorMessage = errorMessage;
                             }
                         }, function(progressPercent) {
-                            progressPercentTotal = (progressPercent/2) * (205/100);
-                            $("#progress").animate({ width: progressPercentTotal }, 500);
+                            $("#progress").animate({ width: progressPercent - 50 }, 500);
                         })
                     } else {
                         filepicker.convert(inkBlob, {width: metadata.width, height: metadata.width, fit: 'crop'},  function(squareInkBlob2){
@@ -52,8 +49,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
                                 $scope.errorMessage = errorMessage;
                             }
                         }, function(progressPercent) {
-                            progressPercentTotal = (progressPercent/2)*(205/100)
-                            $("#progress").animate({ width: progressPercentTotal }, 500);
+                            $("#progress").animate({ width: progressPercent -50 }, 500);
                         });
                     }
                 }
@@ -66,7 +62,6 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
     }
 
     function resizeAndStoreUserImage(inkBlob) {
-        var progressPercentTotal;
         filepicker.convert(inkBlob, {width: 96, height: 96},
             function(convertedInkBlob){
                 pageService.setUserImageURL(convertedInkBlob.url);
@@ -89,8 +84,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
                     $scope.errorMessage = errorMessage;
                 }
             }, function(progressPercent) {
-                progressPercentTotal = (50 + progressPercent/2) *(205/100);
-                $("#progress").animate({ width: progressPercentTotal }, 500);
+                $("#progress").animate({ width: progressPercent }, 500);
             }
         );
     }
