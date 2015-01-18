@@ -13,7 +13,7 @@ treehouseApp.controller('signinController', function ($scope, $http, $timeout, p
 
         $scope.isiPad = navigator.userAgent.match(/iPad/i) != null;
         $scope.isiPhone = navigator.userAgent.match(/iPhone/i) != null;
-        pageService.isiOs = $scope.isiPad || $scope.isiPhone;
+        pageService.setisiOs($scope.isiPad || $scope.isiPhone);
         //TODO add scope.isAppMode
         $scope.isLoading = false;
 
