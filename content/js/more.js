@@ -95,7 +95,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
         );
     }
 
-    function saveUserImage(imageURL, callback) { //TODO byt till scope.imageUrl
+    function saveUserImage(imageURL, callback) {
         $http.post('/api/more/setUserImage', { imageURL : imageURL }).success(function(error) {
             callback(error);
         });
