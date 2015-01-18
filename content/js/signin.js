@@ -1,4 +1,4 @@
-treehouseApp.controller('signinController', function ($scope, $http, $timeout) {
+treehouseApp.controller('signinController', function ($scope, $http, $timeout, pageService) {
     'use strict';
 
     function init() {
