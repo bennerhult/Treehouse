@@ -17,6 +17,13 @@ module.exports = function (app, templates, requestHandlers, user, thSettings) {
                 return requestHandlers.respondWithJson(response, {error: error});
             });
         });
+
+        app.post('/api/more/setUsernames', function (request, response) {
+            if(!request.body.firstName || request.body.lastName) {
+                requestHandlers.respondWithJson(response, { errCode : 1 });
+            }
+            user.setUsernames(request.session.currentUser._id , request.body.firstName, request.body.lastName, function(error) {});
+        });
     }
 
     return {

@@ -2,6 +2,14 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
     "use strict";
     pageService.setTitle('More');
 
+    $scope.firstName = pageService.firstName;
+    $scope.lastName = pageService.lastName;
+
+    $scope.nameUpdate = function() {
+        pageService.setName($scope.firstName, $scope.lastName, pageService.username);
+        $http.post('/api/more/setUsernames', { firstName: $scope.firstName, lastName: $scope.lastName }).success(function() {});
+    };
+
     $scope.uploadUserImage = function(evt) {
         evt.preventDefault();
 

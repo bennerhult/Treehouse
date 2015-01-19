@@ -19,7 +19,8 @@ module.exports = {
     getShortName: getShortName,
     getUserData : getUserData,
     remove: remove,
-    setImageURL : setImageURL
+    setImageURL : setImageURL,
+    setUsernames : setUsernames
 }
 
 function createUser(name, callback) {
@@ -37,6 +38,19 @@ function setImageURL(userId, imageURL, callback)   {
     User.findById(userId, function(err,myUser) {
         if (myUser) {
             myUser.imageURL = imageURL
+
+            myUser.save(function (error) {
+                if (callback) callback(error)
+            })
+        }
+    })
+}
+
+function setUsernames(userId, firstName, lastName, callback)   {
+    User.findById(userId, function(err,myUser) {
+        if (myUser) {
+            myUser.firstName = firstName;
+            myUser.lastName = lastName;
 
             myUser.save(function (error) {
                 if (callback) callback(error)

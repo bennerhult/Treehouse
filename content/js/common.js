@@ -17,9 +17,10 @@ treehouseApp.factory('pageService', function() {
         this.pageTitle = title;
     }
 
-    service.setName = function(firstName, lastName, userName) {
+    service.setName = function(firstName, lastName, username) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.username = username;
 
         if (firstName && lastName) {
             this.prettyName = firstName + " " + lastName;
@@ -28,7 +29,7 @@ treehouseApp.factory('pageService', function() {
         } else if (lastName) {
             this.prettyName =  lastName;
         } else  {
-            this.prettyName = userName;
+            this.prettyName = username;
         }
     }
 

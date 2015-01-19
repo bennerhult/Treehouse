@@ -42,8 +42,8 @@
             </div>
 
             <div class="section">
-                <input type="text" class="formstyle" value="{{pageService.firstName}}" placeholder="First name">
-                <input type="text" class="formstyle" value="{{pageService.lastName}}" placeholder="Last name">
+                <input type="text" class="formstyle" ng-blur='nameUpdate()' ng-model="firstName" placeholder="First name">
+                <input type="text" class="formstyle" ng-blur='nameUpdate()' ng-model="lastName" placeholder="Last name">
                 <h3>Email</h3>
                 <p>test@test.se</p>
             </div>
