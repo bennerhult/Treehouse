@@ -25,11 +25,11 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
             filepicker.stat(inkBlob, {width: true, height: true},
                 function(metadata){
                     if (metadata.width === metadata.height) {
-                        resizeAndStoreUserImage(inkBlob);
+                        resizeAndSaveUserImage(inkBlob);
                     } else if (metadata.width > metadata.height) {
                         filepicker.convert(inkBlob, {width: metadata.height, height: metadata.height, fit: 'crop'},  function(squareInkBlob){
                             filepicker.remove(inkBlob, function(){
-                                resizeAndStoreUserImage(squareInkBlob);
+                                resizeAndSaveUserImage(squareInkBlob);
                             })
                         }, function(errorMessage) {
                             if (errorMessage) {
@@ -42,7 +42,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
                     } else {
                         filepicker.convert(inkBlob, {width: metadata.width, height: metadata.width, fit: 'crop'},  function(squareInkBlob2){
                             filepicker.remove(inkBlob, function(){
-                                resizeAndStoreUserImage(squareInkBlob2);
+                                resizeAndSaveUserImage(squareInkBlob2);
                             })
                         }, function(errorMessage) {
                             if (errorMessage) {
@@ -62,7 +62,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
         })
     }
 
-    function resizeAndStoreUserImage(inkBlob) {
+    function resizeAndSaveUserImage(inkBlob) {
         filepicker.convert(inkBlob, {width: 96, height: 96},
             function(convertedInkBlob){
                 pageService.setUserImageURL(convertedInkBlob.url);
