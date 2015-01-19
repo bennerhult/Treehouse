@@ -3,7 +3,6 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
     pageService.setTitle('More');
 
     $scope.uploadUserImage = function(evt) {
-        alert(pageService.isiOs)
         evt.preventDefault();
         $scope.isConverting = true;
         $scope.errorState = false;
