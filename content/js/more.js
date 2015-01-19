@@ -12,7 +12,6 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
             container = 'imageUploadFrame';
             $("#bottomMenu").hide();
             $("#morePage").hide();
-            //TODO hide stuff underneath
         }
         filepicker.setKey('AM9A7pbm3QPSe24aJU2M2z');
         filepicker.pick({container: container, services: ['COMPUTER', 'FACEBOOK', 'IMAGE_SEARCH', 'URL', 'INSTAGRAM', 'FLICKR', 'DROPBOX', 'PICASA', 'GOOGLE_DRIVE', 'SKYDRIVE','WEBDAV', 'EVERNOTE', 'GMAIL', 'GITHUB']}, function(inkBlob){
@@ -21,7 +20,6 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
                 $("#imageUploadFrame").remove();
                 $("#bottomMenu").show();
                 $("#morePage").show();
-                //TODO show stuff underneath
             }
             pageService.setUserImageURL(inkBlob.url);
             filepicker.stat(inkBlob, {width: true, height: true},
