@@ -14,9 +14,9 @@ module.exports = function (thSettings, user) {
             });
     }
 
-    function getPrettyNameIdAndImageURL(id, callback) {
-        user.getPrettyNameAndImageURL(id, function(prettyName, imageURL) {
-            callback(prettyName, id, imageURL)
+    function getUserData(id, callback) {
+        user.getUserData(id, function(firstName, lastName, username, imageURL) {
+            callback(firstName, lastName, username, imageURL)
         })
     }
 
@@ -27,7 +27,7 @@ module.exports = function (thSettings, user) {
     }
 
     return {
-        getPrettyNameIdAndImageURL : getPrettyNameIdAndImageURL,
+        getUserData : getUserData,
         respondWithJson : respondWithJson
     };
 };

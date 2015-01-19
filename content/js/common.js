@@ -17,6 +17,23 @@ treehouseApp.factory('pageService', function() {
         this.pageTitle = title;
     }
 
+    service.setName = function(firstName, lastName, userName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+
+        if (firstName && lastName) {
+            this.prettyName = firstName + " " + lastName;
+        } else if (firstName) {
+            this.prettyName = firstName;
+        } else if (lastName) {
+            this.prettyName =  lastName;
+        } else  {
+            this.prettyName = userName;
+        }
+    }
+
+
+
     service.setUserImageURL = function(userImageURL) {
         this.userImageURL = userImageURL;
     }
@@ -36,7 +53,11 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
 
 
     $http.post('/api/init', {}).success(function(result) {
-        $scope.prettyName = result.prettyName;
+        //$scope.prettyName = result.prettyName;
+
+        pageService.setName(result.firstName, result.lastName, result.username);
+
+
         pageService.setUserImageURL(result.userImageURL);
 
         $scope.isiPad = navigator.userAgent.match(/iPad/i) != null;

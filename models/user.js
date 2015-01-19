@@ -16,9 +16,8 @@ var User = mongoose.model('User', UserSchema)
 module.exports = {
     User: User,
     createUser: createUser,
-    setPrettyName : setPrettyName,
     getShortName: getShortName,
-    getPrettyNameAndImageURL : getPrettyNameAndImageURL,
+    getUserData : getUserData,
     remove: remove,
     setImageURL : setImageURL
 }
@@ -31,20 +30,6 @@ function createUser(name, callback) {
     user.isIssuer = false
     user.save(function (error) {
         if (callback) callback(user, error)
-    })
-}
-
-
-function setPrettyName(userId, firstName, lastName, callback)   {
-    User.findById(userId, function(err,myUser) {
-        if (myUser) {
-            myUser.firstName = firstName
-            myUser.lastName = lastName
-
-            myUser.save(function (error) {
-                if (callback) callback(error)
-            })
-        }
     })
 }
 
@@ -89,21 +74,12 @@ function remove(username, next) {
     })
 }
 
-function getPrettyNameAndImageURL(userId, callback) {
-    User.findById(userId , function(err,myUser) {
+function getUserData(userId, callback) {
+    User.findById(userId , function(err, myUser) {
         if (myUser){
-            if (myUser.firstName && myUser.lastName) {
-                callback(myUser.firstName + " " + myUser.lastName, myUser.imageURL)
-            } else if (myUser.firstName) {
-                callback(myUser.firstName, myUser.imageURL)
-            } else if (myUser.lastName) {
-                callback(myUser.lastName, myUser.imageURL)
-            } else  {
-                callback(myUser.username, myUser.imageURL)
-            }
+           callback(myUser.firstName, myUser.lastName, myUser.username, myUser.imageURL);
         } else {
-            console.log("User not found for userId " + userId + ", error: " + err)
-            callback("user not found")
+            console.log("User not found for userId " + userId + ", error: " + err);
         }
-    })
+    });
 }
