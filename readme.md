@@ -149,6 +149,11 @@ If you want to swap user for testing user interaction such as sharing or newsfee
 ##  Facebook admin
 [App admin page] (https://developers.facebook.com/apps/480961688595420/)
 
+##  Filepicker admin
+[Filepicker admin page] (https://developers.filepicker.io/login/)
+User: staff@treehouse.io
+PW: treehouserocks
+
 ##The missing manual
 [jQuery Mobile](http://jquerymobile.com/)
 
