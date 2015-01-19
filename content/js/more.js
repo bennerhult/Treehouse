@@ -104,6 +104,18 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
         });
     }
 
+    $scope.upgradeToIssuer = function(evt) {
+        evt.preventDefault();
+
+        $http.post('/api/more/upgradeToIssuer', { username : pageService.username  }).success(function(result) {
+            if(result.errCode === 1) {
+                $scope.issuerRequestError = true;
+            }  else {
+                $scope.issuerRequestSent = true;
+            }
+        })
+    };
+
     $scope.signout = function(evt) {
         evt.preventDefault();
 

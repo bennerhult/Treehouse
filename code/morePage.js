@@ -1,4 +1,4 @@
-module.exports = function (app, templates, requestHandlers, user, thSettings) {
+module.exports = function (app, templates, requestHandlers, user, thSettings, email) {
     'use strict';
 
     function registerHandlers() {
@@ -23,6 +23,21 @@ module.exports = function (app, templates, requestHandlers, user, thSettings) {
                 requestHandlers.respondWithJson(response, { errCode : 1 });
             }
             user.setUsernames(request.session.currentUser._id , request.body.firstName, request.body.lastName, function(error) {});
+        });
+
+        app.post('/api/more/upgradeToIssuer', function (request, response) {
+            if(!request.body.username) {
+                requestHandlers.respondWithJson(response, { errCode : 1 });
+            }
+            var text = "User " + request.body.username + " wants to be an issuer. Make it so. 1. Confirm that the user is really the Issuer and willing to pay the corresponding fees. 2. Change user to issuer=true 3. Give the user an issuerName."
+            email.emailUser('staff@treehouse.io', 'Issuer Request', text, text, function (error) {
+                if (error) {
+                    response.writeHead(404, {'content-type': 'application/json'});
+                } else {
+                    response.writeHead(200, {'content-type': 'application/json'});
+                }
+                response.end('\n', 'utf-8');
+            });
         });
     }
 

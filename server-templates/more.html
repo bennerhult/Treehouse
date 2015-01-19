@@ -46,11 +46,13 @@
                 <p>{{pageService.username}}</p>
             </div>
         </div>
-        <div class="section bottomborder">
+        <div ng-hide="issuerRequestSent"  class="section bottomborder">
             <h2>Issuer</h2>
             <p>Want to create achievements available for all? Apply by clicking below.</p>
-            <input type="button" class="button" value="Upgrade to issuer">
+            <input type="button" class="button" ng-click="upgradeToIssuer($event)" value="Upgrade to issuer">
         </div>
+        <div ng-show="issuerRequestSent" class="message">Your request has been sent and the happy people in Treehouse HQ will get back to you. We know your email.</div>
+        <div ng-show="issuerRequestError" class="message">Oopsie, we dropped your request. Sorry! Email us at <a href='mailto:staff@treehouse.io'>staff@treehouse.io</a> and we will handle it.</div>
     </div>
 </div>
 <div class="clear"></div>
