@@ -9,12 +9,8 @@ treehouseApp.controller('signinController', function ($scope, $http, $timeout, p
             xfbml: true,
             channelUrl : '//www.treehouse.io/channel.html',  //increases performance
             oauth: true
-        })
+        });
 
-        $scope.isiPad = navigator.userAgent.match(/iPad/i) != null;
-        $scope.isiPhone = navigator.userAgent.match(/iPhone/i) != null;
-        pageService.setisiOs($scope.isiPad || $scope.isiPhone);
-        //TODO add scope.isAppMode
         $scope.isLoading = false;
 
         var autoSignin = false;
@@ -92,5 +88,6 @@ treehouseApp.controller('signinController', function ($scope, $http, $timeout, p
             }, {scope: 'email'});
         }
     }
+
     init();
 });

@@ -6,7 +6,6 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
         evt.preventDefault();
         $scope.isConverting = true;
         $scope.errorState = false;
-
         var container = 'modal';
         if (pageService.isiOs) {
             $('<iframe id="imageUploadFrame" class="imageUploadFrame" style="z-index:999;" >').appendTo('body');
@@ -15,6 +14,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
         filepicker.setKey('AM9A7pbm3QPSe24aJU2M2z');
         filepicker.pick({container: container,
             services: ['COMPUTER', 'FACEBOOK', 'IMAGE_SEARCH', 'URL', 'INSTAGRAM', 'FLICKR', 'DROPBOX', 'PICASA', 'GOOGLE_DRIVE', 'SKYDRIVE','WEBDAV', 'EVERNOTE', 'GMAIL', 'GITHUB']}, function(inkBlob){
+
             if (pageService.isiOs) {
                 $("#imageUploadFrame").remove();
             }

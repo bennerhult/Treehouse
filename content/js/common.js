@@ -13,15 +13,15 @@ treehouseApp.factory("achievementService",function() {
 treehouseApp.factory('pageService', function() {
     var service = {};
 
-    service.setTitle = function(title){
+    service.setTitle = function(title) {
         this.pageTitle = title;
     }
 
-    service.setUserImageURL = function(userImageURL){
+    service.setUserImageURL = function(userImageURL) {
         this.userImageURL = userImageURL;
     }
 
-    service.setisiOs = function(isiOs){
+    service.setIsiOs = function(isiOs) {
         this.isiOs = isiOs;
     }
 
@@ -34,9 +34,17 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
     $scope.pageService = pageService;
     pageService.setTitle('Treehouse');
 
+
     $http.post('/api/init', {}).success(function(result) {
         $scope.prettyName = result.prettyName;
         pageService.setUserImageURL(result.userImageURL);
+
+        $scope.isiPad = navigator.userAgent.match(/iPad/i) != null;
+        $scope.isiPhone = navigator.userAgent.match(/iPhone/i) != null;
+        var isiOs = $scope.isiPad || $scope.isiPhone;
+        pageService.setIsiOs(isiOs);
+        //TODO add pageService.isAppMode
+
         $scope.isLoading = false;
     });
 
