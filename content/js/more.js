@@ -52,7 +52,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
                     }
                 }
             );
-        },function(){ //user closed the modal window
+        }, function(){ //user closed the modal window
             $scope.$apply(function () {
                 $scope.isConverting = false;
             });
