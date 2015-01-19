@@ -3,6 +3,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
     pageService.setTitle('More');
 
     $scope.uploadUserImage = function(evt) {
+        alert(pageService.isiOs)
         evt.preventDefault();
         $scope.isConverting = true;
         $scope.errorState = false;
@@ -15,7 +16,6 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
         filepicker.pick({container: container,
             services: ['COMPUTER', 'FACEBOOK', 'IMAGE_SEARCH', 'URL', 'INSTAGRAM', 'FLICKR', 'DROPBOX', 'PICASA', 'GOOGLE_DRIVE', 'SKYDRIVE','WEBDAV', 'EVERNOTE', 'GMAIL', 'GITHUB']}, function(inkBlob){
 
-            alert(pageService.isiOs)
             if (pageService.isiOs) {
                 $("#imageUploadFrame").remove();
             }
