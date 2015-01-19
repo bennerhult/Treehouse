@@ -4,22 +4,23 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
 
     $scope.uploadUserImage = function(evt) {
         evt.preventDefault();
-        $scope.isConverting = true;
+
         $scope.errorState = false;
         var container = 'modal';
         if (pageService.isiOs) {
             $('<iframe id="imageUploadFrame" class="imageUploadFrame" style="z-index:999;" >').appendTo('body');
             container = 'imageUploadFrame';
             $("#bottomMenu").hide();
+            $("#morePage").hide();
             //TODO hide stuff underneath
         }
         filepicker.setKey('AM9A7pbm3QPSe24aJU2M2z');
-        filepicker.pick({container: container,
-            services: ['COMPUTER', 'FACEBOOK', 'IMAGE_SEARCH', 'URL', 'INSTAGRAM', 'FLICKR', 'DROPBOX', 'PICASA', 'GOOGLE_DRIVE', 'SKYDRIVE','WEBDAV', 'EVERNOTE', 'GMAIL', 'GITHUB']}, function(inkBlob){
-
+        filepicker.pick({container: container, services: ['COMPUTER', 'FACEBOOK', 'IMAGE_SEARCH', 'URL', 'INSTAGRAM', 'FLICKR', 'DROPBOX', 'PICASA', 'GOOGLE_DRIVE', 'SKYDRIVE','WEBDAV', 'EVERNOTE', 'GMAIL', 'GITHUB']}, function(inkBlob){
+            $scope.isConverting = true;
             if (pageService.isiOs) {
                 $("#imageUploadFrame").remove();
                 $("#bottomMenu").show();
+                $("#morePage").show();
                 //TODO show stuff underneath
             }
             pageService.setUserImageURL(inkBlob.url);
