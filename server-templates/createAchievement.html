@@ -3,10 +3,32 @@
 <div class="content">
     <div class="header">Create achievement</div>
     <div>
-        Title: {{achievement.title}}
-        <img width="96" height="96" ng-src="{{achievement.imageURL}}" alt="{{achievement.title}}">
+        <input type="text" class="formstyle" name="title" placeholder="title">
+        <textarea class="formstyle" name="description" placeholder="description"></textarea>
+
+        <img width="96" height="96" ng-src="../content/image/empty.png" alt="{{achievement.title}}">
+        <ul>
+            <li><a href="javascript:void(0)" onclick="toggleImage(-1)"><img src="../content/img/left-arrow.png" alt=""></a></li>
+            <li class="last"><a href="javascript:void(0)" onclick="toggleImage(1)"><img src="../content/img/right-arrow.png" alt=""></a></li>
+        </ul>
+    </div><div id="fileupload" class="fileupload">
+    <a href="javascript:void(0)" onclick="uploadImage()"><img src="../content/img/upload.png"></a>
     </div>
 
+    <table id="goalTable">
+        <tbody>
+            <tr>
+                <td class="goal">
+                    <input type="text" class="formstyle" name="goalTitle1" placeholder="goal" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)">
+                </td>
+                <td class="quantity">
+                    <input type="text" class="formstyle" id="goalQuantity1" placeholder="1" onblur="showMenu()" onfocus="hideMenu()" name="goalQuantity1">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <input type="submit" id="saveButton" class="button" value="Create achievement">
     <div class="clear"> </div>
 </div>
 <div class="clear"></div>
