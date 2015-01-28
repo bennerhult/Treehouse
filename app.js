@@ -177,6 +177,7 @@ require('./code/newsfeedPage.js')(app, templates, requestHandlers, newsfeed).reg
 require('./code/friendsPage.js')().registerHandlers();
 require('./code/morePage.js')(app, templates, requestHandlers, user, thSettings, email).registerHandlers();
 require('./code/achievementsPage.js')(app, templates, requestHandlers, user, progress, moment, shareholding, achievement, url).registerHandlers();
+require('./code/createAchievementPage.js')(app, templates, requestHandlers, user, progress, moment, shareholding, achievement, url).registerHandlers();
 
 app.get('/server-templates/*', function(request, response) {
     staticFiles.serve("." + request.url, response);
