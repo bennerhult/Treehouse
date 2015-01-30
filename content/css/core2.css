@@ -367,6 +367,7 @@ h2{
 }
 
 .userArea{
+    position: relative;
     padding-bottom: 20px;
 }
 
@@ -385,6 +386,28 @@ h2{
     -moz-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
     -webkit-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
     box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+}
+
+.userArea .loader{
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    bottom: 3px;
+    width: 43px;
+    background-color: #fff;
+    padding-left: 10px;
+    padding-top: 8px;
+}
+
+.userArea .loader img{
+
+    -moz-box-shadow:  none;
+    -webkit-box-shadow:  none;
+    box-shadow:  none;
+    border: 0px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
 }
 
 .newsUserArea{
