@@ -227,6 +227,28 @@ span.progress{
     padding-left: 15px;
 }
 
+.onethird{
+    float: left;
+    width: 33%;
+    text-align: center;
+}
+
+.twothirds{
+    float: left;
+    width: 67%;
+}
+
+img.border{
+    border: 3px solid #fff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
+    -moz-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+    -webkit-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+    box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
+}
+
 .none{
     display: none;
 }
@@ -237,6 +259,20 @@ span.progress{
     padding-top: 330px;
 }
 
+/*swap image*/
+
+ul.swapimage{
+    padding: 10px 0px;
+}
+
+ul.swapimage li{
+    display: inline;
+    margin-right: 10px;
+}
+
+ul.swapimage li:last-child{
+    margin-right: 0px;
+}
 
 /*Sign in*/
 
@@ -378,14 +414,6 @@ h2{
 .userArea img{
     float: left;
     margin-right: 10px;
-    border: 3px solid #fff;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-
-    -moz-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
-    -webkit-box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
-    box-shadow:  0px 0px 5px rgba(0,0,0,0.5);
 }
 
 .userArea .loader{
@@ -397,17 +425,6 @@ h2{
     background-color: #fff;
     padding-left: 10px;
     padding-top: 8px;
-}
-
-.userArea .loader img{
-
-    -moz-box-shadow:  none;
-    -webkit-box-shadow:  none;
-    box-shadow:  none;
-    border: 0px;
-    -moz-border-radius: 0px;
-    -webkit-border-radius: 0px;
-    border-radius: 0px;
 }
 
 .newsUserArea{
@@ -663,10 +680,6 @@ h2{
     margin-top: 15px;
 }
 
-.morePage input{
-    margin-bottom: 20px;
-}
-
 .morePage p{
     color: #444444;
 }
@@ -674,12 +687,12 @@ h2{
 /*form and fontstyles*/
 
 
-input.formstyle,
-textarea.formstyle{
+input.formstyle{
     width: 100%;
     height: 38px;
-    font-size: 16px;
-    padding-left: 2%;
+    font-family: Verdana;
+    font-size: 14px;
+    padding-left: 5px;
     color: #2c3524;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -688,7 +701,27 @@ textarea.formstyle{
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    margin-bottom: 20px;
 }
+
+textarea{
+    width: 100%;
+    font-family: Verdana;
+    font-size: 14px;
+    padding-left: 5px;
+    padding-top: 5px;
+    color: #2c3524;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    border: 1px solid #6d6d6d;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    height: 100px;
+}
+
 
 input.error{
     -moz-box-shadow: inset -5px -5px 10px rgba(173,18,39,0.27);
