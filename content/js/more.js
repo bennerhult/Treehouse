@@ -44,9 +44,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
                                 $scope.errorState = true;
                                 $scope.errorMessage = errorMessage;
                             }
-                        }, function(progressPercent) {
-                            $("#progress").animate({ width: progressPercent - 50 }, 500);
-                        })
+                        }, function(progressPercent) {})
                     } else {
                         filepicker.convert(inkBlob, {width: metadata.width, height: metadata.width, fit: 'crop'},  function(squareInkBlob2){
                             filepicker.remove(inkBlob, function(){
@@ -57,9 +55,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
                                 $scope.errorState = true;
                                 $scope.errorMessage = errorMessage;
                             }
-                        }, function(progressPercent) {
-                            $("#progress").animate({ width: progressPercent -50 }, 500);
-                        });
+                        }, function(progressPercent) {});
                     }
                 }
             );
@@ -92,9 +88,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
                     $scope.errorState = true;
                     $scope.errorMessage = errorMessage;
                 }
-            }, function(progressPercent) {
-                $("#progress").animate({ width: progressPercent }, 500);
-            }
+            }, function(progressPercent) {}
         );
     }
 
