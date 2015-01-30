@@ -274,6 +274,21 @@ ul.swapimage li:last-child{
     margin-right: 0px;
 }
 
+/* create goal*/
+
+table tr td input.formstyle{
+    margin-bottom: 0px;
+}
+
+table tr td.goal{
+    width: 90%;
+}
+
+table tr td.quantity{
+    width: 10%;
+}
+
+
 /*Sign in*/
 
 .signinContainer{
@@ -513,8 +528,7 @@ h2{
 }
 
 .listWrap{
-    margin-bottom: 50px;
-
+    margin-bottom: 20px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
