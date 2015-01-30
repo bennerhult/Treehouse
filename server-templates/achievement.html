@@ -1,11 +1,20 @@
 <div ng-include src="'/server-templates/includes/userInfo.html'"></div>
 <div ng-include src="'/server-templates/includes/desktopMenu.html'"></div>
 <div class="content">
-    <div class="header">My achievement</div>
-    <div>
-        Title: {{achievement.title}}
-        <img width="96" height="96" ng-src="{{achievement.imageURL}}" alt="{{achievement.title}}">
+
+    <div class="section">
+        <div class="twothirds">
+            <h3>{{achievement.title}}</h3>
+            <p>
+                Beskrivning lorem ipsum
+            </p>
+        </div>
+        <div class="onethird">
+            <img width="96" height="96" ng-src="{{achievement.imageURL}}" alt="{{achievement.title}}">
+        </div>
+        <div class="clear"></div>
     </div>
+    <div class="header"><span class="create-link"><a href="#">Publicize</a></span><span class="create-link"><a href="#">Edit</a></span><span class="create-link"><a href="#">Delete</a></span></div>
 
     <div class="clear"> </div>
 </div>

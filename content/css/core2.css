@@ -492,23 +492,24 @@ h2{
     -webkit-box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
     box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
 
-    text-align: center;
+    text-align: left;
     background-color: #000;
     line-height: 16px;
     height: 20px;
-    padding: 10px 0px;
+    padding: 10px 10px;
     font-size: 16px;
     font-family: Verdana;
     font-weight: normal;
     color: #ffffff;
 }
 
+span.create-link{
+    padding-right: 15px;
+}
+
 span.create-link a{
-    position: absolute;
-    left: 15px;
     color: #fff;
     font-size: 12px;
-
 }
 
 
