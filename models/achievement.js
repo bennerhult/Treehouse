@@ -59,7 +59,7 @@ function createAchievement2(createdBy, title, description, imageURL, goals, call
     async.each(goals, function( currentGoal, goalProcessed ) {
         var myGoal = goal.prepareGoal(currentGoal.title, currentGoal.quantity);
         myAchievement.goals.push(myGoal);
-        progress.createProgress(createdBy, myAchievement._id, myGoal._id);
+        progress.createAndSaveProgress(createdBy, myAchievement._id, myGoal._id);
         goalProcessed();
     }, function(){
         save(myAchievement, function(error) {
