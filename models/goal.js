@@ -1,5 +1,5 @@
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema
+    Schema = mongoose.Schema;
 
 var GoalSchema = new Schema({
     createdDate     : Date,
@@ -7,7 +7,7 @@ var GoalSchema = new Schema({
     quantityTotal     : {type: Number, required: true}
 })
 
-var Goal = mongoose.model('Goal', GoalSchema)
+var Goal = mongoose.model('Goal', GoalSchema);
 
 module.exports = {
     Goal: Goal,
@@ -16,9 +16,9 @@ module.exports = {
 }
 
 function prepareGoal(title, quantityTotal) {
-    var goal = new Goal()
-    goal.createdDate = new Date()
-    goal.title = title
-    goal.quantityTotal = quantityTotal
-    return goal
+    var goal = new Goal();
+    goal.createdDate = new Date();
+    goal.title = title;
+    goal.quantityTotal = quantityTotal;
+    return goal;
 }

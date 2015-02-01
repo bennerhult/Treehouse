@@ -23,6 +23,7 @@ var Achievement = mongoose.model('Achievement', AchievementSchema);
 module.exports = {
     Achievement: Achievement,
     createAchievement: createAchievement,
+    createAchievement2: createAchievement2,
     createIssuedAchievement: createIssuedAchievement,
     acceptIssuedAchievement: acceptIssuedAchievement,
     issue: issue,
@@ -45,6 +46,27 @@ function createAchievement(createdBy, title, description, imageURL) {
     achievement.description = description;
     achievement.imageURL = imageURL;
     return achievement;
+}
+
+function createAchievement2(createdBy, title, description, imageURL, goals, callback) {
+    var myAchievement = new Achievement();
+    myAchievement.createdDate = new Date();
+    myAchievement.createdBy = createdBy;
+    myAchievement.title = title;
+    myAchievement.description = description;
+    myAchievement.imageURL = imageURL;
+
+    async.each(goals, function( currentGoal, goalProcessed ) {
+        var myGoal = goal.prepareGoal(currentGoal.title, currentGoal.quantity);
+        myAchievement.goals.push(myGoal);
+        progress.createProgress(createdBy, myAchievement._id, myGoal._id);
+        goalProcessed();
+    }, function(){
+        save(myAchievement, function(error) {
+            console.log("saved: " + error)
+        });
+        callback();
+    });
 }
 
 function createIssuedAchievement(createdBy, title, description, imageURL, issuerName) {
