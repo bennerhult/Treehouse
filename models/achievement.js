@@ -84,7 +84,7 @@ function getAchievementList(achieverId, callback) {
 
     progress.Progress.find({ achiever_id: achieverId}, {}, { sort: { 'created' : -1 } }, function(err, progresses) {
         if (progresses && progresses.length > 0) {
-            async.each(progresses, function( currentProgress, achievementProcessed) {
+            async.each(progresses, function(currentProgress, achievementProcessed) {
                 Achievement.findById(currentProgress.achievement_id, function (err2, myAchievement) {
                     achievementList.push(myAchievement);
                     achievementProcessed();

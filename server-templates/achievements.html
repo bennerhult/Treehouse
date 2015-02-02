@@ -1,7 +1,7 @@
 <div ng-include src="'/server-templates/includes/userInfo.html'"></div>
 <div ng-include src="'/server-templates/includes/desktopMenu.html'"></div>
 <div class="content">
-    <div class="listWrap" ng-if="achievementList">
+    <div class="listWrap">
         <div class="header"> <span class="create-link"><a href="app/createAchievement">Create new achievement</a></span></div>
         <div ng-repeat="currentAchievement in achievementList track by $index" class="item">
             <div>
