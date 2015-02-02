@@ -90,7 +90,18 @@ function getAchievementList(achieverId, callback) {
                     achievementProcessed();
                 });
             }, function(){
-                callback(achievementList);
+                //remove duplicates
+                var arrResult = {};
+                var nonDuplicatedArray = {};
+                for (i = 0, n = achievementList.length; i < n; i++) {
+                    var item = achievementList[i];
+                    arrResult[ item.title ] = item;
+                }
+                i = 0;
+                for(var item in arrResult) {
+                    nonDuplicatedArray[i++] = arrResult[item];
+                }
+                callback(nonDuplicatedArray);
             });
         }
     });
