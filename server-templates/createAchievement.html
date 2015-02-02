@@ -25,7 +25,7 @@
                 <table>
                     <tr>
                         <td class="goal">
-                            <input type="text" class="formstyle" placeholder="Add a goal" ng-keypress="goalKeyPress($event, $last)">
+                            <input type="text" class="formstyle" placeholder="Add a goal" ng-keypress="goalKeyPress($event, $last);" ng-paste="goalKeyPress($event, $last);">
                         </td>
                         <td class="quantity">
                             <input type="text" class="formstyle"  placeholder="1">
