@@ -118,7 +118,8 @@ app.get('/content/*', function(request, response){
     staticFiles.serve("." + request.url, response);
 })
 
-app.get('app/content/*', function(request, response){
+app.get('/app/content*', function(request, response){
+    console.log("." + request.url)
     staticFiles.serve("." + request.url, response);
 })
 
