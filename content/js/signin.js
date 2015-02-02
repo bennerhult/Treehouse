@@ -2,6 +2,8 @@ treehouseApp.controller('signinController', function ($scope, $http, $timeout, p
     'use strict';
 
     function init() {
+
+
         FB.init({
             appId: '480961688595420',
             status: true,
