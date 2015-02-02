@@ -1,7 +1,6 @@
 var mongoose = require('mongoose'),
     async = require('async'),
     goal = require('./goal.js'),
-    latestAchievement = require('./latestAchievement.js'),
     newsfeedEvent = require('./newsfeedEvent.js'),
     progress = require('./progress.js'),
     Schema= mongoose.Schema;
@@ -153,40 +152,8 @@ function publicize(oneProgress) {
             currentProgress.save();
             if (index === (progresses.length -1)) {
                 newsfeedEvent.addEvent("publicize", oneProgress.achiever_id, oneProgress.achievement_id);
-                latestAchievement.update(oneProgress._id);
             }
         });
-    });
-}
-
-function updateLatestAchievementIfNecessary(progressId, next) {
-    latestAchievement.getId(function(latestAchievement_progressId) {
-        progress.Progress.findOne({ _id: latestAchievement_progressId }, function(err,currentProgress) {
-            if (progressId && currentProgress) {
-                if (progressId.equals(currentProgress._id)) {
-                    setNewPublicAchievement(next);
-                } else {
-                    if (next) {
-                        next();
-                    }
-                }
-            } else {
-                setNewPublicAchievement(next);
-            }
-        });
-    });
-}
-
-function setNewPublicAchievement(next) {
-    findPublicAchievement(function (publicId) {
-        if (publicId) {
-            latestAchievement.update(publicId);
-        }   else {
-            latestAchievement.update(-1);
-        }
-        if (next) {
-            next();
-        }
     });
 }
 
@@ -197,7 +164,6 @@ function unpublicize(oneProgress) {
             currentProgress.save();
             if (index == (progresses.length -1)) {
                 newsfeedEvent.addEvent("achievementUnpublicized", oneProgress.achiever_id, oneProgress.achievement_id);
-                updateLatestAchievementIfNecessary (oneProgress._id);
             }
         });
     });
@@ -224,7 +190,6 @@ function removeIndividualPartOfAchievement(achievement, userId, next)    {
                     currentProgress.remove();
                 }
                 newsfeedEvent.addEvent("achievementRemoved", userId, achievement._id);
-                updateLatestAchievementIfNecessary(currentProgress._id, next);
             } else if (currentProgress) {
                 currentProgress.remove();
             }
