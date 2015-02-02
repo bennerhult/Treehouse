@@ -10,7 +10,7 @@ module.exports = function (app, templates, requestHandlers, user, progress, mome
         app.post('/api/achievements/createAchievement', function (request, response) {
            // var goals = [{title: 'testTitle', quantity: 1}, {title: 'testTitle2', quantity: 5}];
             var goals = [{title: 'testTitle', quantity: 1}];
-            achievement.createAchievement2(request.session.currentUser._id, request.body.achievementTitle, request.body.achievementDescription, "../content/img/achievementImages/48.png", goals, function() {
+            achievement.createAchievement2(request.session.currentUser._id, request.body.achievementTitle, request.body.achievementDescription, request.body.achievementImage, goals, function() {
                 return requestHandlers.respondWithJson(response, {url: thSettings.getDomain() + 'app/achievements'});
             });
         });
@@ -19,7 +19,4 @@ module.exports = function (app, templates, requestHandlers, user, progress, mome
     return {
         registerHandlers : registerHandlers
     };
-
-
-
 }

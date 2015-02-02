@@ -10,10 +10,10 @@
                 <input type="text" class="formstyle" placeholder="Series" >
             </div>
             <div class="onethird">
-                <img class="border" width="96" height="96" ng-src="../content/img/empty.png" alt="{{achievement.title}}">
+                <img class="border" width="96" height="96" id="achievementImage" ng-src="/content/img/achievementImages/1.png" alt="An image depicting your awesome achievement">
                 <ul class="swapimage">
-                    <li><a href="javascript:void(0)" onclick="toggleImage(-1)"><img src="../content/img/left-arrow.png" alt=""></a></li>
-                    <li class="last"><a href="javascript:void(0)" onclick="toggleImage(1)"><img src="../content/img/right-arrow.png" alt=""></a></li>
+                    <li><a href="javascript:void(0)" ng-click="toggleImage($event, -1)"><img src="../content/img/left-arrow.png" alt=""></a></li>
+                    <li class="last"><a href="javascript:void(0)" ng-click="toggleImage($event, 1)"><img src="../content/img/right-arrow.png" alt=""></a></li>
                 </ul>
                 <a href="#"><button class="grey">Change picture</button></a>
             </div>
@@ -36,10 +36,10 @@
                 <table>
                     <tr>
                         <td class="goal">
-                            <input type="text" class="formstyle" name="goalTitle1" placeholder="Add a goal" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)">
+                            <input type="text" class="formstyle" name="goalTitle2" placeholder="Add a goal" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)">
                         </td>
                         <td class="quantity">
-                            <input type="text" class="formstyle" id="goalQuantity1" placeholder="1" name="goalQuantity1">
+                            <input type="text" class="formstyle" id="goalQuantity2" placeholder="1" name="goalQuantity2">
                         </td>
                     </tr>
                 </table>
@@ -48,10 +48,10 @@
                 <table>
                     <tr>
                         <td class="goal">
-                            <input type="text" class="formstyle" name="goalTitle1" placeholder="Add a goal" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)">
+                            <input type="text" class="formstyle" name="goalTitle3" placeholder="Add a goal" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)">
                         </td>
                         <td class="quantity">
-                            <input type="text" class="formstyle" id="goalQuantity1" placeholder="1" name="goalQuantity1">
+                            <input type="text" class="formstyle" id="goalQuantity3" placeholder="1" name="goalQuantity3">
                         </td>
                     </tr>
                 </table>
