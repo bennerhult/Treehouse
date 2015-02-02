@@ -3,20 +3,19 @@
 <div class="content">
     <div class="listWrap" ng-if="achievementList">
         <div class="header"> <span class="create-link"><a href="app/createAchievement">Create new achievement</a></span></div>
-        <div ng-repeat="currentAchievement in achievementList" class="item">
+        <div ng-repeat="currentAchievement in achievementList track by $index" class="item">
             <div>
                 <div class="progressWrap">
                     <a href="app/achievement" ng-click="openAchievement(currentAchievement);">
                         <img width="96" height="96" ng-src="{{currentAchievement.imageURL}}" alt="{{currentAchievement.title}}">
                         <span class="gradient-bg"></span>
-                        <span class="progressbar"> </span>
+                        <span class="progressbar"></span>
                         <div class="progress-container"><span class="progress" style="width:25%"></span></div>
                     </a>
                 </div>
                 <p><a href="app/achievement" ng-click="openAchievement(currentAchievement);">{{currentAchievement.title}}</a></p>
             </div>
         </div>
-
     </div>
     <div class="clear"></div>
 </div>

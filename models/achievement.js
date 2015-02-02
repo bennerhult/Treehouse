@@ -55,7 +55,6 @@ function createAchievement2(createdBy, title, description, imageURL, goals, call
     myAchievement.title = title;
     myAchievement.description = description;
     myAchievement.imageURL = imageURL;
-
     async.each(goals, function( currentGoal, goalProcessed ) {
         var myGoal = goal.prepareGoal(currentGoal.title, currentGoal.quantity);
         myAchievement.goals.push(myGoal);
@@ -63,9 +62,8 @@ function createAchievement2(createdBy, title, description, imageURL, goals, call
         goalProcessed();
     }, function(){
         save(myAchievement, function(error) {
-            console.log("saved: " + error)
+            callback(error);
         });
-        callback();
     });
 }
 

@@ -33,8 +33,6 @@ treehouseApp.factory('pageService', function() {
         }
     }
 
-
-
     service.setUserImageURL = function(userImageURL) {
         this.userImageURL = userImageURL;
     }

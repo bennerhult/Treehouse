@@ -3,9 +3,9 @@ treehouseApp.controller('createAchievementController', function($scope,  $http, 
 
     $scope.createAchievement = function(evt) {
         evt.preventDefault();
-
-        $http.post('/api/achievements/createAchievements', { }).success(function(result) {
-
-        });
+        $http.post('/api/achievements/createAchievement', {
+            achievementTitle : $scope.achievementTitle,
+            achievementDescription: $scope.achievementDescription
+        }).success(function(result) {});
     };
 });
