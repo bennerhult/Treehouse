@@ -1,4 +1,4 @@
-module.exports = function (app, templates, requestHandlers, user, progress, moment, shareholding, achievement, url) {
+module.exports = function (app, templates, requestHandlers, user, progress, moment, shareholding, achievement) {
     'use strict';
 
     function registerHandlers() {

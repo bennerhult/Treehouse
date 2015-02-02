@@ -6,7 +6,7 @@ module.exports = function (app, templates, requestHandlers, user, progress, mome
     function registerHandlers() {
         app.post('/api/achievements/createAchievement', function (request, response) {
             cleanUpGoalList( request.body.goalList, function(goalList) {
-                achievement.createAchievement2(request.session.currentUser._id, request.body.achievementTitle, request.body.achievementDescription, request.body.achievementImage, goalList, function() {
+                achievement.createAchievement(request.session.currentUser._id, request.body.achievementTitle, request.body.achievementDescription, request.body.achievementImage, goalList, function() {
                     return requestHandlers.respondWithJson(response, {url: thSettings.getDomain() + 'app/achievements'});
                 })
             });

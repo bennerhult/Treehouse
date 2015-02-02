@@ -22,7 +22,6 @@ var Achievement = mongoose.model('Achievement', AchievementSchema);
 module.exports = {
     Achievement: Achievement,
     createAchievement: createAchievement,
-    createAchievement2: createAchievement2,
     createIssuedAchievement: createIssuedAchievement,
     acceptIssuedAchievement: acceptIssuedAchievement,
     issue: issue,
@@ -37,17 +36,7 @@ module.exports = {
     getAchievementList: getAchievementList
 }
 
-function createAchievement(createdBy, title, description, imageURL) {
-    var achievement = new Achievement();
-    achievement.createdDate = new Date();
-    achievement.createdBy = createdBy;
-    achievement.title = title;
-    achievement.description = description;
-    achievement.imageURL = imageURL;
-    return achievement;
-}
-
-function createAchievement2(createdBy, title, description, imageURL, goals, callback) {
+function createAchievement(createdBy, title, description, imageURL, goals, callback) {
     var myAchievement = new Achievement();
     myAchievement.createdDate = new Date();
     myAchievement.createdBy = createdBy;
@@ -169,11 +158,13 @@ function unpublicize(oneProgress) {
     });
 }
 
-function remove(achievement, userId, next) {
-    removeIndividualPartOfAchievement(achievement, userId, function() {
-        progress.Progress.find({ achievement_id: achievement._id}, function(err, progresses) {
+function remove(achievementId, userId, next) {
+    removeIndividualPartOfAchievement(achievementId, userId, function() {
+        progress.Progress.find({ achievement_id: achievementId}, function(err, progresses) {
             if (!(progresses && progresses.length > 0)) {
-                achievement.remove(function () {});
+                Achievement.findOne({ _id: achievementId }, function(err,currentAchievement) {
+                    currentAchievement.remove(function () {});
+                });
             }
         });
         if (next) {
@@ -182,14 +173,15 @@ function remove(achievement, userId, next) {
     });
 }
 
-function removeIndividualPartOfAchievement(achievement, userId, next)    {
-    progress.Progress.find({ achiever_id: userId, achievement_id: achievement._id}, function(err, progresses) {
+function removeIndividualPartOfAchievement(achievementId, userId, next)    {
+    progress.Progress.find({ achiever_id: userId, achievement_id: achievementId}, function(err, progresses) {
         progresses.forEach(function(currentProgress, index) {
             if (index == (progresses.length - 1)) {
                 if (currentProgress) {
                     currentProgress.remove();
                 }
-                newsfeedEvent.addEvent("achievementRemoved", userId, achievement._id);
+                newsfeedEvent.addEvent("achievementRemoved", userId, achievementId);
+                next();
             } else if (currentProgress) {
                 currentProgress.remove();
             }
