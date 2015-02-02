@@ -59,7 +59,9 @@ treehouseApp.controller('createAchievementController', function($scope,  $http, 
             achievementTitle : $scope.achievementTitle,
             achievementDescription : $scope.achievementDescription,
             achievementImage : $("#achievementImage").attr("src")
-        }).success(function(result) {});
+        }).success(function(result) {
+            document.location =  result.url;
+        });
     };
 
     $scope.toggleImage = function(evt, step) {
