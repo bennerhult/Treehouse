@@ -19,44 +19,22 @@
             </div>
             <div class="clear"></div>
         </div>
-        <div class="listWrap">
+
+        <div ng-repeat="currentGoal in goalList" class="listWrap">
             <div class="item">
                 <table>
                     <tr>
                         <td class="goal">
-                            <input type="text" class="formstyle" name="goalTitle1" placeholder="Add a goal" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)">
+                            <input type="text" class="formstyle" placeholder="Add a goal" ng-keypress="goalKeyPress($event, $last)">
                         </td>
                         <td class="quantity">
-                            <input type="text" class="formstyle" id="goalQuantity1" placeholder="1" name="goalQuantity1">
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="item">
-                <table>
-                    <tr>
-                        <td class="goal">
-                            <input type="text" class="formstyle" name="goalTitle2" placeholder="Add a goal" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)">
-                        </td>
-                        <td class="quantity">
-                            <input type="text" class="formstyle" id="goalQuantity2" placeholder="1" name="goalQuantity2">
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="item">
-                <table>
-                    <tr>
-                        <td class="goal">
-                            <input type="text" class="formstyle" name="goalTitle3" placeholder="Add a goal" onkeypress="goalKeyPress(this)" onpaste="goalKeyPress(this)">
-                        </td>
-                        <td class="quantity">
-                            <input type="text" class="formstyle" id="goalQuantity3" placeholder="1" name="goalQuantity3">
+                            <input type="text" class="formstyle"  placeholder="1">
                         </td>
                     </tr>
                 </table>
             </div>
         </div>
+
         <input type="submit" id="saveButton" class="button" value="Create achievement">
     </form>
     <div class="clear"> </div>

@@ -1,5 +1,6 @@
 treehouseApp.controller('createAchievementController', function($scope,  $http, pageService) {
     pageService.setTitle('Create new achievement');
+    $scope.goalList = [{title: 'testTitle', quantity: 1}];
 
     var images = [
         "/content/img/achievementImages/1.png",
@@ -52,6 +53,17 @@ treehouseApp.controller('createAchievementController', function($scope,  $http, 
         "/content/img/achievementImages/48.png",
         "/content/img/achievementImages/49.png"
     ];
+    
+    //TODO spara goals
+    //TODO spara bara goals om de har quantity och title
+    //TODO ta bort fake-arraydata
+
+    $scope.goalKeyPress = function(evt, last) {
+        console.log(last)
+        if (last) {
+            $scope.goalList.push({title: 'testTitle', quantity: 1});
+        }
+    }
 
     $scope.createAchievement = function(evt) {
         evt.preventDefault();
@@ -62,7 +74,7 @@ treehouseApp.controller('createAchievementController', function($scope,  $http, 
         }).success(function(result) {
             document.location =  result.url;
         });
-    };
+    }
 
     $scope.toggleImage = function(evt, step) {
         evt.preventDefault();
@@ -75,5 +87,5 @@ treehouseApp.controller('createAchievementController', function($scope,  $http, 
             newPos = images.length-1;
         }
         $("#achievementImage").attr("src", images[newPos]);
-    };
+    }
 });
