@@ -3,9 +3,7 @@ module.exports = function (app, templates, requestHandlers, user, progress, mome
 
     function registerHandlers() {
         app.post('/api/achievements/deleteAchievement', function (request, response) {
-            achievement.remove(request.body.achievementId, request.session.currentUser._id, function() {
-                return requestHandlers.respondWithJson(response, {url: thSettings.getDomain() + 'app/achievements'});
-            });
+            achievement.remove(request.body.achievementId, request.session.currentUser._id, function() {});
         });
     }
 
