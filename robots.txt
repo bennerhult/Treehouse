@@ -1,5 +1,2 @@
 User-agent: *
-Disallow: /code/
-Disallow: /models/
-Disallow: /resources/
-Disallow: /test/
+Disallow: /app/
