@@ -1,4 +1,5 @@
-var mongoose = require('mongoose'),
+var moment = require('moment'),
+    mongoose = require('mongoose'),
     progress = require('./progress.js'),
     Schema = mongoose.Schema;
 
@@ -14,7 +15,8 @@ var schemaOptions = {
 };
 
 var GoalSchema = new Schema({
-    createdDate         : Date,
+    createdDate         : {type: Date, required: true},
+    latestUpdatedDate   : {type: Date, required: false},
     title               : {type: String, required: true},
     quantityTotal       : {type: Number, required: true},
     quantityCompleted   : {type: Number, required: true},
@@ -30,7 +32,15 @@ module.exports = {
 }
 
 GoalSchema.virtual('percentageCompleted').get(function() {
-        return (100*(this.quantityCompleted/this.quantityTotal));
+        return 100*(this.quantityCompleted/this.quantityTotal);
+});
+
+GoalSchema.virtual('latestUpdated').get(function() {
+    if (this.latestUpdatedDate) {
+        return "(" + moment(this.latestUpdatedDate).format("MMM Do YYYY") + ")";
+    } else {
+        return "";
+    }
 });
 
 function prepareGoal(title, quantityTotal) {

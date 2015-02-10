@@ -14,24 +14,21 @@
         </div>
         <div class="clear"></div>
     </div>
-
-
     <div class="section">
         <div class="progressWrap" ng-repeat="currentGoal in achievement.goals">
-            {{achievement.progresses}}
-            <h3>{{currentGoal.title}} moment(progresses[i].latestUpdated).format("MMM Do YYYY")</h3>
+            <h3>{{currentGoal.title}} {{currentGoal.latestUpdated}} </h3>
             <table border="1px">
                 <tr>
                     <td class="bararea">
                         <div class="progress-goal-container">
                             <span class="progressbar"></span>
                             <div id="progressbar-goal' + goal._id + '">
-                                <span class="progress" id="progress' + goal._id + '" style="width:25%;"></span>
+                                <span class="progress" id="progress' + goal._id + '" style="width:{{currentGoal.quantityCompleted}}%;"></span>
                             </div>
                         </div>
                     </td>
                     <td id="countarea' + goal._id + '" class="countarea">
-                        <h3>0/{{currentGoal.quantityTotal}}</h3>
+                        <h3>{{currentGoal.quantityCompleted}}/{{currentGoal.quantityTotal}}</h3>
                     </td>
                     <td>
                         <div id="addbutton532b6ba7daedf30200a683b3" class="addbutton"><a href="javascript:void(0)" onclick="progress('532b6ba7daedf30200a683b3', '1')"><img src="/content/img/+.png" alt="I did it!"></a></div>
@@ -41,7 +38,6 @@
             <div class="clear"></div>
          </div>
      </div>
-
 
     <div class="header"><span class="create-link"><a href="#">Publicize</a></span><span class="create-link"><a href="#">Edit</a></span><span class="create-link"><a href="/app/achievements" ng-click="deleteAchievement($event)">Delete</a></span></div>
 
