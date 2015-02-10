@@ -1,9 +1,16 @@
-module.exports = function (app, templates, requestHandlers, user, progress, moment, shareholding, achievement, thSettings) {
+module.exports = function (app, templates, requestHandlers, user, progress, moment, shareholding, achievementInstance, thSettings) {
     'use strict';
 
     function registerHandlers() {
+        app.post('/api/achievements/progress', function (request, response) {
+            achievementInstance.progress( request.body.goal, function(percentageCompleted) {
+
+            });
+        });
+
         app.post('/api/achievements/deleteAchievement', function (request, response) {
-            achievement.remove(request.body.achievementId, request.session.currentUser._id, function() {});
+            //TODO ta bort både instance och moderachievement
+            achievementInstance.remove(request.body.achievementId, request.session.currentUser._id, function() {});
         });
     }
 

@@ -25,6 +25,7 @@ module.exports = {
     acceptIssuedAchievement: acceptIssuedAchievement,
     issue: issue,
     userHasAcceptedAchievement: userHasAcceptedAchievement,
+    progress: progress,
     publicize: publicize,
     unpublicize: unpublicize,
     remove: remove,
@@ -98,6 +99,12 @@ function save(achievement, callback) {
     achievement.save(function (error) {
         callback(error, achievement._id);
     });
+}
+
+function progress(goal, callback) {
+    var percentageCompleted = 0;
+
+    callback(percentageCompleted);
 }
 
 function publicize(oneProgress) {
