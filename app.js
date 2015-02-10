@@ -73,6 +73,7 @@ app.use(session({
 //Database models
 var user = require('./models/user.js'),
     achievement = require('./models/achievement.js'),
+    achievementInstance = require('./models/achievementInstance.js'),
     progress = require('./models/progress.js'),
     shareholding = require('./models/shareholding.js'),
     loginToken = require('./models/loginToken.js'),
@@ -177,7 +178,7 @@ require('./code/newsfeedPage.js')(app, templates, requestHandlers, newsfeed).reg
 require('./code/friendsPage.js')().registerHandlers();
 require('./code/morePage.js')(app, templates, requestHandlers, user, thSettings, email).registerHandlers();
 require('./code/achievementPage.js')(app, templates, requestHandlers, user, progress, moment, shareholding, achievement, thSettings).registerHandlers();
-require('./code/achievementsPage.js')(app, templates, requestHandlers, user, progress, moment, shareholding, achievement).registerHandlers();
+require('./code/achievementsPage.js')(app, templates, requestHandlers, user, progress, moment, shareholding, achievementInstance).registerHandlers();
 require('./code/createAchievementPage.js')(app, templates, requestHandlers, user, progress, moment, shareholding, achievement, thSettings).registerHandlers();
 
 app.get('/server-templates/*', function(request, response) {

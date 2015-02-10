@@ -10,7 +10,7 @@
                         <img width="96" height="96" ng-src="{{currentAchievement.imageURL}}" alt="{{currentAchievement.title}}">
                         <span class="gradient-bg"></span>
                         <span class="progressbar"></span>
-                        <div class="progress-container"><span class="progress" style="width:25%"></span></div>
+                        <div class="progress-container"><span class="progress" style="width:{{currentAchievement.percentageCompleted}}%"></span></div>
                     </a>
                 </div>
                 <p><a href="app/achievement" ng-click="openAchievement(currentAchievement);">{{currentAchievement.title}}</a></p>

@@ -5,10 +5,7 @@ var mongoose = require('mongoose'),
 var ProgressSchema = new Schema({
     created                     : {type: Date, required: true},
     latestUpdated               : {type: Date},
-    achiever_id                 : {type: Schema.ObjectId, required: true},
-    achievement_id              : {type: Schema.ObjectId, required: true},
     goal_id                     : {type: Schema.ObjectId, required: true},
-    publiclyVisible             : {type: Boolean, required: true},
     quantityFinished            :{type: Number, required: true}
 })
 
@@ -17,12 +14,9 @@ var Progress = mongoose.model('Progress', ProgressSchema)
 module.exports = {
     Progress: Progress,
     createProgress : createProgress,
-    createAndSaveProgress : createAndSaveProgress,
-    markProgress : markProgress,
-    removeProgress : removeProgress,
-    getPercentageFinished: getPercentageFinished
+    createAndSaveProgress : createAndSaveProgress
 }
-
+/*
 function markProgress(achiever_id, goal_id, next) {
     Progress.findOne({ achiever_id: achiever_id,  goal_id: goal_id}, function(err,currentProgress) {
         if (!currentProgress.created) {
@@ -54,31 +48,26 @@ function getPercentageFinished(currentAchievement, achiever_id, next) {
         })
     })
 }
-
-function createProgress(achiever_id, achievement_id, goal_id, callback) {
+*/
+function createProgress(goal_id, callback) {
     var progress = new Progress()
-    progress.achiever_id = achiever_id
-    progress.achievement_id = achievement_id
     progress.goal_id = goal_id
     progress.quantityFinished = 0
-    progress.publiclyVisible = false
     progress.created = new Date()
     if (callback) {
         callback (progress);
     }
 }
 
-function createAndSaveProgress(achiever_id, achievement_id, goal_id) {
+function createAndSaveProgress(goal_id, callback) {
     var progress = new Progress()
-    progress.achiever_id = achiever_id
-    progress.achievement_id = achievement_id
     progress.goal_id = goal_id
     progress.quantityFinished = 0
-    progress.publiclyVisible = false
     progress.created = new Date()
     progress.save()
+    callback(progress);
 }
-
+/*
 function removeProgress(achievement_id, user_id, next) {
     Progress.find({ achiever_id: user_id, achievement_id: achievement_id}, function(err, progresses) {
         progresses.forEach(function(currentProgress, index) {
@@ -88,4 +77,4 @@ function removeProgress(achievement_id, user_id, next) {
             }
         })
     })
-}
+}*/
