@@ -2,12 +2,15 @@ treehouseApp.controller('achievementController', function($scope, $http, achieve
     pageService.setTitle('Achievement');
     $scope.achievement = achievementService.achievement;
 
-    $scope.progress = function(evt, currentGoal) {
+    $scope.progress = function(evt, currentGoal, currentAchievement) {
 console.log(currentGoal.title)
         $http.post('/api/achievements/progress', {
-            goal : currentGoal
-        }).success(function() {
-            //TODO animate progressbar
+            goal : currentGoal,
+            achievement : $scope.achievement
+        }).success(function(percentageComplete) {
+            //TODO XXX animate progressbar
+            //TODO XXX visa ändrade värden direkt
+            console.log("percentageComplete1:  " + percentageComplete)
         });
     }
 

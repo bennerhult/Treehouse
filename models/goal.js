@@ -19,8 +19,7 @@ var GoalSchema = new Schema({
     latestUpdatedDate   : {type: Date, required: false},
     title               : {type: String, required: true},
     quantityTotal       : {type: Number, required: true},
-    quantityCompleted   : {type: Number, required: true},
-    progresses          : {type: [progress.ProgressSchema], required: false}
+    quantityCompleted   : {type: Number, required: true}
 }, schemaOptions)
 
 var Goal = mongoose.model('Goal', GoalSchema);

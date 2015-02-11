@@ -29,7 +29,6 @@ module.exports = {
     publicize: publicize,
     unpublicize: unpublicize,
     remove: remove,
-    save: save,
     findPublicAchievement: findPublicAchievement,
     getAchievementList: getAchievementList
 }
@@ -95,16 +94,30 @@ function issue(achievement, callback) {
     });
 }
 
-function save(achievement, callback) {
-    achievement.save(function (error) {
-        callback(error, achievement._id);
-    });
-}
-
-function progress(goal, callback) {
-    var percentageCompleted = 0;
-
-    callback(percentageCompleted);
+function progress(goalToUpdate, achievementToUpdate, callback) {
+    if  (goalToUpdate.quantityCompleted < goalToUpdate.quantityTotal) {
+        var newQuantityCompleted = 0;
+        var newQuantityTotal = 0;
+        var newGoalCompleted;
+        async.each(achievementToUpdate.goals, function(currentGoal, goalProcessed) {
+            if (currentGoal._id == goalToUpdate._id) {
+                currentGoal.quantityCompleted++;
+                newGoalCompleted = currentGoal.quantityCompleted;
+            }
+            newQuantityCompleted += currentGoal.quantityCompleted;
+            newQuantityTotal += currentGoal.quantityTotal;
+            goalProcessed();
+        }, function(){
+            achievementToUpdate.percentageCompleted = 100 * (newQuantityCompleted/newQuantityTotal);
+            var id = achievementToUpdate._id;
+            delete achievementToUpdate._id;
+            AchievementInstance.findByIdAndUpdate(id,  achievementToUpdate, function (err, updatedAchievement) {
+                callback(updatedAchievement);
+            });
+        });
+    } else {
+        callback(achievementToUpdate);
+    }
 }
 
 function publicize(oneProgress) {
