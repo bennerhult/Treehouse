@@ -783,6 +783,13 @@ p{
     color: #ffffff;
 }
 
+p.dark{
+    font-family: Verdana;
+    font-size: 14px;
+    color: #444444;
+    margin-top: 10px;
+}
+
 p a{
     font-family: Verdana;
     font-size: 14px;
