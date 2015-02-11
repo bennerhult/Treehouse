@@ -4,7 +4,8 @@ module.exports = function (app, templates, requestHandlers, user, progress, mome
     function registerHandlers() {
         app.post('/api/achievements/progress', function (request, response) {
             achievementInstance.progress( request.body.goal, request.body.achievement, function(updatedAchievementInstance) {
-                //TODO XXX achievementInstance = updatedAchievementInstance;
+                console.log("BADZ: " + updatedAchievementInstance.percentageCompleted)
+                requestHandlers.respondWithJson(response, { achievementPercentage : updatedAchievementInstance.percentageCompleted });
             });
         });
 
