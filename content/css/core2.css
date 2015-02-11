@@ -305,12 +305,41 @@ table tr td input.formstyle{
 table tr td.goal{
     width: 90%;
 }
+.listWrap .item table tr td.goal p{
+   text-align: left;
+   padding-bottom: 10px;
+}
 
 table tr td.quantity{
     width: 10%;
 }
 
+table tr td.goal .progressWrap{
+    width: 80%;
+    float: left;
+    margin-top: 11px;
+}
 
+table tr td.goal .progressWrap .progressbar,
+table tr td.goal .progressWrap div.progress-container{
+    margin-left: 0%;
+    width: 100%;
+    bottom:0px;
+}
+
+table tr td.goal .progressWrap div.progress-container span.progress{
+    bottom:1px;
+}
+
+.listWrap .item table tr td.goal .counter p{
+    text-align: center;
+    padding-bottom: 10px;
+}
+.counter{
+    float: left;
+    width: 20%;
+    text-align: center;
+}
 
 /*Sign in*/
 
@@ -599,6 +628,7 @@ span.create-link a{
 
 .listWrap .item table{
     width: 100%;
+    vertical-align: top;
 }
 .navigation{
     padding: 10px;
