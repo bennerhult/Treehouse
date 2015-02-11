@@ -14,7 +14,7 @@
                 <img class="border" width="96" height="96" ng-src="{{achievement.imageURL}}" alt="{{achievement.title}}">
                 <span class="gradient-bg"></span>
                 <span class="progressbar"></span>
-                <div class="progress-container"><span class="progress" style="width:25%"></span></div>
+                <div class="progress-container"><span class="progress" style="width:{{achievement.percentageCompleted}}%"></span></div>
             </div>
         </div>
         <div class="clear"></div>
@@ -28,7 +28,7 @@
                             <p>{{currentGoal.title}} {{currentGoal.latestUpdated}}</p>
                             <div class="progressWrap">
                                 <span class="progressbar"></span>
-                                <div class="progress-container"><span class="progress" style="width:25%"></span></div>
+                                <div class="progress-container"><span class="progress" style="width:{{currentGoal.percentageCompleted}}%"></span></div>
                             </div>
                             <div class="counter">
                                 <p>{{currentGoal.quantityCompleted}}/{{currentGoal.quantityTotal}}</p>
