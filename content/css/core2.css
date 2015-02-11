@@ -597,17 +597,9 @@ span.create-link a{
     border: 0px;
 }
 
-.listWrap .item img{
-    border: 3px solid #fff;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-
-    -moz-box-shadow:  0px 0px 5px rgb(0,0,0);
-    -webkit-box-shadow:  0px 0px 5px rgb(0,0,0);
-    box-shadow:  0px 0px 5px rgb(0,0,0);
+.listWrap .item table{
+    width: 100%;
 }
-
 .navigation{
     padding: 10px;
     border-bottom: 1px solid #5c5c5b;

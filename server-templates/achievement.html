@@ -20,6 +20,25 @@
         <div class="clear"></div>
     </div>
     <div class="section">
+        <div class="listWrap">
+            <div class="item">
+                <table>
+                    <tr>
+                        <td class="goal">
+                            <div class="progressWrap">
+                                <span class="progressbar"></span>
+                                <div class="progress-container"><span class="progress" style="width:25%"></span></div>
+                            </div>
+                        </td>
+                        <td class="quantity">
+                            <a href="#"><img src="/content/img/+.png" alt="I did it!">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
         <div class="progressWrap" ng-repeat="currentGoal in achievement.goals">
             <h3>{{currentGoal.title}} {{currentGoal.latestUpdated}} </h3>
             <table border="1px">
