@@ -10,7 +10,12 @@
             </p>
         </div>
         <div class="onethird">
-            <img width="96" height="96" ng-src="{{achievement.imageURL}}" alt="{{achievement.title}}">
+            <div class="progressWrap">
+                <img class="border" width="96" height="96" ng-src="{{achievement.imageURL}}" alt="{{achievement.title}}">
+                <span class="gradient-bg"></span>
+                <span class="progressbar"></span>
+                <div class="progress-container"><span class="progress" style="width:25%"></span></div>
+            </div>
         </div>
         <div class="clear"></div>
     </div>
