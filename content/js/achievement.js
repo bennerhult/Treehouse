@@ -7,12 +7,8 @@ treehouseApp.controller('achievementController', function($scope, $http, achieve
             goal : currentGoal,
             achievement : $scope.achievement
         }).success(function(result) {
-            //TODO rätt värde på achievment progressbar
-            //TODO rätt värde på goal progressbar
-            //TODO rätt värde på x/y
-            //TODO kunna klicka flera gånger
             //TODO animera progressbarändring
-            console.log("updatedAchievement.percentageComplete:  " + result.achievementPercentage)
+            $scope.achievement = result.updatedAchievementInstance;
         });
     }
 
