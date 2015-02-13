@@ -7,7 +7,6 @@ treehouseApp.controller('achievementController', function($scope, $http, achieve
             goal : currentGoal,
             achievement : $scope.achievement
         }).success(function(result) {
-            //TODO animera progressbarändring
             $scope.achievement = result.updatedAchievementInstance;
         });
     }
