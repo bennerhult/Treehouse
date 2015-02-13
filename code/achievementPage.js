@@ -9,8 +9,7 @@ module.exports = function (app, templates, requestHandlers, user, progress, mome
         });
 
         app.post('/api/achievements/deleteAchievement', function (request, response) {
-            //TODO ta bort både instance och moderachievement
-            achievementInstance.remove(request.body.achievementId, request.session.currentUser._id, function() {});
+            achievementInstance.remove(request.body.achievementInstance, request.session.currentUser._id, function() {});
         });
     }
 

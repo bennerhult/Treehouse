@@ -1,13 +1,14 @@
 var mongoose = require('mongoose'),
     async = require('async'),
     goal = require('./goal.js'),
+    achievement = require('./achievement.js'),
     newsfeedEvent = require('./newsfeedEvent.js'),
     Schema= mongoose.Schema;
-
 
 var AchievementInstanceSchema = new Schema({
     createdDate             : {type: Date, required: true},
     createdBy               : {type: String, required: true},
+    achievementId           : {type: Schema.ObjectId, required: true},
     title                   : {type: String, required: true},
     description             : {type: String},
     imageURL                : {type: String, required: true},
@@ -20,7 +21,7 @@ var AchievementInstance = mongoose.model('AchievementInstance', AchievementInsta
 
 module.exports = {
     AchievementInstance: AchievementInstance,
-    createAchievementInstance: createAchievementInstance,
+    createAchievement: createAchievement,
     createIssuedAchievement: createIssuedAchievement,
     acceptIssuedAchievement: acceptIssuedAchievement,
     issue: issue,
@@ -29,14 +30,32 @@ module.exports = {
     publicize: publicize,
     unpublicize: unpublicize,
     remove: remove,
-    findPublicAchievement: findPublicAchievement,
     getAchievementList: getAchievementList
+}
+
+function createAchievement(createdBy, title, description, imageURL, goals, callback) {
+    var myAchievement = new achievement.Achievement();
+    myAchievement.createdDate = new Date();
+    myAchievement.createdBy = createdBy;
+    myAchievement.title = title;
+    myAchievement.description = description;
+    myAchievement.imageURL = imageURL;
+    async.each(goals, function(currentGoal, goalProcessed ) {
+        var myGoal = goal.prepareGoal(currentGoal.title, currentGoal.quantity);
+        myAchievement.goals.push(myGoal);
+        goalProcessed();
+    }, function() {
+        myAchievement.save(function(error) {
+            createAchievementInstance(myAchievement, createdBy, callback)
+        });
+    });
 }
 
 function createAchievementInstance(motherAchievement, user, callback) {
     var myAchievementInstance = new AchievementInstance();
     myAchievementInstance.createdDate = new Date();
     myAchievementInstance.createdBy = user;
+    myAchievementInstance.achievementId = motherAchievement.id;
     myAchievementInstance.title = motherAchievement.title;
     myAchievementInstance.description = motherAchievement.description;
     myAchievementInstance.imageURL = motherAchievement.imageURL;
@@ -49,15 +68,15 @@ function createAchievementInstance(motherAchievement, user, callback) {
 }
 
 function createIssuedAchievement(createdBy, title, description, imageURL, issuerName) {
-    var achievement = new Achievement();
-    achievement.createdDate = new Date();
+    var achievementInstance = new AchievementInstance();
+   /* achievement.createdDate = new Date();
     achievement.createdBy = createdBy;
     achievement.title = title;
     achievement.description = description;
     achievement.imageURL = imageURL;
     achievement.issuedAchievement = true;
-    achievement.issuerName = issuerName;
-    return achievement;
+    achievement.issuerName = issuerName;*/
+    return achievementInstance;
 }
 
 function getAchievementList(userId, callback) {
@@ -88,10 +107,10 @@ function acceptIssuedAchievement(achievement_id, achiever_id, callback) {
 }
 
 function issue(achievement, callback) {
-    achievement.isIssued = true;
+   /* achievement.isIssued = true;
     achievement.save(function (error) {
         callback(error);
-    });
+    });*/
 }
 
 function progress(goalToUpdate, achievementToUpdate, callback) {
@@ -144,43 +163,18 @@ function unpublicize(oneProgress) {
     });*/
 }
 
-function remove(achievementId, userId, next) {
-   /* removeIndividualPartOfAchievement(achievementId, userId, function() {
-        progress.Progress.find({ achievement_id: achievementId}, function(err, progresses) {
-            if (!(progresses && progresses.length > 0)) {
-                Achievement.findOne({ _id: achievementId }, function(err,currentAchievement) {
-                    currentAchievement.remove(function () {});
+function remove(achievementInstance, userId, next) {
+    AchievementInstance.findById( achievementInstance._id, function(err1,currentAchievementInstance) {
+        var achievementId = achievementInstance.achievementId;
+        console.log("achievementId: " + achievementId )
+        currentAchievementInstance.remove(function () {
+            achievement.Achievement.findById( achievementId, function (err2, currentAchievement) {
+                currentAchievement.remove(function () {
+                    if (next) {
+                        next();
+                    }
                 });
-            }
-        });
-        if (next) {
-            next();
-        }
-    });*/
-}
-
-/*function removeIndividualPartOfAchievement(achievementId, userId, next)    {
-    progress.Progress.find({ achiever_id: userId, achievement_id: achievementId}, function(err, progresses) {
-        progresses.forEach(function(currentProgress, index) {
-            if (index == (progresses.length - 1)) {
-                if (currentProgress) {
-                    currentProgress.remove();
-                }
-                newsfeedEvent.addEvent("achievementRemoved", userId, achievementId);
-                next();
-            } else if (currentProgress) {
-                currentProgress.remove();
-            }
+            });
         });
     });
-}*/
-
-function findPublicAchievement(callback) {
-    /*progress.Progress.findOne({ publiclyVisible: true }, function(err,currentProgress) {
-        if (currentProgress) {
-            callback(currentProgress._id);
-        } else {
-            callback();
-        }
-    });*/
 }
