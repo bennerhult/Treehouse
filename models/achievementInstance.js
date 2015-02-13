@@ -166,7 +166,6 @@ function unpublicize(oneProgress) {
 function remove(achievementInstance, userId, next) {
     AchievementInstance.findById( achievementInstance._id, function(err1,currentAchievementInstance) {
         var achievementId = achievementInstance.achievementId;
-        console.log("achievementId: " + achievementId )
         currentAchievementInstance.remove(function () {
             achievement.Achievement.findById( achievementId, function (err2, currentAchievement) {
                 currentAchievement.remove(function () {
