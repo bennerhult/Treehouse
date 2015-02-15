@@ -73,6 +73,7 @@ app.use(session({
 //Database models
 var user = require('./models/user.js'),
     achievement = require('./models/achievement.js'),
+    achievementInstance = require('./models/achievementInstance.js'),
     progress = require('./models/progress.js'),
     shareholding = require('./models/shareholding.js'),
     loginToken = require('./models/loginToken.js'),
@@ -119,7 +120,7 @@ app.get('/content/*', function(request, response){
     staticFiles.serve("." + request.url, response);
 })
 
-app.get('app/content/*', function(request, response){
+app.get('/app/content*', function(request, response){
     staticFiles.serve("." + request.url, response);
 })
 
@@ -177,8 +178,9 @@ require('./code/signinPage.js')(app, templates, requestHandlers, thSettings, use
 require('./code/newsfeedPage.js')(app, templates, requestHandlers, newsfeed).registerHandlers();
 require('./code/friendsPage.js')(app, friendship).registerHandlers();
 require('./code/morePage.js')(app, templates, requestHandlers, user, thSettings, email).registerHandlers();
-require('./code/achievementsPage.js')(app, templates, requestHandlers, user, progress, moment, shareholding, achievement, url).registerHandlers();
-require('./code/createAchievementPage.js')(app, templates, requestHandlers, user, progress, moment, shareholding, achievement, url).registerHandlers();
+require('./code/achievementPage.js')(app, templates, requestHandlers, user, progress, moment, shareholding, achievementInstance, thSettings).registerHandlers();
+require('./code/achievementsPage.js')(app, templates, requestHandlers, user, progress, moment, shareholding, achievementInstance).registerHandlers();
+require('./code/createAchievementPage.js')(app, templates, requestHandlers, user, progress, moment, shareholding, achievementInstance, thSettings).registerHandlers();
 
 app.get('/server-templates/*', function(request, response) {
     staticFiles.serve("." + request.url, response);

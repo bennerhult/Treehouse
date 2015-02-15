@@ -33,8 +33,6 @@ treehouseApp.factory('pageService', function() {
         }
     }
 
-
-
     service.setUserImageURL = function(userImageURL) {
         this.userImageURL = userImageURL;
     }
@@ -54,13 +52,8 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
 
 
     $http.post('/api/init', {}).success(function(result) {
-        //$scope.prettyName = result.prettyName;
-
         pageService.setName(result.firstName, result.lastName, result.username);
-
-
         pageService.setUserImageURL(result.userImageURL);
-
         $scope.isiPad = navigator.userAgent.match(/iPad/i) != null;
         $scope.isiPhone = navigator.userAgent.match(/iPhone/i) != null;
         var isiOs = $scope.isiPad || $scope.isiPhone;

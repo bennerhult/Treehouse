@@ -5,16 +5,45 @@
     <div class="section">
         <div class="twothirds">
             <h3>{{achievement.title}}</h3>
-            <p>
-                Beskrivning lorem ipsum
+            <p class="dark">
+                {{achievement.description}}
             </p>
         </div>
         <div class="onethird">
-            <img width="96" height="96" ng-src="{{achievement.imageURL}}" alt="{{achievement.title}}">
+            <div class="progressWrap">
+                <img class="border" width="96" height="96" ng-src="{{achievement.imageURL}}" alt="{{achievement.title}}">
+                <span class="gradient-bg"></span>
+                <span class="progressbar"></span>
+                <div class="progress-container"><span class="progress" style="width:{{achievement.percentageCompleted}}%"></span></div>
+            </div>
         </div>
         <div class="clear"></div>
     </div>
-    <div class="header"><span class="create-link"><a href="#">Publicize</a></span><span class="create-link"><a href="#">Edit</a></span><span class="create-link"><a href="#">Delete</a></span></div>
+    <div class="section">
+        <div class="listWrap">
+            <div class="item" ng-repeat="currentGoal in achievement.goals">
+                <table>
+                    <tr>
+                        <td class="goal">
+                            <p>{{currentGoal.title}} {{currentGoal.latestUpdated}}</p>
+                            <div class="progressWrap">
+                                <span class="progressbar"></span>
+                                <div class="progress-container"><span class="progress" style="width:{{currentGoal.percentageCompleted}}%"></span></div>
+                            </div>
+                            <div class="counter">
+                                <p>{{currentGoal.quantityCompleted}}/{{currentGoal.quantityTotal}}</p>
+                            </div>
+                        </td>
+                        <td class="quantity">
+                            <a href="#" ng-click="progress($event, currentGoal)"><img src="/content/img/+.png" alt="I did it!"></a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="header"><span class="create-link"><a href="#">Publicize(not implemented)</a></span><span class="create-link"><a href="#">Edit(not implemented)</a></span><span class="create-link"><a href="/app/achievements" ng-click="deleteAchievement($event)">Delete</a></span></div>
 
     <div class="clear"> </div>
 </div>
