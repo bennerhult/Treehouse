@@ -1,18 +1,32 @@
-module.exports = function (app, friendship) {
+module.exports = function (app, friendship, user, requestHandlers) {
     'use strict';
 
     function registerHandlers() {
-        app.get('/api/friends/init', function (request, response) {
+        app.post('/api/friends/init', function (request, response) {
             var userId = request.session.currentUser._id
             friendship
                 .Friendship
-                .find()
-                .or([{ friend1_id: userId }, { friend2_id: userId }])
+                .find([{ friend1_id: userId }])
                 .exec(function(err, result) {
                     if(err) {
                         throw err;
                     }
-                    console.log(result);
+                    var friendUsersFilter = [];
+                    for(var i=0; i<result.length; i++) {
+                        if(result[i].confirmed) {
+                            friendUsersFilter.push({ _id : result[i].friend2_id });
+                        }
+                    }
+                    user.User.find().or(friendUsersFilter).exec(function(err, result) {
+                        if(err) {
+                            throw err;
+                        }
+                        var r = [];
+                        for(var j=0; j<result.length; j++) {
+                            r.push({ imageURL : result[j].imageURL, username : result[j].username });
+                        }
+                        requestHandlers.respondWithJson(response, r);
+                    });
                 });
         });
     }

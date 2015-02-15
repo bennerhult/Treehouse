@@ -176,7 +176,7 @@ require('./code/mainPage.js')(app, requestHandlers, templates).registerHandlers(
 require('./code/preSigninPage.js')(app, templates).registerHandlers();
 require('./code/signinPage.js')(app, templates, requestHandlers, thSettings, user, loginToken, email, auth, url).registerHandlers();
 require('./code/newsfeedPage.js')(app, templates, requestHandlers, newsfeed).registerHandlers();
-require('./code/friendsPage.js')(app, friendship).registerHandlers();
+require('./code/friendsPage.js')(app, friendship, user, requestHandlers).registerHandlers();
 require('./code/morePage.js')(app, templates, requestHandlers, user, thSettings, email).registerHandlers();
 require('./code/achievementPage.js')(app, templates, requestHandlers, user, progress, moment, shareholding, achievementInstance, thSettings).registerHandlers();
 require('./code/achievementsPage.js')(app, templates, requestHandlers, user, progress, moment, shareholding, achievementInstance).registerHandlers();

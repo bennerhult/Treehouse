@@ -1,5 +1,6 @@
 <div ng-include src="'/server-templates/includes/userInfo.html'"></div>
 <div ng-include src="'/server-templates/includes/desktopMenu.html'"></div>
+
 <div class="content">
     <div class="section">
         <input type="email" class="formstyle" placeholder="Ange din väns e-post adress">
@@ -20,22 +21,14 @@
 
     <div class="listWrap">
         <div class="header">My friends</div>
-        <div class="item">
+        <div class="item" ng-repeat="f in friends">
             <div class="newsUserArea">
-                <img src="../content/img/user_has_no_image.jpg" >
-                <p>namn/epost</p>
+                <img src="{{f.imageURL}}" >
+                <p>{{f.username}}</p>
                 <div class="clear"> </div>
                 <div class="remove">
                     <a href="#">Remove</a>
                 </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="newsUserArea">
-                <img src="../content/img/user_has_no_image.jpg" >
-                <p>namn/epost</p>
-                <div class="clear"> </div>
-                <div class="remove"><a href="#">Remove</a></div>
             </div>
         </div>
     </div>
