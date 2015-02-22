@@ -82,6 +82,16 @@ var user = require('./models/user.js'),
     friendship = require('./models/friendship.js'),
     staticFiles = require('./code/staticFiles.js');
 
+if(process.argv.length >= 3 && process.argv[2] === 'CREATE_NEW_TESTUSER') {
+    console.log("Adding a test user then exiting.");
+    var t = require('./code/insertTestData.js')(user, loginToken, thSettings);
+    t.createNewTestUser(function (loginUrl) {
+        console.log('Login-url for the new testuser: ');
+        console.log(loginUrl);
+        process.exit();
+    });
+}
+
 var port = process.env.PORT || 1337;
 app.listen(port);
 console.log('Treehouse server started on port ' + port);
