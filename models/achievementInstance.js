@@ -139,35 +139,25 @@ function progress(goalToUpdate, achievementToUpdate, callback) {
     }
 }
 
-function publicize(achievementInstance, userId, next) {
-    AchievementInstance.findById(achievementInstance._id, function(err1, currentAchievementInstance) {
-        currentAchievementInstance.publiclyVisible = true;
-        currentAchievementInstance.save();
+function publicize(achievementInstance, callback) {
+    achievementInstance.publiclyVisible = true;
+    var id = achievementInstance._id;
+    delete achievementInstance._id;
+    AchievementInstance.findByIdAndUpdate(id, achievementInstance, function (err, updatedAchievement) {
+        callback(updatedAchievement);
     });
-   /* progress.Progress.find({ achievement_id: oneProgress.achievement_id, achiever_id: oneProgress.achiever_id }, function(err,progresses) {
-        progresses.forEach(function(currentProgress, index) {
-            currentProgress.publiclyVisible = true;
-            currentProgress.save();
-            if (index === (progresses.length -1)) {
-                newsfeedEvent.addEvent("publicize", oneProgress.achiever_id, oneProgress.achievement_id);
-            }
-        });
-    });*/
 }
 
-function unpublicize(oneProgress) {
-    /*progress.Progress.find({ achievement_id: oneProgress.achievement_id, achiever_id: oneProgress.achiever_id }, function(err,progresses) {
-        progresses.forEach(function(currentProgress, index) {
-            currentProgress.publiclyVisible = false;
-            currentProgress.save();
-            if (index == (progresses.length -1)) {
-                newsfeedEvent.addEvent("achievementUnpublicized", oneProgress.achiever_id, oneProgress.achievement_id);
-            }
-        });
-    });*/
+function unpublicize(achievementInstance, callback) {
+    achievementInstance.publiclyVisible = false;
+    var id = achievementInstance._id;
+    delete achievementInstance._id;
+    AchievementInstance.findByIdAndUpdate(id, achievementInstance, function (err, updatedAchievement) {
+        callback(updatedAchievement);
+    });
 }
 
-function remove(achievementInstance, userId, next) {
+function remove(achievementInstance, next) {
     AchievementInstance.findById(achievementInstance._id, function(err1, currentAchievementInstance) {
         var achievementId = achievementInstance.achievementId;
         currentAchievementInstance.remove(function () {

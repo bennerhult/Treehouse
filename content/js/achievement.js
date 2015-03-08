@@ -2,10 +2,10 @@ treehouseApp.controller('achievementController', function($scope, $http, achieve
     pageService.setTitle('Achievement');
     $scope.achievement = achievementService.achievement;
 
-    $scope.progress = function(evt, currentGoal, currentAchievement) {
+    $scope.progress = function(evt, currentGoal) {
         $http.post('/api/achievements/progress', {
             goal : currentGoal,
-            achievement : $scope.achievement
+            achievementInstance : $scope.achievement
         }).success(function(result) {
             $scope.achievement = result.updatedAchievementInstance;
         });
@@ -14,7 +14,17 @@ treehouseApp.controller('achievementController', function($scope, $http, achieve
     $scope.publicize = function(evt) {
         $http.post('/api/achievements/publicizeAchievement', {
             achievementInstance : $scope.achievement
-        }).success(function() {});
+        }).success(function(result) {
+            $scope.achievement = result.updatedAchievementInstance;
+        });
+    }
+
+    $scope.unpublicize = function(evt) {
+        $http.post('/api/achievements/unpublicizeAchievement', {
+            achievementInstance : $scope.achievement
+        }).success(function(result) {
+            $scope.achievement = result.updatedAchievementInstance;
+        });
     }
 
     $scope.deleteAchievement = function(evt) {

@@ -43,7 +43,12 @@
         </div>
     </div>
 
-    <div class="header"><span class="create-link"><a href="#" ng-click="publicize($event)">Publicize</a></span><span class="create-link"><a href="#">Edit(not implemented)</a></span><span class="create-link"><a href="/app/achievements" ng-click="deleteAchievement($event)">Delete</a></span></div>
+    <div class="header">
+        <span class="create-link"><a href="#" ng-show="achievement.publiclyVisible" ng-click="unpublicize($event)">Unpublicize</a></span>
+        <span class="create-link"><a href="#" ng-hide="achievement.publiclyVisible" ng-click="publicize($event)">Publicize</a></span>
+        <span class="create-link"><a href="#">Edit(not implemented)</a></span>
+        <span class="create-link"><a href="/app/achievements" ng-click="deleteAchievement($event)">Delete</a></span>
+    </div>
 
     <div class="clear"> </div>
 </div>
