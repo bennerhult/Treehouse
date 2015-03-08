@@ -13,7 +13,7 @@
  - Add some achievements
  - Add some achivement progress
 */
-module.exports = function (user, loginToken, thSettings) {
+module.exports = function (user, loginToken, thSettings, friendship) {
     "use strict";
 
     function guid() {
@@ -25,18 +25,60 @@ module.exports = function (user, loginToken, thSettings) {
         return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
     }
 
-    function createNewTestUser(cb) {
+    function createUser(prefix, cb) {
         //TODO: Swap the uid for some name generation thing that makes is shorter and somewhat readable
-        var email = 'testuser+' + guid() + '@treehouse.io';
+        var email = prefix + 'testuser+' + guid() + '@treehouse.io';
         user.createUser(email, function (user, err) {
             if(err) {
                 throw err;
             }
-            loginToken.createToken(email, function (token) {
-                var loginUrl = thSettings.getDomain() + "signinByEmail?email=" + encodeURIComponent(email) + "&token=" + encodeURIComponent(token.token);
-                cb(loginUrl);
-            });
+            cb(user);
+        });
+    }
 
+    function createFriendsForUser(user, cb) {
+        var addAFriend = function (cba) {
+            createUser('f-', function (u1) {
+                friendship.createFriendship(u1._id, user._id, function (crap, friendship_id) {
+                    friendship.confirmFriendRequest(friendship_id, cba);
+                })
+            })
+        }
+
+        var addIncomingFriendRequest = function (cba) {
+            createUser('-f', function (u1) {
+                friendship.createFriendship(u1._id, user._id, function () {
+                    cba();
+                })
+            })
+        }
+
+        var addOutgoingFriendRequest = function (cba) {
+            createUser('-f', function (u1) {
+                friendship.createFriendship(user._id, u1._id, function () {
+                    cba();
+                })
+            })
+        }
+
+        //Find some way to kill all these christmas trees
+        addAFriend(function () {
+            addIncomingFriendRequest(function () {
+                addOutgoingFriendRequest(function () {
+                    cb()
+                })
+            })
+        })
+    }
+
+    function createNewTestUser(cb) {
+        createUser('', function (user) {
+            loginToken.createToken(user.username, function (token) {
+                var loginUrl = thSettings.getDomain() + "signinByEmail?email=" + encodeURIComponent(user.username) + "&token=" + encodeURIComponent(token.token);
+                createFriendsForUser(user, function () {
+                    cb(loginUrl);
+                })
+            });
         });
     }
 

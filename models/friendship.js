@@ -31,7 +31,7 @@ function createFriendship(friend1_id, friend2_id, callback) {
     isFriendRequestExisting(friend1_id, friend2_id, function(requestExists) {
         if (!requestExists) {
             friendship.save(function () {
-                callback(true)
+                callback(true, friendship._id)
             })
         } else {
            callback(false)
