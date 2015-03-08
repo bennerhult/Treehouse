@@ -11,6 +11,12 @@ treehouseApp.controller('achievementController', function($scope, $http, achieve
         });
     }
 
+    $scope.publicize = function(evt) {
+        $http.post('/api/achievements/publicizeAchievement', {
+            achievementInstance : $scope.achievement
+        }).success(function() {});
+    }
+
     $scope.deleteAchievement = function(evt) {
         $http.post('/api/achievements/deleteAchievement', {
             achievementInstance : $scope.achievement

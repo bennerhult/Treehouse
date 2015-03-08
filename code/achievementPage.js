@@ -8,6 +8,10 @@ module.exports = function (app, templates, requestHandlers, user, progress, mome
             });
         });
 
+        app.post('/api/achievements/publicizeAchievement', function (request, response) {
+            achievementInstance.publicize(request.body.achievementInstance, request.session.currentUser._id, function() {});
+        });
+
         app.post('/api/achievements/deleteAchievement', function (request, response) {
             achievementInstance.remove(request.body.achievementInstance, request.session.currentUser._id, function() {});
         });

@@ -130,7 +130,7 @@ function progress(goalToUpdate, achievementToUpdate, callback) {
             achievementToUpdate.percentageCompleted = 100 * (newQuantityCompleted/newQuantityTotal);
             var id = achievementToUpdate._id;
             delete achievementToUpdate._id;
-            AchievementInstance.findByIdAndUpdate(id,  achievementToUpdate, function (err, updatedAchievement) {
+            AchievementInstance.findByIdAndUpdate(id, achievementToUpdate, function (err, updatedAchievement) {
                 callback(updatedAchievement);
             });
         });
@@ -139,7 +139,11 @@ function progress(goalToUpdate, achievementToUpdate, callback) {
     }
 }
 
-function publicize(oneProgress) {
+function publicize(achievementInstance, userId, next) {
+    AchievementInstance.findById(achievementInstance._id, function(err1, currentAchievementInstance) {
+        currentAchievementInstance.publiclyVisible = true;
+        currentAchievementInstance.save();
+    });
    /* progress.Progress.find({ achievement_id: oneProgress.achievement_id, achiever_id: oneProgress.achiever_id }, function(err,progresses) {
         progresses.forEach(function(currentProgress, index) {
             currentProgress.publiclyVisible = true;
@@ -164,7 +168,7 @@ function unpublicize(oneProgress) {
 }
 
 function remove(achievementInstance, userId, next) {
-    AchievementInstance.findById( achievementInstance._id, function(err1,currentAchievementInstance) {
+    AchievementInstance.findById(achievementInstance._id, function(err1, currentAchievementInstance) {
         var achievementId = achievementInstance.achievementId;
         currentAchievementInstance.remove(function () {
             achievement.Achievement.findById( achievementId, function (err2, currentAchievement) {
