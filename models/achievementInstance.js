@@ -130,7 +130,7 @@ function progress(goalToUpdate, achievementToUpdate, callback) {
             achievementToUpdate.percentageCompleted = 100 * (newQuantityCompleted/newQuantityTotal);
             var id = achievementToUpdate._id;
             delete achievementToUpdate._id;
-            AchievementInstance.findByIdAndUpdate(id,  achievementToUpdate, function (err, updatedAchievement) {
+            AchievementInstance.findByIdAndUpdate(id, achievementToUpdate, function (err, updatedAchievement) {
                 callback(updatedAchievement);
             });
         });
@@ -139,32 +139,26 @@ function progress(goalToUpdate, achievementToUpdate, callback) {
     }
 }
 
-function publicize(oneProgress) {
-   /* progress.Progress.find({ achievement_id: oneProgress.achievement_id, achiever_id: oneProgress.achiever_id }, function(err,progresses) {
-        progresses.forEach(function(currentProgress, index) {
-            currentProgress.publiclyVisible = true;
-            currentProgress.save();
-            if (index === (progresses.length -1)) {
-                newsfeedEvent.addEvent("publicize", oneProgress.achiever_id, oneProgress.achievement_id);
-            }
-        });
-    });*/
+function publicize(achievementInstance, callback) {
+    achievementInstance.publiclyVisible = true;
+    var id = achievementInstance._id;
+    delete achievementInstance._id;
+    AchievementInstance.findByIdAndUpdate(id, achievementInstance, function (err, updatedAchievement) {
+        callback(updatedAchievement);
+    });
 }
 
-function unpublicize(oneProgress) {
-    /*progress.Progress.find({ achievement_id: oneProgress.achievement_id, achiever_id: oneProgress.achiever_id }, function(err,progresses) {
-        progresses.forEach(function(currentProgress, index) {
-            currentProgress.publiclyVisible = false;
-            currentProgress.save();
-            if (index == (progresses.length -1)) {
-                newsfeedEvent.addEvent("achievementUnpublicized", oneProgress.achiever_id, oneProgress.achievement_id);
-            }
-        });
-    });*/
+function unpublicize(achievementInstance, callback) {
+    achievementInstance.publiclyVisible = false;
+    var id = achievementInstance._id;
+    delete achievementInstance._id;
+    AchievementInstance.findByIdAndUpdate(id, achievementInstance, function (err, updatedAchievement) {
+        callback(updatedAchievement);
+    });
 }
 
-function remove(achievementInstance, userId, next) {
-    AchievementInstance.findById( achievementInstance._id, function(err1,currentAchievementInstance) {
+function remove(achievementInstance, next) {
+    AchievementInstance.findById(achievementInstance._id, function(err1, currentAchievementInstance) {
         var achievementId = achievementInstance.achievementId;
         currentAchievementInstance.remove(function () {
             achievement.Achievement.findById( achievementId, function (err2, currentAchievement) {

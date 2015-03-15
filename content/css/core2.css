@@ -312,6 +312,8 @@ table tr td.goal{
 
 table tr td.quantity{
     width: 10%;
+    vertical-align: bottom;
+    padding-bottom: 4px;
 }
 
 table tr td.goal .progressWrap{
@@ -589,6 +591,41 @@ span.create-link a{
     float: right;
     width: 70%;
 }
+.tabs{
+    height: 21px;
+}
+.tabs span{
+    display: inline;
+    background-color: #131213;
+    padding: 5px 8px;
+    text-decoration: none;
+
+    border-top-left-radius: 3px;
+    -webkit-border-top-left-radius: 3px;
+    -moz-border-radius-topleft: 3px;
+
+    border-top-right-radius: 3px;
+    -webkit-border-top-right-radius: 3px;
+    -moz-border-radius-topright: 3px;
+    margin-right: 3px;
+}
+
+.tabs span.selected{
+    background-color: #7e7b76;
+}
+
+.tabs span:hover{
+    background-color: #7e7b76;
+}
+.tabs a{
+    color: #ffffff;
+    text-decoration: none;
+    font-family: Verdana;
+    font-weight: normal;
+    font-size: 13px;
+}
+
+
 
 .listWrap{
     margin-bottom: 20px;
