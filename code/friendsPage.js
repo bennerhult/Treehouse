@@ -35,15 +35,19 @@ module.exports = function (app, friendship, user, requestHandlers) {
 
                     var allFriends = [];
                     var fetchFriends = function (direction, ids, cb) {
-                        user.User.find().or(ids).exec(function(err, result) {
-                            if(err) {
-                                throw err;
-                            }
-                            for(var j=0; j<result.length; j++) {
-                                allFriends.push({ imageURL : result[j].imageURL, username : result[j].username, direction : direction });
-                            }
-                            cb();
-                        });
+                        if(ids.length == 0) {
+                            cb()
+                        } else {
+                            user.User.find().or(ids).exec(function(err, result) {
+                                if(err) {
+                                    throw err;
+                                }
+                                for(var j=0; j<result.length; j++) {
+                                    allFriends.push({ imageURL : result[j].imageURL, username : result[j].username, direction : direction });
+                                }
+                                cb();
+                            });
+                        }
                     }
 
                     fetchFriends('confirmed', confirmedFriendUsersFilter, function () {
@@ -54,6 +58,15 @@ module.exports = function (app, friendship, user, requestHandlers) {
                         });
                     });
                 });
+        });
+
+        app.post('/api/friends/removeUser', function (request, response) {
+            var userId = request.session.currentUser._id
+            user.User.findOne({ username: request.body.username }, function(err, friendUser) {
+                friendship.unfriendUserById(request.session.currentUser._id, friendUser._id, request.body.direction, function () {
+                    requestHandlers.respondWithJson(response, {})
+                })
+            })
         });
     }
 

@@ -21,13 +21,13 @@
 
     <div class="listWrap">
         <div class="header">My friends</div>
-        <div class="item" ng-repeat="f in friends">
+        <div class="item" ng-repeat="f in friends" ng-hide="f.isHidden">
             <div class="newsUserArea">
                 <img src="{{f.imageURL}}" >
                 <p>{{f.username}} ({{f.direction}})</p>
                 <div class="clear"> </div>
                 <div class="remove">
-                    <a href="#">Remove</a>
+                    <a href="#" ng-click="removeUser(f)">Remove</a>
                 </div>
             </div>
         </div>

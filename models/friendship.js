@@ -19,7 +19,8 @@ module.exports = {
     getPendingRequests: getPendingRequests,
     removeFriendRequest: removeFriendRequest,
     confirmFriendRequest: confirmFriendRequest,
-    getFriends: getFriends
+    getFriends: getFriends,
+    unfriendUserById : unfriendUserById
 }
 
 function createFriendship(friend1_id, friend2_id, callback) {
@@ -84,6 +85,21 @@ function removeFriendRequest(friendship_id, next) {
         friendshipToBeRemoved.remove()
         next()
     })
+}
+
+function unfriendUserById(actualUserId, friendUserId, direction, callback) {
+    if(direction == 'incoming') {
+        //Decline a friend pending friend request from someone the user doesnt want to be friends with
+        Friendship.remove({ friend1_id: friendUserId, friend2_id: actualUserId, confirmed : false }, callback);
+    } else if(direction == 'incoming') {
+         //Revoke a pending friend request the user made that has not been accepted yet
+        Friendship.remove({ friend1_id: actualUserId, friend2_id: friendUserId, confirmed : false }, callback);
+    } else {
+        //Revoke any confirmed friendships with the user regardless of who initiated the friendship
+        Friendship.remove({ friend1_id: actualUserId, friend2_id: friendUserId, confirmed : true }, function () {
+            Friendship.remove({ friend1_id: friendUserId, friend2_id: actualUserId, confirmed : true }, callback);
+        });
+    }
 }
 
 function confirmFriendRequest(friendship_id, callback) {
