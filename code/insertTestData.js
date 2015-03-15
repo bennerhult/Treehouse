@@ -46,7 +46,7 @@ module.exports = function (user, loginToken, thSettings, friendship) {
         }
 
         var addIncomingFriendRequest = function (cba) {
-            createUser('-f', function (u1) {
+            createUser('if-', function (u1) {
                 friendship.createFriendship(u1._id, user._id, function () {
                     cba();
                 })
@@ -54,7 +54,7 @@ module.exports = function (user, loginToken, thSettings, friendship) {
         }
 
         var addOutgoingFriendRequest = function (cba) {
-            createUser('-f', function (u1) {
+            createUser('of-', function (u1) {
                 friendship.createFriendship(user._id, u1._id, function () {
                     cba();
                 })
