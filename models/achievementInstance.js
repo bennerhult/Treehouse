@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
 
 var AchievementInstanceSchema = new Schema({
     createdDate             : {type: Date, required: true},
+    unlockedDate            : {type: Date},
     createdBy               : {type: String, required: true},
     achievementId           : {type: Schema.ObjectId, required: true},
     title                   : {type: String, required: true},
@@ -80,8 +81,10 @@ function createIssuedAchievement(createdBy, title, description, imageURL, issuer
 }
 
 function getAchievementList(userId, callback) {
-    AchievementInstance.find({ createdBy: userId}, {}, { sort: { 'created' : -1 } }, function(err, achievementInstances) {
-        callback(achievementInstances);
+    AchievementInstance.find({ createdBy: userId, unlockedDate: { $exists: false } }, {}, { sort: { 'created' : -1 } }, function(err, achievementInstancesInProgress) {
+        AchievementInstance.find({ createdBy: userId, unlockedDate: { $exists: true }}, {}, { sort: { 'created' : -1 } }, function(err2, achievementInstancesUnlocked) {
+            callback(achievementInstancesInProgress, achievementInstancesUnlocked);
+        });
     });
 }
 
@@ -128,6 +131,9 @@ function progress(goalToUpdate, achievementToUpdate, callback) {
             goalProcessed();
         }, function(){
             achievementToUpdate.percentageCompleted = 100 * (newQuantityCompleted/newQuantityTotal);
+           if (newQuantityCompleted >= newQuantityTotal) {
+                achievementToUpdate.unlockedDate = new Date();
+            }
             var id = achievementToUpdate._id;
             delete achievementToUpdate._id;
             AchievementInstance.findByIdAndUpdate(id, achievementToUpdate, function (err, updatedAchievement) {

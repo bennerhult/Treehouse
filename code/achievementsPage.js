@@ -7,8 +7,8 @@ module.exports = function (app, templates, requestHandlers, user, progress, mome
         });
 
         app.post('/api/achievements/init', function (request, response) {
-            achievementInstance.getAchievementList(request.session.currentUser._id, function(achievementList) {
-                return requestHandlers.respondWithJson(response, { achievementList: achievementList });
+            achievementInstance.getAchievementList(request.session.currentUser._id, function(progressList, unlockedList) {
+                return requestHandlers.respondWithJson(response, { progressList: progressList,  unlockedList: unlockedList});
             });
         });
     }
