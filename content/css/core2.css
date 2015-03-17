@@ -628,6 +628,7 @@ span.create-link a{
 
 
 .listWrap{
+    position: relative;
     margin-bottom: 20px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -667,6 +668,13 @@ span.create-link a{
     width: 100%;
     vertical-align: top;
 }
+
+ul.icons{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
 .navigation{
     padding: 10px;
     border-bottom: 1px solid #5c5c5b;
