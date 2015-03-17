@@ -21,9 +21,7 @@ treehouseApp.controller('achievementsController', function($scope, $http, achiev
     $scope.showUnlockedList = function () {
         $scope.achievementList = $scope.unlockedList;
     };
-    
+
     //TODO markera rätt flik
     //TODO inte kunna klicka på vald flik
-    //TODO visa unlocked-datum
-
 });
