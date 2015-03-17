@@ -8,6 +8,7 @@ treehouseApp.controller('achievementsController', function($scope, $http, achiev
 
         $scope.achievementList = result.progressList;
         $scope.isLoading = false;
+        $scope.showingProgressList = true;
     });
 
     $scope.openAchievement = function (chosenAchievement) {
@@ -15,13 +16,29 @@ treehouseApp.controller('achievementsController', function($scope, $http, achiev
     };
 
     $scope.showProgressList = function () {
+        $scope.showingProgressList = true;
         $scope.achievementList = $scope.progressList;
     };
 
     $scope.showUnlockedList = function () {
+        $scope.showingProgressList = false;
         $scope.achievementList = $scope.unlockedList;
     };
 
-    //TODO markera rätt flik
+    $scope.getTabClass = function(tabName) {
+        if (tabName === 'progress') {
+            if ($scope.showingProgressList) {
+                return "selected";
+            } else {
+                return "";
+            }
+        } else if (tabName === 'unlocked') {
+            if ($scope.showingProgressList) {
+                return "";
+            } else {
+                return "selected";
+            }
+        }
+    };
     //TODO inte kunna klicka på vald flik
 });
