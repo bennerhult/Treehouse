@@ -24,21 +24,4 @@ treehouseApp.controller('achievementsController', function($scope, $http, achiev
         $scope.showingProgressList = false;
         $scope.achievementList = $scope.unlockedList;
     };
-
-    $scope.getTabClass = function(tabName) {
-        if (tabName === 'progress') {
-            if ($scope.showingProgressList) {
-                return "selected";
-            } else {
-                return "";
-            }
-        } else if (tabName === 'unlocked') {
-            if ($scope.showingProgressList) {
-                return "";
-            } else {
-                return "selected";
-            }
-        }
-    };
-    //TODO inte kunna klicka på vald flik
 });

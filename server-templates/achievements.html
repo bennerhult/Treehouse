@@ -2,8 +2,11 @@
 <div ng-include src="'/server-templates/includes/desktopMenu.html'"></div>
 <div class="content">
     <div class="tabs">
-        <a ng-click="showProgressList();" href="#"><span ng-class="getTabClass('progress')">Progress</span></a>
-        <a ng-click="showUnlockedList();" href="#"><span ng-class="getTabClass('unlocked')">Unlocked</span></a>
+        <a ng-show="showingProgressList" href="#"><span class="selected">Progress</span></a>
+        <a ng-click="showProgressList();" ng-show="!showingProgressList" href="#"><span>Progress</span></a>
+
+        <a ng-click="showUnlockedList();" ng-show="showingProgressList" href="#"><span>Unlocked</span></a>
+        <a ng-show="!showingProgressList" href="#"><span class="selected">Unlocked</span></a>
     </div>
     <div class="listWrap">
         <div ng-repeat="currentAchievement in achievementList" class="item">
