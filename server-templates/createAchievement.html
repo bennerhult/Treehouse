@@ -29,11 +29,12 @@
                             <input type="text" class="formstyle" ng-model="currentGoal.title" value="{{currentGoal.title}}" placeholder="Add a goal" ng-keypress="goalKeyPress($event, $last, currentGoal);" ng-paste="goalKeyPress($event, $last);">
                         </td>
                         <td class="quantity">
-                            <input type="text" class="formstyle"  ng-model="currentGoal.quantity" value="{{currentGoal.quantity}}"  placeholder="1">
+                            <input type="number" class="formstyle"  ng-model="currentGoal.quantity" value="{{currentGoal.quantity}}"  placeholder="1" valid-number>
                         </td>
                     </tr>
                 </table>
             </div>
+            <div ng-show="goalError">An achievement must have at least one goal!</div>
         </div>
         <input type="submit" id="saveButton" ng-click="createAchievement($event)" class="button" value="Create achievement" />
     </form>

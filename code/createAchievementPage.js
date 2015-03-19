@@ -23,6 +23,7 @@ module.exports = function (app, templates, requestHandlers, user, progress, mome
         }
     }
 
+
     return {
         registerHandlers : registerHandlers
     };

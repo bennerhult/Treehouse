@@ -60,20 +60,24 @@ treehouseApp.controller('createAchievementController', function($scope,  $http, 
             if(!currentGoal.quantity) {
                 currentGoal.quantity = 1;
             }
-
         }
     }
 
     $scope.createAchievement = function(evt) {
-        if ($scope.achievementTitle && $scope.achievementTitle.length > 0 ) {
-            $http.post('/api/achievements/createAchievement', {
-                achievementTitle : $scope.achievementTitle,
-                achievementDescription : $scope.achievementDescription,
-                achievementImage : $("#achievementImage").attr("src"),
-                goalList :  $scope.goalList
-            }).success(function(result) {
-                 document.location =  result.url;
-            });
+        if ($scope.goalList.length > 0 && $scope.goalList[0] && $scope.goalList[0].title && $scope.goalList[0].title.length > 0 && $scope.goalList[0].quantity && $scope.goalList[0].quantity > 0) {
+            $scope.goalError = false;
+            if ($scope.achievementTitle && $scope.achievementTitle.length > 0) {
+                 $http.post('/api/achievements/createAchievement', {
+                    achievementTitle : $scope.achievementTitle,
+                    achievementDescription : $scope.achievementDescription,
+                    achievementImage : $("#achievementImage").attr("src"),
+                    goalList :  $scope.goalList
+                }).success(function(result) {
+                    document.location =  result.url;
+                });
+            }
+        } else {
+            $scope.goalError = true;
         }
     }
 
@@ -171,4 +175,33 @@ treehouseApp.controller('createAchievementController', function($scope,  $http, 
         $("#achievementImage").attr("src", imageURL);
         callback();
     }
+});
+
+treehouseApp.directive('validNumber', function() {
+    return {
+        require: '?ngModel',
+        link: function(scope, element, attrs, ngModelCtrl) {
+            if(!ngModelCtrl) {
+                return;
+            }
+
+            ngModelCtrl.$parsers.push(function(val) {
+                if (angular.isUndefined(val)) {
+                    var val = '';
+                }
+                var clean = val.replace( /[^0-9]+/g, '');
+                if (val !== clean) {
+                    ngModelCtrl.$setViewValue(clean);
+                    ngModelCtrl.$render();
+                }
+                return clean;
+            });
+
+            element.bind('keypress', function(event) {
+                if(event.keyCode === 32) {
+                    event.preventDefault();
+                }
+            });
+        }
+    };
 });
