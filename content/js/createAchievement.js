@@ -61,15 +61,16 @@ treehouseApp.controller('createAchievementController', function($scope,  $http, 
     }
 
     $scope.createAchievement = function(evt) {
-        evt.preventDefault();
-        $http.post('/api/achievements/createAchievement', {
-            achievementTitle : $scope.achievementTitle,
-            achievementDescription : $scope.achievementDescription,
-            achievementImage : $("#achievementImage").attr("src"),
-            goalList :  $scope.goalList
-        }).success(function(result) {
-            document.location =  result.url;
-        });
+       if ($scope.achievementTitle && $scope.achievementTitle.length > 0 ) {
+           $http.post('/api/achievements/createAchievement', {
+               achievementTitle : $scope.achievementTitle,
+               achievementDescription : $scope.achievementDescription,
+               achievementImage : $("#achievementImage").attr("src"),
+               goalList :  $scope.goalList
+           }).success(function(result) {
+               document.location =  result.url;
+           });
+       }
     }
 
     $scope.toggleImage = function(evt, step) {

@@ -1,16 +1,18 @@
 <div ng-include src="'/server-templates/includes/userInfo.html'"></div>
 <div ng-include src="'/server-templates/includes/desktopMenu.html'"></div>
 <div class="content">
-
-    <form novalidate ng-submit="createAchievement($event)" name="createAchievementForm">
+    <form name="createAchievementForm" novalidate>
         <div class="section">
             <div class="twothirds">
                 <input type="text" class="formstyle" name="achievementTitle" ng-model="achievementTitle" placeholder="Your achievements title" required>
+                <div ng-show="createAchievementForm.$submitted || createAchievementForm.achievementTitle.$touched">
+                    <div ng-show="createAchievementForm.achievementTitle.$error.required">No title, no achievement!</div>
+                </div>
                 <textarea name="achievementDescription" ng-model="achievementDescription" placeholder="Add a description"></textarea>
                 <input type="text" class="formstyle" placeholder="Series (not implemented)" >
             </div>
             <div class="onethird">
-                <img class="border" width="96" height="96" id="achievementImage" ng-src="/content/img/achievementImages/1.png" alt="An image depicting your awesome achievement">
+                <img class="border" width="96" height="96" id="achievementImage" ng-src="/content/img/achievementImages/1.png" alt="An image depicting your awe-inspiring achievement">
                 <ul class="swapimage">
                     <li><a href="javascript:void(0)" ng-click="toggleImage($event, -1)"><img src="../content/img/left-arrow.png" alt=""></a></li>
                     <li class="last"><a href="javascript:void(0)" ng-click="toggleImage($event, 1)"><img src="../content/img/right-arrow.png" alt=""></a></li>
@@ -19,7 +21,6 @@
             </div>
             <div class="clear"></div>
         </div>
-
         <div class="listWrap">
             <div ng-repeat="currentGoal in goalList" class="item">
                 <table>
@@ -34,8 +35,7 @@
                 </table>
             </div>
         </div>
-
-        <input type="submit" id="saveButton" class="button" value="Create achievement">
+        <input type="submit" id="saveButton" ng-click="createAchievement($event)" class="button" value="Create achievement" />
     </form>
     <div class="clear"> </div>
 </div>
