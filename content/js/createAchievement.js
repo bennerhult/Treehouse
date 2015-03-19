@@ -84,4 +84,86 @@ treehouseApp.controller('createAchievementController', function($scope,  $http, 
         }
         $("#achievementImage").attr("src", images[newPos]);
     }
+
+    $scope.uploadAchievementImage = function(evt) {
+        evt.preventDefault();
+        $scope.errorState = false;
+        $scope.isConverting = true;
+        var container = 'modal';
+        if (pageService.isiOs) {
+            $('<iframe id="imageUploadFrame" class="imageUploadFrame" style="z-index:999;" >').appendTo('body');
+            container = 'imageUploadFrame';
+            $("#bottomMenu").hide();
+            $("#morePage").hide();
+        }
+        filepicker.setKey('AM9A7pbm3QPSe24aJU2M2z');
+        filepicker.pick({container: container, services: ['COMPUTER', 'FACEBOOK', 'IMAGE_SEARCH', 'URL', 'INSTAGRAM', 'FLICKR', 'DROPBOX', 'PICASA', 'GOOGLE_DRIVE', 'SKYDRIVE','WEBDAV', 'EVERNOTE', 'GMAIL', 'GITHUB']}, function(inkBlob){
+            if (pageService.isiOs) {
+                $("#imageUploadFrame").remove();
+                $("#bottomMenu").show();
+                $("#morePage").show();
+            }
+            $("#achievementImage").attr("src", inkBlob.url);
+            filepicker.stat(inkBlob, {width: true, height: true},
+                function(metadata){
+                    if (metadata.width === metadata.height) {
+                        resizeAndSaveImage(inkBlob, 96, 96)
+                    } else if (metadata.width > metadata.height) {
+                        filepicker.convert(inkBlob, {width: metadata.height, height: metadata.height, fit: 'crop'},  function(squareInkBlob){
+                            filepicker.remove(inkBlob, function(){
+                                resizeAndSaveImage(squareInkBlob, 96, 96);
+                            })
+                        }, function(errorMessage) {
+                            if (errorMessage) {
+                                $scope.errorState = true;
+                                $scope.errorMessage = errorMessage;
+                            }
+                        }, function(progressPercent) {})
+                    } else {
+                        filepicker.convert(inkBlob, {width: metadata.width, height: metadata.width, fit: 'crop'},  function(squareInkBlob2){
+                            filepicker.remove(inkBlob, function(){
+                                resizeAndSaveImage(squareInkBlob2, 96, 96);
+                            })
+                        }, function(errorMessage) {
+                            if (errorMessage) {
+                                $scope.errorState = true;
+                                $scope.errorMessage = errorMessage;
+                            }
+                        }, function(progressPercent) {});
+                    }
+                }
+            );
+        }, function(){ //user closed the modal window
+            $scope.$apply(function () {
+                $scope.isConverting = false;
+            });
+        })
+    }
+
+    function resizeAndSaveImage (inkBlob, newWidth, newHeight) {
+        filepicker.convert(inkBlob, {width: newWidth, height: newHeight},
+            function(convertedInkBlob){
+                $("#achievementImage").attr("src", inkBlob.url);
+                $scope.isConverting = false;
+                saveImage(convertedInkBlob.url, function () {
+                    filepicker.remove(inkBlob, function() {}, function(fpError){
+                        if (fpError) {
+                            $scope.errorState = true;
+                            $scope.errorMessage = fpError;
+                        }
+                    });
+                });
+            }, function(errorMessage) {
+                if (errorMessage) {
+                    $scope.errorState = true;
+                    $scope.errorMessage = errorMessage;
+                }
+            }, function(progressPercent) {}
+        );
+    }
+
+    function saveImage(imageURL, callback) {
+        $("#achievementImage").attr("src", imageURL);
+        callback();
+    }
 });

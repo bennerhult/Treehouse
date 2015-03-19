@@ -50,7 +50,6 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
     $scope.pageService = pageService;
     pageService.setTitle('Treehouse');
 
-
     $http.post('/api/init', {}).success(function(result) {
         pageService.setName(result.firstName, result.lastName, result.username);
         pageService.setUserImageURL(result.userImageURL);
@@ -59,7 +58,6 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
         var isiOs = $scope.isiPad || $scope.isiPhone;
         pageService.setIsiOs(isiOs);
         //TODO add pageService.isAppMode
-
         $scope.isLoading = false;
     });
 

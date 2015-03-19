@@ -12,7 +12,6 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
 
     $scope.uploadUserImage = function(evt) {
         evt.preventDefault();
-
         $scope.errorState = false;
         $scope.isConverting = true;
         var container = 'modal';
@@ -33,11 +32,11 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
             filepicker.stat(inkBlob, {width: true, height: true},
                 function(metadata){
                     if (metadata.width === metadata.height) {
-                        resizeAndSaveUserImage(inkBlob);
+                        resizeAndSaveImage(inkBlob, 96, 96, '/api/more/setUserImage')
                     } else if (metadata.width > metadata.height) {
                         filepicker.convert(inkBlob, {width: metadata.height, height: metadata.height, fit: 'crop'},  function(squareInkBlob){
                             filepicker.remove(inkBlob, function(){
-                                resizeAndSaveUserImage(squareInkBlob);
+                                resizeAndSaveImage(squareInkBlob, 96, 96, '/api/more/setUserImage');
                             })
                         }, function(errorMessage) {
                             if (errorMessage) {
@@ -48,7 +47,7 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
                     } else {
                         filepicker.convert(inkBlob, {width: metadata.width, height: metadata.width, fit: 'crop'},  function(squareInkBlob2){
                             filepicker.remove(inkBlob, function(){
-                                resizeAndSaveUserImage(squareInkBlob2);
+                                resizeAndSaveImage(squareInkBlob2, 96, 96, '/api/more/setUserImage');
                             })
                         }, function(errorMessage) {
                             if (errorMessage) {
@@ -66,16 +65,16 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
         })
     }
 
-    function resizeAndSaveUserImage(inkBlob) {
-        filepicker.convert(inkBlob, {width: 96, height: 96},
+    function resizeAndSaveImage (inkBlob, newWidth, newHeight, saveApiPath) {
+        filepicker.convert(inkBlob, {width: newWidth, height: newHeight},
             function(convertedInkBlob){
                 pageService.setUserImageURL(convertedInkBlob.url);
                 $scope.isConverting = false;
-                saveUserImage(convertedInkBlob.url, function (error) {
-                        if (error.errCode === 1) {
-                            $scope.errorState = true;
-                            $scope.errorMessage = error;
-                        }
+                saveImage(convertedInkBlob.url, saveApiPath, function (error) {
+                    if (error.errCode === 1) {
+                        $scope.errorState = true;
+                        $scope.errorMessage = error;
+                    }
                     filepicker.remove(inkBlob, function() {}, function(fpError){
                         if (fpError) {
                             $scope.errorState = true;
@@ -92,15 +91,14 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
         );
     }
 
-    function saveUserImage(imageURL, callback) {
-        $http.post('/api/more/setUserImage', { imageURL : imageURL }).success(function(error) {
+    function saveImage(imageURL, saveApiPath, callback) {
+        $http.post(saveApiPath, { imageURL : imageURL }).success(function(error) {
             callback(error);
         });
     }
 
     $scope.upgradeToIssuer = function(evt) {
         evt.preventDefault();
-
         $http.post('/api/more/upgradeToIssuer', { username : pageService.username  }).success(function(result) {
             if(result.errCode === 1) {
                 $scope.issuerRequestError = true;
@@ -112,7 +110,6 @@ treehouseApp.controller('moreController', function($scope, $http, pageService) {
 
     $scope.signout = function(evt) {
         evt.preventDefault();
-
         $http.post('/api/more/signout', {}).success(function(result) {
             document.location =  result.url;
         });

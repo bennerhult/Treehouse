@@ -70,6 +70,11 @@ app.use(session({
     secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4'
 }))
 
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:1337');
+    next();
+});
+
 //Database models
 var user = require('./models/user.js'),
     achievement = require('./models/achievement.js'),
