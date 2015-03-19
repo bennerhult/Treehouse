@@ -26,7 +26,7 @@
                 <table>
                     <tr>
                         <td class="goal">
-                            <input type="text" class="formstyle" ng-model="currentGoal.title" value="{{currentGoal.title}}" placeholder="Add a goal" ng-keypress="goalKeyPress($event, $last);" ng-paste="goalKeyPress($event, $last);">
+                            <input type="text" class="formstyle" ng-model="currentGoal.title" value="{{currentGoal.title}}" placeholder="Add a goal" ng-keypress="goalKeyPress($event, $last, currentGoal);" ng-paste="goalKeyPress($event, $last);">
                         </td>
                         <td class="quantity">
                             <input type="text" class="formstyle"  ng-model="currentGoal.quantity" value="{{currentGoal.quantity}}"  placeholder="1">
