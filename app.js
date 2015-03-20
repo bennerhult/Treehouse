@@ -68,12 +68,14 @@ app.use(session({
     saveUninitialized: false,
     cookie: { maxAge: new Date(Date.now() + 2 * 604800000)},
     secret: 'jkdWs23321kA3kk3kk3kl1lklk1ajUUUAkd378043!sa3##21!lk4'
-}))
+}));
 
-app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:1337');
-    next();
-});
+if(thSettings.isDevelopment()) {
+    app.use(function (req, res, next) {
+        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:1337');
+        next();
+    });
+};
 
 //Database models
 var user = require('./models/user.js'),
