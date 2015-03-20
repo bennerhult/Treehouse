@@ -24,6 +24,10 @@ treehouseApp.config(function($routeProvider, $locationProvider) {
             templateUrl: '/server-templates/achievement.html',
             controller: 'achievementController'
         })
+        .when('/app/achievementInstance/:achievementInstanceId', {
+            templateUrl: '/server-templates/publicAchievement.html',
+            controller: 'publicAchievementController'
+        })
         .when('/app/achievements', {
             templateUrl: '/server-templates/achievements.html',
             controller: 'achievementsController'

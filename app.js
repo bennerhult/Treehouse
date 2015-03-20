@@ -129,6 +129,8 @@ skipSigninPageIfReturningUser.use(function(req, res, next) {
 app.use('/', publiclyAvailable);
 app.use('/signin', skipSigninPageIfReturningUser);
 app.use('/api', publiclyAvailable);
+app.use('/public', publiclyAvailable)
+app.use('/app/achievementInstance', publiclyAvailable);
 app.use('/app', requireAccess);
 
 app.get('/content/*', function(request, response){
@@ -194,6 +196,7 @@ require('./code/newsfeedPage.js')(app, templates, requestHandlers, newsfeed).reg
 require('./code/friendsPage.js')(app, friendship, user, requestHandlers).registerHandlers();
 require('./code/morePage.js')(app, templates, requestHandlers, user, thSettings, email).registerHandlers();
 require('./code/achievementPage.js')(app, templates, requestHandlers, user, progress, moment, shareholding, achievementInstance, thSettings).registerHandlers();
+require('./code/publicAchievementPage.js')(app, templates).registerHandlers();
 require('./code/achievementsPage.js')(app, templates, requestHandlers, user, progress, moment, shareholding, achievementInstance).registerHandlers();
 require('./code/createAchievementPage.js')(app, templates, requestHandlers, user, progress, moment, shareholding, achievementInstance, thSettings).registerHandlers();
 

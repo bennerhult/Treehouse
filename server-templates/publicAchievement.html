@@ -21,9 +21,7 @@
     </div>
     <div class="section">
         <div class="tabs">
-            <a href=""><span class="selected">My progress</span></a>
-            <a href=""><span>Share (not implemented)</span></a>
-            <a href=""><span>Compare (not implemented)</span></a>
+            <a href=""><span class="selected">Progress</span></a>
         </div>
         <div class="listWrap">
             <div class="item" ng-repeat="currentGoal in achievement.goals">
@@ -47,19 +45,5 @@
             </div>
         </div>
     </div>
-
-    <div class="header">
-        <span class="create-link"><a href="#" ng-show="achievement.publiclyVisible" ng-click="unpublicize($event)">Unpublicize</a></span>
-        <span class="create-link"><a href="#" ng-hide="achievement.publiclyVisible" ng-click="publicize($event)">Publicize</a></span>
-        <span class="create-link"><a href="#">Edit(not implemented)</a></span>
-        <span class="create-link"><a href="/app/achievements" ng-click="deleteAchievement($event)">Delete</a></span>
-    </div>
-
-    <div class="header" ng-show="achievement.publiclyVisible">
-        <span class="create-link" ><a href="/app/achievementInstance/{{achievement._id}}">Visit public badge</a></span>
-    </div>
-
     <div class="clear"> </div>
 </div>
-<div class="clear"></div>
-<div ng-include src="'/server-templates/includes/bottomMenu.html'"></div>
