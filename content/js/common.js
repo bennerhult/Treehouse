@@ -78,7 +78,7 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
     }
 
     $scope.isRegularAppPage = function() {
-        if ($location.path().substr(0, 5) === '/app/') {
+        if ($location.path().substr(0, 5) === '/app/'  || $location.path().substr(0, 28) === '/public/achievementInstance/') {
             return true;
         } else {
             return false;
