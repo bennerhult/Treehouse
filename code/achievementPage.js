@@ -2,10 +2,6 @@ module.exports = function (app, templates, requestHandlers, user, progress, mome
     'use strict';
 
     function registerHandlers() {
-        app.get('/app/achievementInstance/:achievementInstanceId', function (request, response) {
-            templates.serveHtmlRaw(response, './server-templates/treehouse.html', {});
-        });
-
         app.post('/api/achievements/progress', function (request, response) {
             achievementInstance.progress(request.body.goal, request.body.achievementInstance, function(updatedAchievementInstance) {
                 requestHandlers.respondWithJson(response, { updatedAchievementInstance : updatedAchievementInstance });

@@ -2,7 +2,7 @@ module.exports = function (app, templates, requestHandlers, achievementInstance)
     'use strict';
 
     function registerHandlers() {
-        app.get('/app/achievementInstance/:achievementInstanceId', function (request, response) {
+        app.get('/public/achievementInstance/:achievementInstanceId', function (request, response) {
             templates.serveHtmlRaw(response, './server-templates/treehouse.html', {});
         });
 

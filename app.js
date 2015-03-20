@@ -130,7 +130,6 @@ app.use('/', publiclyAvailable);
 app.use('/signin', skipSigninPageIfReturningUser);
 app.use('/api', publiclyAvailable);
 app.use('/public', publiclyAvailable)
-app.use('/app/achievementInstance', publiclyAvailable);
 app.use('/app', requireAccess);
 
 app.get('/content/*', function(request, response){
