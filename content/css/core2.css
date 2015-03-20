@@ -839,9 +839,25 @@ textarea{
 
 
 input.error{
-    -moz-box-shadow: inset -5px -5px 10px rgba(173,18,39,0.27);
-    -webkit-box-shadow: inset -5px -5px 10px rgba(173,18,39,0.27);
-    box-shadow: inset -5px -5px 10px rgba(173,18,39,0.27);
+    -moz-box-shadow: inset -5px -5px 10px rgba(198,9,9,0.4);
+    -webkit-box-shadow: inset -5px -5px 10px rgba(198,9,9,0.4);
+    box-shadow: inset -5px -5px 10px rgba(198,9,9,0.4);
+}
+
+input.error::-webkit-input-placeholder {
+    color: #b90707;
+}
+
+input.error:-moz-placeholder { /* Firefox 18- */
+    color: #b90707;
+}
+
+input.error::-moz-placeholder {  /* Firefox 19+ */
+    color: #b90707;
+}
+
+input.error:-ms-input-placeholder {
+    color: #b90707;
 }
 
 p{
@@ -849,6 +865,13 @@ p{
     font-size: 14px;
     color: #ffffff;
 }
+
+p.errortext{
+    font-family: Verdana;
+    font-size: 14px;
+    color: #dd1d1d;
+}
+
 
 p.dark{
     font-family: Verdana;
