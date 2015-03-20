@@ -196,7 +196,7 @@ require('./code/newsfeedPage.js')(app, templates, requestHandlers, newsfeed).reg
 require('./code/friendsPage.js')(app, friendship, user, requestHandlers).registerHandlers();
 require('./code/morePage.js')(app, templates, requestHandlers, user, thSettings, email).registerHandlers();
 require('./code/achievementPage.js')(app, templates, requestHandlers, user, progress, moment, shareholding, achievementInstance, thSettings).registerHandlers();
-require('./code/publicAchievementPage.js')(app, templates).registerHandlers();
+require('./code/publicAchievementPage.js')(app, templates, requestHandlers, achievementInstance).registerHandlers();
 require('./code/achievementsPage.js')(app, templates, requestHandlers, user, progress, moment, shareholding, achievementInstance).registerHandlers();
 require('./code/createAchievementPage.js')(app, templates, requestHandlers, user, progress, moment, shareholding, achievementInstance, thSettings).registerHandlers();
 

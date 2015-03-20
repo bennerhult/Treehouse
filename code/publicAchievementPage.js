@@ -1,9 +1,15 @@
-module.exports = function (app, templates) {
+module.exports = function (app, templates, requestHandlers, achievementInstance) {
     'use strict';
 
     function registerHandlers() {
         app.get('/app/achievementInstance/:achievementInstanceId', function (request, response) {
             templates.serveHtmlRaw(response, './server-templates/treehouse.html', {});
+        });
+
+        app.post('/api/publicAchievement/init', function (request, response) {
+            achievementInstance.getPublicAchievement(request.body.achievementInstanceId, function(achievementInstance) {
+                return requestHandlers.respondWithJson(response, { achievementInstance: achievementInstance});
+            });
         });
     }
 
