@@ -2,8 +2,6 @@ treehouseApp.controller('signinController', function ($scope, $http, $timeout, p
     'use strict';
 
     function init() {
-
-
         FB.init({
             appId: '480961688595420',
             status: true,
@@ -14,15 +12,13 @@ treehouseApp.controller('signinController', function ($scope, $http, $timeout, p
         });
 
         $scope.isLoading = false;
-
         var autoSignin = false;
         try {
             if(localStorage && localStorage.th_autosignin_email) {
                 $scope.emailAddress = localStorage.th_autosignin_email;
                 autoSignin = true;
             }
-        } catch(err) {
-        }
+        } catch(err) {}
         if(autoSignin) {
             $timeout(function () { $scope.signinWithEmail(); }); //To have page init be done before we try to autosignin. Avoids having to deal with things like emailSigninForm being null.
         }
@@ -39,10 +35,10 @@ treehouseApp.controller('signinController', function ($scope, $http, $timeout, p
         if($scope.emailSigninForm.$invalid) {
            if($scope.emailSigninForm.emailAddress.$error.email) {
                $scope.isEmailInvalid = true;
-            } else {
+           } else {
                $scope.nothingEntered = true;
-             }
-            return;
+           }
+           return;
         }
 
         $http.post('/api/signin/authenticate', { email : $scope.emailAddress }).success(function (result) {
