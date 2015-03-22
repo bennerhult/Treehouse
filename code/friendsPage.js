@@ -79,7 +79,7 @@ module.exports = function (app, friendship, user, requestHandlers) {
                 if(friendUser) {
                     u.user = {
                         username : friendUser.username,
-                        imageurl : friendUser.imageUrl
+                        imageURL : friendUser.imageURL
                     }
                 }
                 requestHandlers.respondWithJson(response, u)

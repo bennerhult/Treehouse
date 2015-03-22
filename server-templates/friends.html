@@ -4,7 +4,7 @@
 <div class="content">
     <div class="section">
         <input type="email" class="formstyle" ng-model="searchEmail" placeholder="Friends e-mail" >
-        <input type="submit" class="button" place value="Search" ng-click="searchForFriend($event, searchEmail)">
+        <input type="submit" class="button" place value="Search" ng-click="searchForFriend($event)">
     </div>
     <div class="message" ng-show="pageMessage">
         <p>{{pageMessage}}</p>
@@ -12,7 +12,7 @@
 
     <div class="message" ng-show="searchHitUser">
         <div class="userArea">
-            <img src="{{searchHitUser.imageUrl}}" >
+            <img ng-src="{{searchHitUser.imageURL}}" >
             <div class="addfriend"><a href="#" ng-click="sendFriendRequest($event, searchHitUser.username)">Send friend request</a></div>
             <div class="clear"> </div>
         </div>
@@ -22,7 +22,7 @@
         <div class="header">My friends</div>
         <div class="item" ng-repeat="f in friends" ng-hide="f.isHidden">
             <div class="newsUserArea">
-                <img src="{{f.imageURL}}" >
+                <img ng-src="{{f.imageURL}}" >
                 <p>{{f.username}} ({{f.direction}})</p>
                 <div class="clear"> </div>
                 <div class="remove">

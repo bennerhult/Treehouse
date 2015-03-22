@@ -21,8 +21,9 @@ treehouseApp.controller('friendsController', function($scope, pageService, $http
         $timeout(function() { $scope.pageMessage = null }, 2500);
     }
 
-    $scope.searchForFriend = function (evt, email) {
+    $scope.searchForFriend = function (evt) {
         evt.preventDefault();
+        var email = $scope.searchEmail
         if(!email || email.indexOf("@") < 0) {
             $scope.showPageMessage('Invalid email')
             return;
@@ -33,6 +34,7 @@ treehouseApp.controller('friendsController', function($scope, pageService, $http
             $scope.isLoading = false;
             if(r.user) {
                 $scope.searchHitUser = r.user
+                $scope.searchEmail = null
             } else {
                 $scope.showPageMessage('Sorry but we could not find a user with that email')
             }
@@ -45,6 +47,7 @@ treehouseApp.controller('friendsController', function($scope, pageService, $http
             $scope.isLoading = false;
             if(r.friend) {
                 $scope.friends.push(r.friend)
+                $scope.searchHitUser = null
             } else {
                 $scope.showPageMessage('Sorry, something went wrong on our end')
             }
