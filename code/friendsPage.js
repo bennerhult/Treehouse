@@ -68,6 +68,35 @@ module.exports = function (app, friendship, user, requestHandlers) {
                 })
             })
         });
+
+
+        app.post('/api/friends/findUserByEmail', function (request, response) {
+            user.User.findOne({ username: request.body.email }, function(err, friendUser) {
+                if(err) {
+                    throw err;
+                }
+                var u = { }
+                if(friendUser) {
+                    u.user = {
+                        username : friendUser.username,
+                        imageurl : friendUser.imageUrl
+                    }
+                }
+                requestHandlers.respondWithJson(response, u)
+            })
+        });
+
+        app.post('/api/friends/sendFriendRequestByUsername', function (request, response) {
+            var userId = request.session.currentUser._id
+            user.User.findOne({ username: request.body.username }, function(err, friendUser) {
+                if(err) {
+                    throw err;
+                }
+                friendship.createFriendship(userId, friendUser._id, function () {
+                    requestHandlers.respondWithJson(response, { friend : { imageURL : friendUser.imageURL, username : friendUser.username, direction : 'outgoing' } })
+                })
+            })
+        });
     }
 
     return {
