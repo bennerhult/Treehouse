@@ -1,7 +1,6 @@
 <div ng-include src="'/server-templates/includes/userInfo.html'"></div>
-<div ng-include src="'/server-templates/includes/desktopMenu.html'"></div>
+<div ng-show="signedInUser" ng-include src="'/server-templates/includes/desktopMenu.html'"></div>
 <div class="content">
-
     <div class="section">
         <div class="twothirds">
             <h3>{{achievement.title}}</h3>
