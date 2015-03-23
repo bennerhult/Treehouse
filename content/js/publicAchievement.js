@@ -1,8 +1,6 @@
 treehouseApp.controller('publicAchievementController', function($scope, $http, $routeParams, pageService, achievementService) {
     pageService.setTitle('Public Achievement');
 
-    initCreatedBy($scope, $http, $routeParams);
-
     if(!pageService.username) { //not signed in
         initAchievement($scope, $http, $routeParams);
     } else {
@@ -20,12 +18,13 @@ function initAchievement($scope, $http, $routeParams) {
         achievementInstanceId : $routeParams.achievementInstanceId
     }).success(function(result) {
         $scope.achievement = result.achievementInstance;
+        initCreatedBy($scope, $http, result.achievementInstance.createdBy);
     });
 };
 
-function initCreatedBy($scope, $http, $routeParams) {
+function initCreatedBy($scope, $http, userId) {
     $http.post('/api/publicAchievement/initCreatedBy', {
-        achievementInstanceId : $routeParams.achievementInstanceId
+        userId : userId
     }).success(function(result) {
         $scope.creator = result.createdBy;
     });

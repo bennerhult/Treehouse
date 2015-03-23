@@ -1,4 +1,4 @@
-module.exports = function (app, templates, requestHandlers, achievementInstance) {
+module.exports = function (app, templates, requestHandlers, achievementInstance, user) {
     'use strict';
 
     function registerHandlers() {
@@ -13,7 +13,7 @@ module.exports = function (app, templates, requestHandlers, achievementInstance)
         });
 
         app.post('/api/publicAchievement/initCreatedBy', function (request, response) {
-            achievementInstance.getCreatedBy(request.body.achievementInstanceId, function(createdBy) {
+            user.User.findById(request.body.userId, function(err2, createdBy) {
                 return requestHandlers.respondWithJson(response, { createdBy: createdBy});
             });
         });

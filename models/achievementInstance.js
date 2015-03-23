@@ -33,8 +33,7 @@ module.exports = {
     unpublicize: unpublicize,
     remove: remove,
     getAchievementList: getAchievementList,
-    getPublicAchievement: getPublicAchievement,
-    getCreatedBy: getCreatedBy
+    getPublicAchievement: getPublicAchievement
 }
 
 function createAchievement(createdBy, title, description, imageURL, goals, callback) {
@@ -86,14 +85,6 @@ function createIssuedAchievement(createdBy, title, description, imageURL, issuer
 function getPublicAchievement(achievementInstanceId, callback) {
     AchievementInstance.findById(achievementInstanceId, function(err1, currentAchievementInstance) {
         callback(currentAchievementInstance);
-    });
-}
-
-function getCreatedBy(achievementInstanceId, callback) {
-    AchievementInstance.findById(achievementInstanceId, function(err1, currentAchievementInstance) {
-        user.User.findById(currentAchievementInstance.createdBy, function(err2, currentCreatedBy) {
-            callback(currentCreatedBy);
-        });
     });
 }
 
