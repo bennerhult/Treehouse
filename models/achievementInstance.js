@@ -84,7 +84,11 @@ function createIssuedAchievement(createdBy, title, description, imageURL, issuer
 
 function getPublicAchievement(achievementInstanceId, callback) {
     AchievementInstance.findById(achievementInstanceId, function(err1, currentAchievementInstance) {
-        callback(currentAchievementInstance);
+        if (currentAchievementInstance && currentAchievementInstance.publiclyVisible && currentAchievementInstance.publiclyVisible === true) {
+            callback(currentAchievementInstance);
+        } else {
+            callback();
+        }
     });
 }
 

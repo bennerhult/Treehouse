@@ -17,8 +17,13 @@ function initAchievement($scope, $http, $routeParams) {
     $http.post('/api/publicAchievement/init', {
         achievementInstanceId : $routeParams.achievementInstanceId
     }).success(function(result) {
-        $scope.achievement = result.achievementInstance;
-        initCreatedBy($scope, $http, result.achievementInstance.createdBy);
+        if (result.achievementInstance) {
+            $scope.achievement = result.achievementInstance;
+            initCreatedBy($scope, $http, result.achievementInstance.createdBy);
+        } else {
+            window.location = '/app/';
+        }
+
     });
 };
 
