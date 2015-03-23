@@ -8,9 +8,13 @@ module.exports = function (app, templates, requestHandlers, achievementInstance,
 
         app.post('/api/publicAchievement/init', function (request, response) {
             achievementInstance.getPublicAchievement(request.body.achievementInstanceId, function(achievementInstance) {
-                user.User.findById(achievementInstance.createdBy, function(err2, createdBy) {
-                    return requestHandlers.respondWithJson(response, { achievementInstance: achievementInstance,  createdBy: createdBy});
-                });
+                if (achievementInstance) {
+                    user.User.findById(achievementInstance.createdBy, function(err2, createdBy) {
+                        return requestHandlers.respondWithJson(response, { achievementInstance: achievementInstance,  createdBy: createdBy});
+                    });
+                } else {
+                    return requestHandlers.respondWithJson(response, {});
+                }
             });
         });
     }
