@@ -28,7 +28,6 @@ module.exports = {
     User: User,
     createUser: createUser,
     getShortName: getShortName,
-    getUserData : getUserData,
     remove: remove,
     setImageURL : setImageURL,
     setUsernames : setUsernames
@@ -107,16 +106,6 @@ function remove(username, next) {
             })
         } else {
             next();
-        }
-    });
-}
-
-function getUserData(userId, callback) {
-    User.findById(userId , function(err, myUser) {
-        if (myUser){
-           callback(myUser.firstName, myUser.lastName, myUser.username, myUser.imageURL);
-        } else {
-            console.log("User not found for userId " + userId + ", error: " + err);
         }
     });
 }

@@ -51,8 +51,8 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
     pageService.setTitle('Treehouse');
 
     $http.post('/api/init', {}).success(function(result) {
-        pageService.setName(result.firstName, result.lastName, result.username);
-        pageService.setUserImageURL(result.userImageURL);
+        pageService.setName(result.currentUser.firstName, result.currentUser.lastName, result.currentUser.username);
+        pageService.setUserImageURL(result.currentUser.imageURL);
         $scope.isiPad = navigator.userAgent.match(/iPad/i) != null;
         $scope.isiPhone = navigator.userAgent.match(/iPhone/i) != null;
         var isiOs = $scope.isiPad || $scope.isiPhone;

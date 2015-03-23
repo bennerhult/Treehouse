@@ -14,12 +14,6 @@ module.exports = function (thSettings, user) {
             });
     }
 
-    function getUserData(id, callback) {
-        user.getUserData(id, function(firstName, lastName, username, imageURL) {
-            callback(firstName, lastName, username, imageURL)
-        })
-    }
-
     function respondWithJson(response, data) {
         response.writeHead(200, {'content-type': 'application/json' });
         response.write(JSON.stringify(data));
@@ -27,7 +21,6 @@ module.exports = function (thSettings, user) {
     }
 
     return {
-        getUserData : getUserData,
         respondWithJson : respondWithJson
     };
 };
