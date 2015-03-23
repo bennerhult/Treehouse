@@ -1,4 +1,5 @@
 treehouseApp.controller('publicAchievementController', function($scope, $http, $routeParams, pageService, achievementService) {
+    $scope.isLoading = true;
     pageService.setTitle('Public Achievement');
 
     initAchievement($scope, $http, $routeParams);
@@ -14,6 +15,7 @@ function initAchievement($scope, $http, $routeParams) {
         if (result.achievementInstance) {
             $scope.achievement = result.achievementInstance;
             $scope.creator = result.createdBy;
+            $scope.isLoading = false;
         } else {
             window.location = '/app/';
         }

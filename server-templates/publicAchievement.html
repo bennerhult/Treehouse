@@ -1,6 +1,6 @@
-<div ng-show="signedInUser" ng-include src="'/server-templates/includes/userInfo.html'"></div>
-<div ng-show="signedInUser" ng-include src="'/server-templates/includes/desktopMenu.html'"></div>
-<div class="content">
+<div ng-hide="isLoading" ng-show="signedInUser" ng-include src="'/server-templates/includes/userInfo.html'"></div>
+<div ng-hide="isLoading" ng-show="signedInUser" ng-include src="'/server-templates/includes/desktopMenu.html'"></div>
+<div ng-hide="isLoading" class="content">
     <div class="section">
         <div class="twothirds">
             <h3>{{achievement.title}} by {{creator.prettyName}}  <img class="border" width="48" height="48" ng-src="{{creator.imageURL}}" alt="{{creator.firstName}}"></h3>
