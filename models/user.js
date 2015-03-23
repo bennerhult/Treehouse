@@ -1,5 +1,16 @@
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema
+    Schema = mongoose.Schema;
+
+var schemaOptions = {
+    toObject: {
+        virtuals: true,
+        methods: true
+    }
+    ,toJSON: {
+        virtuals: true,
+        methods: true
+    }
+}
 
 var UserSchema = new Schema({
     created         : Date,
@@ -9,9 +20,9 @@ var UserSchema = new Schema({
     imageURL        : {type: String, required: true},
     isIssuer        : {type: Boolean, required: false},
     issuerName       : {type: String, required: false}
-})
+}, schemaOptions);
 
-var User = mongoose.model('User', UserSchema)
+var User = mongoose.model('User', UserSchema);
 
 module.exports = {
     User: User,
@@ -23,28 +34,40 @@ module.exports = {
     setUsernames : setUsernames
 }
 
+UserSchema.virtual('prettyName').get(function() {
+    if (this.firstName && this.lastName) {
+        return this.firstName + " " + this.lastName;
+    } else if (this.firstName) {
+        return this.firstName;
+    } else if (this.lastName) {
+        return this.lastName;
+    } else  {
+        return this.username;
+    }
+});
+
 function createUser(name, callback) {
-    var user = new User()
-    user.created = new Date()
-    user.username = name
-    user.imageURL = '../content/img/user_has_no_image.jpg'
-    user.isIssuer = false
+    var user = new User();
+    user.created = new Date();
+    user.username = name;
+    user.imageURL = '../content/img/user_has_no_image.jpg';
+    user.isIssuer = false;
     user.save(function (error) {
-        if (callback) callback(user, error)
-    })
-}
+        if (callback) callback(user, error);
+    });
+};
 
 function setImageURL(userId, imageURL, callback)   {
     User.findById(userId, function(err,myUser) {
         if (myUser) {
-            myUser.imageURL = imageURL
+            myUser.imageURL = imageURL;
 
             myUser.save(function (error) {
-                if (callback) callback(error)
-            })
+                if (callback) callback(error);
+            });
         }
-    })
-}
+    });
+};
 
 function setUsernames(userId, firstName, lastName, callback)   {
     User.findById(userId, function(err,myUser) {
@@ -53,25 +76,25 @@ function setUsernames(userId, firstName, lastName, callback)   {
             myUser.lastName = lastName;
 
             myUser.save(function (error) {
-                if (callback) callback(error)
-            })
+                if (callback) callback(error);
+            });
         }
-    })
+    });
 }
 
 function getShortName(userId, callback) {
     User.findById(userId , function(err,myUser) {
         if (myUser){
             if (myUser.firstName) {
-                callback(myUser.firstName)
+                callback(myUser.firstName);
             } else {
-                callback(null)
+                callback(null);
             }
         } else {
-            console.log("User not found for userId " + userId + ", error: " + err)
-            callback("user not found")
+            console.log("User not found for userId " + userId + ", error: " + err);
+            callback("user not found");
         }
-    })
+    });
 }
 
 function remove(username, next) {
@@ -79,13 +102,13 @@ function remove(username, next) {
         if (userToDelete) {
             userToDelete.remove(function () {
                 if (next) {
-                    next()
+                    next();
                 }
             })
         } else {
-            next()
+            next();
         }
-    })
+    });
 }
 
 function getUserData(userId, callback) {

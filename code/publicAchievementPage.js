@@ -11,6 +11,12 @@ module.exports = function (app, templates, requestHandlers, achievementInstance)
                 return requestHandlers.respondWithJson(response, { achievementInstance: achievementInstance});
             });
         });
+
+        app.post('/api/publicAchievement/initCreatedBy', function (request, response) {
+            achievementInstance.getCreatedBy(request.body.achievementInstanceId, function(createdBy) {
+                return requestHandlers.respondWithJson(response, { createdBy: createdBy});
+            });
+        });
     }
 
     return {

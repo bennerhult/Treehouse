@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
     async = require('async'),
     goal = require('./goal.js'),
+    user = require('./user.js'),
     achievement = require('./achievement.js'),
     newsfeedEvent = require('./newsfeedEvent.js'),
     Schema= mongoose.Schema;
@@ -8,7 +9,7 @@ var mongoose = require('mongoose'),
 var AchievementInstanceSchema = new Schema({
     createdDate             : {type: Date, required: true},
     unlockedDate            : {type: Date},
-    createdBy               : {type: String, required: true},
+    createdBy               : {type: Schema.ObjectId, required: true},
     achievementId           : {type: Schema.ObjectId, required: true},
     title                   : {type: String, required: true},
     description             : {type: String},
@@ -32,7 +33,8 @@ module.exports = {
     unpublicize: unpublicize,
     remove: remove,
     getAchievementList: getAchievementList,
-    getPublicAchievement: getPublicAchievement
+    getPublicAchievement: getPublicAchievement,
+    getCreatedBy: getCreatedBy
 }
 
 function createAchievement(createdBy, title, description, imageURL, goals, callback) {
@@ -84,6 +86,14 @@ function createIssuedAchievement(createdBy, title, description, imageURL, issuer
 function getPublicAchievement(achievementInstanceId, callback) {
     AchievementInstance.findById(achievementInstanceId, function(err1, currentAchievementInstance) {
         callback(currentAchievementInstance);
+    });
+}
+
+function getCreatedBy(achievementInstanceId, callback) {
+    AchievementInstance.findById(achievementInstanceId, function(err1, currentAchievementInstance) {
+        user.User.findById(currentAchievementInstance.createdBy, function(err2, currentCreatedBy) {
+            callback(currentCreatedBy);
+        });
     });
 }
 

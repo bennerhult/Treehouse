@@ -20,7 +20,7 @@ var GoalSchema = new Schema({
     title               : {type: String, required: true},
     quantityTotal       : {type: Number, required: true},
     quantityCompleted   : {type: Number, required: true}
-}, schemaOptions)
+}, schemaOptions);
 
 var Goal = mongoose.model('Goal', GoalSchema);
 

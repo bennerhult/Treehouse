@@ -138,7 +138,7 @@ function exitIfNewsfeedIsCleared(nrOfNewsFeedsGoneThrough, newsfeedEventListLeng
 
 
 function appendFriendJsonToNewsfeed(newsfeedEvent, newFriendId, currentFriendId, callback) {
-    user.getPrettyNameAndImageURL(newsfeedEvent.userId, function(prettyName) {
+   /* user.getPrettyNameAndImageURL(newsfeedEvent.userId, function(prettyName) {
         user.getPrettyNameAndImageURL(newFriendId, function(friendName, friendImageUrl) {
             var newsJson = '{'
                 + '"AchieverName":"' + prettyName +'"'
@@ -149,11 +149,11 @@ function appendFriendJsonToNewsfeed(newsfeedEvent, newFriendId, currentFriendId,
                 + '}';
             newsfeed.updateNewsfeed(currentFriendId, newsfeedEvent.eventType, newsJson, callback);
         });
-    });
+    });*/
 }
 
 function appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId, callback) {
-    user.getPrettyNameAndImageURL(newsfeedEvent.userId, function(prettyName) {
+    /*user.getPrettyNameAndImageURL(newsfeedEvent.userId, function(prettyName) {
         var newsJson = '{'
             + '"AchieverName":"' + prettyName +'"'
             + ',"AchieverId":"' + newsfeedEvent.userId + '"'
@@ -162,5 +162,5 @@ function appendJsonToNewsfeed(newsfeedEvent, currentAchievement, currentFriendId
             + ',"AchievementImageURL":"' + currentAchievement.imageURL + '"'
             + '}';
         newsfeed.updateNewsfeed(currentFriendId, newsfeedEvent.eventType, newsJson, callback);
-    });
+    });*/
 }
