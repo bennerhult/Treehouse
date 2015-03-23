@@ -3,18 +3,17 @@
 
 <div class="content">
     <div class="section">
-        <input type="email" class="formstyle" placeholder="Ange din väns e-post adress">
-        <input type="submit" class="button" value="Search">
+        <input type="email" class="formstyle" ng-model="searchEmail" placeholder="Friends e-mail" >
+        <input type="submit" class="button" place value="Search" ng-click="searchForFriend($event)">
     </div>
-    <div class="message none">
-        <p>lsporrek@avida.se is already your friend!</p>
+    <div class="message" ng-show="pageMessage">
+        <p>{{pageMessage}}</p>
     </div>
 
-    <div class="message none">
+    <div class="message" ng-show="searchHitUser">
         <div class="userArea">
-            <img src="../content/img/user_has_no_image.jpg" >
-            <p>namn/epost is found!</p>
-            <div class="addfriend"><a href="#">Send friend request</a></div>
+            <img ng-src="{{searchHitUser.imageURL}}" >
+            <div class="addfriend"><a href="#" ng-click="sendFriendRequest($event, searchHitUser.username)">Send friend request</a></div>
             <div class="clear"> </div>
         </div>
     </div>
@@ -23,11 +22,11 @@
         <div class="header">My friends</div>
         <div class="item" ng-repeat="f in friends" ng-hide="f.isHidden">
             <div class="newsUserArea">
-                <img src="{{f.imageURL}}" >
+                <img ng-src="{{f.imageURL}}" >
                 <p>{{f.username}} ({{f.direction}})</p>
                 <div class="clear"> </div>
                 <div class="remove">
-                    <a href="#" ng-click="removeUser(f)">Remove</a>
+                    <a href="#" ng-click="removeUser($event, f)">Remove</a>
                 </div>
             </div>
         </div>

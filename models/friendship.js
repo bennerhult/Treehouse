@@ -91,7 +91,7 @@ function unfriendUserById(actualUserId, friendUserId, direction, callback) {
     if(direction == 'incoming') {
         //Decline a friend pending friend request from someone the user doesnt want to be friends with
         Friendship.remove({ friend1_id: friendUserId, friend2_id: actualUserId, confirmed : false }, callback);
-    } else if(direction == 'incoming') {
+    } else if(direction == 'outgoing') {
          //Revoke a pending friend request the user made that has not been accepted yet
         Friendship.remove({ friend1_id: actualUserId, friend2_id: friendUserId, confirmed : false }, callback);
     } else {
