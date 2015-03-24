@@ -6,11 +6,7 @@
             <div class="twothirds">
                 <input type="text" class="formstyle" name="achievementTitle" ng-model="achievementTitle" placeholder="Your achievements title" required>
 
-                <!--<input type="text" class="formstyle error" placeholder="No title, no achievement!">-->
 
-                <div ng-show="createAchievementForm.$submitted || createAchievementForm.achievementTitle.$touched">
-                    <div ng-show="createAchievementForm.achievementTitle.$error.required">No title, no achievement!</div>
-                </div>
                 <textarea name="achievementDescription" ng-model="achievementDescription" placeholder="Add a description"></textarea>
                 <input type="text" class="formstyle" placeholder="Series (not implemented)" >
             </div>
@@ -25,7 +21,6 @@
             <div class="clear"></div>
         </div>
 
-        <div ng-show="goalError">An achievement must have at least one goal!</div>
         <div class="listWrap">
             <div ng-repeat="currentGoal in goalList" class="item">
                 <table>
@@ -41,6 +36,10 @@
             </div>
 
         </div>
+        <div ng-show="createAchievementForm.$submitted || createAchievementForm.achievementTitle.$touched">
+            <div ng-show="createAchievementForm.achievementTitle.$error.required"><p class="errortext">No title, no achievement!</p></div>
+        </div>
+        <div ng-show="goalError"><p class="errortext">An achievement must have at least one goal!</p></div>
         <input type="submit" id="saveButton" ng-click="createAchievement($event)" class="button" value="Create achievement" />
     </form>
     <div class="clear"> </div>
