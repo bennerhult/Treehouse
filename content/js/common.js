@@ -53,6 +53,7 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
     $http.post('/api/init', {}).success(function(result) {
         pageService.setName(result.currentUser.firstName, result.currentUser.lastName, result.currentUser.username);
         pageService.setUserImageURL(result.currentUser.imageURL);
+        $scope.incomingFriendRequestsCount = result.nrOfIncomingFriendRequests;
         $scope.isiPad = navigator.userAgent.match(/iPad/i) != null;
         $scope.isiPhone = navigator.userAgent.match(/iPhone/i) != null;
         var isiOs = $scope.isiPad || $scope.isiPhone;
@@ -82,6 +83,17 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
             return true;
         } else {
             return false;
+        }
+    }
+
+    $scope.incFriendCount = function () {
+        if($scope.incomingFriendRequestsCount) {
+            $scope.incomingFriendRequestsCount = $scope.incomingFriendRequestsCount + 1;
+        }
+    }
+    $scope.decFriendCount = function () {
+        if($scope.incomingFriendRequestsCount) {
+            $scope.incomingFriendRequestsCount = $scope.incomingFriendRequestsCount - 1;
         }
     }
 });

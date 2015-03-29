@@ -11,6 +11,9 @@ treehouseApp.controller('friendsController', function($scope, pageService, $http
     $scope.removeUser = function (evt, f) {
         evt.preventDefault();
         f.isHidden = true
+        if(f.direction =='incoming') {
+            $scope.decFriendCount()
+        }
         $http.post('/api/friends/removeUser', { username : f.username, direction : f.direction }).success(function(r) {
             $scope.isLoading = false;
         });
@@ -60,6 +63,7 @@ treehouseApp.controller('friendsController', function($scope, pageService, $http
             $scope.isLoading = false;
             if(r.success) {
                 f.direction = 'confirmed'
+                $scope.decFriendCount()
             } else {
                 $scope.showPageMessage('Sorry, something went wrong on our end')
             }
