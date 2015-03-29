@@ -24,11 +24,33 @@ treehouseApp.controller('friendsController', function($scope, pageService, $http
         $timeout(function() { $scope.pageMessage = null }, 2500);
     }
 
+    function findLocalFriend(email) {
+        for(var i=0; i<$scope.friends.length; i++) {
+            if($scope.friends[i].username.toLowerCase() == email) {
+                return $scope.friends[i]
+            }
+        }
+        return null
+    }
+
     $scope.searchForFriend = function (evt) {
         evt.preventDefault();
         var email = $scope.searchEmail
         if(!email || email.indexOf("@") < 0) {
             $scope.showPageMessage('Invalid email')
+            return;
+        }
+
+        //Check if they are already in the friend list
+        var f = findLocalFriend(email)
+        if(f && f.direction == 'incoming') {
+            $scope.showPageMessage('You already have a pending friend request from that user.')
+            return;
+        } else if(f && f.direction == 'outgoing') {
+            $scope.showPageMessage('You have already asked that user to be your friend.')
+            return;
+        } else if(f && f.direction == 'confirmed') {
+            $scope.showPageMessage('That user is already your friend.')
             return;
         }
 
