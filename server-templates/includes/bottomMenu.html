@@ -13,7 +13,9 @@
         <li>
             <div ng-class="getClass('/app/friends')">
                 <a ng-hide="incomingFriendRequestsCount && incomingFriendRequestsCount > 0"  href="/app/friends"><img src="../content/img/friendsicon.png" alt=""></a>
-                <a ng-show="incomingFriendRequestsCount && incomingFriendRequestsCount > 0"  href="/app/friends"><img src="../content/img/friendsicon.png" alt="You have {{incomingFriendRequestsCount}} friend requests!"></a>
+                <a ng-show="incomingFriendRequestsCount && incomingFriendRequestsCount > 0"  href="/app/friends">
+                    <div style="display:inline-block;position:relative;background-image:url('../content/img/friendsicon.png');background-color:transparent;width:70px;height:40px;color:red;text-align:right" >({{incomingFriendRequestsCount}})</div>
+                </a>
             </div>
         </li>
         <li>
