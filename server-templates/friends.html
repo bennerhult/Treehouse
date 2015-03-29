@@ -26,7 +26,12 @@
                 <p>{{f.username}} ({{f.direction}})</p>
                 <div class="clear"> </div>
                 <div class="remove">
-                    <a href="#" ng-click="removeUser($event, f)">Remove</a>
+                    <a href="#" ng-show="f.direction=='incoming'" ng-click="acceptFriendRequest($event, f)">Accept</a>
+                    <a href="#" ng-click="removeUser($event, f)">
+                        <span ng-show="f.direction=='incoming'">Refuse</span>
+                        <span ng-show="f.direction=='outgoing'">Cancel</span>
+                        <span ng-show="f.direction=='confirmed'">Remove</span>
+                    </a>
                 </div>
             </div>
         </div>

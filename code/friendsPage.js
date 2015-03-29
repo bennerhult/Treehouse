@@ -97,6 +97,29 @@ module.exports = function (app, friendship, user, requestHandlers) {
                 })
             })
         });
+
+
+        app.post('/api/friends/acceptFriendRequestByUsername', function (request, response) {
+            var userId = request.session.currentUser._id
+            user.User.findOne({ username: request.body.username }, function(err, friendUser) {
+                if(err) {
+                    throw err;
+                }
+
+                friendship.Friendship.findOne({ friend1_id: friendUser._id,  friend2_id: userId, confirmed: false }, function(err, fs) {
+                    if(err) {
+                        throw err;
+                    }
+                    if(fs) {
+                        friendship.confirmFriendRequest(fs._id, function () {
+                            requestHandlers.respondWithJson(response, {success : true})
+                        })
+                    } else {
+                        requestHandlers.respondWithJson(response, {success : false}) //could not find any pending friend request. could be improved slightly by checking if they are already friends and just saying ok then.
+                    }
+                })
+            })
+        });
     }
 
     return {

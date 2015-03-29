@@ -53,4 +53,16 @@ treehouseApp.controller('friendsController', function($scope, pageService, $http
             }
         });
     }
+
+    $scope.acceptFriendRequest = function (evt, f) {
+        $scope.isLoading = true
+        $http.post('/api/friends/acceptFriendRequestByUsername', { username : f.username }).success(function(r) {
+            $scope.isLoading = false;
+            if(r.success) {
+                f.direction = 'confirmed'
+            } else {
+                $scope.showPageMessage('Sorry, something went wrong on our end')
+            }
+        });
+    }
 });
