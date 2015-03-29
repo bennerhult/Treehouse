@@ -1,0 +1,15 @@
+<div ng-include src="'/server-templates/includes/userInfo.html'"></div>
+<div ng-include src="'/server-templates/includes/desktopMenu.html'"></div>
+
+<div class="content">
+    <div class="message">
+        <div class="newsUserArea">
+            <img style="width:50px;height:50px" ng-src="{{friend.imageURL}}" >
+            <p>{{friend.username}}</p>
+            <div class="clear"> </div>
+        </div>
+    </div>
+    <div class="clear"> </div>
+</div>
+<div class="clear"> </div>
+<div ng-include src="'/server-templates/includes/bottomMenu.html'"></div>
