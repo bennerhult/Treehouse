@@ -1,5 +1,4 @@
-<div ng-show="signedInUser" ng-include src="'/server-templates/includes/userInfo.html'"></div>
-<div ng-show="signedInUser" ng-include src="'/server-templates/includes/desktopMenu.html'"></div>
+<div ng-show="signedInUser"><a href="/app/achievements"><span ng-class="getClass('/app/achievements')"><< Back</span></a></div>
 <div ng-hide="isLoading" class="content">
     <div class="section">
         <div class="twothirds">
