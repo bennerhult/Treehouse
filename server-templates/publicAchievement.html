@@ -1,8 +1,17 @@
-<div ng-show="signedInUser"><a href="/app/achievements"><span ng-class="getClass('/app/achievements')"><< Back</span></a></div>
+<div ng-show="signedInUser" class="desktopMenu">
+    <a href="/app/achievements"><span ng-class="getClass('/app/achievements')"><img src="../content/img/back-1.png" /></span></a>
+</div>
 <div ng-hide="isLoading" class="content">
+    <div class="userArea">
+        <img class="border" width="48" height="48" ng-src="{{creator.imageURL}}" alt="{{creator.firstName}}">
+
+        <p>{{creator.prettyName}}</p>
+        <div class="clear"></div>
+    </div>
+
     <div class="section">
         <div class="twothirds">
-            <h3>{{achievement.title}} by {{creator.prettyName}}  <img class="border" width="48" height="48" ng-src="{{creator.imageURL}}" alt="{{creator.firstName}}"></h3>
+            <h3>{{achievement.title}}</h3>
             <p class="dark">
                 {{achievement.description}}
             </p>
