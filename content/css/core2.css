@@ -496,20 +496,21 @@ h2{
     padding-top: 8px;
 }
 
-.newsUserArea{
-    position: relative;
-}
-
-.newsUserArea div.remove{
+.userArea div.remove{
     position: absolute;
     bottom: 0px;
     right: 0px;
 }
 
-.newsUserArea div.remove a{
+.userArea div.remove a{
     color: #000000;
     font: 12px Verdana;
 }
+
+.listWrap .item .userArea p{
+    color: #ffffff;
+}
+
 
 .header{
     position: relative;
