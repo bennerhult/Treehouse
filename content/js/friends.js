@@ -1,5 +1,6 @@
-treehouseApp.controller('friendsController', function($scope, pageService, $http, $timeout) {
+treehouseApp.controller('friendsController', function($scope, pageService, $http, $timeout, $location) {
     "use strict";
+    $scope.location = encodeURIComponent($location.path())
     $scope.isLoading = true;
     pageService.setTitle('Friends');
     $scope.friends = [];

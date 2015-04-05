@@ -7,4 +7,8 @@ treehouseApp.controller('friendController', function($scope, pageService, $http,
         $scope.isLoading = false;
         $scope.friend = r.friend;
     });
+
+    if($routeParams.backurl) {
+        $scope.backurl = $routeParams.backurl
+    }
 });
