@@ -30,7 +30,8 @@ module.exports = {
     getShortName: getShortName,
     remove: remove,
     setImageURL : setImageURL,
-    setUsernames : setUsernames
+    setUsernames : setUsernames,
+    getPrettyName: getPrettyName
 }
 
 UserSchema.virtual('prettyName').get(function() {
@@ -45,12 +46,31 @@ UserSchema.virtual('prettyName').get(function() {
     }
 });
 
-function createUser(name, callback) {
+function getPrettyName (u) {
+    //NOTE: This is a hack
+    //u.prettyName should really be all that is needed but some wierdness about mongoose that I cant figure out makes it be undefined in all cases except when logging it so this is the worarkound
+    if (u.firstName && u.lastName) {
+        return u.firstName + " " + u.lastName;
+    } else if (u.firstName) {
+        return u.firstName;
+    } else if (u.lastName) {
+        return u.lastName;
+    } else  {
+        return u.username;
+    }
+}
+
+function createUser(name, callback, more) {
     var user = new User();
     user.created = new Date();
     user.username = name;
     user.imageURL = '../content/img/user_has_no_image.jpg';
     user.isIssuer = false;
+     console.log(more)
+    if(more) {
+        user.firstName = more.firstName
+        user.lastName = more.lastName
+    }
     user.save(function (error) {
         if (callback) callback(user, error);
     });

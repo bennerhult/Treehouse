@@ -14,6 +14,7 @@ module.exports = function (app, friendship, user, requestHandlers) {
                 if(friendUser) {
                     u.friend = {
                         username : friendUser.username,
+                        prettyName : user.getPrettyName(friendUser),
                         imageURL : friendUser.imageURL
                     }
                 }

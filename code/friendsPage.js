@@ -43,7 +43,7 @@ module.exports = function (app, friendship, user, requestHandlers) {
                                     throw err;
                                 }
                                 for(var j=0; j<result.length; j++) {
-                                    allFriends.push({ imageURL : result[j].imageURL, username : result[j].username, direction : direction });
+                                    allFriends.push({ imageURL : result[j].imageURL, username : result[j].username, direction : direction, prettyName : user.getPrettyName(result[j]) });
                                 }
                                 cb();
                             });

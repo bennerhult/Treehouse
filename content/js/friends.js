@@ -8,6 +8,7 @@ treehouseApp.controller('friendsController', function($scope, pageService, $http
         $scope.isLoading = false;
     });
 
+
     $scope.removeUser = function (evt, f) {
         evt.preventDefault();
         f.isHidden = true

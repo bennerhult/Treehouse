@@ -16,6 +16,8 @@
 module.exports = function (user, loginToken, thSettings, friendship) {
     "use strict";
 
+    var fn = require('./fakeNameGenerator.js')
+
     function guid() {
         function s4() {
             return Math.floor((1 + Math.random()) * 0x10000)
@@ -26,14 +28,16 @@ module.exports = function (user, loginToken, thSettings, friendship) {
     }
 
     function createUser(prefix, cb) {
+        var name = fn.generateName()
         //TODO: Swap the uid for some name generation thing that makes is shorter and somewhat readable
-        var email = prefix + 'testuser+' + guid() + '@treehouse.io';
+        var email = (prefix + name.firstName + '-' + name.lastName + '@treehouse.io').toLowerCase();
+        var moreFields = { firstName : name.firstName, lastName : name.lastName }
         user.createUser(email, function (user, err) {
             if(err) {
                 throw err;
             }
             cb(user);
-        });
+        }, moreFields);
     }
 
     function createFriendsForUser(user, cb) {
