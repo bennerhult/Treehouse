@@ -14,14 +14,14 @@
         <div ng-repeat="currentNotification in notificationList" class="item">
             <div>
                 <div class="progressWrap">
-                     <a href="app/achievement" ng-click="openAchievement(currentNotification);">
+                    <!-- <a href="app/achievement" ng-click="openAchievement(currentNotification);">-->
                             <img class="border" width="96" height="96" ng-src="{{currentNotification.imageURL}}" alt="{{currentNotification.title}}">
                             <span class="gradient-bg"></span>
                             <span class="progressbar"></span>
                             <div class="progress-container"><span class="progress" style="width:{{currentNotification.percentageCompleted}}%"></span></div>
-                        </a>
+                    <!--    </a>-->
                 </div>
-               <p><a href="app/achievement" ng-click="openAchievement(currentNotification);">Challenge: {{currentNotification.title}}</a></p>
+               <p>Challenge: {{currentNotification.title}}</p>
             </div>
         </div>
         <div ng-repeat="currentAchievement in achievementList" class="item">
