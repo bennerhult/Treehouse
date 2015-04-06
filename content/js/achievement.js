@@ -1,6 +1,23 @@
 treehouseApp.controller('achievementController', function($scope, $http, achievementService, pageService) {
     pageService.setTitle('Achievement');
     $scope.achievement = achievementService.achievement;
+    $scope.showingMyProgressTab = true;
+
+    $scope.openMyProgressTab= function(evt) {
+        evt.preventDefault();
+        $scope.showingMyProgressTab = true;
+        $scope.showingShareTab = false;
+    }
+
+    $scope.openShareTab= function(evt) {
+        evt.preventDefault();
+        $scope.showingMyProgressTab = false;
+        $scope.showingShareTab = true;
+        $http.post('/api/achievements/shareToList', {
+        }).success(function(result) {
+            $scope.shareToList = result;
+        });
+    }
 
     $scope.progress = function(evt, currentGoal) {
         $http.post('/api/achievements/progress', {
