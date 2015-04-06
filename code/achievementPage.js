@@ -73,12 +73,7 @@ module.exports = function (app, templates, requestHandlers, progress, moment, sh
                     }
 
                     fetchFriends('confirmed', confirmedFriendUsersFilter, function () {
-                        console.log(confirmedFriendUsersFilter)
-                        fetchFriends('incoming', incomingFriendUserFilter, function () {
-                            fetchFriends('outgoing', outgoingFriendUserFilter, function () {
-                                requestHandlers.respondWithJson(response, shareToList);
-                            })
-                        });
+                        requestHandlers.respondWithJson(response, shareToList);
                     });
                 });
         });
