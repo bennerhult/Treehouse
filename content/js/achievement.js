@@ -19,6 +19,17 @@ treehouseApp.controller('achievementController', function($scope, $http, achieve
         });
     }
 
+    $scope.share = function(evt, achievement, friend) {
+        console.log("achievement: " + achievement._id)
+        console.log("friend: " + friend.id)
+        $http.post('/api/achievements/share', {
+            achievement : achievement,
+            friend : friend
+        }).success(function(result) {
+
+        });
+    }
+
     $scope.progress = function(evt, currentGoal) {
         $http.post('/api/achievements/progress', {
             goal : currentGoal,

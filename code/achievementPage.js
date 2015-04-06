@@ -24,6 +24,10 @@ module.exports = function (app, templates, requestHandlers, progress, moment, sh
             achievementInstance.remove(request.body.achievementInstance, function() {});
         });
 
+        app.post('/api/achievements/share', function (request, response) {
+            shareholding.createShareholding(request.session.currentUser._id, request.body.friend.id, request.body.achievement._id, function() {});
+        });
+
         app.post('/api/achievements/shareToList', function (request, response) {
             var userId = request.session.currentUser._id;
             friendship
@@ -65,7 +69,7 @@ module.exports = function (app, templates, requestHandlers, progress, moment, sh
                                     throw err;
                                 }
                                 for(var j=0; j<result.length; j++) {
-                                    shareToList.push({ imageURL : result[j].imageURL, username : result[j].username, direction : direction, prettyName : user.getPrettyName(result[j]) });
+                                    shareToList.push({ id : result[j]._id, imageURL : result[j].imageURL, username : result[j].username, direction : direction, prettyName : user.getPrettyName(result[j]) });
                                 }
                                 cb();
                             });
