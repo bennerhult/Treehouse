@@ -1,5 +1,7 @@
-module.exports = function (app, friendship, user, requestHandlers) {
+module.exports = function (app, friendship, user, requestHandlers, achievementInstance) {
     'use strict';
+
+    var _ = require("underscore")._
 
     function registerHandlers() {
         app.post('/api/friend/init', function (request, response) {
@@ -10,15 +12,33 @@ module.exports = function (app, friendship, user, requestHandlers) {
                 if(err) {
                     throw err;
                 }
-                var u = { }
-                if(friendUser) {
+                if(!friendUser) {
+                    throw 'no such user'
+                }
+                achievementInstance.getAchievementList(friendUser._id, function(instancesInProgress, instancesUnlocked) {
+                    var u = { }
+                    var achievements = []
+
+                    _.each(instancesInProgress, function (i) {
+                        if(i.publiclyVisible === true) {
+                            achievements.push(i)
+                        }
+                    })
+
+                    _.each(instancesUnlocked, function (i) {
+                        if(i.publiclyVisible === true) {
+                            achievements.push(i)
+                        }
+                    })
+
                     u.friend = {
                         username : friendUser.username,
                         prettyName : user.getPrettyName(friendUser),
-                        imageURL : friendUser.imageURL
+                        imageURL : friendUser.imageURL,
+                        achievements: achievements
                     }
-                }
-                requestHandlers.respondWithJson(response, u)
+                    requestHandlers.respondWithJson(response, u)
+                })
             })
         });
     }

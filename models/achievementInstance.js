@@ -55,7 +55,7 @@ function createAchievement(createdBy, title, description, imageURL, goals, callb
     });
 }
 
-function createAchievementInstance(motherAchievement, user, callback) {
+function createAchievementInstance(motherAchievement, user, callback, more) {
     var myAchievementInstance = new AchievementInstance();
     myAchievementInstance.createdDate = new Date();
     myAchievementInstance.createdBy = user;
@@ -66,6 +66,9 @@ function createAchievementInstance(motherAchievement, user, callback) {
     myAchievementInstance.publiclyVisible = false;
     myAchievementInstance.percentageCompleted = 0;
     myAchievementInstance.goals = motherAchievement.goals;
+    if(more) {
+        myAchievementInstance.publiclyVisible = more.publiclyVisible
+    }
     myAchievementInstance.save(function (error) {
         callback();
     });

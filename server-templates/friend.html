@@ -13,18 +13,18 @@
     <div class="clear"> </div>
 
     <div class="listWrap">
-        <div class="item"><p>Finns inget publikt achievement... Some fin text.</p></div>
-        <div class="item">
-            <div>
+        <div class="item" ng-show="friend.achievements.length == 0"><p>You friend has not shared any achievements</p></div>
+        <div class="item" ng-hide="friend.achievements.length == 0">
+            <div ng-repeat="a in friend.achievements">
                 <div class="progressWrap">
                     <a href="#">
-                        <img class="border" width="96" height="96" src="../content/img/achievementImages/1.png" alt="">
+                        <img class="border" width="96" height="96" ng-src="{{a.imageURL}}" alt="">
                         <span class="gradient-bg"></span>
                         <span class="progressbar"></span>
-                        <div class="progress-container"><span class="progress" style="width:25%"></span></div>
+                        <div class="progress-container"><span class="progress" style="width:{{a.percentageCompleted}}%"></span></div>
                     </a>
                 </div>
-                <p><a href="#" >Achievement title</a></p>
+                <p><a href="#" >{{a.title}}</a></p>
             </div>
         </div>
     </div>

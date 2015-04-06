@@ -38,7 +38,9 @@ module.exports = function (user, loginToken, thSettings, friendship, achievement
             if(err) {
                 throw err;
             }
-            cb(user);
+            addAchivementsToUser(user, function () {
+                cb(user);
+            })
         }, moreFields);
     }
 
@@ -79,7 +81,7 @@ module.exports = function (user, loginToken, thSettings, friendship, achievement
 
     function createAchivementInstances(user, achivements, createAchivementInstancesDone) {
         async.each(achivements, function(a, cb) {
-            achievementInstance.createAchievementInstance(a, user._id, cb)
+            achievementInstance.createAchievementInstance(a, user._id, cb, { publiclyVisible : true})
         }, function (err) {
             if (err) {
                 throw err
@@ -113,9 +115,7 @@ module.exports = function (user, loginToken, thSettings, friendship, achievement
             loginToken.createToken(user.username, function (token) {
                 var loginUrl = thSettings.getDomain() + "signinByEmail?email=" + encodeURIComponent(user.username) + "&token=" + encodeURIComponent(token.token);
                 createFriendsForUser(user, function () {
-                    addAchivementsToUser(user, function () {
-                        cb(loginUrl);
-                    })
+                    cb(loginUrl);
                 })
             });
         });
