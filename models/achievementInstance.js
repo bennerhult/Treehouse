@@ -33,7 +33,8 @@ module.exports = {
     unpublicize: unpublicize,
     remove: remove,
     getAchievementList: getAchievementList,
-    getPublicAchievement: getPublicAchievement
+    getPublicAchievement: getPublicAchievement,
+    createAchievementInstance: createAchievementInstance
 }
 
 function createAchievement(createdBy, title, description, imageURL, goals, callback) {

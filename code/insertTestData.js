@@ -13,10 +13,12 @@
  - Add some achievements
  - Add some achivement progress
 */
-module.exports = function (user, loginToken, thSettings, friendship) {
+module.exports = function (user, loginToken, thSettings, friendship, achievement, achievementInstance) {
     "use strict";
 
-    var fn = require('./fakeNameGenerator.js')
+    var fn = require('./fakeGenerator.js')
+    var async = require('async')
+    var _ = require("underscore")._
 
     function guid() {
         function s4() {
@@ -75,12 +77,45 @@ module.exports = function (user, loginToken, thSettings, friendship) {
         })
     }
 
+    function createAchivementInstances(user, achivements, createAchivementInstancesDone) {
+        async.each(achivements, function(a, cb) {
+            achievementInstance.createAchievementInstance(a, user._id, cb)
+        }, function (err) {
+            if (err) {
+                throw err
+            }
+
+            createAchivementInstancesDone()
+        })
+    }
+
+    function addAchivementsToUser(user, addAchivementsToUserDone) {
+        var achivements
+        achivements = fn.generateAchievements(user._id, new Date())
+        async.map(achivements, function(a, cb) {
+            var am = new achievement.Achievement()
+            _.extend(am, a)
+            am.save(function () {
+                cb(null, am)
+            })
+        }, function (err, actualAchivements) {
+            if (err) {
+                throw err
+            }
+            createAchivementInstances(user, actualAchivements, function () {
+                addAchivementsToUserDone()
+            })
+        })
+    }
+
     function createNewTestUser(cb) {
         createUser('', function (user) {
             loginToken.createToken(user.username, function (token) {
                 var loginUrl = thSettings.getDomain() + "signinByEmail?email=" + encodeURIComponent(user.username) + "&token=" + encodeURIComponent(token.token);
                 createFriendsForUser(user, function () {
-                    cb(loginUrl);
+                    addAchivementsToUser(user, function () {
+                        cb(loginUrl);
+                    })
                 })
             });
         });

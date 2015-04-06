@@ -66,7 +66,6 @@ function createUser(name, callback, more) {
     user.username = name;
     user.imageURL = '../content/img/user_has_no_image.jpg';
     user.isIssuer = false;
-     console.log(more)
     if(more) {
         user.firstName = more.firstName
         user.lastName = more.lastName

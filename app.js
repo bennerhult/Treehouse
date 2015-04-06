@@ -91,7 +91,7 @@ var user = require('./models/user.js'),
 
 if(process.argv.length >= 3 && process.argv[2] === 'CREATE_NEW_TESTUSER') {
     console.log("Adding a test user then exiting.");
-    var t = require('./code/insertTestData.js')(user, loginToken, thSettings, friendship);
+    var t = require('./code/insertTestData.js')(user, loginToken, thSettings, friendship, achievement, achievementInstance);
     t.createNewTestUser(function (loginUrl) {
         console.log('Login-url for the new testuser: ');
         console.log(loginUrl);
