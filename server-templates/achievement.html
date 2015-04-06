@@ -29,8 +29,8 @@
 
             <a href=""><span>Compare (not implemented)</span></a>
         </div>
-        <div class="listWrap">
-            <div class="item" ng-show="showingMyProgressTab" ng-repeat="currentGoal in achievement.goals">
+        <div class="listWrap" ng-show="showingMyProgressTab">
+            <div class="item"  ng-repeat="currentGoal in achievement.goals">
                 <table>
                     <tr>
                         <td class="goal">
@@ -49,15 +49,17 @@
                     </tr>
                 </table>
             </div>
-            <div class="item" ng-show="showingShareTab" ng-repeat="currentFriend in shareToList">
+        </div>
+        <div class="listWrap" ng-show="showingShareTab">
+            <div class="item" ng-repeat="currentFriend in shareToList">
                 <div class="userArea">
                     <a ng-href="/app/friend/{{currentFriend.username}}"><img class="border" style="width:50px;height:50px" ng-src="{{currentFriend.imageURL}}" ></a>
                     <p><a ng-href="/app/friend/{{currentFriend.username}}?backurl={{location}}">{{currentFriend.prettyName}}</a></p>
                 </div>
             </div>
-
+            <div ng-show="!shareToList.length" class="item"><p><strong>Get social!</strong><br />Find some friends and challenge them.</p></div>
         </div>
-    </div>
+         </div>
 
     <div class="header">
         <span class="create-link"><a href="#" ng-show="achievement.publiclyVisible" ng-click="unpublicize($event)">Unpublicize</a></span>
