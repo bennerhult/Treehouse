@@ -21,12 +21,16 @@
     </div>
     <div class="section">
         <div class="tabs">
-            <a href=""><span class="selected">My progress</span></a>
-            <a href=""><span>Share (not implemented)</span></a>
+            <a ng-show="showingMyProgressTab" href="#"><span class="selected">My progress</span></a>
+            <a ng-click="openMyProgressTab($event);" ng-show="!showingMyProgressTab" href="#"><span>My progress</span></a>
+
+            <a ng-click="openShareTab($event);" ng-show="showingMyProgressTab" href="#"><span>Share</span></a>
+            <a ng-show="!showingMyProgressTab" href="#"><span class="selected">Share</span></a>
+
             <a href=""><span>Compare (not implemented)</span></a>
         </div>
         <div class="listWrap">
-            <div class="item" ng-repeat="currentGoal in achievement.goals">
+            <div class="item" ng-show="showingMyProgressTab" ng-repeat="currentGoal in achievement.goals">
                 <table>
                     <tr>
                         <td class="goal">
@@ -45,6 +49,13 @@
                     </tr>
                 </table>
             </div>
+            <div class="item" ng-show="showingShareTab" ng-repeat="currentFriend in shareToList">
+                <div class="userArea">
+                    <a ng-href="/app/friend/{{currentFriend.username}}"><img class="border" style="width:50px;height:50px" ng-src="{{currentFriend.imageURL}}" ></a>
+                    <p><a ng-href="/app/friend/{{currentFriend.username}}?backurl={{location}}">{{currentFriend.prettyName}}</a></p>
+                </div>
+            </div>
+
         </div>
     </div>
 
