@@ -5,6 +5,7 @@ treehouseApp.controller('achievementsController', function($scope, $http, achiev
     $http.post('/api/achievements/init', {}).success(function(result) {
         $scope.progressList = result.progressList;
         $scope.unlockedList = result.unlockedList;
+        $scope.notificationList = result.notificationList;
 
         $scope.achievementList = result.progressList;
         $scope.isLoading = false;

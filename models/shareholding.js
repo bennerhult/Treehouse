@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
     achievement = require('./achievement.js'),
+    achievementInstance = require('./achievementInstance.js'),
     progress = require('./progress.js'),
     Schema = mongoose.Schema;
 
@@ -104,8 +105,8 @@ function getSharedAchievementNotifications(achieverId, userId, callback) {
     Shareholding.find({ shareholder_id: achieverId, confirmed: false }, function(err, notifications) {
         if (notifications && notifications.length > 0) {
             notifications.forEach(function(notification, index) {
-                achievement.Achievement.findOne({ _id: notification.achievement_id }, function(err2,currentAchievement) {
-                    if (notification.shareholder_id == userId || notification.sharer_id == userId) {
+               achievementInstance.AchievementInstance.findOne({ _id: notification.achievement_id }, function(err2,currentAchievement) {
+                   if (notification.shareholder_id == userId || notification.sharer_id == userId) {
                         achievementNotifications.push(currentAchievement);
                     }
                     if (index == (notifications.length -1)) {
