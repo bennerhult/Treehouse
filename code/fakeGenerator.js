@@ -175,6 +175,7 @@ module.exports = (function () {
     return {
         generateName : generateFullName,
         generateAchievement : generateAchievement,
-        generateAchievements: generateAchievements
+        generateAchievements: generateAchievements,
+        getRandomInt : getRandomInt
     }
 }())

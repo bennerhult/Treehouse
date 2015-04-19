@@ -81,7 +81,13 @@ module.exports = function (user, loginToken, thSettings, friendship, achievement
 
     function createAchivementInstances(user, achivements, createAchivementInstancesDone) {
         async.each(achivements, function(a, cb) {
-            achievementInstance.createAchievementInstance(a, user._id, cb, { publiclyVisible : true})
+            achievementInstance.createAchievementInstance(a, user._id, function (ai) {
+                async.each(ai.goals, function (g, cb2) {
+                    achievementInstance.progressByCount(g, ai, fn.getRandomInt(0, g.quantityTotal), function () {cb2()})
+                }, function() {
+                    cb()
+                })
+            }, { publiclyVisible : true })
         }, function (err) {
             if (err) {
                 throw err

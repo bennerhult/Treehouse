@@ -34,7 +34,8 @@ module.exports = {
     remove: remove,
     getAchievementList: getAchievementList,
     getPublicAchievement: getPublicAchievement,
-    createAchievementInstance: createAchievementInstance
+    createAchievementInstance: createAchievementInstance,
+    progressByCount: progressByCount
 }
 
 function createAchievement(createdBy, title, description, imageURL, goals, callback) {
@@ -70,7 +71,7 @@ function createAchievementInstance(motherAchievement, user, callback, more) {
         myAchievementInstance.publiclyVisible = more.publiclyVisible
     }
     myAchievementInstance.save(function (error) {
-        callback();
+        callback(myAchievementInstance);
     });
 }
 
@@ -133,13 +134,17 @@ function issue(achievement, callback) {
 }
 
 function progress(goalToUpdate, achievementToUpdate, callback) {
+    progressByCount(goalToUpdate, achievementToUpdate, 1, callback)
+}
+
+function progressByCount(goalToUpdate, achievementToUpdate, quantityToProgress, callback) {
     if  (goalToUpdate.quantityCompleted < goalToUpdate.quantityTotal) {
         var newQuantityCompleted = 0;
         var newQuantityTotal = 0;
         var newGoalCompleted;
         async.each(achievementToUpdate.goals, function(currentGoal, goalProcessed) {
             if (currentGoal._id == goalToUpdate._id) {
-                currentGoal.quantityCompleted++;
+                currentGoal.quantityCompleted = currentGoal.quantityCompleted + quantityToProgress;
                 newGoalCompleted = currentGoal.quantityCompleted;
             }
             newQuantityCompleted += currentGoal.quantityCompleted;
@@ -152,8 +157,12 @@ function progress(goalToUpdate, achievementToUpdate, callback) {
             }
             var id = achievementToUpdate._id;
             delete achievementToUpdate._id;
+            if(achievementToUpdate.toObject) {
+                //The findAndUpdate code explodes if achievementToUpdate is a mongoose object so this wierdness is needed
+                achievementToUpdate = achievementToUpdate.toObject()
+            }
             AchievementInstance.findByIdAndUpdate(id, achievementToUpdate, function (err, updatedAchievement) {
-                callback(updatedAchievement);
+                 callback(updatedAchievement);
             });
         });
     } else {
