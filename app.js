@@ -201,6 +201,7 @@ require('./code/publicAchievementPage.js')(app, templates, requestHandlers, achi
 require('./code/achievementsPage.js')(app, templates, requestHandlers, progress, moment, shareholding, achievementInstance).registerHandlers();
 require('./code/createAchievementPage.js')(app, templates, requestHandlers, user, progress, moment, shareholding, achievementInstance, thSettings).registerHandlers();
 require('./code/friendPage.js')(app, friendship, user, requestHandlers, achievementInstance).registerHandlers();
+require('./code/friendAchievementPage.js')(app, friendship, user, requestHandlers, achievementInstance).registerHandlers();
 
 app.get('/server-templates/*', function(request, response) {
     staticFiles.serve("." + request.url, response);

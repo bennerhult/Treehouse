@@ -10,11 +10,20 @@ treehouseApp.factory("achievementService",function() {
     return service;
 });
 
-treehouseApp.factory('pageService', function() {
+treehouseApp.factory('pageService', function($location) {
     var service = {};
 
     service.setTitle = function(title) {
         this.pageTitle = title;
+    }
+    
+    service.getLocation = function () {
+         var location = $location.path()
+         var s = $location.search()
+         if(s.backurl) {
+             location = location + '?backurl=' + encodeURIComponent(s.backurl)
+         }
+         return encodeURIComponent(location)
     }
 
     service.setName = function(firstName, lastName, username) {

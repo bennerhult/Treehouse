@@ -20,6 +20,10 @@ treehouseApp.config(function($routeProvider, $locationProvider) {
             templateUrl: '/server-templates/friend.html',
             controller: 'friendController'
         })
+        .when('/app/friendAchievement/:username/:achievementId', {
+            templateUrl: '/server-templates/friendAchievement.html',
+            controller: 'friendAchievementController'
+        })
         .when('/app/newsfeed', {
             templateUrl: '/server-templates/newsfeed.html',
             controller: 'newsfeedController'
