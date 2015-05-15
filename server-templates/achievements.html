@@ -9,7 +9,7 @@
         <a ng-show="!showingProgressList" href="#"><span class="selected">Unlocked</span></a>
     </div>
     <div class="listWrap">
-        <div ng-show="!achievementList.length && showingProgressList" class="item"><p><strong>Challenge yourself now!</strong><br />Create an achievement and get to work on fulfilling it.</p></div>
+        <div ng-show="!achievementList.length && !notificationList.length && showingProgressList" class="item"><p><strong>Challenge yourself now!</strong><br />Create an achievement and get to work on fulfilling it.</p></div>
         <div ng-show="!achievementList.length && !showingProgressList" class="item"><p><strong>Fulfill your dreams!</strong><br />Complete one of your dream achievements today.</p></div>
         <div ng-show="showingProgressList" ng-repeat="currentNotification in notificationList" class="item">
             <div>
