@@ -1058,6 +1058,9 @@ button.grey:hover{
         display: inherit;
     }
 
+    .navigation{
+        border-radius: 0px;
+    }
 }
 
 
