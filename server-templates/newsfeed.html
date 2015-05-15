@@ -13,33 +13,41 @@
                     <p>{{newsItem.newsJson.AchieverName}}</p>
                     <div class="clear"> </div>
                 </div>
-                <p>became friends with {{newsItem.newsJson.FriendName}}</p>
-                <img class="border" width="96" height="96" ng-src="{{newsItem.newsJson.FriendImageURL}}" alt="{{newsItem.newsJson.AchieverName}} became friends with {{newsItem.newsJson.FriendName}}">
+                <div class="bg-image" style="background-image: url('{{newsItem.newsJson.FriendImageURL}}'); background-repeat: no-repeat; background-position: right;">
+                    <div class="bg-image-shade" style=" background-color: rgba(0,0,0,0.0);">
+                        <p class="news-text">Became friends with "<a href="#">{{newsItem.newsJson.FriendName}}</a>"</p>
+                    </div>
+                </div>
             </div>
+
             <div ng-switch-when="progress">
                 <div class="newsUserArea">
                     <img class="border" src="../content/img/user_has_no_image.jpg" >
                     <p>{{newsItem.newsJson.AchieverName}}</p>
                     <div class="clear"> </div>
                 </div>
-                <p>has made a progress on "{{newsItem.newsJson.AchievementName}}"</p>
-                <a ng-click="gotoAchievement($event, newsItem)">
-                    <img class="border" width="96" height="96" ng-src="{{newsItem.newsJson.AchievementImageURL}}" alt="{{newsItem.newsJson.AchieverName}} progressed {{newsItem.newsJson.AchievementName}}">
-                </a>
+                <div class="bg-image" style="background-image: url('{{newsItem.newsJson.AchievementImageURL}}');">
+                    <div class="bg-image-shade">
+                        <p class="news-text">Has made a progress on "<a href="#">{{newsItem.newsJson.AchievementName}}</a>"</p>
+                    </div>
+                </div>
             </div>
+
             <div ng-switch-when="publicize">
                 <div class="newsUserArea">
                     <img class="border" src="../content/img/user_has_no_image.jpg" >
                     <p>{{newsItem.newsJson.AchieverName}}</p>
                     <div class="clear"> </div>
                 </div>
-                <p>has published "{{newsItem.newsJson.AchievementName}}"</p>
-                <a ng-click="gotoAchievement($event, newsItem)">
-                    <img class="border" width="96" height="96" ng-src="{{newsItem.newsJson.AchievementImageURL}}" alt="{{newsItem.newsJson.AchieverName}} progressed {{newsItem.newsJson.AchievementName}}">
-                </a>
+                <div class="bg-image" style="background-image: url('{{newsItem.newsJson.AchievementImageURL}}');">
+                    <div class="bg-image-shade">
+                        <p class="news-text">Has published "<a href="#">{{newsItem.newsJson.AchievementName}}</a>"</p>
+                    </div>
+                </div>
             </div>
             <div ng-switch-default><pre>{{newsItem | json}}</pre></div>
         </div>
+
     </div>
 </div>
 <div class="clear"></div>
