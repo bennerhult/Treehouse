@@ -11,7 +11,7 @@
     <div class="listWrap">
         <div ng-show="!achievementList.length && showingProgressList" class="item"><p><strong>Challenge yourself now!</strong><br />Create an achievement and get to work on fulfilling it.</p></div>
         <div ng-show="!achievementList.length && !showingProgressList" class="item"><p><strong>Fulfill your dreams!</strong><br />Complete one of your dream achievements today.</p></div>
-        <div ng-repeat="currentNotification in notificationList" class="item">
+        <div ng-show="showingProgressList" ng-repeat="currentNotification in notificationList" class="item">
             <div>
                 <div class="progressWrap">
                     <!-- <a href="app/achievement" ng-click="openAchievement(currentNotification);">-->
