@@ -12,7 +12,7 @@
 
     <div class="message" ng-show="searchHitUser">
         <div class="userArea">
-            <img ng-src="{{searchHitUser.imageURL}}" >
+            <img class="border" ng-src="{{searchHitUser.imageURL}}" >
             <div class="addfriend"><a href="#" ng-click="sendFriendRequest($event, searchHitUser.username)">Send friend request</a></div>
             <div class="clear"> </div>
         </div>
@@ -22,7 +22,7 @@
         <div class="header">My friends</div>
         <div class="item" ng-repeat="f in friends" ng-hide="f.isHidden">
             <div class="userArea">
-                <a ng-href="/app/friend/{{f.username}}"><img class="border" style="width:50px;height:50px" ng-src="{{f.imageURL}}" ></a>
+                <a ng-href="/app/friend/{{f.username}}?backurl={{location}}"><img class="border" style="width:50px;height:50px" ng-src="{{f.imageURL}}" ></a>
                 <p><a ng-href="/app/friend/{{f.username}}?backurl={{location}}">{{f.prettyName}}</a>({{f.direction}})</p>
                 <div class="clear"> </div>
                 <div class="remove">
