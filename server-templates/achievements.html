@@ -33,11 +33,11 @@
                         <span class="progressbar"></span>
                         <div class="progress-container"><span class="progress" style="width:{{currentAchievement.percentageCompleted}}%"></span></div>
                     </a>
-                    <ul class="icons">
-                        <li><img ng-show="true" src="content/img/shared.png"></li>
-                        <li><img ng-show="currentAchievement.publiclyVisible" src="content/img/public.png"></li>
-                    </ul>
                 </div>
+                <ul class="icons">
+                    <li><img ng-show="true" src="content/img/shared.png"></li>
+                    <li><img ng-show="currentAchievement.publiclyVisible" src="content/img/public.png"></li>
+                </ul>
                 <p><a href="app/achievement" ng-click="openAchievement(currentAchievement);">{{currentAchievement.title}}</a></p>
             </div>
         </div>
