@@ -1,0 +1,64 @@
+<div ng-include src="'/server-templates/includes/userInfo.html'"></div>
+<div ng-include src="'/server-templates/includes/desktopMenu.html'"></div>
+<div class="content">
+
+    <div class="section">
+        <div class="twothirds">
+            <h3>{{achievement.title}}</h3>
+            <p class="dark">
+                {{achievement.description}}
+            </p>
+        </div>
+        <div class="onethird">
+            <div class="progressWrap">
+                <img class="border" width="96" height="96" ng-src="{{achievement.imageURL}}" alt="{{achievement.title}}">
+                <span class="gradient-bg"></span>
+                <span class="progressbar"></span>
+                <div class="progress-container"><span class="progress" style="width:{{achievement.percentageCompleted}}%"></span></div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="section">
+        <div class="tabs">
+            <span class="selected">My progress</span>
+        </div>
+        <div class="listWrap" ng-show="showingMyProgressTab">
+            <div class="item"  ng-repeat="currentGoal in achievement.goals">
+                <table>
+                    <tr>
+                        <td class="goal">
+                            <p>{{currentGoal.title}} {{currentGoal.latestUpdated}}</p>
+                            <div class="progressWrap">
+                                <span class="progressbar"></span>
+                                <div class="progress-container"><span class="progress" style="width:{{currentGoal.percentageCompleted}}%"></span></div>
+                            </div>
+                            <div class="counter">
+                                <p>{{currentGoal.quantityCompleted}}/{{currentGoal.quantityTotal}}</p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="listWrap" ng-show="showingShareTab">
+            <div class="item" ng-repeat="currentFriend in shareToList">
+                <div class="userArea">
+                    <a ng-href="/app/friend/{{currentFriend.username}}"><img class="border" style="width:50px;height:50px" ng-src="{{currentFriend.imageURL}}" ></a>
+                    <p><a ng-href="/app/friend/{{currentFriend.username}}?backurl={{location}}">{{currentFriend.prettyName}}</a></p>
+                    <div class="remove"><a href="#" ng-click="share($event, achievement, currentFriend)">Share</a></div>
+                </div>
+            </div>
+            <div ng-show="!shareToList.length" class="item"><p><strong>Get social!</strong><br />Find some friends and challenge them.</p></div>
+        </div>
+         </div>
+
+    <div class="header">
+        <span class="create-link"><a href="#">Accept(not implemented)</a></span>
+        <span class="create-link"><a href="#">Reject(not implemented)</a></span>              
+    </div>
+
+    <div class="clear"> </div>
+</div>
+<div class="clear"></div>
+<div ng-include src="'/server-templates/includes/bottomMenu.html'"></div>

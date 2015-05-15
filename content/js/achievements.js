@@ -15,6 +15,10 @@ treehouseApp.controller('achievementsController', function($scope, $http, achiev
     $scope.openAchievement = function (chosenAchievement) {
         achievementService.setAchievement(chosenAchievement);
     };
+    
+    $scope.openChallenge = function (chosenAchievement) {
+        achievementService.setAchievement(chosenAchievement);
+    };
 
     $scope.showProgressList = function () {
         $scope.showingProgressList = true;
