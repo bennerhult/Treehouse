@@ -55,7 +55,7 @@
                 <div class="userArea">
                     <a ng-href="/app/friend/{{currentFriend.username}}"><img class="border" style="width:50px;height:50px" ng-src="{{currentFriend.imageURL}}" ></a>
                     <p><a ng-href="/app/friend/{{currentFriend.username}}?backurl={{location}}">{{currentFriend.prettyName}}</a></p>
-                    <a href="#" ng-click="share($event, achievement, currentFriend)">Share</a>
+                    <div class="remove"><a href="#" ng-click="share($event, achievement, currentFriend)">Share</a></div>
                 </div>
             </div>
             <div ng-show="!shareToList.length" class="item"><p><strong>Get social!</strong><br />Find some friends and challenge them.</p></div>
