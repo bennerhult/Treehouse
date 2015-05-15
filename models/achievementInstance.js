@@ -10,6 +10,8 @@ var AchievementInstanceSchema = new Schema({
     createdDate             : {type: Date, required: true},
     unlockedDate            : {type: Date},
     createdBy               : {type: Schema.ObjectId, required: true},
+    createdByName           : {type: String, required: true},
+    createdByImageURL       : {type: String, required: true},
     achievementId           : {type: Schema.ObjectId, required: true},
     title                   : {type: String, required: true},
     description             : {type: String},
@@ -41,7 +43,7 @@ module.exports = {
 function createAchievement(createdBy, title, description, imageURL, goals, callback) {
     var myAchievement = new achievement.Achievement();
     myAchievement.createdDate = new Date();
-    myAchievement.createdBy = createdBy;
+    myAchievement.createdBy = createdBy._id;
     myAchievement.title = title;
     myAchievement.description = description;
     myAchievement.imageURL = imageURL;
@@ -59,7 +61,9 @@ function createAchievement(createdBy, title, description, imageURL, goals, callb
 function createAchievementInstance(motherAchievement, user, callback, more) {
     var myAchievementInstance = new AchievementInstance();
     myAchievementInstance.createdDate = new Date();
-    myAchievementInstance.createdBy = user;
+    myAchievementInstance.createdBy = user._id;
+    myAchievementInstance.createdByName = user.prettyName;
+    myAchievementInstance.createdByImageURL = user.imageURL;
     myAchievementInstance.achievementId = motherAchievement.id;
     myAchievementInstance.title = motherAchievement.title;
     myAchievementInstance.description = motherAchievement.description;
