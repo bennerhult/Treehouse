@@ -791,6 +791,7 @@ ul.icons{
     display: none;
     position: fixed;
     bottom: 0px;
+    left: 0px;
     z-index: 2;
     border-top: 1px solid #000000;
     background-color: #131213;
