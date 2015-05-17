@@ -112,15 +112,19 @@ function denyShareHolding(achievement_id, shareholder_id, sharer_id) {
     });
 }
 
-function acceptShareHolding(motherAchievementInstance, user, sharer_id, callback){
+function acceptShareHolding(motherAchievementInstance, user, sharer_id, callback) {
     Shareholding.findOne({ achievement_id: motherAchievementInstance._id, shareholder_id: user._id, sharer_id: sharer_id, confirmed: false }, function(err, shareholdingInstance) {
-        achievement.Achievement.findOne({ _id: motherAchievementInstance.achievementId}, function(err2, motherAchievement) {
-             achievementInstance.createAchievementInstance(motherAchievement, user, function(myAchievementInstance) {
-                shareholdingInstance.confirmed = true;
-                shareholdingInstance.save(function () {
-                    callback(myAchievementInstance);
+        if (shareholdingInstance) {
+            achievement.Achievement.findOne({ _id: motherAchievementInstance.achievementId}, function(err2, motherAchievement) {
+                 achievementInstance.createAchievementInstance(motherAchievement, user, function(myAchievementInstance) {
+                    shareholdingInstance.confirmed = true;
+                    shareholdingInstance.save(function () {
+                        callback(myAchievementInstance);
+                    });
                 });
             });
-        });
+        } else {
+            callback();
+        }
     });
 }
