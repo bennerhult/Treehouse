@@ -3,9 +3,9 @@ var treehouseApp = angular.module('App', ['ngRoute']);
 treehouseApp.factory("achievementService",function() {
     var service = {};
 
-    service.setAchievement = function(currentAchievement){
+    service.setAchievement = function(currentAchievement) {
         this.achievement = currentAchievement;
-    }
+    };
 
     return service;
 });

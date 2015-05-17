@@ -16,7 +16,7 @@ treehouseApp.controller('achievementsController', function($scope, $http, achiev
         achievementService.setAchievement(chosenAchievement);
     };
     
-    $scope.openChallenge = function (chosenAchievement) {
+    $scope.openChallenge = function (chosenAchievement) { 
         achievementService.setAchievement(chosenAchievement);
     };
 

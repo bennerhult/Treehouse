@@ -35,7 +35,7 @@ treehouseApp.controller('achievementController', function($scope, $http, achieve
         }).success(function(result) {
             $scope.achievement = result.updatedAchievementInstance;
         });
-    }
+    };
 
     $scope.publicize = function(evt) {
         $http.post('/api/achievements/publicizeAchievement', {
@@ -43,7 +43,7 @@ treehouseApp.controller('achievementController', function($scope, $http, achieve
         }).success(function(result) {
             $scope.achievement = result.updatedAchievementInstance;
         });
-    }
+    };
 
     $scope.unpublicize = function(evt) {
         $http.post('/api/achievements/unpublicizeAchievement', {
@@ -51,11 +51,17 @@ treehouseApp.controller('achievementController', function($scope, $http, achieve
         }).success(function(result) {
             $scope.achievement = result.updatedAchievementInstance;
         });
-    }
+    };
 
     $scope.deleteAchievement = function(evt) {
         $http.post('/api/achievements/deleteAchievement', {
-            achievementInstance : $scope.achievement
+            achievement : $scope.achievement
         }).success(function() {});
-    }
+    };
+    
+    $scope.denyChallenge = function(evt) {
+        $http.post('/api/achievements/denyChallenge', {
+            achievement : $scope.achievement
+        }).success(function() {});
+    };
 });

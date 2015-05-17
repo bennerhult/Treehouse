@@ -25,7 +25,7 @@ module.exports = {
     isAchievementCreatedByMe: isAchievementCreatedByMe,
     isAchievementSharedByMe: isAchievementSharedByMe,
     getShareHolders: getShareHolders,
-    ignoreShareHolding: ignoreShareHolding
+    denyShareHolding: denyShareHolding
 }
 
 function createShareholding(sharer_id, shareholder_id, achievement_id, callback) {
@@ -152,10 +152,9 @@ function getCompares(achievementId, userId, callback) {
     });
 }
 
-function ignoreShareHolding(achievement_id, shareholder_id, callback) {
-    Shareholding.findOne({ shareholder_id: shareholder_id, achievement_id: achievement_id }, function(err, shareholding) {
+function denyShareHolding(achievement_id, shareholder_id, sharer_id) {
+    Shareholding.findOne({ shareholder_id: shareholder_id, achievement_id: achievement_id, sharer_id: sharer_id, confirmed:false }, function(err, shareholding) {
         shareholding.remove();
-        callback();
     });
 }
 

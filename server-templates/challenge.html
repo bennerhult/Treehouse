@@ -23,7 +23,7 @@
         <div class="tabs">
             <span class="selected">My progress</span>
         </div>
-        <div class="listWrap" ng-show="showingMyProgressTab">
+        <div class="listWrap">
             <div class="item"  ng-repeat="currentGoal in achievement.goals">
                 <table>
                     <tr>
@@ -40,22 +40,12 @@
                     </tr>
                 </table>
             </div>
-        </div>
-        <div class="listWrap" ng-show="showingShareTab">
-            <div class="item" ng-repeat="currentFriend in shareToList">
-                <div class="userArea">
-                    <a ng-href="/app/friend/{{currentFriend.username}}"><img class="border" style="width:50px;height:50px" ng-src="{{currentFriend.imageURL}}" ></a>
-                    <p><a ng-href="/app/friend/{{currentFriend.username}}?backurl={{location}}">{{currentFriend.prettyName}}</a></p>
-                    <div class="remove"><a href="#" ng-click="share($event, achievement, currentFriend)">Share</a></div>
-                </div>
-            </div>
-            <div ng-show="!shareToList.length" class="item"><p><strong>Get social!</strong><br />Find some friends and challenge them.</p></div>
-        </div>
-         </div>
+        </div>     
+    </div>
 
     <div class="header">
         <span class="create-link"><a href="#">Accept(not implemented)</a></span>
-        <span class="create-link"><a href="#">Reject(not implemented)</a></span>              
+        <span class="create-link"><a href="/app/achievements" ng-click="denyChallenge($event)">Deny</a></span>              
     </div>
 
     <div class="clear"> </div>

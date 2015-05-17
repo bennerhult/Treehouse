@@ -23,6 +23,10 @@ module.exports = function (app, templates, requestHandlers, progress, moment, sh
         app.post('/api/achievements/deleteAchievement', function (request, response) {
             achievementInstance.remove(request.body.achievementInstance, function() {});
         });
+        
+        app.post('/api/achievements/denyChallenge', function (request, response) {
+           shareholding.denyShareHolding(request.body.achievement._id, request.session.currentUser._id, request.body.achievement.createdBy);
+        });
 
         app.post('/api/achievements/share', function (request, response) {
             shareholding.createShareholding(request.session.currentUser._id, request.body.friend.id, request.body.achievement._id, function() {});
