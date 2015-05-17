@@ -58,10 +58,4 @@ treehouseApp.controller('achievementController', function($scope, $http, achieve
             achievement : $scope.achievement
         }).success(function() {});
     };
-    
-    $scope.denyChallenge = function(evt) {
-        $http.post('/api/achievements/denyChallenge', {
-            achievement : $scope.achievement
-        }).success(function() {});
-    };
 });

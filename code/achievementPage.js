@@ -24,6 +24,11 @@ module.exports = function (app, templates, requestHandlers, progress, moment, sh
             achievementInstance.remove(request.body.achievementInstance, function() {});
         });
         
+        app.post('/api/achievements/acceptChallenge', function (request, response) {
+           console.log("challenge accepted!")
+           //shareholding.acceptShareHolding(request.body.achievement._id, request.session.currentUser._id, request.body.achievement.createdBy);
+        });
+        
         app.post('/api/achievements/denyChallenge', function (request, response) {
            shareholding.denyShareHolding(request.body.achievement._id, request.session.currentUser._id, request.body.achievement.createdBy);
         });
