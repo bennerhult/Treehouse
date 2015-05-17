@@ -58,7 +58,7 @@ treehouseApp.controller('achievementController', function($scope, $http, achieve
 
     $scope.deleteAchievement = function(evt) {
         $http.post('/api/achievements/deleteAchievement', {
-            achievement : $scope.achievement
+            achievementInstance : $scope.achievement
         }).success(function() {});
     };
 });
