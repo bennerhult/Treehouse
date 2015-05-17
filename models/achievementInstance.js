@@ -72,7 +72,7 @@ function createAchievementInstance(motherAchievement, user, callback, more) {
     myAchievementInstance.percentageCompleted = 0;
     myAchievementInstance.goals = motherAchievement.goals;
     if(more) {
-        myAchievementInstance.publiclyVisible = more.publiclyVisible
+        myAchievementInstance.publiclyVisible = more.publiclyVisible;
     }
     myAchievementInstance.save(function (error) {
         callback(myAchievementInstance);
