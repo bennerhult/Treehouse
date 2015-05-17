@@ -20,6 +20,7 @@ treehouseApp.controller('achievementController', function($scope, $http, achieve
     }
 
     $scope.share = function(evt, achievement, friend) {
+        evt.preventDefault();
         $http.post('/api/achievements/share', {
             achievement : achievement,
             friend : friend
@@ -29,6 +30,7 @@ treehouseApp.controller('achievementController', function($scope, $http, achieve
     }
 
     $scope.progress = function(evt, currentGoal) {
+        evt.preventDefault();
         $http.post('/api/achievements/progress', {
             goal : currentGoal,
             achievementInstance : $scope.achievement
@@ -38,6 +40,7 @@ treehouseApp.controller('achievementController', function($scope, $http, achieve
     };
 
     $scope.publicize = function(evt) {
+        evt.preventDefault();
         $http.post('/api/achievements/publicizeAchievement', {
             achievementInstance : $scope.achievement
         }).success(function(result) {

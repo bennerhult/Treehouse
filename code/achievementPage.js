@@ -25,8 +25,9 @@ module.exports = function (app, templates, requestHandlers, progress, moment, sh
         });
         
         app.post('/api/achievements/acceptChallenge', function (request, response) {
-           console.log("challenge accepted!")
-           //shareholding.acceptShareHolding(request.body.achievement._id, request.session.currentUser._id, request.body.achievement.createdBy);
+           shareholding.acceptShareHolding(request.body.achievement, request.session.currentUser, request.body.achievement.createdBy, function() {
+               //TODO: show new achievement
+           });
         });
         
         app.post('/api/achievements/denyChallenge', function (request, response) {

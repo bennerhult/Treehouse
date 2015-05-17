@@ -1,7 +1,6 @@
 var mongoose = require('mongoose'),
     achievement = require('./achievement.js'),
     achievementInstance = require('./achievementInstance.js'),
-    progress = require('./progress.js'),
     Schema = mongoose.Schema;
 
 var ShareholdingSchema = new Schema({
@@ -33,7 +32,7 @@ function createShareholding(sharer_id, shareholder_id, achievement_id, callback)
     shareholding.achievement_id = achievement_id;
     shareholding.confirmed = false;
     Shareholding.findOne({ sharer_id: sharer_id, shareholder_id: shareholder_id, achievement_id: achievement_id }, function(err, exists) {
-        if (exists) {
+        if (!exists) {
             shareholding.save(function () {
                 callback(true);
             });
@@ -113,17 +112,14 @@ function denyShareHolding(achievement_id, shareholder_id, sharer_id) {
     });
 }
 
-function acceptShareHolding(achievement_id, shareholder_id, callback){
-    Shareholding.findOne({ shareholder_id: shareholder_id, achievement_id: achievement_id }, function(err, shareholding) {
-        achievement.Achievement.findOne({ _id: achievement_id }, function(err2,currentAchievement) {
-            currentAchievement.goals.forEach(function(goal, index) {
-                progress.createAndSaveProgress(shareholder_id, achievement_id, goal._id);
-                if (index == currentAchievement.goals.length -1)  {
-                    shareholding.confirmed = true;
-                    shareholding.save(function () {
-                        callback(currentAchievement.title);
-                    });
-                }
+function acceptShareHolding(motherAchievementInstance, user, sharer_id, callback){
+    Shareholding.findOne({ achievement_id: motherAchievementInstance._id, shareholder_id: user._id, sharer_id: sharer_id, confirmed: false }, function(err, shareholdingInstance) {
+        achievement.Achievement.findOne({ _id: motherAchievementInstance.achievementId}, function(err2, motherAchievement) {
+             achievementInstance.createAchievementInstance(motherAchievement, user, function(myAchievementInstance) {
+                shareholdingInstance.confirmed = true;
+                shareholdingInstance.save(function () {
+                    callback(myAchievementInstance);
+                });
             });
         });
     });
