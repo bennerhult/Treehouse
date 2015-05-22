@@ -21,13 +21,14 @@ treehouseApp.controller('achievementController', function($scope, $http, achieve
 
     $scope.share = function(evt, achievementInstance, friend) {
         evt.preventDefault();
+
+       friend.alreadyChallenged = true;
+             
         $http.post('/api/achievements/share', {
             achievementInstance : achievementInstance,
             friend : friend
-        }).success(function(result) {
-
-        });
-    }
+        });  
+    };
 
     $scope.progress = function(evt, currentGoal) {
         evt.preventDefault();
