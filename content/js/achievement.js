@@ -19,10 +19,10 @@ treehouseApp.controller('achievementController', function($scope, $http, achieve
         });
     }
 
-    $scope.share = function(evt, achievement, friend) {
+    $scope.share = function(evt, achievementInstance, friend) {
         evt.preventDefault();
         $http.post('/api/achievements/share', {
-            achievement : achievement,
+            achievementInstance : achievementInstance,
             friend : friend
         }).success(function(result) {
 

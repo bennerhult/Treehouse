@@ -25,17 +25,17 @@ module.exports = function (app, templates, requestHandlers, progress, moment, sh
         });
         
         app.post('/api/achievements/acceptChallenge', function (request, response) {
-           shareholding.acceptShareHolding(request.body.achievement, request.session.currentUser, request.body.achievement.createdBy, function() {
+           shareholding.acceptShareHolding(request.body.achievementInstance, request.session.currentUser, request.body.achievementInstance.createdBy, function() {
                //TODO: show new achievement
            });
         });
         
         app.post('/api/achievements/denyChallenge', function (request, response) {
-           shareholding.denyShareHolding(request.body.achievement._id, request.session.currentUser._id, request.body.achievement.createdBy);
+           shareholding.denyShareHolding(request.body.achievementInstance.achievementId, request.session.currentUser._id, request.body.achievementInstance.createdBy);
         });
 
         app.post('/api/achievements/share', function (request, response) {
-            shareholding.createShareholding(request.session.currentUser._id, request.body.friend.id, request.body.achievement._id, function() {});
+            shareholding.createShareholding(request.session.currentUser._id, request.body.friend.id, request.body.achievementInstance.achievementId, function() {});
         });
 
         app.post('/api/achievements/shareToList', function (request, response) {

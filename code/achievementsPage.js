@@ -8,7 +8,7 @@ module.exports = function (app, templates, requestHandlers, progress, moment, sh
 
         app.post('/api/achievements/init', function (request, response) {
             achievementInstance.getAchievementList(request.session.currentUser._id, function(progressList, unlockedList) {
-                shareholding.getSharedAchievementNotifications(request.session.currentUser._id, request.session.currentUser._id, function (notificationList) {
+                shareholding.getSharedAchievementNotifications(request.session.currentUser._id, function (notificationList) {
                     return requestHandlers.respondWithJson(response, { notificationList: notificationList, progressList: progressList,  unlockedList: unlockedList});
                 });
             });

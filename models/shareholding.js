@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
     achievement = require('./achievement.js'),
     achievementInstance = require('./achievementInstance.js'),
+    user = require('./user.js'),
     Schema = mongoose.Schema;
 
 var ShareholdingSchema = new Schema({
@@ -54,15 +55,13 @@ function isAchievementSharedByMe(userId, achievement_id, callback) {
     });
 }
 
-function getSharedAchievementNotifications(achieverId, userId, callback) {
+function getSharedAchievementNotifications(achieverId, callback) {
     var achievementNotifications = [];
     Shareholding.find({ shareholder_id: achieverId, confirmed: false }, function(err, notifications) {
         if (notifications && notifications.length > 0) {
             notifications.forEach(function(notification, index) {
-               achievementInstance.AchievementInstance.findOne({ _id: notification.achievement_id }, function(err2,currentAchievement) {
-                   if (notification.shareholder_id == userId || notification.sharer_id == userId) {
-                        achievementNotifications.push(currentAchievement);
-                    }
+               achievementInstance.AchievementInstance.findOne({  achievementId: notification.achievement_id, createdBy: notification.sharer_id }, function(err2,currentAchievement) {
+                    achievementNotifications.push(currentAchievement);
                     if (index == (notifications.length -1)) {
                         callback(achievementNotifications);
                     }
@@ -75,7 +74,7 @@ function getSharedAchievementNotifications(achieverId, userId, callback) {
 }
 
 function getCompares(achievementId, userId, callback) {
-    var compares = [];
+   /* var compares = [];
     var currentShareFriendId;
 
     Shareholding.find({ achievement_id: achievementId, confirmed: true }, function(err, shareholdings) {
@@ -103,7 +102,7 @@ function getCompares(achievementId, userId, callback) {
         } else {
             callback();
         }
-    });
+    });*/
 }
 
 function denyShareHolding(achievement_id, shareholder_id, sharer_id) {
@@ -112,11 +111,11 @@ function denyShareHolding(achievement_id, shareholder_id, sharer_id) {
     });
 }
 
-function acceptShareHolding(motherAchievementInstance, user, sharer_id, callback) {
-    Shareholding.findOne({ achievement_id: motherAchievementInstance._id, shareholder_id: user._id, sharer_id: sharer_id, confirmed: false }, function(err, shareholdingInstance) {
+function acceptShareHolding(motherAchievementInstance, currentUser, sharer_id, callback) {
+    Shareholding.findOne({ achievement_id: motherAchievementInstance.achievementId, shareholder_id: currentUser._id, sharer_id: sharer_id, confirmed: false }, function(err, shareholdingInstance) {
         if (shareholdingInstance) {
-            achievement.Achievement.findOne({ _id: motherAchievementInstance.achievementId}, function(err2, motherAchievement) {
-                 achievementInstance.createAchievementInstance(motherAchievement, user, function(myAchievementInstance) {
+            achievement.Achievement.findById(motherAchievementInstance.achievementId, function (err2, motherAchievement) {
+                achievementInstance.createAchievementInstance(motherAchievement, currentUser, function(myAchievementInstance) {
                     shareholdingInstance.confirmed = true;
                     shareholdingInstance.save(function () {
                         callback(myAchievementInstance);

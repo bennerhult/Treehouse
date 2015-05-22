@@ -64,7 +64,7 @@ function createAchievementInstance(motherAchievement, user, callback, more) {
     myAchievementInstance.createdBy = user._id;
     myAchievementInstance.createdByName = user.prettyName;
     myAchievementInstance.createdByImageURL = user.imageURL;
-    myAchievementInstance.achievementId = motherAchievement.id;
+    myAchievementInstance.achievementId = motherAchievement._id;
     myAchievementInstance.title = motherAchievement.title;
     myAchievementInstance.description = motherAchievement.description;
     myAchievementInstance.imageURL = motherAchievement.imageURL;
