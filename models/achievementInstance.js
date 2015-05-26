@@ -29,6 +29,7 @@ var AchievementInstanceSchema = new Schema({
     description             : {type: String},
     imageURL                : {type: String, required: true},
     publiclyVisible         : {type: Boolean, required: true},
+    isShared                : {type: Boolean, required: true},
     percentageCompleted     : {type: Number, required: true},
     goals                   : {type: [goal.GoalSchema], required: true}
 }, schemaOptions);
@@ -82,6 +83,7 @@ function createAchievementInstance(motherAchievement, user, callback, more) {
     myAchievementInstance.description = motherAchievement.description;
     myAchievementInstance.imageURL = motherAchievement.imageURL;
     myAchievementInstance.publiclyVisible = false;
+    myAchievementInstance.isShared = false;
     myAchievementInstance.percentageCompleted = 0;
     myAchievementInstance.goals = motherAchievement.goals;
     if(more) {

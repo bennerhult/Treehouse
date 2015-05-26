@@ -34,8 +34,13 @@ function createShareholding(sharer_id, shareholder_id, achievement_id, callback)
     shareholding.confirmed = false;
     Shareholding.findOne({ sharer_id: sharer_id, shareholder_id: shareholder_id, achievement_id: achievement_id }, function(err, exists) {
         if (!exists) {
-            shareholding.save(function () {
-                callback(true);
+            achievementInstance.AchievementInstance.findOne({  achievementId: achievement_id, createdBy: sharer_id }, function (err2, motherAchievementInstance) {
+                motherAchievementInstance.isShared = true; 
+                motherAchievementInstance.save(function () {
+                    shareholding.save(function () {
+                        callback(true);
+                    });
+                });
             });
         } else {
             callback(false);
@@ -116,10 +121,13 @@ function acceptShareHolding(motherAchievementInstance, currentUser, sharer_id, c
         if (shareholdingInstance) {
             achievement.Achievement.findById(motherAchievementInstance.achievementId, function (err2, motherAchievement) {
                 achievementInstance.createAchievementInstance(motherAchievement, currentUser, function(myAchievementInstance) {
-                    shareholdingInstance.confirmed = true;
-                    shareholdingInstance.save(function () {
-                        callback(myAchievementInstance);
-                    });
+                    myAchievementInstance.isShared = true;
+                    myAchievementInstance.save(function () {
+                        shareholdingInstance.confirmed = true;
+                        shareholdingInstance.save(function () {
+                            callback(myAchievementInstance);
+                        });
+                    });    
                 });
             });
         } else {
