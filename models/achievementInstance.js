@@ -6,10 +6,22 @@ var mongoose = require('mongoose'),
     newsfeedEvent = require('./newsfeedEvent.js'),
     Schema= mongoose.Schema;
 
+var schemaOptions = {
+    toObject: {
+        virtuals: true,
+        methods: true
+    }
+    ,toJSON: {
+        virtuals: true,
+        methods: true
+    }
+};
+
 var AchievementInstanceSchema = new Schema({
     createdDate             : {type: Date, required: true},
     unlockedDate            : {type: Date},
     createdBy               : {type: Schema.ObjectId, required: true},
+    originalCreatedBy       : {type: Schema.ObjectId, required: true},
     createdByName           : {type: String, required: true},
     createdByImageURL       : {type: String, required: true},
     achievementId           : {type: Schema.ObjectId, required: true},
@@ -19,7 +31,7 @@ var AchievementInstanceSchema = new Schema({
     publiclyVisible         : {type: Boolean, required: true},
     percentageCompleted     : {type: Number, required: true},
     goals                   : {type: [goal.GoalSchema], required: true}
-});
+}, schemaOptions);
 
 var AchievementInstance = mongoose.model('AchievementInstance', AchievementInstanceSchema);
 
@@ -62,6 +74,7 @@ function createAchievementInstance(motherAchievement, user, callback, more) {
     var myAchievementInstance = new AchievementInstance();
     myAchievementInstance.createdDate = new Date();
     myAchievementInstance.createdBy = user._id;
+    myAchievementInstance.originalCreatedBy = motherAchievement.createdBy;
     myAchievementInstance.createdByName = user.prettyName;
     myAchievementInstance.createdByImageURL = user.imageURL;
     myAchievementInstance.achievementId = motherAchievement._id;
@@ -78,6 +91,14 @@ function createAchievementInstance(motherAchievement, user, callback, more) {
         callback(myAchievementInstance);
     });
 }
+
+AchievementInstanceSchema.virtual('createdByUser').get(function() {
+    if (this.createdBy.equals(this.originalCreatedBy)) {
+        return true;
+    } else  {
+        return false;
+    }
+});
 
 function createIssuedAchievement(createdBy, title, description, imageURL, issuerName) {
     var achievementInstance = new AchievementInstance();
