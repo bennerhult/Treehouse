@@ -25,8 +25,8 @@ module.exports = function (app, templates, requestHandlers, progress, moment, sh
         });
         
         app.post('/api/achievements/acceptChallenge', function (request, response) {
-           shareholding.acceptShareHolding(request.body.achievementInstance, request.session.currentUser, request.body.achievementInstance.createdBy, function() {
-               //TODO: show new achievement
+           shareholding.acceptShareHolding(request.body.achievementInstance, request.session.currentUser, request.body.achievementInstance.createdBy, function(newAchievementInstance) {
+              requestHandlers.respondWithJson(response, { newAchievementInstance : newAchievementInstance });
            });
         });
         
