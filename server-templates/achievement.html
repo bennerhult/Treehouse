@@ -16,6 +16,10 @@
                 <span class="progressbar"></span>
                 <div class="progress-container"><span class="progress" style="width:{{achievement.percentageCompleted}}%"></span></div>
             </div>
+             <ul class="icons">
+                 <li><img ng-show="achievement.isShared" src="content/img/shared.png"></li>
+                <li><img ng-show="achievement.publiclyVisible" src="content/img/public.png"></li>
+             </ul>
         </div>
         <div class="clear"></div>
     </div>
