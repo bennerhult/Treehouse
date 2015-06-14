@@ -75,7 +75,7 @@ module.exports = function (app, templates, requestHandlers, progress, moment, sh
                 var achievementId = request.body.achievementInstance.achievementId;
                 var async = require('async');
 
-                var fetchFriends = function (direction, ids, cb) {
+                var fetchFriends = function (ids, cb) {
                     if (ids.length == 0) {
                         cb();
                     } else {
@@ -98,20 +98,20 @@ module.exports = function (app, templates, requestHandlers, progress, moment, sh
                 var addToLists = function (foundFriend, friendProcessed) {
                     shareholding.Shareholding.findOne({ shareholder_id: foundFriend._id, achievement_id: achievementId }, function (err, existingShareholding) {
                         if (existingShareholding && existingShareholding.confirmed === false) {
-                            shareToPendingList.push({ id: foundFriend._id, imageURL: foundFriend.imageURL, username: foundFriend.username, direction: 'confirmed', prettyName: user.getPrettyName(foundFriend) });
+                            shareToPendingList.push({ id: foundFriend._id, imageURL: foundFriend.imageURL, username: foundFriend.username, prettyName: user.getPrettyName(foundFriend) });
                             friendProcessed();
                         } else if (existingShareholding && existingShareholding.confirmed === true) {
-                            shareToAcceptedList.push({ id: foundFriend._id, imageURL: foundFriend.imageURL, username: foundFriend.username, direction: 'confirmed', prettyName: user.getPrettyName(foundFriend) });
+                            shareToAcceptedList.push({ id: foundFriend._id, imageURL: foundFriend.imageURL, username: foundFriend.username, prettyName: user.getPrettyName(foundFriend) });
                             friendProcessed();
                         } else {
-                            shareToList.push({ id: foundFriend._id, imageURL: foundFriend.imageURL, username: foundFriend.username, direction: 'confirmed', prettyName: user.getPrettyName(foundFriend) });
+                            shareToList.push({ id: foundFriend._id, imageURL: foundFriend.imageURL, username: foundFriend.username, prettyName: user.getPrettyName(foundFriend) });
                             friendProcessed();
                         }
                     });
 
                 };
 
-                fetchFriends('confirmed', confirmedFriendUsersFilter, function () {
+                fetchFriends(confirmedFriendUsersFilter, function () {
                     var result = new Object();
                     result.shareToList = shareToList;
                     result.shareToPendingList = shareToPendingList;
