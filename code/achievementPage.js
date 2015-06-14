@@ -68,12 +68,13 @@ module.exports = function (app, templates, requestHandlers, progress, moment, sh
                         outgoingFriendUserFilter.push({ _id: uid });
                     }
                 }
- 
+
                 var shareToList = [];
                 var shareToPendingList = [];
                 var shareToAcceptedList = [];
                 var achievementId = request.body.achievementInstance.achievementId;
-                var nrToGoThrough;
+                var async = require('async');
+
                 var fetchFriends = function (direction, ids, cb) {
                     if (ids.length == 0) {
                         cb();
@@ -82,35 +83,29 @@ module.exports = function (app, templates, requestHandlers, progress, moment, sh
                             if (err) {
                                 throw err;
                             }
-                            nrToGoThrough = result.length;
-                            for (var j = 0; j < result.length; j++) {
-                                addToLists(result[j], cb);
-                            }
-
+                            async.each(result, function (foundFriend, friendProcessed) {
+                                addToLists(foundFriend, friendProcessed);
+                            }, function (err) {
+                                    if (err) {
+                                        throw err
+                                    }
+                                    cb();
+                                });
                         });
                     }
-                }
+                };
 
-                var addToLists = function (foundFriend, cb) {
+                var addToLists = function (foundFriend, friendProcessed) {
                     shareholding.Shareholding.findOne({ shareholder_id: foundFriend._id, achievement_id: achievementId }, function (err, existingShareholding) {
                         if (existingShareholding && existingShareholding.confirmed === false) {
                             shareToPendingList.push({ id: foundFriend._id, imageURL: foundFriend.imageURL, username: foundFriend.username, direction: 'confirmed', prettyName: user.getPrettyName(foundFriend) });
-                            nrToGoThrough--;
-                            if (nrToGoThrough === 0) {
-                                cb();
-                            }
+                            friendProcessed();
                         } else if (existingShareholding && existingShareholding.confirmed === true) {
                             shareToAcceptedList.push({ id: foundFriend._id, imageURL: foundFriend.imageURL, username: foundFriend.username, direction: 'confirmed', prettyName: user.getPrettyName(foundFriend) });
-                            nrToGoThrough--;
-                            if (nrToGoThrough === 0) {
-                                cb();
-                            }
+                            friendProcessed();
                         } else {
                             shareToList.push({ id: foundFriend._id, imageURL: foundFriend.imageURL, username: foundFriend.username, direction: 'confirmed', prettyName: user.getPrettyName(foundFriend) });
-                            nrToGoThrough--;
-                            if (nrToGoThrough === 0) {
-                                cb();
-                            }
+                            friendProcessed();
                         }
                     });
 
