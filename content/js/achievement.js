@@ -9,13 +9,16 @@ treehouseApp.controller('achievementController', function($scope, $http, achieve
         $scope.showingShareTab = false;
     }
 
-    $scope.openShareTab= function(evt) {
+    $scope.openShareTab= function(evt, achievementInstance) {
         evt.preventDefault();
         $scope.showingMyProgressTab = false;
         $scope.showingShareTab = true;
         $http.post('/api/achievements/shareToList', {
+             achievementInstance : achievementInstance,
         }).success(function(result) {
-            $scope.shareToList = result;
+            $scope.shareToList = result.shareToList;
+            $scope.shareToPendingList = result.shareToPendingList;
+            $scope.shareToAcceptedList = result.shareToAcceptedList;
         });
     }
 

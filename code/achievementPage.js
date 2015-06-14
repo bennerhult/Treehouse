@@ -3,39 +3,39 @@ module.exports = function (app, templates, requestHandlers, progress, moment, sh
 
     function registerHandlers() {
         app.post('/api/achievements/progress', function (request, response) {
-            achievementInstance.progress(request.body.goal, request.body.achievementInstance, function(updatedAchievementInstance) {
-                requestHandlers.respondWithJson(response, { updatedAchievementInstance : updatedAchievementInstance });
+            achievementInstance.progress(request.body.goal, request.body.achievementInstance, function (updatedAchievementInstance) {
+                requestHandlers.respondWithJson(response, { updatedAchievementInstance: updatedAchievementInstance });
             });
         });
 
         app.post('/api/achievements/publicizeAchievement', function (request, response) {
-            achievementInstance.publicize(request.body.achievementInstance, function(updatedAchievementInstance) {
-                requestHandlers.respondWithJson(response, { updatedAchievementInstance : updatedAchievementInstance });
+            achievementInstance.publicize(request.body.achievementInstance, function (updatedAchievementInstance) {
+                requestHandlers.respondWithJson(response, { updatedAchievementInstance: updatedAchievementInstance });
             });
         });
 
         app.post('/api/achievements/unpublicizeAchievement', function (request, response) {
-            achievementInstance.unpublicize(request.body.achievementInstance, function(updatedAchievementInstance) {
-                requestHandlers.respondWithJson(response, { updatedAchievementInstance : updatedAchievementInstance });
+            achievementInstance.unpublicize(request.body.achievementInstance, function (updatedAchievementInstance) {
+                requestHandlers.respondWithJson(response, { updatedAchievementInstance: updatedAchievementInstance });
             });
         });
 
         app.post('/api/achievements/deleteAchievement', function (request, response) {
-            achievementInstance.remove(request.body.achievementInstance, function() {});
+            achievementInstance.remove(request.body.achievementInstance, function () { });
         });
-        
+
         app.post('/api/achievements/acceptChallenge', function (request, response) {
-           shareholding.acceptShareHolding(request.body.achievementInstance, request.session.currentUser, request.body.achievementInstance.createdBy, function(newAchievementInstance) {
-              requestHandlers.respondWithJson(response, { newAchievementInstance : newAchievementInstance });
-           });
+            shareholding.acceptShareHolding(request.body.achievementInstance, request.session.currentUser, request.body.achievementInstance.createdBy, function (newAchievementInstance) {
+                requestHandlers.respondWithJson(response, { newAchievementInstance: newAchievementInstance });
+            });
         });
-        
+
         app.post('/api/achievements/denyChallenge', function (request, response) {
-           shareholding.denyShareHolding(request.body.achievementInstance.achievementId, request.session.currentUser._id, request.body.achievementInstance.createdBy);
+            shareholding.denyShareHolding(request.body.achievementInstance.achievementId, request.session.currentUser._id, request.body.achievementInstance.createdBy);
         });
 
         app.post('/api/achievements/share', function (request, response) {
-            shareholding.createShareholding(request.session.currentUser._id, request.body.friend.id, request.body.achievementInstance.achievementId, function() {});
+            shareholding.createShareholding(request.session.currentUser._id, request.body.friend.id, request.body.achievementInstance.achievementId, function () { });
         });
 
         app.post('/api/achievements/shareToList', function (request, response) {
@@ -43,57 +43,91 @@ module.exports = function (app, templates, requestHandlers, progress, moment, sh
             friendship
                 .Friendship
                 .find().or([{ friend1_id: userId }, { friend2_id: userId }])
-                .exec(function(err, result) {
-                    if(err) {
-                        throw err;
+                .exec(function (err, result) {
+                if (err) {
+                    throw err;
+                }
+                var confirmedFriendUsersFilter = [];
+                var incomingFriendUserFilter = [];
+                var outgoingFriendUserFilter = [];
+                for (var i = 0; i < result.length; i++) {
+                    var uid;
+                    var isIncoming;
+                    if (result[i].friend2_id == userId) {
+                        isIncoming = true;
+                        uid = result[i].friend1_id;
+                    } else {
+                        isIncoming = false;
+                        uid = result[i].friend2_id;
                     }
-                    var confirmedFriendUsersFilter = []
-                    var incomingFriendUserFilter = []
-                    var outgoingFriendUserFilter = []
-                    for(var i=0; i<result.length; i++) {
-                        var uid;
-                        var isIncoming;
-                        if(result[i].friend2_id == userId) {
-                            isIncoming = true
-                            uid = result[i].friend1_id
-                        } else {
-                            isIncoming = false
-                            uid = result[i].friend2_id
-                        }
-                        if(result[i].confirmed) {
-                            confirmedFriendUsersFilter.push({ _id : uid });
-                        } else if (isIncoming) {
-                            incomingFriendUserFilter.push({ _id : uid });
-                        } else {
-                            outgoingFriendUserFilter.push({ _id : uid });
-                        }
+                    if (result[i].confirmed) {
+                        confirmedFriendUsersFilter.push({ _id: uid });
+                    } else if (isIncoming) {
+                        incomingFriendUserFilter.push({ _id: uid });
+                    } else {
+                        outgoingFriendUserFilter.push({ _id: uid });
                     }
+                }
+ 
+                var shareToList = [];
+                var shareToPendingList = [];
+                var shareToAcceptedList = [];
+                var achievementId = request.body.achievementInstance.achievementId;
+                var nrToGoThrough;
+                var fetchFriends = function (direction, ids, cb) {
+                    if (ids.length == 0) {
+                        cb();
+                    } else {
+                        user.User.find().or(ids).exec(function (err, result) {
+                            if (err) {
+                                throw err;
+                            }
+                            nrToGoThrough = result.length;
+                            for (var j = 0; j < result.length; j++) {
+                                addToLists(result[j], cb);
+                            }
 
-                    var shareToList = [];
-                    var fetchFriends = function (direction, ids, cb) {
-                        if(ids.length == 0) {
-                            cb()
-                        } else {
-                            user.User.find().or(ids).exec(function(err, result) {
-                                if(err) {
-                                    throw err;
-                                }
-                                for(var j=0; j<result.length; j++) {
-                                    shareToList.push({ id : result[j]._id, imageURL : result[j].imageURL, username : result[j].username, direction : direction, prettyName : user.getPrettyName(result[j]) });
-                                }
+                        });
+                    }
+                }
+
+                var addToLists = function (foundFriend, cb) {
+                    shareholding.Shareholding.findOne({ shareholder_id: foundFriend._id, achievement_id: achievementId }, function (err, existingShareholding) {
+                        if (existingShareholding && existingShareholding.confirmed === false) {
+                            shareToPendingList.push({ id: foundFriend._id, imageURL: foundFriend.imageURL, username: foundFriend.username, direction: 'confirmed', prettyName: user.getPrettyName(foundFriend) });
+                            nrToGoThrough--;
+                            if (nrToGoThrough === 0) {
                                 cb();
-                            });
+                            }
+                        } else if (existingShareholding && existingShareholding.confirmed === true) {
+                            shareToAcceptedList.push({ id: foundFriend._id, imageURL: foundFriend.imageURL, username: foundFriend.username, direction: 'confirmed', prettyName: user.getPrettyName(foundFriend) });
+                            nrToGoThrough--;
+                            if (nrToGoThrough === 0) {
+                                cb();
+                            }
+                        } else {
+                            shareToList.push({ id: foundFriend._id, imageURL: foundFriend.imageURL, username: foundFriend.username, direction: 'confirmed', prettyName: user.getPrettyName(foundFriend) });
+                            nrToGoThrough--;
+                            if (nrToGoThrough === 0) {
+                                cb();
+                            }
                         }
-                    }
-
-                    fetchFriends('confirmed', confirmedFriendUsersFilter, function () {
-                        requestHandlers.respondWithJson(response, shareToList);
                     });
+
+                };
+
+                fetchFriends('confirmed', confirmedFriendUsersFilter, function () {
+                    var result = new Object();
+                    result.shareToList = shareToList;
+                    result.shareToPendingList = shareToPendingList;
+                    result.shareToAcceptedList = shareToAcceptedList;
+                    requestHandlers.respondWithJson(response, result);
                 });
+            });
         });
     }
 
     return {
-        registerHandlers : registerHandlers
+        registerHandlers: registerHandlers
     };
-}
+};
