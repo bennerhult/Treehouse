@@ -3,12 +3,14 @@ treehouseApp.controller('challengeController', function($scope, $http, achieveme
     $scope.achievement = achievementService.achievement;
    
     $scope.denyChallenge = function(evt) {
+        $scope.decChallengesCount();
         $http.post('/api/achievements/denyChallenge', {
             achievementInstance : $scope.achievement
         }).success(function() {});
     }
  
     $scope.acceptChallenge = function(evt) {
+        $scope.decChallengesCount();
         $http.post('/api/achievements/acceptChallenge', {
             achievementInstance : $scope.achievement
         }).success(function(newAchievementInstance) {

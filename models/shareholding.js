@@ -22,6 +22,7 @@ module.exports = {
     acceptShareHolding: acceptShareHolding,
     isAchievementSharedByMe: isAchievementSharedByMe,
     acceptShareHolding: acceptShareHolding,
+    getNrOfChallenges: getNrOfChallenges,
     denyShareHolding: denyShareHolding
 }
 
@@ -113,6 +114,12 @@ function getCompares(achievementId, userId, callback) {
 function denyShareHolding(achievement_id, shareholder_id, sharer_id) {
     Shareholding.findOne({ achievement_id: achievement_id, shareholder_id: shareholder_id, sharer_id: sharer_id, confirmed: false }, function(err, shareholdingInstance) {
         shareholdingInstance.remove();
+    });
+}
+
+function getNrOfChallenges(user_id, callback) {
+    Shareholding.find({ shareholder_id: user_id, confirmed: false }, function(err, challenges) {
+        callback(challenges.length);
     });
 }
 

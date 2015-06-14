@@ -1,7 +1,12 @@
 <div class="desktopMenu">
     <ul>
         <li><a href="/app/newsfeed"><span ng-class="getClass('/app/newsfeed')">Newsfeed</span></a></li>
-        <li><a href="/app/achievements"><span ng-class="getClass('/app/achievements')">Achievements</span></a></li>
+        <li><a href="/app/achievements">
+            <span ng-class="getClass('/app/achievements')">
+                Achievements
+                <!-- This should be a span but there is some wierd child selector crap destroying the use of nested spans so this is a hack to make something that is at least sort of like a vanilla span -->
+                <section ng-show="incomingChallengesCount && incomingChallengesCount > 0" style="color:red;display:inline">({{incomingChallengesCount}})</section>
+            </span></a></li>
         <li><a href="/app/friends">
             <span ng-class="getClass('/app/friends')">
                 Friends

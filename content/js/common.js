@@ -63,6 +63,7 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
         pageService.setName(result.currentUser.firstName, result.currentUser.lastName, result.currentUser.username);
         pageService.setUserImageURL(result.currentUser.imageURL);
         $scope.incomingFriendRequestsCount = result.nrOfIncomingFriendRequests;
+        $scope.incomingChallengesCount = result.nrOfIncomingChallenges;
         $scope.isiPad = navigator.userAgent.match(/iPad/i) != null;
         $scope.isiPhone = navigator.userAgent.match(/iPhone/i) != null;
         var isiOs = $scope.isiPad || $scope.isiPhone;
@@ -85,7 +86,7 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
         } else {
             return '';
         }
-    }
+    };
 
     $scope.isRegularAppPage = function() {
         if ($location.path().substr(0, 5) === '/app/'  || $location.path().substr(0, 28) === '/public/achievementInstance/') {
@@ -93,16 +94,23 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
         } else {
             return false;
         }
-    }
+    };
 
     $scope.incFriendCount = function () {
         if($scope.incomingFriendRequestsCount) {
             $scope.incomingFriendRequestsCount = $scope.incomingFriendRequestsCount + 1;
         }
-    }
+    };
+    
     $scope.decFriendCount = function () {
         if($scope.incomingFriendRequestsCount) {
             $scope.incomingFriendRequestsCount = $scope.incomingFriendRequestsCount - 1;
         }
-    }
+    };
+    
+    $scope.decChallengesCount = function () {
+        if($scope.incomingChallengesCount) {
+            $scope.incomingChallengesCount = $scope.incomingChallengesCount - 1;
+        }
+    };
 });

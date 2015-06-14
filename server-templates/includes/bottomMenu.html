@@ -7,7 +7,10 @@
         </li>
         <li>
             <div ng-class="getClass('/app/achievements')">
-                <a href="/app/achievements"><img src="../content/img/treeicon.png" alt=""></a>
+                <a ng-hide="incomingChallengesCount && incomingChallengesCount > 0"  href="/app/achievements"><img src="../content/img/treeicon.png" alt=""></a>
+                <a ng-show="incomingChallengesCount && incomingChallengesCount > 0"  href="/app/achievements">
+                    <div style="display:inline-block;position:relative;background-image:url('../content/img/treeicon.png');background-color:transparent;width:70px;height:40px;color:red;text-align:right" >({{incomingChallengesCount}})</div>
+                </a>
             </div>
         </li>
         <li>
