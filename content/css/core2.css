@@ -316,6 +316,7 @@ span.progress{
     float: left;
     width: 33%;
     text-align: center;
+    position: relative;
 }
 
 .twothirds{
@@ -759,6 +760,13 @@ ul.icons{
     position: absolute;
     right: 20px;
     top: 20px;
+}
+
+
+ul.icons-achievemntpage{
+    position: absolute;
+    right: 20px;
+    top: 0px;
 }
 
 .navigation{
