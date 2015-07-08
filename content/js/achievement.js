@@ -2,17 +2,21 @@ treehouseApp.controller('achievementController', function($scope, $http, achieve
     pageService.setTitle('Achievement');
     $scope.achievement = achievementService.achievement;
     $scope.showingMyProgressTab = true;
+    $scope.showingShareTab = false;
+    $scope.showingCompareTab = false;
 
     $scope.openMyProgressTab= function(evt) {
         evt.preventDefault();
         $scope.showingMyProgressTab = true;
         $scope.showingShareTab = false;
+        $scope.showingCompareTab = false;
     }
 
     $scope.openShareTab= function(evt, achievementInstance) {
         evt.preventDefault();
         $scope.showingMyProgressTab = false;
         $scope.showingShareTab = true;
+        $scope.showingCompareTab = false;
         $http.post('/api/achievements/shareToList', {
              achievementInstance : achievementInstance,
         }).success(function(result) {
@@ -22,6 +26,13 @@ treehouseApp.controller('achievementController', function($scope, $http, achieve
         });
     }
 
+    $scope.openCompareTab= function(evt, achievementInstance) {
+        evt.preventDefault();
+        $scope.showingMyProgressTab = false;
+        $scope.showingShareTab = false;
+        $scope.showingCompareTab = true;
+    }
+    
     $scope.share = function(evt, achievementInstance, friend) {
         evt.preventDefault();
 
