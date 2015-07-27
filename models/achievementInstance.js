@@ -48,6 +48,7 @@ module.exports = {
     unpublicize: unpublicize,
     remove: remove,
     getAchievementList: getAchievementList,
+    getCompareList: getCompareList,
     getPublicAchievement: getPublicAchievement,
     createAchievementInstance: createAchievementInstance,
     progressByCount: progressByCount
@@ -125,10 +126,23 @@ function getPublicAchievement(achievementInstanceId, callback) {
 }
 
 function getAchievementList(userId, callback) {
-    AchievementInstance.find({ createdBy: userId, unlockedDate: { $exists: false } }, {}, { sort: { 'created' : -1 } }, function(err, achievementInstancesInProgress) {
+    AchievementInstance.find({ 
+            createdBy: userId, 
+            unlockedDate: { $exists: false } 
+        }, {}, { sort: { 'created' : -1 } }, function(err, achievementInstancesInProgress) {
         AchievementInstance.find({ createdBy: userId, unlockedDate: { $exists: true }}, {}, { sort: { 'created' : -1 } }, function(err2, achievementInstancesUnlocked) {
             callback(achievementInstancesInProgress, achievementInstancesUnlocked);
         });
+    });
+}
+
+function getCompareList(userId, achievementId, callback) {
+    AchievementInstance.find({ 
+            achievementId: achievementId,
+            createdBy: {'$ne': userId}, 
+        }, {}, { sort: { 'created' : -1 } }, 
+        function(err, compareList) {
+            callback(compareList);
     });
 }
 

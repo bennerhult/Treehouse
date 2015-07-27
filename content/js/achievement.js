@@ -31,6 +31,11 @@ treehouseApp.controller('achievementController', function($scope, $http, achieve
         $scope.showingMyProgressTab = false;
         $scope.showingShareTab = false;
         $scope.showingCompareTab = true;
+        $http.post('/api/achievements/compareList', {
+             achievementInstance : achievementInstance,
+        }).success(function(result) {
+            $scope.compareList = result.compareList;
+        });
     }
     
     $scope.share = function(evt, achievementInstance, friend) {

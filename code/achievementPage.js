@@ -38,6 +38,17 @@ module.exports = function (app, templates, requestHandlers, progress, moment, sh
             shareholding.createShareholding(request.session.currentUser._id, request.body.friend.id, request.body.achievementInstance.achievementId, function () { });
         });
 
+        app.post('/api/achievements/compareList', function (request, response) {
+            var userId = request.session.currentUser._id;
+            var achievementId = request.body.achievementInstance.achievementId
+           
+            achievementInstance.getCompareList(userId, achievementId, function(compareList) {
+                var result = new Object();
+                result.compareList = compareList;
+                requestHandlers.respondWithJson(response, result);
+            });
+        });
+        
         app.post('/api/achievements/shareToList', function (request, response) {
             var userId = request.session.currentUser._id;
             friendship
