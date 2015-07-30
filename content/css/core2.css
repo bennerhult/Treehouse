@@ -81,6 +81,19 @@ iframe.imageUploadFrame {
     float: left;
     margin-top: 20px;
 }
+
+.compareProgressWrap {
+   position: relative;
+   margin: auto;
+   margin-bottom: 5px;
+    float: left;
+}
+
+.listWrap .item .compareArea p {
+    color: #ffffff;
+    text-align: left;
+}
+
 /* Slut tillagt av Erik */
 
 /*progress*/
