@@ -1,6 +1,6 @@
 treehouseApp.controller('friendController', function($scope, pageService, $http, $routeParams) {
     "use strict";
-    $scope.location = pageService.getLocation()
+    $scope.location = pageService.getLocation();
     $scope.isLoading = true;
     pageService.setTitle('Visiting friend'); //TODO: Name
 
