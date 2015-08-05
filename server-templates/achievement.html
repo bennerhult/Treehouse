@@ -58,8 +58,8 @@
         <div class="listWrap" ng-show="showingShareTab">
             <div ng-show="achievement.createdByUser" class="item" ng-repeat="currentFriend in shareToList">
                 <div class="userArea">
-                    <a ng-href="/app/friend/{{currentFriend._id}}"><img class="border" style="width:50px;height:50px" ng-src="{{currentFriend.imageURL}}" ></a>
-                    <p><a ng-href="/app/friend/{{currentFriend._id}}?backurl={{location}}">{{currentFriend.prettyName}}</a></p>
+                    <a ng-href="/app/friend/{{currentFriend.id}}?backurl={{location}}"><img class="border" style="width:50px;height:50px" ng-src="{{currentFriend.imageURL}}" ></a>
+                    <p><a ng-href="/app/friend/{{currentFriend.id}}?backurl={{location}}">{{currentFriend.prettyName}}</a></p>
                     <div ng-show="!currentFriend.alreadyChallenged" class="remove"><a href="#" ng-click="share($event, achievement, currentFriend)">Share</a></div>
                     <div ng-show="currentFriend.alreadyChallenged" class="remove">Challenge sent!</div>
                 </div>
@@ -67,16 +67,16 @@
             
             <div ng-show="achievement.createdByUser" class="item" ng-repeat="currentFriend in shareToPendingList">
                 <div class="userArea">
-                    <a ng-href="/app/friend/{{currentFriend._id}}"><img class="border" style="width:50px;height:50px" ng-src="{{currentFriend.imageURL}}" ></a>
-                    <p><a ng-href="/app/friend/{{currentFriend._id}}?backurl={{location}}">{{currentFriend.prettyName}}</a></p>
+                    <a ng-href="/app/friend/{{currentFriend.id}}?backurl={{location}}"><img class="border" style="width:50px;height:50px" ng-src="{{currentFriend.imageURL}}" ></a>
+                    <p><a ng-href="/app/friend/{{currentFriend.id}}?backurl={{location}}">{{currentFriend.prettyName}}</a></p>
                     <div ng-show="!currentFriend.alreadyChallenged" class="remove">Pending</div>
                 </div>
             </div>
             
             <div ng-show="achievement.createdByUser" class="item" ng-repeat="currentFriend in shareToAcceptedList">
                 <div class="userArea">
-                    <a ng-href="/app/friend/{{currentFriend._id}}"><img class="border" style="width:50px;height:50px" ng-src="{{currentFriend.imageURL}}" ></a>
-                    <p><a ng-href="/app/friend/{{currentFriend._id}}?backurl={{location}}">{{currentFriend.prettyName}}</a></p>
+                    <a ng-href="/app/friend/{{currentFriend.id}}?backurl={{location}}"><img class="border" style="width:50px;height:50px" ng-src="{{currentFriend.imageURL}}" ></a>
+                    <p><a ng-href="/app/friend/{{currentFriend.id}}?backurl={{location}}">{{currentFriend.prettyName}}</a></p>
                     <div ng-show="!currentFriend.alreadyChallenged" class="remove">Accepted</div>
                 </div>
             </div>
