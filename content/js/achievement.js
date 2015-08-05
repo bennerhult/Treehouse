@@ -1,4 +1,6 @@
 treehouseApp.controller('achievementController', function($scope, $http, achievementService, pageService) {
+    "use strict";
+    $scope.location = pageService.getLocation();
     pageService.setTitle('Achievement');
     $scope.achievement = achievementService.achievement;
     $scope.showingMyProgressTab = true;

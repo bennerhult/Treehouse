@@ -68,7 +68,7 @@
             <div ng-show="achievement.createdByUser" class="item" ng-repeat="currentFriend in shareToPendingList">
                 <div class="userArea">
                     <a ng-href="/app/friend/{{currentFriend._id}}"><img class="border" style="width:50px;height:50px" ng-src="{{currentFriend.imageURL}}" ></a>
-                    <p><a ng-href="/app/friend/{{currentFriend.use_id}}?backurl={{location}}">{{currentFriend.prettyName}}</a></p>
+                    <p><a ng-href="/app/friend/{{currentFriend._id}}?backurl={{location}}">{{currentFriend.prettyName}}</a></p>
                     <div ng-show="!currentFriend.alreadyChallenged" class="remove">Pending</div>
                 </div>
             </div>
@@ -93,9 +93,6 @@
                         <span class="progressbar"></span>
                         <div class="progress-container"><span class="progress" style="width:{{currentCompare.percentageCompleted}}%"></span></div>
                     </div>
-                   <!--
-                        /app/friendAchievement/erik.bennerhult@avida.se/556496312daf10e00a3a8a22?backurl=%2Fapp%2Ffriend%2Ferik.bennerhult%40avida.se%3Fbackurl%3D%252Fapp%252Ffriends
-                    -->
                     <p><a ng-href="/app/friendAchievement/{{currentCompare.createdBy}}/{{currentCompare._id}}?backurl={{location}}">{{currentCompare.createdByName}}</a></p>
                     <p>{{currentCompare.percentageCompleted}}%</p>
                 </div>
