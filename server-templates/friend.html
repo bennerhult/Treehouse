@@ -17,14 +17,14 @@
         <div class="item" ng-hide="friend.achievements.length == 0">
             <div ng-repeat="a in friend.achievements">
                 <div class="progressWrap">
-                    <a ng-href="/app/friendAchievement/{{friend.username}}/{{a._id}}?backurl={{location}}">
+                    <a ng-href="/app/friendAchievement/{{friend._id}}/{{a._id}}?backurl={{location}}">
                         <img class="border" width="96" height="96" ng-src="{{a.imageURL}}" alt="">
                         <span class="gradient-bg"></span>
                         <span class="progressbar"></span>
                         <div class="progress-container"><span class="progress" style="width:{{a.percentageCompleted}}%"></span></div>
                     </a>
                 </div>
-                <p><a ng-href="/app/friendAchievement/{{friend.username}}/{{a._id}}?backurl={{location}}" >{{a.title}}</a></p>
+                <p><a ng-href="/app/friendAchievement/{{friend._id}}/{{a._id}}?backurl={{location}}" >{{a.title}}</a></p>
             </div>
         </div>
     </div>

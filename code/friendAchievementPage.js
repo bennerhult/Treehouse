@@ -5,11 +5,11 @@ module.exports = function (app, friendship, user, requestHandlers, achievementIn
 
     function registerHandlers() {
         app.post('/api/friendAchievement/init', function (request, response) {
-            var userId = request.session.currentUser._id
-            var friendUserName = request.body.username
-            var friendAchievmentId = request.body.achievementId
+            //var userId = request.session.currentUser._id
+            var friendUserId = request.body.friendUserId;
+            var friendAchievementId = request.body.achievementId;
 
-            user.User.findOne({ username: friendUserName }, function(err, friendUser) {
+            user.User.findOne({ id: friendUserId }, function(err, friendUser) {
                 if(err) {
                     throw err;
                 }
@@ -17,7 +17,7 @@ module.exports = function (app, friendship, user, requestHandlers, achievementIn
                     throw 'no such user'
                 }
                 
-                achievementInstance.AchievementInstance.findOne({ _id : friendAchievmentId }, function(err2, ai) {
+                achievementInstance.AchievementInstance.findOne({ _id : friendAchievementId }, function(err2, ai) {
                     if(ai.publiclyVisible !== true) {
                         throw 'haxorattempt!'
                     }

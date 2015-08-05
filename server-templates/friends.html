@@ -22,8 +22,8 @@
         <div class="header">My friends</div>
         <div class="item" ng-repeat="f in friends" ng-hide="f.isHidden">
             <div class="userArea">
-                <a ng-href="/app/friend/{{f.username}}?backurl={{location}}"><img class="border" style="width:50px;height:50px" ng-src="{{f.imageURL}}" ></a>
-                <p><a ng-href="/app/friend/{{f.username}}?backurl={{location}}">{{f.prettyName}}</a>({{f.direction}})</p>
+                <a ng-href="/app/friend/{{f._id}}?backurl={{location}}"><img class="border" style="width:50px;height:50px" ng-src="{{f.imageURL}}" ></a>
+                <p><a ng-href="/app/friend/{{f._id}}?backurl={{location}}">{{f.prettyName}}</a>({{f.direction}})</p>
                 <div class="clear"> </div>
                 <div class="remove">
                     <a href="#" ng-show="f.direction=='incoming'" ng-click="acceptFriendRequest($event, f)">Accept</a>

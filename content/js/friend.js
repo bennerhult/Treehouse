@@ -4,7 +4,7 @@ treehouseApp.controller('friendController', function($scope, pageService, $http,
     $scope.isLoading = true;
     pageService.setTitle('Visiting friend'); //TODO: Name
 
-    $http.post('/api/friend/init', { username : $routeParams.username }).success(function(r) {
+    $http.post('/api/friend/init', { friendUserId : $routeParams.friendUserId }).success(function(r) {
         $scope.isLoading = false;
         $scope.friend = r.friend;
     });

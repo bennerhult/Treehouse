@@ -5,10 +5,9 @@ module.exports = function (app, friendship, user, requestHandlers, achievementIn
 
     function registerHandlers() {
         app.post('/api/friend/init', function (request, response) {
-            var userId = request.session.currentUser._id
-            var friendUserName = request.body.username
+            var friendUserId = request.body.friendUserId;
 
-            user.User.findOne({ username: friendUserName }, function(err, friendUser) {
+            user.User.findOne({ _id: friendUserId }, function(err, friendUser) {
                 if(err) {
                     throw err;
                 }
@@ -32,6 +31,7 @@ module.exports = function (app, friendship, user, requestHandlers, achievementIn
                     })
 
                     u.friend = {
+                        _id : friendUser._id,
                         username : friendUser.username,
                         prettyName : user.getPrettyName(friendUser),
                         imageURL : friendUser.imageURL,

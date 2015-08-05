@@ -16,11 +16,11 @@ treehouseApp.config(function($routeProvider, $locationProvider) {
             templateUrl: '/server-templates/friends.html',
             controller: 'friendsController'
         })
-        .when('/app/friend/:username', {
+        .when('/app/friend/:friendUserId', {
             templateUrl: '/server-templates/friend.html',
             controller: 'friendController'
         })
-        .when('/app/friendAchievement/:username/:achievementId', {
+        .when('/app/friendAchievement/:friendUserId/:achievementId', {
             templateUrl: '/server-templates/friendAchievement.html',
             controller: 'friendAchievementController'
         })
