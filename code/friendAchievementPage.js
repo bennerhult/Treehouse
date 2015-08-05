@@ -3,13 +3,21 @@ module.exports = function (app, friendship, user, requestHandlers, achievementIn
 
     var _ = require("underscore")._
 
+    app.post('/api/friendAchievement/compareList', function (request, response) {
+            var userId = request.body.friend._id;
+            var achievementId = request.body.achievementInstance.achievementId
+            achievementInstance.getCompareList(userId, achievementId, function(compareList) {
+                var result = new Object();
+                result.compareList = compareList;
+                requestHandlers.respondWithJson(response, result);
+            });
+        });
+        
     function registerHandlers() {
         app.post('/api/friendAchievement/init', function (request, response) {
-            //var userId = request.session.currentUser._id
             var friendUserId = request.body.friendUserId;
             var friendAchievementId = request.body.achievementId;
-
-            user.User.findOne({ id: friendUserId }, function(err, friendUser) {
+            user.User.findOne({ _id: friendUserId }, function(err, friendUser) {
                 if(err) {
                     throw err;
                 }
@@ -24,6 +32,7 @@ module.exports = function (app, friendship, user, requestHandlers, achievementIn
                     var u = { }
 
                     u.friend = {
+                        _id : friendUser._id,
                         username : friendUser.username,
                         prettyName : user.getPrettyName(friendUser),
                         imageURL : friendUser.imageURL

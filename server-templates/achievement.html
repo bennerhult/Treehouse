@@ -85,19 +85,21 @@
         </div>
         
         <div class="listWrap" ng-show="showingCompareTab">
-            <div ng-show="{{compareList.length}}" class="item" ng-repeat="currentCompare in compareList">
+            <div ng-show="compareList.length > 0" class="item" ng-repeat="currentCompare in compareList">
                 <div class="compareArea">
                     <div class="compareProgressWrap">
-                        <img class="border" width="50" height="50" ng-src="{{currentCompare.createdByImageURL}}" alt="{{currentCompare.createdByName}}" >
-                        <span class="gradient-bg"></span>
-                        <span class="progressbar"></span>
-                        <div class="progress-container"><span class="progress" style="width:{{currentCompare.percentageCompleted}}%"></span></div>
+                        <a ng-href="/app/friendAchievement/{{currentCompare.createdBy}}/{{currentCompare._id}}?backurl={{location}}">
+                            <img class="border" width="50" height="50" ng-src="{{currentCompare.createdByImageURL}}" alt="{{currentCompare.createdByName}}" >
+                            <span class="gradient-bg"></span>
+                            <span class="progressbar"></span>
+                            <div class="progress-container"><span class="progress" style="width:{{currentCompare.percentageCompleted}}%"></span></div>
+                        </a>
                     </div>
                     <p><a ng-href="/app/friendAchievement/{{currentCompare.createdBy}}/{{currentCompare._id}}?backurl={{location}}">{{currentCompare.createdByName}}</a></p>
                     <p>{{currentCompare.percentageCompleted}}%</p>
                 </div>
             </div> 
-            <div ng-show="{{!compareList.length}}" class="item">You can only compare shared achievements.</div>     
+            <div ng-hide="compareList.length > 0" class="item">You can only compare shared achievements.</div>     
         </div>
     </div>
 

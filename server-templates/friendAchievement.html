@@ -1,48 +1,49 @@
 <div class="desktopMenu">
     <a ng-show="backurl" ng-href="{{backurl}}"><span><img src="../content/img/back-1.png" /></span></a>
 </div>
-
 <div class="content">
     <div class="userArea">
         <img class="border" width="48" height="48" ng-src="{{friend.imageURL}}" alt="{{friend.imageURL}}">
-
         <p>{{friend.prettyName}}</p>
         <div class="clear"></div>
     </div>
-
-    <div class="clear"> </div>
-
+    <div class="clear"></div>
     <div class="section">
         <div class="twothirds">
             <h3>{{achievement.title}}</h3>
-            <p class="dark">
-                {{achievement.description}}
-            </p>
+            <p class="dark">{{achievement.description}}</p>
         </div>
         <div class="onethird">
             <div class="progressWrap">
                 <img class="border" width="96" height="96" ng-src="{{achievement.imageURL}}" alt="{{achievement.title}}">
                 <span class="gradient-bg"></span>
                 <span class="progressbar"></span>
-                <div class="progress-container"><span class="progress" style="width:{{achievement.percentageCompleted}}%"></span></div>
+                <div class="progress-container">
+                    <span class="progress" style="width:{{achievement.percentageCompleted}}%"></span>
+                </div>
             </div>
         </div>
         <div class="clear"></div>
     </div>
     <div class="section">
         <div class="tabs">
-            <a href="#"><span class="selected">My progress</span></a>
-            <a href=""><span>Compare (not implemented)</span></a>
+             <a ng-show="!showingProgressTab" ng-click="openProgressTab($event);" href="#"><span>{{friend.prettyName}}'s progress</span></a>
+            <a ng-show="showingProgressTab" href="#"><span class="selected">{{friend.prettyName}}'s progress</span></a>              
+
+            <a ng-show="!showingCompareTab" ng-click="openCompareTab($event, achievement);"  href="#"><span>Compare</span></a>
+            <a ng-show="showingCompareTab" href="#"><span class="selected">Compare</span></a>
         </div>
-        <div class="listWrap">
-            <div class="item"  ng-repeat="currentGoal in achievement.goals">
+        <div class="listWrap" ng-show="showingProgressTab">
+            <div class="item" ng-repeat="currentGoal in achievement.goals">
                 <table>
                     <tr>
                         <td class="goal">
                             <p>{{currentGoal.title}} {{currentGoal.latestUpdated}}</p>
                             <div class="progressWrap">
                                 <span class="progressbar"></span>
-                                <div class="progress-container"><span class="progress" style="width:{{currentGoal.percentageCompleted}}%"></span></div>
+                                <div class="progress-container">
+                                    <span class="progress" style="width:{{currentGoal.percentageCompleted}}%"></span>
+                                </div>
                             </div>
                             <div class="counter">
                                 <p>{{currentGoal.quantityCompleted}}/{{currentGoal.quantityTotal}}</p>
@@ -51,7 +52,27 @@
                     </tr>
                 </table>
             </div>
-    <div class="clear"> </div>
-</div>
-<div class="clear"></div>
-<div ng-include src="'/server-templates/includes/bottomMenu.html'"></div>
+            <div class="clear"></div>
+        </div>
+        <div class="listWrap" ng-show="showingCompareTab">
+            <div ng-show="compareList.length > 0" class="item" ng-repeat="currentCompare in compareList">
+                <div class="compareArea">
+                    <div class="compareProgressWrap">
+                        <a ng-href="/app/friendAchievement/{{currentCompare.createdBy}}/{{currentCompare._id}}?backurl={{location}}">
+                            <img class="border" width="50" height="50" ng-src="{{currentCompare.createdByImageURL}}" alt="{{currentCompare.createdByName}}">                
+                            <span class="gradient-bg"></span>
+                            <span class="progressbar"></span>
+                            <div class="progress-container">
+                                <span class="progress" style="width:{{currentCompare.percentageCompleted}}%"></span>
+                            </div>
+                        </a>
+                    </div>
+                    <p>
+                        <a ng-href="/app/friendAchievement/{{currentCompare.createdBy}}/{{currentCompare._id}}?backurl={{location}}">{{currentCompare.createdByName}}</a>
+                    </p>
+                    <p>{{currentCompare.percentageCompleted}}%</p>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div ng-include src="'/server-templates/includes/bottomMenu.html'"></div>
