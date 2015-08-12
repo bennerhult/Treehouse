@@ -12,7 +12,7 @@ treehouseApp.factory("achievementService",function() {
 
 treehouseApp.factory('pageService', function($location) {
     var service = {};
-
+            
     service.setTitle = function(title) {
         this.pageTitle = title;
     }
@@ -58,6 +58,8 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
     $scope.isLoading = true;
     $scope.pageService = pageService;
     pageService.setTitle('Treehouse');
+
+    $scope.pageDomain = document.domain;
 
     $http.post('/api/init', {}).success(function(result) {
         pageService.setName(result.currentUser.firstName, result.currentUser.lastName, result.currentUser.username);
