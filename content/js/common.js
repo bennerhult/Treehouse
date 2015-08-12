@@ -53,14 +53,36 @@ treehouseApp.factory('pageService', function($location) {
     return service;
 });
 
-treehouseApp.controller('commonController', function($scope, $http, $location, pageService) {
+treehouseApp.controller('commonController', function($scope, $http, $location, $timeout, pageService) {
     "use strict";
     $scope.isLoading = true;
     $scope.pageService = pageService;
     pageService.setTitle('Treehouse');
-
     $scope.pageDomain = document.domain;
 
+    function init() {
+        FB.init({
+            appId: '480961688595420',
+            status: true,
+            cookie: true,
+            xfbml: true,
+            channelUrl : '//www.treehouse.io/channel.html',  //increases performance
+            oauth: true
+        });
+
+        $scope.isLoading = false;
+        var autoSignin = false;
+        try {
+            if(localStorage && localStorage.th_autosignin_email) {
+                $scope.emailAddress = localStorage.th_autosignin_email;
+                autoSignin = true;
+            }
+        } catch(err) {}
+        if(autoSignin) {
+            $timeout(function () { $scope.signinWithEmail(); }); //To have page init be done before we try to autosignin. Avoids having to deal with things like emailSigninForm being null.
+        }
+    }
+    
     $http.post('/api/init', {}).success(function(result) {
         pageService.setName(result.currentUser.firstName, result.currentUser.lastName, result.currentUser.username);
         pageService.setUserImageURL(result.currentUser.imageURL);
@@ -115,4 +137,6 @@ treehouseApp.controller('commonController', function($scope, $http, $location, p
             $scope.incomingChallengesCount = $scope.incomingChallengesCount - 1;
         }
     };
+    
+    init();
 });
