@@ -15,6 +15,7 @@ function initAchievement($scope, $http, $routeParams) {
             $scope.achievement = result.achievementInstance;
             $scope.creator = result.createdBy;
             $scope.isLoading = false;
+            $scope.pageDomain = document.domain;
         } else {
             window.location = '/app/';
         }
