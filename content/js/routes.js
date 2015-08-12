@@ -1,8 +1,7 @@
 treehouseApp.config(function($routeProvider, $locationProvider) {
     $routeProvider
         .when('/', {
-            templateUrl: '/server-templates/info.html',
-            controller: 'commonController'
+            templateUrl: '/server-templates/info.html'
         })
         .when('/signin', {
             templateUrl: '/server-templates/signin.html',

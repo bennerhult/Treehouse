@@ -16,7 +16,7 @@ function initAchievement($scope, $http, $routeParams) {
             $scope.creator = result.createdBy;
             $scope.isLoading = false;
         } else {
-            window.location = '/app/';
+            window.location.hash = '/app/';
         }
     });
 };

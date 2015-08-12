@@ -1,6 +1,20 @@
 treehouseApp.controller('signinController', function ($scope, $http, $timeout, pageService) {
     'use strict';
 
+    function init() {
+        $scope.isLoading = false;
+        var autoSignin = false;
+        try {
+            if(localStorage && localStorage.th_autosignin_email) {
+                $scope.emailAddress = localStorage.th_autosignin_email;
+                autoSignin = true;
+            }
+        } catch(err) {}
+        if(autoSignin) {
+            $timeout(function () { $scope.signinWithEmail(); }); //To have page init be done before we try to autosignin. Avoids having to deal with things like emailSigninForm being null.
+        }
+    }
+
     $scope.signinWithEmail = function (evt) {
         $scope.isLoading = true;
         $scope.authenticationFailure1 = false;
@@ -63,4 +77,6 @@ treehouseApp.controller('signinController', function ($scope, $http, $timeout, p
             }, {scope: 'email'});
         }
     }
+
+    init();
 });

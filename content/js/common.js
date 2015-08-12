@@ -61,26 +61,16 @@ treehouseApp.controller('commonController', function($scope, $http, $location, $
     $scope.pageDomain = document.domain;
 
     function init() {
-        FB.init({
-            appId: '480961688595420',
-            status: true,
-            cookie: true,
-            xfbml: true,
-            channelUrl : '//www.treehouse.io/channel.html',  //increases performance
-            oauth: true
-        });
-
-        $scope.isLoading = false;
-        var autoSignin = false;
-        try {
-            if(localStorage && localStorage.th_autosignin_email) {
-                $scope.emailAddress = localStorage.th_autosignin_email;
-                autoSignin = true;
-            }
-        } catch(err) {}
-        if(autoSignin) {
-            $timeout(function () { $scope.signinWithEmail(); }); //To have page init be done before we try to autosignin. Avoids having to deal with things like emailSigninForm being null.
-        }
+        $timeout(function () {
+            FB.init({
+                appId: '480961688595420',
+                status: true,
+                cookie: true,
+                xfbml: true,
+                channelUrl : '//www.treehouse.io/channel.html',  //increases performance
+                oauth: true
+            });
+        }); 
     }
     
     $http.post('/api/init', {}).success(function(result) {
