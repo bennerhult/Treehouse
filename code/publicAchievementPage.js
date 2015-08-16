@@ -23,7 +23,7 @@ module.exports = function (app, templates, requestHandlers, achievementInstance,
                                 '<meta property="og:description" content="' + achievementInstance.description + '" />' + 
                                 '<meta property="og:type" content="article" />' + 
                                 '<meta property="og:image" content="' + thSettings.getDomain().substring(0, thSettings.getDomain().length - 1) + achievementInstance.imageURL + '" />' + 
-                                '<meta property="og:url" content="' + thSettings.getDomain() + '" />' + 
+                                '<meta property="og:url" content="' + request.url + '" />' + 
                             '</head>' + 
                             '<body>' + 
                             '</body>' +
