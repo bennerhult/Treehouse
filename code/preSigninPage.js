@@ -22,7 +22,7 @@ module.exports = function (app, templates, thSettings) {
                         '<meta property="og:image" content="' + thSettings.getDomain() + 'content/img/treehouse.jpg" />' + 
                         '<meta property="og:url" content="' + thSettings.getDomain() + '" />' + 
                     '</head>' + 
-                    '<body>HI' + 
+                    '<body>' + 
                     '</body>' +
                 '</html>'
                 response.writeHead(200, { 'Content-Type': 'text/html' })
