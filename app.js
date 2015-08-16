@@ -191,7 +191,7 @@ var auth = (function () {
 
 var templates = require('./code/templates.js')();
 require('./code/mainPage.js')(app, requestHandlers, templates, friendship, shareholding).registerHandlers();
-require('./code/preSigninPage.js')(app, templates).registerHandlers();
+require('./code/preSigninPage.js')(app, templates, thSettings).registerHandlers();
 require('./code/signinPage.js')(app, templates, requestHandlers, thSettings, user, loginToken, email, auth, url).registerHandlers();
 require('./code/newsfeedPage.js')(app, templates, requestHandlers, newsfeed).registerHandlers();
 require('./code/friendsPage.js')(app, friendship, user, requestHandlers).registerHandlers();

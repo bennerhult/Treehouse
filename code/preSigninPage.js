@@ -1,4 +1,4 @@
-module.exports = function (app, templates) {
+module.exports = function (app, templates, thSettings) {
     'use strict';
 
     function registerHandlers() {
@@ -19,8 +19,8 @@ module.exports = function (app, templates) {
                         '<meta property="og:title" content="Treehouse. Track your achievements!" />' + 
                         '<meta property="og:description" content="Treehouse helps you track your achievements. Explore. Achieve. Play!" />' + 
                         '<meta property="og:type" content="article" />' + 
-                        '<meta property="og:image" content="http://www.treehouse.io/content/img/treehouse.jpg" />' + 
-                        '<meta property="og:url" content="http://www.treehouse.io/" />' + 
+                        '<meta property="og:image" content="' + thSettings.getDomain() + 'content/img/treehouse.jpg" />' + 
+                        '<meta property="og:url" content="' + thSettings.getDomain() + '" />' + 
                     '</head>' + 
                     '<body>HI' + 
                     '</body>' +
