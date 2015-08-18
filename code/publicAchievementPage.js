@@ -11,7 +11,9 @@ module.exports = function (app, templates, requestHandlers, achievementInstance,
                 achievementInstance.getPublicAchievement(achievementId, function(achievementInstance) {
                     if (achievementInstance && achievementInstance.publiclyVisible) {
                         var description = achievementInstance.description;
-                        if (!description) { description = "Test"}
+                        if (!description) { 
+                            description = "";
+                        }
                         var fileText = 
                         '<!DOCTYPE html>' +
                         '<html lang="en" xmlns:fb="http://www.facebook.com/2008/fbml">' +  
