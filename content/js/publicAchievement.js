@@ -6,19 +6,20 @@ treehouseApp.controller('publicAchievementController', function($scope, $http, $
         $scope.signedInUser = true;
     }
     
-    $scope.fbShare = function(caption, imageURL) {
-       /*if (!imageURL.startsWith('https:')) {
-            imageURL = 'http://www.treehouse.io/' + imageURL; //TODO ERIK dynamic domain
-        }*/
+    $scope.fbShare = function() {
+        var imageURL = $scope.achievement.imageURL;
+        if (!imageURL.startsWith('https:')) {
+            imageURL = 'http://' + $scope.pageDomain + '/' + imageURL;
+        }
         var achLink = 'http://' + $scope.pageDomain + '/public/achievementInstance/' + $routeParams.achievementInstanceId;
-        alert(achLink)
+        var caption = $scope.achievement.title;
         FB.ui({
             method: 'feed',
-            app_id: '480961688595420', //906464552711796 test
+            app_id: '480961688595420', //TODO ERIK 906464552711796 test
             link: achLink,
-            redirect_uri: achLink, //When using FB.ui, you should not specify a redirect_uri
+            redirect_uri: achLink, //TODO ERIK When using FB.ui, you should not specify a redirect_uri
             picture: imageURL,
-            caption: (caption) //decodeURIComponent(caption) //TODO ERIK remove
+            caption: caption
         }, function(response){});
     }
 });

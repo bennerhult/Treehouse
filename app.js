@@ -18,12 +18,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 var MongoStore = require('connect-mongo')(session);
 
-if (typeof String.prototype.startsWith != 'function') {
-    String.prototype.startsWith = function (str) {
-        return this.indexOf(str) == 0;
-    }
-}
-
 var env = process.env.NODE_ENV || 'development';
 if ('development' == env) {
     domain = 'http://localhost:1337/';

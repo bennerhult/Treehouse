@@ -1,5 +1,11 @@
 var treehouseApp = angular.module('App', ['ngRoute']);
 
+if (typeof String.prototype.startsWith != 'function') {
+    String.prototype.startsWith = function (str) {
+        return this.indexOf(str) == 0;
+    }
+}
+
 treehouseApp.factory("achievementService",function() {
     var service = {};
 
