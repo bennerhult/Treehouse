@@ -86,6 +86,20 @@ treehouseApp.controller('commonController', function($scope, $http, $location, $
         $scope.isLoading = false;
     });
 
+    $scope.fbShare = function(caption, achLink, imageURL) {
+       /*if (!imageURL.startsWith('https:')) {
+            imageURL = 'http://www.treehouse.io/' + imageURL; //TODO ERIK dynamic domain
+        }*/
+        FB.ui({
+            method: 'feed',
+            app_id: '480961688595420',
+            link: achLink,
+            redirect_uri: achLink, //When using FB.ui, you should not specify a redirect_uri
+            picture: imageURL,
+            caption: (caption) //decodeURIComponent(caption) //TODO ERIK remove
+        }, function(response){});
+    }
+
     $scope.getClass = function(path) {
         if ($location.path().substr(0, path.length) == path) {
             return "selected";
