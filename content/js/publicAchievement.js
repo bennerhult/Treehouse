@@ -15,9 +15,8 @@ treehouseApp.controller('publicAchievementController', function($scope, $http, $
         var caption = $scope.achievement.title;
         FB.ui({
             method: 'feed',
-            app_id: '480961688595420', //TODO ERIK 906464552711796 test
+            app_id: '480961688595420',
             link: achLink,
-            redirect_uri: achLink, //TODO ERIK When using FB.ui, you should not specify a redirect_uri
             picture: imageURL,
             caption: caption
         }, function(response){});
