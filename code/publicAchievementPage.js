@@ -10,6 +10,8 @@ module.exports = function (app, templates, requestHandlers, achievementInstance,
                 var achievementId = request.url.substring(request.url.indexOf('/achievementInstance/') + 21);
                 achievementInstance.getPublicAchievement(achievementId, function(achievementInstance) {
                     if (achievementInstance && achievementInstance.publiclyVisible) {
+                        var description = achievementInstance.description;
+                        if (!description) { description = "Test"}
                         var fileText = 
                         '<!DOCTYPE html>' +
                         '<html lang="en" xmlns:fb="http://www.facebook.com/2008/fbml">' +  
@@ -20,7 +22,7 @@ module.exports = function (app, templates, requestHandlers, achievementInstance,
                                 '<meta name="keywords" content="Gamification, achievement, achieve, track" />' + 
                                 '<meta property="og:site_name" content="Treehouse" />' + 
                                 '<meta property="og:title" content="' + achievementInstance.title + '" />' + 
-                                '<meta property="og:description" content="' + achievementInstance.description + '" />' + 
+                                '<meta property="og:description" content="' + description + '" />' + 
                                 '<meta property="og:type" content="article" />' + 
                                 '<meta property="og:image" content="' + thSettings.getDomain().substring(0, thSettings.getDomain().length - 1) + achievementInstance.imageURL + '" />' + 
                                 '<meta property="og:url" content="' +  thSettings.getDomain().substring(0, thSettings.getDomain().length - 1) + request.url + '" />' + 
