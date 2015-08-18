@@ -90,9 +90,10 @@ treehouseApp.controller('commonController', function($scope, $http, $location, $
        /*if (!imageURL.startsWith('https:')) {
             imageURL = 'http://www.treehouse.io/' + imageURL; //TODO ERIK dynamic domain
         }*/
+        alert(achLink)
         FB.ui({
             method: 'feed',
-            app_id: '480961688595420',
+            app_id: '906464552711796', //480961688595420
             link: achLink,
             redirect_uri: achLink, //When using FB.ui, you should not specify a redirect_uri
             picture: imageURL,
