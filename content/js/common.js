@@ -17,14 +17,6 @@ treehouseApp.directive('fbLike', function ($window, $rootScope) {
                 $.getScript('//connect.facebook.net/en_US/sdk.js', function () {
                     renderLikeButton();
                 });           
-            //alternativ    
-           /*     (function(d, s, id) {
-              var js, fjs = d.getElementsByTagName(s)[0];
-              if (d.getElementById(id)) return;
-              js = d.createElement(s); js.id = id;
-              js.src = "//connect.facebook.net/en_US/all.js"; //#xfbml=1&appId=480961688595420
-              fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));*/
             } else {
                 renderLikeButton();
             }
@@ -36,16 +28,22 @@ treehouseApp.directive('fbLike', function ($window, $rootScope) {
                     watchAdded = true;
                     var unbindWatch = scope.$watch('fbLike', function (newValue, oldValue) {
                         if (newValue) {
-                            renderLikeButton();
-                                       
+                            renderLikeButton();                                      
                             // only need to run once
                             unbindWatch();
                         }
-
                     });
                     return;
                 } else {
-                    element.html('<div class="fb-like"' + (!!scope.fbLike ? ' data-href="' + scope.fbLike + '"' : '') + ' data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>');
+                    /*
+                    <div id="fbLikeWeb" style="overflow:visible;">
+                        <div class="fb-like" data-href="http://{{pageDomain}}/" data-width="200" font="segoe ui" data-layout="standard" data-action="like" data-show-faces="true" data-share="false"></div>
+                    </div>
+                    <div id="fbShare">
+                        <a onclick="fbShare('Treehouse', 'http://www.treehouse.io', 'content/img/treehouse.jpg')" href="javascript:void(0)"><span><img src="../content/img/f-icon.png"><p>Share</p></span></a>
+                    </div>
+                     */
+                    element.html('<div id="fbLikeWeb" style="overflow:visible;"><div class="fb-like"' + (!!scope.fbLike ? ' data-href="' + scope.fbLike + '"' : '') + ' data-layout="standard" data-width="250" data-action="like" data-show-faces="true" data-share="true"></div></div>');
                     $window.FB.XFBML.parse(element.parent()[0]);
                 }
             }
@@ -113,12 +111,6 @@ treehouseApp.controller('commonController', function ($rootScope, $scope, $http,
     pageService.setTitle('Treehouse');
     $scope.pageDomain = document.domain;
     $rootScope.facebookAppId = '480961688595420';
-
-    $scope.myModel = {
-              Url: 'http://jasonwatmore.com/post/2014/08/01/AngularJS-directives-for-social-sharing-buttons-Facebook-Like-GooglePlus-Twitter-and-Pinterest.aspx',
-              Name: "AngularJS directives for social sharing buttons - Facebook, Google+, Twitter and Pinterest | Jason Watmore's Blog",
-              ImageUrl: 'http://www.jasonwatmore.com/pics/jason.jpg'
-          };
           
     function init() {
         $timeout(function () {
