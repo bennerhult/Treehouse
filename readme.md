@@ -155,8 +155,6 @@ User: staff@treehouse.io
 PW: treehouserocks
 
 ##The missing manual
-[jQuery Mobile](http://jquerymobile.com/)
-
 [Node.js](http://nodejs.org/)
 
 [Underscore](http://documentcloud.github.com/underscore/)

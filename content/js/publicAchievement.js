@@ -1,12 +1,12 @@
-treehouseApp.controller('publicAchievementController', function($scope, $http, $routeParams, pageService, achievementService) {
+treehouseApp.controller('publicAchievementController', function ($scope, $http, $routeParams, pageService, achievementService) {
     $scope.isLoading = true;
     pageService.setTitle('Public Achievement');
     initAchievement($scope, $http, $routeParams);
-    if(pageService.username) {
+    if (pageService.username) {
         $scope.signedInUser = true;
     }
-    
-    $scope.fbShare = function() {
+
+    $scope.fbShare = function () {
         var imageURL = $scope.achievement.imageURL;
         if (!imageURL.startsWith('https:')) {
             imageURL = 'http://' + $scope.pageDomain + '/' + imageURL;
@@ -19,20 +19,20 @@ treehouseApp.controller('publicAchievementController', function($scope, $http, $
             link: achLink,
             picture: imageURL,
             caption: caption
-        }, function(response){});
+        }, function (response) { });
     }
-});
 
-function initAchievement($scope, $http, $routeParams) {
-    $http.post('/api/publicAchievement/init', {
-        achievementInstanceId : $routeParams.achievementInstanceId
-    }).success(function(result) {
-        if (result.achievementInstance) {
-            $scope.achievement = result.achievementInstance;
-            $scope.creator = result.createdBy;
-            $scope.isLoading = false;
-        } else {
-            window.location.hash = '/app/';
-        }
-    });
-};
+    function initAchievement($scope, $http, $routeParams) {
+        $http.post('/api/publicAchievement/init', {
+            achievementInstanceId: $routeParams.achievementInstanceId
+        }).success(function (result) {
+            if (result.achievementInstance) {
+                $scope.achievement = result.achievementInstance;
+                $scope.creator = result.createdBy;
+                $scope.isLoading = false;
+            } else {
+                window.location.hash = '/app/';
+            }
+        });
+    };
+});
