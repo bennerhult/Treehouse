@@ -35,14 +35,6 @@ treehouseApp.directive('fbLike', function ($window, $rootScope) {
                     });
                     return;
                 } else {
-                    /*
-                    <div id="fbLikeWeb" style="overflow:visible;">
-                        <div class="fb-like" data-href="http://{{pageDomain}}/" data-width="200" font="segoe ui" data-layout="standard" data-action="like" data-show-faces="true" data-share="false"></div>
-                    </div>
-                    <div id="fbShare">
-                        <a onclick="fbShare('Treehouse', 'http://www.treehouse.io', 'content/img/treehouse.jpg')" href="javascript:void(0)"><span><img src="../content/img/f-icon.png"><p>Share</p></span></a>
-                    </div>
-                     */
                     element.html('<div id="fbLikeWeb" style="overflow:visible;"><div class="fb-like"' + (!!scope.fbLike ? ' data-href="' + scope.fbLike + '"' : '') + ' data-layout="standard" data-width="250" data-action="like" data-show-faces="true" data-share="true"></div></div>');
                     $window.FB.XFBML.parse(element.parent()[0]);
                 }
