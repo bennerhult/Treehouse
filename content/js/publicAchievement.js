@@ -27,8 +27,13 @@ treehouseApp.controller('publicAchievementController', function ($scope, $http, 
             achievementInstanceId: $routeParams.achievementInstanceId
         }).success(function (result) {
             if (result.achievementInstance) {
+                var imageURL = result.achievementInstance.imageURL;
+                if (!imageURL.startsWith('https:')) {
+                    imageURL = 'http://' + $scope.pageDomain + '/' + imageURL;
+                }
                 $scope.socialModel = {
-                    description: "Check out my achievement: " + result.achievementInstance.title
+                    description: "Check out my achievement: " + result.achievementInstance.title,
+                    imageURL: imageURL
                 };
                 $scope.achievement = result.achievementInstance;
                 $scope.creator = result.createdBy;
