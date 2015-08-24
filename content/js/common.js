@@ -16,7 +16,7 @@ treehouseApp.directive('fbLike', function ($window, $rootScope) {
             if (!$window.FB) {
                 $.getScript('//connect.facebook.net/en_US/sdk.js', function () {
                     renderLikeButton();
-                });           
+                });
             } else {
                 renderLikeButton();
             }
@@ -37,6 +37,85 @@ treehouseApp.directive('fbLike', function ($window, $rootScope) {
                 } else {
                     element.html('<div id="fbLikeWeb" style="overflow:visible;"><div class="fb-like"' + (!!scope.fbLike ? ' data-href="' + scope.fbLike + '"' : '') + ' data-layout="standard" data-width="250" data-action="like" data-show-faces="true" data-share="true"></div></div>');
                     $window.FB.XFBML.parse(element.parent()[0]);
+                }
+            }
+        }
+    };
+});
+
+treehouseApp.directive('googlePlus', function ($window) {
+    return {
+        restrict: 'A',
+        scope: {
+            googlePlus: '=?'
+        },
+        link: function (scope, element, attrs) {
+            if (!$window.gapi) {
+                // Load Google SDK if not already loaded
+                $.getScript('//apis.google.com/js/platform.js', function () {
+                    renderPlusButton();
+                });
+            } else {
+                renderPlusButton();
+            }
+
+            var watchAdded = false;
+            function renderPlusButton() {
+                if (!!attrs.googlePlus && !scope.googlePlus && !watchAdded) {
+                    // wait for data if it hasn't loaded yet
+                    watchAdded = true;
+                    var unbindWatch = scope.$watch('googlePlus', function (newValue, oldValue) {
+                        if (newValue) {
+                            renderPlusButton();
+ 
+                            // only need to run once
+                            unbindWatch();
+                        }
+
+                    });
+                    return;
+                } else {
+                    element.html('<div class="g-plusone"' + (!!scope.googlePlus ? ' data-href="' + scope.googlePlus + '"' : '') + ' data-size="medium"></div>');
+                    $window.gapi.plusone.go(element.parent()[0]);
+                }
+            }
+        }
+    };
+});
+
+treehouseApp.directive('tweet', function ($window, $location) {
+    return {
+        restrict: 'A',
+        scope: {
+            tweet: '='
+        },
+        link: function (scope, element, attrs) {
+            if (!$window.twttr) {
+                // Load Twitter SDK if not already loaded
+                $.getScript('//platform.twitter.com/widgets.js', function () {
+                    renderTweetButton();
+                });
+            } else {
+                renderTweetButton();
+            }
+
+            var watchAdded = false;
+            function renderTweetButton() {
+                if (!scope.tweet && !watchAdded) {
+                    // wait for data if it hasn't loaded yet
+                    watchAdded = true;
+                    var unbindWatch = scope.$watch('tweet', function (newValue, oldValue) {
+                        if (newValue) {
+                            renderTweetButton();
+                                   
+                            // only need to run once
+                            unbindWatch();
+                        }
+                    });
+                    return;
+                } else {
+                    element.html('<a href="https://twitter.com/share" class="twitter-share-button" data-text="' + scope.tweet + '" data-url="' +  $location.absUrl() + '">Tweet</a>');
+                    $window.twttr.widgets.load(element.parent()[0]);
                 }
             }
         }
@@ -103,15 +182,18 @@ treehouseApp.controller('commonController', function ($rootScope, $scope, $http,
     pageService.setTitle('Treehouse');
     $scope.pageDomain = document.domain;
     $rootScope.facebookAppId = '480961688595420';
-          
+    $scope.socialModel = {
+        description: "Find out what your friends are up to and issue challenges!"
+    };
+               
     function init() {
         $timeout(function () {
-          FB.init({
+            FB.init({
                 appId: $rootScope.facebookAppId,
                 version: 'v2.0',
                 status: true,
                 cookie: true,
-                xfbml: true, 
+                xfbml: true,
                 channelUrl: '//www.treehouse.io/channel.html',  //increases performance
                 oauth: true
             });

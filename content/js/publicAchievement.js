@@ -21,12 +21,15 @@ treehouseApp.controller('publicAchievementController', function ($scope, $http, 
             caption: caption
         }, function (response) { });
     }
-
+    
     function initAchievement($scope, $http, $routeParams) {
         $http.post('/api/publicAchievement/init', {
             achievementInstanceId: $routeParams.achievementInstanceId
         }).success(function (result) {
             if (result.achievementInstance) {
+                $scope.socialModel = {
+                    description: "Check out my achievement: " + result.achievementInstance.title
+                };
                 $scope.achievement = result.achievementInstance;
                 $scope.creator = result.createdBy;
                 $scope.isLoading = false;
