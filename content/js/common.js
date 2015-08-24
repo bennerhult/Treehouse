@@ -35,7 +35,7 @@ treehouseApp.directive('fbLike', function ($window, $rootScope) {
                     });
                     return;
                 } else {
-                    element.html('<div id="fbLikeWeb" style="overflow:visible;"><div class="fb-like"' + (!!scope.fbLike ? ' data-href="' + scope.fbLike + '"' : '') + ' data-layout="standard" data-width="250" data-action="like" data-show-faces="true" data-share="true"></div></div>');
+                    element.html('<div style="overflow:visible;"><div class="fb-like"' + (!!scope.fbLike ? ' data-href="' + scope.fbLike + '"' : '') + ' data-layout="standard" data-width="250" data-action="like" data-show-faces="true" data-share="true"></div></div>');
                     $window.FB.XFBML.parse(element.parent()[0]);
                 }
             }

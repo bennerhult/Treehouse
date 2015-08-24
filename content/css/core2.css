@@ -19,7 +19,7 @@ iframe.imageUploadFrame {
     height: 100%;
 }
 
-#fbLikeWeb {
+.socialButton {
     padding-top: 20px;
     float: left;
     margin-right: 20px;
