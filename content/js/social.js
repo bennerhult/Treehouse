@@ -1,4 +1,6 @@
-treehouseApp.directive('fbLike', function ($window, $rootScope) {
+var socialModule = angular.module('socialModule', []); //'ngRoute'
+
+socialModule.directive('fbLike', function ($window, $rootScope) {
     return {
         restrict: 'A',
         scope: {
@@ -35,7 +37,7 @@ treehouseApp.directive('fbLike', function ($window, $rootScope) {
     };
 });
 
-treehouseApp.directive('googlePlus', function ($window) {
+socialModule.directive('googlePlus', function ($window) {
     return {
         restrict: 'A',
         scope: {
@@ -75,7 +77,7 @@ treehouseApp.directive('googlePlus', function ($window) {
     };
 });
 
-treehouseApp.directive('tweet', function ($window, $location) {
+socialModule.directive('tweet', function ($window, $location) {
     return {
         restrict: 'A',
         scope: {
@@ -114,7 +116,7 @@ treehouseApp.directive('tweet', function ($window, $location) {
     };
 });
 
-treehouseApp.directive('pinIt', function ($window, $location) {
+socialModule.directive('pinIt', function ($window, $location) {
     return {
         restrict: 'A',
         scope: {

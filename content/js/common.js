@@ -1,4 +1,4 @@
-var treehouseApp = angular.module('App', ['ngRoute']);
+var treehouseApp = angular.module('App', ['ngRoute', 'socialModule']);
 
 if (typeof String.prototype.startsWith != 'function') {
     String.prototype.startsWith = function (str) {
