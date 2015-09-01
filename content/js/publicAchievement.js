@@ -5,6 +5,10 @@ treehouseApp.controller('publicAchievementController', function ($scope, $http, 
     if (pageService.username) {
         $scope.signedInUser = true;
     }
+    
+    if($routeParams.backurl) {
+        $scope.backurl = $routeParams.backurl
+    }
 
     $scope.fbShare = function () {
         var imageURL = $scope.achievement.imageURL;

@@ -1,5 +1,5 @@
 <div ng-show="signedInUser" class="desktopMenu">
-    <a href="/app/achievements"><span ng-class="getClass('/app/achievements')"><img src="../content/img/back-1.png" /></span></a>
+    <a ng-show="backurl" ng-href="{{backurl}}"><span><img src="../content/img/back-1.png" /></span></a>
 </div>
 <div ng-hide="isLoading" class="content">
     <div class="userArea">
