@@ -1,26 +1,26 @@
 var mongoose = require('mongoose'),
     newsfeedEvent = require('./newsfeedEvent.js'),
-    Schema = mongoose.Schema
+    Schema = mongoose.Schema;
 
 var FriendshipSchema = new Schema({
     created         : {type: Date, required: true},
     friend1_id      : {type: Schema.ObjectId, required: true},
     friend2_id      : {type: Schema.ObjectId, required: true},
     confirmed       : {type: Boolean, required: true}
-})
+});
 
 var Friendship = mongoose.model('Friendship', FriendshipSchema)
 
 module.exports = {
-    Friendship: Friendship,
-    createFriendship: createFriendship,
-    getNrOfRequests: getNrOfRequests,
-    isFriendRequestExisting: isFriendRequestExisting,
-    getPendingRequests: getPendingRequests,
-    removeFriendRequest: removeFriendRequest,
-    confirmFriendRequest: confirmFriendRequest,
-    getFriends: getFriends,
-    unfriendUserById : unfriendUserById
+    Friendship,
+    createFriendship,
+    getNrOfRequests,
+    isFriendRequestExisting,
+    getPendingRequests,
+    removeFriendRequest,
+    confirmFriendRequest,
+    getFriends,
+    unfriendUserById
 }
 
 function createFriendship(friend1_id, friend2_id, callback) {

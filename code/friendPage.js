@@ -35,7 +35,7 @@ module.exports = function (app, friendship, user, requestHandlers, achievementIn
                         username : friendUser.username,
                         prettyName : user.getPrettyName(friendUser),
                         imageURL : friendUser.imageURL,
-                        achievements: achievements
+                        achievements
                     }
                     requestHandlers.respondWithJson(response, u)
                 })
@@ -44,6 +44,6 @@ module.exports = function (app, friendship, user, requestHandlers, achievementIn
     }
 
     return {
-        registerHandlers : registerHandlers
+        registerHandlers
     };
 };

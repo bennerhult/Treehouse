@@ -10,11 +10,11 @@ var LoginTokenSchema = new Schema({
 var LoginToken = mongoose.model('LoginToken', LoginTokenSchema);
 
 module.exports = {
-    LoginToken: LoginToken,
-    randomToken: randomToken,
-    createToken: createToken,
-    cookieValue: cookieValue,
-    remove: remove
+    LoginToken,
+    randomToken,
+    createToken,
+    cookieValue,
+    remove
 }
 
 function createToken(email, next) {

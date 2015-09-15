@@ -32,6 +32,6 @@ module.exports = function (app, templates, thSettings) {
     }
 
     return {
-        registerHandlers: registerHandlers
+        registerHandlers
     };
 };

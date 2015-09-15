@@ -10,8 +10,8 @@ var NewsItemSchema = new Schema({
 var NewsItem = mongoose.model('NewsItem', NewsItemSchema);
 
 module.exports = {
-    NewsItem: NewsItem,
-    createNewsItem: createNewsItem
+    NewsItem,
+    createNewsItem
 }
 
 function createNewsItem(eventType, newsJson, callback) {

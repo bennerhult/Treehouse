@@ -122,8 +122,8 @@ module.exports = (function () {
         var goals, nrOfGoals, g, a, desc
 
         a = { goals : [],
-             createdBy : createdBy,
-             createdDate : createdDate,
+             createdBy,
+             createdDate,
              imageURL : '/content/img/achievementImages/1.png'
             }
         nrOfGoals = getRandomInt(1, 10)
@@ -133,7 +133,7 @@ module.exports = (function () {
             g = generateGoal()
             goals.push(g)
             a.goals.push({
-                createdDate : createdDate,
+                createdDate,
                 title : g.title,
                 quantityTotal : g.quantityTotal,
                 quantityCompleted : 0
@@ -174,8 +174,8 @@ module.exports = (function () {
 
     return {
         generateName : generateFullName,
-        generateAchievement : generateAchievement,
-        generateAchievements: generateAchievements,
-        getRandomInt : getRandomInt
+        generateAchievement,
+        generateAchievements,
+        getRandomInt
     }
 }())

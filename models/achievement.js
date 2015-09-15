@@ -20,5 +20,5 @@ var AchievementSchema = new Schema({
 var Achievement = mongoose.model('Achievement', AchievementSchema);
 
 module.exports = {
-    Achievement: Achievement
+    Achievement
 }

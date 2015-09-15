@@ -11,8 +11,8 @@ var NewsfeedEventSchema = new Schema({
 var NewsfeedEvent = mongoose.model('NewsfeedEvent', NewsfeedEventSchema);
 
 module.exports = {
-    NewsfeedEvent: NewsfeedEvent,
-    addEvent: addEvent
+    NewsfeedEvent,
+    addEvent
 }
 
 function addEvent(eventType, userId, objectId) {

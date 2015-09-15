@@ -136,6 +136,6 @@ module.exports = function (app, templates, requestHandlers, thSettings, user, si
     }
 
     return {
-        registerHandlers : registerHandlers
+        registerHandlers
     };
 };

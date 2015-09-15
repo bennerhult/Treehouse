@@ -37,7 +37,7 @@ treehouseApp.controller('publicAchievementController', function ($scope, $http, 
                 }
                 $scope.socialModel = {
                     description: "Check out my achievement: " + result.achievementInstance.title,
-                    imageURL: imageURL
+                    imageURL
                 };
                 $scope.achievement = result.achievementInstance;
                 $scope.creator = result.createdBy;

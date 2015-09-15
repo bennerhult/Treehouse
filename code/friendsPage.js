@@ -123,6 +123,6 @@ module.exports = function (app, friendship, user, requestHandlers) {
     }
 
     return {
-        registerHandlers : registerHandlers
+        registerHandlers
     };
 };

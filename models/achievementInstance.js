@@ -37,22 +37,22 @@ var AchievementInstanceSchema = new Schema({
 var AchievementInstance = mongoose.model('AchievementInstance', AchievementInstanceSchema);
 
 module.exports = {
-    AchievementInstance: AchievementInstance,
-    isVisibleToUser: isVisibleToUser,
-    createAchievement: createAchievement,
-    createIssuedAchievement: createIssuedAchievement,
-    acceptIssuedAchievement: acceptIssuedAchievement,
-    issue: issue,
-    userHasAcceptedAchievement: userHasAcceptedAchievement,
-    progress: progress,
-    publicize: publicize,
-    unpublicize: unpublicize,
-    remove: remove,
-    getAchievementList: getAchievementList,
-    getCompareList: getCompareList,
-    getPublicAchievement: getPublicAchievement,
-    createAchievementInstance: createAchievementInstance,
-    progressByCount: progressByCount
+    AchievementInstance,
+    isVisibleToUser,
+    createAchievement,
+    createIssuedAchievement,
+    acceptIssuedAchievement,
+    issue,
+    userHasAcceptedAchievement,
+    progress,
+    publicize,
+    unpublicize,
+    remove,
+    getAchievementList,
+    getCompareList,
+    getPublicAchievement,
+    createAchievementInstance,
+    progressByCount
 }
 
 function createAchievement(createdBy, title, description, imageURL, goals, callback) {

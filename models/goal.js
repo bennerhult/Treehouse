@@ -25,9 +25,9 @@ var GoalSchema = new Schema({
 var Goal = mongoose.model('Goal', GoalSchema);
 
 module.exports = {
-    Goal: Goal,
-    prepareGoal: prepareGoal,
-    GoalSchema: GoalSchema
+    Goal,
+    prepareGoal,
+    GoalSchema
 }
 
 GoalSchema.virtual('percentageCompleted').get(function() {

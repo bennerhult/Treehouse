@@ -18,6 +18,6 @@ module.exports = function (app, requestHandlers, templates, friendship, sharehol
     }
 
     return {
-        registerHandlers : registerHandlers
+        registerHandlers
     };
 };

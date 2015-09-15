@@ -15,15 +15,14 @@ var ShareholdingSchema = new Schema({
 var Shareholding = mongoose.model('Shareholding', ShareholdingSchema);
 
 module.exports = {
-    Shareholding: Shareholding,
-    createShareholding: createShareholding,
-    getSharedAchievementNotifications: getSharedAchievementNotifications,
-    getCompares: getCompares,
-    acceptShareHolding: acceptShareHolding,
-    isAchievementSharedByMe: isAchievementSharedByMe,
-    acceptShareHolding: acceptShareHolding,
-    getNrOfChallenges: getNrOfChallenges,
-    denyShareHolding: denyShareHolding
+    Shareholding,
+    createShareholding,
+    getSharedAchievementNotifications,
+    getCompares,
+    acceptShareHolding,
+    isAchievementSharedByMe,
+    getNrOfChallenges,
+    denyShareHolding
 }
 
 function createShareholding(sharer_id, shareholder_id, achievement_id, callback) {

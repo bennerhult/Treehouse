@@ -54,6 +54,6 @@ module.exports = function (app, templates, requestHandlers, achievementInstance,
     }
 
     return {
-        registerHandlers : registerHandlers
+        registerHandlers
     };
 }

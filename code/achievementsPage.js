@@ -16,6 +16,6 @@ module.exports = function (app, templates, requestHandlers, progress, moment, sh
     }
 
     return {
-        registerHandlers : registerHandlers
+        registerHandlers
     };
 }

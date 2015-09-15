@@ -25,13 +25,13 @@ var UserSchema = new Schema({
 var User = mongoose.model('User', UserSchema);
 
 module.exports = {
-    User: User,
-    createUser: createUser,
-    getShortName: getShortName,
-    remove: remove,
-    setImageURL : setImageURL,
-    setUsernames : setUsernames,
-    getPrettyName: getPrettyName
+    User,
+    createUser,
+    getShortName,
+    remove,
+    setImageURL,
+    setUsernames,
+    getPrettyName
 }
 
 UserSchema.virtual('prettyName').get(function() {

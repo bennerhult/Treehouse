@@ -13,11 +13,11 @@ var NewsfeedSchema = new Schema({
 var Newsfeed = mongoose.model('Newsfeed', NewsfeedSchema);
 
 module.exports = {
-    Newsfeed: Newsfeed,
-    createNewsfeed: createNewsfeed,
-    updateNewsfeed: updateNewsfeed,
-    removeFromNewsfeed: removeFromNewsfeed,
-    getNewsfeed: getNewsfeed
+    Newsfeed,
+    createNewsfeed,
+    updateNewsfeed,
+    removeFromNewsfeed,
+    getNewsfeed
 }
 
 function createNewsfeed(userId, newsType, newsText, callback) {

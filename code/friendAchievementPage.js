@@ -50,6 +50,6 @@ module.exports = function (app, friendship, user, requestHandlers, achievementIn
     }
 
     return {
-        registerHandlers: registerHandlers
+        registerHandlers
     };
 };
