@@ -83,4 +83,8 @@ treehouseApp.controller('achievementController', function($scope, $http, achieve
             achievementInstance : $scope.achievement
         }).success(function() {});
     };
+    
+    $scope.edit = function(evt) {
+        evt.preventDefault();
+    };
 });

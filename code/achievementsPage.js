@@ -13,6 +13,15 @@ module.exports = function (app, templates, requestHandlers, progress, moment, sh
                 });
             });
         });
+        
+        app.post('/api/achievements/editAchievement', function (request, response) {
+            achievementInstance.editAchievement(request.session.currentUser._id, request.body.achievementId, request.body.changes, function (error) {
+                if(error) {
+                    throw error;
+                }
+                return requestHandlers.respondWithJson(response, {});
+            })
+        });
     }
 
     return {

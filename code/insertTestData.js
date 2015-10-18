@@ -87,7 +87,7 @@ module.exports = function (user, loginToken, thSettings, friendship, achievement
                 }, function() {
                     cb()
                 })
-            }, { publiclyVisible : true })
+            }, { publiclyVisible : true, originalCreatedBy : user._id })
         }, function (err) {
             if (err) {
                 throw err

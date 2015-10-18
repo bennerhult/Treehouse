@@ -48,5 +48,9 @@ treehouseApp.config(function($routeProvider, $locationProvider) {
             templateUrl: '/server-templates/createAchievement.html',
             controller: 'createAchievementController'
         })
+        .when('/app/editAchievement', {
+            templateUrl: '/server-templates/editAchievement.html',
+            controller: 'editAchievementController'
+        })          
     $locationProvider.html5Mode(true);
 });

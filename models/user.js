@@ -47,6 +47,9 @@ UserSchema.virtual('prettyName').get(function() {
 });
 
 function getPrettyName (u) {
+    if(u.prettyName) {
+        return u.prettyName;
+    }
     //NOTE: This is a hack
     //u.prettyName should really be all that is needed but some wierdness about mongoose that I cant figure out makes it be undefined in all cases except when logging it so this is the worarkound
     if (u.firstName && u.lastName) {

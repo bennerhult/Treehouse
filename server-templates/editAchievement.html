@@ -1,0 +1,48 @@
+<div ng-include src="'/server-templates/includes/userInfo.html'"></div>
+<div ng-include src="'/server-templates/includes/desktopMenu.html'"></div>
+<div class="content">
+    <form name="editAchievementForm" novalidate>
+        <div class="section">
+            <div class="twothirds">
+                <input type="text" class="formstyle" name="achievementTitle" ng-model="achievement.title" placeholder="Your achievements title" required>
+
+
+                <textarea name="achievementDescription" ng-model="achievement.description" placeholder="Add a description"></textarea>
+                <input type="text" class="formstyle" placeholder="Series (not implemented)" >
+            </div>
+            <div class="onethird">
+                <img class="border" width="96" height="96" id="achievementImage" ng-src="/content/img/achievementImages/1.png" alt="An image depicting your awe-inspiring achievement">
+                <ul class="swapimage">
+                    <li><a href="javascript:void(0)" ng-click="toggleImage($event, -1)"><img src="../content/img/left-arrow.png" alt=""></a></li>
+                    <li class="last"><a href="javascript:void(0)" ng-click="toggleImage($event, 1)"><img src="../content/img/right-arrow.png" alt=""></a></li>
+                </ul>
+                <a href="javascript:void(0)" ng-click="uploadAchievementImage($event)"><button class="grey">Change picture</button></a>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="listWrap">
+            <div ng-repeat="currentGoal in goalList" class="item">
+                <table>
+                    <tr>
+                        <td class="goal">
+                            <input type="text" class="formstyle" ng-model="currentGoal.title" value="{{currentGoal.title}}" placeholder="Add a goal" ng-keypress="goalKeyPress($event, $last, currentGoal);" ng-paste="goalKeyPress($event, $last);">
+                        </td>
+                        <td class="quantity">
+                            <input type="number" class="formstyle"  ng-model="currentGoal.quantity" value="{{currentGoal.quantity}}"  placeholder="1" valid-number>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+        
+        <div class="header">
+            <span class="create-link"><a href="/app/achievement">Cancel</a></span>
+            <span class="create-link"><a href="/app/achievement" ng-click="editAchievement($event)" ng-show="isValidState()">Save</a></span>            
+        </div>
+    </form>
+    <div class="clear"> </div>
+</div>
+<div class="clear"></div>
+<div ng-include src="'/server-templates/includes/bottomMenu.html'"></div>

@@ -52,7 +52,38 @@ module.exports = {
     getCompareList,
     getPublicAchievement,
     createAchievementInstance,
-    progressByCount
+    progressByCount,
+    editAchievement
+}
+
+function editAchievement(editRequestedByUserId, achievementId, changes, callback) {
+    achievement.Achievement.update({ _id: achievementId}, { $set: changes}, {}, function () {        
+        //TODO: Protect against editing achievements not created by the requesting user
+        AchievementInstance.find({
+            achievementId: achievementId
+        }, {}, {}, function (err, instances) {
+            if(err) {
+                throw err;
+            }
+            async.each(instances, function (currentInstance, cb) {
+                //TODO: Figure out how to do this dynamically with something likes mergeInto(currentInstance, changes)
+                if(changes.title) {
+                    currentInstance.title = changes.title;
+                }
+                if(changes.description) {
+                    currentInstance.description = changes.description;
+                }
+                currentInstance.save(function (err) {
+                    if(err) {
+                        throw err;
+                    }
+                    cb();
+                })                
+            }, function () {
+                callback();
+            });            
+        });        
+    });
 }
 
 function createAchievement(createdBy, title, description, imageURL, goals, callback) {
@@ -73,13 +104,13 @@ function createAchievement(createdBy, title, description, imageURL, goals, callb
     });
 }
 
-function createAchievementInstance(motherAchievement, user, callback, more) {
+function createAchievementInstance(motherAchievement, userLocal, callback, more) {
     var myAchievementInstance = new AchievementInstance();
     myAchievementInstance.createdDate = new Date();
-    myAchievementInstance.createdBy = user._id;
+    myAchievementInstance.createdBy = userLocal._id;
     myAchievementInstance.originalCreatedBy = motherAchievement.createdBy;
-    myAchievementInstance.createdByName = user.prettyName;
-    myAchievementInstance.createdByImageURL = user.imageURL;
+    myAchievementInstance.createdByName =  user.getPrettyName(userLocal);
+    myAchievementInstance.createdByImageURL = userLocal.imageURL;
     myAchievementInstance.achievementId = motherAchievement._id;
     myAchievementInstance.title = motherAchievement.title;
     myAchievementInstance.description = motherAchievement.description;
@@ -91,7 +122,13 @@ function createAchievementInstance(motherAchievement, user, callback, more) {
     if (more) {
         myAchievementInstance.publiclyVisible = more.publiclyVisible;
     }
+    if(more && more.originalCreatedBy) {
+        myAchievementInstance.originalCreatedBy = more.originalCreatedBy
+    }    
     myAchievementInstance.save(function (error) {
+        if(error) {
+            throw error;
+        }
         callback(myAchievementInstance);
     });
 }
